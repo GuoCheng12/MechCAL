@@ -12,18 +12,34 @@ not included.
 
 ## Installation
 
-Python 3.11 is the tested environment. From the repository root:
+The full tool workflow is tested on Linux x86_64 with Python 3.11. See the
+[tool installation guide](docs/tools.md) for Amesp download, RDKit/ASE
+setup, MCP, verification, and troubleshooting.
 
 ```bash
-python -m venv .venv
+git clone https://github.com/GuoCheng12/MechCAL.git
+cd MechCAL
+python3.11 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e ".[science,mcp,dev]"
+python -m pip install --upgrade pip
+python -m pip install -e ".[science,mcp]"
+python -m pip check
+python examples/check_tools.py --mcp
 ```
 
 For conda, run `conda env create -f environment.yml` and then
 `conda activate mechcal`. A core-only installation (`pip install -e .`)
 supports schemas, metrics, and model clients. Molecular calculations require
-the science dependencies. Amesp is installed separately.
+the science dependencies. **Amesp is not installed by pip or conda**: follow
+[Download and Extract](docs/tools.md#download-and-extract), configure
+`MECHCAL_AMESP_BIN`, then verify real computation:
+
+```bash
+python examples/check_tools.py --amesp --mcp
+```
+
+These checks do not call a model API. Add the `dev` extra when running tests
+or building packages.
 
 ## Run a Molecule
 
@@ -33,22 +49,31 @@ Set the subject model credentials in your environment. See
 ```bash
 export MECHCAL_OPENAI_BASE_URL="https://your-provider.example/v1"
 export MECHCAL_OPENAI_MODEL="your-model"
-export MECHCAL_OPENAI_API_KEY="your-api-key"
-export MECHCAL_OPENAI_MAX_TOKENS="4800"
+read -s -p "Model API key: " MECHCAL_OPENAI_API_KEY
+export MECHCAL_OPENAI_API_KEY
+export MECHCAL_OPENAI_MAX_TOKENS="16384"
+export MECHCAL_OPENAI_TIMEOUT="180"
 
 mechcal-llm-smoke
 mechcal-run-case \
   --smiles 'C(c1ccccc1)(c1ccccc1)=C(c1ccccc1)c1ccccc1' \
   --case-id example-001 \
   --llm-planner \
+  --amesp \
   --max-rounds 30 \
   --output-dir outputs/example
 ```
 
-This uses local RDKit tools. Add `--amesp` after setting
-`MECHCAL_AMESP_BIN` to an authorized Amesp executable. For MCP transport, add
-`--tool-backend mcp-stdio`. Missing microscopic capabilities are reported in
-the run; a run without Amesp does not reproduce the full evidence routes.
+This example enables RDKit and Amesp and assumes the installation checks
+above passed. For a reduced-tool demonstration, replace `--amesp` with
+`--no-amesp`; it does not reproduce the full microscopic evidence route.
+For MCP transport, add `--tool-backend mcp-stdio`.
+
+The single-case command does not enable Amesp by default, whereas
+`mechcal-evaluate` does. Explicit flags avoid inherited shell settings.
+Configure sampling and thinking for your provider as described in
+[Configuration](docs/configuration.md). The example token limit is not
+universal: thinking output can exhaust it before the final JSON appears.
 
 The command calls your configured model API. All generated records stay in
 the ignored `outputs/` directory. No API call is made during installation or
@@ -97,6 +122,7 @@ does not require a parent research workspace.
 ## Validation
 
 ```bash
+python -m pip install -e ".[science,mcp,dev]"
 pytest -q -m "not integration"
 ruff check mechcal tests examples
 python examples/offline_score.py

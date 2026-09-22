@@ -22,6 +22,31 @@ revision separately in a dedicated environment, along with
 `mechcal/baselines/chemgraph_mas/requirements-core.txt`. The upstream source
 is available at https://github.com/argonne-lcf/ChemGraph.
 
+From the MechCAL repository root, create a separate environment so the
+pinned LangChain dependencies do not replace those in another project:
+
+```bash
+mkdir -p third_party
+python3.11 -m venv third_party/chemgraph-env
+source third_party/chemgraph-env/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[science,chemgraph]" \
+  -r mechcal/baselines/chemgraph_mas/requirements-core.txt
+git clone https://github.com/argonne-lcf/ChemGraph.git third_party/ChemGraph
+git -C third_party/ChemGraph checkout --detach 203e18c8529869531fa4addbcdb3f1395a831eaa
+python -m pip install --no-deps -e third_party/ChemGraph
+python -m pip check
+mechcal-chemgraph --help
+```
+
+This is the dependency set for the adapted baseline, not an installation
+of all upstream ChemGraph features. The `--no-deps` flag intentionally
+avoids unrelated upstream tool integrations. Any upstream dependency
+warnings from `pip check` must be reviewed against that limited scope;
+do not silently ignore missing packages used by the adapter. Configure
+the model API and Amesp as described in [Tools](tools.md) before a real run.
+ChemGraph is not needed to run MechCAL itself.
+
 The adapter exposes the same Macro and Microscopic capability implementations.
 It does not add MechCAL's reviewers, support audit, or claim gate. PubChem,
 literature retrieval, web search, and upstream default chemistry tools are
