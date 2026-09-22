@@ -1,0 +1,13 @@
+include README.md LICENSE CHANGELOG.md environment.yml
+recursive-include docs *.md
+recursive-include env *.example.sh
+recursive-include tests *.py
+recursive-include examples *.py
+recursive-include mechcal/prompts *.md
+recursive-include mechcal/eval/prompts *.md
+recursive-include mechcal/eval/rubrics *.json
+global-exclude *.py[cod] *.local.sh *.log *.jsonl
+prune outputs
+prune data
+prune var
+prune .git

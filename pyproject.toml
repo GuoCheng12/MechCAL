@@ -1,0 +1,58 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mechcal"
+version = "0.1.0"
+description = "Evidence-calibrated mechanism ranking for molecular photophysics."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+dependencies = ["httpx>=0.27", "openai>=1.40", "pydantic>=2.7", "typer>=0.12.3"]
+
+[project.optional-dependencies]
+science = ["ase>=3.22.1", "numpy>=1.26", "rdkit>=2023.9.1", "scipy>=1.11"]
+mcp = ["fastmcp>=2.10,<2.14", "mcp>=1.14"]
+dev = ["pytest>=8.2", "ruff>=0.6", "build>=1.2"]
+chemgraph = ["langchain-core==0.3.86", "langchain-openai==0.3.27", "tiktoken>=0.7"]
+
+[project.scripts]
+mechcal-run-case = "mechcal.cli.run_case:cli"
+mechcal-evaluate = "mechcal.cli.evaluate:main"
+mechcal-direct = "mechcal.cli.evaluate_direct:main"
+mechcal-tool-llm = "mechcal.cli.evaluate_tools:main"
+mechcal-common-prior = "mechcal.cli.evaluate_prior:main"
+mechcal-chemgraph = "mechcal.cli.evaluate_chemgraph:main"
+mechcal-rescore = "mechcal.cli.rescore:main"
+mechcal-shards = "mechcal.cli.run_shards:main"
+mechcal-export-report = "mechcal.cli.export_report:cli"
+mechcal-llm-smoke = "mechcal.cli.llm_smoke:cli"
+mechcal-mcp = "mechcal.mcp.server:main"
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mechcal", "mechcal.*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+mechcal = [
+  "prompts/*.md", "eval/prompts/*.md", "eval/rubrics/*.json",
+  "baselines/chemgraph_mas/README.md", "baselines/chemgraph_mas/requirements-core.txt"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+markers = ["integration: optional external-tool or subprocess integration"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E9", "F63", "F7", "F82"]

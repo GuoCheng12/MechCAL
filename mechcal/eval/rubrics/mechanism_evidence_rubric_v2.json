@@ -1,0 +1,368 @@
+{
+  "mechanism_evidence_rubric_version": "v2",
+  "mechanism_pool": [
+    "RIM_RIR_RIV",
+    "PACKING_HOST_MATRIX_CONFINEMENT",
+    "HOST_GUEST_INTERACTION",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_METAL_ENERGY_TRANSFER",
+    "RACI_CI_ACCESS",
+    "SOKR_ANTI_KASHA"
+  ],
+  "support_score_scale": {
+    "strong": 1.0,
+    "partial": 0.5,
+    "unsupported": 0.0
+  },
+  "global_rules": [
+    "Score whether the agent-provided evidence supports the predicted mechanism label, not whether the mechanism is ultimately true.",
+    "Give 1.0 only for case-specific evidence that matches the mechanism.",
+    "Give 0.5 only when an incomplete proxy is case-specific, mechanism-matched, and includes an explicit boundary. Follow-up-only support is not evidence.",
+    "Give 0.0 when evidence is absent, mismatched to the label, generic domain background, or better supports another mechanism.",
+    "Generic statements such as 'AIE often results from RIM', 'the molecule has aromatic rings', or 'fluorescence changes' should receive 0.0 unless they are tied to a case-specific finding and mechanism-specific warrant.",
+    "Do not assign 0.0 only because wet-lab, source-paper, or high-level excited-state validation is missing. If the agent gives case-specific structural, computational, or tool-derived proxy evidence and clearly states the boundary, 0.5 is appropriate.",
+    "Do not treat a proposed follow-up as evidence. Statements such as 'needs PL, lifetime, TD-DFT, CI search, DLS, or XRD validation' are boundary/validation notes, not support by themselves.",
+    "Strong support does not require wet-lab data when a mechanism-specific computational or structural analysis directly matches the label; however, ordinary SMILES motifs alone are triggers for differential diagnosis, not evidence support."
+  ],
+  "labels": {
+    "RIM_RIR_RIV": {
+      "mechanism_meaning": "Restriction of intramolecular motion, rotation, or vibration that suppresses nonradiative channels.",
+      "strong_evidence": [
+        "Rotatable or vibrational nonradiative units are identified and shown to be restricted in aggregate, crystal, MOF, host, pressure, viscosity, or steric environments.",
+        "Aggregation, crystallization, rigidification, pressure, viscosity, or host confinement increases emission with an explicit motion-restriction explanation.",
+        "Conformer/PES scans, low-frequency modes, MD, packing analysis, or rotor free-volume analysis show restricted motion.",
+        "Viscosity-dependent PL, pressure-dependent PL, packing, temperature-dependent motion, or solid/aggregate emission enhancement supports motion restriction.",
+        "Lower nonradiative decay or improved radiative/nonradiative balance is linked to restricted motion.",
+        "Viscosity, temperature, phase-transition, aggregation, host-assembly, or solid-state data show emission increases when specific rotations, vibrations, ring flips, or torsional motions are restricted."
+      ],
+      "partial_evidence": [
+        "Case-specific rotors, ring-flip, torsion, or vibration coordinates are identified with a mechanism-specific warrant and an explicit boundary that direct restriction evidence is missing.",
+        "Solid or aggregate emission is stronger, but the cause is not separated from packing, excimer, CT, or radiative-rate mechanisms.",
+        "The agent identifies plausible rotors or ring-flip/torsion coordinates from SMILES-only structure and explains how those motions could provide nonradiative channels while clearly stating that direct restriction evidence is missing."
+      ],
+      "unsupported_or_invalid": [
+        "The claim is made only because the system is an AIEgen.",
+        "RIM is inferred only from a generic AIE pattern, aromatic rings, or the presence of phenyl groups without a case-specific motion argument.",
+        "Fluorescence enhancement is reported without motion-restriction, viscosity, packing, or computation evidence.",
+        "Evidence actually supports CT, ESIPT, excimer, SOKR, or radiative-state balance."
+      ],
+      "typical_tools_or_proxies": [
+        "rotor_geometry_analysis",
+        "conformer_scan",
+        "packing_or_framework_constraint_analysis",
+        "low_frequency_mode_analysis",
+        "viscosity_pressure_aggregate_followup"
+      ]
+    },
+    "PACKING_HOST_MATRIX_CONFINEMENT": {
+      "mechanism_meaning": "External packing, host, matrix, framework, pressure, or morphology constrains structure or nonradiative channels.",
+      "strong_evidence": [
+        "Crystal packing, MOF framework, host matrix, polymer matrix, pressure, or aggregate morphology changes conformation, rotor freedom, or nonradiative channels.",
+        "PXRD, single-crystal structure, packing analysis, pore/free-volume analysis, or framework deformation simulation supports environmental control of emission.",
+        "Different polymorphs, pressures, hosts, aggregate morphologies, or matrices give different emission with matching structural evidence.",
+        "Host/framework structure limits a key rotor, torsion, planarization, or intermolecular arrangement.",
+        "Polymorph, mechanochromic, thermochromic, vapor/fuming, grinding, pressure, or reversible solid-state switching experiments are tied to packing, lattice, matrix, or morphology changes.",
+        "DLS, microscopy, nanoparticle or aggregate-size data, film morphology, or water-fraction morphology changes support an external confinement or morphology-controlled emission channel."
+      ],
+      "partial_evidence": [
+        "Solid or aggregate emission is enhanced without packing or matrix evidence.",
+        "A host or framework is present, but its effect on emission channels is not shown.",
+        "The evidence only says crystal or MOF exists.",
+        "SMILES-only structure suggests aggregation or solid-state confinement may matter, but no crystal, morphology, matrix, or pressure evidence is available."
+      ],
+      "unsupported_or_invalid": [
+        "All solid-state emission is attributed to packing confinement.",
+        "Only intramolecular RIM evidence is supplied with no external packing, host, or matrix support.",
+        "The better-supported mechanism is host-guest binding, lanthanide transfer, or CT.",
+        "A packing/confinement claim is made from a planar or aromatic structure alone with no aggregate, morphology, crystal, matrix, or environmental evidence."
+      ],
+      "typical_tools_or_proxies": [
+        "crystal_packing_analysis",
+        "MOF_framework_constraint_analysis",
+        "pressure_deformation_proxy",
+        "free_volume_analysis",
+        "PXRD_SCXRD_followup"
+      ]
+    },
+    "HOST_GUEST_INTERACTION": {
+      "mechanism_meaning": "Guest molecules, gases, solvents, ions, or analytes enter or bind a host, pore, or cavity and alter emission.",
+      "strong_evidence": [
+        "Gas uptake, adsorption isotherm, binding constant, host-guest complex, pore accessibility, or guest occupancy supports guest entry and interaction.",
+        "In-situ FT-IR, PXRD, NMR, XPS, Raman, sorption, or crystal structure shows guest binding or guest-induced structural/electronic change.",
+        "Specific guests give distinct emission responses tied to size, polarity, binding motif, coordination, or electron-transfer ability.",
+        "Docking, adsorption simulation, or interaction analysis shows plausible guest contact with rotor, chromophore, metal center, or pore.",
+        "Supramolecular host systems such as crown ether, cyclodextrin, cucurbituril, pillararene, cage, micelle, or host polymer show binding, inclusion, shuttling, or proximity-controlled emission changes.",
+        "NMR/NOESY, Job plot, binding constant, competitive binding, pH-triggered complexation, or analyte-specific recognition supports host-guest or receptor-guest interaction."
+      ],
+      "partial_evidence": [
+        "A material responds to gas, solvent, or ions, but guest entry or binding is not shown.",
+        "The response may be caused by pressure, polarity, viscosity, framework deformation, or packing.",
+        "Only a sensing phenotype is reported.",
+        "A receptor, cavity, ion-binding motif, or supramolecular assembly motif is present, but direct guest binding or inclusion evidence is missing."
+      ],
+      "unsupported_or_invalid": [
+        "Evidence shows inaccessible pores, low uptake, no FT-IR interaction, or exclusion of direct ingress.",
+        "All MOF sensing is treated as host-guest binding.",
+        "Responses are nonspecific and better fit pressure or framework effects."
+      ],
+      "typical_tools_or_proxies": [
+        "pore_accessibility_proxy",
+        "gas_probe_size_analysis",
+        "adsorption_simulation",
+        "host_guest_docking",
+        "gas_uptake_in_situ_FTIR_followup"
+      ]
+    },
+    "ICT_TICT_CT": {
+      "mechanism_meaning": "Intramolecular charge transfer, twisted intramolecular charge transfer, or charge-transfer excited-state behavior.",
+      "strong_evidence": [
+        "Donor-acceptor architecture is identified with excited-state charge-transfer evidence.",
+        "NTO, electron-hole separation, Mulliken analysis, charge-density difference, or dipole change shows CT character.",
+        "Solvatochromism or polarity-dependent emission supports CT/TICT.",
+        "Excited-state optimized geometry shows twisted D-A conformation or TICT minimum.",
+        "Torsional PES shows an accessible twisted CT state linked to quenching or emission shift.",
+        "TD-DFT shows LE/CT ordering, charge separation, oscillator strength, or CT transition.",
+        "HLCT, through-space CT, ligand-to-metal-metal CT, or environment-sensitive CT assignment is supported by spectra, orbital/NTO analysis, solvatochromism, or excited-state calculations."
+      ],
+      "partial_evidence": [
+        "A donor-acceptor or polarity-sensitive scaffold is paired with a case-specific charge-transfer warrant and an explicit boundary that excited-state CT evidence is missing.",
+        "Solvent effects are present, but ESIPT, PET, aggregation, or radiative-rate alternatives are not separated.",
+        "Twisted geometry is noted without charge-transfer character.",
+        "A structure-only orbital, electronic, torsional, or charge-separation proxy suggests CT/TICT, but no excited-state CT, solvatochromism, orbital, or dipole evidence is available."
+      ],
+      "unsupported_or_invalid": [
+        "A donor and acceptor are present but no CT evidence is supplied.",
+        "Any torsion is called TICT without CT evidence.",
+        "ESIPT, PET, or packing evidence better explains the observation.",
+        "CT/TICT is used as a catch-all for quenching or color change without charge-separation, polarity, orbital, or twisted-state evidence."
+      ],
+      "typical_tools_or_proxies": [
+        "electronic_motif_analysis",
+        "TDDFT_NTO_analysis",
+        "electron_hole_analysis",
+        "excited_state_torsion_scan",
+        "solvatochromism_followup"
+      ]
+    },
+    "ESIPT_PT": {
+      "mechanism_meaning": "Excited-state intramolecular proton transfer or proton-transfer photophysics.",
+      "strong_evidence": [
+        "A credible proton donor-acceptor motif exists, such as O-H...N or N-H...O intramolecular hydrogen bonding.",
+        "Excited-state hydrogen bonding strengthens or the proton-transfer coordinate becomes favorable.",
+        "FPT/RPT PES or barrier calculation supports excited-state proton transfer.",
+        "Dual emission, large Stokes shift, normal/tautomer emission, or enol/keto assignment supports ESIPT.",
+        "IR, isotope effect, time-resolved spectroscopy, or proton-transfer-specific experiment supports the claim.",
+        "TD-DFT/PES shows an ESIPT state, tautomer minimum, or low-barrier transfer.",
+        "Tautomer-specific assignment, enol/keto emission, ultrafast proton-transfer kinetics, isotope/deuteration response, O-methylation or blocking/recovery control, or ESIPT barrier calculation supports proton transfer."
+      ],
+      "partial_evidence": [
+        "OH or NH and a possible acceptor are present, but geometry or hydrogen bonding is not established.",
+        "Large Stokes shift is mentioned without a proton-transfer pathway.",
+        "The structure resembles an ESIPT probe, but no excited-state or spectral evidence is supplied.",
+        "A structure-only proton donor-acceptor motif suggests ESIPT, but tautomer emission, H-bond geometry, kinetic, isotope, or excited-state pathway evidence is absent."
+      ],
+      "unsupported_or_invalid": [
+        "A hydroxyl group alone is used to claim ESIPT.",
+        "No donor-acceptor pair exists or intramolecular hydrogen bonding is geometrically implausible.",
+        "ICT/TICT, PET, packing, or RIM better explains the evidence.",
+        "A proton-transfer claim is made from a remote OH/NH group without an intramolecular acceptor geometry or tautomer/emission rationale."
+      ],
+      "typical_tools_or_proxies": [
+        "proton_donor_acceptor_motif_detection",
+        "H_bond_geometry_analysis",
+        "FPT_RPT_PES_scan",
+        "excited_state_geometry_optimization",
+        "IR_isotope_time_resolved_followup"
+      ]
+    },
+    "PET_ET": {
+      "mechanism_meaning": "Photoinduced electron transfer or electron-transfer quenching/turn-on.",
+      "strong_evidence": [
+        "A receptor/donor and fluorophore/acceptor electron-transfer channel is identified.",
+        "HOMO/LUMO alignment, redox potential, TD-DFT, electrochemistry, or energy alignment supports PET/ET.",
+        "Analyte binding, protonation, coordination, or reaction changes the PET channel and emission.",
+        "Computation or experiment links electron-transfer quenching to the emission change.",
+        "Controls or before/after binding energy levels support PET being switched on or off.",
+        "Radical-ion signatures, EPR, transient absorption, electrochemical potentials, ECL radical generation, Stern-Volmer behavior, or before/after analyte binding redox alignment supports PET/ET.",
+        "Static quenching, ligand-to-metal charge/electron transfer, protonation/deprotonation, coordination, or host/analyte binding is mechanistically connected to PET turn-on or turn-off."
+      ],
+      "partial_evidence": [
+        "A receptor and fluorophore are present without energy-level or redox evidence.",
+        "Turn-on or quenching is observed without showing PET.",
+        "Donor/acceptor wording cannot distinguish PET from ICT/TICT.",
+        "A donor-receptor-fluorophore architecture or plausible electron donor/acceptor pair is present, but redox, radical, transient, or binding-state evidence is missing."
+      ],
+      "unsupported_or_invalid": [
+        "All sensing turn-on behavior is attributed to PET.",
+        "No electron-transfer, energy-level, or redox evidence is supplied.",
+        "ESIPT, ICT/TICT, RIM, or host-guest packing better explains the evidence.",
+        "Radical, ECL, or quenching language is repeated without evidence of electron-transfer direction, energetics, or species identity."
+      ],
+      "typical_tools_or_proxies": [
+        "frontier_orbital_energy_analysis",
+        "redox_potential_estimation",
+        "binding_state_energy_alignment",
+        "TDDFT_charge_transfer_analysis",
+        "electrochemistry_analyte_control_followup"
+      ]
+    },
+    "AGGREGATE_EXCITON_EXCIMER": {
+      "mechanism_meaning": "Aggregate exciton, H/J aggregation, excimer, exciplex, or new intermolecular excited-state emission.",
+      "strong_evidence": [
+        "Aggregation or high concentration produces a new broad red-shifted emission band consistent with excimer or exciplex.",
+        "H-aggregate or J-aggregate spectral signatures such as absorption/emission shifts, Davydov splitting, or exciton coupling are present.",
+        "Concentration, aggregate fraction, polymorph, or packing changes create a new intermolecular emission species.",
+        "Crystal structure shows strong pi-stacking, donor-acceptor intermolecular contacts, or excimer-forming geometry.",
+        "Computation shows dimer, excimer, exciplex, or aggregate exciton excited states.",
+        "DLS, water-fraction aggregation, concentration-dependent band growth, time-resolved excimer formation, nanoaggregate morphology, or dimer/excimer calculation supports a new aggregate emissive species.",
+        "Aurophilic, metallophilic, pi-stacked, J/H-aggregate, or aggregate-exciton interpretation is supported by packing contacts plus spectral or lifetime evidence."
+      ],
+      "partial_evidence": [
+        "Aggregate-state emission exists but no new aggregate electronic species is shown.",
+        "Case-specific pi-stacking, close contact, dimer, aggregate-propensity, packing artifact, or solid-state proxy evidence is present with an explicit boundary that no excimer band, aggregate spectrum, lifetime, or dimer excited-state calculation was observed.",
+        "Only crystal packing is shown and confinement is not separated from exciton/excimer behavior.",
+        "Aggregation or close contacts are likely, but there is no new emission band, exciton coupling, excimer lifetime, concentration dependence, or dimer excited-state evidence."
+      ],
+      "unsupported_or_invalid": [
+        "All aggregate emission is treated as excimer or exciton emission.",
+        "Emission enhancement is from RIM or packing confinement with no new band or electronic-state evidence.",
+        "Only a generic intermolecular-contact statement is supplied without case-specific geometry, aggregation rationale, or boundary on missing excited-state aggregate-species evidence.",
+        "DLS or aggregate formation alone is treated as excimer/exciton evidence without a new aggregate-state electronic or emissive species."
+      ],
+      "typical_tools_or_proxies": [
+        "aggregate_spectral_analysis",
+        "dimer_excited_state_calculation",
+        "packing_pi_stack_analysis",
+        "concentration_dependent_PL_followup",
+        "HJ_aggregate_spectral_assignment"
+      ]
+    },
+    "RADIATIVE_RATE_STATE_BALANCE": {
+      "mechanism_meaning": "Emission changes arise from radiative rate, oscillator strength, bright/dark state balance, state population, or Kr/knr balance.",
+      "strong_evidence": [
+        "Radiative decay rate, oscillator strength, transition dipole, or emissive-state population changes are shown.",
+        "Emission enhancement is explained by bright-state strengthening, dark-state weakening, state balance, or enol/keto contribution changes.",
+        "Weak absorption changes but strong emission changes are supported by radiative-rate or state-population evidence.",
+        "Computation or experiment shows radiative channel changes rather than only nonradiative motion restriction.",
+        "Different environments alter emissive-state ordering, state character, or radiative contribution.",
+        "Lifetime and quantum-yield data, kr/knr decomposition, oscillator strength, transition dipole, state population, delayed/fluorescence balance, or bright/dark state assignment is linked to the emission change.",
+        "Device- or application-level radiative balance is supported by HLCT/TADF/RISC/exciton-utilization analysis when it is explicitly tied to the molecular emissive-state mechanism."
+      ],
+      "partial_evidence": [
+        "Oscillator strength, Kr, or radiative rate is mentioned but not tied to mechanism change.",
+        "Emission intensity changes without lifetime, QY, oscillator-strength, or state-population support.",
+        "Bright/dark state balance is described only qualitatively.",
+        "The agent reports oscillator strength, lifetime, QY, or bright/dark terminology but does not connect it to a mechanism-changing state or rate balance."
+      ],
+      "unsupported_or_invalid": [
+        "Fluorescence intensity change alone is used to claim a radiative-rate mechanism.",
+        "Ordinary Kr or oscillator-strength output is treated as SOKR or anti-Kasha evidence.",
+        "No state balance or radiative/nonradiative decomposition is supplied.",
+        "Rate/state-balance is used only as a restatement that emission intensity changes, with no lifetime, QY, oscillator strength, state population, or kr/knr information."
+      ],
+      "typical_tools_or_proxies": [
+        "oscillator_strength_calculation",
+        "radiative_rate_proxy",
+        "state_population_analysis",
+        "lifetime_QY_followup",
+        "emissive_state_assignment"
+      ]
+    },
+    "TRIPLET_METAL_ENERGY_TRANSFER": {
+      "mechanism_meaning": "Triplet photophysics, RTP, TADF, heavy atom effect, lanthanide antenna effect, ligand-to-metal transfer, or metal-centered emission.",
+      "strong_evidence": [
+        "Eu, Tb, or other lanthanide characteristic emission lines appear and are connected to ligand-to-metal energy transfer.",
+        "Ligand-centered emission decreases or disappears while metal-centered emission increases, supporting antenna sensitization.",
+        "Ligand triplet energy matches metal excited-state energy.",
+        "Phosphorescence, RTP, TADF, delayed fluorescence, ISC, or heavy-atom effect has explicit evidence.",
+        "Lifetime, time-resolved PL, temperature-dependent PL, or transfer efficiency supports triplet or metal energy transfer.",
+        "Organic triplet photophysics is supported by RTP, TADF, delayed fluorescence, oxygen sensitivity, ISC/rISC, singlet-triplet gap, singlet-oxygen generation, PDT/photosensitization, or time-resolved triplet evidence even when no metal is present.",
+        "Polymorph, temperature, grinding, or matrix changes alter phosphorescence, delayed fluorescence, triplet lifetime, or ISC/rISC pathways with a triplet-state rationale."
+      ],
+      "partial_evidence": [
+        "A lanthanide or heavy atom is present without emission-spectrum or energy-level evidence.",
+        "Narrow red or green emission appears but metal-centered emission is not confirmed.",
+        "A metal center is present but antenna transfer is not established.",
+        "A heavy atom, carbonyl, donor-acceptor, low-gap, or metal-containing motif suggests triplet involvement, but no triplet, lifetime, oxygen, energy-gap, or emission-line evidence is available."
+      ],
+      "unsupported_or_invalid": [
+        "All MOF or metal-complex emission is attributed to lanthanide antenna effect.",
+        "No characteristic metal emission or energy-transfer evidence is supplied.",
+        "A color-tuning secondary feature is claimed as the primary AIE mechanism.",
+        "Triplet or metal energy transfer is claimed only from the presence of a carbonyl, heteroatom, metal, or photosensitizer application without triplet-state evidence."
+      ],
+      "typical_tools_or_proxies": [
+        "metal_center_detection",
+        "ligand_triplet_energy_estimation",
+        "emission_line_assignment",
+        "energy_transfer_gap_analysis",
+        "time_resolved_PL_followup"
+      ]
+    },
+    "RACI_CI_ACCESS": {
+      "mechanism_meaning": "Restricted access to conical intersections or conical-intersection-mediated nonradiative decay.",
+      "strong_evidence": [
+        "A reachable conical intersection or S1/S0 crossing is computed and linked to nonradiative decay.",
+        "PES or nonadiabatic dynamics shows CI access in solution and blockage in aggregate, crystal, or rigid environments.",
+        "A key CI-reaching coordinate such as twisting, flapping, or bond-angle change is identified and environmentally restricted.",
+        "CASSCF, CASPT2, surface hopping, CI search, or comparable excited-state computation supports RACI.",
+        "Weak/strong emission contrast is explained through CI access restriction.",
+        "An ESIPT-generated, torsional, puckering, flapping, or ring-opening coordinate is explicitly linked to S1/S0 crossing, internal conversion, or nonadiabatic decay and its restriction."
+      ],
+      "partial_evidence": [
+        "Nonradiative decay or twisting motion is discussed without CI evidence.",
+        "Aggregation rigidification is shown without proving it restricts a CI path.",
+        "RIM evidence exists but no CI-level mechanism is supplied.",
+        "A torsion, flapping, puckering, or brightness/gap proxy suggests a possible nonradiative coordinate, but no explicit CI search, S1/S0 crossing, or nonadiabatic calculation is available."
+      ],
+      "unsupported_or_invalid": [
+        "Generic nonradiative decay is called RACI.",
+        "No CI geometry, S1/S0 crossing, nonadiabatic pathway, or CI access evidence is supplied.",
+        "RIM alone explains the evidence and CI is overclaimed.",
+        "RACI is claimed because the molecule is flexible or nonradiative decay is possible, without a coordinate tied to CI access or internal conversion."
+      ],
+      "typical_tools_or_proxies": [
+        "conical_intersection_search",
+        "PES_scan_to_CI_coordinate",
+        "nonadiabatic_dynamics",
+        "excited_state_twist_flapping_coordinate_analysis",
+        "crystal_embedded_excited_state_simulation"
+      ]
+    },
+    "SOKR_ANTI_KASHA": {
+      "mechanism_meaning": "Suppression of Kasha's rule, anti-Kasha emission, or higher-state emission.",
+      "strong_evidence": [
+        "Emission comes from a state above S1, such as S2/Sn or hot-exciton emission.",
+        "S1 is dark or non-emissive while a higher excited state has significant oscillator strength.",
+        "Restriction, aggregation, or viscosity suppresses internal conversion to dark S1 and permits higher-state emission.",
+        "Excitation-dependent emission, time-resolved spectroscopy, state ordering, or oscillator-strength analysis supports anti-Kasha behavior.",
+        "Suppression of Kasha's rule or anti-Kasha emission is explicitly supported by excited-state evidence.",
+        "Higher doublet/radical-cation emission, EPR-supported radical formation, nanosecond emission excluding phosphorescence, or calculations assigning higher-state emission supports anti-Kasha behavior.",
+        "Water, H-bonding, aggregation, matrix, or environment-dependent switching between higher excited states is supported by state ordering, oscillator strength, lifetime, or excitation-dependent evidence."
+      ],
+      "partial_evidence": [
+        "Oscillator strength or Kr is analyzed without higher-state emission evidence.",
+        "Viscosity or AIE behavior is present without anti-Kasha state ordering.",
+        "Delayed or hot emission is hinted at but state assignment is missing.",
+        "A state-ordering or oscillator-strength proxy suggests S1 dark/Sn bright behavior, but there is no higher-state emission, excitation-dependent, time-resolved, or calculation evidence."
+      ],
+      "unsupported_or_invalid": [
+        "Emission enhancement or oscillator-strength change alone is used to claim SOKR.",
+        "No higher-state emission, S1/Sn ordering, or excitation-dependent evidence is supplied.",
+        "Ordinary RIM, TICT, ESIPT, or radiative-rate balance explains the evidence.",
+        "Delayed fluorescence, RTP, or strong emission is called anti-Kasha without evidence for emission from above S1 or suppression of Kasha internal conversion."
+      ],
+      "typical_tools_or_proxies": [
+        "excited_state_ordering_analysis",
+        "oscillator_strength_distribution",
+        "excitation_dependent_emission_followup",
+        "internal_conversion_pathway_analysis",
+        "time_resolved_spectroscopy_followup"
+      ]
+    }
+  }
+}
