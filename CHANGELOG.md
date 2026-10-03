@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+- Add reconstructed PhotoMechBench inputs: 119 case IDs and SMILES, excluding
+  historical case 0127. Preserve the remaining case IDs without renumbering.
+- Include dataset format notes and offline input-integrity tests. Hidden
+  references, labels, evidence records and model outputs remain excluded.
+
 ## 0.1.0
 
 - Standalone MechCAL package and command-line interfaces.

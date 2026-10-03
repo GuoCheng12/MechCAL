@@ -1,0 +1,11 @@
+{
+  "dataset": "PhotoMechBench",
+  "version": "raw-v2-119-20261004",
+  "content": "molecular_inputs_only",
+  "file": "raw_v2_119.csv",
+  "encoding": "utf-8",
+  "columns": ["case_id", "smiles"],
+  "case_count": 119,
+  "excluded_case_ids": ["AIE_DDX_MECH_V4_0127"],
+  "sha256": "6fdaea6a4f62c836385e2e14387dd90d3f5e09f0879111a41319cdf797701449"
+}

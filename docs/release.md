@@ -15,8 +15,10 @@ agent prompts, rubric, and regression tests. Historical rubric and prompt
 revision identifiers remain intact. Packaging does not establish that a
 particular archived experiment used the current defaults.
 
-Only source code, configuration templates, documentation, and synthetic test
-fixtures are included. Research outputs, chain-of-thought records, source
+Source code, configuration templates, documentation, synthetic test fixtures,
+and the versioned 119-case PhotoMechBench SMILES input set are included.
+The public input CSV is shipped with the Git repository and source distribution,
+not the Python wheel. Research outputs, chain-of-thought records, source
 papers, hidden references, credentials, relay configuration, model weights,
 and vendored third-party repositories are excluded. Generated output is
 local and ignored by Git.

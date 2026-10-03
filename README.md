@@ -6,9 +6,10 @@ scientific analyses and ranks mechanisms from a fixed pool of 11 families.
 The ranking is rebuilt as evidence and review feedback become available.
 
 The repository contains the method, scientific tool adapters, prompts,
-MechRubric, evaluation code, and baseline adapters. Benchmark cases, hidden
-references, papers, model weights, inference records, and credentials are
-not included.
+MechRubric, evaluation code, and baseline adapters. The reconstructed
+[PhotoMechBench input set](benchmarks/photomechbench/README.md) provides
+119 case IDs and SMILES. Hidden references, papers, model weights, inference
+records, and credentials are not included.
 
 ## Installation
 
@@ -81,6 +82,11 @@ the default offline test suite.
 
 ## Evaluate
 
+The public [119-case CSV](benchmarks/photomechbench/raw_v2_119.csv) contains
+molecular inputs only. It does not include the hidden references required
+for the scoring commands below. Its version and usage are described in the
+[dataset README](benchmarks/photomechbench/README.md).
+
 Provide a directory of case JSON files and configure the evidence judge
 with `MECHCAL_SUPPORT_JUDGE_BASE_URL`, `MECHCAL_SUPPORT_JUDGE_MODEL`, and
 `MECHCAL_SUPPORT_JUDGE_API_KEY`.
@@ -114,6 +120,7 @@ env/                    Credential-free configuration template
 examples/               Offline usage examples
 tests/                  Regression and packaging tests
 docs/                   Configuration, tools, evaluation, and release notes
+benchmarks/             Public, versioned molecular inputs only
 ```
 
 The Python import name is `mechcal`. This repository is self-contained and
