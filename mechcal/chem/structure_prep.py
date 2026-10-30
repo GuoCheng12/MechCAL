@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+from math import dist, isfinite
 from pathlib import Path
 from typing import Literal
 
@@ -12,6 +13,7 @@ StructurePrepErrorCode = Literal[
     "unsupported_radical",
     "embedding_failed",
     "forcefield_failed",
+    "invalid_geometry",
 ]
 
 
@@ -31,6 +33,7 @@ class StructurePrepRequest(BaseModel):
     workdir: Path
     num_conformers: int = 10
     max_force_field_steps: int = 200
+    allow_unoptimized_seed: bool = False
 
     def model_post_init(self, __context: object) -> None:
         self.workdir = self.workdir.expanduser().resolve()
@@ -45,7 +48,9 @@ class PreparedStructure(BaseModel):
     atom_count: int
     conformer_count: int
     selected_conformer_id: int
-    force_field: Literal["MMFF94", "UFF"]
+    force_field: Literal["MMFF94", "UFF"] | None
+    geometry_status: Literal["forcefield_prepared", "embedded_unoptimized"] = "forcefield_prepared"
+    preparation_warning: str | None = None
     xyz_path: Path
     sdf_path: Path
     summary_path: Path
@@ -74,14 +79,22 @@ def prepare_structure_from_smiles(
     validate_closed_shell_support(radical_electrons)
 
     conformer_ids = _embed_conformers(AllChem, mol, request)
-    force_field = _select_force_field(AllChem, mol)
-    selected_conformer_id = _optimize_and_select_conformer(
-        AllChem,
-        mol,
-        conformer_ids,
-        force_field,
-        request.max_force_field_steps,
-    )
+    warning = None
+    try:
+        force_field = _select_force_field(AllChem, mol)
+    except StructurePrepError as exc:
+        if exc.code != "forcefield_failed" or not request.allow_unoptimized_seed:
+            raise
+        force_field = None
+        warning = exc.message
+    if force_field is None:
+        # Preserve an input seed only; it is not eligible for electronic analyses.
+        selected_conformer_id = conformer_ids[0]
+        validate_geometry_coordinates(mol, mol.GetConformer(selected_conformer_id).GetPositions())
+    else:
+        selected_conformer_id = _optimize_and_select_conformer(
+            AllChem, mol, conformer_ids, force_field, request.max_force_field_steps,
+        )
 
     xyz_path = request.workdir / "prepared_structure.xyz"
     sdf_path = request.workdir / "prepared_structure.sdf"
@@ -100,6 +113,8 @@ def prepare_structure_from_smiles(
         conformer_count=len(conformer_ids),
         selected_conformer_id=selected_conformer_id,
         force_field=force_field,
+        geometry_status="forcefield_prepared" if force_field else "embedded_unoptimized",
+        preparation_warning=warning,
         xyz_path=xyz_path,
         sdf_path=sdf_path,
         summary_path=summary_path,
@@ -115,6 +130,25 @@ def prepare_structure_from_smiles(
         positions=conformer.GetPositions(),
     )
     return atoms, prepared
+
+
+def validate_geometry_coordinates(mol, coordinates) -> None:
+    """Basic finite/clash/bond checks, not a validation of a physical minimum."""
+    from rdkit import Chem
+
+    if len(coordinates) != mol.GetNumAtoms() or any(
+        len(row) != 3 or not all(isfinite(float(x)) for x in row) for row in coordinates
+    ):
+        raise StructurePrepError("invalid_geometry", "Incomplete or non-finite coordinates.")
+    for i, point in enumerate(coordinates):
+        if any(dist(point, other) < 0.4 for other in coordinates[i + 1:]):
+            raise StructurePrepError("invalid_geometry", "Severe interatomic overlap in coordinates.")
+    table = Chem.GetPeriodicTable()
+    for bond in mol.GetBonds():
+        a, b = bond.GetBeginAtomIdx(), bond.GetEndAtomIdx()
+        radius = sum(table.GetRcovalent(mol.GetAtomWithIdx(i).GetAtomicNum()) for i in (a, b))
+        if not 0.5 * radius <= dist(coordinates[a], coordinates[b]) <= 2.0 * radius:
+            raise StructurePrepError("invalid_geometry", f"Implausible source-bond distance: {a}-{b}.")
 
 
 def validate_closed_shell_support(radical_electrons: int) -> None:

@@ -12,9 +12,11 @@ from mechcal.schemas import (
     ToolExecutionResult,
 )
 from mechcal.schemas.failures import FailureReport
+from mechcal.schemas.tool_arguments import merge_tool_args
 from mechcal.tools.amesp_baseline import AmespBaselineError
 from mechcal.tools.amesp_microscopic import (
     MICROSCOPIC_ROUTE_PROFILES,
+    AMESP_REQUIRED_ROUTE_KINDS,
     AmespMicroscopicError,
     AmespMicroscopicRunner,
     MicroscopicRouteProfile,
@@ -40,6 +42,10 @@ class LocalMicroscopicTool:
         schema_feedback: str | None = None,
     ) -> ToolExecutionResult:
         del schema_feedback
+        from mechcal.capabilities.external_qc import ROUTES
+        if request.route in ROUTES:
+            from mechcal.tools.external_qc import execute_external
+            return execute_external(request, case_run, execution_plan)
         profile = MICROSCOPIC_ROUTE_PROFILES.get(request.route)
         if profile is None:
             return self._failed_result(
@@ -57,16 +63,11 @@ class LocalMicroscopicTool:
                 status="unsupported",
                 failure=FailureReport(
                     kind="capability_unsupported",
-                    message="Low-cost excited-state relaxation has not been validated in MechCAL.",
+                    message="CI/nonadiabatic dynamics are unsupported. run_excited_state_relaxation is also suspended pending force validation.",
                     recoverable=False,
                 ),
             )
-        amesp_required = profile.route_kind in {
-            "baseline",
-            "prepared_photophysics",
-            "prepared_series",
-            "targeted",
-        }
+        amesp_required = profile.route_kind in AMESP_REQUIRED_ROUTE_KINDS
         if amesp_required and not self.enable_amesp:
             return self._failed_result(
                 request,
@@ -81,7 +82,15 @@ class LocalMicroscopicTool:
                 ),
             )
         try:
-            tool_args = _bounded_microscopic_tool_args(request.route, execution_plan)
+            tool_args = merge_tool_args(request, execution_plan)
+            if profile.route_kind == "geometry_selection":
+                from mechcal.tools.geometry_reuse import select_geometry
+                return select_geometry(request, case_run, tool_args)
+            if profile.route_kind == "geometry_recovery":
+                from mechcal.tools.ground_geometry import optimize_ground_geometry
+                return optimize_ground_geometry(
+                    request, case_run, tool_args, self.amesp_runner.baseline_runner
+                )
             source_artifact = self._source_artifact(
                 profile,
                 case_run,
@@ -94,6 +103,9 @@ class LocalMicroscopicTool:
                 round_id=request.round_id,
                 tool_args=tool_args,
             )
+        except ValueError as exc:
+            return self._failed_result(request, status="failed", failure=FailureReport(
+                kind="tool_args_invalid", message=str(exc), recoverable=True))
         except AmespMicroscopicError as exc:
             status = _status_for_amesp_error(exc.code)
             return self._failed_result(
@@ -102,18 +114,18 @@ class LocalMicroscopicTool:
                 failure=FailureReport(
                     kind=_failure_kind_for_amesp_error(exc.code),
                     message=exc.message,
-                    recoverable=True,
+                    recoverable=exc.code != "capability_unsupported",
                     details={"code": exc.code, **exc.details},
                 ),
             )
         except AmespBaselineError as exc:
             return self._failed_result(
                 request,
-                status="failed",
+                status=_status_for_amesp_error(exc.code),
                 failure=FailureReport(
-                    kind="runtime_failed",
+                    kind=_failure_kind_for_amesp_error(exc.code),
                     message=exc.message,
-                    recoverable=True,
+                    recoverable=exc.code != "capability_unsupported",
                     details={
                         "code": exc.code,
                         "file_paths": exc.file_paths,
@@ -135,13 +147,14 @@ class LocalMicroscopicTool:
             case_run=case_run,
         )
         return ToolExecutionResult(
-            tool_result_id=f"{request.round_id}:microscopic",
+            tool_result_id=evidence.source_report_id,
             round_id=request.round_id,
             agent_name="microscopic",
             dispatch_id=request.dispatch_id,
             capability_id=request.capability_id,
             selected_route=request.route,
-            tool_calls=[f"amesp.{request.route}"],
+            tool_calls=(["amesp.m2m", "multiwfn.hole_electron", "multiwfn.atomic_contributions"]
+                        if request.route == "analyze_hole_electron_from_bundle" else [f"amesp.{request.route}"]),
             raw_results={
                 "tool_args": tool_args,
                 "bundle_manifest": str(result.manifest_path),
@@ -157,15 +170,18 @@ class LocalMicroscopicTool:
                 "parsed_observables": result.bundle.parsed_observables,
                 "missing_deliverables": result.bundle.missing_deliverables,
                 "limitations": result.bundle.limitations,
+                "method_provenance": result.bundle.method_sources(),
             },
-            status="success",
+            status="success" if result.bundle.status == "available" else "partial",
             evidence_units=[evidence],
             artifact_updates=[artifact],
             summary=(
                 f"Microscopic completed route {request.route} and returned a typed "
                 f"{profile.artifact_kind} artifact."
             ),
-            failure=FailureReport(),
+            failure=(FailureReport() if result.bundle.status == "available" else FailureReport(
+                kind="partial_evidence", message="Some requested observables were unavailable or invalid.",
+                recoverable=True, details={"missing_deliverables": result.bundle.missing_deliverables})),
         )
 
     def _source_artifact(
@@ -176,12 +192,15 @@ class LocalMicroscopicTool:
         preferred_artifact_id: Any = None,
     ) -> ArtifactRecord:
         kind_by_route = {
+            "spatial_postprocess": "amesp_baseline_bundle",
             "baseline": "prepared_structure",
             "bundle_discovery": "amesp_baseline_bundle",
             "parse_only": "amesp_baseline_bundle",
             "prepared_photophysics": "prepared_structure",
             "prepared_discovery": "prepared_structure",
             "prepared_series": "prepared_structure",
+            "prepared_relaxation": "prepared_structure",
+            "prepared_scan": "prepared_structure",
             "targeted": "amesp_baseline_bundle",
         }
         required_kind = kind_by_route[profile.route_kind]
@@ -201,14 +220,17 @@ class LocalMicroscopicTool:
             )
         if preferred_artifact_id is not None:
             preferred_id = str(preferred_artifact_id)
-            return next(
+            selected = next(
                 (
                     artifact
                     for artifact in candidates
                     if artifact.artifact_id == preferred_id
                 ),
-                candidates[-1],
+                None,
             )
+            if selected is None:
+                raise AmespMicroscopicError("precondition_missing", f"Source artifact is unavailable or has the wrong kind: {preferred_id}")
+            return selected
         return candidates[-1]
 
     def _failed_result(
@@ -289,6 +311,7 @@ def _artifact_from_bundle(
         reusable_for=["microscopic", "artifact_inspection"],
         metadata={
             "capability_name": bundle.capability_name,
+            **bundle.parsed_observables.get("molecular_context", {}),
             "bundle": bundle.model_dump(mode="json"),
         },
     )
@@ -302,7 +325,7 @@ def _evidence_from_bundle(
     artifact: ArtifactRecord,
     case_run: CaseRun,
 ) -> EvidenceUnit:
-    report_id = f"{request.round_id}:microscopic"
+    report_id = f"{request.dispatch_id}:microscopic:{bundle.bundle_id.rsplit(':', 1)[-1]}"
     return EvidenceUnit(
         evidence_id=f"{report_id}:{request.route}",
         round_id=request.round_id,
@@ -316,11 +339,12 @@ def _evidence_from_bundle(
             case_run=case_run,
         ),
         context=f"computed microscopic {profile.artifact_kind}",
-        basis="computed",
+        basis="checklist" if bundle.parsed_observables.get("boundary_only") else "computed",
         support="not_applicable" if bundle.status == "available" else "unresolved",
         limits=[
             "Microscopic evidence is bounded by the configured route and parsed "
-            "artifact deliverables."
+            "artifact deliverables.",
+            *bundle.limitations,
         ],
         observable=request.route,
         family=request.evidence_goal_family,
@@ -409,8 +433,16 @@ def _microscopic_bundle_claim(
 def _microscopic_evidence_metrics(bundle: MicroscopicArtifactBundle) -> dict[str, object]:
     parsed = bundle.parsed_observables if isinstance(bundle.parsed_observables, dict) else {}
     metrics: dict[str, object] = {
+        "method_provenance": bundle.method_sources(),
         "state_count": parsed.get("state_count", 0),
         "missing_deliverable_count": len(bundle.missing_deliverables),
+        "computed_observables": {
+            **{key: value for key, value in parsed.items() if key != "member_artifacts"},
+            "excited_states": bundle.excited_states,
+            "source_artifact_ids": bundle.source_artifact_ids,
+            "artifact_id": bundle.bundle_id,
+            "limitations": bundle.limitations,
+        },
     }
     bright = parsed.get("bright_state")
     if isinstance(bright, dict):
@@ -459,61 +491,6 @@ def _is_neutral_aromatic_alkene(smiles: str) -> bool:
     return aromatic >= 12 and "=" in smiles and hetero_tokens == 0
 
 
-def _bounded_microscopic_tool_args(
-    route: str,
-    execution_plan: AgentExecutionPlan | None,
-) -> dict[str, Any]:
-    raw = execution_plan.tool_args if execution_plan is not None else {}
-    args: dict[str, Any] = {}
-    source_artifact_id = raw.get("source_artifact_id")
-    if source_artifact_id is not None:
-        args["source_artifact_id"] = str(source_artifact_id)
-    if route in {
-        "run_conformer_bundle",
-        "run_conformer_state_probe",
-        "run_torsion_snapshots",
-        "run_torsion_brightness_coupling_scan",
-    }:
-        args["max_members"] = _bounded_int(raw.get("max_members"), minimum=2, maximum=6)
-    if route in {
-        "run_baseline_bundle",
-        "run_bright_dark_state_ordering",
-        "run_conformer_bundle",
-        "run_conformer_state_probe",
-        "run_torsion_snapshots",
-        "run_torsion_brightness_coupling_scan",
-        "run_targeted_state_characterization",
-        "run_targeted_transition_dipole_analysis",
-        "run_targeted_charge_redistribution_analysis",
-        "run_ris_state_characterization",
-        "run_targeted_localized_orbital_analysis",
-        "run_targeted_natural_orbital_analysis",
-        "run_solvation_polarity_proxy",
-    }:
-        args["s1_nstates"] = _bounded_int(raw.get("s1_nstates"), minimum=1, maximum=10)
-        args["td_tout"] = _bounded_int(raw.get("td_tout"), minimum=1, maximum=10)
-    if route == "run_solvation_polarity_proxy":
-        args["solvents"] = _bounded_choice_list(
-            raw.get("solvents"),
-            allowed={
-                "water",
-                "acetonitrile",
-                "methanol",
-                "ethanol",
-                "toluene",
-                "benzene",
-                "acetone",
-                "chloroform",
-            },
-            maximum=4,
-        )
-    if route == "run_charge_population_panel":
-        args["charge_schemes"] = _bounded_choice_list(
-            raw.get("charge_schemes"),
-            allowed={"mulliken", "lowdin", "hirshfeld", "cm5"},
-            maximum=4,
-        )
-    return {key: value for key, value in args.items() if value is not None}
 
 
 def _status_for_amesp_error(code: str) -> str:
@@ -532,32 +509,3 @@ def _failure_kind_for_amesp_error(code: str) -> str:
     if code.startswith("partial_"):
         return "partial_evidence"
     return "runtime_failed"
-
-
-def _bounded_int(value: Any, *, minimum: int, maximum: int) -> int | None:
-    if isinstance(value, bool) or value is None:
-        return None
-    try:
-        numeric = int(value)
-    except (TypeError, ValueError):
-        return None
-    return min(max(numeric, minimum), maximum)
-
-
-def _bounded_choice_list(
-    value: Any,
-    *,
-    allowed: set[str],
-    maximum: int,
-) -> list[str] | None:
-    if value is None:
-        return None
-    raw_items = value if isinstance(value, list) else [value]
-    selected = []
-    for item in raw_items:
-        normalized = str(item).strip().lower()
-        if normalized in allowed and normalized not in selected:
-            selected.append(normalized)
-        if len(selected) >= maximum:
-            break
-    return selected or None

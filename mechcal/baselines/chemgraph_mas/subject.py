@@ -45,7 +45,7 @@ class ChemGraphMASSubject:
         enable_amesp: bool = True,
         recursion_limit: int = 80,
         schema_retries: int = 1,
-        use_responses_api: bool = False,
+        use_responses_api: bool | None = None,
     ) -> None:
         missing = settings.missing_fields()
         if missing:
@@ -56,7 +56,10 @@ class ChemGraphMASSubject:
         self.enable_amesp = enable_amesp
         self.recursion_limit = max(10, recursion_limit)
         self.schema_retries = max(0, schema_retries)
-        self.use_responses_api = use_responses_api
+        self.use_responses_api = (
+            settings.api_protocol == "responses"
+            if use_responses_api is None else use_responses_api
+        )
 
     @property
     def model(self) -> str:

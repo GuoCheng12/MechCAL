@@ -8,6 +8,7 @@ from mechcal.schemas.artifacts import ArtifactRecord
 from mechcal.schemas.base import JsonDict, MechCALModel
 from mechcal.schemas.evidence import EvidenceUnit
 from mechcal.schemas.failures import FailureReport
+from mechcal.schemas.worker_explanation import WorkerExplanation
 
 AgentReportStatus = Literal[
     "success",
@@ -111,6 +112,7 @@ class AgentReport(MechCALModel):
     artifact_updates: list[ArtifactRecord] = Field(default_factory=list)
     planner_readable_report: str
     operational_note: OperationalNote | None = None
+    result_explanation: WorkerExplanation | None = None
     failure: FailureReport = Field(default_factory=FailureReport)
     policy_notes: list[str] = Field(default_factory=list)
 

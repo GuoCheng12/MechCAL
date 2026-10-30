@@ -13,6 +13,7 @@ from mechcal.schemas import (
     ToolExecutionResult,
 )
 from mechcal.schemas.failures import FailureReport
+from mechcal.schemas.tool_arguments import merge_tool_args
 from mechcal.utils.smiles import extract_smiles_features, scaffold_proxy
 
 _LANTHANIDE_SYMBOLS = {
@@ -99,17 +100,18 @@ class LocalMacroTool:
         schema_feedback: str | None = None,
     ) -> ToolExecutionResult:
         del schema_feedback
-        tool_args = _bounded_macro_tool_args(execution_plan)
+        try:
+            tool_args = merge_tool_args(request, execution_plan)
+        except ValueError as exc:
+            return self._unsupported_result(request, FailureReport(
+                kind="tool_args_invalid", message=str(exc), recoverable=True))
         base_metrics = self._base_metrics(case_run)
         handler = _ROUTE_HANDLERS.get(request.route)
         if handler is None:
             return self._unsupported_result(request)
 
         route_result = handler(base_metrics)
-        route_metrics = {
-            **route_result.metrics,
-            **({"focus_tags": tool_args["focus_tags"]} if tool_args.get("focus_tags") else {}),
-        }
+        route_metrics = dict(route_result.metrics)
         report_id = f"{request.round_id}:macro"
         artifact_refs = (
             [base_metrics["prepared_artifact_id"]]
@@ -214,29 +216,30 @@ class LocalMacroTool:
             **rdkit,
         }
 
-    def _unsupported_result(self, request: DispatchRequest) -> ToolExecutionResult:
+    def _unsupported_result(self, request: DispatchRequest, failure: FailureReport | None = None) -> ToolExecutionResult:
         report_id = f"{request.round_id}:macro"
-        failure = FailureReport(
+        failure = failure or FailureReport(
             kind="capability_unsupported",
             message=f"Unsupported macro route: {request.route}",
             recoverable=False,
             details={"route": request.route, "capability_id": request.capability_id},
         )
+        status = "unsupported" if failure.kind == "capability_unsupported" else "failed"
         evidence = EvidenceUnit(
             evidence_id=f"{report_id}:{request.route}:unsupported",
             round_id=request.round_id,
             source_report_id=report_id,
             agent_name="macro",
             capability_id=request.capability_id,
-            claim=f"Macro route status observation: {request.route} is unsupported.",
-            context="unsupported macro route",
+            claim=f"Macro route status observation: {request.route} did not execute.",
+            context="macro route failure",
             basis="checklist",
             support="unresolved",
-            limits=["No macro proxy was computed because the requested route is unsupported."],
+            limits=["No macro proxy was computed for this failed request."],
             observable=request.route,
             family="geometry_precondition",
             relation="unknown",
-            status="unsupported",
+            status=status,
             observable_tags=[request.route],
             summary=failure.message,
         )
@@ -247,7 +250,7 @@ class LocalMacroTool:
             dispatch_id=request.dispatch_id,
             capability_id=request.capability_id,
             selected_route=request.route,
-            status="unsupported",
+            status=status,
             evidence_units=[evidence],
             failure=failure,
             summary=failure.message,
@@ -441,11 +444,16 @@ def _macro_claim(
             + " This is a screening prior only, not phosphorescence, RTP, TADF, "
             "lanthanide-line, lifetime, triplet-energy, or energy-transfer evidence."
         )
-    if route in {"screen_pi_stacking_prone_geometry", "run_dimer_packing_proxy"}:
+    if route == "run_dimer_packing_proxy":
         return (
-            "Packing/contact proxy route records pi-contact, compactness, or dimer "
-            "geometry descriptors. Planner owns any excimer, quenching, or packing "
-            "assignment."
+            "Single-molecule descriptor heuristic derived from aromatic fraction, logP and "
+            "rotatable-bond count. No dimer or intermolecular contact was computed. This "
+            "does not add an independent observation beyond those descriptors."
+        )
+    if route == "screen_pi_stacking_prone_geometry":
+        return (
+            "Single-molecule aromaticity and planarity proxies, not measured pi contacts "
+            "or a dimer calculation. Planner owns any bounded mechanistic interpretation."
         )
     if route == "screen_aggregation_prone_scaffold":
         aromatic_atoms = int(route_result.metrics.get("aromatic_atom_count") or 0)
@@ -774,7 +782,7 @@ def _screen_metal_triplet_prior(base: dict[str, Any]) -> MacroRouteResult:
     )
     metrics = {
         "structure_source": base["structure_source"],
-        "atom_symbols": atom_symbols[:24],
+        "atom_symbols": atom_symbols,
         "metal_atom_symbols": metal_symbols,
         "lanthanide_symbols": sorted(
             {symbol for symbol in atom_symbols if symbol in _LANTHANIDE_SYMBOLS}
@@ -938,6 +946,11 @@ def _run_dimer_packing_proxy(base: dict[str, Any]) -> MacroRouteResult:
             - min(float(base.get("rotatable_bond_count") or 0.0) / 20.0, 0.3),
             6,
         ),
+        "calculation_scope": "derived_single_molecule_descriptor_heuristic",
+        "independent_observation": False,
+        "dimer_geometry_computed": False,
+        "derived_from": ["aromatic_atom_count", "atom_count", "mol_logp", "rotatable_bond_count"],
+        "formula": "aromatic_fraction + min(logP/10,0.5) - min(rotatable_bond_count/20,0.3)",
     }
     return MacroRouteResult(
         result_name="dimer_packing_proxy",
@@ -947,7 +960,7 @@ def _run_dimer_packing_proxy(base: dict[str, Any]) -> MacroRouteResult:
             "material_level_proxy",
             "structural_prior",
         ],
-        summary="Macro estimated a lightweight dimer packing/contact proxy.",
+        summary="Macro recombined single-molecule descriptors; no dimer/contact calculation ran.",
         metrics=metrics,
     )
 
@@ -966,6 +979,9 @@ def _run_aggregate_contact_proxy(base: dict[str, Any]) -> MacroRouteResult:
     )
     metrics["hydrophobic_contact_proxy"] = float(base.get("mol_logp") or 0.0) >= 3.0
     metrics["polar_disruption_proxy"] = int(base.get("hetero_atom_count") or 0) > 4
+    metrics.update(calculation_scope="derived_single_molecule_descriptor_heuristic",
+                   independent_observation=False, aggregate_geometry_computed=False,
+                   derived_from=["mol_logp", "hetero_atom_count"])
     return MacroRouteResult(
         result_name="aggregate_contact_proxy",
         observable_tags=[
@@ -1332,14 +1348,3 @@ def _fraction(numerator: Any, denominator: float) -> float:
 
 def _first_present(*values: Any) -> Any:
     return next((value for value in values if value is not None), None)
-
-
-def _bounded_macro_tool_args(
-    execution_plan: AgentExecutionPlan | None,
-) -> dict[str, Any]:
-    raw = execution_plan.tool_args if execution_plan is not None else {}
-    focus_tags = raw.get("focus_tags")
-    if not isinstance(focus_tags, list):
-        return {}
-    tags = [str(item).strip() for item in focus_tags if str(item).strip()]
-    return {"focus_tags": tags[:8]} if tags else {}

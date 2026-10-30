@@ -1,12 +1,15 @@
 from __future__ import annotations
 
+import hashlib
 import json
+import time
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel
 
 from mechcal.capabilities import CapabilityCatalog
+from mechcal.runtime.progress import atomic_json, write_activity
 from mechcal.schemas import (
     AgentExecutionPlan,
     AgentReport,
@@ -30,6 +33,7 @@ from mechcal.schemas.mechanisms import (
     MechanismProgram,
     PhotophysicsReview,
 )
+from mechcal.schemas.decisions import DispatchRequest
 
 
 def _jsonable(payload: BaseModel | dict[str, Any]) -> dict[str, Any]:
@@ -47,24 +51,87 @@ class RunStore:
         for relative in ("history", "artifacts", "claims", "rounds"):
             (self.root / relative).mkdir(parents=True, exist_ok=True)
 
+    def activity(self, stage: str, round_id: str | None = None, detail: str = "") -> None:
+        write_activity(self.root, stage, round_id, detail)
+
+    def model_events(self, stage: str, **context):
+        """Per-request audit sink; no stateful client/global logging configuration."""
+        attempt = 0
+
+        def record(event):
+            nonlocal attempt
+            attempt = event.get("attempt", attempt)
+            self.append_jsonl("history/component_requests.jsonl", {
+                **context, "stage": stage, "timestamp": time.time(), "attempt": attempt, **event,
+            })
+        return record
+
     def write_json(self, relative_path: str, payload: BaseModel | dict[str, Any]) -> Path:
         path = self.root / relative_path
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(
-            json.dumps(_jsonable(payload), ensure_ascii=False, indent=2) + "\n",
-            encoding="utf-8",
-        )
+        atomic_json(path, _jsonable(payload))
         return path
 
     def append_jsonl(self, relative_path: str, payload: BaseModel | dict[str, Any]) -> Path:
         path = self.root / relative_path
         path.parent.mkdir(parents=True, exist_ok=True)
-        with path.open("a", encoding="utf-8") as handle:
-            handle.write(json.dumps(_jsonable(payload), ensure_ascii=False) + "\n")
+        # A previous interrupted append may lack its final newline. Keep those
+        # bytes for diagnosis, but do not concatenate the next complete record.
+        with path.open("ab+") as handle:
+            handle.seek(0, 2)
+            if handle.tell():
+                handle.seek(-1, 2)
+                if handle.read(1) != b"\n":
+                    handle.write(b"\n")
+            handle.write((json.dumps(_jsonable(payload), ensure_ascii=False) + "\n").encode("utf-8"))
         return path
+
+    def execution_checkpoint_path(self, request: DispatchRequest) -> Path:
+        token = hashlib.sha256(json.dumps([request.round_id, request.dispatch_id]).encode()).hexdigest()[:24]
+        return self.root / "executions" / f"{token}.json"
+
+    def read_execution_checkpoint(self, request: DispatchRequest) -> dict[str, Any] | None:
+        path = self.execution_checkpoint_path(request)
+        if not path.exists():
+            return None
+        record = json.loads(path.read_text())
+        if record.get("case_id") != self.case_id or record.get("dispatch") != request.model_dump(mode="json"):
+            raise ValueError("Execution checkpoint does not match case and saved request")
+        if record.get("stage") not in {"planning", "planned", "executing", "tool_returned", "reported"}:
+            raise ValueError("Unknown execution checkpoint stage")
+        return record
+
+    def write_execution_checkpoint(
+        self, request: DispatchRequest, *, stage: str, plan: AgentExecutionPlan | None = None,
+        result: ToolExecutionResult | None = None, report: AgentReport | None = None,
+    ) -> None:
+        atomic_json(self.execution_checkpoint_path(request), {
+            "case_id": self.case_id, "dispatch": request.model_dump(mode="json"), "stage": stage,
+            "plan": plan.model_dump(mode="json") if plan is not None else None,
+            "tool_result": result.model_dump(mode="json") if result is not None else None,
+            "report": report.model_dump(mode="json") if report is not None else None,
+        })
 
     def write_case_input(self, case_input: CaseInput) -> Path:
         return self.write_json("input.json", case_input)
+
+    def write_tool_discovery_event(self, event: dict[str, Any]) -> None:
+        self.append_jsonl("history/tool_discovery.jsonl", event)
+        self.write_json("tool_discovery.json", event["state"])
+        querying = event.get("kind") == "tool_description_query" or (
+            event.get("kind") == "tool_discovery_waiting" and event["batches_used"] > 0
+            and event.get("planner_stage") not in {"planner_stop_review_response", "planner_final_synthesis"}
+        )
+        planner_stage = {
+            "planner_stop_review_response": "Planner response to stop review",
+            "planner_final_synthesis": "Planner final synthesis",
+            "planner_question_act": "Planner choose action",
+        }.get(event.get("planner_stage"), "Planner")
+        self.activity(
+            "Query tool descriptions" if querying else planner_stage,
+            event.get("round_id"),
+            str(event.get("error") or ", ".join(event.get("returned_ids", [])) or
+                "Documentation loaded; awaiting Planner decision") if querying else "",
+        )
 
     def write_capability_catalog(self, catalog: CapabilityCatalog) -> Path:
         return self.write_json("capabilities.json", catalog)
@@ -290,6 +357,14 @@ class RunStore:
         )
 
     def write_tool_result(self, result: ToolExecutionResult) -> Path:
+        # Route/agent filenames below are latest-result aliases for older readers.
+        # Keep a separate record for every execution, including repeated routes.
+        execution_id = hashlib.sha256(json.dumps(
+            [result.dispatch_id, result.tool_result_id],
+        ).encode()).hexdigest()[:16]
+        self.write_json(
+            f"rounds/{result.round_id}/execution_{execution_id}_tool_result.json", result,
+        )
         self.write_json(
             (
                 f"rounds/{result.round_id}/{result.agent_name}_"

@@ -38,6 +38,7 @@ def test_installed_entrypoints_work_outside_repository(tmp_path):
         "mechcal-run-case", "mechcal-evaluate", "mechcal-direct",
         "mechcal-tool-llm", "mechcal-common-prior", "mechcal-rescore",
         "mechcal-shards", "mechcal-export-report", "mechcal-llm-smoke",
+        "mechcal-monitor",
     )
     for name in commands:
         command = Path(sys.executable).parent / name

@@ -29,11 +29,13 @@ class LocalStructureTool:
                     smiles=case_input.smiles,
                     label=case_input.case_id,
                     workdir=structure_dir,
+                    allow_unoptimized_seed=True,
                 )
             )
+            initial_only = prepared.geometry_status == "embedded_unoptimized"
             artifact = ArtifactRecord(
-                artifact_id="structure:prepared",
-                kind="prepared_structure",
+                artifact_id="structure:initial" if initial_only else "structure:prepared",
+                kind="initial_structure" if initial_only else "prepared_structure",
                 created_by_round=round_id,
                 created_by_agent="structure",
                 status="available",
@@ -42,10 +44,21 @@ class LocalStructureTool:
                     "sdf": str(prepared.sdf_path),
                     "summary": str(prepared.summary_path),
                 },
-                observable_tags=["prepared_structure", "geometry_precondition"],
-                reusable_for=["macro", "microscopic", "artifact_inspection"],
+                observable_tags=[prepared.geometry_status, "geometry_precondition"],
+                reusable_for=(
+                    ["microscopic.optimize_ground_state_geometry"] if initial_only
+                    else ["macro", "microscopic", "artifact_inspection"]
+                ),
                 metadata=prepared.model_dump(mode="json"),
             )
+            if initial_only:
+                return artifact, FailureReport(
+                    kind="precondition_missing", recoverable=True,
+                    message=("Force-field preparation unavailable. Preserved an unoptimized initial "
+                             "geometry; Planner may request ground-state optimization before analysis."),
+                    details={"code": "forcefield_failed", "reason": prepared.preparation_warning,
+                             "recovery_capability": "microscopic.optimize_ground_state_geometry"},
+                )
             return artifact, FailureReport()
         except StructurePrepError as exc:
             return self._fallback_structure_context(

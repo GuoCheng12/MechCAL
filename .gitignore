@@ -32,3 +32,4 @@ third_party/
 *.pth
 *.zip
 *.tar.gz
+env/*.local.json

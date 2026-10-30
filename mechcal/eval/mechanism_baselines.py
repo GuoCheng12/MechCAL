@@ -16,6 +16,7 @@ from mechcal.runtime.llm import (
     OpenAICompatibleSettings,
     OpenAIJsonClient,
     _parse_json_object,
+    validate_response,
 )
 
 MECHANISM_STRUCTURE_LLM_PROMPT = "mechanism_structure_llm.md"
@@ -70,18 +71,19 @@ class CodexResponsesJsonClient:
             default_headers={"User-Agent": "curl/8.0"},
             http_client=httpx.Client(timeout=self.timeout_seconds, trust_env=False),
         )
-        response = client.responses.create(
-            model=self.model,
-            instructions=system_prompt,
-            input=json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
-            reasoning={"effort": self.reasoning_effort},
-            text={"format": _mechanism_prediction_json_schema(schema_name)},
-            max_output_tokens=2500,
-            store=False,
-            timeout=self.timeout_seconds,
-        )
-        content = getattr(response, "output_text", "") or "{}"
-        return _parse_json_object(content)
+        with client:
+            response = client.responses.create(
+                model=self.model,
+                instructions=system_prompt,
+                input=json.dumps(payload, ensure_ascii=False, separators=(",", ":")),
+                reasoning={"effort": self.reasoning_effort},
+                text={"format": _mechanism_prediction_json_schema(schema_name)},
+                max_output_tokens=2500,
+                store=False,
+                timeout=self.timeout_seconds,
+            )
+            validate_response(response)
+            return _parse_json_object(response.output_text)
 
 
 class CodexStructurePriorMechanismBaseline:

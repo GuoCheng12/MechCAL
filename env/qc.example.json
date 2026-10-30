@@ -1,0 +1,13 @@
+{
+  "enabled": false,
+  "xtb_binary": "",
+  "dftb_binary": "",
+  "pyscf_python": "",
+  "pysoc_python": "",
+  "pysoc_source": "",
+  "parameter_dir": "",
+  "parameter_name": "mio-1-1",
+  "parameter_revision": "263e52419ce15222c864df9b3f6fbf58bfbdfa0f",
+  "threads": 4,
+  "allow_excited_scan": false
+}

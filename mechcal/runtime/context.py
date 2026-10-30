@@ -16,7 +16,7 @@ class PlannerContextView(BaseModel):
     smiles: str
     user_query: str
     round_index: int
-    max_rounds: int
+    max_rounds: int | None
     current_hypothesis: str
     confidence: float
     covered_evidence_families: list[str] = Field(default_factory=list)
@@ -35,7 +35,7 @@ def build_planner_context(
     case_run: CaseRun,
     *,
     round_index: int,
-    max_rounds: int,
+    max_rounds: int | None,
     unresolved_gaps: list[str] | None = None,
 ) -> PlannerContextView:
     sorted_hypotheses = case_run.portfolio.sorted_hypotheses()

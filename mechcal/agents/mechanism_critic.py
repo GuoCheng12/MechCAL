@@ -110,7 +110,6 @@ class MechanismCriticAgent:
                     case_run=case_run,
                     round_id=round_id,
                     allowed_evidence_ids=set(payload["allowed_evidence_ids"]),
-                    calibrate_evidence_tier_priority=False,
                 )
             except Exception as exc:  # noqa: BLE001
                 last_error = (
@@ -519,7 +518,6 @@ def _sanitize_portfolio_response(
     case_run: CaseRun,
     round_id: str,
     allowed_evidence_ids: set[str],
-    calibrate_evidence_tier_priority: bool = True,
 ) -> DifferentialMechanismPortfolio:
     payload = _first_mapping(response, "differential_mechanism_portfolio", "portfolio")
     raw = payload if payload is not None else response
@@ -528,15 +526,6 @@ def _sanitize_portfolio_response(
         _normalize_row(item, allowed_evidence_ids=allowed_evidence_ids)
         for item in raw_rows
     ]
-    if calibrate_evidence_tier_priority:
-        rows = _apply_evidence_tier_priority_calibration(
-            rows,
-            evidence_by_id={
-                item.evidence_id: item
-                for item in case_run.evidence_ledger.items
-                if item.evidence_id in allowed_evidence_ids
-            },
-        )
     labels = {row["label"] for row in rows}
     missing = [label for label in MECHANISM_POOL if label not in labels]
     extra = [label for label in labels if label not in MECHANISM_POOL]
@@ -674,85 +663,6 @@ def _normalize_row(
         "rationale": _clip(row.get("rationale"), 320)
         or "MechanismCritic supplied no rationale beyond current runtime evidence.",
     }
-
-
-def _apply_evidence_tier_priority_calibration(
-    rows: list[dict[str, Any]],
-    *,
-    evidence_by_id: dict[str, EvidenceUnit],
-) -> list[dict[str, Any]]:
-    evidence_tier_by_capability = _evidence_tier_by_capability()
-    updated: list[dict[str, Any]] = []
-    for row in rows:
-        support_strength = str(row.get("support_strength") or "unsupported")
-        trigger_status = str(row.get("trigger_status") or "not_triggered")
-        positive_refs = [
-            ref
-            for ref in _as_text_list(row.get("positive_evidence_refs"))
-            if ref in evidence_by_id
-        ]
-        if not positive_refs or support_strength == "unsupported":
-            current_priority = _bounded_float(row.get("differential_priority"))
-            capped_priority = min(current_priority, 0.05)
-            if capped_priority == current_priority:
-                updated.append(row)
-            else:
-                updated.append({**row, "differential_priority": capped_priority})
-            continue
-        if trigger_status not in {"triggered", "weak_trigger"}:
-            updated.append(row)
-            continue
-        tiers = [
-            evidence_tier_by_capability.get(
-                evidence_by_id[ref].capability_id,
-                "unknown",
-            )
-            for ref in positive_refs
-        ]
-        capability_ids = {
-            evidence_by_id[ref].capability_id
-            for ref in positive_refs
-        }
-        floor = max(
-            (_priority_floor_for_evidence_tier(tier) for tier in tiers),
-            default=0.0,
-        )
-        if floor <= 0.0:
-            updated.append(row)
-            continue
-        current_priority = _bounded_float(row.get("differential_priority"))
-        cap = max((_priority_cap_for_evidence_tier(tier) for tier in tiers), default=1.0)
-        evidence_bonus = min(0.04, 0.02 * max(len(positive_refs) - 1, 0))
-        route_diversity_bonus = min(0.03, 0.015 * max(len(capability_ids) - 1, 0))
-        calibrated_priority = min(
-            max(current_priority, floor) + evidence_bonus + route_diversity_bonus,
-            cap,
-        )
-        if calibrated_priority == current_priority:
-            updated.append(row)
-            continue
-        updated.append({**row, "differential_priority": calibrated_priority})
-    return updated
-
-
-def _priority_floor_for_evidence_tier(tier: str) -> float:
-    return {
-        "computed_direct_proxy": 0.22,
-        "mechanism_specific_structural_trigger": 0.18,
-        "structural_trigger": 0.12,
-        "electronic_weak_trigger": 0.10,
-        "artifact_weak_trigger": 0.08,
-    }.get(tier, 0.0)
-
-
-def _priority_cap_for_evidence_tier(tier: str) -> float:
-    return {
-        "computed_direct_proxy": 0.30,
-        "mechanism_specific_structural_trigger": 0.24,
-        "structural_trigger": 0.18,
-        "electronic_weak_trigger": 0.16,
-        "artifact_weak_trigger": 0.12,
-    }.get(tier, 1.0)
 
 
 def _normalize_attribution(

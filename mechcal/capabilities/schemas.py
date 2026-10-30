@@ -39,6 +39,10 @@ class CapabilitySpec(MechCALModel):
     outputs: list[str] = Field(default_factory=list)
     cost: CapabilityCost = "low"
     failure_modes: list[str] = Field(default_factory=list)
+    requires_amesp: bool = False
+    backend_enabled: bool = True
+    disabled_reason: str | None = None
+    allowed_argument_values: dict[str, list[int | str]] = Field(default_factory=dict)
     tool_binding: CapabilityToolBinding
     metadata: JsonDict = Field(default_factory=dict)
 

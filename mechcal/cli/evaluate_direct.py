@@ -5,6 +5,7 @@ import concurrent.futures
 import json
 import statistics
 import time
+from contextlib import nullcontext
 from pathlib import Path
 
 from mechcal.eval.mechanism_baselines import (
@@ -23,6 +24,7 @@ from mechcal.eval.mechanism_ranking import (
 from mechcal.mechanism_pool import MECHANISM_POOL
 from mechcal.public_ids import anonymized_case_id
 from mechcal.runtime.llm import OpenAICompatibleSettings
+from mechcal.runtime.progress import ExperimentProgress
 
 
 def main() -> None:
@@ -49,6 +51,7 @@ def main() -> None:
         help="Parallel workers for generate-only subject calls.",
     )
     parser.add_argument("--refresh", action="store_true")
+    parser.add_argument("--progress", choices=("auto", "off"), default="auto")
     parser.add_argument(
         "--evidence-format",
         action="store_true",
@@ -146,36 +149,17 @@ def main() -> None:
     support_judge = (
         None if args.generate_only else LLMMechanismEvidenceSupportJudge(settings=settings)
     )
-    if args.generate_only and args.workers > 1:
-        _generate_raw_cases_parallel(
-            subject=subject,
-            cases=cases,
-            raw_dir=raw_dir,
-            workers=args.workers,
-            refresh=args.refresh,
-            required_predictions=(
-                3
-                if args.strict_json_schema
-                or args.native_think_answer
-                or args.native_thinking_json
-                else 1
-            ),
-            require_evidence_headings=(
-                args.native_think_answer or args.native_thinking_json
-            ),
-            require_cached=args.require_cached_raw,
-        )
-        return
-    rows: list[dict[str, object]] = []
-    for index, case in enumerate(cases, start=1):
-        case_id = str(case["case_id"])
-        print(f"[{index}/{len(cases)}] {case_id}", flush=True)
-        raw_path = raw_dir / f"{case_id}_{subject.subject_id}_raw.json"
-        try:
-            raw_record = _run_or_load_raw(
-                subject,
-                case,
-                raw_path=raw_path,
+    with ExperimentProgress(
+        output_dir, [str(case['case_id']) for case in cases], method=subject.subject_id,
+        model=settings.model, judge=support_judge.model if support_judge else 'disabled',
+        mode=args.progress,
+    ) as progress:
+        if args.generate_only and args.workers > 1:
+            _generate_raw_cases_parallel(
+                subject=subject,
+                cases=cases,
+                raw_dir=raw_dir,
+                workers=args.workers,
                 refresh=args.refresh,
                 required_predictions=(
                     3
@@ -188,87 +172,122 @@ def main() -> None:
                     args.native_think_answer or args.native_thinking_json
                 ),
                 require_cached=args.require_cached_raw,
+                progress=progress,
             )
-        except RuntimeError as exc:
-            if not (
-                args.require_cached_raw and args.score_missing_raw_as_zero
-            ):
-                raise
-            row = _format_failure_row(
-                case=case,
-                subject=subject,
-                reason=str(exc),
-                raw_path=raw_path,
-            )
-            rows.append(row)
-            _write_json(eval_dir / f"{case_id}.json", row)
-            _write_summary(output_dir / "summary.json", rows)
-            print("  format failure scored as zero", flush=True)
-            continue
-        if args.generate_only:
+            return
+        rows: list[dict[str, object]] = []
+        for index, case in enumerate(cases, start=1):
+            case_id = str(case["case_id"])
+            progress.start(case_id)
+            print(f"[{index}/{len(cases)}] {case_id}", flush=True)
+            raw_path = raw_dir / f"{case_id}_{subject.subject_id}_raw.json"
+            try:
+                raw_record = _run_or_load_raw(
+                    subject,
+                    case,
+                    raw_path=raw_path,
+                    refresh=args.refresh,
+                    required_predictions=(
+                        3
+                        if args.strict_json_schema
+                        or args.native_think_answer
+                        or args.native_thinking_json
+                        else 1
+                    ),
+                    require_evidence_headings=(
+                        args.native_think_answer or args.native_thinking_json
+                    ),
+                    require_cached=args.require_cached_raw,
+                    progress=progress,
+                )
+            except RuntimeError as exc:
+                if not (
+                    args.require_cached_raw and args.score_missing_raw_as_zero
+                ):
+                    raise
+                row = _format_failure_row(
+                    case=case,
+                    subject=subject,
+                    reason=str(exc),
+                    raw_path=raw_path,
+                )
+                rows.append(row)
+                _write_json(eval_dir / f"{case_id}.json", row)
+                _write_summary(output_dir / "summary.json", rows)
+                print("  format failure scored as zero", flush=True)
+                progress.finish(case_id, status="failed", detail="Invalid raw output")
+                continue
+            if args.generate_only:
+                predictions = prediction_payload_from_structure_llm_mechanism_json(
+                    _raw_json(raw_record)
+                )
+                print(
+                    f"  cached {len(predictions)} schema-valid predictions",
+                    flush=True,
+                )
+                progress.finish(case_id, status=(
+                    "cached" if progress.rows[case_id].detail == "cached raw" else "done"
+                ), detail="Inference only; judge disabled")
+                continue
             predictions = prediction_payload_from_structure_llm_mechanism_json(
                 _raw_json(raw_record)
             )
-            print(
-                f"  cached {len(predictions)} schema-valid predictions",
-                flush=True,
+            assert support_judge is not None
+            eval_path = eval_dir / f"{case_id}.json"
+            cached_row = _load_cached_eval(
+                eval_path,
+                refresh=args.refresh,
+                case_id=case_id,
+                subject=subject,
+                judge_model=support_judge.model,
             )
-            continue
-        predictions = prediction_payload_from_structure_llm_mechanism_json(
-            _raw_json(raw_record)
-        )
-        assert support_judge is not None
-        eval_path = eval_dir / f"{case_id}.json"
-        cached_row = _load_cached_eval(
-            eval_path,
-            refresh=args.refresh,
-            case_id=case_id,
-            subject=subject,
-            judge_model=support_judge.model,
-        )
-        if cached_row is not None:
-            rows.append(cached_row)
+            if cached_row is not None:
+                rows.append(cached_row)
+                _write_summary(output_dir / "summary.json", rows)
+                print(
+                    "  cached judge result " + _compact_score_text(cached_row["scores"]),
+                    flush=True,
+                )
+                progress.finish(case_id, status="cached", scores=cached_row["scores"])
+                continue
+            progress.update(case_id, "judging")
+            support = _judge_support_with_retries(
+                predictions,
+                judge=support_judge,
+                label=case_id,
+            )
+            progress.update(case_id, "scoring")
+            scores = score_mechanism_ranking(
+                predictions,
+                case["reference_mechanisms"],  # type: ignore[arg-type]
+                support_scores=support["support_scores"],  # type: ignore[arg-type]
+            )
+            row = {
+                "case_id": case_id,
+                "public_case_id": case["public_case_id"],
+                "subject_id": subject.subject_id,
+                "subject_kind": subject.subject_kind,
+                "model": subject.model,
+                "prompt_version": subject.prompt_version,
+                "reference_mechanisms": case["reference_mechanisms"],
+                "mechanism_predictions": predictions,
+                "support_judgements": support["judgements"],
+                "scores": scores,
+                "raw_output_path": str(
+                    (raw_dir / f"{case_id}_{subject.subject_id}_raw.json").resolve()
+                ),
+            }
+            rows.append(row)
+            _write_json(eval_path, row)
             _write_summary(output_dir / "summary.json", rows)
-            print(
-                "  cached judge result " + _compact_score_text(cached_row["scores"]),
-                flush=True,
-            )
-            continue
-        support = _judge_support_with_retries(
-            predictions,
-            judge=support_judge,
-            label=case_id,
-        )
-        scores = score_mechanism_ranking(
-            predictions,
-            case["reference_mechanisms"],  # type: ignore[arg-type]
-            support_scores=support["support_scores"],  # type: ignore[arg-type]
-        )
-        row = {
-            "case_id": case_id,
-            "public_case_id": case["public_case_id"],
-            "subject_id": subject.subject_id,
-            "subject_kind": subject.subject_kind,
-            "model": subject.model,
-            "prompt_version": subject.prompt_version,
-            "reference_mechanisms": case["reference_mechanisms"],
-            "mechanism_predictions": predictions,
-            "support_judgements": support["judgements"],
-            "scores": scores,
-            "raw_output_path": str(
-                (raw_dir / f"{case_id}_{subject.subject_id}_raw.json").resolve()
-            ),
-        }
-        rows.append(row)
-        _write_json(eval_path, row)
-        _write_summary(output_dir / "summary.json", rows)
-        print("  " + _compact_score_text(scores), flush=True)
-        for prediction in predictions[:3]:
-            print(
-                f"    rank {prediction['rank']}: {prediction['label']} "
-                f"conf={prediction['confidence']}",
-                flush=True,
-            )
+            progress.finish(case_id, scores=scores)
+            print("  " + _compact_score_text(scores), flush=True)
+            for prediction in predictions[:3]:
+                print(
+                    f"    rank {prediction['rank']}: {prediction['label']} "
+                    f"conf={prediction['confidence']}",
+                    flush=True,
+                )
 
 
 def _load_cases(case_dir: Path) -> list[dict[str, object]]:
@@ -308,28 +327,35 @@ def _generate_raw_cases_parallel(
     required_predictions: int,
     require_evidence_headings: bool,
     require_cached: bool,
+    progress: ExperimentProgress | None = None,
 ) -> None:
     def generate(index_and_case: tuple[int, dict[str, object]]) -> str:
         index, case = index_and_case
         case_id = str(case["case_id"])
-        print(f"[{index}/{len(cases)}] {case_id}", flush=True)
-        raw_record = _run_or_load_raw(
-            subject,
-            case,
-            raw_path=raw_dir / f"{case_id}_{subject.subject_id}_raw.json",
-            refresh=refresh,
-            required_predictions=required_predictions,
-            require_evidence_headings=require_evidence_headings,
-            require_cached=require_cached,
-        )
-        predictions = prediction_payload_from_structure_llm_mechanism_json(
-            _raw_json(raw_record)
-        )
-        print(
-            f"  {case_id}: cached {len(predictions)} schema-valid predictions",
-            flush=True,
-        )
-        return case_id
+        with progress.case(case_id) if progress else nullcontext():
+            print(f"[{index}/{len(cases)}] {case_id}", flush=True)
+            raw_record = _run_or_load_raw(
+                subject,
+                case,
+                raw_path=raw_dir / f"{case_id}_{subject.subject_id}_raw.json",
+                refresh=refresh,
+                required_predictions=required_predictions,
+                require_evidence_headings=require_evidence_headings,
+                require_cached=require_cached,
+                progress=progress,
+            )
+            predictions = prediction_payload_from_structure_llm_mechanism_json(
+                _raw_json(raw_record)
+            )
+            print(
+                f"  {case_id}: cached {len(predictions)} schema-valid predictions",
+                flush=True,
+            )
+            if progress:
+                progress.finish(case_id, status=(
+                    "cached" if progress.rows[case_id].detail == "cached raw" else "done"
+                ), detail="Inference only; judge disabled")
+            return case_id
 
     indexed_cases = list(enumerate(cases, start=1))
     with concurrent.futures.ThreadPoolExecutor(max_workers=workers) as executor:
@@ -385,6 +411,7 @@ def _run_or_load_raw(
     require_evidence_headings: bool = False,
     attempts: int = 3,
     require_cached: bool = False,
+    progress: ExperimentProgress | None = None,
 ) -> dict[str, object]:
     if raw_path.exists() and not refresh:
         cached = json.loads(raw_path.read_text(encoding="utf-8"))
@@ -393,6 +420,8 @@ def _run_or_load_raw(
             min_count=required_predictions,
             require_evidence_headings=require_evidence_headings,
         ):
+            if progress:
+                progress.update(str(case["case_id"]), "inference", detail="cached raw")
             return cached
         print(
             f"  cached structure_llm raw is empty or invalid for {case['case_id']}; "
@@ -406,6 +435,8 @@ def _run_or_load_raw(
     last_error: Exception | None = None
     previous_failure = ""
     for attempt in range(1, attempts + 1):
+        if progress:
+            progress.update(str(case["case_id"]), "inference", detail=f"Attempt {attempt}/{attempts}")
         try:
             attempt_case = dict(case)
             if attempt > 1:

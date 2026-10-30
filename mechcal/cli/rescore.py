@@ -82,6 +82,8 @@ def main() -> None:
         print(f"[{index}/{len(cases)}] {case_id}", flush=True)
         case_run_path = _source_case_run_path(source_dir, case_id)
         case_run = CaseRun.model_validate_json(case_run_path.read_text(encoding="utf-8"))
+        if case_run.status == "paused":
+            raise ValueError(f"{case_id} is paused without a completed answer; resume inference before scoring.")
         predictions = _prediction_payload(case_run)
         evaluation_status = "scored"
         evaluation_failure = None

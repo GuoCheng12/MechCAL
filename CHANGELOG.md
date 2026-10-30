@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- Synchronize the 2026-10-31 development command loop without merging `main`.
+- Add case-local retrieval, provisional confidence tracking, source-aware
+  citations and atomic argument/ranking operations.
+- Include optional Multiwfn, xTB, DFTB+, PySCF and PySOC adapters alongside RDKit
+  and Amesp. Document disabled calculations and dependency boundaries.
+- Add a portable native-command example and source-only publication scope.
+
 - Add reconstructed PhotoMechBench inputs: 119 case IDs and SMILES, excluding
   historical case 0127. Preserve the remaining case IDs without renumbering.
 - Include dataset format notes and offline input-integrity tests. Hidden

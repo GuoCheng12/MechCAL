@@ -3,7 +3,13 @@ from __future__ import annotations
 import json
 from typing import Any
 
-from mechcal.runtime.llm import OpenAICompatibleSettings
+from mechcal.runtime.llm import (
+    OpenAICompatibleSettings,
+    _add_generation_args,
+    create_completion,
+    response_text,
+    validate_response,
+)
 
 
 class OpenAITextClient:
@@ -23,18 +29,6 @@ class OpenAITextClient:
             missing = ", ".join(self.settings.missing_fields())
             raise RuntimeError(f"OpenAI-compatible settings are incomplete: {missing}")
 
-        import httpx
-        from openai import OpenAI
-
-        client = OpenAI(
-            api_key=self.settings.api_key,
-            base_url=self.settings.base_url,
-            max_retries=self.settings.max_retries,
-            http_client=httpx.Client(
-                timeout=self.settings.timeout_seconds,
-                trust_env=self.settings.trust_env,
-            ),
-        )
         request_args: dict[str, Any] = {
             "model": self.settings.model,
             "messages": [
@@ -47,8 +41,9 @@ class OpenAITextClient:
         }
         if self.settings.reasoning_effort is not None:
             request_args["reasoning_effort"] = self.settings.reasoning_effort
-        response = client.chat.completions.create(
-            **request_args,
-            timeout=self.settings.timeout_seconds,
+        _add_generation_args(request_args, self.settings)
+        response = create_completion(
+            self.settings, request_args, sdk_retries=self.settings.max_retries,
         )
-        return (response.choices[0].message.content or "").strip()
+        validate_response(response)
+        return response_text(response).strip()
