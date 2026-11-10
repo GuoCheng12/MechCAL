@@ -73,7 +73,7 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
     tools, models = tool_contracts(None, [], allowed_operations=allowed, strict_schema=strict_tool_schema(client))
     for tool in tools:
         if tool["name"] == "describe_tools":
-            tool["description"] = ("Read registry definitions for shared Planner discovery. Does not execute a scientific tool."
+            tool["description"] = ("Read registry definitions for this role. Does not execute a scientific tool."
                                    if compact_context else
                                    "Read registry definitions only. Does not execute or activate any scientific tool.")
     if completion is not None:

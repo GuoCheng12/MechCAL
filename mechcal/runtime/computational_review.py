@@ -6,6 +6,7 @@ from mechcal.runtime.command_review_workflow import comparison_options
 from mechcal.runtime.command_views import ordered_ranking
 from mechcal.mechanism_pool import mechanism_definitions
 from mechcal.runtime.command_comparison import comparison_view, question_evidence_view
+from mechcal.runtime import command_investigation as investigation
 
 
 def context(case, catalog, *, registry=None, amesp_enabled=False):
@@ -18,16 +19,19 @@ def context(case, catalog, *, registry=None, amesp_enabled=False):
     questions = comparison_options(case, catalog, include_closed=True, registry=registry, amesp_enabled=amesp_enabled)
     comparison = comparison_view(case)
     question_evidence = question_evidence_view(case)
+    investigation_context = investigation.review_context(case) if investigation.enabled(case) else None
     basis = digest({"case_id": case.case_id, "catalog": tools, "results": p.get("results", {}),
                     "definitions": mechanism_definitions(), "candidate_comparison": comparison,
                     "questions": questions, "ranking": [{k: r.get(k) for k in ("label", "confidence", "priority")}
                                                          for r in ordered_ranking(case)],
-                    "assessments": (p.get("exploration") or {}).get("entries", {})})
+                    "assessments": (p.get("exploration") or {}).get("entries", {}),
+                    **({"investigation_choice": investigation_context["current_choice"]} if investigation_context else {})})
     previous = p.get("computational_review")
     if previous and previous.get("case_id") != case.case_id:
         raise RuntimeError("Computational review belongs to another case")
     current = previous if previous and previous["basis"] == basis else None
     return {"basis": basis, "executions": executions, "comparisons": questions,
+            **({"investigation": investigation_context} if investigation_context else {}),
             **({"question_evidence": question_evidence} if question_evidence["questions"] else {}),
             "candidate_comparison": comparison,
             "previous": current,

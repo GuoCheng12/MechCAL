@@ -6,10 +6,12 @@ the complete compact directory. Nothing in this module decides claim validity.
 
 from copy import deepcopy
 
-from mechcal.runtime.command_compact import expand_text
+from mechcal.runtime.command_compact import comparison_rows, expand_text
 from mechcal.runtime.command_context import share_text
 from mechcal.runtime.command_memory import digest, pointer_child
 from mechcal.runtime.command_operations import protocol, put, reject
+from mechcal.runtime.command_review_workflow import investigation_frontier
+from mechcal.runtime import command_investigation as investigation
 from mechcal.schemas.commands import ReadEvidence
 
 
@@ -20,7 +22,13 @@ def task_for(case, payload):
     p = protocol(case)
     if payload.get("judgment_draft"):
         return "repair"
+    if investigation.pending_proposals(case):
+        return "exploration_decision"
     if payload.get("exploration_state", {}).get("new_result_ids"):
+        return "exploration"
+    choice = investigation.current(case)
+    if (choice and choice["choice"]["decision"] == "investigate"
+            and choice["basis"] == investigation.basis(case)):
         return "exploration"
     if p.get("final_draft") and p.get("delivery_rounds") == p.get("rounds"):
         return "delivery"
@@ -52,8 +60,12 @@ def prepare_planner(case, payload):
     value["context_task"] = task
     value["task_context_version"] = 2
     deferred = {}
+    if task in {"repair", "delivery", "revision"} and value.get("comparison_options"):
+        value["comparison_options"] = comparison_rows(value)
     full = deepcopy(value)
     if task in {"repair", "delivery", "revision"}:
+        if value.get("comparison_options"):
+            value["investigation_frontier"] = investigation_frontier(value["comparison_options"])
         for name in ("tool_catalog", "comparison_options", "shared_tool_guidance",
                      "action_index", "artifact_index", "explanation_index", "evidence_associations"):
             if name in value:

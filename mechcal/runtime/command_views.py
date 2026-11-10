@@ -40,6 +40,10 @@ def workflow_records(case):
                "review:issues": p["review_workflow"]}
     if p.get("evidence_followup") is not None:
         records["followup:state"] = p["evidence_followup"]
+    if p.get("investigation_policy") is not None:
+        records["investigation:state"] = p["investigation_policy"]
+    if p.get("review") is not None:
+        records["review:feedback"] = p["review"]
     if p.get("final_draft"):
         records[ANSWER_REF] = p["final_draft"]["command"]
     return records

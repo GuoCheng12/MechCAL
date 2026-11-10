@@ -184,3 +184,25 @@ def test_bound_input_is_checked_even_when_default_input_is_unsupported(tmp_path,
                           registry=registry, amesp_enabled=True)
     assert result["status"] == "ready"
     assert calls == [{"amesp_enabled": True, "source_artifact_id": source}]
+
+
+def test_wrong_proposal_input_does_not_hide_existing_compatible_structure(tmp_path):
+    case = case_with_structure(tmp_path, "CCCO")
+    artifact = series(case)
+    registry = default_capability_registry()
+    cid = "microscopic.run_solvation_polarity_proxy"
+    tool = next(t for t in registry.compact_catalog(case.artifact_manifest, amesp_enabled=True) if t["capability_id"] == cid)
+    route = SimpleNamespace(capability_id=cid, input_refs=[artifact.artifact_id])
+    before = case.model_dump_json()
+    state = route_status(case, route, tool, registry=registry, amesp_enabled=True)
+    assert state["status"] == "missing_input" and state["tool_status"] == "ready"
+    assert state["input_scope"] == "selected_records"
+    assert state["compatible_input_options"] == [{"source_artifact_id": case.artifact_manifest.artifacts[0].artifact_id,
+                                                   "kind": "prepared_structure", "status": "ready"}]
+    assert route.input_refs == [artifact.artifact_id] and case.model_dump_json() == before
+    disabled = route_status(case, route, tool, registry=registry, amesp_enabled=False)
+    assert disabled["status"] == disabled["tool_status"] == "disabled"
+    assert not disabled.get("compatible_input_options")
+    route.input_refs = ["foreign:case"]
+    unknown = route_status(case, route, tool, registry=registry, amesp_enabled=True)
+    assert unknown["status"] == "missing_input" and not unknown.get("compatible_input_options")

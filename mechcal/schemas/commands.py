@@ -1,5 +1,6 @@
 """Model-facing operations. Identity, revisions and execution status stay in runtime."""
 
+from copy import deepcopy
 from typing import Annotated, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
@@ -47,20 +48,22 @@ class NumericOperand(CommandModel):
     ref: str
     path: str = Field(pattern=r"^(?:/.*)?$",
         description="Exact source JSON pointer. For array reductions, select the original array for the intended condition, not a displayed page.")
-    reduction: Literal["scalar", "min", "max", "sum"] = "scalar"
+    reduction: Literal["scalar", "min", "max", "max_abs", "sum"] = Field(default="scalar",
+        description="max_abs returns the largest absolute magnitude, with signed original values and row identities in matches. "
+                    "Array reductions accept up to 100000 rows without paging the source into model context.")
     value_path: str = Field(default="", pattern=r"^(?:/.*)?$",
         description="Relative JSON pointer to the numeric field, e.g. /oscillator_strength in each selected array row. "
                     "Empty for numbers. Missing/non-numeric values are rejected, never skipped.")
     row_indices: list[Annotated[int, Field(strict=True, ge=0)]] | None = Field(default=None,
         min_length=1, max_length=512,
-        description="Optional distinct zero-based ARRAY ROW indices for min/max/sum. Null selects every row. "
+        description="Optional distinct zero-based ARRAY ROW indices for array reductions. Null selects every row. "
                     "These are not atom IDs. Verify each row's atom_index or state identity before selecting a fragment or state subset.")
 
     @model_validator(mode="after")
     def explicit_subset(self):
         if self.row_indices is not None:
             if self.reduction == "scalar":
-                raise ValueError("row_indices applies only to min/max/sum; scalar uses an exact path.")
+                raise ValueError("row_indices applies only to array reductions; scalar uses an exact path.")
             if len(set(self.row_indices)) != len(self.row_indices):
                 raise ValueError("row_indices must be distinct; duplicate rows would double-count observations.")
         return self
@@ -222,6 +225,55 @@ class ComparisonQuestionWithRoute(ComparisonQuestion):
     disposition_reason: str | None = Field(default=None, description="Why a test is deferred or the comparison is resolved, if applicable.")
 
 
+def question_update_model(model):
+    """Wire deltas are distinct from complete, validated stored questions."""
+    fields = {}
+    for name, field in model.model_fields.items():
+        if name == "id":
+            continue
+        field = deepcopy(field)
+        field.default = None
+        field.json_schema_extra = {"x-mechcal-no-change": True}
+        field.description = ((field.description or "") +
+                             " Null or omission retains the saved field. New questions require labels and question.").strip()
+        fields[name] = (field.annotation | None, field)
+    clearable = tuple(name for name in ("assessment", "route", "disposition_reason") if name in fields)
+    if clearable:
+        fields["clear_fields"] = (list[Literal[clearable]], unchanged(default_factory=list,
+            description="Explicitly clear these optional fields. Do not also supply a non-null replacement for them."))
+    return create_model(model.__name__ + "Update", __base__=model, **fields)
+
+
+ComparisonQuestionUpdate = question_update_model(ComparisonQuestion)
+ComparisonQuestionWithRouteUpdate = question_update_model(ComparisonQuestionWithRoute)
+
+
+class ExperimentSuggestion(CommandModel):
+    labels: list[MechanismLabel] = Field(min_length=1, max_length=12)
+    source_refs: list[str] = Field(min_length=1, max_length=6,
+        description="Case-local observations motivating the question, not evidence that its answer is true.")
+    question: str = Field(min_length=1, pattern=r"\S")
+    next_test: str = Field(min_length=1, pattern=r"\S")
+    outcomes: str = Field(min_length=1, pattern=r"\S",
+        description="Different possible outcomes and how they inform the explanations; include limitations.")
+    contrast: ContrastDesign | None = None
+    route: ComparisonRoute | None = None
+
+
+class ReportEvidenceImpactsWithExperiments(ReportEvidenceImpacts):
+    experiments: list[ExperimentSuggestion] = Field(default_factory=list, max_length=3,
+        description="Optional source-motivated experiment options. No required label, score, novelty quota or execution.")
+
+
+class ReportExploration(CommandModel):
+    kind: Literal["report_exploration"]
+    text: str = Field(min_length=1, max_length=6000, pattern=r"\S",
+        description="Your updated private research note: observations, alternative explanations and unresolved questions. "
+                    "Separate facts from hypotheses. This replaces your last note, not the computation records.")
+    experiments: list[ExperimentSuggestion] = Field(default_factory=list, max_length=3,
+        description="Optional useful comparisons. No required mechanism, novelty quota, ranking or execution.")
+
+
 class UpdateHypotheses(CommandModel):
     kind: Literal["update_hypotheses"]
     changes: list[ExplorationChange] = unchanged(default_factory=list, max_length=12)
@@ -231,19 +283,50 @@ class UpdateHypotheses(CommandModel):
 
 class UpdateHypothesesWithFollowup(UpdateHypotheses):
     responses: list[ImpactResponse] = unchanged(default_factory=list, max_length=24)
-    questions: list[ComparisonQuestion] = unchanged(default_factory=list, max_length=8,
-        description="Upsert only changed comparison questions. These are Planner decisions, not scientific evidence.")
+    questions: list[ComparisonQuestionUpdate] = unchanged(default_factory=list, max_length=8,
+        description="Upsert only changed question fields by ID. Null/omitted fields retain saved values. "
+                    "New questions require labels and question. These are Planner decisions, not evidence.")
+
+    @model_validator(mode="before")
+    @classmethod
+    def complete_question_inputs(cls, value):
+        if isinstance(value, dict) and "questions" in value:
+            value = {**value, "questions": [row.model_dump(mode="json") if type(row) in
+                     (ComparisonQuestion, ComparisonQuestionWithRoute) else row for row in value["questions"]]}
+        return value
 
 
 class UpdateHypothesesWithWorkflow(UpdateHypothesesWithFollowup):
-    questions: list[ComparisonQuestionWithRoute] = unchanged(default_factory=list, max_length=8)
+    questions: list[ComparisonQuestionWithRouteUpdate] = unchanged(default_factory=list, max_length=8)
+
+
+class InvestigationChoice(CommandModel):
+    decision: Literal["investigate"]
+    question_id: str | None = Field(default=None,
+        description="Saved question selected for investigation; null for preparation or open exploration, and for conclusion.")
+    considered_question_ids: list[str] = Field(default_factory=list, max_length=8,
+        description="Other saved comparisons actually considered, not a list of all mechanisms or a required coverage quota.")
+    reason: str = Field(min_length=1, pattern=r"\S",
+        description="Briefly compare the information expected from the next experiment with the alternatives, "
+                    "or explain why remaining feasible comparisons do not justify continuing. Scientific disagreement is allowed.")
+
+
+class ConclusionChoice(InvestigationChoice):
+    decision: Literal["conclude"]
+    question_id: None = None
+
+
+class UpdateHypothesesWithInvestigation(UpdateHypothesesWithWorkflow):
+    investigation: InvestigationChoice | ConclusionChoice | None = unchanged(default=None,
+        description="Next investigation choice, separate from confidence. May accompany the computation or finalize "
+                    "in the same response. Omit to retain a still-current choice; runtime manages its version.")
 
 
 class HypothesisStep(CommandModel):
     """Internal native-call transaction; never advertised as a model schema."""
 
     kind: Literal["hypothesis_step"] = "hypothesis_step"
-    update: UpdateHypothesesWithWorkflow | UpdateHypothesesWithFollowup | UpdateHypotheses
+    update: UpdateHypothesesWithInvestigation | UpdateHypothesesWithWorkflow | UpdateHypothesesWithFollowup | UpdateHypotheses
     update_call_id: str
     followup_calls: list[dict] = Field(min_length=1, max_length=6)
 
@@ -360,6 +443,12 @@ class RecordFreshComputationalReview(RecordComputationalReview):
                     "or [] with the reason in text. This is advice, not execution.")
 
 
+class CitationPathEdit(CommandModel):
+    citation_index: int = Field(ge=0)
+    path_index: int = Field(ge=0)
+    path: str = Field(pattern=r"^(?:/.*)?$", description="Exact replacement JSON pointer from the cited record's directory.")
+
+
 class ArgumentPatch(CommandModel):
     kind: Literal["argument_patch"]
     change_index: int = Field(ge=0)
@@ -369,6 +458,15 @@ class ArgumentPatch(CommandModel):
     refs: list[str] | None = unchanged()
     limitation_refs: list[str] | None = unchanged()
     citations: list[ReadRecord] | None = unchanged(max_length=6)
+    citation_path_edits: list[CitationPathEdit] | None = unchanged(max_length=48,
+        description="Replace only specified paths in existing citations, preserving all other paths and source IDs. "
+                    "Do not combine with citations in the same patch.")
+
+    @model_validator(mode="after")
+    def unambiguous_citations(self):
+        if self.citations is not None and self.citation_path_edits is not None:
+            raise ValueError("Use citations or citation_path_edits, not both in the same patch.")
+        return self
 
 
 class CandidatePatch(CommandModel):
@@ -407,6 +505,10 @@ class RepairJudgment(CommandModel):
         default_factory=list, max_length=48,
         description="Indices refer to the displayed draft. Null patch fields are unchanged; [] clears a list.")
     additional_changes: list[Change] = unchanged(default_factory=list, max_length=48)
+    note: str | None = unchanged(description="Optional transaction note. Null/omission preserves the draft note.")
+    request_review: bool | None = unchanged(
+        description="Optional review request. Null/omission preserves the original transaction's choice; "
+                    "false does not bypass required review of changed evidence or arguments.")
 
     @model_validator(mode="after")
     def require_edits(self):
@@ -588,7 +690,7 @@ def computation_model(spec, *, with_question=False):
 
 
 def envelope_model(registry, capability_ids, *, hypothesis_tracking=False, evidence_followup=False, review_workflow=False,
-                   computational_review=False, task_context=False, worker_tasks=False):
+                   computational_review=False, task_context=False, worker_tasks=False, investigation_policy=False):
     commands = [ReadEvidence, ReduceEvidence, CompareEvidence, DescribeTools, ManageExperiments,
                 LinkedReviseJudgment if review_workflow else ReviseJudgment,
                 LinkedRepairJudgment if review_workflow else RepairJudgment,
@@ -599,7 +701,8 @@ def envelope_model(registry, capability_ids, *, hypothesis_tracking=False, evide
         from mechcal.schemas.worker_tasks import DelegateComputation
         commands.append(DelegateComputation)
     if hypothesis_tracking:
-        commands.append(UpdateHypothesesWithWorkflow if review_workflow else
+        commands.append(UpdateHypothesesWithInvestigation if investigation_policy else
+                        UpdateHypothesesWithWorkflow if review_workflow else
                         UpdateHypothesesWithFollowup if evidence_followup else UpdateHypotheses)
     if review_workflow:
         commands.extend([LinkedAmendJudgment, AmendFinal])

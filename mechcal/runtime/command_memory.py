@@ -78,6 +78,19 @@ def resolve_pointer(row, path):
     return value
 
 
+def selection_coverage(value, *, view="data", page=None):
+    """Describe the returned selection, never infer completeness of its source."""
+    if view == "directory":
+        return {"scope": "directory_only", "complete": False}
+    if page is not None and isinstance(value, list):
+        offset, limit = page["offset"], page["limit"]
+        count = len(value[offset:offset + limit])
+        complete = offset == 0 and count == len(value)
+        return {"scope": "complete_array" if complete else "partial_array", "complete": complete,
+                "offset": offset, "returned_rows": count, "total_rows": len(value)}
+    return {"scope": "selected_value", "complete": True}
+
+
 def read_directory(value):
     """Discover actual fields without sampling values or guessing their names."""
     layout = record_layout(value, limit=32)
@@ -357,7 +370,8 @@ def working_reads(entries, available, *, active_refs=(), latest_rows=(), focus_r
                           "visibility": "stored_not_shown", "reason": "outside_current_focus"})
             continue
         record = {"ref": entry["ref"], "path": entry["path"], "page": entry["page"],
-                  "source_status": source.get("status"), "data": value, "visibility": "in_request"}
+                  "source_status": source.get("status"), "data": value, "visibility": "in_request",
+                  "coverage": selection_coverage(resolve_pointer(source, entry["path"]), page=entry["page"])}
         if "source_result_id" in source:
             record["source_result_id"] = source["source_result_id"]
         if _retention_tier(source, entry["path"]) == 0 and entry["ref"] not in contextualized:
@@ -381,4 +395,5 @@ def working_reads(entries, available, *, active_refs=(), latest_rows=(), focus_r
     return {"findings": retained, "other_reads": index[:12], "other_read_count": len(index),
             "policy": "Source-addressed prior reads, not new evidence. Interpretations remain interpretations. "
                       "Observations and their source_context take priority over logs and repeated explanations. "
+                      "Coverage describes only the selected path, not the whole source. Partial pages are not extrema. "
                       "Omitted fields remain queryable; omission is not absence or negative evidence."}

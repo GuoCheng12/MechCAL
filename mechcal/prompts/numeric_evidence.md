@@ -5,6 +5,10 @@ instead of estimating these numbers from prose. Select an exact source ref and
 JSON pointer. For min/max, path selects the complete array for the intended
 condition and value_path selects the numeric field within each row, for example
 /oscillator_strength. Empty value_path selects the numeric value itself.
+For the largest signed coefficient by magnitude, use max_abs. Its value is a
+magnitude; matches keep signed coefficients and exact original row identities.
+This scans up to 100000 rows locally. A partial page, including a last page, cannot
+establish a full-table maximum or absence. Read coverage applies only to its path.
 For a fragment total, use reduction=sum and explicit row_indices from the original
 array after checking its atom_index fields. A small per-atom maximum does not imply
 a small fragment sum. Null row_indices includes the whole array, not an inferred

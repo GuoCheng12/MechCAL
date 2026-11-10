@@ -16,6 +16,12 @@ The live route status describes basic prerequisites, not guaranteed success.
 Different outcomes may support either candidate, both, or neither. Failed or
 unavailable tests do not refute a mechanism. Record why a comparison is deferred
 or resolved when useful; no required scientific checklist controls delivery.
+Confidence describes what you currently believe, not which test is most useful.
+The delivery view keeps an investigation_frontier of unresolved comparisons,
+including linked execution outcomes and current route readiness. Use the planned
+contrasting outcomes to decide whether another test could change the conclusion.
+Keep a new-result question linked to its broader mechanism question when relevant;
+closing one narrow test does not settle the broader question.
 
 Review issues bind to target/source versions. fact means a reporting error,
 science means a scientific question/disagreement, wording means optional style.
