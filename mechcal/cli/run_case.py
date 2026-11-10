@@ -24,6 +24,13 @@ OUTPUT_DIR_OPTION = typer.Option(
 )
 CASE_ID_OPTION = typer.Option(None, "--case-id", help="Optional stable case id.")
 MAX_ROUNDS_OPTION = typer.Option(30, "--max-rounds", min=1, help="Maximum evidence rounds.")
+MAX_EXPLORATION_ROUNDS_OPTION = typer.Option(
+    None, "--max-exploration-rounds", min=1,
+    help="Opt in to stop review and N exploration rounds plus synthesis; replaces the legacy --max-rounds limit.",
+)
+UNLIMITED_EXPLORATION_OPTION = typer.Option(
+    False, "--unlimited-exploration", help="Enable stop review without an exploration-round limit.",
+)
 TOOL_BACKEND_OPTION = typer.Option(
     "local",
     "--tool-backend",
@@ -74,10 +81,21 @@ def run(
     llm_microscopic: bool | None = LLM_MICROSCOPIC_OPTION,
     llm_worker_reports: bool | None = LLM_WORKER_REPORTS_OPTION,
     amesp: bool | None = AMESP_OPTION,
+    max_exploration_rounds: int | None = MAX_EXPLORATION_ROUNDS_OPTION,
+    unlimited_exploration: bool = UNLIMITED_EXPLORATION_OPTION,
+    decision_mode: str = typer.Option("legacy", "--decision-mode", help="legacy or question_loop_v1"),
+    comparative_evidence: bool = typer.Option(False, "--comparative-evidence", help="Record hypothesis comparisons and preserve argument revisions."),
+    resume: bool = typer.Option(False, "--resume", help="Resume a question-loop checkpoint without replaying completed tools."),
+    command_protocol: bool = typer.Option(False, "--command-protocol", help="Opt in to native commands and local operation errors."),
 ) -> None:
     config = OrchestratorConfig(
         run_base_dir=output_dir,
         max_rounds=max_rounds,
+        max_exploration_rounds=max_exploration_rounds,
+        unlimited_exploration=unlimited_exploration,
+        decision_mode=decision_mode,
+        comparative_evidence=comparative_evidence,
+        planner_command_protocol=command_protocol,
         enable_llm_planner=_flag_or_env(llm_planner, "MECHCAL_ENABLE_LLM_PLANNER"),
         enable_macro_llm_planning=_flag_or_env(
             llm_macro,
@@ -104,10 +122,11 @@ def run(
         "mcp-stdio": lambda: mcp_deps(config, StdioMcpTransport(_mcp_server_config(config))),
     }
     orchestrator = MechCALOrchestrator(config, deps=deps_by_backend[tool_backend]())
-    result = orchestrator.run(smiles=smiles, user_query=user_query, case_id=case_id)
+    result = orchestrator.run(smiles=smiles, user_query=user_query, case_id=case_id, resume=resume)
     summary = {
         "case_id": result.case_id,
         "status": result.status,
+        "termination": result.runtime.get("termination"),
         "run_dir": str((output_dir / result.case_id).resolve()),
         "final_answer": (
             result.final_answer.model_dump(mode="json")

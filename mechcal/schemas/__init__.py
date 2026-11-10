@@ -10,6 +10,7 @@ from mechcal.schemas.claims import (
 from mechcal.schemas.decisions import (
     DecisionGateResult,
     DispatchRequest,
+    PlannerAssessment,
     PlannerDecision,
 )
 from mechcal.schemas.evidence import (
@@ -105,6 +106,7 @@ __all__ = [
     "PhotophysicsReview",
     "OperationalNote",
     "PlannerDecision",
+    "PlannerAssessment",
     "RecommendedAgendaRoute",
     "RoundRecord",
     "ScopeBoundary",

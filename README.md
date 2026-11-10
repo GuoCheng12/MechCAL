@@ -1,21 +1,18 @@
 # MechCAL
 
-MechCAL is a multi-agent system for evidence-calibrated mechanism ranking
-in molecular photophysics. Given a verified SMILES string, a Planner selects
-scientific analyses and ranks mechanisms from a fixed pool of 11 families.
-The ranking is rebuilt as evidence and review feedback become available.
+MechCAL investigates molecular photophysics from a verified SMILES string.
+A Planner directs scientific workers, revises competing mechanism hypotheses,
+and submits a three-mechanism ranking with molecule-specific evidence.
 
-The repository contains the method, scientific tool adapters, prompts,
-MechRubric, evaluation code, and baseline adapters. The reconstructed
-[PhotoMechBench input set](benchmarks/photomechbench/README.md) provides
-119 case IDs and SMILES. Hidden references, papers, model weights, inference
-records, and credentials are not included.
+The current workflow includes native structured commands, bounded autonomous
+workers, case-local evidence memory, incremental review, and local MCP tools.
+Scientific decisions remain with the agents. Execution status, parameters,
+artifacts, references, and partial results are recorded by the runtime.
 
-## Installation
+## Install, Configure, Run
 
-The full tool workflow is tested on Linux x86_64 with Python 3.11. See the
-[tool installation guide](docs/tools.md) for Amesp download, RDKit/ASE
-setup, MCP, verification, and troubleshooting.
+Use Linux x86_64 and Python 3.11. No parent research workspace or saved
+experiment is required. Install the Python package first:
 
 ```bash
 git clone https://github.com/GuoCheng12/MechCAL.git
@@ -23,125 +20,105 @@ cd MechCAL
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[science,mcp]"
-python -m pip check
-python examples/check_tools.py --mcp
+python -m pip install -c env/constraints-linux-py311.txt -e ".[science,mcp]"
+cp configs/deepseek.example.toml mechcal.local.toml
 ```
 
-For conda, run `conda env create -f environment.yml` and then
-`conda activate mechcal`. A core-only installation (`pip install -e .`)
-supports schemas, metrics, and model clients. Molecular calculations require
-the science dependencies. **Amesp is not installed by pip or conda**: follow
-[Download and Extract](docs/tools.md#download-and-extract), configure
-`MECHCAL_AMESP_BIN`, then verify real computation:
+Install your scientific tools following [Tools](docs/tools.md). Edit
+`mechcal.local.toml` with their executable paths. Keep keys out of the file:
 
 ```bash
-python examples/check_tools.py --amesp --mcp
-```
-
-These checks do not call a model API. Add the `dev` extra when running tests
-or building packages.
-
-## Run a Molecule
-
-Set the subject model credentials in your environment. See
-[`env/llm.example.sh`](env/llm.example.sh) for all configuration fields.
-
-```bash
-export MECHCAL_OPENAI_BASE_URL="https://your-provider.example/v1"
-export MECHCAL_OPENAI_MODEL="your-model"
-read -s -p "Model API key: " MECHCAL_OPENAI_API_KEY
-export MECHCAL_OPENAI_API_KEY
-export MECHCAL_OPENAI_MAX_TOKENS="16384"
-export MECHCAL_OPENAI_TIMEOUT="180"
-
-mechcal-llm-smoke
-mechcal-run-case \
+read -s -p "DeepSeek API key: " DEEPSEEK_API_KEY
+export DEEPSEEK_API_KEY
+mechcal --config mechcal.local.toml doctor --mcp
+mechcal --config mechcal.local.toml probe
+mechcal --config mechcal.local.toml run \
   --smiles 'C(c1ccccc1)(c1ccccc1)=C(c1ccccc1)c1ccccc1' \
-  --case-id example-001 \
-  --llm-planner \
-  --amesp \
-  --max-rounds 30 \
-  --output-dir outputs/example
+  --case-id demo-001 --output outputs/demo-001
 ```
 
-This example enables RDKit and Amesp and assumes the installation checks
-above passed. For a reduced-tool demonstration, replace `--amesp` with
-`--no-amesp`; it does not reproduce the full microscopic evidence route.
-For MCP transport, add `--tool-backend mcp-stdio`.
+`doctor` checks packages, configured tool locations, and optionally the local
+MCP registry. It makes **no model API calls** and does not establish numerical
+validity for every molecule. `probe` makes one short, paid model request.
+`run` starts the current command workflow and requires a **new** output directory.
+It never automatically calls an external judge or restarts a failed run.
 
-The single-case command does not enable Amesp by default, whereas
-`mechcal-evaluate` does. Explicit flags avoid inherited shell settings.
-Configure sampling and thinking for your provider as described in
-[Configuration](docs/configuration.md). The example token limit is not
-universal: thinking output can exhaust it before the final JSON appears.
+The example uses `deepseek-flash`, high reasoning, and a 30-computation
+exploration limit. Worker and delivery-stage safeguards are separate. To remove
+the exploration limit, remove `max_exploration_rounds` and set
+`unlimited_exploration = true`. This can incur substantial API and compute cost.
+Other providers can be selected in `[model]`; provider-specific native command
+support must be verified. See [Configuration](docs/configuration.md).
 
-The command calls your configured model API. All generated records stay in
-the ignored `outputs/` directory. No API call is made during installation or
-the default offline test suite.
+The older `mechcal-run-case` and benchmark entry points remain available for
+historical workflows. They do not select all current command-profile settings
+by default. Use `mechcal ... run` for the current workflow.
 
-## Evaluate
+## Worker Tools
 
-The public [119-case CSV](benchmarks/photomechbench/raw_v2_119.csv) contains
-molecular inputs only. It does not include the hidden references required
-for the scoring commands below. Its version and usage are described in the
-[dataset README](benchmarks/photomechbench/README.md).
+| Tool | Main responsibility |
+| --- | --- |
+| RDKit, ASE | Structure preparation, descriptors, atom maps and geometry handling |
+| Amesp | Ground-state and vertical excited-state analyses, selected coordinate comparisons |
+| Multiwfn + Amesp m2m | Wavefunction conversion and hole-electron/spatial analysis |
+| xTB | Low-cost ground-state, ionization/affinity and modeled intermolecular-contact calculations |
+| CREST | Conformer exploration, followed by source-map and geometry checks |
+| DFTB+ | Restricted-parameter-domain electronic and spin-state calculations |
+| PySCF | Spin-free excited states and selected response calculations |
+| PySOC | Optional, pinned-source spin-orbit analysis in its supported domain |
 
-Provide a directory of case JSON files and configure the evidence judge
-with `MECHCAL_SUPPORT_JUDGE_BASE_URL`, `MECHCAL_SUPPORT_JUDGE_MODEL`, and
-`MECHCAL_SUPPORT_JUDGE_API_KEY`.
+These are complementary capabilities, not interchangeable success guarantees.
+Optional backends are enabled explicitly in `[qc]`. Unconfigured tools remain
+unavailable. Excited-state scans and Amesp SOC remain disabled in the supplied
+configuration; installing an executable does not override those gates.
+Third-party binaries, parameter distributions and their licenses are not bundled.
 
-```bash
-mechcal-evaluate --case-dir /path/to/cases --output-dir outputs/mechcal --limit 3
-mechcal-direct --case-dir /path/to/cases --output-dir outputs/direct --evidence-format --limit 3
-mechcal-tool-llm --case-dir /path/to/cases --output-dir outputs/tool-llm --limit 3
-mechcal-common-prior --case-dir /path/to/cases --output-dir outputs/prior
-```
+## Results and Evaluation
 
-The first command enables Amesp by default; use `--no-amesp` only for a
-deliberately reduced-tool run. Remove `--limit 3` for the supplied full case
-set. Evaluation requires authorized data that is distributed separately.
-Details are in [Evaluation](docs/evaluation.md) and
-[Baselines](docs/baselines.md).
+Each run writes `manifest.json`, `qc_config.json`, `status.json`, API usage,
+and a case directory containing checkpoints, actions, evidence and artifacts.
+`summary.json` is produced after the orchestrator returns; an interrupted run
+keeps its records and is not assigned a zero score. Outputs are ignored by Git.
 
-## Code Layout
+The public [PhotoMechBench inputs](benchmarks/photomechbench/README.md) contain
+119 case IDs and SMILES. Hidden references, source papers, inference histories,
+model weights and credentials are not included. Inference from an arbitrary
+SMILES needs no benchmark files. Scoring additionally needs authorized reference
+data and separately configured judge access. See [Evaluation](docs/evaluation.md).
+
+## Layout
 
 ```text
-mechcal/agents/          Planner, workers, coverage review, support audit
-mechcal/runtime/         Agent loop, gates, persistence, model client
-mechcal/capabilities/    Capability catalog and evidence guide
-mechcal/tools/           RDKit, Amesp, local and MCP adapters
-mechcal/schemas/         Typed input, evidence, prediction, and run contracts
-mechcal/prompts/         Agent prompts
-mechcal/eval/            Metrics, MechRubric, judge, baseline implementations
-mechcal/baselines/       Optional ChemGraph adapter
-mechcal/cli/             Installed inference and evaluation commands
-env/                    Credential-free configuration template
-examples/               Offline usage examples
-tests/                  Regression and packaging tests
-docs/                   Configuration, tools, evaluation, and release notes
-benchmarks/             Public, versioned molecular inputs only
+mechcal/agents/          Planner and workers
+mechcal/runtime/         Commands, memory, review and persistence
+mechcal/capabilities/    Tool registry, discovery and preconditions
+mechcal/tools/           Scientific adapters and subprocess boundaries
+mechcal/schemas/         Typed contracts
+mechcal/prompts/         Agent instructions
+mechcal/profiles/        Versioned current-workflow configuration
+mechcal/eval/            Metrics, rubrics and judge implementations
+mechcal/cli/             Installed portable and historical entry points
+configs/                Credential-free deployment examples
+tests/                  Portable synthetic regression tests
+benchmarks/             Previously released public molecular inputs
 ```
 
-The Python import name is `mechcal`. This repository is self-contained and
-does not require a parent research workspace.
-
-## Validation
+## Development
 
 ```bash
-python -m pip install -e ".[science,mcp,dev]"
+python -m pip install -c env/constraints-linux-py311.txt -e ".[science,mcp,dev]"
 pytest -q -m "not integration"
 ruff check mechcal tests examples
-python examples/offline_score.py
 python -m build
 ```
 
-Subprocess MCP checks are marked `integration`. ChemGraph tests require its
-optional environment and otherwise skip. See [Validation](docs/validation.md)
-for results and limitations, [Tools](docs/tools.md) for tool setup, and
-[Release](docs/release.md) for distribution scope.
+Research-only replay tests requiring private experiments and raw calculation
+fixtures stay in the research archive, not this code release. Their omission
+is not a claim that those scientific checks passed on a new machine.
+See [Validation](docs/validation.md) for the deployment acceptance scope.
 
 ## License
 
-MechCAL is distributed under the [MIT License](LICENSE). External software,
-models, and datasets retain their own licenses.
+MechCAL is [MIT licensed](LICENSE). External software and datasets retain
+their own licenses. No credentials or proprietary tool distributions are
+included in the source or Python package.

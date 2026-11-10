@@ -1,0 +1,41 @@
+# Copy to mechcal.local.toml. Never put a key in this file.
+[model]
+base_url = "https://api.deepseek.com"
+model = "deepseek-flash"
+api_key_env = "DEEPSEEK_API_KEY"
+reasoning_effort = "high"
+api_protocol = "responses"
+timeout_seconds = 180
+max_retries = 2
+
+[runtime]
+# This example limits NEW computations to 30. For an unbounded run, remove
+# max_exploration_rounds and set unlimited_exploration = true.
+unlimited_exploration = false
+max_exploration_rounds = 30
+enable_amesp = true
+
+[tools]
+# Absolute paths, paths relative to this TOML, or executable names on PATH.
+amesp_binary = "amesp"
+multiwfn_binary = "Multiwfn_noGUI"
+m2m_binary = "m2m"
+amesp_timeout = 180
+amesp_threads = 1
+amesp_maxcore_mb = 1000
+
+[qc]
+# Optional additional backends. Empty paths keep the corresponding backend unavailable.
+enabled = false
+xtb_binary = ""
+crest_binary = ""
+dftb_binary = ""
+pyscf_python = ""
+pysoc_python = ""
+pysoc_source = ""
+parameter_dir = ""
+parameter_name = "mio-1-1"
+parameter_revision = ""
+threads = 2
+allow_amesp_soc = false
+allow_excited_scan = false

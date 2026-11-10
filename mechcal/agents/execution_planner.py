@@ -7,6 +7,7 @@ from mechcal.public_ids import public_case_id_from_metadata
 from mechcal.runtime.llm import OpenAIJsonClient
 from mechcal.runtime.prompts import load_prompt
 from mechcal.schemas import AgentExecutionPlan, CaseRun, DispatchRequest
+from mechcal.schemas.tool_arguments import argument_model, supplied_argument_schema, validate_tool_args
 
 
 class WorkerExecutionPlanner:
@@ -61,7 +62,7 @@ class WorkerExecutionPlanner:
             artifact.artifact_id
             for artifact in case_run.artifact_manifest.artifacts
             if artifact.status in {"available", "partial"}
-            and artifact.kind in capability.required_artifact_kinds
+            and artifact.kind in capability.input_artifact_kinds
         ]
         missing_artifacts = [
             kind
@@ -71,6 +72,11 @@ class WorkerExecutionPlanner:
                 for artifact in case_run.artifact_manifest.artifacts
             )
         ]
+        if capability.source_artifact_kinds and not any(
+            a.kind in capability.source_artifact_kinds and a.status in {"available", "partial"}
+            for a in case_run.artifact_manifest.artifacts
+        ):
+            missing_artifacts.append("one source from " + ", ".join(capability.source_artifact_kinds))
         precondition_status = "missing" if missing_artifacts else "satisfied"
         return AgentExecutionPlan(
             plan_id=f"{request.dispatch_id}:plan",
@@ -80,6 +86,7 @@ class WorkerExecutionPlanner:
             capability_id=request.capability_id,
             selected_route=request.route,
             tool_steps=[capability.tool_binding.tool_name],
+            tool_args=validate_tool_args(request.route, request.tool_args, request.agent_name),
             artifact_refs=artifact_refs,
             precondition_status=precondition_status,
             failure_mode="precondition_missing" if missing_artifacts else None,
@@ -118,11 +125,13 @@ class WorkerExecutionPlanner:
                 "route": capability.route,
                 "description": capability.description,
                 "required_artifact_kinds": capability.required_artifact_kinds,
+                "source_artifact_kinds": capability.source_artifact_kinds,
                 "outputs": capability.outputs,
                 "cost": capability.cost,
                 "failure_modes": capability.failure_modes,
                 "metadata": capability.metadata,
                 "tool_arg_hints": capability.metadata.get("tool_arg_hints", {}),
+                "tool_arg_schema": supplied_argument_schema(argument_model(request.route, request.agent_name)),
                 "tool_name": capability.tool_binding.tool_name,
                 "tool_binding": capability.tool_binding.model_dump(mode="json"),
             },
@@ -160,7 +169,7 @@ class WorkerExecutionPlanner:
             artifact.artifact_id
             for artifact in case_run.artifact_manifest.artifacts
             if artifact.status in {"available", "partial"}
-            and artifact.kind in capability.required_artifact_kinds
+            and artifact.kind in capability.input_artifact_kinds
         )
 
         tool_steps = list(result.get("tool_steps") or [])
@@ -172,6 +181,12 @@ class WorkerExecutionPlanner:
         if not tool_steps:
             tool_steps = [capability.tool_binding.tool_name]
         tool_args = _tool_args_from_result(result)
+        for key, value in request.tool_args.items():
+            if key in tool_args and tool_args[key] != value:
+                raise ValueError(f"Worker must not override Planner parameter {key}.")
+        tool_args = validate_tool_args(
+            request.route, {**tool_args, **request.tool_args}, request.agent_name
+        )
         available_artifact_ids = {
             artifact.artifact_id
             for artifact in case_run.artifact_manifest.artifacts
@@ -184,7 +199,7 @@ class WorkerExecutionPlanner:
                 tool_args["source_artifact_id"] = source_artifact_id
                 artifact_refs.append(source_artifact_id)
             else:
-                tool_args.pop("source_artifact_id", None)
+                raise ValueError(f"Unknown source_artifact_id: {source_artifact_id}")
         tool_arg_rationale = _short_text(
             result.get("tool_arg_rationale")
             or result.get("args_rationale")

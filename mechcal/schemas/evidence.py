@@ -32,7 +32,10 @@ class HypothesisEntry(MechCALModel):
     record_type: str = "HypothesisEntry"
     name: str
     confidence: float = 0.0
-    differential_priority: float | None = None
+    differential_priority: float | None = Field(
+        default=None, ge=0.0, le=1.0,
+        description="Relative priority score from 0 to 1, larger means earlier in the ranking. Not an ordinal rank or a probability.",
+    )
     evidence_support: str = "unsupported"
     claim_status: str = "candidate_requires_validation"
     status: HypothesisStatus = "pending"

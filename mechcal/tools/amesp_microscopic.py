@@ -1,12 +1,22 @@
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from math import dist
 from pathlib import Path
+from uuid import uuid4
 from typing import Any, Literal
 
+from mechcal.chem.solvent_comparisons import solvent_comparisons
+from mechcal.chem.validated_scopes import (
+    SCAN_ATOMIC_NUMBERS, SCAN_LEGACY_ELEMENTS, SCAN_MAX_ATOMS, SCAN_SCOPE,
+)
 from mechcal.schemas import ArtifactRecord, MicroscopicArtifactBundle, MicroscopicStepRecord
+from mechcal.schemas.tool_arguments import RelaxationArgs, argument_model, validate_tool_args
+from mechcal.tools.amesp_relaxation import run_relaxation
+from mechcal.tools.amesp_transitions import parse_transitions
+from mechcal.tools.hole_electron import BOUNDARY as SPATIAL_BOUNDARY, SpatialAnalysisError, backend_unavailable, source_data, run_spatial
+from mechcal.tools.amesp_diagnostics import basis_precondition, STO3G_BOUNDARY
 from mechcal.tools.amesp_baseline import (
     AmespBaselineError,
     AmespBaselineRunner,
@@ -23,14 +33,33 @@ RouteKind = Literal[
     "baseline",
     "bundle_discovery",
     "parse_only",
+    "spatial_postprocess",
     "prepared_photophysics",
     "prepared_discovery",
     "prepared_series",
+    "prepared_relaxation",
+    "prepared_scan",
+    "geometry_selection",
+    "geometry_recovery",
     "targeted",
     "unsupported",
 ]
 _GROUND_TO_EXCITED_DIPOLE = "Ground to excited state transition electric dipole moments"
 _EXCITED_TO_EXCITED_DIPOLE = "Excited to excited state transition electric dipole moments"
+EXCITED_FORCE_BOUNDARY = (
+    "Excited-state geometry optimization is suspended: the installed Amesp aTB1/TDA "
+    "S1/S2 forces failed finite-difference checks. S0 relaxed scans and vertical "
+    "excited-state calculations remain available."
+)
+AMESP_REQUIRED_ROUTE_KINDS = frozenset({
+    "geometry_recovery", "baseline", "prepared_photophysics", "prepared_series",
+    "prepared_relaxation", "prepared_scan", "targeted",
+})
+UNPARSED_GENERIC_DESCRIPTORS = frozenset({
+    "state_family_overlap", "gross_orbital_populations", "density_matrix",
+    "mayer_bond_order",
+    "charge_redistribution_summary", "geometry_rmsd_angstrom",
+})
 
 
 @dataclass(frozen=True)
@@ -50,11 +79,27 @@ class MicroscopicRouteResult:
 
 @dataclass(frozen=True)
 class MicroscopicRunOptions:
+    measurements: list[dict] | None = None
+    spatial_grid: str = "high"
+    fragments: dict[str, list[int]] | None = None
+    coordinate: str | None = None
+    atom_indices: list[int] | None = None
+    values: list[float] | None = None
+    fmax_ev_per_angstrom: float = 0.05
+    max_wall_seconds: int = 300
+    state_root: int = 1
+    max_opt_cycles: int = 60
     max_members: int | None = None
     s1_nstates: int | None = None
     td_tout: int | None = None
     solvents: list[str] | None = None
     charge_schemes: list[str] | None = None
+    dihedral_id: str | None = None
+    dihedral_atoms: list[int] | None = None
+    angles: list[float] | None = None
+    conformer_ids: list[str] | None = None
+    donor_atoms: list[int] | None = None
+    acceptor_atoms: list[int] | None = None
 
 
 @dataclass(frozen=True)
@@ -82,6 +127,30 @@ class AmespMicroscopicError(RuntimeError):
 
 
 MICROSCOPIC_ROUTE_PROFILES: dict[str, MicroscopicRouteProfile] = {
+    "analyze_hole_electron_from_bundle": MicroscopicRouteProfile(
+        route_kind="spatial_postprocess", artifact_kind="hole_electron_bundle",
+        evidence_tags=["state_resolved_spatial_density"],
+        requested_descriptors=["hole_electron_spatial_analysis"],
+    ),
+    "optimize_ground_state_geometry": MicroscopicRouteProfile(
+        route_kind="geometry_recovery", artifact_kind="prepared_structure",
+        evidence_tags=["geometry_precondition"], requested_descriptors=["ground_state_geometry"],
+    ),
+    "select_computed_geometry": MicroscopicRouteProfile(
+        route_kind="geometry_selection", artifact_kind="prepared_structure",
+        evidence_tags=["geometry_reuse"], requested_descriptors=["selected_geometry"],
+    ),
+    "run_relaxed_coordinate_scan": MicroscopicRouteProfile(
+        route_kind="prepared_scan", artifact_kind="relaxed_coordinate_scan_bundle",
+        evidence_tags=["constrained_relaxation", "conformer_sensitivity"],
+        requested_descriptors=["relaxed_coordinate_points"],
+    ),
+    "run_excited_state_relaxation": MicroscopicRouteProfile(
+        route_kind="prepared_relaxation",
+        artifact_kind="excited_state_relaxation_bundle",
+        evidence_tags=["excited_state_relaxation", "state_ordering", "oscillator_strength"],
+        requested_descriptors=["initial_state_manifold", "relaxed_geometry", "final_state_manifold"],
+    ),
     "run_baseline_bundle": MicroscopicRouteProfile(
         route_kind="baseline",
         artifact_kind="amesp_baseline_bundle",
@@ -190,9 +259,9 @@ MICROSCOPIC_ROUTE_PROFILES: dict[str, MicroscopicRouteProfile] = {
         artifact_kind="ct_descriptor_bundle",
         evidence_tags=["ct_descriptor_surrogates", "artifact_inspection"],
         requested_descriptors=[
-            "ct_localization_proxy",
+            "state_ordering",
             "dominant_transitions",
-            "charge_distribution",
+            "mulliken_charges",
         ],
     ),
     "run_targeted_state_characterization": MicroscopicRouteProfile(
@@ -289,6 +358,113 @@ MICROSCOPIC_ROUTE_PROFILES: dict[str, MicroscopicRouteProfile] = {
 }
 
 
+def microscopic_capability_policy(route: str) -> dict[str, Any]:
+    """Expose the same backend and force-validation limits used during execution."""
+    profile = MICROSCOPIC_ROUTE_PROFILES.get(route)
+    disabled = None
+    if profile is None or profile.route_kind == "unsupported":
+        disabled = "This route is not implemented; no scientific calculation is available."
+    elif route == "run_excited_state_relaxation":
+        disabled = EXCITED_FORCE_BOUNDARY
+    elif route == "extract_torsion_candidates_from_bundle":
+        disabled = ("Legacy bundle-only torsion extraction is not implemented. "
+                    "Use microscopic.list_rotatable_dihedrals with the source prepared_structure.")
+    elif route == "analyze_hole_electron_from_bundle":
+        disabled = backend_unavailable()
+    return {
+        "requires_amesp": profile is not None and profile.route_kind in AMESP_REQUIRED_ROUTE_KINDS,
+        "disabled_reason": disabled,
+        "allowed_argument_values": {"state_root": [0]} if route == "run_relaxed_coordinate_scan" else {},
+    }
+
+
+def microscopic_delivery_contract(route: str) -> dict[str, Any]:
+    profile = MICROSCOPIC_ROUTE_PROFILES.get(route)
+    if profile is None:
+        return {}
+    unavailable = (set(profile.requested_descriptors) & UNPARSED_GENERIC_DESCRIPTORS
+                   if profile.route_kind == "targeted" else set())
+    constraints = []
+    value_fields = []
+    if route == "extract_geometry_descriptors_from_bundle":
+        value_fields = ["/parsed_observables/geometry_descriptors", "/parsed_observables/atom_map",
+                        "/parsed_observables/geometry_measurements/{measurement_id}/value"]
+        constraints.append("Only explicitly requested measurements are computed. Units: angstrom or degree. "
+                           "XYZ indices are zero-based. Coordinates do not establish bonding, packing or torsional barriers.")
+    if route == "inspect_raw_artifact_bundle":
+        value_fields = ["/parsed_observables/files", "/parsed_observables/extractable_observables"]
+        constraints.append("File inventory only. Does not read file contents or verify scientific provenance.")
+    if route == "run_relaxed_coordinate_scan":
+        constraints.append(SCAN_SCOPE)
+    if _orbital_analysis_spec(route) or profile.s1_mode in {"tda_ris", "tda_b3lyp"}:
+        constraints = [STO3G_BOUNDARY, "The B3LYP/STO-3G step is fixed; this route exposes no basis or method override."]
+    return {"requested_descriptors": profile.requested_descriptors,
+            "value_fields": value_fields,
+            "backend_constraints": constraints,
+            "unimplemented_structured_descriptors": sorted(unavailable),
+            "note": "A request is not a delivery guarantee. Raw output sections are not parsed descriptor values."}
+
+
+def microscopic_execution_dependencies(route: str) -> list[str]:
+    profile = MICROSCOPIC_ROUTE_PROFILES.get(route)
+    if profile is None:
+        return []
+    if _orbital_analysis_spec(route):
+        return ["amesp.s0_orbital_singlepoint"]
+    if profile.route_kind == "targeted":
+        return ["amesp.s0_singlepoint", *(["amesp." + profile.s1_mode] if profile.s1_mode else [])]
+    if route in {"list_available_conformers", "run_conformer_bundle", "run_conformer_state_probe"}:
+        return ["rdkit.forcefield_conformers"]
+    return []
+
+
+def microscopic_preflight(route: str, artifact: ArtifactRecord, *, tool_args: dict | None = None) -> None:
+    """Read input facts only; use the same checks for discovery and execution."""
+    profile = MICROSCOPIC_ROUTE_PROFILES.get(route)
+    if route == "analyze_hole_electron_from_bundle":
+        try:
+            if reason := backend_unavailable():
+                raise SpatialAnalysisError("capability_unsupported", reason)
+            source = source_data(_bundle_from_artifact(artifact), state_root=(tool_args or {}).get("state_root", 1))
+            from mechcal.tools.hole_electron import fragment_contributions
+            fragment_contributions([], source[2], (tool_args or {}).get("fragments"))
+        except SpatialAnalysisError as exc:
+            raise AmespMicroscopicError(exc.code, str(exc)) from exc
+        except (OSError, ValueError, IndexError) as exc:
+            raise AmespMicroscopicError("precondition_missing", f"Unreadable spatial input: {exc}") from exc
+    if profile and (_orbital_analysis_spec(route) or profile.s1_mode in {"tda_ris", "tda_b3lyp"}):
+        try:
+            bundle = _bundle_from_artifact(artifact)
+        except FileNotFoundError as exc:
+            raise AmespMicroscopicError(
+                "precondition_missing", "Microscopic bundle manifest is missing.",
+                details={"artifact_id": artifact.artifact_id, "missing_path": exc.filename},
+            ) from exc
+        symbols, _ = _read_xyz_or_raise(_bundle_geometry_path(bundle))
+        if diagnostic := basis_precondition(["b3lyp", "sto-3g"], symbols):
+            raise AmespMicroscopicError(
+                diagnostic["code"], diagnostic["message"], details=diagnostic["details"],
+            )
+    if route == "run_relaxed_coordinate_scan":
+        symbols, _ = _read_xyz_or_raise(_artifact_xyz_path(artifact))
+        charge, multiplicity = _charge_and_multiplicity(artifact)
+        numbers = SCAN_ATOMIC_NUMBERS
+        if multiplicity != 1 or set(symbols) - numbers.keys() or len(symbols) > SCAN_MAX_ATOMS:
+            raise AmespMicroscopicError("capability_unsupported", SCAN_SCOPE)
+        if charge != 0 and set(symbols) - SCAN_LEGACY_ELEMENTS:
+            raise AmespMicroscopicError("capability_unsupported", SCAN_SCOPE)
+        if (sum(numbers[s] for s in symbols) - charge) % 2:
+            raise AmespMicroscopicError("precondition_missing", "Singlet scan requires an even electron count.")
+    if route in {"list_available_conformers", "run_conformer_bundle", "run_conformer_state_probe"}:
+        from rdkit import Chem
+        from rdkit.Chem import AllChem
+
+        mol, _ = _mol_from_artifact(artifact)
+        if mol is None:
+            raise AmespMicroscopicError("precondition_missing", "Conformer generation needs a readable molecular topology.")
+        _select_rdkit_force_field(AllChem, Chem.AddHs(mol))
+
+
 class AmespMicroscopicRunner:
     def __init__(self, baseline_runner: AmespBaselineRunner | None = None) -> None:
         self.baseline_runner = baseline_runner or AmespBaselineRunner()
@@ -303,28 +479,149 @@ class AmespMicroscopicRunner:
         tool_args: dict[str, Any] | None = None,
     ) -> MicroscopicRouteResult:
         profile = _require_profile(capability_name)
-        run_options = _microscopic_run_options(tool_args or {})
+        disabled = microscopic_capability_policy(capability_name)["disabled_reason"]
+        if disabled:
+            raise AmespMicroscopicError("capability_unsupported", disabled)
+        validated_args = validate_tool_args(capability_name, tool_args or {})
+        if capability_name == "run_excited_state_relaxation" or (
+            capability_name == "run_relaxed_coordinate_scan" and validated_args.get("state_root", 0) != 0
+        ):
+            raise AmespMicroscopicError("capability_unsupported", EXCITED_FORCE_BOUNDARY)
+        microscopic_preflight(capability_name, source_artifact, tool_args=validated_args)
+        run_options = _microscopic_run_options(validated_args)
         runners = {
+            "spatial_postprocess": self._run_spatial,
             "baseline": self._run_baseline,
             "bundle_discovery": self._discover_bundle,
             "parse_only": self._extract_from_bundle,
             "prepared_photophysics": self._run_prepared_photophysics,
             "prepared_discovery": self._discover_prepared,
             "prepared_series": self._run_prepared_series,
+            "prepared_relaxation": self._run_relaxation,
+            "prepared_scan": self._run_relaxed_scan,
             "targeted": self._run_targeted,
         }
         if profile.route_kind == "unsupported":
             raise AmespMicroscopicError(
                 "capability_unsupported",
-                "Low-cost excited-state relaxation has not been validated for the Amesp adapter.",
+                "Legacy unsupported placeholder; use run_excited_state_relaxation within its declared scope.",
             )
-        return runners[profile.route_kind](
+        result = runners[profile.route_kind](
             capability_name=capability_name,
             profile=profile,
             source_artifact=source_artifact,
             case_id=case_id,
             round_id=round_id,
             run_options=run_options,
+        )
+        result.bundle.parsed_observables["requested_parameters"] = validated_args
+        charge, multiplicity = _charge_and_multiplicity(source_artifact)
+        result.bundle.parsed_observables["molecular_context"] = {
+            "charge": charge, "multiplicity": multiplicity,
+        }
+        effective = dict(validated_args)
+        if "s1_nstates" in argument_model(capability_name).model_fields:
+            effective.update(s1_nstates=run_options.s1_nstates or self.baseline_runner.s1_nstates,
+                             td_tout=run_options.td_tout or self.baseline_runner.td_tout)
+        if capability_name == "run_charge_population_panel":
+            effective["charge_schemes"] = run_options.charge_schemes or ["mulliken", "lowdin"]
+        if capability_name == "run_solvation_polarity_proxy":
+            effective["solvents"] = run_options.solvents or ["water", "toluene"]
+        records = result.bundle.parsed_observables.get("route_records", [])
+        if records:
+            effective["completed_members"] = (sum(r.get("status") == "success" for r in records)
+                                               if profile.route_kind == "prepared_scan" else len(records))
+            if profile.route_kind == "prepared_scan":
+                effective["requested_members"] = len(run_options.values)
+                effective["geometry_converged_members"] = sum(r.get("geometry_converged") is True for r in records)
+            if "dihedral_atoms" in records[0]:
+                effective["dihedral_atoms"] = records[0]["dihedral_atoms"]
+                effective["angles"] = [r["target_angle_deg"] for r in records]
+            elif "conformer_id" in records[0]:
+                effective["conformer_ids"] = [r["conformer_id"] for r in records]
+        result.bundle.parsed_observables["effective_parameters"] = effective
+        result.manifest_path.write_text(result.bundle.model_dump_json(indent=2) + "\n", encoding="utf-8")
+        return result
+
+    def _run_relaxed_scan(
+        self, *, capability_name, profile, source_artifact, case_id, round_id, run_options,
+    ) -> MicroscopicRouteResult:
+        from rdkit import Chem
+        from mechcal.schemas.tool_arguments import RelaxedScanArgs
+        from mechcal.tools.amesp_scan import run_scan, validate_coordinate
+
+        xyz_path = _artifact_xyz_path(source_artifact)
+        symbols, coordinates = _read_xyz_or_raise(xyz_path)
+        charge, multiplicity = _charge_and_multiplicity(source_artifact)
+        microscopic_preflight(capability_name, source_artifact)
+        sdf_path = source_artifact.file_paths.get("sdf")
+        if not sdf_path or not Path(sdf_path).is_file():
+            raise AmespMicroscopicError("precondition_missing", "Indexed source SDF file is unavailable.")
+        mol = Chem.MolFromMolFile(sdf_path, removeHs=False) if sdf_path else None
+        if mol is None or [a.GetSymbol() for a in mol.GetAtoms()] != symbols:
+            raise AmespMicroscopicError("precondition_missing", "Scan requires matching indexed SDF and XYZ; no re-embedding is permitted.")
+        args = RelaxedScanArgs(**{k: getattr(run_options, k) for k in RelaxedScanArgs.model_fields if k != "source_artifact_id"})
+        validate_coordinate(mol, args)
+        workdir = _microscopic_workdir(xyz_path, round_id, capability_name)
+        workdir.mkdir(parents=True, exist_ok=True)
+        result = run_scan(self.baseline_runner, mol=mol, coordinates=coordinates, charge=charge,
+                          multiplicity=multiplicity, args=args, workdir=workdir)
+        return self._write_bundle(
+            bundle_id=f"{round_id}:{profile.artifact_kind}", capability_name=capability_name,
+            profile=profile, status="partial" if result.missing else "available",
+            source_artifact_ids=[source_artifact.artifact_id], geometry_source="constrained_optimized_points",
+            workdir=workdir, file_paths={"source_xyz": str(xyz_path), "source_sdf": sdf_path, **result.paths},
+            steps=[_step_record(s, "aTB1-constrained") for s in result.steps],
+            s0_text="", s1_text="", parsed_overrides=result.observations,
+            missing_deliverables=result.missing,
+            limitations=["Independent gas-phase constrained optimizations from the supplied geometry, not a reaction path.",
+                         "Fixed S0/S1 ordinal root; no character tracking or frequency-verified minima.",
+                         "Energy and brightness changes alone do not establish RIM, TICT, ESIPT or nonradiative rates."],
+        )
+
+    def _run_relaxation(
+        self, *, capability_name: str, profile: MicroscopicRouteProfile,
+        source_artifact: ArtifactRecord, case_id: str, round_id: str,
+        run_options: MicroscopicRunOptions,
+    ) -> MicroscopicRouteResult:
+        del case_id
+        xyz_path = _artifact_xyz_path(source_artifact)
+        symbols, coordinates = _read_xyz_or_raise(xyz_path)
+        charge, multiplicity = _charge_and_multiplicity(source_artifact)
+        atomic_numbers = {"H": 1, "C": 6, "N": 7, "O": 8}
+        if multiplicity != 1 or set(symbols) - atomic_numbers.keys() or len(symbols) > 80:
+            raise AmespMicroscopicError(
+                "capability_unsupported",
+                "Initial relaxation route supports closed-shell CHNO molecules up to 80 atoms only.",
+            )
+        if (sum(atomic_numbers[s] for s in symbols) - charge) % 2:
+            raise AmespMicroscopicError("precondition_missing", "Singlet relaxation requires an even electron count.")
+        workdir = _microscopic_workdir(xyz_path, round_id, capability_name)
+        workdir.mkdir(parents=True, exist_ok=True)
+        args = RelaxationArgs(
+            state_root=run_options.state_root, max_opt_cycles=run_options.max_opt_cycles,
+            s1_nstates=run_options.s1_nstates, td_tout=run_options.td_tout,
+        )
+        result = run_relaxation(
+            self.baseline_runner, workdir=workdir, symbols=symbols, coordinates=coordinates,
+            charge=charge, multiplicity=multiplicity, args=args,
+        )
+        return self._write_bundle(
+            bundle_id=f"{round_id}:{profile.artifact_kind}", capability_name=capability_name,
+            profile=profile, status="partial" if result.missing else "available",
+            source_artifact_ids=[source_artifact.artifact_id],
+            geometry_source=("excited_state_relaxed_geometry" if result.observables["optimization_converged"]
+                             else "prepared_geometry_relaxation_incomplete"),
+            workdir=workdir, file_paths={"source_xyz": str(xyz_path), **result.file_paths},
+            steps=[_step_record(s, "aTB1-TDA-singlet") for s in result.steps],
+            s0_text="", s1_text=result.final_spectrum_text, parsed_overrides=result.observables,
+            missing_deliverables=result.missing,
+            limitations=[
+                "Gas-phase fixed-ordinal singlet-root optimization from the supplied geometry, not necessarily an S0 minimum.",
+                "Electronic character is not tracked across root crossings; matching root indices do not prove state continuity.",
+                "Convergence is not a frequency-verified minimum or proof of RIM, TICT, ESIPT, CI access or emission kinetics.",
+                "Endpoint energy differences are same-method ordinal-root comparisons, not validated reorganization energies or Stokes shifts.",
+            ],
         )
 
     def _run_baseline(
@@ -351,37 +648,45 @@ class AmespMicroscopicRunner:
         run_symbols = symbols
         run_coordinates = coordinates
 
-        try:
-            s0 = self._run_step(
-                step_id="s0_optimization",
-                method_label="aTB1-opt-force",
-                label=f"{label}_s0",
-                workdir=workdir,
-                keywords=["aTB1", "opt", "force"],
-                block_lines=[
-                    ("opt", ["maxcyc 2000", "gediis off", "maxstep 0.3"]),
-                    ("scf", ["maxcyc 2000", "vshift 500"]),
-                ],
-                charge=charge,
-                multiplicity=multiplicity,
-                symbols=symbols,
-                coordinates=coordinates,
-            )
-            steps.append(_step_record(s0, "aTB1-opt-force"))
-            run_symbols, run_coordinates = _final_geometry_or_raise(s0.aop_path)
-        except AmespBaselineError as exc:
-            limitations.append(f"S0 optimization unavailable: {exc.message}")
-            missing_deliverables.append("S0 optimized geometry")
-            geometry_source = "prepared_geometry_fixed_point_fallback"
+        if source_artifact.metadata.get("geometry_source") == "explicit_computed_selection":
+            geometry_source = "explicit_computed_selection_fixed_point"
             s0 = self._run_singlepoint(
-                label=f"{label}_s0sp",
-                workdir=workdir,
-                charge=charge,
-                multiplicity=multiplicity,
-                symbols=symbols,
-                coordinates=coordinates,
+                label=f"{label}_s0sp", workdir=workdir, charge=charge,
+                multiplicity=multiplicity, symbols=symbols, coordinates=coordinates,
             )
             steps.append(_step_record(s0, "aTB1-force"))
+            limitations.append("Explicitly selected scan geometry kept fixed; not an unconstrained S0 minimum.")
+        else:
+            try:
+                s0 = self._run_step(
+                    step_id="s0_optimization",
+                    method_label="aTB1-opt-force",
+                    label=f"{label}_s0",
+                    workdir=workdir,
+                    keywords=["aTB1", "opt", "force"],
+                    block_lines=[
+                        ("opt", ["maxcyc 2000", "gediis off", "maxstep 0.3"]),
+                        ("scf", ["maxcyc 2000", "vshift 500"]),
+                    ],
+                    charge=charge,
+                    multiplicity=multiplicity,
+                    symbols=symbols,
+                    coordinates=coordinates,
+                )
+                steps.append(_step_record(s0, "aTB1-opt-force"))
+                run_symbols, run_coordinates = _final_geometry_or_raise(s0.aop_path)
+            except AmespBaselineError as exc:
+                limitations.append(f"S0 optimization unavailable: {exc.message}")
+                missing_deliverables.append("S0 optimized geometry")
+                geometry_source = "prepared_geometry_fixed_point_fallback"
+                s0 = _recorded_method_fallback(
+                    lambda: self._run_singlepoint(
+                        label=f"{label}_s0sp", workdir=workdir, charge=charge,
+                        multiplicity=multiplicity, symbols=symbols, coordinates=coordinates,
+                    ),
+                    requested="aTB1-opt-force", failure=exc,
+                )
+                steps.append(_step_record(s0, "aTB1-force"))
 
         analysis_xyz = workdir / "analysis_geometry.xyz"
         _write_xyz(
@@ -505,7 +810,7 @@ class AmespMicroscopicRunner:
     ) -> MicroscopicRouteResult:
         del case_id, run_options
         source_bundle = _bundle_from_artifact(source_artifact)
-        workdir = _artifact_workdir(source_artifact) / round_id / capability_name
+        workdir = _artifact_workdir(source_artifact) / _safe_label(round_id) / capability_name / uuid4().hex
         workdir.mkdir(parents=True, exist_ok=True)
         builders = {
             "list_artifact_bundles": _artifact_bundle_inventory,
@@ -550,22 +855,30 @@ class AmespMicroscopicRunner:
                 workdir,
                 max_members=run_options.max_members or 3,
                 member_prefix="conformer",
+                conformer_ids=run_options.conformer_ids,
             ),
             "run_conformer_state_probe": lambda: _conformer_members(
                 source_artifact,
                 workdir,
                 max_members=run_options.max_members or 2,
                 member_prefix="conformer_probe",
+                conformer_ids=run_options.conformer_ids,
             ),
             "run_torsion_snapshots": lambda: _torsion_snapshot_members(
                 source_artifact,
                 workdir,
                 max_members=run_options.max_members or 3,
+                dihedral_id=run_options.dihedral_id,
+                dihedral_atoms=run_options.dihedral_atoms,
+                angles=run_options.angles,
             ),
             "run_torsion_brightness_coupling_scan": lambda: _torsion_snapshot_members(
                 source_artifact,
                 workdir,
                 max_members=run_options.max_members or 3,
+                dihedral_id=run_options.dihedral_id,
+                dihedral_atoms=run_options.dihedral_atoms,
+                angles=run_options.angles,
             ),
         }
         members, generation_limitations = member_builders[capability_name]()
@@ -698,6 +1011,7 @@ class AmespMicroscopicRunner:
                         excited_states[0].get("oscillator_strength") if excited_states else None
                     ),
                     "state_count": len(excited_states),
+                    "excited_states": excited_states,
                 }
             )
             member_artifacts.append(
@@ -713,7 +1027,7 @@ class AmespMicroscopicRunner:
                 }
             )
 
-        if len(route_records) < 2:
+        if not route_records:
             raise AmespMicroscopicError(
                 "partial_member_series_insufficient_successes",
                 f"{capability_name} produced fewer than two successful members.",
@@ -743,6 +1057,9 @@ class AmespMicroscopicRunner:
             }
             & set(profile.requested_descriptors)
         )
+        if len(route_records) < 2:
+            available_descriptors = [d for d in available_descriptors if d not in
+                                     {descriptor, "torsion_brightness_coupling"}]
         missing_descriptors = [
             descriptor_name
             for descriptor_name in profile.requested_descriptors
@@ -759,7 +1076,7 @@ class AmespMicroscopicRunner:
             bundle_id=f"{round_id}:{profile.artifact_kind}",
             capability_name=capability_name,
             profile=profile,
-            status="partial" if member_failures else "available",
+            status="partial" if member_failures or missing_descriptors else "available",
             source_artifact_ids=[source_artifact.artifact_id],
             geometry_source=f"generated_member_series:{capability_name}",
             workdir=workdir,
@@ -767,7 +1084,7 @@ class AmespMicroscopicRunner:
             steps=steps,
             s0_text=first_s0_text,
             s1_text=first_s1_text,
-            missing_deliverables=[],
+            missing_deliverables=missing_descriptors,
             limitations=limitations,
             parsed_overrides={
                 "requested_descriptors": profile.requested_descriptors,
@@ -780,6 +1097,28 @@ class AmespMicroscopicRunner:
             },
         )
 
+    def _run_spatial(self, *, capability_name, profile, source_artifact, case_id, round_id, run_options):
+        del case_id
+        source = _bundle_from_artifact(source_artifact)
+        workdir = _artifact_workdir(source_artifact) / _safe_label(round_id) / capability_name / uuid4().hex
+        try:
+            parsed = run_spatial(source, workdir, run_options.state_root, run_options.spatial_grid,
+                                 run_options.max_wall_seconds, run_options.fragments)
+        except SpatialAnalysisError as exc:
+            raise AmespMicroscopicError(exc.code, str(exc), details={**exc.details, "workdir": str(workdir)}) from exc
+        except (OSError, ValueError, IndexError) as exc:
+            raise AmespMicroscopicError("parse_failed", str(exc), details={"workdir": str(workdir)}) from exc
+        return self._write_bundle(
+            bundle_id=f"{round_id}:{profile.artifact_kind}", capability_name=capability_name,
+            profile=profile, status="available", source_artifact_ids=[source_artifact.artifact_id],
+            geometry_source=source.geometry_source, workdir=workdir,
+            file_paths={p.name: str(p) for p in workdir.iterdir() if p.is_file()},
+            steps=[], s0_text="", s1_text="", missing_deliverables=[], limitations=[SPATIAL_BOUNDARY],
+            parsed_overrides={"requested_descriptors": profile.requested_descriptors,
+                "available_descriptors": profile.requested_descriptors, "missing_descriptors": [],
+                "hole_electron_spatial_analysis": parsed},
+        )
+
     def _extract_from_bundle(
         self,
         *,
@@ -790,18 +1129,22 @@ class AmespMicroscopicRunner:
         round_id: str,
         run_options: MicroscopicRunOptions,
     ) -> MicroscopicRouteResult:
-        del case_id, run_options
+        del case_id
         source_bundle = _bundle_from_artifact(source_artifact)
-        workdir = _artifact_workdir(source_artifact) / round_id / capability_name
+        workdir = _artifact_workdir(source_artifact) / _safe_label(round_id) / capability_name / uuid4().hex
         workdir.mkdir(parents=True, exist_ok=True)
         builders = {
             "extract_ct_descriptors_from_bundle": _ct_descriptor_payload,
             "parse_snapshot_outputs": _snapshot_parse_payload,
             "extract_torsion_candidates_from_bundle": _torsion_candidate_payload,
-            "extract_geometry_descriptors_from_bundle": _geometry_descriptor_payload,
             "inspect_raw_artifact_bundle": _raw_artifact_payload,
         }
-        parsed, missing, limitations = builders[capability_name](source_artifact, source_bundle)
+        if capability_name == "extract_geometry_descriptors_from_bundle":
+            parsed, missing, limitations = _geometry_descriptor_payload(
+                source_artifact, source_bundle, measurements=run_options.measurements or [],
+            )
+        else:
+            parsed, missing, limitations = builders[capability_name](source_artifact, source_bundle)
         return self._write_bundle(
             bundle_id=f"{round_id}:{profile.artifact_kind}",
             capability_name=capability_name,
@@ -871,7 +1214,6 @@ class AmespMicroscopicRunner:
         source_xyz_path: Path,
         run_options: MicroscopicRunOptions,
     ) -> MicroscopicRouteResult:
-        del run_options
         step = self._run_step(
             step_id="frontier_orbital_singlepoint",
             method_label="aTB1-force-out2",
@@ -885,7 +1227,7 @@ class AmespMicroscopicRunner:
             coordinates=coordinates,
         )
         s0_text = _read_text(step.aop_path)
-        parsed = _frontier_orbital_partition_payload(s0_text, source_artifact)
+        parsed = _frontier_orbital_partition_payload(s0_text, source_artifact, run_options)
         missing = [
             descriptor
             for descriptor in profile.requested_descriptors
@@ -932,7 +1274,7 @@ class AmespMicroscopicRunner:
         source_xyz_path: Path,
         run_options: MicroscopicRunOptions,
     ) -> MicroscopicRouteResult:
-        schemes = run_options.charge_schemes or ["mulliken", "lowdin", "hirshfeld", "cm5"]
+        schemes = run_options.charge_schemes or ["mulliken", "lowdin"]
         steps: list[MicroscopicStepRecord] = []
         scheme_records: list[dict[str, object]] = []
         failures: list[dict[str, object]] = []
@@ -976,11 +1318,17 @@ class AmespMicroscopicRunner:
                     for key, path in _existing_mo_file_paths(s0=step, s1=None).items()
                 }
             )
-            scheme_records.append(_charge_scheme_record(scheme, step.aop_path, text))
-        available = [f"{record['scheme']}_charges" for record in scheme_records]
+            record = _charge_scheme_record(scheme, step.aop_path, text, symbols=symbols, charge=charge)
+            scheme_records.append(record)
+            if not record["valid"]:
+                failures.append({"scheme": scheme, "failure_code": "invalid_charge_table",
+                                 "failure_message": record["validation_errors"],
+                                 "file_paths": {"aop": str(step.aop_path)}})
+        requested = [f"{scheme}_charges" for scheme in schemes]
+        available = [f"{record['scheme']}_charges" for record in scheme_records if record["valid"]]
         missing = [
             descriptor
-            for descriptor in profile.requested_descriptors
+            for descriptor in requested
             if descriptor not in available
         ]
         return self._write_bundle(
@@ -1004,7 +1352,7 @@ class AmespMicroscopicRunner:
                 )
             ],
             parsed_overrides={
-                "requested_descriptors": profile.requested_descriptors,
+                "requested_descriptors": requested,
                 "available_descriptors": sorted(available),
                 "missing_descriptors": missing,
                 "charge_schemes": scheme_records,
@@ -1084,6 +1432,7 @@ class AmespMicroscopicRunner:
                     "solvent": solvent,
                     "final_energy_hartree": final_energy,
                     "state_count": len(states),
+                    "excited_states": states,
                     "first_state": states[0] if states else None,
                     "bright_state": _bright_state(states),
                 }
@@ -1128,7 +1477,7 @@ class AmespMicroscopicRunner:
         source_bundle = _bundle_from_artifact(source_artifact)
         xyz_path = _bundle_geometry_path(source_bundle)
         symbols, coordinates = _read_xyz_or_raise(xyz_path)
-        workdir = _artifact_workdir(source_artifact) / round_id / capability_name
+        workdir = _artifact_workdir(source_artifact) / _safe_label(round_id) / capability_name / uuid4().hex
         workdir.mkdir(parents=True, exist_ok=True)
         label = _safe_label(f"{case_id}_{round_id}_{capability_name}")
         charge, multiplicity = _charge_and_multiplicity(source_artifact)
@@ -1230,18 +1579,18 @@ class AmespMicroscopicRunner:
                 mode=profile.s1_mode,
                 run_options=run_options,
             )
-        except AmespBaselineError:
+        except AmespBaselineError as exc:
+            if exc.code in {"capability_unsupported", "precondition_missing"}:
+                raise
             if profile.s1_mode != "tda_ris":
                 raise
-            return self._run_vertical(
-                label=f"{label}_atb_fallback",
-                workdir=workdir,
-                charge=charge,
-                multiplicity=multiplicity,
-                symbols=symbols,
-                coordinates=coordinates,
-                mode="tda_atb_excdip",
-                run_options=run_options,
+            return _recorded_method_fallback(
+                lambda: self._run_vertical(
+                    label=f"{label}_atb_fallback", workdir=workdir, charge=charge,
+                    multiplicity=multiplicity, symbols=symbols, coordinates=coordinates,
+                    mode="tda_atb_excdip", run_options=run_options,
+                ),
+                requested=profile.s1_mode, failure=exc,
             )
 
     def _run_singlepoint(
@@ -1387,8 +1736,7 @@ class AmespMicroscopicRunner:
         symbols: list[str],
         coordinates: list[list[float]],
     ) -> AmespStepResult:
-        del method_label
-        return self.baseline_runner._run_step(
+        result = self.baseline_runner._run_step(
             step_id=step_id,
             label=label,
             workdir=workdir,
@@ -1399,6 +1747,9 @@ class AmespMicroscopicRunner:
             symbols=symbols,
             coordinates=coordinates,
         )
+        return replace(result, method_provenance=result.method_provenance.model_copy(
+            update={"requested_method_label": method_label},
+        ))
 
     def _write_bundle(
         self,
@@ -1428,9 +1779,14 @@ class AmespMicroscopicRunner:
             s1_text=s1_text,
             excited_states=excited_states,
         )
+        missing_deliverables = list(dict.fromkeys([
+            *missing_deliverables, *parsed.get("missing_descriptors", [])
+        ]))
+        if missing_deliverables:
+            status = "partial"
         manifest_path = workdir / "bundle_manifest.json"
         bundle = MicroscopicArtifactBundle(
-            bundle_id=bundle_id,
+            bundle_id=f"{bundle_id}:{workdir.name}",
             capability_name=capability_name,
             status=status,
             source_artifact_ids=source_artifact_ids,
@@ -1457,62 +1813,9 @@ def _require_profile(capability_name: str) -> MicroscopicRouteProfile:
 
 
 def _microscopic_run_options(tool_args: dict[str, Any]) -> MicroscopicRunOptions:
-    return MicroscopicRunOptions(
-        max_members=_bounded_int(tool_args.get("max_members"), minimum=2, maximum=6),
-        s1_nstates=_bounded_int(tool_args.get("s1_nstates"), minimum=1, maximum=10),
-        td_tout=_bounded_int(tool_args.get("td_tout"), minimum=1, maximum=10),
-        solvents=_bounded_choice_list(
-            tool_args.get("solvents"),
-            allowed={
-                "water",
-                "acetonitrile",
-                "methanol",
-                "ethanol",
-                "toluene",
-                "benzene",
-                "acetone",
-                "chloroform",
-            },
-            default=["water", "toluene"],
-            maximum=4,
-        ),
-        charge_schemes=_bounded_choice_list(
-            tool_args.get("charge_schemes"),
-            allowed={"mulliken", "lowdin", "hirshfeld", "cm5"},
-            default=["mulliken", "lowdin", "hirshfeld", "cm5"],
-            maximum=4,
-        ),
-    )
-
-
-def _bounded_int(value: Any, *, minimum: int, maximum: int) -> int | None:
-    if isinstance(value, bool) or value is None:
-        return None
-    try:
-        numeric = int(value)
-    except (TypeError, ValueError):
-        return None
-    return min(max(numeric, minimum), maximum)
-
-
-def _bounded_choice_list(
-    value: Any,
-    *,
-    allowed: set[str],
-    default: list[str],
-    maximum: int,
-) -> list[str] | None:
-    if value is None:
-        return None
-    raw_items = value if isinstance(value, list) else [value]
-    selected = []
-    for item in raw_items:
-        normalized = str(item).strip().lower()
-        if normalized in allowed and normalized not in selected:
-            selected.append(normalized)
-        if len(selected) >= maximum:
-            break
-    return selected or default[:maximum]
+    # run() has already applied the route schema; do not coerce or clamp again.
+    return MicroscopicRunOptions(**{key: value for key, value in tool_args.items()
+                                    if key != "source_artifact_id"})
 
 
 def _artifact_xyz_path(artifact: ArtifactRecord) -> Path:
@@ -1564,7 +1867,7 @@ def _final_geometry_or_raise(aop_path: Path) -> tuple[list[str], list[list[float
 
 
 def _microscopic_workdir(xyz_path: Path, round_id: str, capability_name: str) -> Path:
-    return xyz_path.parents[2] / "artifacts" / "microscopic" / round_id / capability_name
+    return xyz_path.parents[2] / "artifacts" / "microscopic" / _safe_label(round_id) / capability_name / uuid4().hex
 
 
 def _artifact_workdir(artifact: ArtifactRecord) -> Path:
@@ -1583,6 +1886,17 @@ def _artifact_workdir(artifact: ArtifactRecord) -> Path:
 
 def _charge_and_multiplicity(artifact: ArtifactRecord) -> tuple[int, int]:
     metadata = artifact.metadata or {}
+    if "charge" not in metadata and isinstance(metadata.get("bundle"), dict):
+        context = metadata["bundle"].get("parsed_observables", {}).get("molecular_context", {})
+        if context:
+            return int(context["charge"]), int(context["multiplicity"])
+        # Historical bundles predate molecular_context; recover their actual input.
+        for key in ("s0_aip", "s1_aip"):
+            path = artifact.file_paths.get(key)
+            if path and Path(path).is_file():
+                match = re.search(r">\s*xyz\s+(-?\d+)\s+(\d+)", _read_text(Path(path)), re.I)
+                if match:
+                    return int(match.group(1)), int(match.group(2))
     return int(metadata.get("charge", 0)), int(metadata.get("multiplicity", 1))
 
 
@@ -1591,7 +1905,11 @@ def _bundle_from_artifact(artifact: ArtifactRecord) -> MicroscopicArtifactBundle
     if bundle_payload is None:
         manifest_path = artifact.file_paths.get("manifest")
         if manifest_path:
-            bundle_payload = Path(manifest_path).read_text(encoding="utf-8")
+            try:
+                bundle_payload = Path(manifest_path).read_text(encoding="utf-8")
+            except FileNotFoundError as exc:
+                raise AmespMicroscopicError("precondition_missing", "Microscopic bundle manifest cannot be read.",
+                                           details={"artifact_id": artifact.artifact_id, "path": manifest_path}) from exc
     try:
         if isinstance(bundle_payload, str):
             return MicroscopicArtifactBundle.model_validate_json(bundle_payload)
@@ -1604,10 +1922,30 @@ def _bundle_from_artifact(artifact: ArtifactRecord) -> MicroscopicArtifactBundle
         ) from exc
 
 
+def _recorded_method_fallback(operation, *, requested: str, failure: AmespBaselineError) -> AmespStepResult:
+    entry = {"requested_method_label": requested, "failure_code": failure.code,
+             "reason": failure.message, "failed_file_paths": dict(failure.file_paths),
+             "failure_details": dict(failure.details)}
+    try:
+        result = operation()
+    except AmespBaselineError as exc:
+        exc.details = {**exc.details, "method_fallbacks": [entry, *exc.details.get("method_fallbacks", [])]}
+        raise
+    provenance = result.method_provenance.model_copy(update={
+        "requested_method_label": requested,
+        "fallbacks": [entry, *result.method_provenance.fallbacks],
+    })
+    return replace(result, method_provenance=provenance)
+
+
 def _step_record(step: AmespStepResult, method_label: str) -> MicroscopicStepRecord:
+    provenance = step.method_provenance
+    if provenance.requested_method_label == "unknown":
+        provenance = provenance.model_copy(update={"requested_method_label": method_label})
     return MicroscopicStepRecord(
         step_id=step.step_id,
-        method_label=method_label,
+        method_label=provenance.executed_method_label,
+        method_provenance=provenance,
         aip_path=str(step.aip_path),
         aop_path=str(step.aop_path),
         stdout_path=str(step.stdout_path),
@@ -1674,8 +2012,12 @@ def _parsed_observables(
         ],
         "final_energy_hartree": _parse_final_energy(s0_text),
         "mulliken_charge_count": len(_parse_mulliken_charges(s0_text)),
+        "mulliken_charges": _parse_charge_rows(s0_text, "mulliken") if _parse_mulliken_charges(s0_text) else [],
+        "mulliken_charge_scope": "ground_state",
         "state_count": len(excited_states),
+        "excited_states": excited_states,
         "bright_state": _bright_state(excited_states),
+        **parse_transitions(s1_text),
         "section_presence": {
             "ground_to_excited_transition_dipoles": _GROUND_TO_EXCITED_DIPOLE
             in s1_text,
@@ -1701,14 +2043,10 @@ def _available_descriptors(
             state.get("oscillator_strength") is not None for state in excited_states
         ),
         "bright_state": bool(_bright_state(excited_states)),
-        "dominant_transitions": bool(excited_states),
-        "state_family_overlap": bool(excited_states),
-        "ground_to_excited_transition_dipoles": _GROUND_TO_EXCITED_DIPOLE in s1_text,
-        "excited_to_excited_transition_dipoles": _EXCITED_TO_EXCITED_DIPOLE
-        in s1_text,
-        "gross_orbital_populations": "gross orbital population" in s0_text.lower(),
-        "density_matrix": "density matrix" in s0_text.lower(),
-        "mayer_bond_order": "mayer" in s0_text.lower(),
+        # Section headings and scalar state energies are not parsed descriptor values.
+        **dict.fromkeys(UNPARSED_GENERIC_DESCRIPTORS, False),
+        **{key: bool(value) for key, value in parse_transitions(s1_text).items()
+           if key != "transition_conventions"},
         "molecular_orbital_files": False,
         "localized_orbitals_pm": False,
         "natural_orbitals_no": False,
@@ -1721,11 +2059,16 @@ def _available_descriptors(
 
 
 def _available_ct_descriptors(bundle: MicroscopicArtifactBundle) -> list[str]:
-    available = set(bundle.parsed_observables.get("available_descriptors") or [])
+    # Re-evaluate older bundles too; historical availability flags are not values.
+    available = set()
     if bundle.excited_states:
-        available.update({"state_ordering", "oscillator_strength", "dominant_transitions"})
-    if "mulliken_charges" in available:
-        available.add("charge_distribution")
+        available.add("state_ordering")
+    if any(s.get("oscillator_strength") is not None for s in bundle.excited_states):
+        available.add("oscillator_strength")
+    if bundle.parsed_observables.get("mulliken_charges"):
+        available.update({"mulliken_charges", "charge_distribution"})
+    if bundle.parsed_observables.get("dominant_transitions"):
+        available.add("dominant_transitions")
     return sorted(available)
 
 
@@ -1813,36 +2156,49 @@ def _bright_state(excited_states: list[dict[str, object]]) -> dict[str, object]:
 
 
 def _parse_mulliken_charges(text: str) -> list[float]:
-    lower = text.lower()
-    if "mulliken" not in lower:
+    rows = _parse_charge_rows(text, "mulliken")
+    count = re.search(r"Number of Atoms:\s*(\d+)", text)
+    expected_count = int(count.group(1)) if count else len(rows)
+    if [row["atom_index"] for row in rows] != list(range(expected_count)):
         return []
-    charge_lines = [
-        line
-        for line in text.splitlines()
-        if re.search(r"\b[A-Z][a-z]?\b", line) and re.search(r"[-+]?\d+\.\d+", line)
-    ]
-    charges: list[float] = []
-    for line in charge_lines:
-        numbers = re.findall(r"[-+]?\d+\.\d+", line)
-        if numbers:
-            charges.append(float(numbers[-1]))
-    return charges
+    values = [row["charge"] for row in rows]
+    charge = re.search(r">\s*xyz\s+(-?\d+)\s+\d+", text, re.I)
+    if charge and abs(sum(values) - int(charge.group(1))) > 1e-3:
+        return []
+    return values
+
+
+def _parse_charge_rows(text: str, scheme: str) -> list[dict[str, object]]:
+    # Only read the final named table, never numerical lines from other sections.
+    tables = re.findall(r"^\s*" + re.escape(scheme) + r" charges:[ \t]*\n(.*?)^\s*Sum of",
+                        text, re.M | re.S | re.I)
+    if not tables:
+        return []
+    return [{"atom_index": int(i) - 1, "element": element, "charge": float(value)}
+            for i, element, value in re.findall(
+                r"^\s*(\d+)\s+([A-Z][a-z]?)\s+([-+]?\d+\.\d+(?:[Ee][-+]?\d+)?)\s*$",
+                tables[-1], re.M)]
 
 
 def _frontier_orbital_partition_payload(
     text: str,
     artifact: ArtifactRecord,
+    run_options: MicroscopicRunOptions | None = None,
 ) -> dict[str, object]:
     frontier = _parse_frontier_orbitals(text)
     coefficients = _parse_ao_coefficient_weights(text)
-    fragments = _frontier_fragment_atoms(artifact)
+    fragments = _frontier_fragment_atoms(artifact, run_options)
     homo = _frontier_partition_record(frontier.get("homo"), coefficients, fragments)
     lumo = _frontier_partition_record(frontier.get("lumo"), coefficients, fragments)
     available = [
         descriptor
         for descriptor, present in {
             "frontier_orbital_energies": bool(frontier.get("homo") and frontier.get("lumo")),
-            "frontier_orbital_partition": bool(homo and lumo),
+            "frontier_orbital_partition": bool(homo and lumo
+                                               and homo.get("raw_squared_coeff_sum", 0) > 0
+                                               and lumo.get("raw_squared_coeff_sum", 0) > 0
+                                               and fragments["donor_atoms"]
+                                               and fragments["acceptor_atoms"]),
         }.items()
         if present
     ]
@@ -1928,28 +2284,23 @@ def _coefficient_start(parts: list[str]) -> int | None:
     return 2 if len(parts) >= 2 else None
 
 
-def _frontier_fragment_atoms(artifact: ArtifactRecord) -> dict[str, object]:
+def _frontier_fragment_atoms(artifact: ArtifactRecord, options: MicroscopicRunOptions | None = None) -> dict[str, object]:
     mol, limitations = _mol_from_artifact(artifact)
     if mol is None:
         return {"donor_atoms": [], "acceptor_atoms": [], "limitations": limitations}
-    donor_atoms: list[int] = []
-    acceptor_atoms: list[int] = []
-    hetero_atoms: list[int] = []
-    for atom in mol.GetAtoms():
-        atom_number = atom.GetAtomicNum()
-        atom_index = int(atom.GetIdx()) + 1
-        if atom_number in {7, 8, 15, 16}:
-            hetero_atoms.append(atom_index)
-        if atom_number in {7, 8, 15, 16} and (
-            atom.GetTotalNumHs() > 0 or atom.GetFormalCharge() > 0
-        ):
-            donor_atoms.append(atom_index)
-        if atom_number in {7, 8, 16} and atom.GetFormalCharge() <= 0 and atom.GetTotalNumHs() == 0:
-            acceptor_atoms.append(atom_index)
+    # Electronic donor/acceptor fragments cannot be inferred from H-bond rules.
+    donor_atoms = options.donor_atoms if options else None
+    acceptor_atoms = options.acceptor_atoms if options else None
+    if donor_atoms is None or acceptor_atoms is None:
+        limitations.append("No explicit electronic donor/acceptor fragments were supplied; orbital energies only.")
+        donor_atoms, acceptor_atoms = [], []
+    if any(index >= mol.GetNumAtoms() for index in donor_atoms + acceptor_atoms):
+        raise AmespMicroscopicError("precondition_missing", "Fragment atom index is outside the prepared structure.")
     return {
-        "donor_atoms": donor_atoms or hetero_atoms,
-        "acceptor_atoms": acceptor_atoms or hetero_atoms,
-        "atom_index_base": "amesp_one_based_matches_prepared_structure_order",
+        "donor_atoms": donor_atoms,
+        "acceptor_atoms": acceptor_atoms,
+        "atom_index_base": 0,
+        "definition_source": "explicit_atom_selection" if donor_atoms else "not_defined",
         "limitations": limitations,
     }
 
@@ -1966,14 +2317,15 @@ def _frontier_partition_record(
     total = sum(weights.values())
     if total <= 0:
         return {**orbital, "raw_squared_coeff_sum": 0.0}
-    normalized = {atom: value / total for atom, value in weights.items()}
+    normalized = {atom - 1: value / total for atom, value in weights.items()}
     donor_atoms = {int(atom) for atom in fragments.get("donor_atoms", [])}
     acceptor_atoms = {int(atom) for atom in fragments.get("acceptor_atoms", [])}
     return {
         **orbital,
         "raw_squared_coeff_sum": total,
-        "donor_fragment_weight": sum(normalized.get(atom, 0.0) for atom in donor_atoms),
-        "acceptor_fragment_weight": sum(normalized.get(atom, 0.0) for atom in acceptor_atoms),
+        "weight_definition": "normalized_squared_AO_coefficients_not_electron_population",
+        "donor_fragment_weight": sum(normalized.get(atom, 0.0) for atom in donor_atoms) if donor_atoms else None,
+        "acceptor_fragment_weight": sum(normalized.get(atom, 0.0) for atom in acceptor_atoms) if acceptor_atoms else None,
         "top_atom_weights": [
             {"atom_index": atom, "weight": weight}
             for atom, weight in sorted(
@@ -1985,16 +2337,26 @@ def _frontier_partition_record(
     }
 
 
-def _charge_scheme_record(scheme: str, aop_path: Path, text: str) -> dict[str, object]:
-    lower = text.lower()
+def _charge_scheme_record(scheme: str, aop_path: Path, text: str, *, symbols: list[str], charge: int) -> dict[str, object]:
+    rows = _parse_charge_rows(text, scheme)
+    errors = []
+    if [r["atom_index"] for r in rows] != list(range(len(symbols))):
+        errors.append("Charge table must contain every atom exactly once in structure order.")
+    if [r["element"] for r in rows] != symbols:
+        errors.append("Charge table element order does not match input geometry.")
+    total = sum(r["charge"] for r in rows)
+    if abs(total - charge) > 1e-3:
+        errors.append(f"Charge sum {total:.6f} does not match molecular charge {charge}.")
     return {
         "scheme": scheme,
         "aop_path": str(aop_path),
-        "scheme_mentioned": scheme in lower,
-        "charge_keyword_mentioned": "charge" in lower,
-        "numeric_line_count": sum(
-            1 for line in text.splitlines() if re.search(r"[-+]?\d+\.\d+", line)
-        ),
+        "atom_index_base": 0,
+        "valid": not errors,
+        "validation_errors": errors,
+        "total_charge": total,
+        "expected_charge": charge,
+        "charges": rows if not errors else [],
+        "raw_charge_rows": rows,
     }
 
 
@@ -2003,6 +2365,7 @@ def _solvation_proxy_payload(
     solvent_records: list[dict[str, object]],
     failures: list[dict[str, object]],
 ) -> dict[str, object]:
+    comparisons = solvent_comparisons(solvent_records)
     first_states = [
         record["first_state"] for record in solvent_records if record.get("first_state")
     ]
@@ -2028,6 +2391,7 @@ def _solvation_proxy_payload(
         ],
         "solvent_records": solvent_records,
         "solvent_failures": failures,
+        "solvent_comparisons": comparisons,
         "first_excitation_energy_shift_ev": _state_delta(
             first_states,
             "excitation_energy_ev",
@@ -2063,6 +2427,10 @@ def _rotatable_dihedral_inventory(
     return (
         {
             "dihedral_candidates": candidates,
+            "atom_index_base": 0,
+            "atoms": [{"atom_index": atom.GetIdx(), "element": atom.GetSymbol(),
+                       "neighbors": [n.GetIdx() for n in atom.GetNeighbors()]}
+                      for atom in mol.GetAtoms()],
             "candidate_count": len(candidates),
             "selected_policy": "single_non_ring_heavy_atom_bonds",
         },
@@ -2074,26 +2442,67 @@ def _rotatable_dihedral_inventory(
 def _conformer_inventory(
     artifact: ArtifactRecord,
 ) -> tuple[dict[str, object], list[str], list[str]]:
-    metadata = artifact.metadata or {}
-    selected_id = metadata.get("selected_conformer_id", 0)
-    count = int(metadata.get("conformer_count", 1) or 1)
+    _, ranked, limitations = _conformer_pool(artifact)
     conformers = [
         {
-            "conformer_id": f"prepared:{selected_id}",
-            "source": "prepared_structure",
-            "selected": True,
-            "force_field": metadata.get("force_field"),
+            "conformer_id": f"rdkit:{conf_id}",
+            "source": "deterministic_ETKDGv3_pool",
+            "force_field": force_field,
+            "force_field_energy_kcal_mol": energy,
         }
+        for conf_id, force_field, energy in ranked
     ]
     return (
         {
             "conformers": conformers,
             "available_conformer_count": len(conformers),
-            "prepared_conformer_count": count,
+            "pool_seed": 0xA1E,
+            "pool_size": 20,
+            "heavy_atom_rmsd_threshold_angstrom": 0.35,
         },
         [] if conformers else ["stable conformer descriptors"],
-        [],
+        limitations,
     )
+
+
+def _conformer_pool(artifact: ArtifactRecord):
+    try:
+        from rdkit import Chem
+        from rdkit.Chem import AllChem, rdMolAlign
+    except ModuleNotFoundError as exc:
+        raise AmespMicroscopicError(
+            "precondition_missing",
+            "RDKit is required to generate a multi-conformer series.",
+        ) from exc
+
+    base_mol, limitations = _mol_from_artifact(artifact)
+    if base_mol is None:
+        raise AmespMicroscopicError(
+            "precondition_missing",
+            "Prepared artifact does not expose a molecule for conformer generation.",
+            details={"artifact_id": artifact.artifact_id},
+        )
+    mol = Chem.AddHs(base_mol)
+    mol.RemoveAllConformers()
+    params = AllChem.ETKDGv3()
+    params.randomSeed = 0xA1E
+    conformer_ids = list(
+        AllChem.EmbedMultipleConfs(mol, numConfs=20, params=params)
+    )
+    if not conformer_ids:
+        params.useRandomCoords = True
+        conformer_ids = list(
+            AllChem.EmbedMultipleConfs(mol, numConfs=20, params=params)
+        )
+    ranked = _rank_conformers(AllChem, mol, conformer_ids)
+    heavy = Chem.RemoveHs(mol)
+    distinct = []
+    for row in ranked:
+        if all(rdMolAlign.GetBestRMS(Chem.Mol(heavy), heavy, prbId=row[0], refId=prev[0]) >= 0.35
+               for prev in distinct):
+            distinct.append(row)
+    limitations.append(f"Retained {len(distinct)} geometrically distinct conformers from {len(ranked)} optimized candidates (heavy-atom RMSD >= 0.35 angstrom).")
+    return mol, distinct, limitations
 
 
 def _conformer_members(
@@ -2102,36 +2511,18 @@ def _conformer_members(
     *,
     max_members: int,
     member_prefix: str,
+    conformer_ids: list[str] | None = None,
 ) -> tuple[list[PreparedGeometryMember], list[str]]:
-    try:
-        from rdkit import Chem
-        from rdkit.Chem import AllChem
-    except ModuleNotFoundError as exc:
-        raise AmespMicroscopicError(
-            "precondition_missing",
-            "RDKit is required to generate a multi-conformer series.",
-        ) from exc
-
-    smiles = artifact.metadata.get("canonical_smiles") or artifact.metadata.get("input_smiles")
-    base_mol = Chem.MolFromSmiles(str(smiles)) if smiles else None
-    if base_mol is None:
-        raise AmespMicroscopicError(
-            "precondition_missing",
-            "Prepared artifact does not expose parseable SMILES for conformer generation.",
-            details={"artifact_id": artifact.artifact_id},
-        )
-    mol = Chem.AddHs(base_mol)
-    params = AllChem.ETKDGv3()
-    params.randomSeed = 0xA1E
-    conformer_ids = list(
-        AllChem.EmbedMultipleConfs(mol, numConfs=max(max_members, 3), params=params)
-    )
-    if not conformer_ids:
-        params.useRandomCoords = True
-        conformer_ids = list(
-            AllChem.EmbedMultipleConfs(mol, numConfs=max(max_members, 3), params=params)
-        )
-    ranked = _rank_conformers(AllChem, mol, conformer_ids)
+    mol, ranked, limitations = _conformer_pool(artifact)
+    if conformer_ids is not None:
+        by_id = {f"rdkit:{row[0]}": row for row in ranked}
+        unknown = set(conformer_ids) - set(by_id)
+        if unknown:
+            raise AmespMicroscopicError("precondition_missing", f"Unknown conformer IDs: {sorted(unknown)}",
+                                       details={"available_ids": list(by_id)})
+        selected = [by_id[key] for key in conformer_ids]
+    else:
+        selected = ranked[:max_members]
     members_dir = workdir / "generated_conformers"
     members_dir.mkdir(parents=True, exist_ok=True)
     members = [
@@ -2144,13 +2535,14 @@ def _conformer_members(
             metadata={
                 "conformer_rank": rank,
                 "rdkit_conformer_id": int(conf_id),
+                "conformer_id": f"rdkit:{conf_id}",
                 "force_field": force_field,
                 "force_field_energy": energy,
             },
         )
-        for rank, (conf_id, force_field, energy) in enumerate(ranked[:max_members], start=1)
+        for rank, (conf_id, force_field, energy) in enumerate(selected, start=1)
     ]
-    return members, []
+    return members, limitations
 
 
 def _torsion_snapshot_members(
@@ -2158,6 +2550,9 @@ def _torsion_snapshot_members(
     workdir: Path,
     *,
     max_members: int,
+    dihedral_id: str | None = None,
+    dihedral_atoms: list[int] | None = None,
+    angles: list[float] | None = None,
 ) -> tuple[list[PreparedGeometryMember], list[str]]:
     try:
         from rdkit.Chem import rdMolTransforms
@@ -2189,13 +2584,27 @@ def _torsion_snapshot_members(
         )
 
     selected = candidates[0]
+    if dihedral_id is not None:
+        selected = next((c for c in candidates if c["dihedral_id"] == dihedral_id), None)
+        if selected is None:
+            raise AmespMicroscopicError("precondition_missing", f"Unknown dihedral_id: {dihedral_id}",
+                                       details={"available_ids": [c["dihedral_id"] for c in candidates]})
+    if dihedral_atoms is not None:
+        if any(i < 0 or i >= mol.GetNumAtoms() for i in dihedral_atoms):
+            raise AmespMicroscopicError("precondition_missing", "Dihedral atom index is outside the prepared structure.")
+        if any(mol.GetBondBetweenAtoms(a, b) is None for a, b in zip(dihedral_atoms, dihedral_atoms[1:])):
+            raise AmespMicroscopicError("precondition_missing", "Dihedral atoms must form a bonded path.")
+        central = set(dihedral_atoms[1:3])
+        if not any(set(c["atom_indices"][1:3]) == central for c in candidates):
+            raise AmespMicroscopicError("precondition_missing", "Central bond must be a discovered non-ring rotatable bond.")
+        selected = {"dihedral_id": "explicit_atoms", "atom_indices": dihedral_atoms}
     atom_indices = [int(index) for index in selected["atom_indices"]]
     current_angle = rdMolTransforms.GetDihedralDeg(mol.GetConformer(), *atom_indices)
     snapshot_dir = workdir / "generated_torsion_snapshots"
     snapshot_dir.mkdir(parents=True, exist_ok=True)
     members: list[PreparedGeometryMember] = []
     for rank, target_angle in enumerate(
-        _torsion_target_angles(current_angle, max_members),
+        angles if angles is not None else _torsion_target_angles(current_angle, max_members),
         start=1,
     ):
         snapshot_mol = type(mol)(mol)
@@ -2221,7 +2630,7 @@ def _torsion_snapshot_members(
                 },
             )
         )
-    return members, limitations
+    return members, [*limitations, "Rigid torsion snapshots, not relaxed scans or nonradiative rates. State identities are not tracked across geometries."]
 
 
 def _artifact_bundle_inventory(
@@ -2257,7 +2666,9 @@ def _artifact_bundle_members(
         {
             "member_id": f"step:{step.step_id}",
             "member_type": "amesp_step",
-            "method_label": step.method_label,
+            "method_label": step.method_provenance.executed_method_label,
+            "recorded_method_label": step.method_label,
+            "method_provenance": step.method_provenance.model_dump(mode="json"),
             "aop_path": step.aop_path,
             "terminated_normally": step.terminated_normally,
         }
@@ -2284,19 +2695,33 @@ def _ct_descriptor_payload(
     bundle: MicroscopicArtifactBundle,
 ) -> tuple[dict[str, object], list[str], list[str]]:
     del artifact
-    missing = ["hole_electron_separation", "transition_density_cube"]
+    missing = []
+    if not bundle.excited_states:
+        missing.append("state_ordering")
+    if not bundle.parsed_observables.get("mulliken_charges"):
+        missing.append("mulliken_charges")
+    if not bundle.parsed_observables.get("dominant_transitions"):
+        missing.append("dominant_transitions")
     return (
         {
             "source_bundle_id": bundle.bundle_id,
             "state_count": len(bundle.excited_states),
+            "excited_states": bundle.excited_states,
+            "mulliken_charges": bundle.parsed_observables.get("mulliken_charges", []),
+            "mulliken_charge_scope": "ground_state",
+            "dominant_transitions": bundle.parsed_observables.get("dominant_transitions", []),
+            "transition_conventions": bundle.parsed_observables.get("transition_conventions", {}),
             "bright_state": _bright_state(bundle.excited_states),
             "available_descriptors": _available_ct_descriptors(bundle),
             "missing_descriptors": missing,
+            "outside_scope": ["hole_electron_separation", "transition_density_cube"],
+            "spatial_analysis_route": "microscopic.analyze_hole_electron_from_bundle",
         },
         missing,
         [
             "CT extraction uses artifact-backed scalar surrogates only; "
-            "density-grid CT descriptors are not inferred."
+            "density-grid CT descriptors are not inferred. Ground-state Mulliken "
+            "charges are not excited-state charge redistribution."
         ],
     )
 
@@ -2352,19 +2777,28 @@ def _torsion_candidate_payload(
 def _geometry_descriptor_payload(
     artifact: ArtifactRecord,
     bundle: MicroscopicArtifactBundle,
+    *, measurements=None,
 ) -> tuple[dict[str, object], list[str], list[str]]:
-    del artifact
+    import hashlib
+    from mechcal.tools.geometry_measurements import measure_geometry
     xyz_path = _bundle_geometry_path(bundle)
     symbols, coordinates = _read_xyz_or_raise(xyz_path)
     descriptors = _geometry_descriptors(symbols, coordinates)
+    measured = measure_geometry(symbols, coordinates, measurements or [])
     return (
         {
             "source_bundle_id": bundle.bundle_id,
+            "source_artifact_id": artifact.artifact_id,
             "geometry_path": str(xyz_path),
+            "geometry_sha256": hashlib.sha256(xyz_path.read_bytes()).hexdigest(),
+            "atom_map": [{"atom_index": i, "element": symbol, "xyz_angstrom": coordinates[i]}
+                         for i, symbol in enumerate(symbols)],
+            "geometry_measurements": measured,
             "geometry_descriptors": descriptors,
         },
-        [],
-        [],
+        [name for name, row in measured.items() if row["status"] != "available"],
+        ["Coordinate geometry only. XYZ index order may differ from SMILES atom order. "
+         "No bond-connectivity, force-field validity, solid-state packing or energy-barrier claim is implied."],
     )
 
 
@@ -2397,7 +2831,8 @@ def _rank_conformers(AllChem, mol, conformer_ids: list[int]) -> list[tuple[int, 
     ranked: list[tuple[int, str, float]] = []
     for conf_id in conformer_ids:
         forcefield = _build_rdkit_forcefield(AllChem, mol, conf_id, force_field)
-        forcefield.Minimize(maxIts=200)
+        if forcefield.Minimize(maxIts=500) != 0:
+            continue
         ranked.append((int(conf_id), force_field, round(float(forcefield.CalcEnergy()), 8)))
     if not ranked:
         raise AmespMicroscopicError(

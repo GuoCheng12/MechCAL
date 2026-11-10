@@ -52,9 +52,10 @@ def main() -> None:
     parser.add_argument("--schema-retries", type=int, default=1)
     parser.add_argument(
         "--responses-api",
-        action="store_true",
+        action=argparse.BooleanOptionalAction,
+        default=None,
         help=(
-            "Use the OpenAI Responses API through LangChain. Sampling controls "
+            "Override MECHCAL_OPENAI_API_PROTOCOL for ChemGraph. Sampling controls "
             "are omitted for providers that reject explicit temperature settings."
         ),
     )

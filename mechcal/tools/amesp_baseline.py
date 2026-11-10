@@ -1,12 +1,16 @@
 from __future__ import annotations
 
 import os
+import hashlib
 import re
 import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+from mechcal.tools.amesp_diagnostics import backend_stop, basis_precondition
+from mechcal.schemas.microscopic import AmespMethodProvenance
 
 
 @dataclass(frozen=True)
@@ -19,6 +23,7 @@ class AmespStepResult:
     exit_code: int
     terminated_normally: bool
     elapsed_seconds: float
+    method_provenance: AmespMethodProvenance = field(default_factory=AmespMethodProvenance)
 
     def to_json(self) -> dict[str, object]:
         return {
@@ -30,6 +35,7 @@ class AmespStepResult:
             "exit_code": self.exit_code,
             "terminated_normally": self.terminated_normally,
             "elapsed_seconds": self.elapsed_seconds,
+            "method_provenance": self.method_provenance.model_dump(mode="json"),
         }
 
 
@@ -230,7 +236,8 @@ class AmespBaselineRunner:
             except AmespBaselineError as exc:
                 last_error = exc
                 exit_code = exc.details.get("exit_code")
-                if attempt_index >= len(run_configs) or not _is_native_crash(exit_code):
+                if (exc.code in {"capability_unsupported", "precondition_missing"}
+                        or attempt_index >= len(run_configs) or not _is_native_crash(exit_code)):
                     raise
         if last_error is not None:
             raise last_error
@@ -255,6 +262,11 @@ class AmespBaselineRunner:
         maxcore_mb: int,
         retry_attempt: int,
     ) -> AmespStepResult:
+        if diagnostic := basis_precondition(keywords, symbols):
+            raise AmespBaselineError(
+                diagnostic["code"], diagnostic["message"],
+                details={"failed_step": step_id, **diagnostic["details"]},
+            )
         _write_amesp_input(
             aip_path=aip_path,
             keywords=keywords,
@@ -265,6 +277,12 @@ class AmespBaselineRunner:
             block_lines=block_lines,
             npara=npara,
             maxcore_mb=maxcore_mb,
+        )
+        provenance = AmespMethodProvenance(
+            source="submitted_input", executed_method_label=" ".join(keywords) or "unknown",
+            input_keywords=list(keywords),
+            input_blocks=[{"name": name, "lines": list(lines)} for name, lines in block_lines],
+            input_sha256=hashlib.sha256(aip_path.read_bytes()).hexdigest(),
         )
         env = dict(os.environ)
         env.setdefault("KMP_STACKSIZE", "1g")
@@ -282,11 +300,14 @@ class AmespBaselineRunner:
                 check=False,
             )
         except subprocess.TimeoutExpired as exc:
-            stdout_path.write_text(exc.stdout or "", encoding="utf-8")
-            stderr_path.write_text(exc.stderr or "", encoding="utf-8")
+            stdout = exc.stdout or ""
+            stderr = exc.stderr or ""
+            stdout_path.write_text(stdout.decode(errors="replace") if isinstance(stdout, bytes) else stdout, encoding="utf-8")
+            stderr_path.write_text(stderr.decode(errors="replace") if isinstance(stderr, bytes) else stderr, encoding="utf-8")
             raise AmespBaselineError(
                 "runtime_failed",
                 f"Amesp step {step_id} timed out after {self.timeout_seconds} seconds.",
+                details={"failed_step": step_id, "method_provenance": provenance.model_dump(mode="json")},
                 file_paths={
                     "aip": str(aip_path),
                     "aop": str(aop_path),
@@ -298,11 +319,16 @@ class AmespBaselineRunner:
         stdout_path.write_text(completed.stdout or "", encoding="utf-8")
         stderr_path.write_text(completed.stderr or "", encoding="utf-8")
         terminated = False
+        aop_text = ""
         if aop_path.exists():
-            terminated = "Normal termination of Amesp!" in aop_path.read_text(
+            aop_text = aop_path.read_text(
                 encoding="utf-8",
                 errors="replace",
             )
+            terminated = "Normal termination of Amesp!" in aop_text
+        diagnostic = backend_stop({
+            "aop": aop_text, "stdout": completed.stdout or "", "stderr": completed.stderr or "",
+        })
         outcome = AmespStepResult(
             step_id=step_id,
             aip_path=aip_path,
@@ -312,17 +338,21 @@ class AmespBaselineRunner:
             exit_code=completed.returncode,
             terminated_normally=terminated,
             elapsed_seconds=elapsed,
+            method_provenance=provenance,
         )
-        if completed.returncode != 0 or not terminated:
+        if completed.returncode != 0 or not terminated or diagnostic:
             raise AmespBaselineError(
-                "runtime_failed",
-                f"Amesp step {step_id} did not terminate normally.",
+                diagnostic["code"] if diagnostic else "runtime_failed",
+                diagnostic["message"] if diagnostic else f"Amesp step {step_id} did not terminate normally.",
                 file_paths=_step_file_paths(outcome),
                 details={
+                    "failed_step": step_id,
                     "exit_code": completed.returncode,
                     "npara": npara,
                     "maxcore_mb": maxcore_mb,
                     "retry_attempt": retry_attempt,
+                    "method_provenance": provenance.model_dump(mode="json"),
+                    **(diagnostic["details"] if diagnostic else {}),
                 },
             )
         return outcome
@@ -487,7 +517,7 @@ def _parse_excited_states(
                 }
             )
         else:
-            state["oscillator_strength"] = 0.0
+            state["oscillator_strength"] = None
         states.append(state)
     if states or reference_energy_hartree is None:
         return states

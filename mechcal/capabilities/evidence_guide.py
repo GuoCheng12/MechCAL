@@ -7,6 +7,20 @@ MECHANISM_LABELS = set(MECHANISM_POOL)
 
 
 _ABILITY_EVIDENCE_GUIDE: dict[str, dict[str, object]] = {
+    "microscopic.analyze_hole_electron_from_bundle": {
+        "observables": ["state-resolved hole/electron distributions", "centroid distance", "spatial overlap", "heavy-atom contributions"],
+        "useful_for_screening": ["ICT_TICT_CT", "PET_ET"],
+        "support_boundary": "Calculated unrelaxed vertical excitation at one geometry. Spatial redistribution and overlap do not establish TICT, PET kinetics or the emitting state. Atomic contributions refer to the calculation's indexed geometry.",
+        "suggested_claim_strength": "weak_or_proxy",
+        "evidence_tier": "computed_direct_proxy",
+    },
+    "microscopic.optimize_ground_state_geometry": {
+        "observables": ["ground-state optimized geometry", "convergence status"],
+        "useful_for_screening": [],
+        "support_boundary": "Input preparation only; not evidence for an emission mechanism or a frequency-verified minimum.",
+        "suggested_claim_strength": "unsupported",
+        "evidence_tier": "geometry_precondition",
+    },
     "macro.screen_rotor_torsion_topology": {
         "observables": ["rotatable bonds", "torsion topology", "motion-prone groups"],
         "useful_for_screening": ["RIM_RIR_RIV", "RACI_CI_ACCESS", "ICT_TICT_CT"],
@@ -120,27 +134,27 @@ _ABILITY_EVIDENCE_GUIDE: dict[str, dict[str, object]] = {
         "evidence_tier": "structural_trigger",
     },
     "macro.run_dimer_packing_proxy": {
-        "observables": ["single-molecule dimer/contact proxy", "shape complementarity"],
+        "observables": ["aromatic fraction", "logP", "rotatable-bond count", "derived heuristic"],
         "useful_for_screening": [
             "PACKING_HOST_MATRIX_CONFINEMENT",
             "AGGREGATE_EXCITON_EXCIMER",
         ],
         "support_boundary": (
-            "A dimer/contact proxy is not crystal packing, aggregate morphology, "
-            "or dimer excited-state evidence."
+            "No dimer or contact geometry was computed. This recombines existing monomer "
+            "descriptors and adds no independent packing, confinement or excimer evidence."
         ),
         "suggested_claim_strength": "weak_or_proxy",
         "evidence_tier": "structural_trigger",
     },
     "macro.run_aggregate_contact_proxy": {
-        "observables": ["aggregate contact proxy", "pi-contact proxy", "compactness"],
+        "observables": ["logP threshold", "heteroatom-count threshold", "monomer descriptors"],
         "useful_for_screening": [
             "PACKING_HOST_MATRIX_CONFINEMENT",
             "AGGREGATE_EXCITON_EXCIMER",
         ],
         "support_boundary": (
-            "Aggregate contact proxies are not morphology, crystal packing, "
-            "or aggregate excited-state evidence."
+            "No aggregate or contact geometry is computed. These are thresholds on "
+            "monomer descriptors, not independent packing or aggregate observations."
         ),
         "suggested_claim_strength": "weak_or_proxy",
         "evidence_tier": "structural_trigger",
@@ -309,12 +323,34 @@ _ABILITY_EVIDENCE_GUIDE: dict[str, dict[str, object]] = {
         "suggested_claim_strength": "weak_or_proxy",
         "evidence_tier": "electronic_weak_trigger",
     },
+    "microscopic.select_computed_geometry": {
+        "observables": ["explicit geometry selection and provenance"],
+        "useful_for_screening": [],
+        "support_boundary": "Reuses a converged S0 scan geometry without adding evidence or assigning a mechanism. Explicit source and scan member required. Excited-state optimized geometries are suspended.",
+        "suggested_claim_strength": "unsupported", "evidence_tier": "boundary_only",
+    },
+    "microscopic.run_relaxed_coordinate_scan": {
+        "observables": ["constrained optimized structures", "point energies", "endpoint singlet states", "projected force convergence"],
+        "useful_for_screening": ["RIM_RIR_RIV", "ICT_TICT_CT", "ESIPT_PT", "RADIATIVE_RATE_STATE_BALANCE"],
+        "support_boundary": "S0 constrained local optimizations with vertical excited-state comparisons, not reaction paths or rate predictions. S1 force routes are suspended. Geometry changes and energy trends alone do not establish mechanisms.",
+        "suggested_claim_strength": "weak_or_proxy", "evidence_tier": "computed_direct_proxy",
+    },
+    "microscopic.run_excited_state_relaxation": {
+        "observables": ["typed unsupported boundary"],
+        "useful_for_screening": [],
+        "support_boundary": (
+            "Suspended after installed Amesp aTB1/TDA S1/S2 force finite-difference failures. "
+            "Previously converged runs are research records, not validated optimized geometries."
+        ),
+        "suggested_claim_strength": "unsupported",
+        "evidence_tier": "boundary_only",
+    },
     "microscopic.unsupported_excited_state_relaxation": {
         "observables": ["typed unsupported boundary"],
         "useful_for_screening": ["RACI_CI_ACCESS"],
         "support_boundary": (
-            "This route records that CI search, nonadiabatic dynamics, and "
-            "excited-state relaxation are outside current scope."
+            "Legacy boundary route: CI search and nonadiabatic dynamics remain outside current scope. "
+            "run_excited_state_relaxation is also suspended pending force validation."
         ),
         "suggested_claim_strength": "unsupported",
         "evidence_tier": "boundary_only",
@@ -346,6 +382,7 @@ def ability_evidence_guide(
                 "owner_agent": card["owner_agent"],
                 "evidence_family": card["evidence_family"],
                 "required_artifact_kinds": list(card["required_artifact_kinds"]),
+                "source_artifact_kinds": list(card.get("source_artifact_kinds", [])),
                 "observables": list(item["observables"]),  # type: ignore[arg-type]
                 "useful_for_screening": [
                     label
@@ -394,11 +431,16 @@ def compact_ability_evidence_guide(
 
 
 def _compact_boundary(capability_id: str) -> str:
+    if capability_id in {"microscopic.optimize_ground_state_geometry",
+                         "macro.run_dimer_packing_proxy", "macro.run_aggregate_contact_proxy"}:
+        return str(_ABILITY_EVIDENCE_GUIDE[capability_id]["support_boundary"])
     if capability_id == "microscopic.unsupported_excited_state_relaxation":
         return (
-            "Records that explicit CI/nonadiabatic/relaxation evidence is outside "
-            "current scope."
+            "Legacy placeholder; explicit CI/nonadiabatic dynamics are outside current scope. "
+            "run_excited_state_relaxation is also suspended pending force validation."
         )
+    if capability_id == "microscopic.run_excited_state_relaxation":
+        return "Suspended after excited-state force checks; no character tracking or validated optimized geometry."
     if capability_id.startswith("macro."):
         return "Structural/proxy screening only; not direct photophysical or wet-lab evidence."
     if capability_id in {

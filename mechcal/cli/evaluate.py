@@ -15,10 +15,11 @@ from mechcal.eval.mechanism_ranking import (
     score_mechanism_ranking,
 )
 from mechcal.public_ids import anonymized_case_id
-from mechcal.runtime.ablations import ABLATION_MODES, AblationMode
+from mechcal.runtime.ablations import ABLATION_MODES, AblationMode, ablation_policy
 from mechcal.runtime.llm import OpenAICompatibleSettings
 from mechcal.runtime.orchestrator import MechCALOrchestrator, OrchestratorConfig
 from mechcal.runtime.output_assembler import OutputAssembler
+from mechcal.runtime.progress import ExperimentProgress
 from mechcal.schemas import CaseRun
 
 
@@ -37,9 +38,18 @@ def main() -> None:
         default=Path("outputs/mechcal"),
     )
     parser.add_argument("--case-id", action="append", default=[])
+    parser.add_argument("--decision-mode", choices=("legacy", "question_loop_v1"), default="legacy")
+    parser.add_argument("--comparative-evidence", action="store_true")
     parser.add_argument("--exclude-case", action="append", default=[])
     parser.add_argument("--limit", type=int, default=None)
-    parser.add_argument("--max-rounds", type=int, default=30)
+    round_limits = parser.add_mutually_exclusive_group()
+    round_limits.add_argument("--max-rounds", type=int, default=30)
+    round_limits.add_argument(
+        "--max-exploration-rounds", type=int, default=None,
+        help="Enable Planner stop review: N exploration rounds plus tool-free final synthesis.",
+    )
+    round_limits.add_argument("--unlimited-exploration", action="store_true",
+                              help="Enable Planner stop review without an exploration-round cap.")
     parser.add_argument(
         "--ablation-mode",
         choices=ABLATION_MODES,
@@ -47,6 +57,7 @@ def main() -> None:
         help="Run Full MechCAL or one registered component ablation.",
     )
     parser.add_argument("--refresh", action="store_true")
+    parser.add_argument("--progress", choices=("auto", "off"), default="auto")
     parser.add_argument(
         "--public-case-id-map",
         type=Path,
@@ -127,6 +138,13 @@ def main() -> None:
         ),
     )
     args = parser.parse_args()
+    if args.decision_mode == "question_loop_v1" and not (args.unlimited_exploration or args.max_exploration_rounds):
+        parser.error("question_loop_v1 requires --max-exploration-rounds or --unlimited-exploration")
+    if args.max_exploration_rounds is not None:
+        if args.max_exploration_rounds < 1 or ablation_policy(args.ablation_mode).workflow != "iterative":
+            parser.error("--max-exploration-rounds requires a positive limit and an iterative workflow")
+    if args.unlimited_exploration and ablation_policy(args.ablation_mode).workflow != "iterative":
+        parser.error("--unlimited-exploration requires an iterative workflow")
 
     settings = OpenAICompatibleSettings.from_env()
     missing = settings.missing_fields()
@@ -157,6 +175,12 @@ def main() -> None:
             "case_dir": str(args.case_dir.expanduser().resolve()),
             "selected_case_count": len(cases),
             "max_rounds": args.max_rounds,
+            "max_exploration_rounds": args.max_exploration_rounds,
+            "unlimited_exploration": args.unlimited_exploration,
+            "decision_mode": args.decision_mode,
+            "comparative_evidence": args.comparative_evidence,
+            "stopping_protocol": "planner_stop_v1"
+            if args.max_exploration_rounds is not None or args.unlimited_exploration else "legacy",
             "subject_model": settings.model,
             "support_judge_model": support_judge.model,
             "support_judge_prompt_version": MECHANISM_EVIDENCE_SUPPORT_PROMPT_VERSION,
@@ -169,133 +193,159 @@ def main() -> None:
             "hidden_reference_available_to_subject": False,
         },
     )
-    rows: list[dict[str, object]] = []
-    for index, case in enumerate(cases, start=1):
-        case_id = str(case["case_id"])
-        print(f"[{index}/{len(cases)}] {case_id}", flush=True)
-        case_run = _run_or_load_mas(
-            case,
-            output_dir=output_dir,
-            run_base_dir=run_base_dir,
-            max_rounds=args.max_rounds,
-            ablation_mode=args.ablation_mode,
-            enable_amesp=not args.no_amesp,
-            enable_support_auditor=not args.disable_support_auditor,
-            enable_agenda_coverage_reviewer=not args.disable_agenda_coverage_reviewer,
-            enable_incremental_mechanism_portfolio=args.enable_incremental_portfolio,
-            enable_support_auditor_web_search=args.enable_support_auditor_web_search,
-            continue_on_arbiter_failure=not args.fail_on_arbiter_error,
-            continue_on_planner_update_failure=not args.fail_on_planner_timeout,
-            verifier_failure_stop_threshold=args.verifier_failure_stop_threshold,
-            refresh=args.refresh,
-        )
-        predictions = _prediction_payload(case_run)
-        evaluation_status = "scored"
-        evaluation_failure = None
-        if case_run.status == "failed":
-            evaluation_status = "mas_failed"
-            evaluation_failure = case_run.runtime.get("failure")
-            support = {"support_scores": {}, "judgements": []}
-            scores = _unscored_metrics()
-        else:
-            try:
-                support = _judge_support_with_retries(
-                    predictions,
-                    judge=support_judge,
-                    label=case_id,
-                )
-                scores = score_mechanism_ranking(
-                    predictions,
-                    case["reference_mechanisms"],  # type: ignore[arg-type]
-                    support_scores=support["support_scores"],  # type: ignore[arg-type]
-                )
-            except Exception as exc:  # noqa: BLE001
-                evaluation_status = "judge_failed"
+    with ExperimentProgress(
+        output_dir, [str(case['case_id']) for case in cases], method='MechCAL',
+        model=settings.model, judge=support_judge.model,
+        max_rounds=None if args.unlimited_exploration else (
+            args.max_exploration_rounds + 1 if args.max_exploration_rounds is not None else args.max_rounds
+        ),
+        mode=args.progress,
+    ) as progress:
+        rows: list[dict[str, object]] = []
+        for index, case in enumerate(cases, start=1):
+            case_id = str(case["case_id"])
+            progress.start(case_id, run_dir=run_base_dir / case_id)
+            print(f"[{index}/{len(cases)}] {case_id}", flush=True)
+            case_run = _run_or_load_mas(
+                case,
+                output_dir=output_dir,
+                run_base_dir=run_base_dir,
+                max_rounds=args.max_rounds,
+                max_exploration_rounds=args.max_exploration_rounds,
+                unlimited_exploration=args.unlimited_exploration,
+                decision_mode=args.decision_mode,
+                comparative_evidence=args.comparative_evidence,
+                ablation_mode=args.ablation_mode,
+                enable_amesp=not args.no_amesp,
+                enable_support_auditor=not args.disable_support_auditor,
+                enable_agenda_coverage_reviewer=not args.disable_agenda_coverage_reviewer,
+                enable_incremental_mechanism_portfolio=args.enable_incremental_portfolio,
+                enable_support_auditor_web_search=args.enable_support_auditor_web_search,
+                continue_on_arbiter_failure=not args.fail_on_arbiter_error,
+                continue_on_planner_update_failure=not args.fail_on_planner_timeout,
+                verifier_failure_stop_threshold=args.verifier_failure_stop_threshold,
+                refresh=args.refresh,
+            )
+            predictions = _prediction_payload(case_run)
+            evaluation_status = "scored"
+            evaluation_failure = None
+            if case_run.status in {"failed", "paused"}:
+                evaluation_status = "mas_paused" if case_run.status == "paused" else "mas_failed"
+                evaluation_failure = case_run.runtime.get("failure")
+                support = {"support_scores": {}, "judgements": []}
+                scores = _unscored_metrics()
+            elif not predictions:
+                evaluation_status = "invalid_output"
                 evaluation_failure = {
-                    "type": type(exc).__name__,
-                    "message": str(exc),
+                    "type": "MissingMechanismPredictions",
+                    "message": "The run ended without mechanism predictions; no score assigned.",
                 }
                 support = {"support_scores": {}, "judgements": []}
                 scores = _unscored_metrics()
-        row = {
-            "case_id": case_id,
-            "status": case_run.status,
-            "ablation_mode": (case_run.runtime.get("ablation") or {}).get(
-                "mode",
-                args.ablation_mode,
-            ),
-            "evaluation_status": evaluation_status,
-            "evaluation_failure": evaluation_failure,
-            "round_count": len(case_run.round_ids),
-            "verifier_failure_count": len(
-                case_run.runtime.get("verifier_failures", [])
-            ),
-            "planner_failure_count": len(case_run.runtime.get("planner_failures", [])),
-            "mechanism_critic_failure_count": len(
-                case_run.runtime.get("mechanism_critic_failures", [])
-            ),
-            "support_auditor_enabled": bool(
-                (case_run.runtime.get("support_auditor") or {}).get("enabled", True)
-            ),
-            "support_auditor_skipped_round_count": len(
-                case_run.runtime.get("support_auditor_skipped_rounds", [])
-            ),
-            "agenda_coverage_reviewer_enabled": bool(
-                (case_run.runtime.get("agenda_coverage_reviewer") or {}).get(
-                    "enabled",
-                    True,
-                )
-            ),
-            "incremental_mechanism_portfolio_enabled": bool(
-                (case_run.runtime.get("incremental_mechanism_portfolio") or {}).get(
-                    "enabled",
-                    True,
-                )
-            ),
-            "runtime_failure": case_run.runtime.get("failure"),
-            "worker_call_counts": case_run.runtime.get("worker_call_counts", {}),
-            "termination": case_run.runtime.get("termination"),
-            "subject_model": settings.model,
-            "support_judge_model": support_judge.model,
-            "rubric_version": support_judge.rubric.get(
-                "mechanism_evidence_rubric_version"
-            ),
-            "reference_mechanisms": case["reference_mechanisms"],
-            "mechanism_predictions": predictions,
-            "support_judgements": support["judgements"],
-            "scores": scores,
-            "case_run_path": str((run_base_dir / case_id / "case_run.json").resolve()),
-        }
-        rows.append(row)
-        _write_json(eval_dir / f"{case_id}.json", row)
-        _write_summary(output_dir / "summary.json", rows)
-        print(
-            "  "
-            + _compact_score_text(scores)
-            + f"; status={case_run.status}; rounds={len(case_run.round_ids)}"
-            + f"; verifier_failures={row['verifier_failure_count']}"
-            + f"; planner_failures={row['planner_failure_count']}"
-            + f"; mechanism_critic_failures={row['mechanism_critic_failure_count']}"
-            + f"; support_auditor_enabled={row['support_auditor_enabled']}"
-            + f"; agenda_coverage_enabled={row['agenda_coverage_reviewer_enabled']}"
-            + "; incremental_portfolio_enabled="
-            + f"{row['incremental_mechanism_portfolio_enabled']}"
-            + f"; ablation_mode={row['ablation_mode']}"
-            + f"; evaluation_status={evaluation_status}",
-            flush=True,
-        )
-        if evaluation_failure is not None:
+            else:
+                try:
+                    progress.update(case_id, "judging")
+                    support = _judge_support_with_retries(
+                        predictions,
+                        judge=support_judge,
+                        label=case_id,
+                    )
+                    progress.update(case_id, "scoring")
+                    scores = score_mechanism_ranking(
+                        predictions,
+                        case["reference_mechanisms"],  # type: ignore[arg-type]
+                        support_scores=support["support_scores"],  # type: ignore[arg-type]
+                    )
+                except Exception as exc:  # noqa: BLE001
+                    evaluation_status = "judge_failed"
+                    evaluation_failure = {
+                        "type": type(exc).__name__,
+                        "message": str(exc),
+                    }
+                    support = {"support_scores": {}, "judgements": []}
+                    scores = _unscored_metrics()
+            row = {
+                "case_id": case_id,
+                "status": case_run.status,
+                "ablation_mode": (case_run.runtime.get("ablation") or {}).get(
+                    "mode",
+                    args.ablation_mode,
+                ),
+                "evaluation_status": evaluation_status,
+                "evaluation_failure": evaluation_failure,
+                "round_count": len(case_run.round_ids),
+                "verifier_failure_count": len(
+                    case_run.runtime.get("verifier_failures", [])
+                ),
+                "planner_failure_count": len(case_run.runtime.get("planner_failures", [])),
+                "mechanism_critic_failure_count": len(
+                    case_run.runtime.get("mechanism_critic_failures", [])
+                ),
+                "support_auditor_enabled": bool(
+                    (case_run.runtime.get("support_auditor") or {}).get("enabled", True)
+                ),
+                "support_auditor_skipped_round_count": len(
+                    case_run.runtime.get("support_auditor_skipped_rounds", [])
+                ),
+                "agenda_coverage_reviewer_enabled": bool(
+                    (case_run.runtime.get("agenda_coverage_reviewer") or {}).get(
+                        "enabled",
+                        True,
+                    )
+                ),
+                "incremental_mechanism_portfolio_enabled": bool(
+                    (case_run.runtime.get("incremental_mechanism_portfolio") or {}).get(
+                        "enabled",
+                        True,
+                    )
+                ),
+                "runtime_failure": case_run.runtime.get("failure"),
+                "worker_call_counts": case_run.runtime.get("worker_call_counts", {}),
+                "termination": case_run.runtime.get("termination"),
+                "subject_model": settings.model,
+                "support_judge_model": support_judge.model,
+                "rubric_version": support_judge.rubric.get(
+                    "mechanism_evidence_rubric_version"
+                ),
+                "reference_mechanisms": case["reference_mechanisms"],
+                "mechanism_predictions": predictions,
+                "support_judgements": support["judgements"],
+                "scores": scores,
+                "case_run_path": str((run_base_dir / case_id / "case_run.json").resolve()),
+            }
+            rows.append(row)
+            _write_json(eval_dir / f"{case_id}.json", row)
+            _write_summary(output_dir / "summary.json", rows)
+            progress.finish(case_id, status="done" if evaluation_status == "scored" else
+                            "interrupted" if evaluation_status == "mas_paused" else "failed",
+                            detail=f"{case_run.status}; {evaluation_status}", scores=scores)
             print(
-                f"    evaluation_failure={evaluation_failure['type']}: "
-                f"{evaluation_failure['message']}",
+                "  "
+                + _compact_score_text(scores)
+                + f"; status={case_run.status}; rounds={len(case_run.round_ids)}"
+                + f"; verifier_failures={row['verifier_failure_count']}"
+                + f"; planner_failures={row['planner_failure_count']}"
+                + f"; mechanism_critic_failures={row['mechanism_critic_failure_count']}"
+                + f"; support_auditor_enabled={row['support_auditor_enabled']}"
+                + f"; agenda_coverage_enabled={row['agenda_coverage_reviewer_enabled']}"
+                + "; incremental_portfolio_enabled="
+                + f"{row['incremental_mechanism_portfolio_enabled']}"
+                + f"; ablation_mode={row['ablation_mode']}"
+                + f"; evaluation_status={evaluation_status}",
                 flush=True,
             )
-        for prediction in predictions[:3]:
-            print(
-                f"    rank {prediction['rank']}: {prediction['label']} "
-                f"conf={prediction['confidence']} refs={prediction['evidence_refs']}",
-                flush=True,
-            )
+            if evaluation_failure is not None:
+                print(
+                    f"    evaluation_failure={evaluation_failure['type']}: "
+                    f"{evaluation_failure['message']}",
+                    flush=True,
+                )
+            for prediction in predictions[:3]:
+                print(
+                    f"    rank {prediction['rank']}: {prediction['label']} "
+                    f"conf={prediction['confidence']} refs={prediction['evidence_refs']}",
+                    flush=True,
+                )
 
 
 def _load_cases(case_dir: Path) -> list[dict[str, object]]:
@@ -369,6 +419,10 @@ def _run_or_load_mas(
     continue_on_planner_update_failure: bool,
     verifier_failure_stop_threshold: int,
     refresh: bool,
+    max_exploration_rounds: int | None = None,
+    unlimited_exploration: bool = False,
+    decision_mode: str = "legacy",
+    comparative_evidence: bool = False,
 ) -> CaseRun:
     case_id = str(case["case_id"])
     case_run_path = run_base_dir / case_id / "case_run.json"
@@ -376,7 +430,15 @@ def _run_or_load_mas(
         shutil.rmtree(run_base_dir / case_id)
     if case_run_path.exists() and not refresh:
         case_run = CaseRun.model_validate_json(case_run_path.read_text(encoding="utf-8"))
-        if case_run.status in {"finalized", "stopped", "failed"}:
+        if case_run.status in {"finalized", "stopped", "failed", "paused"}:
+            if case_run.runtime.get("decision_mode", "legacy") != decision_mode:
+                raise RuntimeError("Existing case uses a different decision mode; use a new directory.")
+            if case_run.runtime.get("comparative_evidence", False) != comparative_evidence:
+                raise RuntimeError("Existing case uses a different evidence-comparison protocol; use a new directory.")
+            existing_limit = case_run.runtime.get("run_limits", {}).get("max_exploration_rounds")
+            existing_unlimited = case_run.runtime.get("run_limits", {}).get("unlimited_exploration", False)
+            if existing_limit != max_exploration_rounds or existing_unlimited != unlimited_exploration:
+                raise RuntimeError("Existing case uses a different stopping protocol/limit. Use a new output directory.")
             existing_mode = (case_run.runtime.get("ablation") or {}).get("mode")
             if existing_mode != ablation_mode:
                 raise RuntimeError(
@@ -390,6 +452,10 @@ def _run_or_load_mas(
             OrchestratorConfig(
                 run_base_dir=run_base_dir,
                 max_rounds=max_rounds,
+                max_exploration_rounds=max_exploration_rounds,
+                unlimited_exploration=unlimited_exploration,
+                decision_mode=decision_mode,
+                comparative_evidence=comparative_evidence,
                 ablation_mode=ablation_mode,
                 enable_llm_planner=True,
                 enable_llm_worker_planning=False,

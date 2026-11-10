@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import uuid
 from dataclasses import dataclass, replace
+from itertools import count
 from pathlib import Path
 
 from mechcal.agents import (
@@ -16,6 +17,7 @@ from mechcal.agents import (
     WorkerAgent,
 )
 from mechcal.agents.mechanism_agenda import program_from_coverage
+from mechcal.agents.evidence_context import calculation_record
 from mechcal.agents.photophysics_arbiter import DisabledPhotophysicsWebSearch
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
 from mechcal.public_ids import normalize_public_case_id
@@ -32,7 +34,6 @@ from mechcal.runtime.claims import (
 )
 from mechcal.runtime.context import build_planner_context
 from mechcal.runtime.gates import (
-    DISCRIMINATING_FOLLOWUP_CAPABILITY_IDS,
     DeterministicGate,
     GatePolicy,
 )
@@ -47,7 +48,6 @@ from mechcal.schemas import (
     CaseRun,
     DecisionGateResult,
     DifferentialMechanismPortfolio,
-    DifferentialMechanismPortfolioRow,
     DispatchRequest,
     EvidenceLedger,
     FinalAnswer,
@@ -56,8 +56,11 @@ from mechcal.schemas import (
     MechanismPriorityDelta,
     MechanismSupportArgument,
     MechanismSupportAudit,
+    PlannerDecision,
     RoundRecord,
+    ToolExecutionResult,
 )
+from mechcal.schemas.decisions import StopReview
 from mechcal.tools import (
     LocalMacroTool,
     LocalMicroscopicTool,
@@ -91,13 +94,127 @@ class OrchestratorConfig:
     continue_on_planner_update_failure: bool = False
     continue_on_mechanism_critic_failure: bool = True
     verifier_failure_stop_threshold: int = 0
-    convergence_min_rounds: int = 6
-    convergence_window: int = 3
     defer_review_until_portfolio: bool = False
+    planner_tool_loading: str = "eager"
+    # Explicit opt-in: legacy max_rounds keeps its inclusive final-round semantics.
+    max_exploration_rounds: int | None = None
+    unlimited_exploration: bool = False
+    decision_mode: str = "legacy"
+    comparative_evidence: bool = False
+    decision_value_checks: bool = False
+    hypothesis_tests: bool = False
+    evidence_decision_contracts: bool = False
+    decision_economy: bool = False
+    planner_case_memory: bool = False
+    planner_delta_context: bool = False
+    incremental_judgment: bool = False
+    scoped_evidence_updates: bool = False
+    planner_strict_outputs: bool = False
+    predecision_comparison: bool = False
+    final_delivery_v2: bool = False
+    candidate_expansion_mode: str = "off"
+    planner_command_protocol: bool = False
+    command_native_tools: bool = False
+    command_hypothesis_tracking: bool = False
+    command_evidence_followup: bool = False
+    command_review_workflow: bool = False
+    command_computational_review: bool = False
+    command_compact_context: bool = False
+    command_task_context: bool = False
+    command_worker_tasks: bool = False
+    command_delivery_max_model_turns: int = 12
+    worker_task_max_calls: int = 12
+    worker_task_max_computations: int = 4
+    worker_task_seconds: float = 900.0
 
     def __post_init__(self) -> None:
+        if type(self.command_delivery_max_model_turns) is not int or self.command_delivery_max_model_turns < 1:
+            raise ValueError("Delivery model-turn allowance must be a positive integer")
+        if self.command_worker_tasks and not self.command_native_tools:
+            raise ValueError("command_worker_tasks requires command_native_tools")
+        if min(self.worker_task_max_calls, self.worker_task_max_computations, self.worker_task_seconds) <= 0:
+            raise ValueError("Worker task limits must be positive")
+        if self.planner_command_protocol and self.decision_mode != "question_loop_v1":
+            raise ValueError("planner_command_protocol requires question_loop_v1 run configuration")
+        if self.command_native_tools and not self.planner_command_protocol:
+            raise ValueError("command_native_tools requires planner_command_protocol")
+        if self.command_compact_context and not self.command_native_tools:
+            raise ValueError("command_compact_context requires command_native_tools")
+        if self.command_task_context and not (self.command_compact_context and self.command_review_workflow):
+            raise ValueError("command_task_context requires compact context and review workflow")
+        if self.command_hypothesis_tracking and not self.command_native_tools:
+            raise ValueError("command_hypothesis_tracking requires command_native_tools")
+        if self.command_evidence_followup and not self.command_hypothesis_tracking:
+            raise ValueError("command_evidence_followup requires command_hypothesis_tracking")
+        if self.command_review_workflow and not self.command_evidence_followup:
+            raise ValueError("command_review_workflow requires command_evidence_followup")
+        if self.command_computational_review and not self.command_review_workflow:
+            raise ValueError("command_computational_review requires command_review_workflow")
+        if self.command_computational_review and not self.effective_agenda_coverage_reviewer:
+            raise ValueError("command_computational_review requires the final Reviewer")
+        if self.predecision_comparison and not (self.incremental_judgment and self.comparative_evidence):
+            raise ValueError("predecision_comparison requires incremental_judgment and comparative_evidence")
+        if self.predecision_comparison and not self.effective_agenda_coverage_reviewer:
+            raise ValueError("predecision_comparison requires the Coverage Reviewer; ablations cannot bypass this switch")
+        if self.planner_delta_context and not (
+            self.planner_case_memory and self.scoped_evidence_updates and self.planner_strict_outputs
+        ):
+            raise ValueError("planner_delta_context requires case memory, scoped updates and strict outputs")
+        if self.scoped_evidence_updates and not self.incremental_judgment:
+            raise ValueError("scoped_evidence_updates requires incremental_judgment")
+        if self.final_delivery_v2 and not self.incremental_judgment:
+            raise ValueError("final_delivery_v2 requires incremental_judgment")
+        if self.planner_strict_outputs and not self.incremental_judgment:
+            raise ValueError("planner_strict_outputs requires incremental_judgment")
+        if self.planner_case_memory and self.decision_mode != "question_loop_v1":
+            raise ValueError("planner_case_memory requires question_loop_v1")
+        if self.incremental_judgment and not (
+            self.planner_case_memory and self.decision_economy
+            and self.decision_mode == "question_loop_v1"
+        ):
+            raise ValueError("incremental_judgment requires case memory, decision economy and question_loop_v1")
+        if self.decision_economy and not self.evidence_decision_contracts:
+            raise ValueError("decision_economy requires evidence_decision_contracts")
+        if self.evidence_decision_contracts and not self.decision_value_checks:
+            raise ValueError("evidence_decision_contracts requires decision_value_checks")
+        if self.candidate_expansion_mode not in {"off", "reflection", "independent"}:
+            raise ValueError("Unknown candidate_expansion_mode")
+        if self.candidate_expansion_mode != "off" and (
+                not self.hypothesis_tests or not self.effective_agenda_coverage_reviewer):
+            raise ValueError("Candidate expansion requires hypothesis_tests and Coverage Reviewer")
+        if self.hypothesis_tests and not self.decision_value_checks:
+            raise ValueError("hypothesis_tests requires decision_value_checks")
+        if self.decision_value_checks and not self.comparative_evidence:
+            raise ValueError("decision_value_checks requires comparative_evidence")
+        if self.comparative_evidence and self.decision_mode != "question_loop_v1":
+            raise ValueError("comparative_evidence requires question_loop_v1")
+        if self.decision_mode not in {"legacy", "question_loop_v1"}:
+            raise ValueError("Unknown decision_mode")
+        if self.decision_mode == "question_loop_v1" and not self.planner_stopping_enabled:
+            raise ValueError("question_loop_v1 requires an explicit exploration limit or unlimited exploration")
+        if self.planner_tool_loading not in {"eager", "on_demand"}:
+            raise ValueError("planner_tool_loading must be eager or on_demand")
         if self.ablation_mode not in ABLATION_MODES:
             raise ValueError(f"Unknown ablation_mode: {self.ablation_mode}")
+        if self.max_exploration_rounds is not None:
+            if self.max_exploration_rounds < 1:
+                raise ValueError("max_exploration_rounds must be positive")
+            if self.unlimited_exploration:
+                raise ValueError("Choose a finite exploration limit or unlimited_exploration, not both")
+        if self.planner_stopping_enabled and self.ablation_policy.workflow != "iterative":
+            raise ValueError("Separate exploration and synthesis require the iterative workflow")
+
+    @property
+    def planner_stopping_enabled(self) -> bool:
+        return self.unlimited_exploration or self.max_exploration_rounds is not None
+
+    @property
+    def decision_round_limit(self) -> int | None:
+        if self.unlimited_exploration:
+            return None
+        if self.max_exploration_rounds is not None:
+            return self.max_exploration_rounds + 1
+        return self.max_rounds
 
     @property
     def ablation_policy(self) -> AblationPolicy:
@@ -190,6 +307,7 @@ def default_deps(config: OrchestratorConfig) -> OrchestratorDeps:
             capability_registry=capability_registry,
             llm_client=planner_llm_client,
             enable_llm_decisions=config.enable_llm_planner,
+            tool_loading_mode=config.planner_tool_loading,
         ),
         mechanism_agenda=MechanismAgendaAgent(
             capability_registry=capability_registry,
@@ -200,7 +318,7 @@ def default_deps(config: OrchestratorConfig) -> OrchestratorDeps:
             web_search=None
             if config.enable_support_auditor_web_search
             else DisabledPhotophysicsWebSearch(),
-            max_attempts=1,
+            max_attempts=3,
         ),
         mechanism_critic=MechanismCriticAgent(
             llm_client=reviewer_llm_client,
@@ -260,6 +378,7 @@ def mcp_deps(config: OrchestratorConfig, transport: McpTransport) -> Orchestrato
             capability_registry=capability_registry,
             llm_client=planner_llm_client,
             enable_llm_decisions=config.enable_llm_planner,
+            tool_loading_mode=config.planner_tool_loading,
         ),
         mechanism_agenda=MechanismAgendaAgent(
             capability_registry=capability_registry,
@@ -270,7 +389,7 @@ def mcp_deps(config: OrchestratorConfig, transport: McpTransport) -> Orchestrato
             web_search=None
             if config.enable_support_auditor_web_search
             else DisabledPhotophysicsWebSearch(),
-            max_attempts=1,
+            max_attempts=3,
         ),
         mechanism_critic=MechanismCriticAgent(
             llm_client=reviewer_llm_client,
@@ -306,12 +425,18 @@ class MechCALOrchestrator:
         user_query: str,
         case_id: str | None = None,
         public_case_id: str | None = None,
+        resume: bool = False,
     ) -> CaseRun:
         case_id = case_id or uuid.uuid4().hex[:12]
         public_case_id = normalize_public_case_id(public_case_id)
         store = RunStore(self.config.run_base_dir, case_id)
         store.initialize()
-        store.write_capability_catalog(self.deps.capability_registry.snapshot())
+        if resume and self.config.decision_mode != "question_loop_v1":
+            raise ValueError("Explicit stage resume is supported only for question_loop_v1")
+        if self.config.decision_mode == "question_loop_v1" and (store.root / "question_checkpoint.json").exists() and not resume:
+            raise FileExistsError("Existing question-loop run; use resume or a fresh case directory")
+        if self.config.decision_mode != "question_loop_v1":
+            store.write_capability_catalog(self.deps.capability_registry.snapshot())
 
         case_input = CaseInput(
             case_id=case_id,
@@ -323,6 +448,42 @@ class MechCALOrchestrator:
         runtime = {
             "orchestrator": "mechcal",
             "langgraph": False,
+            "planner_tool_loading": self.config.planner_tool_loading,
+            "decision_mode": self.config.decision_mode,
+            "comparative_evidence": self.config.comparative_evidence,
+            "decision_value_checks": self.config.decision_value_checks,
+            "hypothesis_tests": self.config.hypothesis_tests,
+            "evidence_decision_contracts": self.config.evidence_decision_contracts,
+            "decision_economy": self.config.decision_economy,
+            "planner_case_memory": self.config.planner_case_memory,
+            "planner_delta_context": self.config.planner_delta_context,
+                "planner_strict_outputs": self.config.planner_strict_outputs,
+                "final_delivery_v2": self.config.final_delivery_v2,
+            "incremental_judgment": self.config.incremental_judgment,
+            "scoped_evidence_updates": self.config.scoped_evidence_updates,
+            "predecision_comparison": self.config.predecision_comparison,
+            "candidate_expansion_mode": self.config.candidate_expansion_mode,
+            "tool_environment": {"amesp_enabled": self.config.enable_amesp},
+            "decision_policy": (
+                ("planner_stop_v1" if self.config.planner_stopping_enabled
+                 else "planner_assessment_loop_v6")
+                if policy.workflow == "iterative"
+                else policy.workflow
+            ),
+            "run_limits": {
+                "max_rounds": self.config.max_rounds,
+                "last_round_reserved_for_final_decision": policy.workflow == "iterative",
+                **({
+                    "stopping_protocol": "planner_stop_v1",
+                    "max_rounds": self.config.decision_round_limit,
+                    "max_exploration_rounds": self.config.max_exploration_rounds,
+                    "unlimited_exploration": self.config.unlimited_exploration,
+                    "legacy_max_rounds_applies": False,
+                    "last_round_reserved_for_final_decision": False,
+                    "exploration_rounds_used": 0,
+                    "scientific_tools_allowed": True,
+                } if self.config.planner_stopping_enabled else {}),
+            },
             "ablation": {
                 "mode": policy.mode,
                 "workflow": policy.workflow,
@@ -332,11 +493,15 @@ class MechCALOrchestrator:
                 "disabled_capability_owners": list(policy.disabled_worker_agents),
                 "worker_calls_per_agent_limit": policy.worker_calls_per_agent_limit,
                 "max_rounds": self.config.max_rounds,
+                "max_exploration_rounds": self.config.max_exploration_rounds,
+                "unlimited_exploration": self.config.unlimited_exploration,
                 "incremental_mechanism_portfolio": (
-                    self.config.enable_incremental_mechanism_portfolio
+                    self.config.enable_incremental_mechanism_portfolio or self.config.decision_mode == "question_loop_v1"
                 ),
                 "subject_model": _configured_model_name(self.deps.planner),
-                "prompt_files": _ablation_prompt_files(policy),
+                "prompt_files": _ablation_prompt_files(policy) + (
+                    ["planner_tool_discovery.md"] if self.config.planner_tool_loading == "on_demand" else []
+                ),
                 "private_answer_key_access": "none",
                 "case_specific_rules": "none",
             },
@@ -363,7 +528,7 @@ class MechCALOrchestrator:
                     mode=policy.mode,
                 ),
             }
-        if not self.config.enable_incremental_mechanism_portfolio:
+        if not self.config.enable_incremental_mechanism_portfolio and self.config.decision_mode != "question_loop_v1":
             runtime["incremental_mechanism_portfolio"] = {
                 "enabled": False,
                 "policy": "stateless_ranking_with_feedback_retained",
@@ -377,17 +542,44 @@ class MechCALOrchestrator:
             artifact_manifest=ArtifactManifest(case_id=case_id),
             runtime=runtime,
         )
+        if self.config.planner_command_protocol:
+            from mechcal.runtime.command_loop import run_command_loop
+
+            return run_command_loop(self, case_run, store, resume=resume)
+        if self.config.decision_mode == "question_loop_v1":
+            from mechcal.runtime.question_loop import run_question_loop
+
+            return run_question_loop(self, case_run, store, resume=resume)
         store.write_case_input(case_input)
         store.write_json("ablation_manifest.json", runtime["ablation"])
         try:
+            store.activity("Prepare structure")
             case_run = self._prepare_structure(case_run, store)
             if policy.workflow == "parallel_summary":
                 return self._run_parallel_worker_summary(case_run, store)
             if policy.workflow == "one_pass":
                 return self._run_one_pass_mechcal(case_run, store)
 
-            for round_index in range(1, self.config.max_rounds + 1):
+            limit = self.config.decision_round_limit
+            round_indices = count(1) if limit is None else range(1, limit + 1)
+            for round_index in round_indices:
                 round_id = f"R{round_index:03d}"
+                if self.config.planner_stopping_enabled:
+                    case_run = case_run.touch(runtime={
+                        **case_run.runtime,
+                        "proposed_stop": None,
+                        "stop_review_feedback": None,
+                        "run_limits": {
+                            **case_run.runtime["run_limits"],
+                            "exploration_rounds_used": round_index - 1,
+                            "exploration_rounds_remaining": None if self.config.unlimited_exploration else max(
+                                0, self.config.max_exploration_rounds - round_index + 1,
+                            ),
+                            "scientific_tools_allowed": self.config.unlimited_exploration
+                            or round_index <= self.config.max_exploration_rounds,
+                        },
+                    })
+                    store.write_case_run(case_run)
                 if self._should_review_agenda_coverage(case_run, round_index=round_index):
                     case_run = self._review_agenda_coverage(
                         case_run,
@@ -395,19 +587,33 @@ class MechCALOrchestrator:
                         round_id=round_id,
                     )
                 try:
-                    decision = (
-                        self.deps.planner.plan_initial(case_run, round_id=round_id)
-                        if round_index == 1
-                        else self.deps.planner.plan_update(
-                            build_planner_context(
-                                case_run,
-                                round_index=round_index,
-                                max_rounds=self.config.max_rounds,
-                            ),
-                            self._planner_case_view(case_run),
-                            round_id=round_id,
+                    synthesis_only = case_run.runtime["run_limits"].get("scientific_tools_allowed") is False
+                    store.activity("Planner final synthesis" if synthesis_only else "Planner", round_id)
+                    if synthesis_only:
+                        decision = self.deps.planner.synthesize_at_limit(
+                            self._planner_case_view(case_run), round_id=round_id,
+                            **self._discovery_kwargs(store),
                         )
-                    )
+                    else:
+                        decision = (
+                            self.deps.planner.plan_initial(
+                                case_run, round_id=round_id, **self._discovery_kwargs(store),
+                            )
+                            if round_index == 1
+                            else self.deps.planner.plan_update(
+                                build_planner_context(
+                                    case_run,
+                                    round_index=round_index,
+                                    max_rounds=self.config.decision_round_limit,
+                                ),
+                                self._planner_case_view(case_run),
+                                round_id=round_id,
+                                **self._discovery_kwargs(store),
+                            )
+                        )
+                    if (self.config.planner_stopping_enabled
+                            and decision.action == "finalize" and not decision.failure.is_failure):
+                        case_run, decision = self._review_planned_stop(case_run, decision, store)
                 except Exception as exc:  # noqa: BLE001
                     if not self._can_stop_after_transient_planner_failure(
                         round_index=round_index,
@@ -426,9 +632,18 @@ class MechCALOrchestrator:
                         store,
                         attempted_round_id=round_id,
                     )
+                case_run = self._retain_tool_discovery(case_run, decision)
                 case_run = case_run.touch(
                     current_round_id=round_id,
-                    portfolio=decision.portfolio,
+                    runtime={
+                        **case_run.runtime,
+                        "last_planner_assessment": {
+                            "round_id": round_id,
+                            **decision.decision_assessment.model_dump(mode="json"),
+                        } if decision.decision_assessment is not None
+                        else case_run.runtime.get("last_planner_assessment"),
+                    },
+                    portfolio=case_run.portfolio if decision.failure.is_failure else decision.portfolio,
                     mechanism_priority_deltas=_merge_priority_deltas(
                         case_run.mechanism_priority_deltas,
                         decision.priority_deltas,
@@ -478,48 +693,21 @@ class MechCALOrchestrator:
                     store,
                 )
                 case_run = self._apply_reports(case_run, reports)
+                if self.config.planner_stopping_enabled:
+                    case_run = case_run.touch(runtime={
+                        **case_run.runtime,
+                        "run_limits": {**case_run.runtime["run_limits"], "exploration_rounds_used": round_index},
+                    })
                 round_record = round_record.model_copy(update={"agent_reports": reports})
                 case_run = self._record_round(case_run, round_record, store)
-                if self._can_finalize_on_evidence_sufficiency_after_round(
-                    case_run,
-                    store=store,
-                    gate_result=gate_result,
-                    calibrated_after_dispatch=False,
-                ):
-                    return self._finish_converged_case(case_run, store)
                 if self._should_run_post_dispatch_review(case_run):
                     case_run = self._audit_current_round(case_run, store)
                     case_run = self._update_mechanism_reviewer_portfolio(case_run, store)
-                calibrated_after_dispatch = False
-                if self._should_calibrate_portfolio_midrun(
-                    case_run,
-                    round_index=round_index,
-                ):
-                    case_run = self._calibrate_final_planner_portfolio(
-                        case_run,
-                        store,
-                        force=True,
-                    )
-                    case_run = self._update_differential_portfolio(
-                        case_run,
-                        store,
-                        force=True,
-                    )
-                    calibrated_after_dispatch = True
                 if self._should_stop_on_verifier_failures(case_run):
                     return self._stop_after_repeated_verifier_failures(
                         case_run,
                         store,
                     )
-                if self._should_finalize_on_convergence(case_run, store):
-                    return self._finish_converged_case(case_run, store)
-                if self._can_finalize_on_evidence_sufficiency_after_round(
-                    case_run,
-                    store=store,
-                    gate_result=gate_result,
-                    calibrated_after_dispatch=calibrated_after_dispatch,
-                ):
-                    return self._finish_converged_case(case_run, store)
 
             return self._stop_without_terminal_decision(case_run, store)
         except Exception as exc:  # noqa: BLE001
@@ -641,7 +829,10 @@ class MechCALOrchestrator:
         store: RunStore,
     ) -> CaseRun:
         round_id = "R001"
-        decision = self.deps.planner.plan_initial(case_run, round_id=round_id)
+        decision = self.deps.planner.plan_initial(
+            case_run, round_id=round_id, **self._discovery_kwargs(store),
+        )
+        case_run = self._retain_tool_discovery(case_run, decision)
         decision = _limit_dispatches_per_worker(
             decision,
             limit=self.config.ablation_policy.worker_calls_per_agent_limit or 1,
@@ -693,7 +884,18 @@ class MechCALOrchestrator:
         calibration = self.deps.planner.calibrate_final_portfolio(
             self._planner_case_view(case_run),
             round_id=round_id,
+            **self._discovery_kwargs(store),
         )
+        case_run = self._retain_tool_discovery(case_run, calibration)
+        store.write_json(
+            f"rounds/{round_id}/planner_final_calibration.json", calibration,
+        )
+        store.append_jsonl("history/planner_final_calibrations.jsonl", calibration)
+        if calibration.failure.is_failure:
+            raise RuntimeError(
+                "Final Planner calibration failed: "
+                f"{calibration.failure.message} {calibration.failure.details}"
+            )
         case_run = case_run.touch(
             portfolio=calibration.portfolio,
             mechanism_priority_deltas=_merge_priority_deltas(
@@ -704,14 +906,6 @@ class MechCALOrchestrator:
                 case_run.mechanism_support_arguments,
                 calibration.mechanism_support_arguments,
             ),
-        )
-        store.write_json(
-            f"rounds/{round_id}/planner_final_calibration.json",
-            calibration,
-        )
-        store.append_jsonl(
-            "history/planner_final_calibrations.jsonl",
-            calibration,
         )
         if case_run.mechanism_priority_deltas:
             store.write_mechanism_priority_deltas(
@@ -773,7 +967,17 @@ class MechCALOrchestrator:
                 "failure": failure.model_dump(mode="json"),
             },
         )
-        return case_run.touch(artifact_manifest=manifest)
+        return case_run.touch(
+            artifact_manifest=manifest,
+            runtime={
+                **case_run.runtime,
+                "structure_preparation": {
+                    "artifact_id": artifact.artifact_id,
+                    "status": artifact.status,
+                    "failure": failure.model_dump(mode="json"),
+                },
+            },
+        )
 
     def _should_review_agenda_coverage(
         self,
@@ -781,17 +985,89 @@ class MechCALOrchestrator:
         *,
         round_index: int,
     ) -> bool:
+        return self.config.effective_agenda_coverage_reviewer
+
+    def _discovery_kwargs(self, store: RunStore) -> dict[str, object]:
+        if self.config.planner_tool_loading != "on_demand":
+            return {}
+        return {"discovery_event_sink": store.write_tool_discovery_event}
+
+    def _retain_tool_discovery(self, case_run: CaseRun, decision: PlannerDecision) -> CaseRun:
+        if self.config.planner_tool_loading != "on_demand":
+            return case_run
+        state = decision.raw_response.get("tool_discovery_state")
+        if state is None:
+            return case_run
+        return case_run.touch(runtime={
+            **case_run.runtime, "tool_discovery": state,
+            "tool_discovery_budget": decision.raw_response.get("tool_discovery_budget", {}),
+        })
+
+    def _review_planned_stop(
+        self, case_run: CaseRun, proposal: PlannerDecision, store: RunStore,
+    ) -> tuple[CaseRun, PlannerDecision]:
+        """One advisory exchange per proposal; only new tool work can start another round."""
+        case_run = self._retain_tool_discovery(case_run, proposal)
+        store.write_json(f"rounds/{proposal.round_id}/planner_stop_proposal.json", proposal)
+        store.append_jsonl("history/stop_reviews.jsonl", {
+            "event": "proposal", "round_id": proposal.round_id,
+            "decision": proposal.model_dump(mode="json"),
+        })
         if not self.config.effective_agenda_coverage_reviewer:
-            return False
-        if round_index == 1:
-            return True
-        if len(case_run.evidence_ledger.items) < 2:
-            return False
-        if _needs_followup_coverage_review(case_run):
-            return True
-        if round_index % 3 == 0:
-            return True
-        return _has_low_margin_portfolio(case_run)
+            review = StopReview(status="disabled", rationale="Coverage Reviewer is disabled by configuration.")
+        else:
+            store.activity("Review stopping reason", proposal.round_id)
+            review_case = case_run.touch(
+                portfolio=proposal.portfolio,
+                mechanism_support_arguments=_merge_support_arguments(
+                    case_run.mechanism_support_arguments, proposal.mechanism_support_arguments,
+                ),
+            )
+            try:
+                review = self.deps.mechanism_agenda.review_stop(review_case, proposal)
+            except Exception as exc:  # noqa: BLE001
+                review = StopReview(
+                    status="unavailable",
+                    rationale=f"Stop review unavailable ({type(exc).__name__}); this is not approval.",
+                )
+        store.write_json(f"rounds/{proposal.round_id}/stop_review.json", review)
+        store.append_jsonl("history/stop_reviews.jsonl", {
+            "event": "review", "round_id": proposal.round_id,
+            "review": review.model_dump(mode="json"),
+        })
+        case_run = case_run.touch(runtime={
+            **case_run.runtime,
+            "proposed_stop": {
+                "decision_assessment": proposal.decision_assessment.model_dump(mode="json"),
+                "stopping_assessment": proposal.stopping_assessment.model_dump(mode="json"),
+                "portfolio": proposal.portfolio.model_dump(mode="json"),
+                "unresolved_gaps": proposal.unresolved_gaps,
+                "final_answer_draft": proposal.final_answer_draft,
+                "mechanism_support_arguments": [
+                    item.model_dump(mode="json") for item in proposal.mechanism_support_arguments
+                ],
+            },
+            "stop_review_feedback": review.model_dump(mode="json"),
+        })
+        store.write_case_run(case_run)
+        if review.status == "disabled":
+            return case_run, proposal
+        store.activity("Planner response to stop review", proposal.round_id)
+        proposal_view = case_run.touch(
+            portfolio=proposal.portfolio,
+            mechanism_support_arguments=_merge_support_arguments(
+                case_run.mechanism_support_arguments, proposal.mechanism_support_arguments,
+            ),
+        )
+        decision = self.deps.planner.respond_to_stop_review(
+            self._planner_case_view(proposal_view), round_id=proposal.round_id,
+            **self._discovery_kwargs(store),
+        )
+        store.append_jsonl("history/stop_reviews.jsonl", {
+            "event": "response", "round_id": proposal.round_id,
+            "decision": decision.model_dump(mode="json"),
+        })
+        return case_run, decision
 
     def _planner_case_view(self, case_run: CaseRun) -> CaseRun:
         if self.config.enable_incremental_mechanism_portfolio:
@@ -811,6 +1087,7 @@ class MechCALOrchestrator:
         round_id: str,
     ) -> CaseRun:
         previous_action = _previous_planner_action(store)
+        store.activity("Coverage Reviewer", round_id)
         try:
             coverage = self.deps.mechanism_agenda.review_coverage(
                 case_run,
@@ -835,6 +1112,11 @@ class MechCALOrchestrator:
         return updated
 
     def _can_continue_after_agenda_coverage_failure(self, exc: Exception) -> bool:
+        if self.config.decision_mode == "question_loop_v1":
+            from mechcal.runtime.api_failures import api_pause_reason, is_review_service_failure
+
+            return (self.config.continue_on_agenda_coverage_failure
+                    and not api_pause_reason(exc) and is_review_service_failure(exc))
         return (
             self.config.continue_on_agenda_coverage_failure
             and _is_transient_llm_failure(exc)
@@ -872,22 +1154,28 @@ class MechCALOrchestrator:
     ) -> list[AgentReport]:
         reports: list[AgentReport] = []
         for request in dispatches:
+            store.activity(request.agent_name, case_run.current_round_id, request.route or "")
             worker = self.deps.workers[request.agent_name]
-            plan = worker.plan(request, case_run)
-            store.write_execution_plan(plan)
-            store.append_jsonl(
-                "history/tool_events.jsonl",
-                {
-                    "event": "agent_execution_plan",
-                    "dispatch": request.model_dump(mode="json"),
-                    "plan": plan.model_dump(mode="json"),
+            if case_run.runtime.get("question_loop"):
+                tool_result, report = self._durable_execution(worker, request, case_run, store)
+            else:
+                plan = worker.plan(request, case_run)
+                store.write_execution_plan(plan)
+                store.append_jsonl(
+                    "history/tool_events.jsonl",
+                    {
+                        "event": "agent_execution_plan",
+                        "dispatch": request.model_dump(mode="json"),
+                        "plan": plan.model_dump(mode="json"),
+                    },
+                )
+                tool_result, report = worker.run_with_trace(request, case_run, execution_plan=plan)
+            report = report.model_copy(update={
+                "structured_results": {
+                    **report.structured_results,
+                    "dispatch_request": request.model_dump(mode="json"),
                 },
-            )
-            tool_result, report = worker.run_with_trace(
-                request,
-                case_run,
-                execution_plan=plan,
-            )
+            })
             reports.append(report)
             store.write_tool_result(tool_result)
             store.write_agent_report(report)
@@ -907,6 +1195,44 @@ class MechCALOrchestrator:
                 },
             )
         return reports
+
+    def _durable_execution(
+        self, worker: WorkerAgent, request: DispatchRequest, case_run: CaseRun, store: RunStore,
+    ) -> tuple[ToolExecutionResult, AgentReport]:
+        from mechcal.schemas import AgentExecutionPlan
+
+        saved = store.read_execution_checkpoint(request)
+        if saved is not None and saved["stage"] == "executing":
+            raise RuntimeError("In-flight calculation has unknown completion; reconcile records before resuming")
+        if saved is None or saved["stage"] == "planning":
+            store.write_execution_checkpoint(request, stage="planning")
+            plan = worker.plan(request, case_run)
+            store.write_execution_checkpoint(request, stage="planned", plan=plan)
+        else:
+            plan = AgentExecutionPlan.model_validate(saved["plan"])
+        worker._validate_execution_plan(plan, request)
+        if saved is not None and saved["stage"] in {"tool_returned", "reported"}:
+            result = ToolExecutionResult.model_validate(saved["tool_result"])
+            worker._validate_tool_result(result, request)
+        else:
+            store.write_execution_plan(plan)
+            store.append_jsonl("history/tool_events.jsonl", {
+                "event": "agent_execution_plan", "dispatch": request.model_dump(mode="json"),
+                "plan": plan.model_dump(mode="json"),
+            })
+            store.write_execution_checkpoint(request, stage="executing", plan=plan)
+            result = worker.execute_tool(request, case_run, execution_plan=plan)
+            store.write_execution_checkpoint(request, stage="tool_returned", plan=plan, result=result)
+        store.write_tool_result(result)
+        if worker.report_writer.enable_llm and case_run.runtime.get("question_loop"):
+            store.activity("Worker explain tool results", request.round_id)
+        report = (AgentReport.model_validate(saved["report"]) if saved is not None and saved["stage"] == "reported"
+                  else worker.report_result(request, case_run, execution_plan=plan, tool_result=result,
+                       event_sink=store.model_events("worker_explanation", case_id=case_run.case_id,
+                                                    round_id=request.round_id, dispatch_id=request.dispatch_id)))
+        worker._validate_agent_report(report, request)
+        store.write_execution_checkpoint(request, stage="reported", plan=plan, result=result, report=report)
+        return result, report
 
     def _apply_reports(self, case_run: CaseRun, reports: list[AgentReport]) -> CaseRun:
         evidence_units = annotate_evidence_units(
@@ -932,6 +1258,25 @@ class MechCALOrchestrator:
             runtime={
                 **case_run.runtime,
                 "worker_call_counts": worker_call_counts,
+                "calculation_history": [
+                    *case_run.runtime.get("calculation_history", []),
+                    *(calculation_record(report) for report in reports),
+                ],
+                "last_tool_feedback": [
+                    {
+                        "report_id": report.report_id,
+                        "round_id": report.round_id,
+                        "agent_name": report.agent_name,
+                        "status": report.status,
+                        "failure": report.failure.model_dump(mode="json"),
+                        "observations": report.planner_readable_report,
+                        "evidence_refs": [item.evidence_id for item in report.evidence_units],
+                        "artifact_refs": [item.artifact_id for item in report.artifact_updates],
+                        "execution": report.operational_note.model_dump(mode="json")
+                        if report.operational_note else None,
+                    }
+                    for report in reports
+                ],
             },
         )
 
@@ -970,6 +1315,7 @@ class MechCALOrchestrator:
         ):
             return case_run
         try:
+            store.activity("Mechanism Critic", case_run.current_round_id)
             portfolio = self.deps.mechanism_critic.review(case_run)
         except Exception as exc:  # noqa: BLE001
             if not self._can_continue_after_mechanism_critic_failure(case_run, exc):
@@ -991,131 +1337,39 @@ class MechCALOrchestrator:
     ) -> CaseRun:
         return self._update_differential_portfolio(case_run, store, force=True)
 
-    def _should_calibrate_portfolio_midrun(
-        self,
-        case_run: CaseRun,
-        *,
-        round_index: int,
-    ) -> bool:
-        if round_index < 4:
-            return False
-        if len(case_run.evidence_ledger.items) < 5:
-            return False
-        if case_run.runtime.get("planner_failures"):
-            return False
-        if case_run.runtime.get("mechanism_critic_failures"):
-            return False
-        if round_index % 4 == 0:
-            return True
-        return _portfolio_top3_has_stalled(case_run)
 
-    def _should_finalize_on_convergence(self, case_run: CaseRun, store: RunStore) -> bool:
-        if len(case_run.round_ids) < max(1, self.config.convergence_min_rounds):
-            return False
-        if (
-            self.config.effective_support_auditor
-            and case_run.photophysics_review is None
-        ):
-            return False
-        recent_rankings = self._recent_rankings(store, self.config.convergence_window)
-        if len(recent_rankings) < max(1, self.config.convergence_window):
-            return False
-        latest = recent_rankings[-1]
-        if not latest or latest[0] == "unknown":
-            return False
-        return all(ranking == latest for ranking in recent_rankings) or (
-            _rankings_stable_under_low_margin(recent_rankings)
-        )
 
-    def _should_finalize_on_evidence_sufficiency(self, case_run: CaseRun) -> bool:
-        if len(case_run.round_ids) < 2:
-            return False
-        if len(case_run.evidence_ledger.items) < 3:
-            return False
-        if _needs_followup_coverage_review(case_run):
-            return False
-        if case_run.runtime.get("planner_failures"):
-            return False
-        ranked = [
-            item
-            for item in case_run.portfolio.sorted_hypotheses()
-            if item.name and item.name != "unknown"
-        ]
-        if len(ranked) < 2:
-            return False
-        top, runner_up = ranked[0], ranked[1]
-        top_priority = _hypothesis_priority(top)
-        runner_up_priority = _hypothesis_priority(runner_up)
-        if top_priority <= 0.0:
-            return False
-        if top.evidence_support not in {"weak_or_proxy", "partial", "strong"}:
-            return False
-        if not top.evidence_refs:
-            return False
-        supported_labels = {
-            argument.target_label
-            for argument in case_run.mechanism_support_arguments
-            if argument.support_level != "unsupported"
-            and argument.audit_status not in {"unsupported", "invalid_ref", "overclaim"}
-        }
-        if top.name not in supported_labels:
-            return False
-        if not _top_candidate_has_specific_support(case_run, top.name):
-            return False
-        margin = top_priority - runner_up_priority
-        if margin >= 0.08:
-            return True
-        return True
 
-    def _can_finalize_on_evidence_sufficiency_after_round(
-        self,
-        case_run: CaseRun,
-        *,
-        store: RunStore,
-        gate_result: DecisionGateResult,
-        calibrated_after_dispatch: bool,
-    ) -> bool:
-        del store
-        if gate_result.dispatch_requests and not calibrated_after_dispatch:
-            return False
-        return self._should_finalize_on_evidence_sufficiency(case_run)
 
-    def _recent_rankings(self, store: RunStore, window: int) -> list[tuple[str, ...]]:
-        rankings: list[tuple[str, ...]] = []
-        round_dirs = sorted((store.root / "rounds").glob("R*"))
-        for round_dir in round_dirs[-max(1, window):]:
-            path = round_dir / "planner_final_calibration.json"
-            if not path.is_file():
-                path = round_dir / "planner_decision.json"
-            if not path.is_file():
-                continue
-            try:
-                payload = json.loads(path.read_text(encoding="utf-8"))
-            except json.JSONDecodeError:
-                continue
-            rankings.append(_ranking_from_decision_payload(payload))
-        return rankings
 
-    def _audit_current_round(self, case_run: CaseRun, store: RunStore) -> CaseRun:
+    def _audit_current_round(self, case_run: CaseRun, store: RunStore, *, audit_case=None, persist=True) -> CaseRun:
         if not self.config.effective_support_auditor:
             return self._record_support_auditor_skipped(case_run, store)
         try:
-            review = self.deps.photophysics_arbiter.review(case_run)
+            store.activity("Support Auditor", case_run.current_round_id)
+            kwargs = {"event_sink": store.model_events("support_audit", case_id=case_run.case_id,
+                                                       round_id=case_run.current_round_id)} if case_run.runtime.get("question_loop") else {}
+            review = self.deps.photophysics_arbiter.review(audit_case if audit_case is not None else case_run, **kwargs)
         except Exception as exc:  # noqa: BLE001
-            if not self.config.continue_on_arbiter_failure:
+            from mechcal.runtime.api_failures import api_pause_reason, is_review_service_failure
+
+            if (not persist or api_pause_reason(exc) or not is_review_service_failure(exc)
+                    or not self.config.continue_on_arbiter_failure):
                 raise
             return self._record_verifier_failure(case_run, store, exc)
         updated = _apply_support_audits(
             case_run.touch(photophysics_review=review),
             review.support_argument_audits,
         )
-        store.write_photophysics_review(review)
-        if updated.mechanism_support_arguments:
+        if persist:
+            store.write_photophysics_review(review)
+        if persist and updated.mechanism_support_arguments:
             store.write_mechanism_support_arguments(
                 updated.mechanism_support_arguments,
                 round_id=review.round_id,
             )
-        store.write_case_run(updated)
+        if persist:
+            store.write_case_run(updated)
         return updated
 
     def _record_support_auditor_skipped(
@@ -1345,45 +1599,6 @@ class MechCALOrchestrator:
         store.write_case_run(updated)
         return updated
 
-    def _finish_converged_case(self, case_run: CaseRun, store: RunStore) -> CaseRun:
-        case_for_final = self._assemble_current_planner_predictions(case_run, store)
-        diagnosis_units = case_for_final.diagnosis_units or build_diagnosis_units(
-            case_for_final
-        )
-        final_answer = FinalAnswer(
-            case_id=case_for_final.case_id,
-            current_hypothesis=case_for_final.portfolio.current,
-            confidence=_portfolio_current_confidence(case_for_final),
-            answer=(
-                "The MAS finalized because the Planner-owned mechanism ranking "
-                f"stabilized over recent {self._round_review_descriptor()} rounds. "
-                "The final mechanism "
-                "predictions were assembled deterministically from the Planner "
-                "portfolio and Planner support arguments."
-            ),
-            evidence_refs=[item.evidence_id for item in case_for_final.evidence_ledger.items],
-            round_refs=list(case_for_final.round_ids),
-            artifact_refs=case_for_final.artifact_manifest.artifact_ids(),
-            limitations=[
-                "Finalized by ranking-convergence stop before the max_rounds cap.",
-                "No hidden reference, source paper, or case-specific web search was used.",
-                *self._support_auditor_limitation(),
-            ],
-            diagnosis_units=diagnosis_units,
-            mechanism_predictions=case_for_final.mechanism_predictions,
-        )
-        updated = case_for_final.touch(
-            status="finalized",
-            final_answer=final_answer,
-            diagnosis_units=diagnosis_units,
-            runtime=_runtime_with_termination(
-                case_for_final,
-                reason="ranking_convergence",
-            ),
-        )
-        store.write_final_answer(final_answer)
-        store.write_case_run(updated)
-        return updated
 
     def _round_review_descriptor(self) -> str:
         return (
@@ -1454,8 +1669,28 @@ class MechCALOrchestrator:
         round_record: RoundRecord,
         store: RunStore,
         gate_result: DecisionGateResult,
+        *, final_audit_complete: bool = False,
     ) -> CaseRun:
         status = "finalized" if gate_result.status == "finalize" else "stopped"
+        if decision.failure.is_failure or gate_result.status in {"retry_schema", "retry_policy"}:
+            status = "failed"
+            case_run = case_run.touch(runtime={
+                **case_run.runtime,
+                "failure": {
+                    "type": decision.failure.kind if decision.failure.is_failure else "planner_contract_invalid",
+                    "message": decision.failure.message if decision.failure.is_failure else "; ".join(gate_result.violations),
+                    "details": decision.failure.details if decision.failure.is_failure else {"violations": gate_result.violations},
+                    "current_round_id": round_record.round_id,
+                },
+            })
+        # Finalize can introduce new arguments after the last post-tool audit.
+        if status != "failed" and self.config.effective_support_auditor and not final_audit_complete:
+            case_run = case_run.touch(runtime={
+                **case_run.runtime,
+                "final_support_audit_round": round_record.round_id,
+            })
+            case_run = self._audit_current_round(case_run, store)
+        store.activity("Final assembly", round_record.round_id)
         round_ids = [*case_run.round_ids, round_record.round_id]
         case_for_final = self._assemble_current_planner_predictions(
             case_run.touch(round_ids=round_ids),
@@ -1474,6 +1709,23 @@ class MechCALOrchestrator:
                 reason=gate_result.terminal_reason or gate_result.status,
             ),
         )
+        if self.config.planner_stopping_enabled:
+            assessment = decision.stopping_assessment
+            updated = updated.touch(runtime={
+                **updated.runtime,
+                "termination": {
+                    **updated.runtime["termination"],
+                    "exploration_round_count": case_run.runtime["run_limits"]["exploration_rounds_used"],
+                    "limit_reached": not case_run.runtime["run_limits"]["scientific_tools_allowed"],
+                    "stopping_assessment": assessment.model_dump(mode="json") if assessment else None,
+                    "unresolved_gaps": decision.unresolved_gaps,
+                    "next_useful_step": decision.decision_assessment.next_useful_step
+                    if decision.decision_assessment else None,
+                    "stop_review_status": case_run.runtime.get("stop_review_feedback", {}).get("status")
+                    if case_run.runtime.get("stop_review_feedback") else None,
+                    "reviewer_response": decision.reviewer_response,
+                },
+            })
         if final_answer.diagnosis_units:
             updated = updated.touch(diagnosis_units=final_answer.diagnosis_units)
         store.write_final_answer(final_answer)
@@ -1529,7 +1781,18 @@ class MechCALOrchestrator:
         round_id = case_run.current_round_id or (
             case_run.round_ids[-1] if case_run.round_ids else "FINAL"
         )
-        decision = calibrate(self._planner_case_view(case_run), round_id=round_id)
+        store.activity("Planner final calibration", round_id)
+        decision = calibrate(
+            self._planner_case_view(case_run), round_id=round_id, **self._discovery_kwargs(store),
+        )
+        case_run = self._retain_tool_discovery(case_run, decision)
+        store.write_json(f"rounds/{round_id}/planner_final_calibration.json", decision)
+        store.append_jsonl("history/planner_final_calibrations.jsonl", decision)
+        if decision.failure.is_failure:
+            raise RuntimeError(
+                f"Planner final calibration failed: {decision.failure.message} "
+                f"{decision.failure.details}"
+            )
         updated = case_run.touch(
             portfolio=decision.portfolio,
             mechanism_support_arguments=_merge_support_arguments(
@@ -1541,8 +1804,6 @@ class MechCALOrchestrator:
                 decision.priority_deltas,
             ),
         )
-        store.write_json(f"rounds/{round_id}/planner_final_calibration.json", decision)
-        store.append_jsonl("history/planner_final_calibrations.jsonl", decision)
         if decision.mechanism_support_arguments:
             store.write_mechanism_support_arguments(
                 updated.mechanism_support_arguments,
@@ -1695,11 +1956,21 @@ def _runtime_with_termination(
     *,
     reason: str,
 ) -> dict[str, object]:
+    limits = case_run.runtime.get("run_limits", {})
+    exploration = {}
+    if limits.get("stopping_protocol") == "planner_stop_v1":
+        used = limits.get("exploration_rounds_used", 0)
+        exploration = {
+            "exploration_round_count": used,
+            "limit_reached": limits.get("max_exploration_rounds") is not None
+            and used >= limits["max_exploration_rounds"],
+        }
     return {
         **case_run.runtime,
         "termination": {
             "reason": reason,
             "round_count": len(case_run.round_ids),
+            **exploration,
             "worker_call_counts": dict(
                 case_run.runtime.get("worker_call_counts", {})
             ),
@@ -1738,13 +2009,9 @@ def _ablation_prompt_files(policy: AblationPolicy) -> list[str]:
     if policy.workflow == "parallel_summary":
         return ["parallel_worker_summary_synthesis.md"]
     if policy.workflow == "one_pass":
-        return [
-            "planner_decision_compact.md",
-            "planner_initial_evidence_ranking.md",
-        ]
+        return ["planner_decision_compact.md"]
     return [
         "planner_decision_compact.md",
-        "planner_initial_evidence_ranking.md",
         "mechanism_agenda_coverage.md",
         "photophysics_arbiter.md",
         "mechanism_critic.md",
@@ -1764,24 +2031,6 @@ def _disabled_component_reason(*, configured: bool, mode: str) -> str:
     return f"disabled_by_ablation_mode:{mode}"
 
 
-def _ranking_from_decision_payload(payload: dict[str, object]) -> tuple[str, ...]:
-    portfolio = payload.get("portfolio")
-    if not isinstance(portfolio, dict):
-        return ()
-    hypotheses = portfolio.get("hypotheses")
-    if not isinstance(hypotheses, list):
-        return ()
-    ranked: list[tuple[float, str]] = []
-    for item in hypotheses:
-        if not isinstance(item, dict):
-            continue
-        name = str(item.get("name") or "").strip()
-        if not name:
-            continue
-        confidence = item.get("confidence")
-        ranked.append((float(confidence) if isinstance(confidence, int | float) else 0.0, name))
-    ranked.sort(reverse=True)
-    return tuple(name for _, name in ranked[:3])
 
 
 def _stateless_planner_case_view(case_run: CaseRun) -> CaseRun:
@@ -1814,24 +2063,6 @@ def _stateless_planner_case_view(case_run: CaseRun) -> CaseRun:
     )
 
 
-def _rankings_stable_under_low_margin(rankings: list[tuple[str, ...]]) -> bool:
-    if not rankings:
-        return False
-    latest = rankings[-1]
-    if len(latest) < 3 or latest[0] == "unknown":
-        return False
-    latest_top1 = latest[0]
-    latest_top3 = set(latest[:3])
-    if len(latest_top3) < 3:
-        return False
-    for ranking in rankings:
-        if len(ranking) < 3:
-            return False
-        if ranking[0] != latest_top1:
-            return False
-        if set(ranking[:3]) != latest_top3:
-            return False
-    return True
 
 
 def _previous_planner_action(store: RunStore) -> str | None:
@@ -1861,46 +2092,8 @@ def _previous_planner_action(store: RunStore) -> str | None:
     return None
 
 
-def _portfolio_top3_has_stalled(case_run: CaseRun) -> bool:
-    top_items = [
-        item
-        for item in case_run.portfolio.sorted_hypotheses()[:3]
-        if item.name and item.name != "unknown"
-    ]
-    if len(top_items) < 3:
-        return False
-    if not any(item.evidence_support in {"unsupported", "weak_or_proxy"} for item in top_items):
-        return False
-    top_labels = {item.name for item in top_items}
-    round_ids = sorted({delta.round_id for delta in case_run.mechanism_priority_deltas})
-    if len(round_ids) < 2:
-        return False
-    recent_rounds = set(round_ids[-2:])
-    recent_top_deltas = [
-        delta
-        for delta in case_run.mechanism_priority_deltas
-        if delta.round_id in recent_rounds and delta.label in top_labels
-    ]
-    if not recent_top_deltas:
-        return False
-    return all(abs(delta.priority_delta) < 0.02 for delta in recent_top_deltas)
 
 
-def _top_candidate_has_specific_support(case_run: CaseRun, label: str) -> bool:
-    refs = {
-        ref
-        for item in case_run.portfolio.hypotheses
-        if item.name == label
-        for ref in item.evidence_refs
-    }
-    if not refs:
-        return False
-    evidence_by_id = {item.evidence_id: item for item in case_run.evidence_ledger.items}
-    return any(
-        evidence_by_id.get(ref) is not None
-        and evidence_by_id[ref].capability_id in DISCRIMINATING_FOLLOWUP_CAPABILITY_IDS
-        for ref in refs
-    )
 
 
 def _hypothesis_priority(item) -> float:  # noqa: ANN001
@@ -1932,6 +2125,9 @@ def _apply_support_audits(
     case_run: CaseRun,
     audits: list[MechanismSupportAudit],
 ) -> CaseRun:
+    if case_run.runtime.get("question_loop"):
+        # Advisory review stays in photophysics_review; it cannot change claim gates.
+        return case_run
     if not audits or not case_run.mechanism_support_arguments:
         return case_run
     audits_by_id = {item.support_id: item for item in audits}
@@ -1976,70 +2172,23 @@ def _apply_planner_priorities_to_differential_portfolio(
     }
     if not priorities:
         return portfolio
-    planner_is_uninformative = _planner_portfolio_is_uninformative(case_run)
     rows = []
     for row in portfolio.rows:
         if row.label in priorities:
-            planner_priority = priorities[row.label]
-            adjusted_priority = _reviewer_feedback_priority_floor(
-                row,
-                planner_priority=planner_priority,
-                max_existing_priority=max(priorities.values(), default=0.0),
-                planner_is_uninformative=planner_is_uninformative,
-            )
             rows.append(
                 row.model_copy(
-                    update={"differential_priority": adjusted_priority}
+                    update={"differential_priority": priorities[row.label]}
                 )
             )
         else:
             rows.append(
                 row.model_copy(
                     update={
-                        "differential_priority": min(
-                            row.differential_priority,
-                            0.05,
-                        )
+                        "differential_priority": 0.0
                     }
                 )
             )
     return portfolio.model_copy(update={"rows": rows})
-
-
-def _reviewer_feedback_priority_floor(
-    row: DifferentialMechanismPortfolioRow,
-    *,
-    planner_priority: float,
-    max_existing_priority: float,
-    planner_is_uninformative: bool,
-) -> float:
-    if not row.positive_evidence_refs:
-        return planner_priority
-    if row.support_strength == "unsupported":
-        return planner_priority
-    if row.trigger_status not in {"triggered", "weak_trigger"}:
-        return planner_priority
-    if planner_is_uninformative:
-        return max(planner_priority, min(row.differential_priority, 0.28))
-    # Keep Planner as the ranking owner, but do not erase source-grounded reviewer
-    # distinctions among low-margin candidates before the next Planner update.
-    reviewer_floor = min(max(row.differential_priority, 0.12), max_existing_priority + 0.02, 0.28)
-    return max(planner_priority, reviewer_floor)
-
-
-def _planner_portfolio_is_uninformative(case_run: CaseRun) -> bool:
-    hypotheses = [
-        item
-        for item in case_run.portfolio.hypotheses
-        if item.name and item.name != "unknown"
-    ]
-    if not hypotheses:
-        return True
-    if any(item.evidence_refs for item in hypotheses):
-        return False
-    if any(item.evidence_support != "unsupported" for item in hypotheses):
-        return False
-    return max((_hypothesis_priority(item) for item in hypotheses), default=0.0) <= 0.02
 
 
 def _portfolio_current_confidence(case_run: CaseRun) -> float:
@@ -2127,6 +2276,10 @@ def _round_index(round_id: str | None) -> int:
 
 
 def _is_transient_llm_failure(exc: Exception) -> bool:
+    from mechcal.runtime.api_failures import api_pause_reason
+
+    if api_pause_reason(exc):
+        return False
     text = f"{type(exc).__name__}: {exc}".lower()
     non_transient_terms = (
         "insufficient funds",

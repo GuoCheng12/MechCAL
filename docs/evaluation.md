@@ -1,5 +1,11 @@
 # Evaluation
 
+The portable `mechcal ... run` command performs inference only. It does not
+automatically launch a judge or read hidden references. The entry points below
+are retained historical evaluation workflows, not aliases for the current
+`command_v1` inference profile. Record the exact workflow and rubric when
+comparing results.
+
 `mechcal-evaluate` runs MechCAL and scores mechanism predictions.
 `mechcal-direct`, `mechcal-tool-llm`, and `mechcal-common-prior` use the
 same mechanism-ranking evaluator. `mechcal-rescore` evaluates saved runs
@@ -29,11 +35,19 @@ The main metric implementation is `mechcal/eval/mechanism_ranking.py`.
 It reports Top-1 Primary, Recall@3, ES-nDCG@3, and Support@Top1, alongside
 diagnostic metrics retained by the research implementation.
 
-The frozen rubric is `mechcal/eval/rubrics/mechanism_evidence_rubric_v2.json`.
-The `v2` suffix is the rubric revision, not the software release name.
-The judge prompt is `mechcal/eval/prompts/mechanism_evidence_support_judge.md`.
-The judge scores submitted evidence independently of the hidden reference.
+The historical evaluator uses
+`mechcal/eval/rubrics/mechanism_evidence_rubric_v2.json` and
+`mechcal/eval/prompts/mechanism_evidence_support_judge.md`. The current source
+also includes `mechanism_evidence_rubric_v3.json`, its corresponding prompt and
+the submitted-source verification implementation in `mechcal/eval/zero_shot_v3.py`
+and `mechcal/eval/tool_sources.py`. These are different evaluation versions;
+installing this package does not silently convert an old result to v3.
+
+Rubric suffixes are revision identifiers, not software release names. The
+judge scores submitted evidence independently of the hidden reference.
 Reference relevance and evidence support are combined by the metric code.
+Full v3 benchmark orchestration and private references are not part of the
+new single-molecule launcher. Keep judge access separate from inference access.
 
 ## Runs and Ablations
 

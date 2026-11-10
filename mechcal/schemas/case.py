@@ -21,7 +21,7 @@ from mechcal.schemas.mechanisms import (
 )
 from mechcal.schemas.reports import OperationalNote
 
-CaseStatus = Literal["created", "running", "finalized", "stopped", "failed"]
+CaseStatus = Literal["created", "running", "finalized", "stopped", "failed", "paused"]
 
 
 class CaseInput(MechCALModel):

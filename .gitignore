@@ -3,6 +3,8 @@
 .env.*
 !.env.example
 *.local.sh
+*.local.toml
+*.local.json
 .venv/
 __pycache__/
 *.py[cod]

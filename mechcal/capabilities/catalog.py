@@ -2,6 +2,15 @@ from __future__ import annotations
 
 from mechcal.capabilities.registry import CapabilityRegistry
 from mechcal.capabilities.schemas import CapabilitySpec, CapabilityToolBinding
+from mechcal.schemas.tool_arguments import argument_model
+from mechcal.chem.validated_scopes import SPATIAL_SCOPE, SCAN_SCOPE
+from mechcal.schemas.microscopic import GEOMETRY_SOURCE_KINDS
+
+CONFORMER_FORCE_FIELD_LIMIT = (
+    "run_conformer_bundle and run_conformer_state_probe share the RDKit conformer "
+    "generator and require MMFF94 or UFF parameters even when a prepared geometry "
+    "exists. Switching between these routes does not bypass a parameter failure."
+)
 
 MACRO_CAPABILITY_CARDS = [
     {
@@ -137,16 +146,17 @@ MACRO_CAPABILITY_CARDS = [
     {
         "name": "run_dimer_packing_proxy",
         "description": (
-            "Estimate a lightweight dimer packing/contact proxy from single-molecule "
-            "geometry; this is not molecular dynamics or crystal prediction."
+            "Compute a heuristic from single-molecule aromatic fraction, logP and rotatable-bond "
+            "count only. No dimer, contact distances, geometry calculation or new independent "
+            "observation. Reuses descriptors from scaffold/rotor screens."
         ),
         "outputs": ["dimer_packing_proxy_report"],
     },
     {
         "name": "run_aggregate_contact_proxy",
         "description": (
-            "Screen aggregate contact priors from shape, aromaticity, and polarity "
-            "descriptors; this is not an aggregate simulation."
+            "Screen monomer logP and heteroatom-count thresholds, without constructing "
+            "an aggregate or computing contacts. No independent packing observations."
         ),
         "outputs": ["aggregate_contact_proxy_report"],
     },
@@ -177,6 +187,32 @@ MACRO_CAPABILITY_CARDS = [
 ]
 
 MICROSCOPIC_CAPABILITY_CARDS = [
+    {
+        "name": "optimize_ground_state_geometry", "family": "geometry_precondition",
+        "description": "Recover an unoptimized initial_structure using Cartesian ASE BFGS and Amesp aTB1 ground-state forces. Default limits: 240 steps and 240 seconds. Publishes prepared_structure only when max atomic force is at most 0.02 eV/angstrom and basic geometry checks pass. No excited-state or mechanistic evidence; not a frequency-verified minimum.",
+        "required": ["initial_structure"], "outputs": ["prepared_structure"], "cost": "medium",
+    },
+    {
+        "name": "run_relaxed_coordinate_scan", "family": "conformer_sensitivity",
+        "description": "Relax other coordinates at explicitly selected bond lengths or dihedrals with validated Amesp S0 forces. Returns per-point convergence, energies, vertical endpoint states and reusable geometries. Not a reaction path or mechanism verdict. " + SCAN_SCOPE,
+        "required": ["prepared_structure"], "outputs": ["relaxed_coordinate_scan_bundle"], "cost": "high",
+    },
+    {
+        "name": "select_computed_geometry", "family": "geometry_precondition",
+        "description": "Select a successful rigid torsion/conformer member or a converged S0 relaxed-scan member for further tools, preserving atom mapping. Requires source_artifact_id and member_id. Rigid members are not optimized geometries. Excited-state optimized geometries remain suspended. Does not run a calculation.",
+        "required": [], "source_kinds": list(GEOMETRY_SOURCE_KINDS), "outputs": ["prepared_structure"], "cost": "low",
+    },
+    {
+        "name": "run_excited_state_relaxation",
+        "family": "state_ordering_brightness",
+        "description": (
+            "Suspended: installed Amesp aTB1/TDA excited-state forces failed finite-difference validation. "
+            "Returns an unsupported boundary; use S0 relaxed scans and vertical state comparisons instead."
+        ),
+        "required": ["prepared_structure"],
+        "outputs": ["excited_state_relaxation_bundle"],
+        "cost": "high",
+    },
     {
         "name": "list_rotatable_dihedrals",
         "family": "geometry_precondition",
@@ -255,7 +291,8 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "run_conformer_bundle",
         "family": "conformer_sensitivity",
-        "description": "Run bounded conformer bundle characterization from prepared structure.",
+        "description": "Generate RDKit force-field conformers and characterize their electronic states.",
+        "limitations": [CONFORMER_FORCE_FIELD_LIMIT],
         "required": ["prepared_structure"],
         "outputs": ["conformer_bundle"],
         "cost": "medium",
@@ -263,7 +300,8 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "run_conformer_state_probe",
         "family": "conformer_sensitivity",
-        "description": "Run bounded fixed-geometry conformer state probe.",
+        "description": "Generate RDKit force-field conformers and probe their vertical electronic states.",
+        "limitations": [CONFORMER_FORCE_FIELD_LIMIT],
         "required": ["prepared_structure"],
         "outputs": ["conformer_state_probe_bundle"],
         "cost": "medium",
@@ -285,11 +323,20 @@ MICROSCOPIC_CAPABILITY_CARDS = [
         "cost": "medium",
     },
     {
+        "name": "analyze_hole_electron_from_bundle",
+        "family": "charge_localization",
+        "description": "Postprocess matched canonical TDA-aTB1 orbitals and coefficients into state-resolved hole/electron distributions, centroid distance and overlap; no new quantum job.",
+        "required": ["amesp_baseline_bundle"],
+        "outputs": ["hole_electron_bundle"],
+        "cost": "low",
+        "limitations": ["Optional Multiwfn and Amesp m2m required. " + SPATIAL_SCOPE + " Requires td_tout >= 4 and matching successful job files. Atom indices refer to calculation geometry. Optional fragments sum heavy-atom contributions, not transfer probabilities. Au-containing monomers and modeled dimers are supported; this is not SOC or triplet analysis. Unrelaxed vertical excitation is not emitting-state, TICT or PET-kinetic validation."],
+    },
+    {
         "name": "extract_ct_descriptors_from_bundle",
         "family": "charge_localization",
         "description": (
-            "Inspect an existing microscopic bundle for bounded CT descriptor "
-            "surrogates."
+            "Read existing excited states, dominant transitions and ground-state Mulliken charges. "
+            "Does not compute hole-electron separation or spatial transfer; use analyze_hole_electron_from_bundle for spatial analysis."
         ),
         "required": ["amesp_baseline_bundle"],
         "outputs": ["ct_descriptor_bundle", "artifact_backed_ct_surrogates"],
@@ -388,7 +435,7 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "extract_torsion_candidates_from_bundle",
         "family": "torsion_sensitivity",
-        "description": "Extract torsion candidates from reusable bundle geometry.",
+        "description": "Disabled legacy placeholder: use list_rotatable_dihedrals on a prepared_structure for graph-backed torsion candidates.",
         "required": ["amesp_baseline_bundle"],
         "outputs": ["torsion_candidate_bundle"],
         "cost": "low",
@@ -396,7 +443,7 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "extract_geometry_descriptors_from_bundle",
         "family": "geometry_precondition",
-        "description": "Extract bounded geometry descriptors from reusable bundle coordinates.",
+        "description": "Measure selected distances, angles or dihedrals and expose the XYZ atom map and global geometry descriptors.",
         "required": ["amesp_baseline_bundle"],
         "outputs": ["geometry_descriptor_bundle"],
         "cost": "low",
@@ -404,7 +451,7 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "inspect_raw_artifact_bundle",
         "family": "raw_artifact_inspection",
-        "description": "Inspect raw files and extractable observables in a reusable bundle.",
+        "description": "List raw file paths and extractable observables in a bundle, without reading file contents.",
         "required": ["amesp_baseline_bundle"],
         "outputs": ["raw_artifact_inventory"],
         "cost": "low",
@@ -412,7 +459,7 @@ MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "unsupported_excited_state_relaxation",
         "family": "state_ordering_brightness",
-        "description": "Return a typed unsupported result for excited-state relaxation requests.",
+        "description": "CI/nonadiabatic dynamics are unsupported; run_excited_state_relaxation is also suspended pending force validation.",
         "required": [],
         "outputs": [],
         "cost": "low",
@@ -428,7 +475,13 @@ def default_capabilities() -> list[CapabilitySpec]:
 
 
 def default_capability_registry() -> CapabilityRegistry:
-    return CapabilityRegistry(default_capabilities())
+    import os
+    capabilities = default_capabilities()
+    if os.environ.get("MECHCAL_QC_CONFIG"):
+        from mechcal.capabilities.external_qc import external_capabilities
+        from mechcal.tools.qc_process import QCConfig
+        capabilities.extend(external_capabilities(QCConfig.from_environment()))
+    return CapabilityRegistry(capabilities)
 
 
 def _macro_capabilities() -> list[CapabilitySpec]:
@@ -449,6 +502,7 @@ def _macro_capabilities() -> list[CapabilitySpec]:
             ),
             metadata={
                 "mechanism_directness": "not_direct_mechanism_evidence",
+                "tool_arg_schema": argument_model(card["name"], "macro").model_json_schema(),
                 "tool_arg_hints": {
                     "focus_tags": "optional list[str] of route-local descriptors to emphasize"
                 },
@@ -459,6 +513,10 @@ def _macro_capabilities() -> list[CapabilitySpec]:
 
 
 def _microscopic_capabilities() -> list[CapabilitySpec]:
+    from mechcal.tools.amesp_microscopic import (
+        microscopic_capability_policy, microscopic_delivery_contract, microscopic_execution_dependencies,
+    )
+
     return [
         CapabilitySpec(
             capability_id=f"microscopic.{card['name']}",
@@ -467,8 +525,10 @@ def _microscopic_capabilities() -> list[CapabilitySpec]:
             route=card["name"],
             description=card["description"],
             required_artifact_kinds=card["required"],
+            source_artifact_kinds=card.get("source_kinds", []),
             outputs=card["outputs"],
             cost=card["cost"],  # type: ignore[arg-type]
+            **microscopic_capability_policy(card["name"]),
             failure_modes=[
                 "capability_unsupported",
                 "precondition_missing",
@@ -480,7 +540,11 @@ def _microscopic_capabilities() -> list[CapabilitySpec]:
             ),
             metadata={
                 "legacy_capacity_name": card["name"],
+                "tool_arg_schema": argument_model(card["name"]).model_json_schema(),
                 "tool_arg_hints": _microscopic_tool_arg_hints(card["name"]),
+                "limitations": card.get("limitations", []),
+                "execution_dependencies": microscopic_execution_dependencies(card["name"]),
+                "delivery_contract": microscopic_delivery_contract(card["name"]),
             },
         )
         for card in MICROSCOPIC_CAPABILITY_CARDS
@@ -516,9 +580,42 @@ def _microscopic_tool_arg_hints(name: str) -> dict[str, str]:
         "run_solvation_polarity_proxy",
     }:
         hints["s1_nstates"] = "optional int 1-10 for vertical excited-state calculation"
-        hints["td_tout"] = "optional int 1-10 for transition output depth"
+        hints["td_tout"] = "optional int 1-10; transition coefficient printing threshold 10^-N, not a state count"
     if name == "run_solvation_polarity_proxy":
-        hints["solvents"] = "optional list[str] from water/toluene/acetonitrile/methanol"
+        hints["solvents"] = "optional 2-4 distinct solvents from the enum in tool_arg_schema"
     if name == "run_charge_population_panel":
-        hints["charge_schemes"] = "optional list[str] from mulliken/lowdin/hirshfeld/cm5"
+        hints["charge_schemes"] = "default mulliken/lowdin; hirshfeld/cm5 may be requested but require valid charge tables"
+    if name in {"run_torsion_snapshots", "run_torsion_brightness_coupling_scan"}:
+        hints.update(dihedral_id="ID returned by list_rotatable_dihedrals for the same source artifact",
+                     dihedral_atoms="alternative to ID: four zero-based atom indices in prepared structure order",
+                     angles="2-6 distinct absolute angles in [-180,180]; rigid snapshots, not relaxed scan")
+    if name in {"run_conformer_bundle", "run_conformer_state_probe"}:
+        hints["conformer_ids"] = "2-6 IDs from list_available_conformers for the same source artifact"
+    if name == "run_frontier_orbital_partition":
+        hints.update(donor_atoms="explicit zero-based electronic donor fragment atom indices",
+                     acceptor_atoms="explicit zero-based electronic acceptor fragment; disjoint from donor")
+    if name == "run_excited_state_relaxation":
+        hints.update(
+            state_root="all excited-state relaxation suspended after derivative validation",
+            s1_nstates="state window 1-10, default 3",
+            td_tout="transition coefficient printing threshold 10^-N, default 3; not the number of states",
+            max_opt_cycles="optimization iterations 1-200, default 60; exhaustion returns incomplete evidence",
+        )
+    if name == "run_relaxed_coordinate_scan":
+        hints.update(state_root="0 only in production; excited-state force routes are suspended",
+                     atom_indices="explicit zero-based bonded pair or four-atom dihedral",
+                     values="2-6 distinct bond lengths (angstrom) or dihedrals (degrees)",
+                     max_wall_seconds="whole-route wall limit, 5-1800 seconds; default 300")
+    if name == "select_computed_geometry":
+        hints.update(source_artifact_id="required S0 relaxed-scan or rigid torsion/conformer series bundle ID",
+                     member_id="required exact successful member ID from route_records and member_artifacts; no automatic best-member selection")
+    if name in {"run_baseline_bundle", "run_bright_dark_state_ordering"}:
+        hints["source_artifact_id"] += (
+            "; explicitly selected computed geometries are kept fixed for single-point and vertical-state "
+            "calculations; ordinary prepared structures undergo S0 optimization"
+        )
+    if name == "analyze_hole_electron_from_bundle":
+        hints.update(state_root="1-based singlet state present in the selected calculation, default 1",
+                     spatial_grid="medium or high, default high; fixed cross-term threshold 0.001",
+                     max_wall_seconds="10-300 seconds for all conversion and analysis steps; default 300")
     return hints

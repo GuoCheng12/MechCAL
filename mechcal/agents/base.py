@@ -3,11 +3,12 @@ from __future__ import annotations
 from pydantic import ValidationError
 
 from mechcal.agents.execution_planner import WorkerExecutionPlanner
+from mechcal.schemas.tool_arguments import merge_tool_args
 from mechcal.agents.report_writer import WorkerReportWriter
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
 from mechcal.runtime.agent_runtime import BaseAgentRuntime
 from mechcal.runtime.llm import OpenAIJsonClient
-from mechcal.runtime.retry import SchemaRetryError
+from mechcal.runtime.retry import SchemaRetryError, SchemaRetryRunner
 from mechcal.schemas import (
     AgentExecutionPlan,
     AgentReport,
@@ -140,6 +141,7 @@ class WorkerAgent:
                 "AgentExecutionPlan.tool_args contains control fields outside "
                 "the worker boundary: " + ", ".join(forbidden)
             )
+        merge_tool_args(request, plan)
         source_artifact_id = plan.tool_args.get("source_artifact_id")
         if source_artifact_id is not None and str(source_artifact_id) not in plan.artifact_refs:
             raise ValueError(
@@ -171,19 +173,62 @@ class WorkerAgent:
         execution_plan: AgentExecutionPlan | None = None,
     ) -> tuple[ToolExecutionResult, AgentReport]:
         plan = execution_plan or self.plan(request, case_run)
+        tool_result = self.execute_tool(request, case_run, execution_plan=plan)
+        return tool_result, self.report_result(request, case_run, execution_plan=plan, tool_result=tool_result)
+
+    def execute_tool(
+        self, request: DispatchRequest, case_run: CaseRun, *, execution_plan: AgentExecutionPlan,
+    ) -> ToolExecutionResult:
+        plan = execution_plan
         self._validate_execution_plan(plan, request)
         tool_result = self._run_tool(request, case_run, execution_plan=plan)
+        if case_run.runtime.get("question_loop") or case_run.runtime.get("command_protocol"):
+            # Legacy Macro IDs are round-scoped. New question links require one
+            # identity per execution, even for repeated same-route requests.
+            import hashlib
+
+            identity = hashlib.sha256(
+                f"{case_run.case_id}|{request.dispatch_id}|{tool_result.tool_result_id}".encode(),
+            ).hexdigest()[:20]
+            source_id = f"execution:{identity}"
+            evidence = [item.model_copy(update={
+                "evidence_id": f"{source_id}:E{index:03d}", "source_report_id": source_id,
+            }) for index, item in enumerate(tool_result.evidence_units, 1)]
+            tool_result = ToolExecutionResult.model_validate({
+                **tool_result.model_dump(mode="json"), "tool_result_id": source_id,
+                "evidence_units": [e.model_dump(mode="json") for e in evidence],
+                "raw_results": {**tool_result.raw_results,
+                                "original_tool_result_id": tool_result.tool_result_id,
+                                "original_evidence_ids": [e.evidence_id for e in tool_result.evidence_units]},
+            })
+        return tool_result
+
+    def report_result(
+        self, request: DispatchRequest, case_run: CaseRun, *, execution_plan: AgentExecutionPlan,
+        tool_result: ToolExecutionResult,
+        event_sink=None,
+    ) -> AgentReport:
+        plan = execution_plan
+        self._validate_execution_plan(plan, request)
+        self._validate_tool_result(tool_result, request)
         try:
-            report = self.runtime.run_schema_retry(
+            runner = SchemaRetryRunner(
+                AgentReport, policy=self.runtime.retry_runner.policy, event_sink=event_sink,
+                validators=self.runtime.retry_runner.validators,
+                strict_errors=bool(case_run.runtime.get("question_loop")),
+                repair_context=bool(case_run.runtime.get("question_loop")),
+            )
+            report = runner.run(
                 lambda feedback: self._produce_agent_report(
                     request,
                     case_run,
                     execution_plan=plan,
                     tool_result=tool_result,
                     schema_feedback=feedback,
+                    event_sink=event_sink,
                 )
             )
-            return tool_result, report
+            return report
         except SchemaRetryError as exc:
             if self.report_writer.enable_llm:
                 raise RuntimeError(
@@ -200,7 +245,7 @@ class WorkerAgent:
                     *list(exc.errors),
                 ],
             )
-            return tool_result, report
+            return report
         except Exception as exc:
             if self.report_writer.enable_llm:
                 raise RuntimeError(
@@ -217,7 +262,7 @@ class WorkerAgent:
                     f"{type(exc).__name__}: {exc}",
                 ],
             )
-            return tool_result, report
+            return report
 
     def _run_tool(
         self,
@@ -239,6 +284,8 @@ class WorkerAgent:
             )
             self._validate_tool_result(tool_result, request)
             return tool_result
+        except PermissionError:
+            raise
         except (ValidationError, ValueError) as exc:
             failure = FailureReport(
                 kind="agent_schema_invalid",
@@ -255,6 +302,9 @@ class WorkerAgent:
                 error_type=type(exc).__name__,
             )
         except Exception as exc:
+            status = getattr(exc, "status_code", getattr(getattr(exc, "response", None), "status_code", None))
+            if status in {401, 403}:
+                raise
             failure = FailureReport(
                 kind="runtime_failed",
                 message=str(exc),
@@ -275,6 +325,7 @@ class WorkerAgent:
         execution_plan: AgentExecutionPlan,
         tool_result: ToolExecutionResult,
         schema_feedback: str | None,
+        event_sink=None,
     ) -> AgentReport:
         report = AgentReport.model_validate(
             self.report_writer.write_report(
@@ -284,6 +335,7 @@ class WorkerAgent:
                 execution_plan=execution_plan,
                 tool_result=tool_result,
                 schema_feedback=schema_feedback,
+                event_sink=event_sink,
             )
         )
         self._validate_agent_report(report, request)

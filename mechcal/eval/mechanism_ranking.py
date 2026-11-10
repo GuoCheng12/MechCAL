@@ -26,8 +26,13 @@ class LLMMechanismEvidenceSupportJudge:
         settings: OpenAICompatibleSettings | None = None,
         rubric: dict[str, object] | None = None,
     ) -> None:
-        self.client = client or OpenAIJsonClient(_support_judge_settings(settings))
         self.rubric = rubric or load_mechanism_evidence_rubric()
+        if self.rubric.get("status") == "draft_not_enabled":
+            raise ValueError(
+                "This rubric is a draft and requires source-verification integration "
+                "before use. The current judge uses the frozen v2 protocol."
+            )
+        self.client = client or OpenAIJsonClient(_support_judge_settings(settings))
         self.max_schema_attempts = 3
 
     @property
@@ -91,9 +96,8 @@ class LLMMechanismEvidenceSupportJudge:
 
 def _support_judge_settings(
     settings: OpenAICompatibleSettings | None,
-) -> OpenAICompatibleSettings | None:
-    if settings is None:
-        return None
+) -> OpenAICompatibleSettings:
+    settings = settings or OpenAICompatibleSettings.from_env()
     judge_base_url = (
         os.environ.get("MECHCAL_SUPPORT_JUDGE_BASE_URL", "").strip()
         or settings.base_url
@@ -125,6 +129,9 @@ def _support_judge_settings(
         temperature=settings.temperature,
         top_p=settings.top_p,
         seed=settings.seed,
+        api_protocol=os.environ.get(
+            "MECHCAL_SUPPORT_JUDGE_API_PROTOCOL", settings.api_protocol,
+        ).strip(),
     )
 
 

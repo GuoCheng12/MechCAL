@@ -270,6 +270,7 @@ class MechanismAgendaCoverage(MechCALModel):
     case_id: str
     round_id: str
     coverage_summary: str
+    decision_challenges: list[str] = Field(default_factory=list, max_length=4)
     agenda_items: list[AgendaCoverageItem] = Field(default_factory=list)
     screened_out: list[ScreenedOutMechanism] = Field(default_factory=list)
     low_margin_competitions: list[LowMarginMechanismCompetition] = Field(default_factory=list)
@@ -370,15 +371,21 @@ class DifferentialMechanismPortfolio(MechCALModel):
         return self
 
 
+INPUT_SMILES_REF = "input:smiles"
+
+
 class MechanismSupportArgument(MechCALModel):
     record_type: str = "MechanismSupportArgument"
     support_id: str
     target_label: str
     support_level: MechanismSupportLevel
-    finding: str
-    warrant: str
-    boundary: str
-    observation_refs: list[str] = Field(default_factory=list)
+    finding: str = Field(description="What the cited structure or calculation actually shows; preserve conditions and units.")
+    warrant: str = Field(description="Why this particular finding bears on the target mechanism. Explain the proposed physical link, conditionally when appropriate; do not merely repeat values or say worth testing. State when no link is justified.")
+    boundary: str = Field(description="What remains unestablished and any counterevidence. Unconfirmed occurrence is not the same as an unsupported hypothesis.")
+    observation_refs: list[str] = Field(
+        default_factory=list, min_length=1,
+        description="Existing observation IDs, or input:smiles for a checkable feature of the supplied structure. Never use an input reference for a computed or experimental finding.",
+    )
     audit_status: MechanismSupportAuditStatus = "not_reviewed"
     audit_notes: list[str] = Field(default_factory=list)
 
@@ -408,6 +415,30 @@ class MechanismSupportArgument(MechCALModel):
         return self
 
 
+class MechanismArgumentAssessment(MechCALModel):
+    """Auditor's scientific assessments, not program-generated support scores."""
+
+    record_type: str = "MechanismArgumentAssessment"
+    finding_status: Literal["verified", "partly_verified", "unverified", "contradicted"]
+    finding_reason: str = Field(min_length=1, pattern=r"\S")
+    mechanism_link_status: Literal["articulated", "missing", "unsound"]
+    mechanism_link_source_field: Literal["finding", "warrant", "boundary"] | None = Field(
+        default=None,
+        description="Field of this support_id containing the submitted mechanism link. Use null if no link is present; runtime resolves the original text.",
+    )
+    mechanism_link_quote: str = ""
+    mechanism_link_reason: str = Field(min_length=1, pattern=r"\S")
+    boundary_effect: Literal["scope_limit", "counterevidence", "mixed", "none"]
+    boundary_reason: str = Field(min_length=1, pattern=r"\S")
+
+    @field_validator("finding_reason", "mechanism_link_reason", "boundary_reason")
+    @classmethod
+    def _non_empty_reason(cls, value: str) -> str:
+        if not value.strip():
+            raise ValueError("Argument assessment reasons must not be blank.")
+        return value.strip()
+
+
 class MechanismSupportAudit(MechCALModel):
     record_type: str = "MechanismSupportAudit"
     support_id: str
@@ -415,6 +446,8 @@ class MechanismSupportAudit(MechCALModel):
     recommended_support_level: MechanismSupportLevel | None = None
     audit_notes: list[str] = Field(default_factory=list)
     boundary_patch: str | None = None
+    # Historical reviews remain readable; live question-loop reviews require this.
+    argument_assessment: MechanismArgumentAssessment | None = None
 
     @field_validator("support_id")
     @classmethod
@@ -568,6 +601,21 @@ class EvidenceQuestion(MechCALModel):
     status: EvidenceQuestionStatus = "unresolved"
     acceptable_capability_ids: list[str] = Field(default_factory=list)
     missing_or_unresolved: list[str] = Field(default_factory=list)
+    # These fields separate the scientific answer from execution feasibility.
+    related_labels: list[str] = Field(default_factory=list)
+    answer_state: Literal["open", "partial", "answered", "deferred"] = "open"
+    execution_state: Literal["unknown", "feasible", "blocked"] = "unknown"
+    assessment: str = ""
+    decision_role: Literal["material", "limitation"] | None = None
+    evidence_refs: list[str] = Field(default_factory=list)
+    result_ids: list[str] = Field(
+        default_factory=list,
+        description=(
+            "Existing execution IDs from this case relevant to this question. Results may be "
+            "reused across questions; explain relevance in assessment. These citations do not "
+            "change original request-question links or make a failed execution scientific evidence."
+        ),
+    )
 
     @field_validator("question_id", "mechanism_id", "question", "observable")
     @classmethod
@@ -736,6 +784,13 @@ class MechanismHypothesisCard(MechCALModel):
         return self
 
 
+class AuditRouting(MechCALModel):
+    record_type: str = "AuditRouting"
+    mode: Literal["no_change", "local_audit", "global"]
+    affected_support_ids: list[str] = Field(default_factory=list)
+    reason: str = Field(min_length=1)
+
+
 class PhotophysicsReview(MechCALModel):
     record_type: str = "PhotophysicsReview"
     review_id: str
@@ -746,7 +801,9 @@ class PhotophysicsReview(MechCALModel):
     support_argument_audits: list[MechanismSupportAudit] = Field(default_factory=list)
     recommended_next_routes: list[str] = Field(default_factory=list)
     overclaim_warnings: list[str] = Field(default_factory=list)
+    context_notes: list[str] = Field(default_factory=list)
     source_evidence_refs: list[str] = Field(default_factory=list)
+    routing: AuditRouting | None = None
 
     @field_validator("review_id", "case_id", "round_id")
     @classmethod

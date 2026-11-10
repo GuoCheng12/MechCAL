@@ -1,51 +1,76 @@
-# Model and Runtime Configuration
+# Configuration
 
-All credentials are supplied by the caller. The source release contains no
-populated environment files or private API endpoints. Model aliases describe
-the requested endpoint model; they do not independently verify a provider's
-underlying model revision.
+The current entry point reads a TOML file supplied by `--config`. It loads the
+packaged `command_v1` workflow profile and applies explicit `[runtime]` overrides.
+It does not import a historical run, audit script, dataset, or credential store.
+Unknown options are rejected. The legacy environment-based entry points remain
+available but are not equivalent to this profile.
 
-| Variable | Meaning | Default |
-| --- | --- | --- |
-| `MECHCAL_OPENAI_BASE_URL` | Subject API base URL | Required |
-| `MECHCAL_OPENAI_API_KEY` | Subject API credential | Required |
-| `MECHCAL_OPENAI_MODEL` | Exact API-facing subject identifier | `deepseek-v4-flash` |
-| `MECHCAL_OPENAI_TEMPERATURE` | Requested temperature | `0` |
-| `MECHCAL_OPENAI_TOP_P` | Requested top-p | `1` |
-| `MECHCAL_OPENAI_REASONING_EFFORT` | Provider-supported reasoning effort | Omitted |
-| `MECHCAL_OPENAI_MAX_TOKENS` | Per-request output limit | Omitted at base client |
-| `MECHCAL_OPENAI_TIMEOUT` | Request timeout, seconds | `60` |
-| `MECHCAL_OPENAI_MAX_RETRIES` | Additional client attempts | `2` |
-| `MECHCAL_OPENAI_SEED` | Optional provider-supported seed | Omitted |
-| `MECHCAL_LLM_TELEMETRY_PATH` | Optional local usage log | Disabled |
+## Model
 
-Set an unsupported sampling field to `omit`. An omitted field uses the
-provider's behavior; it does not mean temperature or top-p equals one.
-Planner and reviewer clients reserve an output limit of at least 2,400 tokens.
-Other specialized calls can apply their own limits. The example environment
-uses a 4,800-token base limit; this is a runnable configuration example, not
-a claim that every historical experiment used that limit.
+`[model]` requires `base_url` and the exact API-facing `model` identifier.
+`api_key_env` names an environment variable; it does not contain its value.
+Inline API keys and URLs containing embedded credentials are rejected.
 
-Configure the judge separately with `MECHCAL_SUPPORT_JUDGE_BASE_URL`,
-`MECHCAL_SUPPORT_JUDGE_API_KEY`, `MECHCAL_SUPPORT_JUDGE_MODEL`, and
-`MECHCAL_SUPPORT_JUDGE_TIMEOUT`. Unset endpoint and credential fields fall
-back to subject settings. Judge usage is evaluation usage.
+The supplied example uses `deepseek-flash`, `reasoning_effort = "high"`,
+`api_protocol = "responses"`, timeout 180 seconds and two retries.
+The existing provider adapter handles DeepSeek's native transport.
+Temperature, seed and maximum output length are omitted by default; omission
+does not mean temperature zero or unlimited provider output. Supported optional
+fields are declared in `ModelConfig` in `mechcal/cli/deployment.py`.
 
-## Workflow Controls
+`probe` deliberately uses an output cap of 2,048 tokens and no transport retry
+for its single connectivity request. This does not alter normal run settings.
+No secret value is written into the run manifest.
 
-The public single-case and benchmark commands default to a cap of 30 rounds.
-They disable incremental portfolio input: each Planner update reconstructs
-the ranking from available evidence and feedback. The benchmark runner
-enables the Planner and internal reviewers, uses deterministic worker tools,
-and enables Amesp unless `--no-amesp` is supplied. LLM worker planning and
-reporting are optional in the single-case command.
+## Runtime
 
-The exported runtime retains the source stopping implementation. Its
-configuration defaults are `convergence_min_rounds=6` and
-`convergence_window=3`; additional evidence and failure conditions affect
-when a run stops. A 30-round cap is not a 30-tool-call cap. Do not infer
-measured call counts from these limits.
+The packaged profile enables current native commands, case memory, hypothesis
+updates, evidence follow-up, computational review, compact task context and
+autonomous worker tasks. It preserves the current scientific workflow.
 
-Use distinct output directories when changing models, prompts, rubric, or
-workflow configuration. Evaluation runners can reuse cached outputs, so
-reusing an old directory is not a fresh comparison.
+The deployment example explicitly limits exploration to 30 new scientific
+computations. The internal profile itself permits unlimited exploration;
+select the desired limit explicitly:
+
+```toml
+[runtime]
+unlimited_exploration = false
+max_exploration_rounds = 30
+enable_amesp = true
+```
+
+For an unbounded run, remove `max_exploration_rounds` and set
+`unlimited_exploration = true`. Do not set both a finite limit and unlimited mode.
+`max_rounds` is retained for compatibility and is not the active bound in
+unlimited command mode.
+
+Worker task defaults are 12 calls, 4 computations, 900 seconds. Delivery allows
+30 model turns. These are distinct from exploration rounds and provider limits.
+Changes to these settings must be recorded when comparing experiments.
+
+## Tool Locations
+
+`[tools]` configures Amesp, Multiwfn and m2m. `[qc]` configures xTB, CREST,
+DFTB+, PySCF and PySOC. Use executable names on PATH, absolute paths, or paths
+relative to the TOML file, not to the shell's working directory. `~` and defined
+environment variables are expanded. Unresolved variables are errors.
+
+The launcher writes a resolved QC configuration inside the run directory and
+passes its location to the local MCP process. Missing optional backends stay
+unavailable; they are not replaced with invented results. Both Multiwfn and m2m
+must be configured together for hole-electron analysis.
+
+`allow_excited_scan` and `allow_amesp_soc` default to false. Do not enable an
+unvalidated route merely to make a dependency check green.
+
+## Result Isolation
+
+Use a new output directory for every run. Case IDs must be filename-safe, not
+paths. Historical results are never overwritten. API usage and raw outputs
+remain local. The current single-molecule command does not call the external
+judge, and cannot infer benchmark scores without separate reference data.
+
+Judge and baseline settings are documented in [Evaluation](evaluation.md).
+For private deployments, keep TOML files named `*.local.toml` and credentials
+in the configured environment or a user-owned secret store outside Git.

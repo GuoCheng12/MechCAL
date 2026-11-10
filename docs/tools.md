@@ -1,5 +1,57 @@
 # Scientific Tool Installation
 
+## Current Command Workflow
+
+For the current workflow, configure paths in
+[`configs/deepseek.example.toml`](../configs/deepseek.example.toml) and run
+`mechcal --config mechcal.local.toml doctor --mcp`.
+Unlike the older CLI examples below, this entry point always uses local MCP.
+Install `.[science,mcp]` in the same Python environment as `mechcal`.
+Python installation alone does not install third-party scientific executables.
+
+| Component | Configuration | Installation / scope |
+| --- | --- | --- |
+| Amesp | `[tools].amesp_binary` | Complete authorized distribution; instructions below |
+| Multiwfn | `[tools].multiwfn_binary` | Linux no-GUI distribution with its required libraries |
+| Amesp m2m | `[tools].m2m_binary` | Conversion utility from the matching Amesp distribution |
+| xTB | `[qc].xtb_binary` | Local adapter acceptance used 6.7.1 |
+| CREST | `[qc].crest_binary` | Install CREST and xTB; local acceptance used 3.0.2 |
+| DFTB+ | `[qc].dftb_binary`, `parameter_dir` | Install executable and Slater-Koster parameters separately |
+| PySCF | `[qc].pyscf_python` | Python with `pyscf==2.14.0`, ASE, NumPy and SciPy |
+| PySOC | `[qc].pysoc_python`, `pysoc_source` | Separate environment and pinned upstream source |
+
+Install xTB, CREST and DFTB+ from their upstream distributions or conda-forge;
+preserve accompanying libraries and data. Optional subprocess backends also
+use GNU `/usr/bin/time` on Linux. Missing element/basis/parameter coverage must
+not trigger an undocumented change of method.
+
+A separate PySCF environment can be prepared with:
+
+```bash
+python3.11 -m venv "$HOME/opt/mechcal-pyscf"
+"$HOME/opt/mechcal-pyscf/bin/python" -m pip install 'pyscf==2.14.0' ase numpy scipy
+```
+
+Set `pyscf_python` to that interpreter. The adapter uses CPU PySCF, not
+GPU4PySCF. Large systems can time out or return partial results.
+
+PySOC validates source hashes from `https://github.com/gaox-qd/pysoc`, commit
+`1a520c682f4851a8ec6e551a04ec5cc89ebc2894`. It is not a generic interface to any
+package with that name. See `mechcal/tools/pysoc_source.py` for the contract;
+install upstream dependencies and binaries in a compatible Linux environment.
+The validated DFTB parameter family is `mio-1-1`; record its revision in the
+configuration. This route has a restricted element domain and is optional.
+
+Set `[qc].enabled = true` after configuring the desired backends. Empty paths
+leave individual optional routes unavailable. Keep `allow_amesp_soc = false`
+and `allow_excited_scan = false` unless separately validated.
+
+`doctor --mcp` checks paths and registry discovery without paid model calls or
+quantum calculations. Use the small real-computation check below to validate
+an Amesp installation. No private experiment directory is needed.
+
+## Amesp and Legacy CLI Details
+
 Follow this guide after cloning MechCAL. Commands use a Linux shell. The
 full scientific workflow is tested on Linux x86_64 with Python 3.11 and a
 CPU Amesp executable. Native macOS, Windows, ARM, and GPU Amesp execution
@@ -33,7 +85,7 @@ From the cloned repository root, choose **one** installation route.
 python3.11 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
-python -m pip install -e ".[science,mcp]"
+python -m pip install -c env/constraints-linux-py311.txt -e ".[science,mcp]"
 python -m pip check
 python examples/check_tools.py --mcp
 ```

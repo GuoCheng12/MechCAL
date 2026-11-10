@@ -36,11 +36,20 @@ class CapabilitySpec(MechCALModel):
     route: str
     description: str
     required_artifact_kinds: list[str] = Field(default_factory=list)
+    source_artifact_kinds: list[str] = Field(default_factory=list, description="One source from these alternative kinds, in addition to all required kinds.")
     outputs: list[str] = Field(default_factory=list)
     cost: CapabilityCost = "low"
     failure_modes: list[str] = Field(default_factory=list)
+    requires_amesp: bool = False
+    backend_enabled: bool = True
+    disabled_reason: str | None = None
+    allowed_argument_values: dict[str, list[int | str]] = Field(default_factory=dict)
     tool_binding: CapabilityToolBinding
     metadata: JsonDict = Field(default_factory=dict)
+
+    @property
+    def input_artifact_kinds(self) -> list[str]:
+        return list(dict.fromkeys([*self.required_artifact_kinds, *self.source_artifact_kinds]))
 
     @field_validator(
         "capability_id",

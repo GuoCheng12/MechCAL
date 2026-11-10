@@ -1,14 +1,18 @@
 from __future__ import annotations
 
 from typing import Any
+from pydantic import ValidationError
 
+from mechcal.agents.evidence_context import calculation_history, current_support_arguments, evidence_index
+from mechcal.schemas.decisions import PlannerDecision, StopReview
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
+from mechcal.capabilities.discovery import case_catalog
 from mechcal.capabilities.evidence_guide import compact_ability_evidence_guide
 from mechcal.mechanism_pool import MECHANISM_POOL
 from mechcal.public_ids import public_case_id_from_metadata
 from mechcal.runtime.llm import OpenAIJsonClient
 from mechcal.runtime.prompts import load_prompt
-from mechcal.runtime.retry import SchemaRetryError
+from mechcal.runtime.retry import ModelContractError, SchemaRetryError, complete_recorded_json
 from mechcal.schemas import (
     CaseRun,
     MechanismAgendaCoverage,
@@ -87,6 +91,103 @@ class MechanismAgendaAgent:
                 f"{type(exc).__name__}: {exc}"
             ) from exc
 
+    def propose_candidates(self, case_run: CaseRun, fresh, *, event_sink=None):
+        from mechcal.runtime.candidate_expansion import proposal_payload, validate_proposals
+        from mechcal.runtime.retry import SchemaRetryRunner, RetryPolicy
+        from mechcal.schemas.candidate_expansion import CandidateExpansion
+        from mechcal.agents.planner_references import PlannerReferences
+        from mechcal.runtime.field_repair import FieldRepairProducer
+        from mechcal.runtime.retry import RequestValidationError
+
+        if not self.llm_client.is_configured():
+            raise RuntimeError("Candidate expansion requires a configured model")
+        payload = proposal_payload(case_run, fresh)
+        payload["output_contract"] = CandidateExpansion.model_json_schema()
+        from mechcal.runtime.scoped_contracts import candidate_schema
+        payload["output_contract"] = candidate_schema(payload["output_contract"], payload)
+        references = PlannerReferences(case_run)
+        retained = None
+
+        def validate(proposal):
+            validate_proposals(proposal, payload)
+            submitted = [p.model_dump(mode="json") for p in proposal.proposals]
+            if any(p not in submitted for p in retained or []):
+                raise RequestValidationError([{
+                    "path": "proposals", "code": "candidate_changed_valid_proposal",
+                    "repair_paths": [["proposals"], ["rationale"]],
+                    "message": "Keep retained_proposals unchanged. Correct or withdraw only invalid proposals.",
+                }])
+
+        def full(feedback):
+            return references.complete(
+                self.llm_client, event_sink=event_sink, payload=payload,
+                system_prompt=load_prompt("candidate_expansion.md"), schema_feedback=feedback,
+            )
+
+        def repair(correction, feedback):
+            nonlocal retained
+            rejected = correction["rejected_response"]
+            try:
+                parsed = CandidateExpansion.model_validate(rejected)
+            except ValidationError:
+                parsed = None
+            if parsed is not None and retained is None:
+                # Preserve valid proposals across retries; withdrawal must be an
+                # explicit model edit of an invalid item, never an automatic filter.
+                invalid = set()
+                try:
+                    validate_proposals(parsed, payload)
+                except RequestValidationError as exc:
+                    invalid = {i["proposal_index"] for i in exc.issues}
+                retained = [item.model_dump(mode="json") for i, item in enumerate(parsed.proposals) if i not in invalid]
+            return references.complete(
+                self.llm_client, event_sink=event_sink,
+                payload={**payload, **correction, "stage": "candidate_expansion_repair",
+                         "retained_proposals": retained or []},
+                system_prompt=load_prompt("candidate_expansion_repair.md"),
+                schema_feedback="Use the typed correction contract and indexed issues in the payload.",
+            )
+
+        return SchemaRetryRunner(
+            CandidateExpansion, policy=RetryPolicy(max_attempts=3), repair_context=True,
+            validators=[validate], event_sink=event_sink,
+        ).run(FieldRepairProducer(
+            full, repair, response_model=CandidateExpansion, event_sink=event_sink,
+        ))
+
+    def compare_evidence(self, payload, *, event_sink=None):
+        from mechcal.runtime.predecision import validate_review
+        from mechcal.runtime.retry import RetryPolicy, SchemaRetryRunner
+        from mechcal.runtime.structured_output import PlannerOutputContract
+        from mechcal.schemas.predecision import PredecisionReview
+
+        if not self.llm_client.is_configured():
+            raise RuntimeError("Evidence comparison requires a configured model")
+        request = {**payload, "stage": "predecision_comparison",
+                   "output_contract": PredecisionReview.model_json_schema()}
+        from mechcal.runtime.scoped_contracts import predecision_schema
+        request["output_contract"] = predecision_schema(request["output_contract"], payload)
+        contract = PlannerOutputContract(request)
+
+        def produce(feedback):
+            import json
+            from jsonschema import ValidationError as SchemaValidationError
+            from mechcal.runtime.retry import RejectedResponseError
+            response = complete_recorded_json(
+                self.llm_client, payload=request, response_format=contract.response_format(),
+                system_prompt=load_prompt("predecision_comparison.md") + "\n" + load_prompt("planner_structured_output.md"),
+                schema_feedback=feedback, event_sink=event_sink,
+            )
+            try:
+                return contract.decode(response)
+            except (ValueError, SchemaValidationError) as exc:
+                raise RejectedResponseError(str(exc), json.dumps(response)) from exc
+
+        return SchemaRetryRunner(
+            PredecisionReview, policy=RetryPolicy(max_attempts=3),
+            validators=[lambda review: validate_review(review, payload)], event_sink=event_sink,
+        ).run(produce)
+
     def review_coverage(
         self,
         case_run: CaseRun,
@@ -117,7 +218,7 @@ class MechanismAgendaAgent:
         errors: list[str] = []
         for _ in range(1):
             try:
-                response = self.llm_client.complete_json(
+                response = complete_recorded_json(self.llm_client,
                     system_prompt=prompt,
                     payload=payload,
                     schema_feedback=feedback,
@@ -128,7 +229,7 @@ class MechanismAgendaAgent:
                     round_id=round_id,
                     capability_registry=self.capability_registry,
                 )
-            except Exception as exc:  # noqa: BLE001
+            except (ModelContractError, ValidationError) as exc:
                 feedback = (
                     "Return one valid JSON object matching output_contract. "
                     f"Previous error: {type(exc).__name__}: {exc}"
@@ -141,6 +242,56 @@ class MechanismAgendaAgent:
                 f"MechanismAgendaAgent failed to produce a valid coverage memo: "
                 f"{type(exc).__name__}: {exc}"
             ) from exc
+
+    def review_stop(
+        self, case_run: CaseRun, proposal: PlannerDecision,
+        *, event_sink=None,
+    ) -> StopReview:
+        if not self.llm_client.is_configured():
+            raise RuntimeError("Stop review requires a configured LLM client.")
+        payload = _coverage_payload(
+            case_run, self.capability_registry, proposal.round_id,
+            previous_planner_action=proposal.action,
+        )
+        payload.update({
+            "task": "planner_stop_review",
+            "proposed_stop": {
+                "decision_assessment": proposal.decision_assessment.model_dump(mode="json"),
+                "stopping_assessment": proposal.stopping_assessment.model_dump(mode="json"),
+                "unresolved_gaps": proposal.unresolved_gaps,
+                "final_answer_draft": proposal.final_answer_draft,
+                "ranking_uncertainty_material": proposal.raw_response.get("question_action", {}).get(
+                    "ranking_uncertainty_material"),
+                "ranking_justification": proposal.raw_response.get("question_action", {}).get("ranking_justification"),
+            },
+            "current_support_arguments": [
+                item.model_dump(mode="json") for item in current_support_arguments(case_run)
+            ],
+            "run_limits": case_run.runtime.get("run_limits", {}),
+            "capability_cards": case_catalog(self.capability_registry, case_run),
+            "output_contract": StopReview.model_json_schema(),
+        })
+        from mechcal.runtime.retry import ModelContractError, RetryPolicy, SchemaRetryRunner, complete_recorded_json
+        from mechcal.runtime.scoped_contracts import stop_review_schema
+        payload["output_contract"] = stop_review_schema(payload["output_contract"], case_run, payload)
+
+        def validate(review):
+            if review.status != "reviewed":
+                raise ModelContractError("Only the runtime may mark a stop review unavailable or disabled.")
+            allowed = {item.evidence_id for item in case_run.evidence_ledger.items} | {"input:smiles"}
+            if set(review.evidence_refs) - allowed:
+                raise ModelContractError("Stop review cited unknown evidence.")
+            catalog = {row["capability_id"]: row for row in payload["capability_cards"]}
+            if any(cid not in catalog or catalog[cid]["status"] == "disabled" for cid in review.capability_ids):
+                raise ModelContractError("Stop review proposed an unknown or disabled capability.")
+            if case_run.runtime.get("decision_value_checks"):
+                from mechcal.runtime.decision_value import validate_stop_opportunity
+                validate_stop_opportunity(review, catalog)
+
+        return SchemaRetryRunner(StopReview, policy=RetryPolicy(max_attempts=1), validators=[validate],
+                                 strict_errors=True, event_sink=event_sink).run(
+            lambda feedback: complete_recorded_json(self.llm_client, event_sink=event_sink,
+                system_prompt=load_prompt("planner_stop_review.md"), payload=payload, schema_feedback=feedback))
 
 
 def _agenda_payload(
@@ -178,6 +329,7 @@ def _agenda_payload(
                 "route": item["route"],
                 "description": _clip(str(item["description"]), 160),
                 "required_artifact_kinds": list(item["required_artifact_kinds"]),
+                "source_artifact_kinds": list(item.get("source_artifact_kinds", [])),
             }
             for item in capability_registry.cards()
         ],
@@ -199,8 +351,24 @@ def _coverage_payload(
     *,
     previous_planner_action: str | None,
 ) -> dict[str, Any]:
+    from mechcal.runtime.question_changes import public_questions
+
+    questions = public_questions(case_run)
+    context_tools = {tool for q in questions.values()
+                     if q.get("answer_state") not in {"answered", "deferred"}
+                     for tool in q.get("acceptable_capability_ids", [])}
+    context_tools.update(r["capability_id"] for r in case_run.runtime.get("question_loop", {}).get("pending_results", []))
     return {
         "task": "agenda_coverage_review",
+        "decision_value_checks": case_run.runtime.get("decision_value_checks", False),
+        "tool_delivery_contracts": [{"capability_id": spec.capability_id,
+                                     "description": spec.description,
+                                     "delivery_contract": spec.metadata.get("delivery_contract", {}),
+                                     "limitations": spec.metadata.get("limitations", [])}
+                                    for spec in capability_registry.snapshot().capabilities
+                                    if not case_run.runtime.get("planner_case_memory")
+                                    or spec.capability_id in context_tools]
+        if case_run.runtime.get("decision_value_checks") else [],
         "public_case": {
             "case_label": "current_smiles_case",
             "smiles": case_run.input.smiles,
@@ -209,18 +377,16 @@ def _coverage_payload(
         },
         "mechanism_pool": list(MECHANISM_POOL),
         "ablation_constraints": _ablation_constraints(case_run),
-        "current_evidence_ledger_summary": [
-            {
-                "evidence_id": item.evidence_id,
-                "capability_id": item.capability_id,
-                "family": item.family,
-                "support": item.support,
-                "status": item.status,
-                "claim": _clip(item.claim, 100),
-                "observable_tags": list(item.observable_tags[:3]),
-            }
-            for item in case_run.evidence_ledger.recent_items(limit=6)
+        "current_evidence_ledger_summary": evidence_index(case_run),
+        "calculation_history": calculation_history(case_run),
+        "artifact_manifest": [
+            {"artifact_id": item.artifact_id, "kind": item.kind, "status": item.status}
+            for item in case_run.artifact_manifest.artifacts
         ],
+        "structure_preparation": case_run.runtime.get("structure_preparation"),
+        "previous_decision_assessment": case_run.runtime.get("last_planner_assessment"),
+        "question_state": questions,
+        "latest_result_review": case_run.runtime.get("question_loop", {}).get("result_review"),
         "current_mechanism_portfolio": _compact_current_portfolio(case_run),
         "previous_agenda_coverage": _compact_previous_coverage(
             case_run.mechanism_agenda_coverage
@@ -228,17 +394,25 @@ def _coverage_payload(
         "previous_planner_route_or_action": previous_planner_action,
         "support_audit_feedback": _compact_support_audit(case_run),
         "photophysics_review_feedback": _compact_photophysics_review(case_run),
-        "capability_cards": [
+        "capability_cards": case_catalog(capability_registry, case_run)
+        if case_run.runtime.get("planner_tool_loading") == "on_demand" else [
             {
                 "capability_id": item["capability_id"],
                 "route": item["route"],
                 "required_artifact_kinds": list(item["required_artifact_kinds"]),
+                "source_artifact_kinds": list(item.get("source_artifact_kinds", [])),
+                "description": item["description"],
             }
             for item in _coverage_capability_cards(capability_registry)
         ],
-        "ability_evidence_guide": _coverage_ability_guide(capability_registry),
+        "ability_evidence_guide": None
+        if case_run.runtime.get("planner_tool_loading") == "on_demand"
+        else _coverage_ability_guide(capability_registry),
         "output_contract": {
             "coverage_summary": "one sentence, non-diagnostic coverage memo",
+            "decision_challenges": [
+                "brief evidence-grounded question about alternatives, ambiguity or redundant work"
+            ],
             "limits": (
                 "Return at most 3 agenda_items, 2 screened_out, "
                 "1 low_margin_competition, and 4 recommended_next_routes."
@@ -288,6 +462,14 @@ def _coverage_payload(
             "may_modify_portfolio_priority": False,
             "may_output_top3": False,
             "may_output_final_diagnosis": False,
+            "tool_readiness": (
+                "Recommend only ready tools for immediate work. Missing-input tools may be "
+                "discussed as later options after prerequisites; disabled tools cannot run. "
+                "Ready means basic prerequisites satisfied, not guaranteed success. "
+                "The catalog covers every permitted tool. Detailed delivery contracts focus on "
+                "open questions and pending results; other tools remain discoverable by Planner. "
+                "Do not infer unlisted outputs from a tool name."
+            ),
         },
     }
 
@@ -371,6 +553,7 @@ def _coverage_capability_cards(
 
 def _coverage_capability_ids(capability_registry: CapabilityRegistry) -> set[str]:
     wanted = {
+        "microscopic.optimize_ground_state_geometry",
         "microscopic.run_baseline_bundle",
         "macro.screen_esipt_structural_motif",
         "macro.screen_polar_binding_site_prior",
@@ -422,6 +605,7 @@ def _compact_previous_coverage(
     return {
         "round_id": coverage.round_id,
         "coverage_summary": _clip(coverage.coverage_summary, 220),
+        "decision_challenges": coverage.decision_challenges,
         "agenda_items": [
             {
                 "label": item.label,
@@ -498,7 +682,7 @@ def _sanitize_coverage(
         "coverage_review",
     ) or response
     if _has_forbidden_coverage_content(payload):
-        raise ValueError("Mechanism coverage memo contained forbidden final/evaluation text.")
+        raise ModelContractError("Mechanism coverage memo contained forbidden final/evaluation text.")
 
     known_labels = set(MECHANISM_POOL)
     known_capabilities = {
@@ -506,6 +690,11 @@ def _sanitize_coverage(
         for item in capability_registry.cards()
         if isinstance(item.get("capability_id"), str)
     }
+    if case_run.runtime.get("planner_tool_loading") == "on_demand":
+        known_capabilities = {
+            item["capability_id"] for item in case_catalog(capability_registry, case_run)
+            if item["status"] == "ready"
+        }
     public_case_id = _public_case_id(case_run)
     agenda_items = []
     for index, raw_item in enumerate(
@@ -546,14 +735,13 @@ def _sanitize_coverage(
             known_labels=known_labels,
             known_capabilities=known_capabilities,
         )
+        if case_run.runtime.get("planner_tool_loading") == "on_demand" and item is not None:
+            if not item["capability_ids"] or any(
+                value not in known_capabilities for value in _as_text_list(raw_item.get("capability_ids"))
+            ):
+                continue
         if item is not None:
             recommended_next_routes.append(item)
-    recommended_next_routes = _augment_coverage_routes(
-        recommended_next_routes,
-        case_run=case_run,
-        round_id=round_id,
-        known_capabilities=known_capabilities,
-    )[:4]
     if not agenda_items and not recommended_next_routes:
         agenda_items = [_coverage_no_action_item(case_run=case_run, round_id=round_id)]
 
@@ -567,6 +755,10 @@ def _sanitize_coverage(
             220,
         ),
         "agenda_items": agenda_items,
+        "decision_challenges": [
+            _clip(item, 600) for item in payload.get("decision_challenges", [])[:4]
+            if isinstance(item, str) and item.strip()
+        ],
         "screened_out": screened_out,
         "low_margin_competitions": low_margin_competitions,
         "recommended_next_routes": recommended_next_routes,
@@ -624,6 +816,11 @@ def _bootstrap_initial_coverage(
         for item in capability_registry.cards()
         if isinstance(item.get("capability_id"), str)
     }
+    if case_run.runtime.get("planner_tool_loading") == "on_demand":
+        known_capabilities = {
+            item["capability_id"] for item in case_catalog(capability_registry, case_run)
+            if item["status"] == "ready"
+        }
     recommended_next_routes = _augment_coverage_routes(
         [],
         case_run=case_run,

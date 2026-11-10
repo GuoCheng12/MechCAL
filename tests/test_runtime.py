@@ -8,6 +8,7 @@ from pydantic import ValidationError
 
 import mechcal.agents.planner as planner_module
 from mechcal.agents.conclusion_ledger import ConclusionLedgerAgent
+from mechcal.agents.evidence_references import EvidenceReferences
 from mechcal.agents.mechanism_agenda import MechanismAgendaAgent
 from mechcal.agents.mechanism_critic import (
     MechanismCriticAgent,
@@ -48,7 +49,6 @@ from mechcal.runtime.mechanism_program import build_diagnosis_units
 from mechcal.runtime.orchestrator import (
     _apply_planner_priorities_to_differential_portfolio,
     _has_low_margin_portfolio,
-    _rankings_stable_under_low_margin,
 )
 from mechcal.schemas import (
     AgendaCoverageItem,
@@ -226,21 +226,8 @@ def test_orchestrator_runs_one_molecule_typed_flow(tmp_path) -> None:
     assert (run_dir / "rounds" / "R001" / "macro_report.json").is_file()
     assert (run_dir / "rounds" / "R001" / "microscopic_report.json").is_file()
     assert (run_dir / "rounds" / "R001" / "claim_ledger.json").is_file()
-    assert (
-        run_dir / "rounds" / "R002" / "macro_run_dimer_packing_proxy_report.json"
-    ).is_file()
-    assert (
-        run_dir / "rounds" / "R002" / "macro_run_aggregate_contact_proxy_report.json"
-    ).is_file()
-    assert (
-        run_dir
-        / "rounds"
-        / "R002"
-        / "macro_run_crystal_restriction_checklist_report.json"
-    ).is_file()
-    assert (
-        run_dir / "rounds" / "R002" / "microscopic_run_bright_dark_state_ordering_report.json"
-    ).is_file()
+    assert (run_dir / "rounds/R002/macro_report.json").is_file()
+    assert not (run_dir / "rounds/R002/microscopic_run_bright_dark_state_ordering_report.json").exists()
     assert not (run_dir / "rounds" / "R002" / "verifier_execution_plan.json").exists()
     assert not (run_dir / "rounds" / "R002" / "verifier_tool_result.json").exists()
     assert not (run_dir / "rounds" / "R002" / "verifier_report.json").exists()
@@ -309,7 +296,7 @@ def test_mechanism_critic_payload_is_public_only() -> None:
     assert "source paper answer" not in encoded.lower()
 
 
-def test_mechanism_critic_sanitizer_preserves_evidence_tier_priority_floor() -> None:
+def test_mechanism_critic_sanitizer_preserves_model_priority() -> None:
     case_run = _case_run_for_gate().touch(
         input=CaseInput(
             case_id="critic_floor_case",
@@ -431,10 +418,10 @@ def test_mechanism_critic_sanitizer_preserves_evidence_tier_priority_floor() -> 
     )
 
     by_label = {row.label: row for row in portfolio.rows}
-    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.24)
-    assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.215)
-    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.12)
-    assert by_label["PET_ET"].differential_priority == pytest.approx(0.05)
+    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.9)
+    assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.02)
+    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.02)
+    assert by_label["PET_ET"].differential_priority == pytest.approx(0.9)
 
 
 def test_parallel_summary_sanitizer_keeps_priority_separate_from_support() -> None:
@@ -462,7 +449,6 @@ def test_parallel_summary_sanitizer_keeps_priority_separate_from_support() -> No
         case_run=case_run,
         round_id="R001",
         allowed_evidence_ids=set(),
-        calibrate_evidence_tier_priority=False,
     )
     full_critic = _sanitize_portfolio_response(
         response,
@@ -479,7 +465,7 @@ def test_parallel_summary_sanitizer_keeps_priority_separate_from_support() -> No
     )
     assert parallel_row.differential_priority == pytest.approx(0.72)
     assert parallel_row.support_strength == "unsupported"
-    assert full_row.differential_priority == pytest.approx(0.05)
+    assert full_row.differential_priority == pytest.approx(0.72)
 
 
 def test_output_assembler_keeps_planner_ranking_and_uses_reviewed_evidence() -> None:
@@ -586,7 +572,7 @@ def test_output_assembler_keeps_planner_ranking_and_uses_reviewed_evidence() -> 
     assert predictions[1].label == "ICT_TICT_CT"
 
 
-def test_output_assembler_expands_support_arguments_with_source_evidence_details() -> None:
+def test_output_assembler_preserves_planner_finding_without_post_audit_rewrite() -> None:
     case_run = CaseRun(
         case_id="demo",
         input=CaseInput(case_id="demo", smiles="Oc1ccccn1", user_query="Assess."),
@@ -650,9 +636,8 @@ def test_output_assembler_expands_support_arguments_with_source_evidence_details
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
     assert predictions[0].label == "ESIPT_PT"
-    assert "O-H...N" in predictions[0].evidence_details[0].finding
-    assert "hbd_count=1" in predictions[0].evidence_details[0].finding
-    assert "Initial verdict ranked" not in predictions[0].evidence_details[0].finding
+    assert predictions[0].evidence_details[0].finding == case_run.mechanism_support_arguments[0].finding
+    assert predictions[0].evidence_details[0].evidence_refs == ["E_esipt"]
 
 
 def test_output_assembler_exposes_state_proxy_metrics_for_judge() -> None:
@@ -806,7 +791,7 @@ def test_output_assembler_exposes_packing_contact_metrics_for_judge() -> None:
     assert "mol_logp=2.092" in finding
 
 
-def test_output_assembler_supplements_planner_label_with_screening_refs() -> None:
+def test_output_assembler_does_not_add_uncited_screening_evidence() -> None:
     case_run = CaseRun(
         case_id="screening_refs_case",
         input=CaseInput(case_id="screening_refs_case", smiles="c1ccccc1", user_query="Assess."),
@@ -852,10 +837,10 @@ def test_output_assembler_supplements_planner_label_with_screening_refs() -> Non
 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
-    assert predictions[0].evidence_refs == ["E_solid", "E_rotor"]
+    assert predictions[0].evidence_refs == ["E_solid"]
     findings = " ".join(item.finding for item in predictions[0].evidence_details)
-    assert "rotatable_bond_count=5" in findings
-    assert "torsion_candidate_count=5" in findings
+    assert "rotatable_bond_count=5" not in findings
+    assert "torsion_candidate_count=5" not in findings
 
 
 def test_output_assembler_does_not_supplement_negative_solid_state_screen() -> None:
@@ -1009,15 +994,15 @@ def test_output_assembler_orders_grounded_candidates_by_planner_priority() -> No
 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
-    assert [item.label for item in predictions[:2]] == ["RIM_RIR_RIV", "ICT_TICT_CT"]
-    assert predictions[1].differential_priority == pytest.approx(0.20)
+    assert [item.label for item in predictions[:2]] == ["ICT_TICT_CT", "RIM_RIR_RIV"]
+    assert predictions[0].differential_priority == pytest.approx(0.31)
     case_run.evidence_ledger.items[1].metrics["donor_atom_symbols"] = ["N1"]
     case_run.evidence_ledger.items[1].metrics["acceptor_atom_symbols"] = ["O1"]
 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
-    assert [item.label for item in predictions[:2]] == ["RIM_RIR_RIV", "ICT_TICT_CT"]
-    assert predictions[1].differential_priority == pytest.approx(0.20)
+    assert [item.label for item in predictions[:2]] == ["ICT_TICT_CT", "RIM_RIR_RIV"]
+    assert predictions[0].differential_priority == pytest.approx(0.31)
 
 
 def test_output_assembler_orders_ict_evidence_by_mechanism_specificity() -> None:
@@ -1094,453 +1079,14 @@ def test_output_assembler_orders_ict_evidence_by_mechanism_specificity() -> None
     assert "state_count=1" in prediction.evidence_details[1].finding
 
 
-def test_public_update_reducer_keeps_weak_ct_artifact_below_motion_proxy() -> None:
-    case_run = _case_run_for_gate().touch(
-        current_round_id="R002",
-        round_ids=["R001", "R002"],
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.30,
-                    differential_priority=0.30,
-                    evidence_refs=["E_torsion"],
-                ),
-                HypothesisEntry(
-                    name="ICT_TICT_CT",
-                    confidence=0.24,
-                    differential_priority=0.24,
-                    evidence_refs=["E_da"],
-                ),
-            ],
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="ct_floor_case",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_da",
-                    round_id="R001",
-                    source_report_id="R001:macro:da",
-                    agent_name="macro",
-                    capability_id="macro.screen_donor_acceptor_layout",
-                    family="geometry_precondition",
-                    summary="Donor/acceptor structural proxy.",
-                    metrics={
-                        "donor_acceptor_proxy": 1,
-                        "donor_acceptor_partition_proxy": 1.0,
-                    },
-                ),
-                _evidence_unit(
-                    evidence_id="E_torsion",
-                    round_id="R002",
-                    source_report_id="R002:micro:torsion",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_torsion_brightness_coupling_scan",
-                    family="torsion_sensitivity",
-                    summary="Torsion-brightness proxy.",
-                    metrics={"state_count": 0},
-                ),
-                _evidence_unit(
-                    evidence_id="E_ct",
-                    round_id="R002",
-                    source_report_id="R002:micro:ct",
-                    agent_name="microscopic",
-                    capability_id="microscopic.extract_ct_descriptors_from_bundle",
-                    family="charge_localization",
-                    summary="CT descriptor artifact-backed proxy.",
-                    metrics={
-                        "state_count": 1,
-                        "missing_deliverable_count": 2,
-                    },
-                ),
-            ],
-        ),
-    )
-    payload = planner_module._compact_planner_payload(
-        case_run=case_run,
-        round_id="R003",
-        stage="planner_update",
-        context={},
-        capability_registry=default_capability_registry(),
-    )
-    decision = planner_module._normalize_planner_llm_response(
-        planner_module._public_update_evidence_response(
-            case_run=case_run,
-            round_id="R003",
-            payload=payload,
-        ),
-        round_id="R003",
-        existing_portfolio=case_run.portfolio.model_dump(mode="json"),
-        previous_portfolio_hypotheses=[
-            item.model_dump(mode="json")
-            for item in planner_module._full_portfolio_hypotheses(case_run)
-        ],
-        allowed_evidence_ids=[item.evidence_id for item in case_run.evidence_ledger.items],
-        capability_registry=default_capability_registry(),
-        stage="planner_update",
-        prompt_payload=payload,
-    )
-
-    hypotheses = {
-        item["name"]: item for item in decision["portfolio"]["hypotheses"]
-    }
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] == pytest.approx(0.24)
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] < hypotheses[
-        "RIM_RIR_RIV"
-    ]["differential_priority"]
 
 
-def test_public_update_reducer_promotes_informative_ct_over_generic_motion_proxy() -> None:
-    case_run = _case_run_for_gate().touch(
-        current_round_id="R002",
-        round_ids=["R001", "R002"],
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.30,
-                    differential_priority=0.30,
-                    evidence_refs=["E_torsion"],
-                ),
-                HypothesisEntry(
-                    name="ICT_TICT_CT",
-                    confidence=0.24,
-                    differential_priority=0.24,
-                    evidence_refs=["E_da"],
-                ),
-            ],
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="ct_floor_case",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_da",
-                    round_id="R001",
-                    source_report_id="R001:macro:da",
-                    agent_name="macro",
-                    capability_id="macro.screen_donor_acceptor_layout",
-                    family="geometry_precondition",
-                    summary="Donor/acceptor structural proxy.",
-                    metrics={
-                        "donor_acceptor_proxy": 1,
-                        "donor_acceptor_partition_proxy": 1.0,
-                    },
-                ),
-                _evidence_unit(
-                    evidence_id="E_torsion",
-                    round_id="R002",
-                    source_report_id="R002:micro:torsion",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_torsion_brightness_coupling_scan",
-                    family="torsion_sensitivity",
-                    summary="Torsion-brightness proxy.",
-                    metrics={"state_count": 0},
-                ),
-                _evidence_unit(
-                    evidence_id="E_ct",
-                    round_id="R002",
-                    source_report_id="R002:micro:ct",
-                    agent_name="microscopic",
-                    capability_id="microscopic.extract_ct_descriptors_from_bundle",
-                    family="charge_localization",
-                    summary="CT descriptor artifact-backed proxy.",
-                    metrics={
-                        "state_count": 1,
-                        "ct_descriptor_proxy": True,
-                        "electron_hole_separation_proxy": True,
-                        "missing_deliverable_count": 0,
-                    },
-                ),
-            ],
-        ),
-    )
-    payload = planner_module._compact_planner_payload(
-        case_run=case_run,
-        round_id="R003",
-        stage="planner_update",
-        context={},
-        capability_registry=default_capability_registry(),
-    )
-    decision = planner_module._normalize_planner_llm_response(
-        planner_module._public_update_evidence_response(
-            case_run=case_run,
-            round_id="R003",
-            payload=payload,
-        ),
-        round_id="R003",
-        existing_portfolio=case_run.portfolio.model_dump(mode="json"),
-        previous_portfolio_hypotheses=[
-            item.model_dump(mode="json")
-            for item in planner_module._full_portfolio_hypotheses(case_run)
-        ],
-        allowed_evidence_ids=[item.evidence_id for item in case_run.evidence_ledger.items],
-        capability_registry=default_capability_registry(),
-        stage="planner_update",
-        prompt_payload=payload,
-    )
-
-    hypotheses = {
-        item["name"]: item for item in decision["portfolio"]["hypotheses"]
-    }
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] == pytest.approx(0.32)
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] > hypotheses[
-        "RIM_RIR_RIV"
-    ]["differential_priority"]
 
 
-def test_public_update_reducer_keeps_empty_torsion_scan_from_promoting_raci() -> None:
-    case_run = _case_run_for_gate().touch(
-        current_round_id="R002",
-        round_ids=["R001", "R002"],
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.21,
-                    differential_priority=0.21,
-                    evidence_refs=["E_rotor"],
-                ),
-                HypothesisEntry(
-                    name="RACI_CI_ACCESS",
-                    confidence=0.16,
-                    differential_priority=0.16,
-                    evidence_refs=[],
-                ),
-            ],
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="empty_torsion_case",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_rotor",
-                    round_id="R001",
-                    source_report_id="R001:macro:rotor",
-                    agent_name="macro",
-                    capability_id="macro.screen_rotor_torsion_topology",
-                    family="geometry_precondition",
-                    metrics={"rotatable_bond_count": 3, "torsion_candidate_count": 3},
-                    summary="Rotor/torsion topology proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_torsion_empty",
-                    round_id="R002",
-                    source_report_id="R002:micro:torsion",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_torsion_brightness_coupling_scan",
-                    family="torsion_sensitivity",
-                    basis="computed",
-                    metrics={"state_count": 0, "missing_deliverable_count": 1},
-                    summary="Torsion scan produced no excited-state brightness descriptors.",
-                ),
-            ],
-        ),
-    )
-    payload = planner_module._compact_planner_payload(
-        case_run=case_run,
-        round_id="R003",
-        stage="planner_update",
-        context={},
-        capability_registry=default_capability_registry(),
-    )
-    decision = planner_module._normalize_planner_llm_response(
-        planner_module._public_update_evidence_response(
-            case_run=case_run,
-            round_id="R003",
-            payload=payload,
-        ),
-        round_id="R003",
-        existing_portfolio=case_run.portfolio.model_dump(mode="json"),
-        previous_portfolio_hypotheses=[
-            item.model_dump(mode="json")
-            for item in planner_module._full_portfolio_hypotheses(case_run)
-        ],
-        allowed_evidence_ids=[item.evidence_id for item in case_run.evidence_ledger.items],
-        capability_registry=default_capability_registry(),
-        stage="planner_update",
-        prompt_payload=payload,
-    )
-
-    hypotheses = {
-        item["name"]: item for item in decision["portfolio"]["hypotheses"]
-    }
-    assert hypotheses["RIM_RIR_RIV"]["differential_priority"] >= 0.21
-    assert hypotheses["RACI_CI_ACCESS"]["differential_priority"] < hypotheses[
-        "RIM_RIR_RIV"
-    ]["differential_priority"]
-    assert "E_torsion_empty" not in hypotheses["RACI_CI_ACCESS"].get("evidence_refs", [])
 
 
-def test_public_update_reducer_allows_raci_with_torsion_brightness_signal() -> None:
-    case_run = _case_run_for_gate().touch(
-        current_round_id="R002",
-        round_ids=["R001", "R002"],
-        portfolio=HypothesisPortfolio(
-            current="RACI_CI_ACCESS",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RACI_CI_ACCESS",
-                    confidence=0.16,
-                    differential_priority=0.16,
-                    evidence_refs=[],
-                )
-            ],
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="raci_torsion_signal_case",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_torsion_signal",
-                    round_id="R002",
-                    source_report_id="R002:micro:torsion",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_torsion_brightness_coupling_scan",
-                    family="torsion_sensitivity",
-                    basis="computed",
-                    metrics={
-                        "state_count": 3,
-                        "oscillator_strength_range": 0.12,
-                        "missing_deliverable_count": 0,
-                    },
-                    summary="Torsion scan produced geometry-dependent brightness descriptors.",
-                )
-            ],
-        ),
-    )
-    payload = planner_module._compact_planner_payload(
-        case_run=case_run,
-        round_id="R003",
-        stage="planner_update",
-        context={},
-        capability_registry=default_capability_registry(),
-    )
-    decision = planner_module._normalize_planner_llm_response(
-        planner_module._public_update_evidence_response(
-            case_run=case_run,
-            round_id="R003",
-            payload=payload,
-        ),
-        round_id="R003",
-        existing_portfolio=case_run.portfolio.model_dump(mode="json"),
-        previous_portfolio_hypotheses=[
-            item.model_dump(mode="json")
-            for item in planner_module._full_portfolio_hypotheses(case_run)
-        ],
-        allowed_evidence_ids=[item.evidence_id for item in case_run.evidence_ledger.items],
-        capability_registry=default_capability_registry(),
-        stage="planner_update",
-        prompt_payload=payload,
-    )
-
-    hypotheses = {
-        item["name"]: item for item in decision["portfolio"]["hypotheses"]
-    }
-    assert hypotheses["RACI_CI_ACCESS"]["differential_priority"] >= 0.27
-    assert "E_torsion_signal" in hypotheses["RACI_CI_ACCESS"].get("evidence_refs", [])
 
 
-def test_public_update_reducer_does_not_let_weak_ct_artifact_overtake_esipt() -> None:
-    case_run = _case_run_for_gate().touch(
-        current_round_id="R002",
-        round_ids=["R001", "R002"],
-        portfolio=HypothesisPortfolio(
-            current="ESIPT_PT",
-            hypotheses=[
-                HypothesisEntry(
-                    name="ESIPT_PT",
-                    confidence=0.31,
-                    differential_priority=0.31,
-                    evidence_refs=["E_esipt"],
-                ),
-                HypothesisEntry(
-                    name="ICT_TICT_CT",
-                    confidence=0.24,
-                    differential_priority=0.24,
-                    evidence_refs=["E_da"],
-                ),
-            ],
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="weak_ct_esipt_case",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_esipt",
-                    round_id="R001",
-                    source_report_id="R001:macro:esipt",
-                    agent_name="macro",
-                    capability_id="macro.screen_esipt_structural_motif",
-                    family="geometry_precondition",
-                    summary="ESIPT structural motif proxy.",
-                    metrics={
-                        "esipt_motif_proxy": True,
-                        "proton_transfer_pair_proxy_count": 2,
-                    },
-                ),
-                _evidence_unit(
-                    evidence_id="E_da",
-                    round_id="R001",
-                    source_report_id="R001:macro:da",
-                    agent_name="macro",
-                    capability_id="macro.screen_donor_acceptor_layout",
-                    family="geometry_precondition",
-                    summary="Donor/acceptor structural proxy.",
-                    metrics={
-                        "donor_acceptor_proxy": 2,
-                        "donor_acceptor_partition_proxy": 1.0,
-                    },
-                ),
-                _evidence_unit(
-                    evidence_id="E_ct",
-                    round_id="R002",
-                    source_report_id="R002:micro:ct",
-                    agent_name="microscopic",
-                    capability_id="microscopic.extract_ct_descriptors_from_bundle",
-                    family="charge_localization",
-                    summary="Weak CT descriptor artifact-backed proxy.",
-                    metrics={
-                        "state_count": 1,
-                        "oscillator_strength": 0.07,
-                        "missing_deliverable_count": 2,
-                    },
-                ),
-            ],
-        ),
-    )
-    payload = planner_module._compact_planner_payload(
-        case_run=case_run,
-        round_id="R003",
-        stage="planner_update",
-        context={},
-        capability_registry=default_capability_registry(),
-    )
-    decision = planner_module._normalize_planner_llm_response(
-        planner_module._public_update_evidence_response(
-            case_run=case_run,
-            round_id="R003",
-            payload=payload,
-        ),
-        round_id="R003",
-        existing_portfolio=case_run.portfolio.model_dump(mode="json"),
-        previous_portfolio_hypotheses=[
-            item.model_dump(mode="json")
-            for item in planner_module._full_portfolio_hypotheses(case_run)
-        ],
-        allowed_evidence_ids=[item.evidence_id for item in case_run.evidence_ledger.items],
-        capability_registry=default_capability_registry(),
-        stage="planner_update",
-        prompt_payload=payload,
-    )
-
-    hypotheses = {
-        item["name"]: item for item in decision["portfolio"]["hypotheses"]
-    }
-    assert hypotheses["ESIPT_PT"]["differential_priority"] == pytest.approx(0.31)
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] == pytest.approx(0.24)
-    assert hypotheses["ICT_TICT_CT"]["differential_priority"] < hypotheses[
-        "ESIPT_PT"
-    ]["differential_priority"]
 
 
 def test_output_assembler_keeps_planner_order_over_reviewed_rows() -> None:
@@ -1797,7 +1343,7 @@ def test_output_assembler_keeps_low_margin_order_for_only_weak_structural_refs()
     ]
 
 
-def test_reviewer_feedback_floor_is_not_erased_before_next_planner_update() -> None:
+def test_reviewer_feedback_cannot_override_planner_priorities() -> None:
     case_run = CaseRun(
         case_id="reviewer_floor",
         input=CaseInput(
@@ -1869,12 +1415,12 @@ def test_reviewer_feedback_floor_is_not_erased_before_next_planner_update() -> N
     )
 
     rows = {row.label: row for row in merged.rows}
-    assert rows["ESIPT_PT"].differential_priority == pytest.approx(0.12)
+    assert rows["ESIPT_PT"].differential_priority == pytest.approx(0.0)
     assert rows["PET_ET"].differential_priority == pytest.approx(0.0)
     assert rows["RIM_RIR_RIV"].differential_priority == pytest.approx(0.1)
 
 
-def test_reviewer_feedback_can_rank_when_planner_portfolio_is_uninformative() -> None:
+def test_reviewer_feedback_does_not_replace_zero_planner_priorities() -> None:
     case_run = CaseRun(
         case_id="uninformative_planner",
         input=CaseInput(
@@ -1930,9 +1476,9 @@ def test_reviewer_feedback_can_rank_when_planner_portfolio_is_uninformative() ->
     )
 
     rows = {row.label: row for row in merged.rows}
-    assert rows["ESIPT_PT"].differential_priority == pytest.approx(0.24)
-    assert rows["ICT_TICT_CT"].differential_priority == pytest.approx(0.18)
-    assert rows["RIM_RIR_RIV"].differential_priority == pytest.approx(0.12)
+    assert rows["ESIPT_PT"].differential_priority == pytest.approx(0.0)
+    assert rows["ICT_TICT_CT"].differential_priority == pytest.approx(0.0)
+    assert rows["RIM_RIR_RIV"].differential_priority == pytest.approx(0.0)
 
 
 def test_output_assembler_marks_low_margin_predictions() -> None:
@@ -1969,7 +1515,7 @@ def test_output_assembler_marks_low_margin_predictions() -> None:
     assert predictions[0].support_strength == "unsupported"
 
 
-def test_output_assembler_does_not_export_unsupported_no_ref_candidate_above_grounded_one() -> None:
+def test_output_assembler_keeps_priority_independent_of_support() -> None:
     case_run = CaseRun(
         case_id="demo",
         input=CaseInput(case_id="demo", smiles="C1=CC=CC=C1", user_query="Assess."),
@@ -2026,13 +1572,13 @@ def test_output_assembler_does_not_export_unsupported_no_ref_candidate_above_gro
 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
-    assert predictions[0].label == "RIM_RIR_RIV"
-    assert predictions[0].evidence_refs == ["E_rotor"]
-    assert predictions[1].label == "RACI_CI_ACCESS"
-    assert predictions[1].support_strength == "unsupported"
+    assert predictions[0].label == "RACI_CI_ACCESS"
+    assert predictions[0].support_strength == "unsupported"
+    assert predictions[1].label == "RIM_RIR_RIV"
+    assert predictions[1].evidence_refs == ["E_rotor"]
 
 
-def test_output_assembler_uses_rotor_flexibility_floor_for_rim() -> None:
+def test_output_assembler_does_not_apply_rotor_flexibility_floor() -> None:
     case_run = CaseRun(
         case_id="demo",
         input=CaseInput(case_id="demo", smiles="CC1=CC=CC=C1", user_query="Assess."),
@@ -2145,9 +1691,11 @@ def test_output_assembler_uses_rotor_flexibility_floor_for_rim() -> None:
 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
-    assert predictions[0].label == "RIM_RIR_RIV"
-    assert predictions[0].differential_priority == pytest.approx(0.25)
-    assert set(predictions[0].evidence_refs) >= {"E_solid", "E_rotor"}
+    assert predictions[0].label == "ICT_TICT_CT"
+    assert predictions[0].differential_priority == pytest.approx(0.24)
+    assert [item.differential_priority for item in predictions] == [
+        item.differential_priority for item in case_run.portfolio.sorted_hypotheses()[:3]
+    ]
 
 
 def test_output_assembler_keeps_planner_portfolio_order_under_grounded_ties() -> None:
@@ -2279,412 +1827,12 @@ def test_orchestrator_agenda_review_trigger_uses_low_margin_only() -> None:
     assert _has_low_margin_portfolio(low_margin_case)
 
 
-def test_orchestrator_evidence_sufficiency_finalize_guard(tmp_path) -> None:
-    orchestrator = MechCALOrchestrator(
-        OrchestratorConfig(run_base_dir=tmp_path, max_rounds=30)
-    )
-    case_run = _case_run_for_gate().touch(
-        round_ids=["R001", "R002"],
-        photophysics_review=PhotophysicsReview(
-            review_id="demo:R002:photophysics_review",
-            case_id="demo",
-            round_id="R002",
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="demo",
-            items=[
-                _evidence_unit(
-                    evidence_id="E1",
-                    round_id="R002",
-                    source_report_id="R002:microscopic",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_torsion_brightness_coupling_scan",
-                    family="torsion_sensitivity",
-                    summary="Torsion-brightness coupling proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E2",
-                    round_id="R001",
-                    source_report_id="R001:macro",
-                    agent_name="macro",
-                    capability_id="macro.screen_rotor_torsion_topology",
-                    family="geometry_precondition",
-                    summary="Rotor structural proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E3",
-                    round_id="R001",
-                    source_report_id="R001:macro",
-                    agent_name="macro",
-                    capability_id="macro.screen_aggregation_prone_scaffold",
-                    family="geometry_precondition",
-                    summary="Aggregation structural proxy.",
-                ),
-            ],
-        ),
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.42,
-                    differential_priority=0.42,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E1"],
-                ),
-                HypothesisEntry(
-                    name="PACKING_HOST_MATRIX_CONFINEMENT",
-                    confidence=0.30,
-                    differential_priority=0.30,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E3"],
-                ),
-            ],
-        ),
-        mechanism_support_arguments=[
-            MechanismSupportArgument(
-                support_id="R002:support:rim",
-                target_label="RIM_RIR_RIV",
-                support_level="weak",
-                finding="Torsion-brightness coupling proxy.",
-                warrant="The route screens motion-coupled brightness changes.",
-                boundary="No condensed-phase restriction experiment was run.",
-                observation_refs=["E1"],
-            )
-        ],
-    )
-
-    assert not orchestrator._should_finalize_on_evidence_sufficiency(case_run)
-    covered_case = case_run.touch(
-        evidence_ledger=EvidenceLedger(
-            case_id="demo",
-            items=[
-                *case_run.evidence_ledger.items,
-                _evidence_unit(
-                    evidence_id="E4",
-                    round_id="R003",
-                    source_report_id="R003:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_dimer_packing_proxy",
-                    family="geometry_precondition",
-                    summary="Dimer packing proxy follow-up.",
-                ),
-                _evidence_unit(
-                    evidence_id="E5",
-                    round_id="R003",
-                    source_report_id="R003:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_aggregate_contact_proxy",
-                    family="geometry_precondition",
-                    summary="Aggregate contact proxy follow-up.",
-                ),
-                _evidence_unit(
-                    evidence_id="E6",
-                    round_id="R003",
-                    source_report_id="R003:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_crystal_restriction_checklist",
-                    family="geometry_precondition",
-                    summary="Crystal restriction checklist follow-up.",
-                ),
-            ],
-        )
-    )
-    assert orchestrator._should_finalize_on_evidence_sufficiency(covered_case)
-    low_margin_case = case_run.touch(
-        evidence_ledger=covered_case.evidence_ledger,
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.42,
-                    differential_priority=0.42,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E1"],
-                ),
-                HypothesisEntry(
-                    name="PACKING_HOST_MATRIX_CONFINEMENT",
-                    confidence=0.39,
-                    differential_priority=0.39,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E3"],
-                ),
-            ],
-        )
-    )
-    assert orchestrator._should_finalize_on_evidence_sufficiency(low_margin_case)
-    low_margin_without_top_support = low_margin_case.touch(mechanism_support_arguments=[])
-    assert not orchestrator._should_finalize_on_evidence_sufficiency(
-        low_margin_without_top_support
-    )
-    dispatch_gate = DecisionGateResult(
-        gate_id="R002:gate",
-        round_id="R002",
-        status="allow",
-        terminal=False,
-        dispatch_requests=[
-            DispatchRequest(
-                dispatch_id="R002:dispatch:macro:screen_rotor_torsion_topology",
-                round_id="R002",
-                agent_name="macro",
-                capability_id="macro.screen_rotor_torsion_topology",
-                task="Collect rotor topology.",
-                objective="Collect rotor topology.",
-                evidence_goal_family="geometry_precondition",
-                route="screen_rotor_torsion_topology",
-            )
-        ],
-    )
-    assert orchestrator._can_finalize_on_evidence_sufficiency_after_round(
-        covered_case,
-        store=RunStore(tmp_path, "evidence_sufficiency_guard"),
-        gate_result=dispatch_gate,
-        calibrated_after_dispatch=False,
-    ) is False
-    assert orchestrator._can_finalize_on_evidence_sufficiency_after_round(
-        covered_case,
-        store=RunStore(tmp_path, "evidence_sufficiency_guard"),
-        gate_result=dispatch_gate,
-        calibrated_after_dispatch=True,
-    )
 
 
-def test_orchestrator_evidence_sufficiency_allows_missing_review_after_verifier_failure(
-    tmp_path,
-) -> None:
-    orchestrator = MechCALOrchestrator(
-        OrchestratorConfig(run_base_dir=tmp_path, max_rounds=30)
-    )
-    case_run = _case_run_for_gate().touch(
-        round_ids=["R001", "R002"],
-        photophysics_review=None,
-        runtime={
-            "orchestrator": "mechcal",
-            "langgraph": False,
-            "verifier_failures": [
-                {
-                    "type": "RuntimeError",
-                    "message": "APITimeoutError: Request timed out.",
-                    "agent": "PhotophysicsArbiterAgent",
-                    "policy": "continue_without_scientific_fallback",
-                }
-            ],
-            "mechanism_critic_failures": [
-                {
-                    "type": "RuntimeError",
-                    "message": "APITimeoutError: Request timed out.",
-                    "agent": "MechanismCriticAgent",
-                    "policy": (
-                        "continue_with_previous_differential_portfolio_without_"
-                        "scientific_fallback"
-                    ),
-                }
-            ],
-        },
-        evidence_ledger=EvidenceLedger(
-            case_id="demo",
-            items=[
-                _evidence_unit(
-                    evidence_id="E_rotor",
-                    round_id="R001",
-                    source_report_id="R001:macro",
-                    agent_name="macro",
-                    capability_id="macro.screen_rotor_torsion_topology",
-                    family="geometry_precondition",
-                    summary="Rotor proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_agg",
-                    round_id="R001",
-                    source_report_id="R001:macro",
-                    agent_name="macro",
-                    capability_id="macro.screen_aggregation_prone_scaffold",
-                    family="geometry_precondition",
-                    summary="Aggregation proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_state",
-                    round_id="R002",
-                    source_report_id="R002:micro",
-                    agent_name="microscopic",
-                    capability_id="microscopic.run_bright_dark_state_ordering",
-                    family="state_ordering_brightness",
-                    summary="State ordering proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_dimer",
-                    round_id="R002",
-                    source_report_id="R002:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_dimer_packing_proxy",
-                    family="geometry_precondition",
-                    summary="Dimer packing proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_contact",
-                    round_id="R002",
-                    source_report_id="R002:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_aggregate_contact_proxy",
-                    family="geometry_precondition",
-                    summary="Aggregate contact proxy.",
-                ),
-                _evidence_unit(
-                    evidence_id="E_checklist",
-                    round_id="R002",
-                    source_report_id="R002:macro",
-                    agent_name="macro",
-                    capability_id="macro.run_crystal_restriction_checklist",
-                    family="geometry_precondition",
-                    summary="Crystal restriction checklist.",
-                ),
-            ],
-        ),
-        portfolio=HypothesisPortfolio(
-            current="RIM_RIR_RIV",
-            hypotheses=[
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.42,
-                    differential_priority=0.42,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E_state"],
-                ),
-                HypothesisEntry(
-                    name="AGGREGATE_EXCITON_EXCIMER",
-                    confidence=0.30,
-                    differential_priority=0.30,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E_agg"],
-                ),
-            ],
-        ),
-        mechanism_support_arguments=[
-            MechanismSupportArgument(
-                support_id="R002:support:rim",
-                target_label="RIM_RIR_RIV",
-                support_level="weak",
-                finding="Rotor proxy.",
-                warrant="Rotor topology screens RIM/RIR/RIV.",
-                boundary="No direct condensed-phase restriction evidence was collected.",
-                observation_refs=["E_state"],
-            )
-        ],
-    )
-
-    assert orchestrator._should_finalize_on_evidence_sufficiency(case_run)
 
 
-def test_convergence_finalization_uses_current_planner_state_without_recalibration(
-    tmp_path,
-) -> None:
-    class FailingPlanner:
-        def calibrate_final_portfolio(self, case_run: CaseRun, *, round_id: str):
-            del case_run, round_id
-            raise AssertionError("convergence finalization must not recalibrate")
-
-    config = OrchestratorConfig(run_base_dir=tmp_path, max_rounds=30)
-    deps = _fake_llm_deps(config)
-    deps.planner = FailingPlanner()  # type: ignore[assignment]
-    orchestrator = MechCALOrchestrator(config, deps=deps)
-    case_run = _case_run_for_gate().touch(
-        case_id="converged_without_recalibration",
-        input=CaseInput(
-            case_id="converged_without_recalibration",
-            smiles="C1=CC=CC=C1",
-            user_query="Assess.",
-        ),
-        status="running",
-        current_round_id="R006",
-        round_ids=["R001", "R002", "R003", "R004", "R005", "R006"],
-        photophysics_review=PhotophysicsReview(
-            review_id="converged_without_recalibration:R006:photophysics_review",
-            case_id="converged_without_recalibration",
-            round_id="R006",
-        ),
-        evidence_ledger=EvidenceLedger(
-            case_id="converged_without_recalibration",
-            items=[
-                _evidence_unit(
-                    evidence_id="E1",
-                    round_id="R001",
-                    source_report_id="R001:macro",
-                    agent_name="macro",
-                    family="geometry_precondition",
-                    capability_id="macro.screen_esipt_structural_motif",
-                    summary="ESIPT structural proxy.",
-                )
-            ],
-        ),
-        portfolio=HypothesisPortfolio(
-            current="ESIPT_PT",
-            hypotheses=[
-                HypothesisEntry(
-                    name="ESIPT_PT",
-                    confidence=0.42,
-                    differential_priority=0.42,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    evidence_refs=["E1"],
-                    rationale="Planner-owned converged ranking.",
-                ),
-                HypothesisEntry(
-                    name="RIM_RIR_RIV",
-                    confidence=0.30,
-                    differential_priority=0.30,
-                    evidence_support="weak_or_proxy",
-                    claim_status="candidate_requires_validation",
-                    rationale="Planner-owned runner-up.",
-                ),
-            ],
-        ),
-        mechanism_support_arguments=[
-            MechanismSupportArgument(
-                support_id="R006:support:esipt",
-                target_label="ESIPT_PT",
-                support_level="weak",
-                finding="ESIPT structural proxy.",
-                warrant="The route screens a proton-transfer-compatible motif.",
-                boundary="No excited-state proton-transfer computation was run.",
-                observation_refs=["E1"],
-            )
-        ],
-    )
-    store = RunStore(tmp_path, "converged_without_recalibration")
-    store.initialize()
-
-    result = orchestrator._finish_converged_case(case_run, store)
-
-    assert result.status == "finalized"
-    assert result.mechanism_predictions[0].label == "ESIPT_PT"
-    assert result.final_answer is not None
-    assert result.final_answer.mechanism_predictions == result.mechanism_predictions
-    assert (store.root / "mechanism_predictions.json").is_file()
-    assert not (store.root / "history" / "planner_final_calibrations.jsonl").exists()
 
 
-def test_low_margin_convergence_allows_stable_top1_and_top3_set() -> None:
-    assert _rankings_stable_under_low_margin(
-        [
-            ("RADIATIVE_RATE_STATE_BALANCE", "PACKING_HOST_MATRIX_CONFINEMENT", "SOKR_ANTI_KASHA"),
-            ("RADIATIVE_RATE_STATE_BALANCE", "SOKR_ANTI_KASHA", "PACKING_HOST_MATRIX_CONFINEMENT"),
-            ("RADIATIVE_RATE_STATE_BALANCE", "PACKING_HOST_MATRIX_CONFINEMENT", "SOKR_ANTI_KASHA"),
-        ]
-    )
-    assert not _rankings_stable_under_low_margin(
-        [
-            ("PACKING_HOST_MATRIX_CONFINEMENT", "RADIATIVE_RATE_STATE_BALANCE", "SOKR_ANTI_KASHA"),
-            ("RADIATIVE_RATE_STATE_BALANCE", "SOKR_ANTI_KASHA", "PACKING_HOST_MATRIX_CONFINEMENT"),
-            ("RADIATIVE_RATE_STATE_BALANCE", "PACKING_HOST_MATRIX_CONFINEMENT", "SOKR_ANTI_KASHA"),
-        ]
-    )
 
 
 def test_default_deps_do_not_cap_scientific_finalization_timeouts(
@@ -2782,13 +1930,18 @@ def test_orchestrator_can_continue_after_transient_arbiter_failure_without_fallb
     assert not (run_dir / "photophysics_review.json").exists()
 
 
-def test_orchestrator_skips_repeated_verifier_calls_after_evidence_sufficiency(
+def test_orchestrator_honors_planner_finalize_after_reading_requested_followup(
     tmp_path,
 ) -> None:
     class FinalizesAfterFollowupEvidenceClient(FakeJsonClient):
         def complete_json(self, **kwargs) -> dict[str, object]:  # type: ignore[no-untyped-def]
             system_prompt = kwargs["system_prompt"]
             payload = kwargs["payload"]
+            if payload.get("stage") == "planner_update" and payload.get("round_id") == "R002":
+                result = super().complete_json(**kwargs)
+                result["dispatch_requests"] = []
+                result["selected_capability_ids"] = ["macro.run_solid_state_emission_proxy"]
+                return result
             if (
                 "PlannerDecision" in system_prompt
                 and isinstance(payload, dict)
@@ -2796,20 +1949,19 @@ def test_orchestrator_skips_repeated_verifier_calls_after_evidence_sufficiency(
                 and payload.get("round_id") == "R003"
             ):
                 evidence = payload.get("new_round_evidence")
-                evidence_refs = [
+                followup_refs = [
                     str(item.get("evidence_id"))
                     for item in evidence
                     if isinstance(item, dict) and item.get("evidence_id")
+                    and item.get("capability_id") in {
+                        "microscopic.run_bright_dark_state_ordering",
+                        "microscopic.run_torsion_brightness_coupling_scan",
+                        "macro.run_solid_state_emission_proxy",
+                    }
                 ] if isinstance(evidence, list) else []
-                followup_refs = [
-                    ref
-                    for ref in evidence_refs
-                    if "run_bright_dark_state_ordering" in ref
-                    or "run_torsion_brightness_coupling_scan" in ref
-                    or "run_solid_state_emission_proxy" in ref
-                ]
                 assert followup_refs
                 return {
+                    "decision_assessment": _fixture_planner_assessment(),
                     "decision_id": "R003:planner_final_after_followup",
                     "round_id": "R003",
                     "portfolio": {
@@ -2845,6 +1997,8 @@ def test_orchestrator_skips_repeated_verifier_calls_after_evidence_sufficiency(
                                     "Packing or aggregate morphology validation."
                                 ],
                             },
+                            {"name": "ICT_TICT_CT", "differential_priority": 0.1,
+                             "rationale": "Unresolved fixture candidate."},
                         ],
                     },
                     "current_hypothesis": "RIM_RIR_RIV",
@@ -2920,7 +2074,8 @@ def test_orchestrator_skips_repeated_verifier_calls_after_evidence_sufficiency(
 
     assert result.status == "finalized"
     assert result.round_ids == ["R001", "R002", "R003"]
-    assert len(result.runtime["verifier_failures"]) == 2
+    assert len(result.runtime["verifier_failures"]) == 3
+    assert result.runtime["verifier_failures"][-1]["current_round_id"] == "R003"
     assert result.final_answer is not None
     assert result.mechanism_predictions
 
@@ -3192,7 +2347,7 @@ def test_initial_planner_timeout_still_fails_without_fallback(tmp_path) -> None:
     assert not (run_dir / "history" / "planner_failures.jsonl").exists()
 
 
-def test_stop_without_terminal_decision_does_not_repeat_final_arbiter_audit(
+def test_max_round_stop_audits_the_last_planner_decision_once(
     tmp_path,
 ) -> None:
     class CountingArbiter:
@@ -3246,7 +2401,7 @@ def test_stop_without_terminal_decision_does_not_repeat_final_arbiter_audit(
     )
 
     assert result.status == "stopped"
-    assert arbiter.calls == ["R001"]
+    assert arbiter.calls == ["R001", "R002"]
 
 
 def test_support_auditor_can_be_disabled_for_ablation(tmp_path) -> None:
@@ -3502,7 +2657,8 @@ def test_parallel_worker_summary_retries_invalid_synthesis_with_schema_feedback(
     assert "unterminated JSON object" in client.feedbacks[1]
 
 
-def test_one_pass_mechcal_limits_each_selected_worker_to_one_call(tmp_path) -> None:
+@pytest.mark.parametrize("calibration_fails", [False, True])
+def test_one_pass_mechcal_limits_each_selected_worker_to_one_call(tmp_path, calibration_fails) -> None:
     class OnePassPlanner:
         def __init__(self, base, registry) -> None:  # noqa: ANN001
             self.base = base
@@ -3549,6 +2705,16 @@ def test_one_pass_mechcal_limits_each_selected_worker_to_one_call(tmp_path) -> N
             round_id: str,
         ) -> PlannerDecision:
             self.calibration_calls += 1
+            if calibration_fails:
+                return PlannerDecision(
+                    decision_id=f"{round_id}:calibration_failure",
+                    round_id=round_id,
+                    portfolio=HypothesisPortfolio(),
+                    current_hypothesis="unknown",
+                    diagnosis="Invalid calibration response.",
+                    action="stop",
+                    failure=FailureReport(kind="llm_schema_invalid", message="Retries exhausted."),
+                )
             refs = [item.evidence_id for item in case_run.evidence_ledger.items]
             portfolio = HypothesisPortfolio(
                 current="RIM_RIR_RIV",
@@ -3617,13 +2783,28 @@ def test_one_pass_mechcal_limits_each_selected_worker_to_one_call(tmp_path) -> N
     deps.photophysics_arbiter = FailingAuditor()  # type: ignore[assignment]
     deps.mechanism_critic = FailingCritic()  # type: ignore[assignment]
 
+    if calibration_fails:
+        with pytest.raises(RuntimeError, match="Final Planner calibration failed"):
+            MechCALOrchestrator(config, deps=deps).run(
+                smiles="c1ccccc1C=Cc2ccccc2",
+                user_query="Predict likely AIE mechanisms.",
+                case_id="one_pass_mechcal", public_case_id="CASE_001",
+            )
+        result = CaseRun.model_validate_json(
+            (tmp_path / "one_pass_mechcal/case_run.json").read_text()
+        )
+        assert result.status == "failed"
+        assert "Final Planner calibration failed" in result.runtime["failure"]["message"]
+        assert planner.calibration_calls == 1
+        audit = tmp_path / "one_pass_mechcal/rounds/R001/planner_final_calibration.json"
+        assert json.loads(audit.read_text())["failure"]["kind"] == "llm_schema_invalid"
+        return
     result = MechCALOrchestrator(config, deps=deps).run(
         smiles="c1ccccc1C=Cc2ccccc2",
         user_query="Predict likely AIE mechanisms.",
         case_id="one_pass_mechcal",
         public_case_id="CASE_001",
     )
-
     assert result.status == "finalized"
     assert result.round_ids == ["R001"]
     assert result.runtime["worker_call_counts"] == {
@@ -3711,6 +2892,9 @@ def test_photophysics_arbiter_review_feeds_planner_diagnosis(tmp_path) -> None:
 
 
 class FakeArbiterLLM:
+    def __init__(self):
+        self.feedbacks = []
+
     def is_configured(self) -> bool:
         return True
 
@@ -3728,7 +2912,8 @@ class FakeArbiterLLM:
         assert payload["public_case"]["case_label"] == "current_smiles_case"  # type: ignore[index]
         assert "output_contract" in payload
         assert "output_schema" not in payload
-        assert schema_feedback is None
+        self.feedbacks.append(schema_feedback)
+        evidence_refs = ["E1"] if schema_feedback else ["E1", "not_allowed"]
         return {
             "review_id": "llm_supplied_id",
             "case_id": "llm_supplied_case",
@@ -3738,7 +2923,7 @@ class FakeArbiterLLM:
                     "axis_id": "rim_rotor",
                     "label": "RIM/torsion check",
                     "status": "covered",
-                    "evidence_refs": ["E1", "not_allowed"],
+                    "evidence_refs": evidence_refs,
                     "rationale": "Typed evidence supports torsion review.",
                     "recommended_routes": ["microscopic.run_torsion_snapshots"],
                 }
@@ -3748,7 +2933,7 @@ class FakeArbiterLLM:
                     "hypothesis_id": "rim_torsion",
                     "mechanism": "Restriction of intramolecular motion",
                     "status": "proxy_supported",
-                    "support_evidence_refs": ["E1", "not_allowed"],
+                    "support_evidence_refs": evidence_refs,
                     "weakening_evidence_refs": [],
                     "missing_or_unresolved": ["Needs aggregate PL."],
                     "reasoning_summary": "RIM is supported only at proxy level.",
@@ -3958,7 +3143,7 @@ class RetryArbiterLLM:
         }
 
 
-def test_photophysics_arbiter_llm_review_sanitizes_refs_and_routes() -> None:
+def test_photophysics_arbiter_retries_invalid_refs_and_sanitizes_routes() -> None:
     case_run = _case_run_for_gate().touch(
         current_round_id="R001",
         input=CaseInput(
@@ -4000,23 +3185,27 @@ def test_photophysics_arbiter_llm_review_sanitizes_refs_and_routes() -> None:
             )
         ],
     )
+    client = FakeArbiterLLM()
     arbiter = PhotophysicsArbiterAgent(
-        llm_client=FakeArbiterLLM(),  # type: ignore[arg-type]
+        llm_client=client,  # type: ignore[arg-type]
         web_search=FakeGenericSearch(),
     )
 
     review = arbiter.review(case_run)
 
+    assert len(client.feedbacks) == 2
+    assert "Unknown evidence reference" in client.feedbacks[1]
     assert review.case_id == "CASE_007"
     assert review.review_id == "CASE_007:R001:photophysics_review"
     assert review.round_id == "R001"
     assert review.coverage_axes[0].evidence_refs == ["E1"]
     assert review.hypothesis_cards[0].support_evidence_refs == ["E1"]
     assert review.recommended_next_routes == ["microscopic.run_torsion_snapshots"]
-    assert any("Generic web context" in item for item in review.overclaim_warnings)
+    assert any("Generic web context" in item for item in review.context_notes)
+    assert not any("Generic web context" in item for item in review.overclaim_warnings)
 
 
-def test_photophysics_arbiter_allows_support_refs_outside_compact_subset() -> None:
+def test_photophysics_arbiter_includes_old_evidence_cited_by_current_claims() -> None:
     class CompactSubsetArbiterLLM:
         settings = type("Settings", (), {"model": "fake-arbiter"})()
 
@@ -4097,10 +3286,11 @@ def test_photophysics_arbiter_allows_support_refs_outside_compact_subset() -> No
 
     review = arbiter.review(case_run)
 
-    assert "E_old" in client.payload["allowed_evidence_ids"]  # type: ignore[index]
-    assert "E_old" not in client.payload["compact_evidence_ids"]  # type: ignore[index]
+    references = EvidenceReferences.from_ids([item.evidence_id for item in evidence_items])
+    assert references.encode("E_old") in client.payload["allowed_evidence_ids"]
+    assert references.encode("E_old") in client.payload["compact_evidence_ids"]
     assert review.hypothesis_cards[0].support_evidence_refs == ["E_old"]
-    assert "E_old" not in review.source_evidence_refs
+    assert "E_old" in review.source_evidence_refs
 
 
 def test_photophysics_arbiter_llm_failure_raises_without_scientific_fallback() -> None:
@@ -5140,7 +4330,7 @@ def test_mechanism_agenda_first_coverage_adds_polar_binding_prior_when_triggered
     assert len(coverage.recommended_next_routes) == 5
 
 
-def test_mechanism_agenda_followup_adds_packing_contact_routes() -> None:
+def test_mechanism_agenda_followup_does_not_invent_packing_contact_routes() -> None:
     class EmptyCoverageLLM(CoverageAgendaLLM):
         def complete_json(
             self,
@@ -5187,11 +4377,7 @@ def test_mechanism_agenda_followup_adds_packing_contact_routes() -> None:
         for route in coverage.recommended_next_routes
         for capability_id in route.capability_ids
     ]
-    assert capability_ids[:3] == [
-        "macro.run_dimer_packing_proxy",
-        "macro.run_aggregate_contact_proxy",
-        "macro.run_crystal_restriction_checklist",
-    ]
+    assert capability_ids == []
     payload_text = coverage.model_dump_json().lower()
     assert "hidden_reference" not in payload_text
     assert "reference_mechanisms" not in payload_text
@@ -5232,7 +4418,7 @@ def test_mechanism_agenda_coverage_rejects_top3_or_final_diagnosis() -> None:
         agent.review_coverage(_case_run_for_gate(), round_id="R002")
 
 
-def test_planner_normalizer_runs_coverage_route_before_finalize() -> None:
+def test_planner_normalizer_keeps_finalize_despite_coverage_advice() -> None:
     response = {
         "decision_id": "R003:planner_final",
         "round_id": "R003",
@@ -5311,14 +4497,12 @@ def test_planner_normalizer_runs_coverage_route_before_finalize() -> None:
         prompt_payload=prompt_payload,
     )
 
-    assert normalized["action"] == "dispatch"
-    assert normalized["final_answer_draft"] is None
-    assert normalized["dispatch_requests"][0]["capability_id"] == (
-        "macro.run_dimer_packing_proxy"
-    )
+    assert normalized["action"] == "finalize"
+    assert normalized["final_answer_draft"] == response["final_answer_draft"]
+    assert normalized["dispatch_requests"] == []
 
 
-def test_planner_normalizer_resolves_high_urgency_agenda_suggested_route() -> None:
+def test_planner_normalizer_does_not_execute_high_urgency_advice() -> None:
     response = {
         "portfolio": {
             "current": "ESIPT_PT",
@@ -5333,6 +4517,7 @@ def test_planner_normalizer_resolves_high_urgency_agenda_suggested_route() -> No
         "current_hypothesis": "ESIPT_PT",
         "diagnosis": "ESIPT remains under-screened.",
         "action": "finalize",
+        "final_answer_draft": "Bounded model-written assessment.",
     }
     prompt_payload = {
         "agenda_coverage_memo": {
@@ -5369,14 +4554,11 @@ def test_planner_normalizer_resolves_high_urgency_agenda_suggested_route() -> No
         prompt_payload=prompt_payload,
     )
 
-    assert normalized["action"] == "dispatch"
-    assert normalized["final_answer_draft"] is None
-    assert [item["capability_id"] for item in normalized["dispatch_requests"]] == [
-        "macro.screen_esipt_structural_motif"
-    ]
+    assert normalized["action"] == "finalize"
+    assert normalized["dispatch_requests"] == []
 
 
-def test_planner_normalizer_prioritizes_high_urgency_route_under_dispatch_limit() -> None:
+def test_planner_normalizer_preserves_selection_despite_high_urgency_advice() -> None:
     response = {
         "portfolio": {
             "current": "ICT_TICT_CT",
@@ -5443,7 +4625,7 @@ def test_planner_normalizer_prioritizes_high_urgency_route_under_dispatch_limit(
     capability_ids = [
         item["capability_id"] for item in normalized["dispatch_requests"]
     ]
-    assert capability_ids[0] == "macro.screen_donor_acceptor_architecture"
+    assert capability_ids == ["macro.screen_rotor_torsion_topology"]
     assert len(capability_ids) <= planner_module.MAX_DISPATCHES_PER_ROUND
 
 
@@ -5562,17 +4744,10 @@ def test_stateless_followup_payload_keeps_high_urgency_suggested_route() -> None
     assert payload["agenda_coverage_memo"]["agenda_items"][0][
         "suggested_route"
     ] == "screen_esipt_structural_motif"
-    assert [
-        request["capability_id"]
-        for request in planner_module._dispatches_from_coverage_memo(
-            payload_context=payload,
-            round_id="R003",
-            capability_registry=registry,
-        )
-    ] == ["macro.screen_esipt_structural_motif"]
+    assert "macro.screen_esipt_structural_motif" in payload["artifact_available_capability_ids"]
 
 
-def test_planner_normalizer_supplies_neutral_finalize_draft() -> None:
+def test_planner_normalizer_rejects_missing_finalize_draft() -> None:
     response = {
         "portfolio": {
             "current": "RIM_RIR_RIV",
@@ -5590,32 +4765,30 @@ def test_planner_normalizer_supplies_neutral_finalize_draft() -> None:
         "final_answer_draft": None,
     }
 
-    normalized = planner_module._normalize_planner_llm_response(
-        response,
-        round_id="R003",
-        existing_portfolio={
-            "current": "RIM_RIR_RIV",
-            "hypotheses": [
-                {
-                    "name": "RIM_RIR_RIV",
-                    "confidence": 0.25,
-                    "differential_priority": 0.25,
-                }
-            ],
-        },
-        previous_portfolio_hypotheses=[],
-        allowed_evidence_ids=[],
-        capability_registry=default_capability_registry().for_owner_agents(("macro",)),
-        stage="planner_update",
-        prompt_payload={},
-    )
-
-    decision = PlannerDecision.model_validate(normalized)
-    assert decision.action == "finalize"
-    assert decision.final_answer_draft
+    with pytest.raises(ValueError, match="final_answer_draft"):
+        normalized = planner_module._normalize_planner_llm_response(
+            response,
+            round_id="R003",
+            existing_portfolio={
+                "current": "RIM_RIR_RIV",
+                "hypotheses": [
+                    {
+                        "name": "RIM_RIR_RIV",
+                        "confidence": 0.25,
+                        "differential_priority": 0.25,
+                    }
+                ],
+            },
+            previous_portfolio_hypotheses=[],
+            allowed_evidence_ids=[],
+            capability_registry=default_capability_registry().for_owner_agents(("macro",)),
+            stage="planner_update",
+            prompt_payload={},
+        )
 
 
-def test_planner_normalizer_finalizes_when_available_routes_are_exhausted() -> None:
+
+def test_planner_normalizer_preserves_stop_when_routes_are_exhausted() -> None:
     response = {
         "portfolio": {
             "current": "RIM_RIR_RIV",
@@ -5654,8 +4827,8 @@ def test_planner_normalizer_finalizes_when_available_routes_are_exhausted() -> N
     )
 
     decision = PlannerDecision.model_validate(normalized)
-    assert decision.action == "finalize"
-    assert decision.final_answer_draft
+    assert decision.action == "stop"
+    assert decision.final_answer_draft is None
 
 
 def test_planner_policy_accepts_repeated_high_urgency_route_already_executed() -> None:
@@ -5725,11 +4898,7 @@ def test_planner_policy_accepts_repeated_high_urgency_route_already_executed() -
         ],
     )
 
-    assert not planner_module._ignored_high_urgency_under_screened_coverage(
-        decision,
-        case_run,
-        capability_registry=registry,
-    )
+    PlannerAgent(capability_registry=registry)._validate_planner_policy(decision, case_run)
 
 
 def test_planner_policy_does_not_require_disabled_high_urgency_worker_route() -> None:
@@ -5785,11 +4954,7 @@ def test_planner_policy_does_not_require_disabled_high_urgency_worker_route() ->
         ],
     )
 
-    assert not planner_module._ignored_high_urgency_under_screened_coverage(
-        decision,
-        case_run,
-        capability_registry=registry,
-    )
+    PlannerAgent(capability_registry=registry)._validate_planner_policy(decision, case_run)
 
 
 def _case_run_for_gate(*, with_prepared_structure: bool = True) -> CaseRun:
@@ -5825,7 +4990,7 @@ def _case_run_for_gate(*, with_prepared_structure: bool = True) -> CaseRun:
 def _planner_decision_for_dispatch(request: DispatchRequest) -> PlannerDecision:
     return PlannerDecision(
         decision_id="R001:planner",
-        round_id="R001",
+        round_id=request.round_id,
         portfolio=HypothesisPortfolio(
             current="unknown",
             hypotheses=[
@@ -5845,12 +5010,13 @@ def _planner_finalize_decision(round_id: str = "R002") -> PlannerDecision:
         decision_id=f"{round_id}:planner",
         round_id=round_id,
         portfolio=HypothesisPortfolio(
-            current="unknown",
+            current="RIM_RIR_RIV",
             hypotheses=[
-                HypothesisEntry(name="unknown", confidence=0.2, status="pending")
+                HypothesisEntry(name=label, confidence=priority, status="pending")
+                for label, priority in [("RIM_RIR_RIV", 0.4), ("ICT_TICT_CT", 0.3), ("ESIPT_PT", 0.2)]
             ],
         ),
-        current_hypothesis="unknown",
+        current_hypothesis="RIM_RIR_RIV",
         confidence=0.2,
         diagnosis="Finalize test decision.",
         action="finalize",
@@ -5870,12 +5036,16 @@ def test_capability_registry_exposes_migrated_microscopic_routes() -> None:
         item.capability_id: item for item in default_capability_registry().snapshot().capabilities
     }
     expected_routes = {
+        "microscopic.optimize_ground_state_geometry": ["initial_structure"],
         "microscopic.list_rotatable_dihedrals": ["prepared_structure"],
         "microscopic.list_available_conformers": ["prepared_structure"],
         "microscopic.list_artifact_bundles": ["amesp_baseline_bundle"],
         "microscopic.list_artifact_bundle_members": ["amesp_baseline_bundle"],
         "microscopic.run_baseline_bundle": ["prepared_structure"],
         "microscopic.run_bright_dark_state_ordering": ["prepared_structure"],
+        "microscopic.run_excited_state_relaxation": ["prepared_structure"],
+        "microscopic.run_relaxed_coordinate_scan": ["prepared_structure"],
+        "microscopic.select_computed_geometry": [],
         "microscopic.run_frontier_orbital_partition": ["prepared_structure"],
         "microscopic.run_charge_population_panel": ["prepared_structure"],
         "microscopic.run_solvation_polarity_proxy": ["prepared_structure"],
@@ -5884,6 +5054,7 @@ def test_capability_registry_exposes_migrated_microscopic_routes() -> None:
         "microscopic.run_torsion_snapshots": ["prepared_structure"],
         "microscopic.run_torsion_brightness_coupling_scan": ["prepared_structure"],
         "microscopic.extract_ct_descriptors_from_bundle": ["amesp_baseline_bundle"],
+        "microscopic.analyze_hole_electron_from_bundle": ["amesp_baseline_bundle"],
         "microscopic.run_targeted_state_characterization": ["amesp_baseline_bundle"],
         "microscopic.run_targeted_charge_analysis": ["amesp_baseline_bundle"],
         "microscopic.run_targeted_density_population_analysis": ["amesp_baseline_bundle"],
@@ -5909,6 +5080,9 @@ def test_capability_registry_exposes_migrated_microscopic_routes() -> None:
         assert capability.owner_agent == "microscopic"
         assert capability.tool_binding.tool_name == "run_microscopic"
         assert capability.required_artifact_kinds == required_kinds
+        if capability_id == "microscopic.select_computed_geometry":
+            from mechcal.schemas.microscopic import GEOMETRY_SOURCE_KINDS
+            assert capability.source_artifact_kinds == list(GEOMETRY_SOURCE_KINDS)
 
 
 def test_capability_registry_exposes_migrated_macro_proxy_routes() -> None:
@@ -6298,7 +5472,7 @@ def test_gate_blocks_microscopic_followup_without_baseline_bundle() -> None:
     assert any("requires artifact kind amesp_baseline_bundle" in item for item in result.violations)
 
 
-def test_gate_blocks_finalize_without_required_evidence_attempts() -> None:
+def test_gate_accepts_valid_final_shape_without_mandatory_tool_routes() -> None:
     result = MechCALOrchestrator(
         OrchestratorConfig(run_base_dir=Path("/tmp"))
     ).deps.gate.apply(
@@ -6306,10 +5480,9 @@ def test_gate_blocks_finalize_without_required_evidence_attempts() -> None:
         _case_run_for_gate(),
     )
 
-    assert result.status == "retry_policy"
+    assert result.status == "finalize"
     assert result.terminal is True
-    assert any("Macro structural_prior" in item for item in result.violations)
-    assert any("Microscopic baseline" in item for item in result.violations)
+    assert not result.violations
 
 
 def test_gate_allows_finalize_after_required_evidence_and_followup_attempts() -> None:
@@ -6490,7 +5663,7 @@ def test_local_microscopic_tool_returns_typed_artifact_for_migrated_route(tmp_pa
         capability_id=request.capability_id,
         selected_route=request.route,
         tool_steps=["run_microscopic"],
-        tool_args={"source_artifact_id": baseline_artifact.artifact_id, "s1_nstates": 3},
+        tool_args={"source_artifact_id": baseline_artifact.artifact_id},
         tool_arg_rationale="Use the existing baseline bundle and request bounded state depth.",
         parameter_adjustment_hint="Repeat runs may vary s1_nstates within capability bounds.",
         artifact_refs=[baseline_artifact.artifact_id],
@@ -6529,7 +5702,8 @@ def test_local_microscopic_tool_keeps_partial_s0_baseline_without_s1_overclaim(t
         amesp_runner=PartialBaselineMicroscopicRunner(tmp_path),  # type: ignore[arg-type]
     ).run(request, _case_run_for_gate())
 
-    assert result.status == "success"
+    assert result.status == "partial"
+    assert result.failure.kind == "partial_evidence"
     assert result.artifact_updates[0].status == "partial"
     assert result.evidence_units[0].status == "partial"
     assert result.evidence_units[0].support == "unresolved"
@@ -6586,8 +5760,8 @@ def test_local_microscopic_tool_passes_bounded_series_args(tmp_path) -> None:
         capability_id=request.capability_id,
         selected_route=request.route,
         tool_steps=["run_microscopic"],
-        tool_args={"max_members": 99, "s1_nstates": 4, "td_tout": 2},
-        tool_arg_rationale="Exercise bounded series args before tool-side clamping.",
+        tool_args={"max_members": 6, "s1_nstates": 4, "td_tout": 2},
+        tool_arg_rationale="Exercise valid series parameters without silent clamping.",
         parameter_adjustment_hint="Repeat runs may vary max_members, s1_nstates, or td_tout.",
         planning_mode="llm",
     )
@@ -6757,7 +5931,7 @@ def test_local_macro_tool_uses_bounded_plan_args() -> None:
         capability_id=request.capability_id,
         selected_route=request.route,
         tool_steps=["run_macro"],
-        tool_args={"focus_tags": ["torsion", "rotor"], "ignored": True},
+        tool_args={"focus_tags": ["torsion", "rotor"]},
         tool_arg_rationale="Focus the macro proxy scan on rotor and torsion tags.",
         parameter_adjustment_hint="Repeat runs may vary focus_tags within the macro route.",
         planning_mode="llm",
@@ -6770,7 +5944,16 @@ def test_local_macro_tool_uses_bounded_plan_args() -> None:
     )
 
     assert result.structured_results["tool_args"] == {"focus_tags": ["torsion", "rotor"]}
-    assert result.structured_results["metrics"]["focus_tags"] == ["torsion", "rotor"]
+    assert "focus_tags" not in result.structured_results["metrics"]
+
+
+def _fixture_planner_assessment():
+    return {
+        "current_best": "Offline fixture retains its scripted candidates, not a scientific result.",
+        "weakened_or_unresolved": "No scripted counterevidence; alternatives remain unresolved.",
+        "next_useful_step": "Follow the scripted test action; this is not a scientific tool policy.",
+        "evidence_refs": [],
+    }
 
 
 class FakeJsonClient:
@@ -7060,6 +6243,7 @@ class FakeJsonClient:
                 if isinstance(item, dict) and item.get("evidence_id")
             ] if isinstance(evidence, list) else []
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": f"{round_id}:planner_initial_evidence_ranking",
                 "round_id": round_id,
                 "portfolio": {
@@ -7136,12 +6320,15 @@ class FakeJsonClient:
                 }
             ] if evidence_refs else []
             if round_id == "R001":
-                planner_portfolio = portfolio
+                planner_portfolio = {
+                    "current": "unknown",
+                    "hypotheses": [{"name": "unknown", "differential_priority": 0.0}],
+                }
                 current_hypothesis = "unknown"
             else:
                 planner_portfolio = {
                     "current": "RIM_RIR_RIV",
-                    "runner_up": None,
+                    "runner_up": "ICT_TICT_CT",
                     "hypotheses": [
                         {
                             "name": "RIM_RIR_RIV",
@@ -7151,7 +6338,11 @@ class FakeJsonClient:
                                 "Fake LLM portfolio grounded in runtime evidence."
                             ),
                             "evidence_refs": evidence_refs[:4],
-                        }
+                        },
+                        {"name": "ICT_TICT_CT", "differential_priority": 0.2,
+                         "rationale": "Unresolved candidate in an offline workflow fixture."},
+                        {"name": "ESIPT_PT", "differential_priority": 0.1,
+                         "rationale": "Unresolved candidate in an offline workflow fixture."},
                     ],
                 }
                 current_hypothesis = "RIM_RIR_RIV"
@@ -7169,6 +6360,7 @@ class FakeJsonClient:
                 capability_ids = [capability_id] if capability_id else []
             if not capability_ids:
                 return {
+                    "decision_assessment": _fixture_planner_assessment(),
                     "decision_id": f"{round_id}:planner_final",
                     "round_id": round_id,
                     "portfolio": planner_portfolio,
@@ -7191,6 +6383,7 @@ class FakeJsonClient:
                 if item["capability_id"] in set(capability_ids)
             ]
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": f"{round_id}:planner_llm",
                 "round_id": round_id,
                 "portfolio": planner_portfolio,
@@ -7669,7 +6862,7 @@ def test_worker_report_requires_configured_llm_when_enabled() -> None:
         agent.run_with_trace(request, _case_run_for_gate())
 
 
-def test_planner_initial_coverage_dispatch_does_not_call_llm() -> None:
+def test_planner_initial_dispatch_calls_llm_even_with_coverage_memo() -> None:
     from mechcal.agents import PlannerAgent
 
     fake_client = FakeJsonClient()
@@ -7697,9 +6890,11 @@ def test_planner_initial_coverage_dispatch_does_not_call_llm() -> None:
 
     decision = planner.plan_initial(case_run, round_id="R001")
 
-    assert decision.dispatch_requests[0].capability_id == "microscopic.run_baseline_bundle"
+    assert [r.capability_id for r in decision.dispatch_requests] == [
+        "macro.macro_structure_scan", "microscopic.run_baseline_bundle"
+    ]
     assert decision.portfolio.current == "unknown"
-    assert fake_client.payloads == []
+    assert len(fake_client.payloads) == 1
 
 
 def test_initial_coverage_uses_macro_routes_for_smiles_only_fallback() -> None:
@@ -7903,6 +7098,7 @@ def test_planner_normalizes_llm_hypothesis_portfolio_schema_drift() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R001:planner_llm",
                 "round_id": "R001",
                 "hypothesis_portfolio": {
@@ -7953,7 +7149,7 @@ def test_planner_normalizes_llm_hypothesis_portfolio_schema_drift() -> None:
     assert decision.dispatch_requests[0].capability_id == "macro.macro_structure_scan"
 
 
-def test_planner_caps_unsupported_initial_prior_without_evidence_refs() -> None:
+def test_planner_preserves_unsupported_initial_priority_without_evidence_refs() -> None:
     class UnsupportedHighPriorClient(FakeJsonClient):
         def complete_json(
             self,
@@ -7970,6 +7166,7 @@ def test_planner_caps_unsupported_initial_prior_without_evidence_refs() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R001:planner_llm",
                 "round_id": "R001",
                 "portfolio": {
@@ -8036,11 +7233,11 @@ def test_planner_caps_unsupported_initial_prior_without_evidence_refs() -> None:
     decision = planner.plan_initial(case_run, round_id="R001")
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.2)
+    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.72)
     assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.41)
 
 
-def test_planner_initial_dispatch_uses_agenda_coverage_routes() -> None:
+def test_planner_initial_dispatch_uses_only_model_selected_routes() -> None:
     class InitialPlannerClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8057,6 +7254,7 @@ def test_planner_initial_dispatch_uses_agenda_coverage_routes() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R001:planner_llm",
                 "round_id": "R001",
                 "portfolio": {
@@ -8137,15 +7335,11 @@ def test_planner_initial_dispatch_uses_agenda_coverage_routes() -> None:
     decision = planner.plan_initial(case_run, round_id="R001")
 
     assert [request.capability_id for request in decision.dispatch_requests] == [
-        "microscopic.run_baseline_bundle",
-        "macro.screen_esipt_structural_motif",
-        "macro.screen_aggregation_prone_scaffold",
-        "macro.screen_donor_acceptor_layout",
-        "macro.screen_rotor_torsion_topology",
+        "macro.screen_donor_acceptor_architecture"
     ]
 
 
-def test_planner_update_prioritizes_first_coverage_route_for_dispatch() -> None:
+def test_planner_update_does_not_prepend_coverage_route() -> None:
     class UpdatePlannerClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8162,6 +7356,7 @@ def test_planner_update_prioritizes_first_coverage_route_for_dispatch() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R004:planner_llm",
                 "round_id": "R004",
                 "portfolio": {
@@ -8251,7 +7446,6 @@ def test_planner_update_prioritizes_first_coverage_route_for_dispatch() -> None:
     )
 
     assert [request.capability_id for request in decision.dispatch_requests[:2]] == [
-        "macro.run_solid_state_emission_proxy",
         "macro.screen_donor_acceptor_architecture",
     ]
 
@@ -8280,6 +7474,7 @@ def test_planner_retries_placeholder_portfolio_when_context_exists() -> None:
             self.feedbacks.append(schema_feedback)
             self.planner_calls += 1
             base = {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "confidence": 0.4,
@@ -8320,7 +7515,7 @@ def test_planner_retries_placeholder_portfolio_when_context_exists() -> None:
                             "confidence": 0.45,
                             "status": "plausible",
                             "rationale": "Evidence context supports follow-up testing.",
-                            "evidence_refs": ["E1"],
+                            "evidence_refs": [],
                         }
                     ],
                 },
@@ -8364,7 +7559,7 @@ def test_planner_retries_placeholder_portfolio_when_context_exists() -> None:
     )
 
 
-def test_planner_incremental_update_preserves_previous_mechanism_rows() -> None:
+def test_planner_update_does_not_backfill_previous_mechanism_rows() -> None:
     class PartialPortfolioUpdateClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8381,6 +7576,7 @@ def test_planner_incremental_update_preserves_previous_mechanism_rows() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -8517,10 +7713,7 @@ def test_planner_incremental_update_preserves_previous_mechanism_rows() -> None:
     )
 
     labels = {item.name for item in decision.portfolio.hypotheses}
-    assert set(MECHANISM_POOL).issubset(labels)
-    rim = next(item for item in decision.portfolio.hypotheses if item.name == "RIM_RIR_RIV")
-    assert rim.differential_priority == 0.5
-    assert "E1" in rim.evidence_refs
+    assert labels == {"RACI_CI_ACCESS"}
     raci = next(
         item for item in decision.portfolio.hypotheses if item.name == "RACI_CI_ACCESS"
     )
@@ -8535,7 +7728,7 @@ def test_planner_incremental_update_preserves_previous_mechanism_rows() -> None:
     assert payload["agenda_coverage_memo"]["agenda_items"][0]["label"] == "RACI_CI_ACCESS"
 
 
-def test_planner_update_reducer_absorbs_followup_evidence_after_empty_json() -> None:
+def test_planner_empty_reply_fails_without_rule_generated_ranking() -> None:
     class EmptyUpdateClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8620,25 +7813,14 @@ def test_planner_update_reducer_absorbs_followup_evidence_after_empty_json() -> 
         round_id="R003",
     )
 
-    by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["RIM_RIR_RIV"].differential_priority >= 0.3
-    assert by_label["RACI_CI_ACCESS"].differential_priority >= 0.27
-    assert (
-        by_label["RACI_CI_ACCESS"].differential_priority
-        < by_label["RIM_RIR_RIV"].differential_priority
-    )
-    assert "E_torsion" in by_label["RACI_CI_ACCESS"].evidence_refs
-    assert "E_torsion" in by_label["RIM_RIR_RIV"].evidence_refs
-    assert any(delta.label == "RACI_CI_ACCESS" for delta in decision.priority_deltas)
-    assert any(
-        argument.target_label == "RACI_CI_ACCESS"
-        and argument.observation_refs == ["E_torsion"]
-        for argument in decision.mechanism_support_arguments
-    )
-    assert decision.raw_response["source"] == "public_update_evidence_reducer"
+    assert decision.failure.is_failure
+    assert decision.action == "stop"
+    assert decision.portfolio == case_run.portfolio
+    assert decision.mechanism_support_arguments == []
+    assert len(planner.llm_client.payloads) == 3
 
 
-def test_planner_update_reducer_absorbs_high_flexibility_rotor_topology() -> None:
+def test_planner_empty_reply_does_not_promote_rotor_candidate() -> None:
     class EmptyUpdateClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8740,12 +7922,10 @@ def test_planner_update_reducer_absorbs_high_flexibility_rotor_topology() -> Non
     )
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.25)
-    assert by_label["RIM_RIR_RIV"].differential_priority > by_label[
-        "ICT_TICT_CT"
-    ].differential_priority
-    assert "E_rotor" in by_label["RIM_RIR_RIV"].evidence_refs
-    assert any(delta.label == "RIM_RIR_RIV" for delta in decision.priority_deltas)
+    assert decision.failure.is_failure
+    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.12)
+    assert decision.portfolio == case_run.portfolio
+    assert decision.priority_deltas == []
 
 
 def test_planner_payload_includes_priority_hygiene_and_evidence_metrics() -> None:
@@ -8765,6 +7945,7 @@ def test_planner_payload_includes_priority_hygiene_and_evidence_metrics() -> Non
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -8899,7 +8080,8 @@ def test_planner_payload_includes_priority_hygiene_and_evidence_metrics() -> Non
         item["evidence_id"]: item
         for item in payload["new_round_evidence"]
     }
-    assert evidence_by_id["E_state"]["metrics"]["oscillator_strength"] == 0.27
+    references = EvidenceReferences.from_ids([e.evidence_id for e in case_run.evidence_ledger.items])
+    assert evidence_by_id[references.encode("E_state")]["metrics"]["oscillator_strength"] == 0.27
     hygiene_by_label = {
         item["label"]: item for item in payload["priority_hygiene_summary"]
     }
@@ -8920,7 +8102,7 @@ def test_planner_payload_includes_priority_hygiene_and_evidence_metrics() -> Non
     assert "reference_mechanisms" not in encoded
 
 
-def test_planner_applies_evidence_tier_priority_floor_without_support_upgrade() -> None:
+def test_planner_preserves_priority_without_evidence_tier_floor() -> None:
     class LowTierCrowdingClient(FakeJsonClient):
         def complete_json(
             self,
@@ -8937,6 +8119,7 @@ def test_planner_applies_evidence_tier_priority_floor_without_support_upgrade() 
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9039,14 +8222,10 @@ def test_planner_applies_evidence_tier_priority_floor_without_support_upgrade() 
     )
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.23)
+    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.1)
     assert by_label["ESIPT_PT"].evidence_support == "weak_or_proxy"
-    esipt_delta = next(
-        delta for delta in decision.priority_deltas if delta.label == "ESIPT_PT"
-    )
-    assert esipt_delta.support_change == "unchanged"
-    assert "evidence-tier" in esipt_delta.delta_reason
-    assert esipt_delta.evidence_refs_added == ["E_esipt"]
+    assert all("evidence-tier" not in delta.delta_reason for delta in decision.priority_deltas)
+    assert by_label["ESIPT_PT"].evidence_refs == ["E_esipt"]
 
 
 def test_planner_priority_floor_does_not_revive_screened_mechanism() -> None:
@@ -9065,6 +8244,7 @@ def test_planner_priority_floor_does_not_revive_screened_mechanism() -> None:
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9173,7 +8353,7 @@ def test_planner_priority_floor_does_not_revive_screened_mechanism() -> None:
     assert all("evidence-tier" not in delta.delta_reason for delta in esipt_deltas)
 
 
-def test_planner_priority_floor_can_pass_unresolved_high_priority_placeholders() -> None:
+def test_planner_does_not_promote_motif_over_model_order() -> None:
     class UnresolvedCrowdingClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9190,6 +8370,7 @@ def test_planner_priority_floor_can_pass_unresolved_high_priority_placeholders()
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9298,15 +8479,15 @@ def test_planner_priority_floor_can_pass_unresolved_high_priority_placeholders()
     )
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.23)
-    assert decision.portfolio.current == "ESIPT_PT"
+    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.12)
+    assert decision.portfolio.current == "RIM_RIR_RIV"
     esipt_delta = next(
         delta for delta in decision.priority_deltas if delta.label == "ESIPT_PT"
     )
-    assert esipt_delta.evidence_refs_added == ["E_esipt"]
+    assert esipt_delta.evidence_refs_added == []
 
 
-def test_planner_caps_weak_priority_without_runtime_evidence_refs() -> None:
+def test_planner_keeps_weak_priority_without_runtime_evidence_refs() -> None:
     class UnsupportedHighScoreClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9322,6 +8503,7 @@ def test_planner_caps_weak_priority_without_runtime_evidence_refs() -> None:
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R001:planner_llm",
                 "round_id": "R001",
                 "portfolio": {
@@ -9372,11 +8554,11 @@ def test_planner_caps_weak_priority_without_runtime_evidence_refs() -> None:
     decision = planner.plan_initial(_case_run_for_gate(), round_id="R001")
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.12)
-    assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.12)
+    assert by_label["RIM_RIR_RIV"].differential_priority == pytest.approx(0.5)
+    assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.45)
 
 
-def test_planner_priority_floor_applies_computed_direct_proxy() -> None:
+def test_planner_computed_proxy_does_not_trigger_rule_floor() -> None:
     class ComputedProxyCrowdingClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9392,6 +8574,7 @@ def test_planner_priority_floor_applies_computed_direct_proxy() -> None:
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9496,13 +8679,13 @@ def test_planner_priority_floor_applies_computed_direct_proxy() -> None:
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority == pytest.approx(
-        0.24
+        0.15
     )
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].evidence_support == "weak_or_proxy"
-    assert decision.portfolio.current == "RADIATIVE_RATE_STATE_BALANCE"
+    assert decision.portfolio.current == "RIM_RIR_RIV"
 
 
-def test_planner_priority_floor_keeps_bounded_near_dark_state_balance_candidate() -> None:
+def test_planner_keeps_model_score_for_near_dark_state_balance_candidate() -> None:
     class LowOscillatorClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9518,6 +8701,7 @@ def test_planner_priority_floor_keeps_bounded_near_dark_state_balance_candidate(
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9594,12 +8778,12 @@ def test_planner_priority_floor_keeps_bounded_near_dark_state_balance_candidate(
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority == pytest.approx(
-        0.18
+        0.15
     )
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].evidence_support == "weak_or_proxy"
 
 
-def test_planner_promotes_strong_standalone_oscillator_as_weak_radiative_candidate() -> None:
+def test_planner_does_not_promote_strong_standalone_oscillator_by_rule() -> None:
     class StandaloneOscillatorClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9615,6 +8799,7 @@ def test_planner_promotes_strong_standalone_oscillator_as_weak_radiative_candida
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9747,7 +8932,7 @@ def test_planner_promotes_strong_standalone_oscillator_as_weak_radiative_candida
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert labels[0] == "RADIATIVE_RATE_STATE_BALANCE"
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority == pytest.approx(
-        0.29
+        0.24
     )
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].evidence_support == "weak_or_proxy"
 
@@ -9768,6 +8953,7 @@ def test_esipt_context_keeps_baseline_oscillator_as_state_balance_candidate() ->
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9871,11 +9057,11 @@ def test_esipt_context_keeps_baseline_oscillator_as_state_balance_candidate() ->
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert labels == ["ESIPT_PT", "RADIATIVE_RATE_STATE_BALANCE"]
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority == pytest.approx(
-        0.24
+        0.18
     )
 
 
-def test_planner_caps_generic_prior_below_specific_proxy_without_support_upgrade() -> None:
+def test_planner_does_not_cap_generic_prior_below_specific_proxy() -> None:
     class GenericPriorAboveSpecificProxyClient(FakeJsonClient):
         def complete_json(
             self,
@@ -9891,6 +9077,7 @@ def test_planner_caps_generic_prior_below_specific_proxy_without_support_upgrade
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -9994,20 +9181,15 @@ def test_planner_caps_generic_prior_below_specific_proxy_without_support_upgrade
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert by_label["AGGREGATE_EXCITON_EXCIMER"].differential_priority == pytest.approx(
-        0.19
+        0.3
     )
-    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.23)
+    assert by_label["ESIPT_PT"].differential_priority == pytest.approx(0.12)
     assert by_label["ESIPT_PT"].evidence_support == "weak_or_proxy"
-    assert decision.portfolio.current == "ESIPT_PT"
-    aggregate_delta = next(
-        delta
-        for delta in decision.priority_deltas
-        if delta.label == "AGGREGATE_EXCITON_EXCIMER"
-    )
-    assert aggregate_delta.support_change == "weakened"
+    assert decision.portfolio.current == "AGGREGATE_EXCITON_EXCIMER"
+    assert all(delta.support_change != "weakened" for delta in decision.priority_deltas)
 
 
-def test_planner_caps_weak_polar_only_candidate_below_ct_artifact() -> None:
+def test_planner_does_not_cap_polar_candidate_below_ct_artifact() -> None:
     class WeakPolarAboveCtClient(FakeJsonClient):
         def complete_json(
             self,
@@ -10023,6 +9205,7 @@ def test_planner_caps_weak_polar_only_candidate_below_ct_artifact() -> None:
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -10142,13 +9325,13 @@ def test_planner_caps_weak_polar_only_candidate_below_ct_artifact() -> None:
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert by_label["HOST_GUEST_INTERACTION"].differential_priority == pytest.approx(
-        0.19
+        0.25
     )
     assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.24)
-    assert decision.portfolio.current == "ICT_TICT_CT"
+    assert decision.portfolio.current == "HOST_GUEST_INTERACTION"
 
 
-def test_output_assembler_caps_weak_polar_and_generic_packing_export_priority() -> None:
+def test_output_assembler_preserves_polar_and_packing_export_priority() -> None:
     case_run = _case_run_for_gate().touch(
         portfolio=HypothesisPortfolio(
             current="PACKING_HOST_MATRIX_CONFINEMENT",
@@ -10221,16 +9404,16 @@ def test_output_assembler_caps_weak_polar_and_generic_packing_export_priority() 
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
     assert [prediction.label for prediction in predictions] == [
-        "ICT_TICT_CT",
         "PACKING_HOST_MATRIX_CONFINEMENT",
         "HOST_GUEST_INTERACTION",
+        "ICT_TICT_CT",
     ]
-    assert predictions[0].differential_priority == pytest.approx(0.24)
-    assert predictions[1].differential_priority == pytest.approx(0.22)
-    assert predictions[2].differential_priority == pytest.approx(0.19)
+    assert predictions[0].differential_priority == pytest.approx(0.28)
+    assert predictions[1].differential_priority == pytest.approx(0.25)
+    assert predictions[2].differential_priority == pytest.approx(0.24)
 
 
-def test_output_assembler_caps_single_state_radiative_and_polar_pet_priority() -> None:
+def test_output_assembler_preserves_radiative_and_pet_priority() -> None:
     case_run = _case_run_for_gate().touch(
         portfolio=HypothesisPortfolio(
             current="PET_ET",
@@ -10308,16 +9491,16 @@ def test_output_assembler_caps_single_state_radiative_and_polar_pet_priority() -
     predictions = OutputAssembler().build_mechanism_predictions(case_run)
 
     assert [prediction.label for prediction in predictions] == [
-        "TRIPLET_METAL_ENERGY_TRANSFER",
         "PET_ET",
         "RADIATIVE_RATE_STATE_BALANCE",
+        "TRIPLET_METAL_ENERGY_TRANSFER",
     ]
-    assert predictions[0].differential_priority == pytest.approx(0.23)
-    assert predictions[1].differential_priority == pytest.approx(0.18)
-    assert predictions[2].differential_priority == pytest.approx(0.17)
+    assert predictions[0].differential_priority == pytest.approx(0.24)
+    assert predictions[1].differential_priority == pytest.approx(0.24)
+    assert predictions[2].differential_priority == pytest.approx(0.23)
 
 
-def test_initial_verdict_accepts_public_mechanism_aliases() -> None:
+def test_first_evidence_ranking_uses_complete_model_portfolio() -> None:
     class AliasInitialVerdictClient(FakeJsonClient):
         def complete_json(
             self,
@@ -10326,39 +9509,43 @@ def test_initial_verdict_accepts_public_mechanism_aliases() -> None:
             payload: dict[str, object],
             schema_feedback: str | None = None,
         ) -> dict[str, object]:
-            if payload.get("stage") != "planner_initial_verdict":
+            if payload.get("stage") != "planner_update":
                 return super().complete_json(
                     system_prompt=system_prompt,
                     payload=payload,
                     schema_feedback=schema_feedback,
                 )
-            evidence = payload.get("evidence")
+            evidence = payload.get("new_round_evidence")
             evidence_refs = [
-                str(item.get("id"))
+                str(item.get("evidence_id"))
                 for item in evidence
-                if isinstance(item, dict) and item.get("id")
+                if isinstance(item, dict) and item.get("evidence_id")
             ] if isinstance(evidence, list) else []
             return {
-                "mechanism_predictions": [
+                "decision_assessment": _fixture_planner_assessment(),
+                "portfolio": {"current": "ESIPT_PT", "hypotheses": [
                     {
-                        "mechanism": "ESIPT",
+                        "name": "ESIPT_PT",
                         "priority": 0.4,
-                        "support": "weak_or_proxy",
-                        "status": "candidate_requires_validation",
+                        "evidence_support": "weak_or_proxy",
+                        "claim_status": "candidate_requires_validation",
                         "evidence_refs": evidence_refs[:1],
-                        "reason": "ESIPT alias is grounded in runtime evidence.",
+                        "rationale": "ESIPT candidate based on runtime evidence.",
                     },
                     {
-                        "mechanism": "state balance",
+                        "name": "RADIATIVE_RATE_STATE_BALANCE",
                         "priority": 0.35,
-                        "support": "weak_or_proxy",
-                        "status": "candidate_requires_validation",
+                        "evidence_support": "weak_or_proxy",
+                        "claim_status": "candidate_requires_validation",
                         "evidence_refs": evidence_refs[1:2],
-                        "reason": "State-balance alias is grounded in runtime evidence.",
+                        "rationale": "State-balance candidate based on runtime evidence.",
                     },
-                ],
+                    {"name": "RIM_RIR_RIV", "priority": 0.1,
+                     "rationale": "Unresolved fixture candidate."},
+                ]},
                 "action": "finalize",
-                "next_capability_ids": [],
+                "final_answer_draft": "Bounded candidates requiring validation.",
+                "selected_capability_ids": [],
             }
 
     case_run = _case_run_for_gate().touch(
@@ -10428,7 +9615,7 @@ def test_initial_verdict_accepts_public_mechanism_aliases() -> None:
     assert by_label["ESIPT_PT"].evidence_support == "weak_or_proxy"
 
 
-def test_initial_verdict_plan_actions_are_converted_to_followup_dispatch(monkeypatch) -> None:
+def test_first_evidence_ranking_uses_model_followup_routes(monkeypatch) -> None:
     monkeypatch.setenv("MECHCAL_INITIAL_VERDICT_MODE", "llm")
 
     class NestedPlanInitialVerdictClient(FakeJsonClient):
@@ -10439,10 +9626,7 @@ def test_initial_verdict_plan_actions_are_converted_to_followup_dispatch(monkeyp
             payload: dict[str, object],
             schema_feedback: str | None = None,
         ) -> dict[str, object]:
-            if payload.get("stage") not in {
-                "planner_initial_verdict",
-                "planner_initial_evidence_ranking",
-            }:
+            if payload.get("stage") != "planner_update":
                 return super().complete_json(
                     system_prompt=system_prompt,
                     payload=payload,
@@ -10450,31 +9634,33 @@ def test_initial_verdict_plan_actions_are_converted_to_followup_dispatch(monkeyp
                 )
             evidence_refs = [
                 str(item.get("id") or item.get("evidence_id"))
-                for item in payload.get("evidence", [])
+                for item in payload.get("new_round_evidence", [])
                 if isinstance(item, dict) and (item.get("id") or item.get("evidence_id"))
             ]
             return {
-                "verdict": {
-                    "differential_priority": [
+                "decision_assessment": _fixture_planner_assessment(),
+                "portfolio": {
+                    "current": "RADIATIVE_RATE_STATE_BALANCE",
+                    "hypotheses": [
                         {
-                            "mechanism": "RADIATIVE_RATE_STATE_BALANCE",
+                            "name": "RADIATIVE_RATE_STATE_BALANCE",
+                            "differential_priority": 0.4,
                             "rationale": "Baseline bundle leaves state-balance under-screened.",
                             "evidence_refs": evidence_refs[:1],
                         },
                         {
-                            "mechanism": "ICT_TICT_CT",
+                            "name": "ICT_TICT_CT",
+                            "differential_priority": 0.3,
                             "rationale": "D-A proxy needs orbital partition follow-up.",
                             "evidence_refs": evidence_refs[1:2],
                         },
                     ]
                 },
-                "plan": {
-                    "actions": [
-                        "microscopic.run_bright_dark_state_ordering",
-                        "microscopic.run_frontier_orbital_partition",
-                    ]
-                },
-                "action": "finalize",
+                "selected_capability_ids": [
+                    "microscopic.run_bright_dark_state_ordering",
+                    "microscopic.run_frontier_orbital_partition",
+                ],
+                "action": "dispatch",
             }
 
     case_run = _case_run_for_gate().touch(
@@ -10544,7 +9730,7 @@ def test_initial_verdict_plan_actions_are_converted_to_followup_dispatch(monkeyp
     assert decision.final_answer_draft is None
 
 
-def test_public_initial_evidence_reducer_dispatches_discriminating_followup(monkeypatch) -> None:
+def test_first_ranking_calls_llm_instead_of_initial_reducer(monkeypatch) -> None:
     monkeypatch.delenv("MECHCAL_INITIAL_VERDICT_MODE", raising=False)
 
     class InitialVerdictShouldNotBeCalled(FakeJsonClient):
@@ -10623,14 +9809,17 @@ def test_public_initial_evidence_reducer_dispatches_discriminating_followup(monk
     )
 
     assert decision.action == "dispatch"
-    assert "microscopic.run_bright_dark_state_ordering" in {
-        request.capability_id for request in decision.dispatch_requests
+    assert {request.capability_id for request in decision.dispatch_requests} == {
+        "macro.screen_rotor_torsion_topology"
     }
-    by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority > 0.0
+    assert not decision.failure.is_failure
+    assert [item.name for item in decision.portfolio.hypotheses] == [
+        "RIM_RIR_RIV", "ICT_TICT_CT", "ESIPT_PT"
+    ]
+    assert any(p.get("stage") == "planner_update" for p in planner.llm_client.payloads)
 
 
-def test_public_initial_evidence_reducer_keeps_interaction_and_triplet_candidates(
+def test_legacy_reducer_flag_does_not_add_interaction_and_triplet_candidates(
     monkeypatch,
 ) -> None:
     monkeypatch.delenv("MECHCAL_INITIAL_VERDICT_MODE", raising=False)
@@ -10705,18 +9894,14 @@ def test_public_initial_evidence_reducer_keeps_interaction_and_triplet_candidate
         round_id="R002",
     )
 
-    by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["HOST_GUEST_INTERACTION"].differential_priority == pytest.approx(0.19)
-    assert by_label["HOST_GUEST_INTERACTION"].evidence_support == "weak_or_proxy"
-    assert by_label["HOST_GUEST_INTERACTION"].claim_status == "candidate_requires_validation"
-    assert by_label["PET_ET"].differential_priority == pytest.approx(0.18)
-    assert by_label["TRIPLET_METAL_ENERGY_TRANSFER"].differential_priority == pytest.approx(
-        0.28
-    )
-    assert by_label["TRIPLET_METAL_ENERGY_TRANSFER"].evidence_support == "weak_or_proxy"
+    assert not decision.failure.is_failure
+    assert [item.name for item in decision.portfolio.hypotheses] == [
+        "RIM_RIR_RIV", "ICT_TICT_CT", "ESIPT_PT"
+    ]
+    assert any(p.get("stage") == "planner_update" for p in planner.llm_client.payloads)
 
 
-def test_public_update_reducer_ignores_negative_structural_screens(
+def test_legacy_update_reducer_flag_does_not_replace_model_ranking(
     monkeypatch,
 ) -> None:
     monkeypatch.setenv("MECHCAL_UPDATE_REDUCER_MODE", "reducer")
@@ -10799,13 +9984,11 @@ def test_public_update_reducer_ignores_negative_structural_screens(
         round_id="R002",
     )
 
-    by_label = {item.name: item for item in decision.portfolio.hypotheses}
-    assert by_label["TRIPLET_METAL_ENERGY_TRANSFER"].differential_priority == pytest.approx(
-        0.3
-    )
-    assert by_label["ICT_TICT_CT"].differential_priority == pytest.approx(0.0)
-    assert by_label["PET_ET"].differential_priority == pytest.approx(0.0)
-    assert by_label["HOST_GUEST_INTERACTION"].differential_priority == pytest.approx(0.0)
+    assert not decision.failure.is_failure
+    assert [item.name for item in decision.portfolio.hypotheses] == [
+        "RIM_RIR_RIV", "ICT_TICT_CT", "ESIPT_PT"
+    ]
+    assert any(p.get("stage") == "planner_update" for p in planner.llm_client.payloads)
 
 
 def test_initial_ranking_metrics_preserve_interaction_and_triplet_triggers() -> None:
@@ -10847,6 +10030,7 @@ def test_failed_computed_route_does_not_trigger_priority_floor() -> None:
                     schema_feedback=schema_feedback,
                 )
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -10941,7 +10125,7 @@ def test_failed_computed_route_does_not_trigger_priority_floor() -> None:
 
     by_label = {item.name: item for item in decision.portfolio.hypotheses}
     assert by_label["RADIATIVE_RATE_STATE_BALANCE"].differential_priority == pytest.approx(
-        0.05
+        0.17
     )
     assert decision.portfolio.current == "RIM_RIR_RIV"
 
@@ -10963,6 +10147,7 @@ def test_planner_priority_floor_does_not_use_critic_positive_attribution_alone()
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -11104,7 +10289,7 @@ def test_planner_priority_floor_does_not_use_critic_positive_attribution_alone()
     assert hygiene["HOST_GUEST_INTERACTION"]["critic_positive_ref_count"] == 1
 
 
-def test_planner_merges_high_urgency_coverage_route_when_ignored() -> None:
+def test_planner_does_not_merge_ignored_high_urgency_route() -> None:
     class IgnoresCoverageClient(FakeJsonClient):
         def complete_json(
             self,
@@ -11121,6 +10306,7 @@ def test_planner_merges_high_urgency_coverage_route_when_ignored() -> None:
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -11207,13 +10393,12 @@ def test_planner_merges_high_urgency_coverage_route_when_ignored() -> None:
 
     assert decision.action == "dispatch"
     assert [request.capability_id for request in decision.dispatch_requests[:2]] == [
-        "microscopic.run_torsion_brightness_coupling_scan",
         "macro.screen_rotor_torsion_topology",
     ]
     assert decision.failure.kind == "none"
 
 
-def test_planner_low_margin_carry_forward_preserves_previous_relative_order() -> None:
+def test_planner_low_margin_reversal_is_not_overridden_by_previous_order() -> None:
     class LowMarginReversalClient(FakeJsonClient):
         def complete_json(
             self,
@@ -11230,6 +10415,7 @@ def test_planner_low_margin_carry_forward_preserves_previous_relative_order() ->
                 )
             self.payloads.append(payload)
             return {
+                "decision_assessment": _fixture_planner_assessment(),
                 "decision_id": "R002:planner_llm",
                 "round_id": "R002",
                 "portfolio": {
@@ -11344,13 +10530,13 @@ def test_planner_low_margin_carry_forward_preserves_previous_relative_order() ->
     )
 
     ranked_labels = [item.name for item in decision.portfolio.sorted_hypotheses()[:2]]
-    assert ranked_labels == ["RACI_CI_ACCESS", "AGGREGATE_EXCITON_EXCIMER"]
-    assert decision.current_hypothesis == "RACI_CI_ACCESS"
+    assert ranked_labels == ["AGGREGATE_EXCITON_EXCIMER", "RACI_CI_ACCESS"]
+    assert decision.current_hypothesis == "AGGREGATE_EXCITON_EXCIMER"
     assert decision.raw_response["low_margin_competitions"]
     raci_delta = next(
         item for item in decision.priority_deltas if item.label == "RACI_CI_ACCESS"
     )
-    assert raci_delta.ranking_stability_note is not None
+    assert raci_delta.ranking_stability_note is None
 
 
 def test_worker_report_rejects_mechanism_adjudication() -> None:

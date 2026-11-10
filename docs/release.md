@@ -1,19 +1,21 @@
 # Release Scope
 
 The standalone repository and distribution are named MechCAL. Python imports
-use `mechcal`; environment variables use `MECHCAL_`. The first release is
-0.1.0. These names replace the research workspace's internal version names.
+use `mechcal`; environment variables use `MECHCAL_`. Version 0.2.0 integrates
+the current command workflow and adds a portable configuration and launcher.
+The earlier 0.1.0 release remains available in Git history.
 
-On the main branch, GitHub Actions runs offline tests before publishing the
-version in `pyproject.toml`. Existing releases are not overwritten. Each new
-release includes the wheel and source distribution. Pull requests cannot
-publish releases. The workflow can also be started manually after a failed
-publication attempt.
+Pushes and pull requests run offline tests without publishing a release.
+Publishing requires manually starting the Tests workflow on `main` with
+`publish_release` enabled. Tests must pass first. Existing releases are not
+overwritten; each new release includes the wheel and source distribution.
 
-The export retains the existing scientific implementation, mechanism pool,
-agent prompts, rubric, and regression tests. Historical rubric and prompt
-revision identifiers remain intact. Packaging does not establish that a
-particular archived experiment used the current defaults.
+The integration retains the current research implementation, mechanism pool,
+agent prompts and rubrics. It adds no new scientific decision rules. Portable
+synthetic regression tests are included; private experiment replays remain in
+the research archive. Historical rubric and prompt revision identifiers remain
+intact. Packaging does not establish that a particular archived experiment used
+the current defaults.
 
 Source code, configuration templates, documentation, synthetic test fixtures,
 and the versioned 119-case PhotoMechBench SMILES input set are included.

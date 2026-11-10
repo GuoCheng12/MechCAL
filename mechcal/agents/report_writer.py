@@ -115,6 +115,7 @@ class WorkerReportWriter:
         execution_plan: AgentExecutionPlan,
         tool_result: ToolExecutionResult,
         schema_feedback: str | None,
+        event_sink=None,
     ) -> AgentReport | dict[str, Any]:
         if self.enable_llm:
             if not self._can_use_llm():
@@ -129,6 +130,7 @@ class WorkerReportWriter:
                 execution_plan=execution_plan,
                 tool_result=tool_result,
                 schema_feedback=schema_feedback,
+                event_sink=event_sink,
             )
         return self.deterministic_report(
             request=request,
@@ -182,8 +184,20 @@ class WorkerReportWriter:
         execution_plan: AgentExecutionPlan,
         tool_result: ToolExecutionResult,
         schema_feedback: str | None,
+        event_sink=None,
     ) -> dict[str, Any]:
         capability = self.capability_registry.require(request.capability_id)
+        if case_run.runtime.get("question_loop"):
+            from mechcal.agents.worker_explanation import explain_result
+
+            explanation = explain_result(
+                self.llm_client, request, case_run, tool_result, capability, schema_feedback,
+                event_sink=event_sink,
+            )
+            report = self.deterministic_report(
+                request=request, execution_plan=execution_plan, tool_result=tool_result,
+            )
+            return report.model_copy(update={"result_explanation": explanation}).model_dump(mode="json")
         payload = {
             "agent_name": agent_name,
             "dispatch_request": request.model_dump(mode="json"),
@@ -362,6 +376,7 @@ def _compact_capability_card(capability: Any) -> dict[str, Any]:
         "route": capability.route,
         "description": _short_note_text(capability.description, 220),
         "required_artifact_kinds": list(capability.required_artifact_kinds),
+        "source_artifact_kinds": list(capability.source_artifact_kinds),
         "outputs": list(capability.outputs),
         "cost": capability.cost,
         "failure_modes": list(capability.failure_modes),

@@ -1,6 +1,9 @@
 include README.md LICENSE CHANGELOG.md environment.yml
+recursive-include configs *.example.toml
+recursive-include mechcal/profiles *.json
 recursive-include docs *.md
 recursive-include env *.example.sh
+include env/constraints-linux-py311.txt
 recursive-include tests *.py
 recursive-include examples *.py
 recursive-include benchmarks/photomechbench *.csv *.json *.md

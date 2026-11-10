@@ -8,7 +8,7 @@ from mechcal.schemas.base import JsonDict, MechCALModel
 from mechcal.schemas.decisions import AgentName
 
 PreconditionStatus = Literal["satisfied", "missing"]
-PlanningMode = Literal["llm", "deterministic_fallback"]
+PlanningMode = Literal["llm", "deterministic_fallback", "explicit_command"]
 
 
 class AgentExecutionPlan(MechCALModel):

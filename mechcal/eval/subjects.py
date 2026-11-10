@@ -917,6 +917,7 @@ def _compact_tool_card(card: dict[str, object]) -> dict[str, object]:
         "route": card.get("route"),
         "description": card.get("description"),
         "required_artifact_kinds": card.get("required_artifact_kinds", []),
+        "source_artifact_kinds": card.get("source_artifact_kinds", []),
         "outputs": card.get("outputs", []),
         "cost": card.get("cost"),
         "failure_modes": card.get("failure_modes", []),

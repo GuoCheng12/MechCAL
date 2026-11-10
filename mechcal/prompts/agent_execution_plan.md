@@ -32,3 +32,10 @@ Rules:
 - Do not invent artifacts, tool outputs, scientific evidence, or literature evidence.
 
 If prior schema feedback is supplied, correct the same plan and return a valid JSON object.
+# Planner Parameter Contract
+
+Preserve every dispatch_request.tool_args value exactly. You may fill omitted
+route-local parameters, but cannot replace the Planner's target, geometry,
+angles, solvent selection or fragments. Unsupported arguments must be reported
+as errors, not silently dropped. All atom indices are zero-based in the selected
+prepared structure. Use discovered conformer/dihedral IDs only.
