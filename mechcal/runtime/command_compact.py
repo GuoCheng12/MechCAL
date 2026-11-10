@@ -30,6 +30,22 @@ def table_rows(table):
     return [{**table.get("defaults", {}), **dict(zip(table["columns"], row))} for row in table["rows"]]
 
 
+def comparison_rows(payload):
+    """Resolve compact question links before moving their targets out of view."""
+    questions = payload.get("exploration_state", {}).get("evidence_followup", {}).get("questions", [])
+    by_id = {q["id"]: q for q in questions}
+    rows = []
+    for option in payload.get("comparison_options", []):
+        if option.get("question_location"):
+            if (option["question_location"] != "exploration_state.evidence_followup.questions"
+                    or option["id"] not in by_id):
+                raise RuntimeError("Compact comparison points to an unavailable question")
+            rows.append({**by_id[option["id"]], **{k: v for k, v in option.items() if k != "question_location"}})
+        else:
+            rows.append(dict(option))
+    return rows
+
+
 def brief_catalog(table):
     # Dependencies and backend-specific exclusions remain in describe_tools.
     # Keep purpose, outputs, input requirements and actual current status visible.

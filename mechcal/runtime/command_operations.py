@@ -7,7 +7,7 @@ from copy import deepcopy
 from pydantic import ValidationError
 
 from mechcal.mechanism_pool import MECHANISM_POOL
-from mechcal.runtime.command_memory import READ_BYTES, json_bytes, pointer_child, record_layout, result_report
+from mechcal.runtime.command_memory import READ_BYTES, json_bytes, pointer_child, record_layout, result_report, selection_coverage
 from mechcal.runtime.command_views import workflow_records
 from mechcal.schemas import DispatchRequest, FinalAnswer, MechanismPrediction
 from mechcal.schemas.commands import ReadEvidence, internal_arguments
@@ -45,6 +45,8 @@ def check_owner(case):
         (protocol(case).get("exploration") or {}).get("case_id", case.case_id),
         (protocol(case).get("evidence_followup") or {}).get("case_id", case.case_id),
         (protocol(case).get("review_workflow") or {}).get("case_id", case.case_id),
+        (protocol(case).get("investigation_policy") or {}).get("case_id", case.case_id),
+        (protocol(case).get("reviewer_exploration") or {}).get("case_id", case.case_id),
     )):
         raise RuntimeError("Case storage ownership mismatch; no command may execute.")
 
@@ -263,6 +265,7 @@ def read_records(case, command, *, index=None):
         row = available[query.ref]
         selected = {}
         pages = {}
+        coverage = {}
         paths = query.paths or [""]
         if query.view == "data" and query.page and len(paths) != 1:
             reject(["records", i, "page"], "ambiguous_page", "A data page selects exactly one list.",
@@ -282,6 +285,8 @@ def read_records(case, command, *, index=None):
                 reject(["records", i, "paths", j], "unknown_path", "Record path does not exist.",
                        "Use an exact child path below, or view=directory to navigate without reading values.", record_id=query.ref,
                        details={"record_layout": record_layout(value, parent)})
+            coverage[path] = selection_coverage(value, view=query.view,
+                                                page=query.page.model_dump() if query.page else None)
             if query.view == "directory":
                 selected[path] = record_layout(value, path, **(query.page.model_dump() if query.page else {}))
                 layouts.append((query.ref, path, value))
@@ -298,6 +303,7 @@ def read_records(case, command, *, index=None):
             selected[path] = value
         item = {"ref": query.ref, "data": selected if query.paths or query.view == "directory" else selected[""]}
         item["selection"] = query.model_dump(exclude={"ref"})
+        item["coverage"] = coverage
         if query.view == "directory":
             item["view"] = "directory"
         if pages:

@@ -6,7 +6,8 @@ from mechcal.runtime.command_memory import READ_BYTES, digest, json_bytes, resol
 from mechcal.runtime.command_operations import check_refs, protocol, put, record_index, reject
 from mechcal.runtime.command_review import review_execution_context
 
-MAX_ROWS = 512
+MAX_ROWS = 100000
+MAX_MATCH_INDICES = 32
 
 
 def operands(command):
@@ -83,15 +84,20 @@ def evaluate_operand(case, operand, field, *, scope, index):
         paths = [operand.path + "/" + str(i) + operand.value_path for i in indices]
     values = [finite_number(selected_value(record, path, field, operand.ref), field, operand.ref) for path in paths]
     try:
-        value = values[0] if operand.reduction == "scalar" else {"min": min, "max": max, "sum": math.fsum}[operand.reduction](values)
+        value = (max(abs(number) for number in values) if operand.reduction == "max_abs" else
+                 values[0] if operand.reduction == "scalar" else
+                 {"min": min, "max": max, "sum": math.fsum}[operand.reduction](values))
     except OverflowError:
         reject(field, "numeric_overflow", "Reduction result is not finite.", "Report the original values instead.", record_id=operand.ref)
-    matches = [] if operand.reduction == "sum" else [i for i, number in enumerate(values) if number == value]
+    matches = [] if operand.reduction == "sum" else [i for i, number in enumerate(values)
+        if (abs(number) if operand.reduction == "max_abs" else number) == value]
     return {**operand.model_dump(), "source_version": digest(record), "value": value,
             "considered_count": len(values), "missing_or_skipped_count": 0,
             "array_size": len(selected) if indices is not None else None,
             "selection_scope": "explicit_rows" if operand.row_indices is not None else "complete_array" if indices is not None else "scalar",
-            "values_digest": digest(values), "matching_indices": [indices[i] for i in matches] if indices is not None else [],
+            "values_digest": digest(values),
+            "matching_indices": [indices[i] for i in matches[:MAX_MATCH_INDICES]] if indices is not None else [],
+            "omitted_matching_indices": max(0, len(matches) - MAX_MATCH_INDICES) if indices is not None else 0,
             "matching_count": len(matches),
             "matches": [{"path": paths[i], "value": values[i], "context": parent_context(record, paths[i])}
                         for i in matches[:4]],

@@ -4,6 +4,33 @@ The 0.2.0 integration was checked on Linux x86_64 with Python 3.11.
 The checks below concern the portable code and current workflow. They are not
 a new benchmark evaluation or a reproduction of all historical measurements.
 
+The follow-up [evidence retrieval validation](evidence-retrieval.md) documents
+complete-table queries and investigation context tests. The release numbers
+below remain the original 0.2.0 deployment checks.
+
+The opt-in [investigation-choice workflow](investigation-workflow.md) adds a
+separate experiment-selection record. Its November 10 offline regression had
+3,422 passes and 4 skips. Bounded online decision probes are not a full chemical
+rollout or evidence of improved benchmark performance; see that document for
+the observed limitations. The deployment profile keeps the feature disabled.
+
+A second optional experiment-proposal stage passed 3,439 offline tests (4 skips)
+before a frozen two-arm chemical continuation. Reviewer advice was stored and
+selected by Planner, but both arms pursued another dimer electronic comparison.
+The proposal arm consumed more tokens while completing fewer calculations.
+These probes did not establish broader exploration or improved scientific scores;
+see the investigation-workflow document for the measured costs and remaining issues.
+
+The newer [Reviewer exploration mode](reviewer-exploration.md) separates factual
+access from private judgments and retrieval memory. A bounded Case 0003 probe
+passed proposal handoff but Planner still chose to conclude. This validates the
+communication path, not broader discovery or improved scores. It remains opt-in.
+
+The [incremental editing contracts](incremental-interfaces.md) document the
+subsequent interface repair, including draft metadata, exact citation-path edits
+and partial updates to saved comparison questions. This follow-up passed 3,493
+offline tests with 4 skips; it does not replace the deployment results below.
+
 ## Completed Checks
 
 | Check | Result | Scope |

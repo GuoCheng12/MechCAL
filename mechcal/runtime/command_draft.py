@@ -46,13 +46,30 @@ def repair(case, command):
         if changes[index]["kind"] != edit.kind.removesuffix("_patch"):
             reject(["edits", i, "kind"], "edit_kind", "Patch kind does not match the draft record.",
                    "Use argument_patch, ranking_patch or candidate_patch for its matching record.")
-        fields = edit.model_dump(exclude={"kind", "change_index"}, exclude_none=True)
+        fields = edit.model_dump(exclude={"kind", "change_index", "citation_path_edits"}, exclude_none=True)
+        path_edits = getattr(edit, "citation_path_edits", None)
+        if path_edits:
+            citations = deepcopy(changes[index].get("citations", []))
+            targets = set()
+            for j, path_edit in enumerate(path_edits):
+                target = (path_edit.citation_index, path_edit.path_index)
+                if (target in targets or target[0] >= len(citations)
+                        or target[1] >= len(citations[target[0]]["paths"])):
+                    reject(["edits", i, "citation_path_edits", j], "invalid_edit_target",
+                           "Use a distinct existing citation/path position in this draft argument.",
+                           "Copy the repair_target indices from the draft issue; source IDs remain unchanged.")
+                targets.add(target)
+                citations[target[0]]["paths"][target[1]] = path_edit.path
+            fields["citations"] = citations
         if not fields:
             reject(["edits", i], "empty_edit", "This patch changes no fields.",
                    "Supply changed values; null keeps a field, while [] clears a list.")
         changes[index].update(fields)
     data["changes"] = [row for i, row in enumerate(changes) if i not in removed]
     data["changes"].extend(c.model_dump(mode="json") for c in command.additional_changes)
+    for name in ("note", "request_review"):
+        if getattr(command, name) is not None:
+            data[name] = getattr(command, name)
     try:
         return ReviseJudgment.model_validate(data)
     except ValidationError as exc:
@@ -76,13 +93,23 @@ def draft_view(case):
                 value = value[part]
         except (KeyError, IndexError, TypeError):
             value = None
-        issues.append({**issue, **({"current_value": value} if json_bytes(value) <= 2048 else {})})
+        path = issue["path"]
+        target = {}
+        if (len(path) == 6 and path[0] == "changes" and path[2] == "citations" and path[4] == "paths"
+                and all(isinstance(path[i], int) for i in (1, 3, 5))):
+            target = {"repair_target": {"kind": "argument_patch", "change_index": path[1],
+                       "field": "citation_path_edits", "citation_index": path[3], "path_index": path[5]}}
+        issues.append({**issue, **target, **({"current_value": value} if json_bytes(value) <= 2048 else {})})
     return {"draft_id": draft["draft_id"], "ref": "draft:" + draft["draft_id"],
             "base_revision": draft["base_revision"], "accepted": False,
+            "transaction": {"request_review": draft["command"].get("request_review", False),
+                            "note_policy": "Original note retained unless explicitly edited."},
             "changes": [{"change_index": i, **{k: row[k] for k in ("kind", "id", "label") if k in row}}
                         for i, row in enumerate(rows)], "issues": issues,
             "policy": "Only this draft is editable. Read /command/changes/<index> for its full text. "
                       "repair_judgment patches fields and revalidates the entire transaction. "
                       "Null patch fields stay unchanged; [] clears a list. "
+                      "For a bad citation path, use citation_path_edits with the displayed indices and an exact directory path. "
+                      "Original note and request_review are retained unless explicitly changed. "
                       "revise_judgment explicitly replaces the draft; discard_judgment abandons it. "
                       "No draft content is accepted evidence or an accepted ranking."}

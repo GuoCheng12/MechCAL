@@ -32,14 +32,14 @@ from mechcal.schemas.commands import (
     ReadBatch, ReadCall, ReadEvidence, ReadContext, RepairJudgment, ReduceEvidence, CompareEvidence,
     HypothesisStep, ReviseJudgment, SubmitFinal, UpdateHypotheses, UpdateHypothesesWithFollowup, computation_model,
     AmendFinal, AmendFinalFields, LinkedAmendJudgment, LinkedReviseJudgment, LinkedRepairJudgment, UpdateHypothesesWithWorkflow,
-    SubmitFinalAfterReview, ReviewFinal, reviewed_submission_model,
+    SubmitFinalAfterReview, ReviewFinal, reviewed_submission_model, UpdateHypothesesWithInvestigation,
 )
 
 
 DESCRIPTIONS = {
     "delegate_computation": "Delegate a computational objective and explicit scope to a Worker. "
                             "The Worker can diagnose and retry within that scope; Planner retains scientific judgments.",
-    "reduce_evidence": "Compute an exact min/max over one complete explicitly selected array, or read a numeric scalar. "
+    "reduce_evidence": "Compute an exact min/max/max_abs/sum over an explicitly selected array (up to 100000 rows), or read a numeric scalar. "
                        "Returns source paths, conditions and ties. Read-only; shares evidence-query allowance.",
     "compare_evidence": "Compute left/right ratio or left-right difference. Each operand can be a scalar or the min/max "
                         "of an explicit complete array. Returns exact sources and conditions; no scientific inference. "
@@ -54,7 +54,9 @@ DESCRIPTIONS = {
     "manage_experiments": "Retry or explicitly cancel saved pending computations. Retry never invents parameters; "
                           "for parameter changes cancel the old request and submit the corrected computation.",
     "revise_judgment": "Atomically revise related scientific arguments and ranking entries. Omitted records are retained.",
-    "repair_judgment": "Patch the displayed uncommitted draft; null fields stay unchanged. Revalidate and commit the whole transaction.",
+    "repair_judgment": "Patch the displayed uncommitted draft; null fields stay unchanged, including note/request_review. "
+                       "Use citation_path_edits to correct individual paths without rewriting text or other citations. "
+                       "Revalidate and commit the whole transaction.",
     "discard_judgment": "Discard an uncommitted draft without changing accepted arguments or ranking.",
     "finalize": "Submit the final narrative using the accepted ranking and evidence records.",
     "submit_final": "Deliver the exact saved, reviewed final draft without rewriting it.",
@@ -71,7 +73,7 @@ DESCRIPTIONS = {
 def tool_contracts(registry, capability_ids, *, allowed_operations=None, with_draft=False,
                    hypothesis_tracking=False, draft_id=None, evidence_followup=False, review_workflow=False,
                    computational_review=False, strict_schema=True, task_context=False, stopping_review=None,
-                   worker_tasks=False):
+                   worker_tasks=False, investigation_policy=False):
     models = {name: (model, {"kind": name}) for name, model in (
         ("read_evidence", ReadEvidence), ("reduce_evidence", ReduceEvidence), ("compare_evidence", CompareEvidence),
         ("describe_tools", DescribeTools),
@@ -85,7 +87,8 @@ def tool_contracts(registry, capability_ids, *, allowed_operations=None, with_dr
         from mechcal.schemas.worker_tasks import DelegateComputation
         models["delegate_computation"] = (DelegateComputation, {"kind": "delegate_computation"})
     if hypothesis_tracking:
-        models["update_hypotheses"] = (UpdateHypothesesWithWorkflow if review_workflow else
+        models["update_hypotheses"] = (UpdateHypothesesWithInvestigation if investigation_policy else
+                                       UpdateHypothesesWithWorkflow if review_workflow else
                                        UpdateHypothesesWithFollowup if evidence_followup else UpdateHypotheses,
                                        {"kind": "update_hypotheses"})
     if review_workflow:
@@ -253,6 +256,7 @@ def ask_tools(client, registry, visible_tools, payload, store, *, exchange=None,
                                   evidence_followup=followup,
                                   review_workflow=workflow,
                                   computational_review="computational_review" in payload,
+                                  investigation_policy="investigation_policy" in payload,
                                   stopping_review=payload.get("computational_review"),
                                   task_context=bool(payload.get("deferred_context")) and
                                                payload.get("context_reads_remaining", 0) > 0,
@@ -286,7 +290,9 @@ def ask_tools(client, registry, visible_tools, payload, store, *, exchange=None,
         prompt += "\n" + load_prompt("planner_review_workflow.md")
     if "computational_review" in payload and not task_interface:
         prompt += "\n" + load_prompt("computational_mission.md")
-    groups = turn_contract()
+    if "investigation_policy" in payload:
+        prompt += "\n" + load_prompt("planner_investigation.md")
+    groups = turn_contract(models)
     if task_interface:
         groups["batch_read_operations"] = [n for n in groups["batch_read_operations"] if n in models]
         groups["hypothesis_followup_controls"] = ([n for n in groups["hypothesis_followup_controls"] if n in models]

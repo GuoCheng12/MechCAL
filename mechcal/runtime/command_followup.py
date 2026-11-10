@@ -2,11 +2,12 @@
 
 from typing import Literal
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from mechcal.runtime.command_memory import digest
 from mechcal.runtime.command_operations import check_owner, protocol, put, reject, reference_issues, OperationRejected
-from mechcal.schemas.commands import ComparisonQuestion, ComparisonQuestionWithRoute, ImpactSuggestion
+from mechcal.schemas.commands import (ComparisonQuestion, ComparisonQuestionWithRoute, ComparisonQuestionUpdate,
+                                     ComparisonQuestionWithRouteUpdate, ImpactSuggestion)
 
 
 class ImpactItem(ImpactSuggestion):
@@ -20,6 +21,8 @@ class QuestionRecord(BaseModel):
     value: ComparisonQuestion | ComparisonQuestionWithRoute
     revision: int = 1
     trials: list[dict] = Field(default_factory=list)
+    origin: Literal["planner", "impact_reviewer", "exploration_reviewer"] = "planner"
+    source_refs: list[str] = Field(default_factory=list)
 
 
 class FollowupState(BaseModel):
@@ -79,6 +82,9 @@ def accept_review(case, result_ids, feedback):
             row = ImpactSuggestion.model_validate(suggestion)
             iid = "impact:" + digest({"case": case.case_id, "group": key, "label": row.label})[:24]
             current.impacts[iid] = ImpactItem(**row.model_dump())
+        if feedback.get("experiments"):
+            from mechcal.runtime.command_experiment_options import accept_options
+            current = accept_options(case, current, feedback["experiments"])
     # Failed optional commentary is recorded once, not converted into clearance.
     return save_state(case, current)
 
@@ -104,11 +110,31 @@ def apply_update(case, command):
     # Validate the proposed graph as one transaction, including forward references.
     proposed = dict(current.questions)
     for i, question in enumerate(questions):
+        previous = current.questions.get(question.id)
+        if isinstance(question, (ComparisonQuestionUpdate, ComparisonQuestionWithRouteUpdate)):
+            values = previous.value.model_dump(mode="json") if previous else {}
+            edited = question.model_dump(mode="json", exclude_none=True, exclude={"clear_fields"})
+            cleared = getattr(question, "clear_fields", [])
+            if len(set(cleared)) != len(cleared) or set(cleared).intersection(edited):
+                reject(["questions", i, "clear_fields"], "conflicting_edit",
+                       "Clear each field once, without also setting a replacement.",
+                       "Choose a replacement or explicit clearing for each field.")
+            values.update(edited)
+            values.update({name: None for name in cleared})
+            model = ComparisonQuestionWithRoute if isinstance(question, ComparisonQuestionWithRouteUpdate) else ComparisonQuestion
+            try:
+                question = model.model_validate(values)
+            except ValidationError as exc:
+                raise OperationRejected([
+                    dict(path=["questions", i, *error["loc"]], code="question_fields",
+                         message=error["msg"], record_id=question.id,
+                         remedy="New questions require labels and question; an existing case-local ID allows a partial update.")
+                    for error in exc.errors(include_input=False, include_url=False)
+                ]) from exc
         if question.id in seen or len(set(question.labels)) != len(question.labels):
             reject(["questions", i], "duplicate_edit", "Question IDs and candidate labels must be distinct.",
                    "Combine repeated edits; no scientific update committed.")
         seen.add(question.id)
-        previous = current.questions.get(question.id)
         retained = {name: getattr(previous.value, name, None) for name in
                     ("scope", "parent_id", "relation", "contrast")
                     if previous is not None and getattr(question, name) is None}
@@ -169,6 +195,9 @@ def question_rows(current, *, include_closed=False):
         value = {**row.value.model_dump(mode="json"), "revision": row.revision,
                  "recent_results": [{"result_id": t["result_id"], "question_revision": t["revision"]}
                                     for t in row.trials[-3:]]}
+        if row.origin in {"impact_reviewer", "exploration_reviewer"}:
+            value.update(origin=row.origin, proposal_sources=row.source_refs,
+                         advisory_option=True)
         if children[qid]:
             value["subquestions"] = [{"id": child, "status": current.questions[child].value.status,
                 "assessment": getattr(current.questions[child].value, "assessment", None),

@@ -88,7 +88,7 @@ def read_selection_results(case, command, *, allowed_refs=None, allowance=READ_B
         # still use strict read_records and reject any invalid citation.
         split = bool(query.paths) and not (query.view == "data" and query.page and len(query.paths) != 1)
         selections = [query.model_copy(update={"paths": [path]}) for path in query.paths] if split else [query]
-        accepted, local, pages, valid_paths, page_metadata = {}, [], {}, [], {}
+        accepted, local, pages, valid_paths, page_metadata, coverage = {}, [], {}, [], {}, {}
         actual_page = query.page
         for j, selection in enumerate(selections):
             try:
@@ -99,13 +99,17 @@ def read_selection_results(case, command, *, allowed_refs=None, allowance=READ_B
                 room = max(0, allowance - json_bytes(rows) - json_bytes(accepted) - 1000)
                 row = bounded_query(case, selection, allowance=room, index=index)
                 data = row["data"] if query.paths or query.view == "directory" else {"": row["data"]}
-                candidate = {"ref": query.ref, "data": {**accepted, **data}, "selection": query.model_dump(exclude={"ref"})}
+                candidate = {"ref": query.ref, "data": {**accepted, **data},
+                             "coverage": {**coverage, **row["coverage"]},
+                             "pages": {**pages, **row.get("pages", {})},
+                             "selection": query.model_dump(exclude={"ref"})}
                 if json_bytes(rows + [candidate]) > allowance:
                     raise OperationRejected([dict(path=["records", 0, "paths", 0], code="response_too_large",
                         message="This field exceeds the remaining read-turn allowance.", record_id=query.ref,
                         remedy="Use a directory, narrower fields or a smaller page; accepted fields are retained.")])
                 accepted.update(data)
                 pages.update(row.get("pages", {}))
+                coverage.update(row["coverage"])
                 if row.get("requested_page"):
                     actual_page = query.page.model_copy(update=row["selection"]["page"])
                     page_metadata = {key: row[key] for key in ("requested_page", "page_policy")}
@@ -120,6 +124,7 @@ def read_selection_results(case, command, *, allowed_refs=None, allowance=READ_B
                     local.append({**issue, "path": ["arguments", "records", i, *path]})
         if accepted:
             row = {"ref": query.ref, "data": accepted if query.paths or query.view == "directory" else accepted[""],
+                   "coverage": coverage,
                    "selection": query.model_copy(update={"paths": valid_paths, "page": actual_page}).model_dump(exclude={"ref"}),
                    **page_metadata}
             if query.view == "directory":

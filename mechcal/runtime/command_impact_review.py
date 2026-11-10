@@ -5,11 +5,12 @@ from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime import command_followup as followup
 from mechcal.runtime import command_query_state as query_state
 from mechcal.runtime import command_numeric as numeric
+from mechcal.runtime import command_experiment_options as options
 from mechcal.runtime.command_memory import digest, result_report
 from mechcal.runtime.command_operations import protocol, put, record_index, reject
 from mechcal.runtime.command_review import candidate_overview, review_execution_context, reviewer_scope, review_worker_interpretations
 from mechcal.runtime.command_comparison import question_evidence_view, question_source_refs
-from mechcal.schemas.commands import ReportEvidenceImpacts
+from mechcal.schemas.commands import ReportEvidenceImpacts, ReportEvidenceImpactsWithExperiments
 
 
 def review_payload(case, result_ids):
@@ -41,7 +42,7 @@ def review_material(case, result_ids, *, index=None):
     return payload
 
 
-def validate_suggestions(case, result_ids, command):
+def validate_suggestions(case, result_ids, command, *, catalog=None, source_ids=None):
     allowed = association_sources(case, result_ids)
     labels = set()
     for i, suggestion in enumerate(command.suggestions):
@@ -54,10 +55,12 @@ def validate_suggestions(case, result_ids, command):
                 reject(["suggestions", i, "refs", j], "impact_source", "Association must cite a result or unit in this new group.",
                        "Use its exact source ID. A tool call, explanation or old observation is not a new result.", record_id=ref)
     return {"status": "available", "text": command.text,
-            "suggestions": [s.model_dump(mode="json") for s in command.suggestions]}
+            "suggestions": [s.model_dump(mode="json") for s in command.suggestions],
+            **({"experiments": options.validate(case, command, catalog or [], source_ids or allowed)}
+               if options.enabled(case) else {})}
 
 
-def run_turn(o, case, store):
+def run_turn(o, case, store, *, catalog=None):
     p = protocol(case)
     ids = followup.unreviewed_results(case)
     if not ids:
@@ -83,6 +86,10 @@ def run_turn(o, case, store):
         for ref in ("report:" + rid, "explanation:" + rid):
             if ref in index.available:
                 scope[ref] = index.available[ref]
+    if options.enabled(case):
+        if catalog is None:
+            raise RuntimeError("Experiment-option review requires the enabled tool catalog")
+        payload["experiment_generation"] = options.review_context(case, catalog)
     context_key = digest(payload)
     if session.get("context_key", context_key) != context_key:
         raise RuntimeError("Impact review sources changed within a read session")
@@ -90,8 +97,8 @@ def run_turn(o, case, store):
     store.activity("Evidence impact review", case.current_round_id)
     feedback, pending = scoped_commentary_turn(o.deps.photophysics_arbiter.llm_client, case, payload, store,
         scope=scope, state=session, role="impact_reviewer", prompt_name="command_impact_reviewer.md", index=index,
-        completion=("report_evidence_impacts", ReportEvidenceImpacts,
-                    lambda command: validate_suggestions(case, ids, command)),
+        completion=("report_evidence_impacts", ReportEvidenceImpactsWithExperiments if options.enabled(case) else ReportEvidenceImpacts,
+                    lambda command: validate_suggestions(case, ids, command, catalog=catalog, source_ids=set(scope))),
         compact_context=o.config.command_compact_context)
     if pending is not None:
         if o.config.command_compact_context or numeric.outcome_ids(pending.get("outcome", {})):

@@ -119,6 +119,9 @@ class OrchestratorConfig:
     command_evidence_followup: bool = False
     command_review_workflow: bool = False
     command_computational_review: bool = False
+    command_investigation_policy: bool = False
+    command_experiment_options: bool = False
+    command_reviewer_exploration: bool = False
     command_compact_context: bool = False
     command_task_context: bool = False
     command_worker_tasks: bool = False
@@ -152,6 +155,16 @@ class OrchestratorConfig:
             raise ValueError("command_computational_review requires command_review_workflow")
         if self.command_computational_review and not self.effective_agenda_coverage_reviewer:
             raise ValueError("command_computational_review requires the final Reviewer")
+        if self.command_investigation_policy and not self.command_computational_review:
+            raise ValueError("command_investigation_policy requires command_computational_review")
+        if self.command_experiment_options and not self.command_investigation_policy:
+            raise ValueError("command_experiment_options requires command_investigation_policy")
+        if self.command_experiment_options and not self.effective_support_auditor:
+            raise ValueError("command_experiment_options requires the result-impact Reviewer")
+        if self.command_reviewer_exploration and not self.command_investigation_policy:
+            raise ValueError("command_reviewer_exploration requires command_investigation_policy")
+        if self.command_reviewer_exploration and self.command_experiment_options:
+            raise ValueError("Choose isolated Reviewer exploration or coupled experiment options, not both")
         if self.predecision_comparison and not (self.incremental_judgment and self.comparative_evidence):
             raise ValueError("predecision_comparison requires incremental_judgment and comparative_evidence")
         if self.predecision_comparison and not self.effective_agenda_coverage_reviewer:

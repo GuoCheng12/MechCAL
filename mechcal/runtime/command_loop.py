@@ -26,6 +26,8 @@ from mechcal.runtime.command_events import CommandEvent, stop_reason, track_stat
 from mechcal.runtime import command_hypotheses as hypotheses
 from mechcal.runtime import command_followup as followup
 from mechcal.runtime import command_review_workflow as workflow
+from mechcal.runtime import command_investigation as investigation
+from mechcal.runtime import command_exploration_review as exploration_review
 from mechcal.runtime import computational_review
 from mechcal.runtime import command_read_handoff as handoff
 from mechcal.runtime import command_query_state as query_state
@@ -249,9 +251,23 @@ def planner_payload(o, case, *, native=False):
             from mechcal.runtime.command_edit_context import correction_context
             payload["correction_context"] = correction_context(case, index=index)
         payload["comparison_options"] = workflow.comparison_options(case, _catalog(o, case), **_route_context(o, case))
+        if investigation.enabled(case):
+            payload["investigation_policy"] = investigation.view(case, payload["comparison_options"])
         feedback = payload.get("review_feedback")
         if feedback and feedback.get("findings") is not None:
             payload["review_feedback"] = {"status": feedback["status"], "text": feedback["text"]}
+        pending = investigation.pending_proposals(case)
+        if pending:
+            payload["proposal_decision"] = {"handoff_id": pending["id"], "question_ids": pending["question_ids"],
+                "options_field": "comparison_options",
+                "policy": "New public experiment suggestions need a planning decision, not a wording revision. "
+                          "Compare their possible outcomes against current unresolved judgments. Choose, adapt, defer "
+                          "or decline in update_hypotheses.investigation; no particular experiment or confidence change "
+                          "is required. These suggestions are not observations or proof that an experiment is useful."}
+            if payload.get("review_feedback"):
+                payload["review_feedback"] = {"status": "historical", "read_ref": "review:feedback",
+                    "scope": "Prior review of existing arguments. It does not evaluate this new proposal handoff. "
+                             "Outstanding factual issues remain in review_workflow; the full prior feedback is readable."}
     # A fixture/resume may have a delivered result but no native call to replay.
     # Deduplication is valid only when that result actually has a message route.
     if native and p.get("latest_exchange"):
@@ -367,6 +383,15 @@ def _apply(o, case, command, store):
         return put(candidate, phase="hypothesis_next", pending_command=None,
                    hypothesis_step={"update_call_id": command.update_call_id, "update_result": result,
                                     "followup_calls": command.followup_calls})
+    investigation.guard(case, command)
+    boundary_operation = command.kind in {
+        "compute", "compute_batch", "delegate_computation", "finalize", "submit_final", "review_final", "amend_final"}
+    boundary_operation |= command.kind == "manage_experiments" and command.action == "retry"
+    if o.config.command_reviewer_exploration and boundary_operation and (reason := exploration_review.due(case)):
+        candidate = _outcome(case, store, "exploration_requested", executed=False, committed=False,
+            reason="An independent exploration check is due. No computation or delivery was executed. "
+                   "Consider its optional questions, then choose your next operation.")
+        return exploration_review.start(candidate, reason)
     if command.kind == "compute_batch":
         candidate = stage_batch(o, case, command)
         return put(_outcome(candidate, store, "batch_accepted", executed=False), phase="batch_next", outcome_request_id=None)
@@ -845,6 +870,10 @@ def run_command_loop(o, case, store, *, resume=False):
             case = followup.enable(case)
         if o.config.command_review_workflow:
             case = workflow.enable(case)
+        if o.config.command_investigation_policy:
+            case = investigation.enable(case, offer_experiments=o.config.command_experiment_options)
+        if o.config.command_reviewer_exploration:
+            case = exploration_review.enable(case)
         case = save(case, store)
         stopping = False
         local_cursors = set()
@@ -894,11 +923,16 @@ def run_command_loop(o, case, store, *, resume=False):
                             and followup.unreviewed_results(case)):
                         case = save(put(case, phase="impact_review"), store)
                         continue
+                    if (o.config.command_reviewer_exploration and p.get("pending_command") is None
+                            and (reason := exploration_review.due(case))):
+                        case = save(exploration_review.start(case, reason), store)
+                        continue
                     model = envelope_model(o.deps.capability_registry, p.get("visible_tools", []),
                                            hypothesis_tracking=o.config.command_hypothesis_tracking,
                                            evidence_followup=o.config.command_evidence_followup,
                                            review_workflow=o.config.command_review_workflow,
                                            computational_review=o.config.command_computational_review,
+                                           investigation_policy=o.config.command_investigation_policy,
                                            task_context=o.config.command_task_context,
                                            worker_tasks=o.config.command_worker_tasks)
                     if p.get("pending_command") is None:
@@ -951,7 +985,13 @@ def run_command_loop(o, case, store, *, resume=False):
                 elif p["phase"] == "impact_review":
                     case = save(recovery.before_model_turn(case,
                         max_model_turns=o.config.command_delivery_max_model_turns), store)
-                    case = impact_review_turn(o, case, store)
+                    case = impact_review_turn(o, case, store,
+                        catalog=_catalog(o, case) if o.config.command_experiment_options else None)
+                elif p["phase"] == "exploration_review":
+                    if not o.config.command_reviewer_exploration:
+                        raise RuntimeError("Isolated exploration is disabled in this run")
+                    case = exploration_review.run_turn(o, case, store, catalog=_catalog(o, case),
+                        describe_tools=lambda command: _describe_tools(o, case, command))
                 elif p["phase"] in {"explain", "review"}:
                     case = save(recovery.before_model_turn(case,
                         max_model_turns=o.config.command_delivery_max_model_turns), store)

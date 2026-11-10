@@ -1,6 +1,6 @@
 """Scoped proofreading after a source-bound scientific review, without approval reuse."""
 
-from mechcal.runtime.command_memory import digest, json_bytes, resolve_pointer, _read_value
+from mechcal.runtime.command_memory import digest, json_bytes, resolve_pointer, _read_value, selection_coverage
 from mechcal.runtime.command_reads import merge_handles
 from mechcal.runtime import command_read_handoff as handoff
 from mechcal.runtime.command_operations import protocol, record_index
@@ -57,6 +57,7 @@ def fact_packets(case, refs, *, citations=(), index=None):
             continue
         selection = {"ref": ref, "paths": [path] if path else [], "view": "data", "page": page}
         packet = {"source": selection, "source_version": digest(index.available[ref]), "value": value,
+                  "coverage": selection_coverage(resolve_pointer(index.available[ref], path), page=page),
                   "parent_context": _parent_context(index.available[ref], path),
                   "visibility": "in_request", "execution": execution.get(ref)}
         if ref in contexts_seen:

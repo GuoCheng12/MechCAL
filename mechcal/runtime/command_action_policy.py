@@ -17,13 +17,29 @@ ASSESSMENT_CONTROLS = {"revise_judgment", "amend_judgment", "finalize", "amend_f
                        "submit_final", "review_final", "delegate_computation", "manage_experiments"}
 
 
-def turn_contract():
-    return {"read_calls": READ_CALLS, "read_selections": READ_SELECTIONS,
+def turn_contract(available=None):
+    contract = {"read_calls": READ_CALLS, "read_selections": READ_SELECTIONS,
             "batch_read_operations": sorted(BATCH_READS), "compute_calls": COMPUTE_CALLS,
             "hypothesis_followup_controls": sorted(ASSESSMENT_CONTROLS),
             "rule": "One control, up to four read-only calls, or up to six independent computations. "
                     "One update_hypotheses may precede computations or ONE listed control. "
                     "Never mix reads with mutations; multiple delegations require separate turns."}
+    if available is None:
+        return contract
+    names = set(available)
+    contract["available_operations"] = sorted(names)
+    contract["batch_read_operations"] = sorted(BATCH_READS & names)
+    contract["hypothesis_followup_controls"] = (sorted(ASSESSMENT_CONTROLS & names)
+                                                if "update_hypotheses" in names else [])
+    if not contract["batch_read_operations"]:
+        contract["read_calls"] = contract["read_selections"] = 0
+    if not any(name.startswith("compute_") for name in names):
+        contract["compute_calls"] = 0
+    contract["rule"] = ("Only available_operations may be called in this response. "
+        "Use one listed control, or the listed read/computation groups within their nonzero limits. "
+        "update_hypotheses may precede available computations or ONE listed hypothesis_followup_control. "
+        "Never mix reads with mutations. Zero means unavailable, not permission to infer an operation.")
+    return contract
 
 
 class ActionPolicy(BaseModel):

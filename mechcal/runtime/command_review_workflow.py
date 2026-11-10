@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from mechcal.runtime.command_memory import digest, resolve_pointer
+from mechcal.runtime.command_memory import digest, json_bytes, pointer_child, resolve_pointer
 from mechcal.runtime.command_operations import OperationRejected, check_owner, protocol, put, record_index, reject
 from mechcal.runtime.command_views import enabled
 from mechcal.schemas.commands import RepairJudgment, ReviseJudgment, ReviewFinding
@@ -258,9 +258,71 @@ def comparison_options(case, catalog, *, include_closed=False, registry=None, am
                         "route": route.model_dump(mode="json") if route else None,
                         "route_status": route_status(case, route, tool, registry=registry,
                             amesp_enabled=amesp_enabled, index=index),
+                        "trial_summary": trial_summary(record.trials, results),
                         "route_attempts_for_question": sum(t.get("capability_id") == route.capability_id
                                                            for t in record.trials) if route else 0,
                         "trials": [{"result_id": t.get("result_id"), "question_revision": t["revision"],
                                     "status": results.get(t.get("result_id"), {}).get("status", "not_executed")}
                                    for t in record.trials[-2:]]})
     return options
+
+
+def trial_summary(trials, results):
+    """Count linked executions, not independent evidence or scientific support."""
+    ids = {t["result_id"] for t in trials if t.get("result_id")}
+    statuses = {}
+    for rid in sorted(ids):
+        status = results.get(rid, {}).get("status", "missing_record")
+        statuses[status] = statuses.get(status, 0) + 1
+    completed_dispatches = {t.get("dispatch_id") for t in trials if t.get("result_id")}
+    pending = {t["dispatch_id"] for t in trials if t.get("dispatch_id")
+               and not t.get("result_id") and t["dispatch_id"] not in completed_dispatches}
+    return {"linked_results": len(ids), "result_statuses": statuses, "pending_dispatches": len(pending)}
+
+
+def investigation_frontier(options, *, allowance=5000, limit=8):
+    """Keep a diverse navigation view at delivery; never score or schedule tests."""
+    remaining, rows, seen = list(options), [], set()
+    while remaining and len(rows) < limit:
+        # Display one question per previously unseen label before more questions
+        # for the same labels. This is display coverage, not scientific priority.
+        position = next((i for i, q in enumerate(remaining) if set(q["labels"]) - seen), 0)
+        q = remaining.pop(position)
+        seen.update(q["labels"])
+        row = {k: q[k] for k in ("id", "labels", "status", "assessment", "scope", "parent_id",
+                                "unresolved_descendants", "trial_summary", "origin", "advisory_option") if k in q}
+        route = q.get("route_status", {})
+        row["route_status"] = route.get("status", "unspecified")
+        for field in ("tool_status", "input_scope", "missing_inputs", "compatible_input_count"):
+            if field in route:
+                row[field] = route[field]
+        if route.get("compatible_input_options"):
+            row["compatible_input_options"] = route["compatible_input_options"][:2]
+        if route.get("preparation_options"):
+            row["preparation_options"] = route["preparation_options"][:2]
+        row["capability_id"] = (q.get("route") or {}).get("capability_id")
+        row["read"] = {"ref": "followup:state", "paths": [pointer_child("/questions", q["id"])]}
+        details, deferred = {}, []
+        for key in ("question", "next_test", "outcomes", "disposition_reason"):
+            if not q.get(key):
+                continue
+            candidate = {**details, key: q[key]}
+            if json_bytes(candidate) <= 600 and json_bytes(rows + [{**row, **candidate}]) <= allowance - 200:
+                details = candidate
+            else:
+                deferred.append(key)
+        row.update(details)
+        if deferred:
+            row.update(details_deferred=True, deferred_fields=deferred)
+        if json_bytes(rows + [row]) > allowance:
+            break
+        rows.append(row)
+    return {"questions": rows, "total_questions": len(options), "omitted_questions": len(options) - len(rows),
+            "read_all": {"ref": "context:planner", "paths": ["/fields/comparison_options"]},
+            "policy": "Investigation choices, not confidence ranks or required work. Counts cover explicitly linked trials only; "
+                      "success/partial/failed are execution statuses, not support scores. Readiness is not a success guarantee. "
+                      "route_status applies to the selected inputs; tool_status is the overall catalog state. "
+                      "Compatible inputs/preparation options require explicit selection, not automatic substitution. "
+                      "Compare expected distinguishing outcomes, prior attempts and preparation needs before choosing a test. "
+                      "A low-confidence candidate can merit a useful test; a failed test does not refute it. "
+                      "Use read_context(fields=['tool_catalog','comparison_options']) to resume computation, or keep a bounded conclusion."}

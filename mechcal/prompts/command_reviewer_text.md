@@ -98,3 +98,10 @@ each path_set names its top-level paths in read_path_sets. view=directory reveal
 deeper fields. Source cards are previews, not full evidence.
 A same_text_at object points to identical text at a JSON pointer in this message;
 it is not a scientific source or a citation.
+# Reading coverage
+Read coverage applies only to the selected path. directory_only contains no
+observations; partial_array cannot establish absence or a global extremum, even
+when next_offset is null. Check a claimed extremum with reduce_evidence over the
+original array. max_abs returns the magnitude and signed source rows. If you
+cannot complete that check, report uncertainty rather than a factual correction
+based on an unrepresentative page.

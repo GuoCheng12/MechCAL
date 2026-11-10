@@ -6,6 +6,7 @@ from mechcal.mechanism_pool import MECHANISM_POOL
 from mechcal.runtime.command_operations import OperationRejected, check_owner, protocol, put, reference_issues, reject
 from mechcal.schemas.commands import ExplorationChange, UpdateHypotheses
 from mechcal.runtime import command_followup as followup
+from mechcal.runtime import command_investigation as investigation
 from mechcal.runtime.command_views import candidate_view
 from mechcal.runtime.command_action_policy import QUERY_TURNS, action_policy, read_allowance, science_read_attempt
 from mechcal.runtime.command_reads import READ_KINDS, query_refs
@@ -115,7 +116,9 @@ def update(case, command: UpdateHypotheses):
     updated = current.model_copy(update={"entries": next_entries})
     candidate = followup.apply_update(put(case, exploration=updated.model_dump(mode="json")), command)
     followup_changed = protocol(candidate).get("evidence_followup") != protocol(case).get("evidence_followup")
-    if not changed and not needs_assessment(current) and command.note == current.note and not followup_changed:
+    candidate = investigation.record_choice(candidate, command)
+    choice_changed = protocol(candidate).get("investigation_policy") != protocol(case).get("investigation_policy")
+    if not changed and not needs_assessment(current) and command.note == current.note and not followup_changed and not choice_changed:
         return case, {"status": "unchanged", "committed": False, "assessment_count": current.assessments}
     before = {row.label: current.entries[row.label].model_dump(mode="json")
               if row.label in current.entries else None for row in changed}
@@ -129,6 +132,11 @@ def update(case, command: UpdateHypotheses):
     if followup_changed:
         details["impact_responses"] = [row.model_dump(mode="json") for row in getattr(command, "responses", [])]
         details["comparison_questions"] = [row.model_dump(mode="json") for row in getattr(command, "questions", [])]
+    if choice_changed:
+        details["investigation_choice"] = investigation.current(candidate)
+    if investigation.enabled(candidate):
+        details["impact_coverage"] = {iid: {"label": item["label"], "disposition": item["disposition"]}
+            for iid, item in (protocol(candidate).get("evidence_followup") or {}).get("impacts", {}).items()}
     current.event = {"event_id": f"hypotheses:{current.assessments}", "kind": "hypotheses",
                      "role": "planner", "status": "updated" if changed else "retained", "details": details}
     result = {"status": "hypotheses_updated", "committed": True, "assessment_count": current.assessments,
