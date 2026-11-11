@@ -1,0 +1,221 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0075",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Cc1cc(S(=O)(=O)[O-])ccc1Nc1ccc(Nc2ccc(S(=O)(=O)[O-])cc2C)c2c1C(=O)c1ccccc1C2=O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "AG / acid green 25",
+    "source_documents": [
+      {
+        "source_id": "S0077",
+        "title": "Efficient Photoinduced Energy and Electron Transfers in a Tetraphenylethene-Based Octacationic Cage Through Host-Guest Complexation",
+        "doi": "10.1021/acsami.1c01867",
+        "pdf_sha256": "ae2f227d5b7f6356cdb90e8aa4eb8b21c004a83a8a19dc0e7644e2904af02f1b",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0077",
+        "pdf_page": 4,
+        "quote": "proton signals of free cage gradually disappeared, while the proton signals of the bound cage gradually appeared",
+        "subject": "AG and AV with cage 1.8Cl",
+        "scope": "series_including_target",
+        "conditions": "Aqueous host-guest NMR titration, 1:1 endpoint; SI Figures S10/S11 cited.",
+        "kind": "observation",
+        "statement": "The text reports formation of 1:1 complexes for both guests.",
+        "limitations": "The underlying SI NMR traces are unavailable; no free-guest photophysical inference follows from this."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0077",
+        "pdf_page": 3,
+        "quote": "(6.98 ± 0.30) × 106 13.1c 3.65",
+        "subject": "AG in cage 1.8Cl",
+        "scope": "target",
+        "conditions": "Table 1: binding constant from titration; yield in water at 10 micromolar; lifetime at cage emission 545 nm.",
+        "kind": "observation",
+        "statement": "The complex has Ka (6.98 +/- 0.30) x 10^6 M^-1, yield 13.1% and lifetime 3.65 ns.",
+        "limitations": "These are complex/cage-emission properties, not the isolated dye's emission lifetime or quantum yield."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0077",
+        "pdf_page": 5,
+        "quote": "no PEnT process is observed in ﬂuorescence titration experiments",
+        "subject": "AG and AV with cage 1.8Cl",
+        "scope": "series_including_target",
+        "conditions": "Cage excitation and fluorescence titration in water; absorption/emission overlap present.",
+        "kind": "observation",
+        "statement": "The source reports no observable sensitized energy-transfer response despite spectral overlap.",
+        "limitations": "Keep this condition-specific. The discussion later hedges possible competing processes."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0077",
+        "pdf_page": 5,
+        "quote": "ﬂuorescence quenching was caused by the PET process from the electron-rich dye to the electro-deﬁcient cage",
+        "subject": "ICG, AG and AV with cage",
+        "scope": "series_including_target",
+        "conditions": "Authors' account of complexation-induced quenching.",
+        "kind": "author_interpretation",
+        "statement": "PET from dye to cage is proposed as a quenching route.",
+        "limitations": "Binding and quenching alone do not uniquely establish PET; retain the electrochemical/TA evidence separately."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0077",
+        "pdf_page": 6,
+        "quote": "when R700, R800, ICG, or AG as the guest, the ﬁrst reduction of the bound cage in the complexes exhibits negative shifts",
+        "subject": "AG and other named dye complexes",
+        "scope": "series_including_target",
+        "conditions": "Cyclic voltammetry in DMSO.",
+        "kind": "observation",
+        "statement": "The source reports a negative shift of the cage reduction potential for this group including AG.",
+        "limitations": "This is not the AV result. CV shifts are contextual evidence, not direct photoinduced dynamics."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0077",
+        "pdf_page": 6,
+        "quote": "and 1·8Cl−⊃AV (which exhibits PET) were probed by femtosecond transient absorption",
+        "subject": "AV complex, not AG",
+        "scope": "comparator",
+        "conditions": "Main-text fsTA experiments on cage, cage/NiR and cage/AV.",
+        "kind": "observation",
+        "statement": "The time-resolved PET experiment is on AV, not the AG target.",
+        "limitations": "Do not attach AV's subpicosecond PET timescale to AG."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "Complex formation is central to the source's studied system; it is conditional on the added cage."
+      },
+      {
+        "label": "PET_ET",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "PET is the source interpretation supported by quenching and CV, but no AG-specific fsTA is presented."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "TPE-cage motion behavior must not be transferred to the guest SMILES."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "Binding is established, but a separate confinement-induced suppression mechanism is not isolated for this guest."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "Complex formation is central to the source's studied system; it is conditional on the added cage."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04"
+        ],
+        "rationale": "Intermolecular PET is retained under PET_ET; it is not evidence for an independent intramolecular CT pathway in the isolated dye."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "PET is the source interpretation supported by quenching and CV, but no AG-specific fsTA is presented."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "dafd0fc949ad59b84b1e33f879ab0b0fff3b6d8c02c18764a7d7e3837eb90682",
+    "label_record_sha256": "c58ff3d8733323d31e722bd6fb9b4a46ab9a648b646cbcf51a5e3fc236eda821"
+  }
+}

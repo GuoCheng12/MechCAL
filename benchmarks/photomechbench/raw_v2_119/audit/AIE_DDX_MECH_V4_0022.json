@@ -1,0 +1,18 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0022",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0021",
+    "pdf_page": 2,
+    "figure": "Scheme 1, compound 3",
+    "rationale": "The hydroxy/diethylamino salicylidene ring and para-nitroaniline substituent agree with Scheme 1 and the named synthesis. Imine stereochemistry is not independently certified.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Retrieve SI Zn2+ response and characterization; obtain expert review of ESIPT evidence strength and the CT family boundary.",
+    "Do not promote a source-supported interpretation to independently verified causal truth."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,254 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0041",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC(=O)c1ccc2cc(N3CCC3)ccc2c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "P4",
+    "source_documents": [
+      {
+        "source_id": "F017",
+        "title": "Quantitative Design of Bright Fluorophores and AIEgens via the Accurate Prediction of Twisted Intramolecular Charge Transfer (TICT)",
+        "doi": "10.1002/anie.201916357",
+        "pdf_sha256": "eeb99e3bd698daf11ea4ae820e1307a403f810ea3010dd2a6ff2e67370f19f1d",
+        "page_count": 15
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "the rotation barriers and driving energies of P4 (ERB = 0.38 and EDE = -0.14 eV) and P5 (ERB = 0.27 and EDE = -0.24 eV) are larger than that of P2 (ERB = 0.23 and EDE = -0.36 eV)",
+        "subject": "P2, P4 and P5",
+        "scope": "series_including_target",
+        "conditions": "CAM-B3LYP/cLR-SMD in water; Figure 4d.",
+        "kind": "computation",
+        "statement": "P2 has a 0.23 eV N-TICT barrier and -0.36 eV driving energy; P4 has 0.38 and -0.14 eV, predicting stronger resistance in P4.",
+        "limitations": "Target-specific numbers are separated; no claim that P4 entirely prevents TICT."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "the quantum yields of P4 (Φ = 0.38) and P5 (Φ = 0.33) are about twice than that of P2 (Φ = 0.17)",
+        "subject": "P2, P4 and P5",
+        "scope": "series_including_target",
+        "conditions": "PBS solution; Figure 4e visually inspected.",
+        "kind": "observation",
+        "statement": "PBS quantum yield is 0.38 for P4, versus P2's 0.17.",
+        "limitations": "Comparative brightness improvement is not an aggregation experiment."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "the relative fluorescence intensity of P2 and P4 gradually increases when the water/glycerol ratio changed from 10/0 to 2/8.",
+        "subject": "P2 and P4",
+        "scope": "series_including_target",
+        "conditions": "Water/glycerol volume ratio 10/0 to 2/8; Figure 4f-g.",
+        "kind": "observation",
+        "statement": "Both compounds brighten as glycerol increases.",
+        "limitations": "Polarity changes together with viscosity; donor strength similarity is a control argument, not exact invariance of all solvent interactions."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "P2 and P4 exhibit comparable quantum yield (Φ = 0.48 vs. 0.55) when the volume fraction of glycerol rises to 80%.",
+        "subject": "P2 and P4",
+        "scope": "series_including_target",
+        "conditions": "80 vol% glycerol in water; Figure 4g.",
+        "kind": "observation",
+        "statement": "The reported yields converge to P2 0.48 and P4 0.55.",
+        "limitations": "Do not assign the comparator's yield to target; neither yield reaches unity."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "the enhancement of fluorescence intensities of P2 and P4 can be attributed to TICT inhibition as glycerol is significantly more viscous and less polar than water is.",
+        "subject": "P2 and P4",
+        "scope": "series_including_target",
+        "conditions": "Water/glycerol solvent comparison.",
+        "kind": "author_interpretation",
+        "statement": "The authors attribute enhancement to suppression of TICT in more viscous, less polar medium.",
+        "limitations": "Restriction and polarity stabilization effects are not experimentally separated."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "The ESA band (II) at 391 nm consists of a double exponential decay profile",
+        "subject": "P4",
+        "scope": "target",
+        "conditions": "Transient absorption in PBS; main-text description of SI Figure S41.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign the P4 391 nm ESA components to nonemissive TICT (79 ps) and emissive ICT (1.37 ns).",
+        "limitations": "Transient kinetic assignment is interpretive; SI trace S41 was not personally inspected."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "the quantum yields of both P2 and P4 increased substantially (Table S2).",
+        "subject": "P2 and P4",
+        "scope": "series_including_target",
+        "conditions": "DMSO replaces water/glycerol to reduce hydrogen bonding around oxygen.",
+        "kind": "observation",
+        "statement": "The authors report additional quantum-yield improvement in DMSO and retain hydrogen-bond quenching as a contributor.",
+        "limitations": "SI Table S2 was not inspected; no numeric DMSO yield is supplied here and no ESIPT is inferred."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F017",
+        "pdf_page": 9,
+        "quote": "While P4 is also prone to the TICT formation, it exhibited much stronger “TICT resistance”.",
+        "subject": "P2 and P4",
+        "scope": "series_including_target",
+        "conditions": "Combined viscosity, PBS and computed comparisons.",
+        "kind": "author_interpretation",
+        "statement": "P4 has partial, not complete, TICT resistance relative to P2.",
+        "limitations": "Neither compound's fluorescence is attributed solely to one pathway; hydrogen-bond quenching remains."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "rationale": "The viscosity-associated suppression of TICT rotation is the source's motion-level interpretation, with polarity covariation retained."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The source assigns nonemissive N-TICT competing with emissive ICT in water, with P4 more resistant than P2."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The explicit competition between nonemissive TICT and emissive ICT populations accounts for yield changes; it overlaps with the primary TICT description."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "rationale": "The viscosity-associated suppression of TICT rotation is the source's motion-level interpretation, with polarity covariation retained."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific packing, host or matrix mechanism established for the selected conditions."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The source assigns nonemissive N-TICT competing with emissive ICT in water, with P4 more resistant than P2."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The explicit competition between nonemissive TICT and emissive ICT populations accounts for yield changes; it overlaps with the primary TICT description."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "37c4190d3e4b91ece357b3f05cee34b9aa9af1f03ae4dd466c88e71b49a524d9",
+    "label_record_sha256": "3314525861e2856d6a089910e44c3cb075aa80380f9f991e6dd93b77c3b5de76"
+  }
+}

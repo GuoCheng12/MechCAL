@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0033",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "S0033",
+    "pdf_page": 3,
+    "figure": "Schemes 1-2 (pointers only; structure not adjudicated)",
+    "rationale": "Evidence-first reconstruction requested by the user; molecular graph adjudication is deferred.",
+    "limitations": "Legacy SMILES retained unverified. The figure is a future review pointer, not approval of chemical identity."
+  },
+  "notes": [
+    "Structural identity adjudication is deferred; the legacy input remains unverified.",
+    "Obtain SI Fig. S3-S6 for DLS and free-dye controls; main-text reporting is not direct inspection of those data.",
+    "Confirm that the host-guest family includes the source's surface electrostatic association without implying cavity inclusion.",
+    "Review roles as overlapping source explanations, not independent additive causal pathways."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

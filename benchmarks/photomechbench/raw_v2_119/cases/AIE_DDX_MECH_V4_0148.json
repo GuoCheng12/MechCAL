@@ -1,0 +1,287 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0148",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=Cc1cccc(C=O)c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "B",
+    "source_documents": [
+      {
+        "source_id": "F055",
+        "title": "Achieving short-wavelength free radical emission by combining small conjugated structure and anti-Kasha emission",
+        "doi": "10.1016/j.dyepig.2023.111625",
+        "pdf_sha256": "3c1366b4d135e9c6fa353d445e55d7dbc8864d2be88d80b2acc50aab6193b566",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F055",
+        "pdf_page": 3,
+        "quote": "calculated to be 0.2% in air and 0.3% in nitrogen after 1 min of light irradiation.",
+        "subject": "B after irradiation",
+        "scope": "target",
+        "conditions": "B in chloroform, 10 mg/mL; 365 nm, 10 W irradiation for 1 min (p.2 continuation).",
+        "kind": "observation",
+        "statement": "Photoactivated B solution has reported PLQYs of 0.2% in air and 0.3% in nitrogen; visible emission persists for about 72 h in the authors' visual assessment.",
+        "limitations": "The approximately 72 h is radical/emission persistence, not excited-state lifetime. A's 1.12 ns value is not assigned to B."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F055",
+        "pdf_page": 3,
+        "quote": "There was no new 1H NMR signal for A in CD3CN and B in CDCl3",
+        "subject": "Irradiated A and B solutions",
+        "scope": "series_including_target",
+        "conditions": "Before/after UV irradiation; NMR and absorption comparison.",
+        "kind": "observation",
+        "statement": "No new proton-NMR resonances are reported, while absorption changes indicate a new absorbing species; the authors infer radical generation.",
+        "limitations": "Absence of new NMR signals is not unique proof of unchanged chemistry or radical cation identity. B's SI spectra were not inspected."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F055",
+        "pdf_page": 3,
+        "quote": "A, B, C and D exhibited very weak emission and no obvious photoinduced emission in the solid powder state",
+        "subject": "A-D powders, including B",
+        "scope": "series_including_target",
+        "conditions": "Neat solid powders under light irradiation.",
+        "kind": "observation",
+        "statement": "Weak powder emission and absence of obvious photoactivation constrain the interpretation: this is polymer-enabled radical luminescence rather than intrinsic AIE.",
+        "limitations": "Do not infer a specific excimer or exciton from quenching alone. C/D solution negative controls differ from the emitting B solution."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F055",
+        "pdf_page": 4,
+        "quote": "The PLQY of the B-6-PMMA film (the optimum doping concentration) in air was calculated to be 0.7% and 2.0% in nitrogen",
+        "subject": "B-6-PMMA",
+        "scope": "target",
+        "conditions": "Optimum B film; 365 nm, 10 W irradiation for 1 min.",
+        "kind": "observation",
+        "statement": "B-PMMA becomes emissive after irradiation, with PLQY 0.7% in air and 2.0% in nitrogen; Fig.3g shows the new blue/green band.",
+        "limitations": "Fig.3g visually inspected; plot legend uses 3 min whereas yield prose uses 1 min. No precise experimental peak or A's 0.92 ns lifetime is assigned to B."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F055",
+        "pdf_page": 5,
+        "quote": "The luminescence intensity of the B-6-PMMA was greatly weakened after heating at 100 ◦C for 30 min",
+        "subject": "B-6-PMMA",
+        "scope": "target",
+        "conditions": "100 C heating for 30 min, then UV reactivation.",
+        "kind": "observation",
+        "statement": "Heating weakens radical emission, and photoactivation remains possible over seven heat/light cycles.",
+        "limitations": "Fig.3i visually inspected; Fig.S21 was not inspected. Thermal loss need not uniquely indicate an internal rotor mechanism."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F055",
+        "pdf_page": 5,
+        "quote": "it only showed the slightly change in luminescence",
+        "subject": "B-6-PMMA",
+        "scope": "target",
+        "conditions": "Photoactivated film held in air for 120 h.",
+        "kind": "observation",
+        "statement": "The main text reports little luminescence change over 120 h and an FTIR-derived radical conversion estimate of 5.5%, supporting matrix stabilization.",
+        "limitations": "Reported Fig.S19 data were not personally inspected; radical conversion and stability estimates are not direct emission-state identification."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F055",
+        "pdf_page": 5,
+        "quote": "The calculated fluorescence of A and B originates from the anti-Kasha",
+        "subject": "A and B radical cations",
+        "scope": "series_including_target",
+        "conditions": "Quantum-chemical spectra compared with photoactivated films.",
+        "kind": "computation",
+        "statement": "Calculated emission is assigned to D4-to-D0 for A at 497 nm and D5-to-D0 for B at 512 nm, not to the neutral precursor singlet fluorescence.",
+        "limitations": "Table S1 is reported in main text but not inspected. These are state assignments from calculations, not direct state-resolved experimental proof."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F055",
+        "pdf_page": 5,
+        "quote": "making the reason for slow internal conversion due to the large energy gap between corresponding states.",
+        "subject": "A and B radical cations",
+        "scope": "series_including_target",
+        "conditions": "Interpretation of isolated D4(A)/D5(B) states above lower doublets.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose that a large gap to lower doublet states slows internal conversion enough to permit higher-doublet fluorescence.",
+        "limitations": "No experimentally determined internal-conversion rate or complete dynamics is provided in the main-text evidence."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F055",
+        "pdf_page": 5,
+        "quote": "single electron transfer (SET) from dopant to matrix",
+        "subject": "A and B in PMMA",
+        "scope": "series_including_target",
+        "conditions": "Photoexcited dopants in a proposed supramolecular complex with PMMA.",
+        "kind": "author_interpretation",
+        "statement": "The proposed film activation route transfers an electron from excited A/B to PMMA, forming the emissive radical cation; two-step photoionization is the alternative proposed solution route.",
+        "limitations": "SET is inferred from broad, method-dependent energy-level ranges, not measured electron-transfer kinetics. Figure 4 caption reverses the direction verbally; the mechanistic prose identifies dopant as donor and PMMA as acceptor."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F055",
+        "pdf_page": 4,
+        "quote": "Such supramolecular interactions can protect the free radical from quenching by oxygen and limit the movement of free rad­ icals, leading to free radical emission",
+        "subject": "A/B radical emitters in PMMA",
+        "scope": "series_including_target",
+        "conditions": "PMMA mechanism discussion followed by B-PMMA measurements.",
+        "kind": "author_interpretation",
+        "statement": "The source attributes film stabilization to supramolecular matrix interactions protecting radicals from oxygen and limiting their motion.",
+        "limitations": "The detailed EPR g=2.006 and 1680-to-1685 cm^-1 carbonyl shift are A measurements, not B measurements. Broad radical-motion wording is not direct internal RIM evidence."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E06",
+          "E10"
+        ],
+        "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
+      },
+      {
+        "label": "PET_ET",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E09"
+        ],
+        "rationale": "Preserve the proposed excited dopant-to-PMMA SET route as an enabling radical-generation mechanism, explicitly distinct from proof of emission-state origin."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The proposed D5-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "The source invokes protection and restriction of radical movement in PMMA, but does not resolve a specific internal rotational/vibrational suppression mechanism; do not infer RIM from polymer enhancement."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E06",
+          "E10"
+        ],
+        "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E09"
+        ],
+        "rationale": "Preserve the proposed excited dopant-to-PMMA SET route as an enabling radical-generation mechanism, explicitly distinct from proof of emission-state origin."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The proposed D5-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "105f8c4293bfd441550af816fd202248ca7db7dc89cffd89044f41aec345119b",
+    "label_record_sha256": "edd3cd8743ac5b615562cc5b86623e6f30e2e867f42458d9e0afdbf268de6291"
+  }
+}

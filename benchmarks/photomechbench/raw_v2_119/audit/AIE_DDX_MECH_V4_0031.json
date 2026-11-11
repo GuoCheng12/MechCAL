@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0031",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "S0031",
+    "pdf_page": 7,
+    "figure": "Fig. 1 (pointer only; structure not adjudicated)",
+    "rationale": "Evidence-first reconstruction requested by the user; molecular graph adjudication is deferred.",
+    "limitations": "Legacy SMILES retained unverified. The figure is a future review pointer, not approval of chemical identity."
+  },
+  "notes": [
+    "Structure confirmation is deferred at the user's request; the legacy SMILES is not verified.",
+    "Expert review should decide whether the system-mediated SDS/cyclodextrin interaction belongs in a reference for the dye, rather than silently treating it as direct host inclusion.",
+    "Review the proposed primary/secondary roles and distinguish whole-body anisotropy from internal motion."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

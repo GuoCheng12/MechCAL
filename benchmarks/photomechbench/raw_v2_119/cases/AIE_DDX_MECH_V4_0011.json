@@ -1,0 +1,289 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0011",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "c1cc2ccc3cc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6cc7ccc8cccc9ccc(c6)c7c89)cc5)cc4)cc4ccc(c1)c2c34"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "3a",
+    "source_documents": [
+      {
+        "source_id": "F007",
+        "title": "Novel Y-shaped multi-stimuli responsive pyrene substituted quinoxaline and pyridopyrazine-based push-pull molecules showing solvatochromism, aggregation induced excimer emission, acidofluorochromism and moisture detection",
+        "doi": "10.1016/j.dyepig.2023.111182",
+        "pdf_sha256": "1dbbf9785d101d79e72be12a51330fd55fe27867e5b0212642543094c3d1fdfe",
+        "page_count": 16
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F007",
+        "pdf_page": 5,
+        "quote": "Intermolecular π-π interactions with distance 3.695 Å were present",
+        "subject": "3a crystal",
+        "scope": "target",
+        "conditions": "Room-temperature single-crystal diffraction, CHCl3-grown crystal.",
+        "kind": "observation",
+        "statement": "The source reports herringbone packing with pyrene contacts of 3.695 A and a twisted molecular conformation.",
+        "limitations": "The contact suggests possible excited-state coupling but does not alone establish an excimer or the packing in solution."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F007",
+        "pdf_page": 7,
+        "quote": "For 3a and 3d, red-shift of 105 nm and 91 nm was observed, respectively",
+        "subject": "3a and 3d solvent comparison",
+        "scope": "series_including_target",
+        "conditions": "Emission at 1e-5 M across toluene, THF, CHCl3, CH3CN and DMSO.",
+        "kind": "observation",
+        "statement": "3a shows a reported 105 nm toluene-to-DMSO red shift, interpreted as ICT; Table 3 gives 444 and 549 nm.",
+        "limitations": "Solvent polarity, specific solvation and aggregation are not independently isolated by this comparison."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F007",
+        "pdf_page": 8,
+        "quote": "justifies the possibility of TICT process in these molecules",
+        "subject": "3a-d",
+        "scope": "series_including_target",
+        "conditions": "Hexane/THF polarity series and crystal conformation.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose TICT from polarity-dependent shifts and twisted structure.",
+        "limitations": "This is a proposed interpretation, not direct time-resolved identification of a twisted CT state; do not borrow the strongest 3c response for 3a."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F007",
+        "pdf_page": 8,
+        "quote": "In 3a, there is a dual emission at 10% THF-H2O mixture",
+        "subject": "3a",
+        "scope": "target",
+        "conditions": "Increasing water fraction in THF, Fig. S22.",
+        "kind": "observation",
+        "statement": "The authors assign coexisting monomer and excimer emission, followed by a 493 nm aggregation-associated band with a 24 nm red shift.",
+        "limitations": "The figure is in separate SI; a spectral shift alone does not uniquely establish J-type stacking."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F007",
+        "pdf_page": 9,
+        "quote": "this peak diminished, giving rise to a new peak at 501 nm",
+        "subject": "3a",
+        "scope": "target",
+        "conditions": "THF concentration increases to 1e-2 M, Fig. 10.",
+        "kind": "observation",
+        "statement": "The 476 nm lower-concentration peak is replaced by an enhanced 501 nm band at high concentration, supporting the aggregate/excimer interpretation.",
+        "limitations": "Reabsorption and concentration effects are not independently excluded here."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F007",
+        "pdf_page": 10,
+        "quote": "biexponential (2 components) decay at lower concentrations and triex",
+        "subject": "3a-d including target-specific Table 4",
+        "scope": "series_including_target",
+        "conditions": "Fluorescence decay at 1e-5 M and 1e-3 M THF.",
+        "kind": "observation",
+        "statement": "Decay complexity increases with concentration. Table 4 reports 3a components of 1.34/3.27 ns at low concentration and 1.51/3.02/6.03 ns at high concentration.",
+        "limitations": "The prose assigns a 2-4 ns third species, whereas the tabulated third 3a component is 6.03 ns; preserve this inconsistency, not a definitive species assignment."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F007",
+        "pdf_page": 10,
+        "quote": "might be occuring as a result of photo-induced electron transfer (PET)",
+        "subject": "Protonated 3a-d",
+        "scope": "series_including_target",
+        "conditions": "TFA added to CHCl3 solutions, up to 1000 equivalents.",
+        "kind": "author_interpretation",
+        "statement": "Acid-induced quenching is tentatively assigned to PET from pyrene to protonated quinoxaline.",
+        "limitations": "Applies to protonated species, not unconditional PET in neutral 3a; no electron-transfer kinetics are provided."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F007",
+        "pdf_page": 12,
+        "quote": "Hence, this supports the Jobs plot and absorbance titration findings of 1:2 binding stoichiometry for 3a with TFA.",
+        "subject": "3a with TFA",
+        "scope": "target",
+        "conditions": "CDCl3 NMR and acid/base titration.",
+        "kind": "observation",
+        "statement": "Quinoxaline proton shifts and reversibility with TEA support acid-dependent protonation and a reported 1:2 stoichiometry.",
+        "limitations": "This is acid-base chemistry, not evidence for intramolecular ESIPT or a host cavity."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F007",
+        "pdf_page": 13,
+        "quote": "The powder XRD spectra showed that 3a became more crystalline on fuming with TFA",
+        "subject": "3a solid",
+        "scope": "target",
+        "conditions": "Sequential TFA and TEA vapor exposure, Fig. 20.",
+        "kind": "observation",
+        "statement": "Powder diffraction changes reversibly with acid/base exposure.",
+        "limitations": "The adjacent detailed fluorescence shift is for 3c; it must not be assigned to 3a."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F007",
+        "pdf_page": 14,
+        "quote": "The emissions of 3a, 3c-d were quenched effectively with peak broadening",
+        "subject": "3a,3c,3d moisture sensing",
+        "scope": "series_including_target",
+        "conditions": "0-3 percent water added to THF.",
+        "kind": "observation",
+        "statement": "3a displays a 22 nm red shift and quenching, which authors interpret as solvent relaxation and ICT-to-TICT conversion.",
+        "limitations": "This low-water polarity regime is distinct from high-water excimer enhancement."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E09"
+        ],
+        "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E10"
+        ],
+        "rationale": "Solvatochromism and moisture-dependent quenching support source-assigned ICT/TICT, with TICT remaining indirect."
+      },
+      {
+        "label": "PET_ET",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "Retain the authors' tentative PET interpretation only for the acid-protonated form."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Water-fraction, concentration and decay observations underpin the source's excimer interpretation."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E09"
+        ],
+        "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E10"
+        ],
+        "rationale": "Solvatochromism and moisture-dependent quenching support source-assigned ICT/TICT, with TICT remaining indirect."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "Retain the authors' tentative PET interpretation only for the acid-protonated form."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Water-fraction, concentration and decay observations underpin the source's excimer interpretation."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "5b385d12e4f2a4aa7ad88d1d01636036d0229372c2cedfe97223010136f341d6",
+    "label_record_sha256": "d774add6a4e66bc97f48afab17ebf71c63b3eb90f88efc9eb281b5ef95692872"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0047",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F020",
+    "pdf_page": 2,
+    "figure": "Scheme 1 (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI optical Table S1 and aggregate microscopy/XRD; structural contact explanation is qualitative.",
+    "No RIM, excimer, J-exciton or triplet label assigned from their introductory/background mentions; BTN lacks targeted validation of these mechanisms.",
+    "Main p.2 donor wording and p.7 spectral-direction/panel labels are internally inconsistent."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

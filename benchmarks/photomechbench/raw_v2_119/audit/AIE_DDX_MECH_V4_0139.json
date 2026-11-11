@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0139",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F048",
+    "pdf_page": 2,
+    "figure": "Figure 1a-b: DMF-BP-PXZ",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F048 SI rate equations, Tables S1-S5 and functional/geometry data; main-text references are not SI inspection.",
+    "Expert review must assess anti-Kasha assignment given the substitution of S1-to-S0 IC for the total decay sequence and discrepancy between calculated and derived RISC rates.",
+    "Six overlapping labels reflect different levels of the same source account, not six independently proven causes."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

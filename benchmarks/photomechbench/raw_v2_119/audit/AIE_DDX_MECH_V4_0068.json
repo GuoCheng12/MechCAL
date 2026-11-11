@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0068",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F029",
+    "pdf_page": 2,
+    "figure": "Scheme 1 DMIM; Figs. 1-2 polymorphs",
+    "rationale": "DMIM is named and synthesized in this source; O-DMIM and G-DMIM are polymorphs of the same dyad, not separate target molecules.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI temperature spectra, excitation spectra, FLIM component spectra, calculations and crystal data; not personally inspected.",
+    "The p.6 steady-state component percentages sum incorrectly (53+38+29 and 29+13+48); do not propagate them.",
+    "No RIM label is inferred solely from crystal brightness; no target excimer is assigned."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

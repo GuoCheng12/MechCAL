@@ -1,0 +1,305 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0096",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "N#Cc1ccc(-c2cc(-c3ccccc3)c(-c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc2-c2ccccc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "PXZ-TPB-CN",
+    "source_documents": [
+      {
+        "source_id": "F042",
+        "title": "Tetraphenylbenzene Based AIE Luminogen with Donor-Acceptor Structure: Unique Mechanochromic Emission and High Exciton Utilization",
+        "doi": "10.1002/ajoc.202000133",
+        "pdf_sha256": "18026ec502ade0fe9770584f8093bc8920b724d52a12ae6a95bfb46f9a904c64",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F042",
+        "pdf_page": 3,
+        "quote": "Molecular structure and synthesis routes of PXZ-TPB-CN.",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "observation",
+        "statement": "Scheme 1 names the paper's single newly studied AIE emitter PXZ-TPB-CN; this is the provisional source designation for case 0096.",
+        "limitations": "The manifest's name is pending reconciliation. Source selection and the sole studied emitter support a provisional designation only; no candidate-graph matching was performed."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F042",
+        "pdf_page": 3,
+        "quote": "This phenomenon is readily ascribed to the effect of twisted intermolecular charge transfer (TICT).",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "author_interpretation",
+        "statement": "Initial water addition up to 60% causes red shift and quenching, which the authors assign to TICT.",
+        "limitations": "The accepted manuscript literally says 'intermolecular'; retain its wording rather than silently correcting it to intramolecular. No twisted-state geometry is directly established."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F042",
+        "pdf_page": 3,
+        "quote": "activation of restriction of intramolecular motion, demonstrating an AEE feature",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "author_interpretation",
+        "statement": "At higher water fractions aggregation produces stronger, blue-shifted PL, assigned partly to motion restriction and reduced polarity effects.",
+        "limitations": "The mechanism is an author interpretation from solvent/aggregation trends, not direct internal-motion measurement."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F042",
+        "pdf_page": 3,
+        "quote": "The F in THF solution was measured to be 2.2%, whereas, the value in the solid state was recorded to be 5.9%.",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "observation",
+        "statement": "Solution and pristine solid quantum yields are 2.2% and 5.9%.",
+        "limitations": "Main Figure 1 inspected; these are not ground-powder or evaporated-film values."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F042",
+        "pdf_page": 3,
+        "quote": "the ground sample emits a bright bluish green light at 484 nm.",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "observation",
+        "statement": "Grinding shifts pristine 460 nm emission to 484 nm and increases yield to 12.4%; DCM fuming restores approximately 458 nm.",
+        "limitations": "Figure 2 inspected. Reversibility concerns color/profile; full yield recovery was not independently established."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F042",
+        "pdf_page": 4,
+        "quote": "the sharp diffraction peaks after grinding partly disappeared",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "observation",
+        "statement": "PXRD and a ground-sample 139 C cold-crystallization feature support crystalline-to-partly-amorphous conversion.",
+        "limitations": "Figure 3 inspected; loss of some peaks does not justify saying every ground molecule is amorphous."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F042",
+        "pdf_page": 4,
+        "quote": "multiple weak intermolecular interactions could partially restrict the intramolecular motion of molecules in the aggregate state",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "author_interpretation",
+        "statement": "Crystal contacts are proposed to constrain motions; the source reports almost no adjacent pi stacking.",
+        "limitations": "This is a packing-enabled RIM proposal, not an aggregate-exciton or excimer assignment."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F042",
+        "pdf_page": 4,
+        "quote": "the energy gap between T5 and S1 is as low as 0.043 eV",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "computation",
+        "statement": "DFT reported in main text places T5 only 0.043 eV above S1; 77 K spectra give S1/T1 2.63/2.33 eV. Authors propose T5-to-S1 hRISC rather than conventional T1-to-S1 TADF.",
+        "limitations": "Underlying SI calculations/spectra were not inspected. An energy gap alone is not a measured hRISC rate."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F042",
+        "pdf_page": 5,
+        "quote": "the experiment EQE value is much higher than the theoretical EQE value",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "author_interpretation",
+        "statement": "Measured maximum OLED EQE 2.9% exceeds the source's 1.6% fluorescent estimate, supporting proposed triplet utilization; the estimate includes 79% horizontal dipoles and 33% outcoupling.",
+        "limitations": "Model-dependent inference with ideal charge recombination; not direct time-resolved proof of T5 transfer. Higher-triplet-to-S1 transfer is not anti-Kasha emission."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F042",
+        "pdf_page": 2,
+        "quote": "suggesting that it doesn’t possess traditional TADF feature.",
+        "subject": "PXZ-TPB-CN (provisional source designation for pending-name case)",
+        "scope": "target",
+        "conditions": "PXZ-TPB-CN at 10 micromolar in THF/water (300 nm excitation), pristine/ground/fumed powders, vacuum-evaporated film and non-doped OLED.",
+        "kind": "author_interpretation",
+        "statement": "Pristine powder shows only prompt 12.69 ns PL; the authors explicitly reject traditional TADF for this state.",
+        "limitations": "Ground powder/film have longer 18.63/25.13 ns decays and an extra component; do not collapse all states into a conventional TADF label."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E07"
+        ],
+        "rationale": "Proposed motion restriction explains AEE, bounded to the provisionally identified source compound."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Crystal contacts and reversible morphology change explain the mechanical luminescence response."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Retain the author's TICT interpretation with the accepted-manuscript terminology error and indirect evidence explicit."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "State-dependent decay components and inferred triplet-to-singlet exciton utilization are part of the source explanation; this overlaps with hRISC."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Preserve the explicit but tentative high-triplet RISC interpretation for ground/film/device states, not conventional TADF or a measured triplet transfer rate."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E07"
+        ],
+        "rationale": "Proposed motion restriction explains AEE, bounded to the provisionally identified source compound."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Crystal contacts and reversible morphology change explain the mechanical luminescence response."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Retain the author's TICT interpretation with the accepted-manuscript terminology error and indirect evidence explicit."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is established."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton or excimer mechanism is established; aggregation alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "State-dependent decay components and inferred triplet-to-singlet exciton utilization are part of the source explanation; this overlaps with hRISC."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Preserve the explicit but tentative high-triplet RISC interpretation for ground/film/device states, not conventional TADF or a measured triplet transfer rate."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E08",
+          "E09"
+        ],
+        "rationale": "T5-to-S1 RISC still ends in S1 emission; this does not establish higher-singlet emission or anti-Kasha behavior."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "ec6919839dc095320ab9eab41b7292b21bd6740132255fc80412c29a214cdc34",
+    "label_record_sha256": "a51ea9bcc417e769e03388e8fb0764902b0f6b655f0a98dcdc153319c5c161de"
+  }
+}

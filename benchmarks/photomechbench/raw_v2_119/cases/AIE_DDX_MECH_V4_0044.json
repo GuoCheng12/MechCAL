@@ -1,0 +1,288 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0044",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC(C)(C)c1ccc(C(=O)Nc2cccc(-c3nc4ccccc4o3)c2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "3OTB",
+    "source_documents": [
+      {
+        "source_id": "F019",
+        "title": "From dark TICT state to Emissive quasi-TICT State: The AIE Mechanism of N-(3-(benzo[d]oxazol-2-yl)phenyl)-4-tert-butylbenzamide",
+        "doi": "10.1021/jp5089433",
+        "pdf_sha256": "71be0a3f4753204d6836771ed02098663e4f64bb5dd26ea8effaef81931d8f8e",
+        "page_count": 30
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F019",
+        "pdf_page": 8,
+        "quote": "The fluorescence quantum yield of 3OTB powder is 8±2%, 47- times higher than that of THF solution (0.17%)",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "THF solution versus powder; integrating sphere for solids, reported error +/-2%.",
+        "kind": "observation",
+        "statement": "3OTB is weak in THF (0.17%) and enhanced in powder (8+/-2%).",
+        "limitations": "Later text reports powder 9% and crystal 8%; do not impose the abstract's strict crystal-greater-than-powder ordering."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F019",
+        "pdf_page": 9,
+        "quote": "with increase of solvent polarity, the TICT emission red shifts together with a decrease of the relative intensity",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "Aprotic solvents at 1e-5 M; excitation 290 nm.",
+        "kind": "observation",
+        "statement": "Long-wavelength band shifts with polarity and weakens, unlike the near-UV LE band.",
+        "limitations": "TICT is the authors' assignment; protic solvents suppress this band and hydrogen bonding is only suggested."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F019",
+        "pdf_page": 11,
+        "quote": "when the water content is larger than 90%, the molecules begin to aggregate",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "THF/water, 1e-5 M; Figure 5.",
+        "kind": "observation",
+        "statement": "Main text links new approximately 450 nm emission to scattering tails and TEM-observed aggregation.",
+        "limitations": "Boundary wording is approximate: 10:90 THF/water nanosheets are discussed elsewhere; no sharp universal threshold inferred."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F019",
+        "pdf_page": 12,
+        "quote": "Due to these weak interactions, the free configuration twist is partially restricted and a quasi-TICT* state can be formed",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "Single crystals grown from ethyl acetate; weak contacts listed in Figure 6.",
+        "kind": "author_interpretation",
+        "statement": "The authors connect crystal contacts to partial twisting restriction and quasi-TICT emission.",
+        "limitations": "Not a measured excited-state crystal geometry; SI calculations were not inspected."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F019",
+        "pdf_page": 16,
+        "quote": "while the electron transition in 1x* (λcal = 479 nm, f= 0.003)",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "CAM-B3LYP/6-31G* excited-state geometry calculations.",
+        "kind": "computation",
+        "statement": "The relaxed TICT minimum has calculated 479 nm emission and f=0.003, compared with LE f=0.877 and 315 nm.",
+        "limitations": "The computed minima and oscillator strengths are model results; the source is not fully consistent about CT direction, so no direction is adjudicated."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F019",
+        "pdf_page": 17,
+        "quote": "calculated absorption spectra and maximum wavelengths of the selected dimer from crystal structures show almost no spectral shift when compared with monomer",
+        "subject": "3OTB dimer and monomer",
+        "scope": "target",
+        "conditions": "Main-text report of SI Figure S4.",
+        "kind": "computation",
+        "statement": "The selected dimer is reported to have little absorption shift from monomer.",
+        "limitations": "SI not inspected; no affirmative excimer or exciton mechanism follows from aggregation."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F019",
+        "pdf_page": 18,
+        "quote": "The intramolecular relaxation along the 1x* PES will be stopped at an intermediate point",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "Condensed-state interpretation; Figure 10 visually inspected.",
+        "kind": "author_interpretation",
+        "statement": "Partial restriction stops relaxation before the dark TICT minimum, creating an emissive quasi-TICT state.",
+        "limitations": "A proposed intermediate configuration, not independently time-resolved structural proof; PES crossing is not automatically a conical intersection."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F019",
+        "pdf_page": 18,
+        "quote": "The emission in powder and crystal is peaked at 440 nm while that in nanoaggregates and films at 446 nm",
+        "subject": "3OTB morphologies",
+        "scope": "target",
+        "conditions": "Powder, crystal, nanoaggregate and spin-coated film.",
+        "kind": "observation",
+        "statement": "Powder/crystal peaks are 440 nm; nanoaggregates/films 446 nm. Text reports yields 9%, 8%, and 2% for powder, crystal, and film.",
+        "limitations": "Source's yield ordering conflicts with abstract; differences of powder and crystal are within stated approximately 2% uncertainty."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F019",
+        "pdf_page": 20,
+        "quote": "replaced by the structured phosphorescence (with detecting lifetime longer than µs magnitude, see Figure S6).",
+        "subject": "3OTB",
+        "scope": "target",
+        "conditions": "105-77 K cooling in meTHF; main-text report referring to SI Figure S6.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign the lowest-temperature structured emission to phosphorescence with longer-than-microsecond lifetime.",
+        "limitations": "Low-temperature triplet assignment only, not room-temperature aggregate phosphorescence; SI trace not inspected."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Partial restriction of twisting enables quasi-TICT emission; same pathway as the primary label."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E08"
+        ],
+        "rationale": "Intermolecular contacts and morphology order are invoked to set the extent of rotational restriction."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E07"
+        ],
+        "rationale": "Emissive quasi-TICT produced by incomplete relaxation toward dark TICT is the central source interpretation."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E07"
+        ],
+        "rationale": "Explicit oscillator-strength changes along relaxation distinguish bright LE/quasi-TICT from dark relaxed TICT."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E09"
+        ],
+        "rationale": "Preserve the explicit low-temperature phosphorescence assignment only; it is not the AIE mechanism at ambient conditions."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Partial restriction of twisting enables quasi-TICT emission; same pathway as the primary label."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E08"
+        ],
+        "rationale": "Intermolecular contacts and morphology order are invoked to set the extent of rotational restriction."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E07"
+        ],
+        "rationale": "Emissive quasi-TICT produced by incomplete relaxation toward dark TICT is the central source interpretation."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E07"
+        ],
+        "rationale": "Explicit oscillator-strength changes along relaxation distinguish bright LE/quasi-TICT from dark relaxed TICT."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E09"
+        ],
+        "rationale": "Preserve the explicit low-temperature phosphorescence assignment only; it is not the AIE mechanism at ambient conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "86750c56f36bd51c5f88b59bb0e7b3c6fe338cb6cba127c62ca1e26740dad548",
+    "label_record_sha256": "52e0fdcc8955cbe7e794d35c43384bc2d30eeb38e0dfeeaf345ad60685c08241"
+  }
+}

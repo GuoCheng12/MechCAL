@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0163",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0161",
+    "pdf_page": 4,
+    "figure": "Figure 1 and Scheme 2",
+    "rationale": "Figure 1 puts both methoxyphenyl groups on the same central alkene carbon. The phenyl substituent on the TPPDC dicyanovinyl donor-side carbon is retained, rather than replacing it with the TPDC methyl group.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "The graph has been corrected against Figure 1 in this draft; independent structure review remains required before release.",
+    "Retrieve SI geometry, spectra and synthesis; references 35/37 contain prior TPDC/TPPDC syntheses.",
+    "Have experts adjudicate whether any additional mechanism is supported beyond CT and triplet sensitization, without forcing a preset number of labels.",
+    "Retain probe-based assay limitations and the similar-spin-orbit-coupling assumption.",
+    "Formula agreement cannot distinguish the old and corrected constitutional isomers.",
+    "The source cites earlier syntheses for TPDC/TPPDC. Their SI and coordinate files have not been acquired for this review."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

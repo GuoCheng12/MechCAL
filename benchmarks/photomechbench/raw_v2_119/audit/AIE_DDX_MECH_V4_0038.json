@@ -1,0 +1,18 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0038",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0037",
+    "pdf_page": 3,
+    "figure": "Figure 1f, BODIPY 5",
+    "rationale": "The meso-diethylamino BODIPY graph matches Figure 1f. Alternative B-N bond/charge representations require a uniform dataset convention.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Check SI target-specific absorption, yield and transient-fit details.",
+    "Adjudicate TICS-to-CT mapping and overlapping state-balance/RIM roles; no new label is introduced."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,247 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0042",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Cc1cc(N(C)C)cc(C)c1/C=C1\\Sc2ccccc2C1=O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "HTI Z-1",
+    "source_documents": [
+      {
+        "source_id": "F018",
+        "title": "Electronic and Geometric Characterization of TICT Formation in Hemithioindigo Photoswitches by Picosecond Infrared Spectroscopy",
+        "doi": "10.1021/acs.jpca.1c02646",
+        "pdf_sha256": "fead5a82cd90817c405bc66de052fa88029a99ac1ca2217e81c178decd05c320",
+        "page_count": 11
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F018",
+        "pdf_page": 2,
+        "quote": "HTI 3 serves as a control compound, which bears the same electron-rich stilbene part as 1, yet is not pretwisted in the ground state and thus does not undergo TICT formation in any solvent.",
+        "subject": "HTI Z-3",
+        "scope": "comparator",
+        "conditions": "Planar comparator versus pretwisted HTI Z-1 and Z-2.",
+        "kind": "author_interpretation",
+        "statement": "The source uses non-pretwisted Z-3 as a negative TICT control.",
+        "limitations": "The claim applies to solvents tested and is not evidence of aggregation or RIM turn-on in Z-1."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F018",
+        "pdf_page": 2,
+        "quote": "HTI Z-1 was dissolved in dCH, dDCM, and dDMSO",
+        "subject": "HTI Z-1",
+        "scope": "target",
+        "conditions": "Transient IR; 1.0-2.5 mg/mL deuterated solvents; pump 460-500 nm, magic-angle setup.",
+        "kind": "observation",
+        "statement": "Z-1 was studied across apolar and polar solvents, with optical preparation of the Z state.",
+        "limitations": "Concentration is the stated experimental range, not a solvent-specific concentration."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F018",
+        "pdf_page": 4,
+        "quote": "Z-1 and Z-2 show no spectral evolution of the initial excited-state spectrum toward new excited-state species in the apolar solvent dCH.",
+        "subject": "HTI Z-1 and Z-2",
+        "scope": "series_including_target",
+        "conditions": "Apolar deuterated cyclohexane; time-resolved IR.",
+        "kind": "observation",
+        "statement": "No evolution into a new excited-state spectral species is detected in dCH; decay and E photoproduct formation are reported.",
+        "limitations": "No aggregation series is present; lack of TICT is condition-specific."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F018",
+        "pdf_page": 4,
+        "quote": "210 ps for Z-1 and 32 ps for Z-2 in dDCM.",
+        "subject": "HTI Z-1 and Z-2",
+        "scope": "series_including_target",
+        "conditions": "Global IR kinetic analysis in dDCM; Figure 3 visually inspected.",
+        "kind": "observation",
+        "statement": "Reported TICT decay is about 210 ps for Z-1, versus about 32 ps for Z-2.",
+        "limitations": "These are different compounds, not interchangeable lifetimes; values are rounded in prose."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F018",
+        "pdf_page": 8,
+        "quote": "For Z-1, in dDCM (see Figure 3a,c), the C−O band shows a qualitatively similar behavior",
+        "subject": "HTI Z-1",
+        "scope": "target",
+        "conditions": "Transient IR band near 1515 cm-1 in dDCM.",
+        "kind": "observation",
+        "statement": "The main text reports about 5 cm-1 shift with about 3 ps time constant, and amplitude maximum after about 30 ps.",
+        "limitations": "Assignment is analogous to Z-2 rather than independently calculated for Z-1."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F018",
+        "pdf_page": 8,
+        "quote": "Kinetic Data Describing the Excited-State Processes for HTIs Z-1, Z-2, and Z-3 in Diﬀerent Solvents",
+        "subject": "HTI Z-1",
+        "scope": "target",
+        "conditions": "Table 2 visually inspected; colored time-constant assignments.",
+        "kind": "observation",
+        "statement": "Table 2 gives Z-1 TICT lifetimes of 210.6 ps in dDCM and 17.8 ps in dDMSO; shift-time entries are 2.8 and 1.9 ps, respectively.",
+        "limitations": "Caption anchors the visually read table; dCH 11.9 ps component is not marked TICT. The table header labels the shift column cm-1 although prose describes its entries as time constants; unit ambiguity retained."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F018",
+        "pdf_page": 5,
+        "quote": "We only focused on the Z-2 derivative as TICT forming species and neglected Z-1 in the calculations",
+        "subject": "HTI Z-2 and Z-3",
+        "scope": "comparator",
+        "conditions": "CASSCF/CASPT2 reaction pathways and TDDFT marker-band calculations.",
+        "kind": "computation",
+        "statement": "The computational conical-intersection pathways and quantitative dipoles belong to Z-2/Z-3, not target Z-1.",
+        "limitations": "No Z-1 CI geometry, dipole magnitude or state energy is transferred."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F018",
+        "pdf_page": 9,
+        "quote": "identification of the C−O marker band was not corroborated by quantum chemical calculations",
+        "subject": "HTI Z-1",
+        "scope": "target",
+        "conditions": "Final discussion of marker assignment.",
+        "kind": "author_interpretation",
+        "statement": "The source acknowledges that full Z-1 transient band assignment was not possible and assumes analogous behavior to Z-2.",
+        "limitations": "This explicit uncertainty bounds the otherwise supported TICT interpretation."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F018",
+        "pdf_page": 9,
+        "quote": "Solvent relaxation induced by the significant change in the dipole of the molecule for the TICT state could also contribute to the spectral shift",
+        "subject": "TICT-forming HTI derivatives",
+        "scope": "series_including_target",
+        "conditions": "Discussion of picosecond spectral shifts in polar solvents.",
+        "kind": "author_interpretation",
+        "statement": "The authors retain solvent relaxation as a possible contributor to the evolving IR shift.",
+        "limitations": "The shift is not treated as a uniquely geometric measure."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Time-resolved polar/apolar contrasts support the authors' TICT assignment for Z-1, bounded by analog-based marker assignment and solvent-relaxation ambiguity."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of internal motion established in this extraction; AIE or rigidity alone is not sufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific packing, host or matrix mechanism established for the selected conditions."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Time-resolved polar/apolar contrasts support the authors' TICT assignment for Z-1, bounded by analog-based marker assignment and solvent-relaxation ambiguity."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04",
+          "E06"
+        ],
+        "rationale": "Transient-state lifetimes alone do not isolate an emission-rate mechanism for Z-1."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "Conical intersections are computed for Z-2/Z-3, not Z-1; target CI access is not established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "d61e6c97a4a9255f1d10b9b2f50b0dc7ed6e91c92f3686379bdbb120258935a4",
+    "label_record_sha256": "b5d77f396bdcd1f04fff10ee81cb1bd538ebb0e522c5709e28d71b90f219b9af"
+  }
+}

@@ -1,0 +1,273 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0051",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "C1=Cc2nc(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)c(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)nc2C=c2nc(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)c(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)nc2=C1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TAA-4PTPA",
+    "source_documents": [
+      {
+        "source_id": "F023",
+        "title": "Rational Design of Red AIEgens with New Core Structure from Non-Emissive Heteroaromatics",
+        "doi": "10.1039/c8sc02810a",
+        "pdf_sha256": "78950f4aa440015b23cb33a994961dc153cfb214bf9a184c4b1805e2743b85a3",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "TAA-4PTPA exhibited faint but much redder emission at ca. 708 nm in THF.",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "THF; 10 micromolar, excitation 474 nm from Figure 2 caption.",
+        "kind": "observation",
+        "statement": "Target shows weak approximately 708 nm emission in THF.",
+        "limitations": "Not TAA-4TPA's 627 nm or TAA-4P's blue emission."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "A strong emission band at 641 nm was recorded with fw started from 30%.",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "THF/water; Figure 2C-D visually inspected.",
+        "kind": "observation",
+        "statement": "Target aggregate-related emission rises near 641 nm from about 30% water.",
+        "limitations": "Water-fraction threshold and emission differ from comparator TAA-4TPA."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "at high fw from 60% to 90%, macroscopic aggregates were formed immediately and floated on the surface of solvent",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "THF/water 60-90% water.",
+        "kind": "observation",
+        "statement": "Macroscopic floating aggregates prevent reliable fluorimeter spectra at high water fraction.",
+        "limitations": "Do not invent target spectra or yields for 60-90% water from the comparator's curves."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "whereas, in TAA-4PTPA, CT transition became dominant.",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "B3LYP/6-31G(d), PCM THF, Figure 3.",
+        "kind": "computation",
+        "statement": "The source finds stronger CT-dominated character than the LE/CT mixed TAA-4TPA comparator.",
+        "limitations": "Orbital-based interpretation is computational, not a direct charge-transfer yield."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "TAA-4PTPA allowed it to relax to twisted intramolecular charge transfer (TICT) state easily by molecular motion upon excitation",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "Interpretation of flexibility, S1/S0 calculations and 234 nm Stokes shift.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign red solution emission and energy dissipation to motion-enabled TICT relaxation.",
+        "limitations": "No explicit target TICT barrier is given; TAA-4P reorganization-energy calculations are not transferred."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "that of TAA-4PTPA (6.23 × 108 s-1).",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "Rates estimated from measured quantum yield and lifetime in THF.",
+        "kind": "computation",
+        "statement": "Reported target knr is 6.23e8 s-1 and kr is 0.06e8 s-1, versus comparator 2.49e8 and 0.61e8.",
+        "limitations": "Derived rates, not new inference experiments or direct rate measurements; rounding gives approximate yield."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "However, in the solid, the motion of TAA-4PTPA was better restricted.",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "Solid versus solution comparison.",
+        "kind": "author_interpretation",
+        "statement": "Authors invoke steric restriction of motion and reduced structural relaxation to explain brighter solid emission.",
+        "limitations": "Quantitative reorganization-energy partitioning on p.4 concerns TAA-4P only."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F023",
+        "pdf_page": 5,
+        "quote": "TAA-4PTPA showed higher ΦF of 8.0% than TAA-4TPA in the solid state",
+        "subject": "TAA-4PTPA",
+        "scope": "target",
+        "conditions": "Main text reporting SI Table S1.",
+        "kind": "observation",
+        "statement": "Target yield is 8.0% solid versus 1% solution as stated in the same discussion.",
+        "limitations": "SI table not inspected; do not use comparator TAA-4P's 3.5% crystal yield."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F023",
+        "pdf_page": 6,
+        "quote": "The NPs showed obvious red emission peaked at 615 nm",
+        "subject": "TAA-4PTPA encapsulated in DSPE-PEG2000",
+        "scope": "target",
+        "conditions": "Aqueous formulated NPs; main Figure 4.",
+        "kind": "observation",
+        "statement": "NP emission peaks at 615 nm; reported TEM diameter about 75 nm and DLS about 96 nm.",
+        "limitations": "Distinct formulated condition, not the 641 nm THF/water suspension or proof of cavity binding."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E07"
+        ],
+        "rationale": "Explicit motion-enabled quenching and restricted solid-state relaxation form the source's AIE explanation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07",
+          "E09"
+        ],
+        "rationale": "Solid steric constraints and formulated nanoparticles supply an environment for restricted relaxation; no crystal-specific target packing is inferred."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "CT-dominated/TICT relaxation is specifically assigned to target, unlike the more rigid TAA-4TPA comparator."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06",
+          "E08"
+        ],
+        "rationale": "Source-derived radiative/nonradiative rates quantify the weak solution emission; interpretation overlaps with TICT and motion."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E05",
+          "E07"
+        ],
+        "rationale": "Explicit motion-enabled quenching and restricted solid-state relaxation form the source's AIE explanation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07",
+          "E09"
+        ],
+        "rationale": "Solid steric constraints and formulated nanoparticles supply an environment for restricted relaxation; no crystal-specific target packing is inferred."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "CT-dominated/TICT relaxation is specifically assigned to target, unlike the more rigid TAA-4TPA comparator."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06",
+          "E08"
+        ],
+        "rationale": "Source-derived radiative/nonradiative rates quantify the weak solution emission; interpretation overlaps with TICT and motion."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "9702f7ad50d5a908638a731cd0fbe3e6b2522ed2e7f6636448adb673733fe4b7",
+    "label_record_sha256": "5e8c05dfc06eebf14f9cba26f683e03d8159f39704ea17ac4cbf36d98bc3698f"
+  }
+}

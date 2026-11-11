@@ -1,0 +1,279 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0068",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CN(C)c1ccc(N2C(=O)c3cccc4cccc(c34)C2=O)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "DMIM",
+    "source_documents": [
+      {
+        "source_id": "F029",
+        "title": "Polymorph crystal packing effects on charge transfer emission in the solid state",
+        "doi": "10.1039/c5sc01151e",
+        "pdf_sha256": "652ccae1db38eed59ae7caf7a12b5c765175cdfc9eb3ff8b92c45abc7b2d0994",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F029",
+        "pdf_page": 3,
+        "quote": "no solvent molecules were identied in the crystal lattice.",
+        "subject": "DMIM polymorphs",
+        "scope": "target",
+        "conditions": "Diethyl ether vapor diffusion into chloroform; green crystals first, orange needles after days.",
+        "kind": "observation",
+        "statement": "X-ray analysis finds no lattice solvent; green and orange forms have different packing and molecular conformers.",
+        "limitations": "Not a solvent inclusion mechanism; kinetic versus thermodynamic preference is an author interpretation."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F029",
+        "pdf_page": 3,
+        "quote": "molecules in G-DMIM do not show this form of stacking.",
+        "subject": "DMIM polymorphs",
+        "scope": "target",
+        "conditions": "Fig. 2 crystal packing; O-DMIM naphthalimide separation 3.73-3.75 angstrom.",
+        "kind": "observation",
+        "statement": "Face-to-face naphthalimide stacking occurs in orange but not green crystals.",
+        "limitations": "Packing does not on its own establish an excimer."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F029",
+        "pdf_page": 4,
+        "quote": "the HOMO clearly resides on the N,N-dimethylaniline group while the LUMO is localised on the naphthalimide subunit",
+        "subject": "DMIM",
+        "scope": "target",
+        "conditions": "DFT B3LYP/6-311G+(3df), cyclohexane continuum.",
+        "kind": "computation",
+        "statement": "Computed orbitals support donor-to-acceptor CT; orthogonal calculated geometry has a dark HOMO-LUMO transition, which gains small oscillator strength at crystal-like angles.",
+        "limitations": "Ground-state/TD-DFT calculations, not direct measurement of excited-state geometry."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F029",
+        "pdf_page": 4,
+        "quote": "with a quantum yield close to 0.02% and a maximum at 366 nm",
+        "subject": "DMIM solution",
+        "scope": "target",
+        "conditions": "Room-temperature dilute cyclohexane; main text discusses SI solution spectrum.",
+        "kind": "observation",
+        "statement": "Solution emission is very weak; crystal emission is instead broad, peaking at 605 nm for O-DMIM and 549 nm for G-DMIM.",
+        "limitations": "SI not inspected; do not substitute abstract chloroform context for the detailed cyclohexane experiment."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F029",
+        "pdf_page": 5,
+        "quote": "The measured quantum yields are 1% and 3.5% for G-DMIM and O-DMIM, respectively.",
+        "subject": "DMIM crystals",
+        "scope": "target",
+        "conditions": "Front-face illumination at 370 nm, calibrated against DCM dye in ethanol.",
+        "kind": "observation",
+        "statement": "Estimated crystal QY is 1% green and 3.5% orange.",
+        "limitations": "Method assumes all excitation light is absorbed; not integrating-sphere absolute QY."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F029",
+        "pdf_page": 5,
+        "quote": "Re-puried and recrystallized samples afforded the same results.",
+        "subject": "DMIM purity control",
+        "scope": "target",
+        "conditions": "Re-purification and recrystallization, solid emission.",
+        "kind": "observation",
+        "statement": "Authors report reproduced spectra, arguing against impurity emission.",
+        "limitations": "Does not independently determine CT versus intermolecular excited-state origin."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F029",
+        "pdf_page": 6,
+        "quote": "the charge recombination is expected to be in the inverted Marcus regime and can follow radiative decay route in addition to the non-radiative one.",
+        "subject": "DMIM crystal CT emission",
+        "scope": "target",
+        "conditions": "Emission-band fitting and solution electrochemistry; rigid crystal assumption.",
+        "kind": "author_interpretation",
+        "statement": "Source assigns crystal emission to charge recombination from CT states in the Marcus inverted regime.",
+        "limitations": "Shared reorganization/vibrational energy constraints are modeling assumptions; no conical-intersection evidence."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F029",
+        "pdf_page": 6,
+        "quote": "the internal reorganization energy associated with the CS state relaxation to the ground state is more than six times larger for G-DMIM than for O-DMIM",
+        "subject": "DMIM crystal spectral model",
+        "scope": "target",
+        "conditions": "CT band-shape fits, Fig. 8; common outer reorganization energy 0.400 eV.",
+        "kind": "computation",
+        "statement": "Fits give internal reorganization energies 0.33 and 0.05 eV for green and orange; source connects them to different packing relaxation.",
+        "limitations": "Conditional fit, not direct structural dynamics. Printed component-contribution percentages on this page are internally inconsistent and not used."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F029",
+        "pdf_page": 7,
+        "quote": "The origin of the effect for DMIM appears to be alter- ations in rate constants for non-radiative decay.",
+        "subject": "DMIM polymorph rate comparison",
+        "scope": "target",
+        "conditions": "Emission-fit model versus lifetime/QY estimates.",
+        "kind": "author_interpretation",
+        "statement": "Authors estimate about 2.6-fold higher nonradiative rate for green from fits, versus about 3.5-fold from lifetime comparison assuming similar radiative rates.",
+        "limitations": "Main text reports SI calculation; multiexponential decay and assumptions limit use as definitive rate separation."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Polymorph packing changes CT state energy and nonradiative relaxation."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E07"
+        ],
+        "rationale": "CT excited-state character describes the same PET pathway, not an independent additional cause."
+      },
+      {
+        "label": "PET_ET",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "The central source interpretation is intramolecular photoinduced charge separation and radiative charge recombination in the crystal."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E09"
+        ],
+        "rationale": "Explicit oscillator-strength and rate-balance analysis, particularly differing nonradiative rates with similar radiative rates; model-dependent."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Polymorph packing changes CT state energy and nonradiative relaxation."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E07"
+        ],
+        "rationale": "CT excited-state character describes the same PET pathway, not an independent additional cause."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "The central source interpretation is intramolecular photoinduced charge separation and radiative charge recombination in the crystal."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E09"
+        ],
+        "rationale": "Explicit oscillator-strength and rate-balance analysis, particularly differing nonradiative rates with similar radiative rates; model-dependent."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "8a8995e6e4da9cbbb0e1649e63417d2ac3ebae23d43e440977f04b7edc9ff5a4",
+    "label_record_sha256": "44b2c4fa528571c66835cb06985ba80a55ad766d670c1e51b51e7673f3421e8f"
+  }
+}

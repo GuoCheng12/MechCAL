@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0153",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F056",
+    "pdf_page": 2,
+    "figure": "Fig. 1, 3,4-benzopyrene (designation only)",
+    "rationale": "The printed source name and Figure 1 identify the intended named PAH; chemical graph verification is deferred.",
+    "limitations": "Legacy SMILES is unchanged and unverified. The PDF extraction renders the prime in 2'-methyl as 0; source figure inspection resolves the name only."
+  },
+  "notes": [
+    "Structure review is deferred; no candidate graph is verified.",
+    "SI containing full optimized geometries, frequencies, coupling parameters and convergence controls was not available in the packet and was not inspected.",
+    "The model starts at 0 K and covers only 1.5-3 ps. Longer-lived anti-Kasha emission is motivated by earlier experimental references, not directly simulated here.",
+    "The paper repeatedly writes ps for early-time processes despite fs axes and 1.5 ps figure windows (especially p.11 and Fig.10); preserve this as a source inconsistency.",
+    "The source comparison to experimental pyrene internal conversion is not a direct measurement on 3,4-benzopyrene; keep comparator and target separate."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

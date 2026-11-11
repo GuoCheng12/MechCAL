@@ -1,0 +1,244 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0038",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCN(CC)C1=C2C=CC=[N+]2[B-](F)(F)n2cccc21"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "BODIPY 5",
+    "source_documents": [
+      {
+        "source_id": "S0037",
+        "title": "Photoexcitation Induced Twisted Intramolecular Charge Shuttle (TICS)",
+        "doi": "10.1002/anie.201902766",
+        "pdf_sha256": "d8fd2f498db755792710f645e5d414a85b40218ae5b4bc01a943515edab74efa",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "BODIPY 5 (a close analogue of 2) exhibited low quantum yields",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Synthesized experimental analogue of computed compound 2.",
+        "kind": "observation",
+        "statement": "The source distinguishes experimental compound 5 from computational compound 2.",
+        "limitations": "Missing SI Table S3 is not independently verified."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "enhancement of fluorescence intensities by up to ~6 times in 5",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Ethylene glycol/glycerol viscosity series, Figure 1g; 10 micromolar, excitation 380 nm.",
+        "kind": "observation",
+        "statement": "Increasing glycerol fraction increases target fluorescence up to approximately sixfold.",
+        "limitations": "Solvent composition and polarity also change; this is not a perfectly isolated viscosity intervention."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0037",
+        "pdf_page": 5,
+        "quote": "the low quantum yields of 5 were related to molecular rotations",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Interpretation of the viscosity experiment compared with compound 1.",
+        "kind": "author_interpretation",
+        "statement": "The authors associate target quenching with molecular rotation.",
+        "limitations": "The comparator supports but does not independently locate the target's rotating-state geometry."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0037",
+        "pdf_page": 5,
+        "quote": "a short decay lifetime of 3.0 ps",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Femtosecond transient absorption in chloroform, Figure 1i-k.",
+        "kind": "observation",
+        "statement": "A short-lived stimulated-emission feature near 480 nm is assigned to an LE state.",
+        "limitations": "The state assignment is interpretation of the observed spectral/kinetic feature."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0037",
+        "pdf_page": 5,
+        "quote": "a peak and a shoulder at 555 nm and 521 nm, respectively, and a much longer decay lifetime of 78.3 ps",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Transient absorption in chloroform.",
+        "kind": "observation",
+        "statement": "A longer-lived excited-state absorption feature is observed with the stated wavelengths and lifetime.",
+        "limitations": "Band resemblance to a BODIPY radical supports an assignment but is not unique chemical identification."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0037",
+        "pdf_page": 5,
+        "quote": "We thus attributed the second excited state to the TICS state",
+        "subject": "BODIPY 5",
+        "scope": "target",
+        "conditions": "Interpretation of transient absorption and radical-band comparison.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign the longer-lived state to TICS and estimate an LE-to-TICS transition rate of 3.3 x 10^11 s^-1.",
+        "limitations": "TICS is mapped to the broad CT family, not silently renamed ordinary TICT."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "the oscillator strength of the TICS conformation is almost zero",
+        "subject": "BODIPY 2",
+        "scope": "comparator",
+        "conditions": "Computed S1 potential-energy surface of the dimethyl analogue.",
+        "kind": "computation",
+        "statement": "The computed analogue has a dark TICS minimum.",
+        "limitations": "Do not assign its exact oscillator strength or barrier to target 5."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Target-specific viscosity response supports suppression of rotation-dependent quenching."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The target's transient absorption is assigned to TICS, within the existing broad CT family."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E04",
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "The target's state conversion and emission suppression support a bright/dark-state account; the exact f~0 calculation belongs only to compound 2."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Target-specific viscosity response supports suppression of rotation-dependent quenching."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The target's transient absorption is assigned to TICS, within the existing broad CT family."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E04",
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "The target's state conversion and emission suppression support a bright/dark-state account; the exact f~0 calculation belongs only to compound 2."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "470e5c6b9b6c46fbd389a59f1368119ece90f41d9f0874969ed8eb0e28a138a5",
+    "label_record_sha256": "eb9c8bffeb8271748c2e6b9311dc251afc52a69dd612d7d1e14417375dd4f60e"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0078",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F032",
+    "pdf_page": 2,
+    "figure": "Chart 1 NI-C11-PTZ",
+    "rationale": "Named undecyl-linked NI-C11-PTZ target; distinguished from octyl-linked and polyether-linked dyads and NI-only references.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI NI-C11-PTZ transient spectra and Table S1; main text and tables inspected only.",
+    "No AIE experiment is reported; scope is solution PET. Do not attach aggregation-derived RIM.",
+    "p.4 generic recombination range differs from target-specific p.5 Table 2; retain target row without averaging."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

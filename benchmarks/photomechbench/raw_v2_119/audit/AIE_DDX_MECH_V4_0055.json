@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0055",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0102",
+    "pdf_page": 2,
+    "figure": "Scheme 1, mPhDCzDPSPXZ",
+    "rationale": "Scheme 1 places phenoxazine N and sulfone para on their shared phenyl ring. The p3 synthesis identifies the same para-substituted sulfone precursor. The peripheral mPhDCz arm remains meta; the molecule name does not make the DPS-PXZ core meta.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "The core-ring regioisomer has been corrected in this draft using Scheme 1 and the p3 precursor description; independent review remains required before release.",
+    "Retrieve SI characterization and rate derivations; review overlapping family roles.",
+    "Formula agreement cannot distinguish the old and corrected positional isomers.",
+    "Main-paper synthesis text independently corroborates the drawing within the same publication; this is not a second expert review."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

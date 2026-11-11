@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0095",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F041",
+    "pdf_page": 3,
+    "figure": "Scheme 1, 3 (pointer only)",
+    "rationale": "Source designation Compound 3 (diethylene-oxide-chain TPE derivative) is used for evidence attribution only; molecular graph confirmation is deferred as requested.",
+    "limitations": "Legacy candidate SMILES is retained unmodified and UNVERIFIED. The page/figure is a future structure-review pointer, not confirmation of connectivity, substitution positions, stereochemistry or charge."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy candidate SMILES has not been verified against the original structure.",
+    "Assistant source-reading draft only; human review remains pending and mechanism roles are proposals, not expert-approved causal ground truth.",
+    "Only the supplied main PDF was inspected. Supporting Information referenced in the main text was not personally inspected; obtain SI for the reported underlying data and methodological detail.",
+    "Keep the lower bulk yield and defect hypothesis distinct from the brighter J-coupled LC comparators.",
+    "Retrieve SI for full wavelength-dependent decay fits and DSC; table/prose decay-fraction rounding is noted."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

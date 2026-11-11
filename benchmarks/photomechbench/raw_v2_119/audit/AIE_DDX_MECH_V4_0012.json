@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0012",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F008",
+    "pdf_page": 11,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Expert review should prevent double-counting H-aggregate packing and aggregate-exciton labels as independent evidence.",
+    "Audit primary/secondary assignments for ESIPT versus suppressed TICT; the latter is a competing loss route.",
+    "ITP1 crystal contains two imidazole forms; defer graph/tautomer adjudication rather than rewriting the input."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,285 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0012",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC(C)c1cc2c(s1)N=c1[nH]c(-c3ccccc3O)nc1=C(c1ccccc1Cl)C2"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "ITP1",
+    "source_documents": [
+      {
+        "source_id": "F008",
+        "title": "Enhancement of the Excited-state Intramolecular Proton Transfer Process to Produce All-powerful DSE Molecules for Bridging the Gap Between ACQ and AIE",
+        "doi": "10.1016/j.dyepig.2018.08.066",
+        "pdf_sha256": "88fc948273fe86e60697cee3fd496d565f4d378821dc27449c9928ae18a25e7b",
+        "page_count": 47
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F008",
+        "pdf_page": 7,
+        "quote": "Even in methanol, ITP1 exhibits clear enol/keto PL efficiency",
+        "subject": "ITP1",
+        "scope": "target",
+        "conditions": "Dilute methanol, emission spectra and absolute quantum yield.",
+        "kind": "observation",
+        "statement": "Two bands at 395 and 525 nm have reported yields of 2 and 5 percent; authors assign enol and keto emission.",
+        "limitations": "Band assignment supports the proposed ESIPT interpretation but is not ultrafast proton-transfer kinetics."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F008",
+        "pdf_page": 7,
+        "quote": "solvate ITP1 and partially restrict the ESIPT",
+        "subject": "ITP1",
+        "scope": "target",
+        "conditions": "Methanol compared with aprotic solvents.",
+        "kind": "author_interpretation",
+        "statement": "Methanol hydrogen bonding is proposed to compete with intramolecular proton transfer and lower efficiency.",
+        "limitations": "This is specific solvent interaction; not a host-guest complex by itself."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F008",
+        "pdf_page": 7,
+        "quote": "35 due to the enhancement of ESIPTthat restricts the TICT.",
+        "subject": "ITP1 versus DF1",
+        "scope": "target",
+        "conditions": "Benzene; quantum yields and lifetimes used for rate estimates.",
+        "kind": "author_interpretation",
+        "statement": "Authors interpret an approximately 35-fold lower nonradiative rate than DF1 with near-unchanged radiative rate as ESIPT suppressing TICT.",
+        "limitations": "DF1 is a different scaffold; causal attribution is an interpretation of a compound comparison rather than a direct TICT-state measurement."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F008",
+        "pdf_page": 6,
+        "quote": "3.0230% vs 4.6359%",
+        "subject": "ITP1 and DF1",
+        "scope": "target",
+        "conditions": "Ground-state HOMO atomic-contribution comparison, with tabulated coefficients in embedded SI.",
+        "kind": "computation",
+        "statement": "A smaller N10/O orbital-contribution difference motivates the proposed stronger intramolecular proton-transfer tendency in ITP1.",
+        "limitations": "A ground-state orbital proxy does not demonstrate an excited-state proton-transfer rate."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F008",
+        "pdf_page": 10,
+        "quote": "The PL efficiency of ITP1 was slightly lower",
+        "subject": "ITP1 versus DF1 solid",
+        "scope": "target",
+        "conditions": "Solid-state photoluminescence, Table 1.",
+        "kind": "observation",
+        "statement": "ITP1 has 11 percent yield versus DF1 26 percent; ITP1 knr is about three times higher while kr remains similar.",
+        "limitations": "Solution improvement does not imply improved solid-state emission. Do not merge the two environments."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F008",
+        "pdf_page": 11,
+        "quote": "equivalent of two different imidazole isomers",
+        "subject": "ITP1 crystal",
+        "scope": "target",
+        "conditions": "Single-crystal packing, Fig. 3 and embedded Fig. S1.",
+        "kind": "observation",
+        "statement": "The source describes equal 3H-imi/1H-imi forms with intermolecular H bonds and close pi contacts, interpreted as H-aggregate packing that lowers emission.",
+        "limitations": "The crystal isomer mixture does not certify the inherited SMILES tautomer; diagram-to-graph verification is deferred."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F008",
+        "pdf_page": 10,
+        "quote": "bonding interactions restricting the rotation of ring D",
+        "subject": "ITP1/DF1 structural comparison",
+        "scope": "target",
+        "conditions": "Crystal analysis of intramolecular H bonds.",
+        "kind": "author_interpretation",
+        "statement": "Authors identify restricted phenyl-ring rotation as a structural factor retained in ITP1.",
+        "limitations": "A structural restriction is not a measured dynamical rate; the specific ITP5 substitution experiment is only comparative."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F008",
+        "pdf_page": 13,
+        "quote": "red-shifted emission was observed for ITP1 and ITP2",
+        "subject": "ITP1 and ITP2",
+        "scope": "series_including_target",
+        "conditions": "Approximately 1000 equivalents Et3N in DMF or CH3CN.",
+        "kind": "observation",
+        "statement": "ITP1 red-shifts under base addition, unlike phenolate-forming ITP3/ITP4/ITP6. Authors propose preserved intramolecular H bonding and new intermolecular H bonding.",
+        "limitations": "The authors' molecular association is tentative and must not be replaced by the ITP4 deprotonation interpretation."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "Source assigns a restricting role to intramolecular hydrogen bonding, with proxy-level support."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Crystal packing helps explain why solid ITP1 is less efficient despite the solution benefit."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03"
+        ],
+        "rationale": "The source invokes suppression of a competing TICT loss channel, not direct bright TICT emission."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Dual enol/keto emission and solvent/comparator analysis underpin the source's ESIPT interpretation."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Retain specifically the author's H-aggregate/quenching interpretation; no excimer is established."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "rationale": "Rate estimates distinguish nearly unchanged kr and environment-dependent knr."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "Source assigns a restricting role to intramolecular hydrogen bonding, with proxy-level support."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Crystal packing helps explain why solid ITP1 is less efficient despite the solution benefit."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03"
+        ],
+        "rationale": "The source invokes suppression of a competing TICT loss channel, not direct bright TICT emission."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Dual enol/keto emission and solvent/comparator analysis underpin the source's ESIPT interpretation."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Retain specifically the author's H-aggregate/quenching interpretation; no excimer is established."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "rationale": "Rate estimates distinguish nearly unchanged kr and environment-dependent knr."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "0cdbcb01c3f83d15c74c0040ce141f834ca072484ae886ce530ca5b3d307cb02",
+    "label_record_sha256": "e7629b4a7c89e9daf661f734c471ad8d957dd01a6c48e1fad6e1a9a9eb5fe092"
+  }
+}

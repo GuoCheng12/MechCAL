@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0005",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0004",
+    "pdf_page": 2,
+    "figure": "Figure 1, THP 2",
+    "rationale": "Connectivity, ester alkyl groups and para-bromo substituents (for THP 3) agree with the figure. The paper uses racemates; the inherited SMILES does not specify one enantiomer.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Retrieve SI crystal tables, Figure S5 orbital plots and decay fits; main-text reconstruction is not a complete SI audit.",
+    "Adjudicate whether broad aggregate electronic coupling belongs in the existing aggregate-exciton family; do not expand its scope silently.",
+    "Review proposed primary/secondary roles and retain polymorph-specific conditions; no expert approval is claimed."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

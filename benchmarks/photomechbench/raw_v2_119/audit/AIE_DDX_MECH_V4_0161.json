@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0161",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0161",
+    "pdf_page": 4,
+    "figure": "Figure 1 and Scheme 2",
+    "rationale": "Figure 1 and Scheme 2 put both methoxyphenyl groups on the same central alkene carbon. PPDC retains the extra para-phenylene bridge and the methyl-substituted dicyanovinyl acceptor. The precursor drawing and the p2-p3 methoxy/methyl proton counts support these groups.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "The graph has been corrected against Figure 1 and Scheme 2 in this draft; independent structure review remains required before release.",
+    "Retrieve SI geometry, spectra and synthesis; references 35/37 contain prior TPDC/TPPDC syntheses.",
+    "Have experts adjudicate whether any additional mechanism is supported beyond CT and triplet sensitization, without forcing a preset number of labels.",
+    "Retain probe-based assay limitations and the similar-spin-orbit-coupling assumption.",
+    "The p3 mass entry labels 558.2 as [M+1]+, whereas the drawing-derived C39H30N2O2 neutral exact mass is about 558.231. This apparent ion-label inconsistency is not treated as independent formula confirmation.",
+    "The original and corrected graphs have identical formulas; mass alone cannot distinguish the connectivity error."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

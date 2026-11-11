@@ -1,0 +1,265 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0018",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCN(CC)c1ccc(/C=N/N=C/C(C#N)=C(/N)C#N)c(O)c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "compound 1",
+    "source_documents": [
+      {
+        "source_id": "F009",
+        "title": "Rational design of a red-emissive fluorophore with AIE and ESIPT characteristics and its application in light-up sensing of esterase",
+        "doi": "10.1021/acs.analchem.6b04974",
+        "pdf_sha256": "1f955fdb89fc68b190e9237ce6cb27d9b1e2fc1038d64360fb39d0a88fc1b3bc",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F009",
+        "pdf_page": 4,
+        "quote": "powders of 1 emit strong red fluo- rescence",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Solid powders; Fig. 1, excitation 500 nm.",
+        "kind": "observation",
+        "statement": "Compound 1 emits at 650 nm with fluorescence quantum yield 24.3%; control powders 2 and 3 have yields below 1%.",
+        "limitations": "Powder values are not solution or probe-4 values; the 2/3 comparison does not identify a unique causal pathway."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F009",
+        "pdf_page": 4,
+        "quote": "The AIE effect of 1 occurs when the water volume fraction in the co-solvent is more than 70%.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "100 micromolar, DMSO/water with 10 mM PBS pH 7.4; excitation 437 nm, Fig. 2.",
+        "kind": "observation",
+        "statement": "Green emission in DMSO changes to intense red emission at 90% water; I619/I513 rises above 70% water.",
+        "limitations": "Aggregation is inferred with scattering and main-text-reported DLS (540.4 nm, SI S2); SI not inspected."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F009",
+        "pdf_page": 4,
+        "quote": "the deprotona- tion process can improve its solubility.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Aqueous pH 3-13; concentration and pH studies reported from SI S3-S4.",
+        "kind": "author_interpretation",
+        "statement": "Authors relate acidic red emission to aggregates and alkaline green emission to increased solubility following deprotonation.",
+        "limitations": "Ground-state pH/solubility changes alone do not establish ESIPT kinetics; SI data not inspected."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F009",
+        "pdf_page": 4,
+        "quote": "the short fluorescence lifetime in a good solvent",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Main-text account of SI S5: 0% water, 90% water and solid.",
+        "kind": "author_interpretation",
+        "statement": "Reported lifetimes are 0.2 ns in good solvent, 2.6 ns at 90% water and 3.2 ns in solid. Authors attribute the short solution lifetime to collision-associated nonradiative decay.",
+        "limitations": "The collision explanation is an author assignment without independently resolved rates; not evidence of internal rotational restriction."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F009",
+        "pdf_page": 5,
+        "quote": "ICT has little contribution to the red-shifted emission of 1.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Solvent-polarity control reported from SI S6/Table S1.",
+        "kind": "author_interpretation",
+        "statement": "Little absorption/emission solvatochromism argues against ICT as the main origin of red-shifted emission.",
+        "limitations": "This limits ICT's contribution under tested conditions rather than proving absence of all charge redistribution; SI not inspected."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F009",
+        "pdf_page": 5,
+        "quote": "In the crystals of 1, molecules form effective J-aggregates.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Single-crystal analysis, Fig. 3c.",
+        "kind": "author_interpretation",
+        "statement": "Authors assign J-aggregate packing and attribute emission preservation to ethyl-group steric hindrance and 4.01 angstrom interplanar spacing that weakens quenching pi interactions.",
+        "limitations": "Crystal packing assignment is source-supported; no independently measured exciton dispersion or excimer kinetics."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F009",
+        "pdf_page": 5,
+        "quote": "As for 3, molecules adopt J-aggregate packing pattern",
+        "subject": "compounds 2 and 3",
+        "scope": "comparator",
+        "conditions": "Single-crystal and DMSO/water controls, Fig. 3d-e; SI S7-S9 reported.",
+        "kind": "author_interpretation",
+        "statement": "Compound 2 is bent with 3.25 angstrom spacing; compound 3 has J packing but 3.32 angstrom spacing. Authors assign both ACQ to close pi interactions.",
+        "limitations": "J packing alone is not sufficient for AIE; comparator distances must not be assigned to 1."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F009",
+        "pdf_page": 6,
+        "quote": "the fluorescent product after reaction between probe 4 and the esterase was isolated by filtration",
+        "subject": "probe 4 converted to compound 1",
+        "scope": "target",
+        "conditions": "100 micromolar probe 4, 10 mM PBS pH 7.4, 37 C; product characterization reported from SI S10.",
+        "kind": "observation",
+        "statement": "Authors report isolation and characterization of compound 1 after esterase cleavage of 4; inhibition and selectivity controls concern the reaction-based probe.",
+        "limitations": "The starting analyte is probe 4, not unmodified 1; product identification is reported in main text, SI not inspected."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F009",
+        "pdf_page": 7,
+        "quote": "resulting in 1 with ESIPT and strong fluores- cence in the aggregate states.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Hydroxyl unmasking in the esterase experiment; conclusion and Scheme 1b.",
+        "kind": "author_interpretation",
+        "statement": "Authors explicitly assign ESIPT to hydroxyl-bearing compound 1 and associate hydroxyl recovery with aggregate fluorescence.",
+        "limitations": "No time-resolved proton-transfer measurement is supplied in inspected main text; blocking can change multiple properties."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "Source identifies intermolecular spacing and suppression of quenching pi contacts as decisive for compound 1, with ACQ controls."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E08",
+          "E09"
+        ],
+        "rationale": "Preserve the source's explicit ESIPT assignment and hydroxyl-unmasking rationale; this is not independent ultrafast proof."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "The frozen family includes J aggregation. Authors explicitly assign J packing, but compound 3 shows it is not sufficient for AIE; no excimer claim is made."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04",
+          "E06"
+        ],
+        "rationale": "Do not add RIM from AIE terminology: this paper emphasizes intermolecular spacing, ESIPT and a collision-based solution explanation, not target-specific internal torsional restriction."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "Source identifies intermolecular spacing and suppression of quenching pi contacts as decisive for compound 1, with ACQ controls."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No host or analyte binding mechanism changing target emission is established in this extraction."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "contradicted",
+        "role": null,
+        "evidence_ids": [
+          "E05"
+        ],
+        "rationale": "A substantial ICT explanation of the red shift is explicitly disfavored by the source's solvent control. This does not rule out every CT contribution."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E08",
+          "E09"
+        ],
+        "rationale": "Preserve the source's explicit ESIPT assignment and hydroxyl-unmasking rationale; this is not independent ultrafast proof."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "The frozen family includes J aggregation. Authors explicitly assign J packing, but compound 3 shows it is not sufficient for AIE; no excimer claim is made."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or state-population explanation is established; intensity or lifetime changes alone do not isolate it."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "aa7f3bb6aca4ddb84bd442d71ba227b077aebf79f2baaced4176ec90928c99d8",
+    "label_record_sha256": "8a4c40b46018e9896213743d4f4e5d7a7f87ce640e69086377a6c3046b62f5ac"
+  }
+}

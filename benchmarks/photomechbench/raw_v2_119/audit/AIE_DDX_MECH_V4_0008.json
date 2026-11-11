@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0008",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F004",
+    "pdf_page": 2,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "The paper explains dual emission without excimer/exciplex. Check any legacy positive excimer assignment against this explicit exclusion.",
+    "The fixed pool may not precisely represent two weakly coupled fluorophores; review the provisional RADIATIVE_RATE_STATE_BALANCE mapping.",
+    "Obtain SI decay traces and reconcile film versus crystal packing; do not assert direct structural verification."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

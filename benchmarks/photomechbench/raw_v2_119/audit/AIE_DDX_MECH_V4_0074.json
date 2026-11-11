@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0074",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F031",
+    "pdf_page": 2,
+    "figure": "Scheme 1c, Si4s-2C",
+    "rationale": "Si4s-2C is synthesized in section 2.b.4 and identified independently of Si2s-2C.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "No AIE or aggregation-based confinement experiment is established for Si4s-2C in this paper.",
+    "Request SI Figs. S2, S6, S9 and spectral fitting details; main tables remain sufficient for a bounded draft."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

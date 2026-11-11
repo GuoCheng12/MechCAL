@@ -1,0 +1,387 @@
+{
+  "$defs": {
+    "CaseProvenance": {
+      "additionalProperties": false,
+      "properties": {
+        "annotation_method": {
+          "const": "assistant_source_reconstruction",
+          "default": "assistant_source_reconstruction",
+          "title": "Annotation Method",
+          "type": "string"
+        },
+        "origin_snapshot": {
+          "minLength": 1,
+          "title": "Origin Snapshot",
+          "type": "string"
+        },
+        "raw_record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Raw Record Sha256",
+          "type": "string"
+        },
+        "label_record_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Label Record Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "origin_snapshot",
+        "raw_record_sha256",
+        "label_record_sha256"
+      ],
+      "title": "CaseProvenance",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_id": {
+          "pattern": "^E\\d+$",
+          "title": "Evidence Id",
+          "type": "string"
+        },
+        "source_id": {
+          "title": "Source Id",
+          "type": "string"
+        },
+        "pdf_page": {
+          "minimum": 1,
+          "title": "Pdf Page",
+          "type": "integer"
+        },
+        "quote": {
+          "minLength": 15,
+          "title": "Quote",
+          "type": "string"
+        },
+        "subject": {
+          "minLength": 1,
+          "title": "Subject",
+          "type": "string"
+        },
+        "scope": {
+          "enum": [
+            "target",
+            "comparator",
+            "series_including_target",
+            "background"
+          ],
+          "title": "Scope",
+          "type": "string"
+        },
+        "conditions": {
+          "minLength": 1,
+          "title": "Conditions",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "observation",
+            "computation",
+            "author_interpretation",
+            "background"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "statement": {
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        },
+        "limitations": {
+          "minLength": 1,
+          "title": "Limitations",
+          "type": "string"
+        }
+      },
+      "required": [
+        "evidence_id",
+        "source_id",
+        "pdf_page",
+        "quote",
+        "subject",
+        "scope",
+        "conditions",
+        "kind",
+        "statement",
+        "limitations"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "HiddenReference": {
+      "additionalProperties": false,
+      "properties": {
+        "target_name": {
+          "minLength": 1,
+          "title": "Target Name",
+          "type": "string"
+        },
+        "source_documents": {
+          "items": {
+            "$ref": "#/$defs/SourceDocument"
+          },
+          "minItems": 1,
+          "title": "Source Documents",
+          "type": "array"
+        },
+        "reference_evidence_units": {
+          "items": {
+            "$ref": "#/$defs/Evidence"
+          },
+          "minItems": 1,
+          "title": "Reference Evidence Units",
+          "type": "array"
+        },
+        "reference_mechanisms": {
+          "items": {
+            "$ref": "#/$defs/ReferenceMechanism"
+          },
+          "minItems": 1,
+          "title": "Reference Mechanisms",
+          "type": "array"
+        },
+        "mechanism_decisions": {
+          "items": {
+            "$ref": "#/$defs/MechanismDecision"
+          },
+          "maxItems": 11,
+          "minItems": 11,
+          "title": "Mechanism Decisions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "target_name",
+        "source_documents",
+        "reference_evidence_units",
+        "reference_mechanisms",
+        "mechanism_decisions"
+      ],
+      "title": "HiddenReference",
+      "type": "object"
+    },
+    "MechanismDecision": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "status": {
+          "enum": [
+            "supported",
+            "not_established",
+            "contradicted"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "role": {
+          "anyOf": [
+            {
+              "enum": [
+                "primary",
+                "co_primary",
+                "secondary"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Role"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "status",
+        "evidence_ids",
+        "rationale"
+      ],
+      "title": "MechanismDecision",
+      "type": "object"
+    },
+    "MolecularStructure": {
+      "additionalProperties": false,
+      "properties": {
+        "format": {
+          "const": "smiles",
+          "default": "smiles",
+          "title": "Format",
+          "type": "string"
+        },
+        "value": {
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "value"
+      ],
+      "title": "MolecularStructure",
+      "type": "object"
+    },
+    "Molecule": {
+      "additionalProperties": false,
+      "properties": {
+        "structure": {
+          "$ref": "#/$defs/MolecularStructure"
+        }
+      },
+      "required": [
+        "structure"
+      ],
+      "title": "Molecule",
+      "type": "object"
+    },
+    "PublicInput": {
+      "additionalProperties": false,
+      "properties": {
+        "molecule": {
+          "$ref": "#/$defs/Molecule"
+        }
+      },
+      "required": [
+        "molecule"
+      ],
+      "title": "PublicInput",
+      "type": "object"
+    },
+    "ReferenceMechanism": {
+      "additionalProperties": false,
+      "properties": {
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "primary",
+            "co_primary",
+            "secondary"
+          ],
+          "title": "Role",
+          "type": "string"
+        },
+        "gain": {
+          "enum": [
+            1,
+            2
+          ],
+          "title": "Gain",
+          "type": "integer"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "rationale": {
+          "minLength": 1,
+          "title": "Rationale",
+          "type": "string"
+        }
+      },
+      "required": [
+        "label",
+        "role",
+        "gain",
+        "evidence_ids",
+        "rationale"
+      ],
+      "title": "ReferenceMechanism",
+      "type": "object"
+    },
+    "SourceDocument": {
+      "additionalProperties": false,
+      "properties": {
+        "source_id": {
+          "pattern": "^[A-Za-z0-9_]+$",
+          "title": "Source Id",
+          "type": "string"
+        },
+        "title": {
+          "minLength": 1,
+          "title": "Title",
+          "type": "string"
+        },
+        "doi": {
+          "pattern": "^10\\.[^\\s]+/[^\\s]+$",
+          "title": "Doi",
+          "type": "string"
+        },
+        "pdf_sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Pdf Sha256",
+          "type": "string"
+        },
+        "page_count": {
+          "minimum": 1,
+          "title": "Page Count",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "source_id",
+        "title",
+        "doi",
+        "pdf_sha256",
+        "page_count"
+      ],
+      "title": "SourceDocument",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": "photomechbench.raw.v2",
+      "default": "photomechbench.raw.v2",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "case_id": {
+      "pattern": "^AIE_DDX_MECH_V4_\\d{4}$",
+      "title": "Case Id",
+      "type": "string"
+    },
+    "public_input": {
+      "$ref": "#/$defs/PublicInput"
+    },
+    "hidden_reference": {
+      "$ref": "#/$defs/HiddenReference"
+    },
+    "provenance": {
+      "$ref": "#/$defs/CaseProvenance"
+    }
+  },
+  "required": [
+    "case_id",
+    "public_input",
+    "hidden_reference",
+    "provenance"
+  ],
+  "title": "PhotoMechCase",
+  "type": "object"
+}

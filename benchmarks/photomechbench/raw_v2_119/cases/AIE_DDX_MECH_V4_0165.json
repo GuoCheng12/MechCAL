@@ -1,0 +1,292 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0165",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC(C)(C)N1C(=O)c2ccc(-n3c4ccccc4c4ccccc43)cc2S1(=O)=O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "6-Cz-Sac",
+    "source_documents": [
+      {
+        "source_id": "F058",
+        "title": "Saccharin-derived multifunctional emitters featuring concurrently room temperature phosphorescence, thermally activated delayed fluorescence and aggregation-induced enhanced emission",
+        "doi": "10.1016/j.cej.2021.129628",
+        "pdf_sha256": "962004d8380aed2bb91e15099e5e7a5bab9243770aa282324a3c05da1ac400e3",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F058",
+        "pdf_page": 4,
+        "quote": "the strong positive solvatochromic effect of the three lumi­ nogens was observed.",
+        "subject": "6-Cz-Sac, 5-Cz-Sac and DiCz-Sac",
+        "scope": "series_including_target",
+        "conditions": "Solvents n-hexane, toluene, DCM, THF and DMF; spectra discussed with Fig.S14.",
+        "kind": "author_interpretation",
+        "statement": "The authors interpret positive solvatochromism across all three emitters as ICT between carbazole and saccharin. DiCz-Sac alone is explicitly quantified as shifting from 445 to 529 nm.",
+        "limitations": "SI spectra were not inspected. The 445-to-529 nm shift is not assigned to 5-Cz-Sac or 6-Cz-Sac; no time-resolved charge-transfer kinetics is established."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F058",
+        "pdf_page": 4,
+        "quote": "348 ms for 6-Cz-Sac, 664 ms for 5-Cz-Sac, and 285 ms for DiCz-Sac",
+        "subject": "6-Cz-Sac",
+        "scope": "target",
+        "conditions": "Crystals synthesized from commercial carbazole, ambient conditions after 365 nm excitation.",
+        "kind": "observation",
+        "statement": "6-Cz-Sac has a reported RTP lifetime of 348 ms and steady-state blue emission peak of 463 nm. Its broad 480 nm phosphorescence has a weaker approximately 550 nm shoulder that dominates at longer delay.",
+        "limitations": "Lifetime data are main-text reports of Fig.S16, not inspected SI. Fig.2 on p.5 was visually inspected. These are commercial-feedstock crystal values, not intrinsic purity-independent molecular constants."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F058",
+        "pdf_page": 4,
+        "quote": "All the crystals of Cz-Sac-Lab compounds exhibited phosphorescence emissions under ambient condition with the lifetimes determined to be around 2.5 ms",
+        "subject": "Cz-Sac-Lab purity controls including 6-Cz-Sac-Lab",
+        "scope": "series_including_target",
+        "conditions": "Control syntheses using lab-made carbazole from diphenylamine; Cz-Sac-Lab crystals.",
+        "kind": "observation",
+        "statement": "All three lab-carbazole controls retain ambient phosphorescence but have only approximately 2.5 ms lifetimes, far shorter than commercial-carbazole samples.",
+        "limitations": "Approximate series value; do not assign an exact fitted value to any one lab sample. Lifetimes are reported from Fig.S18, which was not inspected; main Fig.2 contrasts lab/commercial spectra."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F058",
+        "pdf_page": 4,
+        "quote": "may be caused by the trace amount of the carbazole isomer",
+        "subject": "Commercial-carbazole Cz-Sacs and lab-made controls",
+        "scope": "series_including_target",
+        "conditions": "Interpretation of the lab-made versus commercial carbazole control.",
+        "kind": "author_interpretation",
+        "statement": "The authors provisionally attribute the dramatically extended commercial-feedstock RTP lifetimes to a trace carbazole isomer, while describing millisecond RTP as intrinsic to the lab-made derivatives.",
+        "limitations": "The impurity identity, amount and operative energy/charge-transfer pathway are not demonstrated by this main-text passage. Do not replace 'may' with confirmed causality or infer a host-guest mechanism."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F058",
+        "pdf_page": 5,
+        "quote": "weak π-π stacking in",
+        "subject": "6-Cz-Sac",
+        "scope": "target",
+        "conditions": "Single-crystal diffraction and packing analysis, Fig.3.",
+        "kind": "observation",
+        "statement": "6-Cz-Sac shows a C-H...pi/C-H...O network and weak pi stacking around 3.930 A, distinct from the stronger carbazole stacking assigned to 5-Cz-Sac.",
+        "limitations": "Fig.3C-D visually inspected. Do not transfer 5-Cz-Sac's 3.632-3.710 A stack distance to 6-Cz-Sac or infer an excimer from proximity."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F058",
+        "pdf_page": 6,
+        "quote": "considered as an efficient pathway to prevent energy loss and stabilize the triplet excitons.",
+        "subject": "Three Cz-Sac crystals including 6-Cz-Sac",
+        "scope": "series_including_target",
+        "conditions": "Comparison of Cz-Sac crystal interactions, continuing p.5.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose compact packing/intermolecular interactions as a triplet-stabilizing contributor and relate packing differences to different RTP lifetimes.",
+        "limitations": "This packing interpretation coexists with the purity-control caveat; it does not override evidence that trace isomers may dominate lifetime extension."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F058",
+        "pdf_page": 7,
+        "quote": "A/B: 6-Cz-Sac; C/D: 5-Cz-Sac; E/F: DiCz-Sac.",
+        "subject": "6-Cz-Sac",
+        "scope": "target",
+        "conditions": "THF/water titration, Figure 5 panels A/B; inset UV excitation 365 nm.",
+        "kind": "observation",
+        "statement": "6-Cz-Sac is emissive in pure THF, weakens sharply on initial water addition, and recovers stronger emission at high water fractions. The target's own panels were visually inspected.",
+        "limitations": "No cross-compound intensity comparison is made because axes and baseline intensities differ. No digitized enhancement factor or absolute quantum yield is inferred."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F058",
+        "pdf_page": 6,
+        "quote": "The formation of aggregates could effectively block molecular motions and inhibit the",
+        "subject": "Three Cz-Sac emitters including 6-Cz-Sac",
+        "scope": "series_including_target",
+        "conditions": "THF/water aggregates at high water fractions, section 3.6.",
+        "kind": "author_interpretation",
+        "statement": "The authors explicitly propose that aggregation blocks molecular motion, including carbazole rotation, and suppresses nonradiative decay to produce AIEE.",
+        "limitations": "This is an interpretation of aggregation-dependent spectra, not measured rotational barriers or conical-intersection calculations."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F058",
+        "pdf_page": 6,
+        "quote": "dark twisted intramolecular charge transfer (TICT) states formed with the increase of solvent polarity.",
+        "subject": "Three Cz-Sac emitters including 6-Cz-Sac",
+        "scope": "series_including_target",
+        "conditions": "Initial water addition versus aggregation at water fraction greater than 80%.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign initial quenching to dark TICT states and subsequent intensity recovery/blue shift to aggregation suppressing motion and reducing solvent relaxation/TICT.",
+        "limitations": "Mixed-solvent polarity and aggregation change together; TICT is an explicit but not uniquely proven assignment. Do not equate this with intermolecular PET."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F058",
+        "pdf_page": 6,
+        "quote": "In contrast, no delayed compo­ nents can be observed for 6-Cz-Sac and 5-Cz-Sac",
+        "subject": "6-Cz-Sac",
+        "scope": "target",
+        "conditions": "Neat-film transient PL, Fig.4D; analogous inert-solution controls described in main text.",
+        "kind": "observation",
+        "statement": "6-Cz-Sac lacks the delayed component observed for DiCz-Sac. The source assigns no TADF under these conditions and reports a spectroscopically estimated S1-T1 gap of 0.31 eV.",
+        "limitations": "Fig.4A-B,D visually inspected. This negative TADF finding does not contradict the target's crystalline RTP or exclude all triplet pathways."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E09"
+        ],
+        "rationale": "Keep the source's ICT solvatochromism and dark-TICT quenching interpretation with the solvent/aggregation confound stated."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E10"
+        ],
+        "rationale": "RTP is supported, including the short-lived lab-made purity control. TADF is explicitly absent in the tested conditions, so the family must not be described as TADF for this target."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "rationale": "Trace-isomer dependence is acknowledged, but no direct host binding, inclusion or identified host-guest photophysical pathway is established in the inspected main text."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E09"
+        ],
+        "rationale": "Keep the source's ICT solvatochromism and dark-TICT quenching interpretation with the solvent/aggregation confound stated."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "The selected evidence does not isolate a distinct radiative-rate or bright/dark-state balance explanation beyond the other explicitly assigned pathways."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E10"
+        ],
+        "rationale": "RTP is supported, including the short-lived lab-made purity control. TADF is explicitly absent in the tested conditions, so the family must not be described as TADF for this target."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "d29d37c8ca103b9c5e3d26c14ad340519669a6ecb69fc992cc55306640123837",
+    "label_record_sha256": "5ad83ab340bed34728a923d7658b525ade46585d6fde75f48c771bc08632844f"
+  }
+}

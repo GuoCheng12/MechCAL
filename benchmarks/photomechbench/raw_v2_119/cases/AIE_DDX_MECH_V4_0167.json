@@ -1,0 +1,304 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0167",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=C(c1ccc(-c2cccc3c2oc2ccccc23)cc1)c1ccc(N2c3ccccc3Sc3ccccc32)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "ODFRPTZ",
+    "source_documents": [
+      {
+        "source_id": "F059",
+        "title": "An AIE Molecule Featured with Changeable Triplet Emission between Phosphorescence and Delayed Fluorescence by External force",
+        "doi": "10.1039/c9qm00509a",
+        "pdf_sha256": "f84f12e9b152810aa8de52d03f104eea1a49ee7444da4606b621646bd463f1dd",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F059",
+        "pdf_page": 3,
+        "quote": "Figure 1. Molecular structure of ODFRPTZ.",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Accepted-manuscript Fig.1 and Results opening.",
+        "kind": "observation",
+        "statement": "The linked paper's focal emitter is consistently named ODFRPTZ and depicted in Figure 1; this is the provisional source-designation assignment for the manifest's unnamed case.",
+        "limitations": "Fig.1 visually inspected for designation only. This does not establish correspondence of its graph to the unverified legacy SMILES. The synthesis paragraph says dibenzothiophenyl reagent while discussion/figure identify dibenzofuran; resolve with SI."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F059",
+        "pdf_page": 3,
+        "quote": "However, AIE showed up when the water fraction reached 70%.",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "THF/water mixtures, 20 micromolar; Fig.2; UV excitation 365 nm.",
+        "kind": "observation",
+        "statement": "ODFRPTZ is weakly emissive in THF, begins increasing emission around 70% water, and shows stronger yellow emission near 550 nm at high water fractions.",
+        "limitations": "Fig.2 visually inspected. No aggregate size, absolute enhancement factor or triplet assignment is obtained from these spectra alone."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F059",
+        "pdf_page": 3,
+        "quote": "restriction of the intramolecular rotation and vibration",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Aggregation in THF/water, section Results.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign aggregation-enhanced intensity to restriction of internal rotation and vibration reducing nonradiative relaxation.",
+        "limitations": "This is a proposed microscopic explanation, not direct dynamics or viscosity control. It should not imply that mechanical grinding always suppresses motion."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F059",
+        "pdf_page": 4,
+        "quote": "540 nm red-shifted 41 nm to 581 nm",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Pristine crystalline versus mechanically ground solid, 365 nm excitation.",
+        "kind": "observation",
+        "statement": "Grinding removes the short-wavelength band and redshifts the main band; Fig.3 XRD comparison indicates loss of crystallinity.",
+        "limitations": "Fig.3 visually inspected on p.3. Main text additionally reports reversible DCM-vapor recovery and DSC changes in SI, which were not inspected; grinding does not alone prove a specific conformer."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F059",
+        "pdf_page": 4,
+        "quote": "lifetime continuously increased from 0.4 ms at 300 K to 121.1 ms at 77 K",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Pristine crystalline powder, approximately 540 nm emission, temperature-dependent decay.",
+        "kind": "observation",
+        "statement": "The delayed component becomes much longer lived on cooling; the source reports 0.4 ms at 300 K and 121.1 ms at 77 K, alongside a fast 8.9 ns component. No visible room-temperature afterglow is reported.",
+        "limitations": "The 8.9 ns decay is reported from SI, not inspected SI. Oxygen enhances triplet sensitivity, but oxygen dependence alone does not distinguish phosphorescence from DF."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F059",
+        "pdf_page": 4,
+        "quote": "emission of ODFRPTZ crystalline powder is composed of prompt fluorescence and phosphorescence",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Temperature-dependent crystalline-powder PL and delayed spectra; main text also reports oxygen response.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign crystalline emission to prompt fluorescence plus phosphorescence using delayed spectra, lifetime increase on cooling and low-temperature afterglow.",
+        "limitations": "Do not label all delayed emission as TADF. The text's argon/oxygen comparison and figure's air/vacuo labels differ; the reported ratio 2.2 is not treated as a calibrated gas-quenching constant."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F059",
+        "pdf_page": 5,
+        "quote": "strong intermolecular interactions (Figure S14), which effectively decrease the nonradiative decay rates",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Layered crystalline packing, main-text XRD discussion.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose that strong packing interactions protect triplet emission from oxygen/thermal deactivation and support the constrained quasi-axial PTZ conformation.",
+        "limitations": "Detailed stacking/SI Figs.S13-S15 were not inspected. Main Fig.6 was visually inspected; the interpretation does not independently establish excimer or H/J emission."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F059",
+        "pdf_page": 5,
+        "quote": "The calculated ΔEST values of isolated monomer, Dimer-1 and Dimer- 2 are 0.73 eV, 0.66 eV and 0.76 eV, respectively.",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Crystal-derived monomer and two dimers, TDDFT B3LYP/6-311+G(d,p).",
+        "kind": "computation",
+        "statement": "Computed dimers have more candidate S1-to-Tn channels than the monomer; large S1-T1 gaps are interpreted as unfavorable for RISC, consistent with crystalline phosphorescence.",
+        "limitations": "These are static state/channel calculations, not ISC/RISC rates. Fig.6 visually inspected; full Table S2/SI was not inspected. Values are not transferred to the ground amorphous material."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F059",
+        "pdf_page": 5,
+        "quote": "fluorescence has a long lifetime of 0.9 μs",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Mechanically ground powder, approximately 580-581 nm; Fig.7 delayed spectrum and decay.",
+        "kind": "observation",
+        "statement": "Ground material has a microsecond component reported as 0.9 microseconds and a prompt 18.7 ns component; quantum yield increases from 3.24% to 18.88% after grinding.",
+        "limitations": "Main Fig.7 visually inspected. Authors call the delayed band DF; no ground-powder temperature activation series is established in the inspected source, so the record does not upgrade it to independently proven TADF."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F059",
+        "pdf_page": 6,
+        "quote": "disappearance of the 1LE emission and 20 enhancement of the CT emission.",
+        "subject": "ODFRPTZ (provisional source designation for case 0167)",
+        "scope": "target",
+        "conditions": "Quasi-axial crystalline versus proposed quasi-equatorial ground conformer; assignments section.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign 428 nm to singlet LE, 540 nm to CT(ax) fluorescence plus triplet LE phosphorescence, and 581 nm to CT(eq) prompt/delayed fluorescence after grinding.",
+        "limitations": "The quasi-equatorial ground-state structure is inferred from spectra, quantum yield and analogy rather than directly solved crystallography; the claimed LE/CT redistribution remains a bounded author interpretation."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "RIM is the explicit proposed explanation for solution-to-aggregate enhancement, not an assumption based only on the term AIE."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Crystalline constraints and grinding-induced disorder alter conformation and nonradiative/triplet pathways; this is phase-dependent, not a universal rule that tighter packing is brighter."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E10"
+        ],
+        "rationale": "The source explicitly distinguishes axial and equatorial CT emission and assigns their changing contribution after grinding; exact conformer identification remains inferential."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E08",
+          "E10"
+        ],
+        "rationale": "Conformation-dependent LE/CT and singlet/triplet state balance is an explicit interpretation of spectral switching. This overlaps the CT and triplet labels rather than adding an independent demonstrated cause."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Crystal phosphorescence and ground-powder delayed fluorescence are distinguished by source state and conditions. Ground-powder DF is not asserted to be independently established thermally activated DF."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "RIM is the explicit proposed explanation for solution-to-aggregate enhancement, not an assumption based only on the term AIE."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Crystalline constraints and grinding-induced disorder alter conformation and nonradiative/triplet pathways; this is phase-dependent, not a universal rule that tighter packing is brighter."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E10"
+        ],
+        "rationale": "The source explicitly distinguishes axial and equatorial CT emission and assigns their changing contribution after grinding; exact conformer identification remains inferential."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E08",
+          "E10"
+        ],
+        "rationale": "Conformation-dependent LE/CT and singlet/triplet state balance is an explicit interpretation of spectral switching. This overlaps the CT and triplet labels rather than adding an independent demonstrated cause."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Crystal phosphorescence and ground-powder delayed fluorescence are distinguished by source state and conditions. Ground-powder DF is not asserted to be independently established thermally activated DF."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "dc820aab4cfe875f5a3b1d7fe95260f8f9375cf6c3f0cccc79b68980800b2e35",
+    "label_record_sha256": "1a1fdb04371dc45ba461ccf2ce8d68bcf468fc0585341c66a77d00432f911fbe"
+  }
+}

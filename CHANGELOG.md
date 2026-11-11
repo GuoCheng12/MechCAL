@@ -2,6 +2,11 @@
 
 ## 0.2.0 (Unreleased)
 
+- Publish reconstructed PhotoMechBench references under CC BY 4.0: 119 cases,
+  401 reference mechanisms, 998 evidence records and 76 source DOIs, with
+  unchanged case files, JSON Schema, provenance and original review notes.
+  Keep PDFs, model runs and credentials excluded; references stay out of
+  inference prompts. Add offline dataset integrity and loader checks.
 - Split Scientific Reviewer and Exploration Agent into independent components,
   clients and private memory scopes; preserve published proposal handoff.
 - Send short resident Planner rules and task-scoped background, with exact
@@ -23,15 +28,16 @@
 - Include expanded RDKit, Amesp, xTB, CREST, DFTB+, PySCF and PySOC adapters.
 - Add the installed `mechcal` CLI with portable TOML configuration, local
   dependency/MCP checks, explicit connectivity probe and fresh-run entry.
-- Keep credentials, private references, inference histories, model weights
+- Keep credentials, inference histories, model weights
   and third-party binaries outside the code distribution.
 - Deployment changes preserve the current scientific methods, mechanism pool
   and rubric. Include tested direct-dependency versions for Linux/Python 3.11.
 
 - Add reconstructed PhotoMechBench inputs: 119 case IDs and SMILES, excluding
   historical case 0127. Preserve the remaining case IDs without renumbering.
-- Include dataset format notes and offline input-integrity tests. Hidden
-  references, labels, evidence records and model outputs remain excluded.
+- Include dataset format notes and offline input-integrity tests. This initial
+  input-only export is now accompanied by the reference release listed above;
+  model outputs remain excluded.
 
 ## 0.1.0
 
@@ -42,6 +48,6 @@
 - Direct, tool-augmented, common-prior, and adapted ChemGraph evaluation.
 - Source-only distribution with offline regression tests.
 
-This release packages the existing research implementation. It does not
+Version 0.1.0 packaged the existing research implementation. It did not
 include benchmark cases, hidden references, inference records, weights,
 credentials, or historical experiment results.

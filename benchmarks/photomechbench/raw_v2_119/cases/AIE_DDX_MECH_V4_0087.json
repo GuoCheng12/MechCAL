@@ -1,0 +1,293 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0087",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CN(C)c1ccc(/C=C/C(=O)c2ccccc2O)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "Compound 1",
+    "source_documents": [
+      {
+        "source_id": "F038",
+        "title": "How Inter- and Intramolecular Processes Dictate Aggregation Induced Emission in Crystals Undergoing Excited State Proton Transfer",
+        "doi": "10.1021/acs.jpclett.7b02893",
+        "pdf_sha256": "6f924fafb1bfbc03f38114e99c4a797d12c40404a6709fabf00da4942d08aea6",
+        "page_count": 12
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F038",
+        "pdf_page": 3,
+        "quote": "Compound 1 exhibits AIE and has promising properties for solid state lasers.",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "observation",
+        "statement": "The source identifies compound 1 as the emissive AIE-active member.",
+        "limitations": "Experimental behavior is cited from reference 41; this paper is a theoretical analysis."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F038",
+        "pdf_page": 3,
+        "quote": "chromophores aggregate in a slip- stacking, herringbone structure in an edge to face arrangement",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "observation",
+        "statement": "Compound 1 packs in a slip-stacked herringbone arrangement.",
+        "limitations": "The original PDF has a line-break hyphen in slip-stacking. Packing derives from previously reported crystal structures."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F038",
+        "pdf_page": 4,
+        "quote": "There is no signiﬁcant intermolec- ular charge transfer upon excitation in either material.",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "series_including_target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "computation",
+        "statement": "Neither compound is calculated to undergo significant intermolecular CT at vertical excitation.",
+        "limitations": "Negative result for intermolecular CT, not proof of absent intramolecular polarization."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F038",
+        "pdf_page": 4,
+        "quote": "This is typical of H dimers within the Kasha excitonic coupling model",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "series_including_target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "author_interpretation",
+        "statement": "The dimer models are assigned H-like coupling, with the bright absorption shifting to S2.",
+        "limitations": "H-type absorption does not imply higher-state emission or prove AIE quenching."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F038",
+        "pdf_page": 5,
+        "quote": "Since no double proton transfer K* minimum was found for 1, emission is expected from a localised K* state.",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "computation",
+        "statement": "Compound 1's emission is assigned to a localized single-proton-transfer keto state; no double-transfer minimum was located.",
+        "limitations": "Calculated emission is method dependent: about 2.7 eV with TDDFT, 2.2 eV with CC2 versus reported 1.5-2.1 eV experimental band."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F038",
+        "pdf_page": 5,
+        "quote": "In the case of 1, signiﬁcant reabsorption is expected due to the small Stokes shift for the E* minimum.",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "author_interpretation",
+        "statement": "The E* emission is disfavored by self-absorption, helping distinguish it from the K* emission channel.",
+        "limitations": "This is an enol-channel interpretation, not evidence that the keto state is dark."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "lies 0.5-1.0 eV above the S1 energy for the FC geometry",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "computation",
+        "statement": "Compound 1's keto S1-S0 MECI is above the photopopulated energy by 0.5-1.0 eV.",
+        "limitations": "Figure 2 visually inspected; this is compound 1, not the 0.4 eV accessible barrier reported for compound 2."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "For compound 1, the electrostatic potential sta- bilises the S1 state but has little eﬀect on the en- ergy of the MECI",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "computation",
+        "statement": "Crystal electrostatics stabilizes S1 relative to the MECI and further reduces access to nonradiative decay.",
+        "limitations": "The M7/M15 comparison suggests short-to-medium-range rather than long-range electrostatic control."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "molecular aggregation completely blocks the E* non-radiative decay path.",
+        "subject": "Compound 1 (2'-hydroxychalcone derivative)",
+        "scope": "series_including_target",
+        "conditions": "Experimental crystal structures optimized with PBE-D2; ONIOM TDDFT/AMBER monomer/dimer clusters and Ewald embedding, with CC2/CASSCF checks.",
+        "kind": "author_interpretation",
+        "statement": "Both crystals strongly destabilize the enol CI; the keto pathway is the discriminating channel.",
+        "limitations": "This shared result cannot by itself explain why compound 2 stays dark."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E08"
+        ],
+        "rationale": "Steric and electrostatic crystal effects jointly determine CI geometry and accessibility."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Localized keto emission after ESIPT is explicitly assigned, with enol self-absorption suppressing that alternative channel."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "H-dimer excitonic splitting and relaxation/localization alter the accessible states. This is a secondary state-structure context, not the main source explanation for AIE."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source distinguishes bright dimer absorption, localized keto emission and poorly useful enol emission. Radiative-state differences alone do not explain the compound contrast."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Restricted access to the keto CI explains the contrast with non-emissive compound 2; the enol CI is blocked in both."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E07",
+          "E08"
+        ],
+        "rationale": "The mechanistic analysis is explicitly CI-based; harmonic RIM is background and not independently established for this target."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E08"
+        ],
+        "rationale": "Steric and electrostatic crystal effects jointly determine CI geometry and accessibility."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Localized keto emission after ESIPT is explicitly assigned, with enol self-absorption suppressing that alternative channel."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "H-dimer excitonic splitting and relaxation/localization alter the accessible states. This is a secondary state-structure context, not the main source explanation for AIE."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source distinguishes bright dimer absorption, localized keto emission and poorly useful enol emission. Radiative-state differences alone do not explain the compound contrast."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Restricted access to the keto CI explains the contrast with non-emissive compound 2; the enol CI is blocked in both."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "57cb329c9287aeaa41c0de77697d720d4fffc5210987ed451713c76d3237a453",
+    "label_record_sha256": "75cec6fb01fdb0b7596a0d2a75eb6e6ce65948aef2dea8b94047c9faab232d24"
+  }
+}

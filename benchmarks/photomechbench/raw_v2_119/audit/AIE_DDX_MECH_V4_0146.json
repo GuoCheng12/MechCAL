@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0146",
+  "prior_status": "identity_blocked",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F054",
+    "pdf_page": 4,
+    "figure": "Fig. 4, PDTDA optimized structures (pointer only)",
+    "rationale": "PDTDA is explicitly identified by name in the source; chemical-graph adjudication is deferred.",
+    "limitations": "Legacy radical SMILES is unchanged and not verified; no spin/valence or stereochemical confirmation is asserted."
+  },
+  "notes": [
+    "Structure and the legacy radical graph are not verified; structure review is deferred and radical chemistry requires later adjudication.",
+    "Obtain SI for active-space comparisons, configuration tables, coordinates and Huang-Rhys factors. Only main-text reports of SI were read.",
+    "The optimized D3/D2 CI is missing and corrected CI gaps are nonzero for two crossings; how robust is the proposed pathway beyond the interpolation and harmonic models?",
+    "Separate the D1 FC-region film assignment from the proposed D3 isolated-molecule emission. Prior experimental reference 12 was not part of this assigned source packet.",
+    "The source reports differing D1 Huang-Rhys maxima (30.932 on p.6 versus 31.141 on p.8); no value was adopted as settled."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

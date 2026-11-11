@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0003",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F002",
+    "pdf_page": 1,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Retrieve DLS and phase-related SI; distinguish reported observations from inferred emitting-phase Au-Au contacts.",
+    "Confirm the broad metal-associated family's treatment of LMMCT without asserting phosphorescence."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,18 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0160",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0155",
+    "pdf_page": 7,
+    "figure": "Figure 7a, TPA6",
+    "rationale": "Para-linked triphenylamine-oxygen-pyridine connectivity agrees with Figure 7a.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Retrieve target-specific SI structure and any AIE controls before adding further mechanism labels.",
+    "Review state-balance role and avoid importing TPA1/4 calculations as target-6 evidence."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

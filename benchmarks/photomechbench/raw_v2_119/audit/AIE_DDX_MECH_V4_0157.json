@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0157",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0155",
+    "pdf_page": 2,
+    "figure": "Figure 1b, TPA3",
+    "rationale": "Figure and inherited SMILES agree on the para-substituted triphenylamine, O/CH2 linker and the target-specific cyanobenzene, benzophenone or acetophenone acceptor.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Retrieve SI spectroscopy, synthesis and crystal structures; TPA2 has no single-crystal structure in this report.",
+    "Review overlapping RIM, environmental confinement and state-balance roles. These are source-based proposals, not independent causal components.",
+    "Review the T1/T2 discussion and its internal-conversion estimate before treating it as a validated kinetic calculation."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

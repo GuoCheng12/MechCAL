@@ -1,0 +1,287 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0020",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Oc1cc(C(F)(F)F)ccc1-c1nc2sc(-c3ccc(C(F)(F)F)cc3O)nc2s1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "CF3-HTTH",
+    "source_documents": [
+      {
+        "source_id": "F011",
+        "title": "Mechanochromism induced through the interplay between excimer reaction and excited state intramolecular proton transfer",
+        "doi": "10.1038/s42004-019-0113-8",
+        "pdf_sha256": "5fb2ebb6ebb36ed46146448c25a97b1dfaed2e1a3e2343cdd91a26e9f9ac3e4e",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F011",
+        "pdf_page": 3,
+        "quote": "a major red emission band appears at 600 nm",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Pristine solid powder at room temperature; Fig. 1c, excitation 380 nm.",
+        "kind": "observation",
+        "statement": "Normal/vibronic emission around 440-460 nm and tautomer emission around 520 nm coexist with a broad 600 nm band.",
+        "limitations": "Band locations used for maxima and monitoring differ (e.g., 550/650 nm); do not treat every monitoring wavelength as a peak maximum."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F011",
+        "pdf_page": 3,
+        "quote": "disappears when CF3-HTTH is deposited as a thin film",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Comparison of powder, solution, vapor-deposited quartz film and PMMA; PMMA result reported from SI.",
+        "kind": "observation",
+        "statement": "The broad red band is absent in solution and deposited/dispersed films, supporting a packing-dependent intermolecular origin.",
+        "limitations": "SI PMMA data not inspected; absence of the band in these conditions does not mean all aggregate states are nonemissive."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F011",
+        "pdf_page": 3,
+        "quote": "CF3-MTTH with ESIPT reveals negligible excimer emission",
+        "subject": "CF3-MTTH and CF3-MTTM",
+        "scope": "comparator",
+        "conditions": "Methylated controls and crystal analysis, Fig. 1 and Table 1.",
+        "kind": "author_interpretation",
+        "statement": "MTTH supports ESIPT but little excimer, while fully methylated MTTM can form an excimer without ESIPT. Packing and excited-state competition both matter.",
+        "limitations": "Comparator behavior is not transferred to target. ESIPT is not a universal prerequisite for excimer formation."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F011",
+        "pdf_page": 4,
+        "quote": "a long rise component of 400 ps is obvious",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Pristine powder, room temperature; 400 nm excitation; TCSPC monitoring 650 nm, Fig. 2a/Table 2 visually inspected.",
+        "kind": "observation",
+        "statement": "Excimer-dominated red emission rises in about 400 ps and decays in about 2.4 ns; normal and tautomer signals have matching approximately 400 ps decays.",
+        "limitations": "Observed 400 ps is a coupled kinetic time constant, not an independently measured elementary excimer-formation rate."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F011",
+        "pdf_page": 4,
+        "quote": "decay time of the normal emission (460 nm) of 3.9 ± 0.2 ps",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Femtosecond up-conversion, 400 nm excitation, Fig. 2b.",
+        "kind": "observation",
+        "statement": "Normal emission decay of 3.9 +/- 0.2 ps matches tautomer rise of 3.8 +/- 0.2 ps, followed by a longer decay.",
+        "limitations": "Instrument response about 120 fs; fit uncertainty and reversible proton transfer must be retained."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F011",
+        "pdf_page": 6,
+        "quote": "The forward (kpt) and reverse (k−pt) ESIPT are fitted",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Coupled N*, T*, E* rate-equation simulation; Eqs. 3-8 and methods p.8.",
+        "kind": "computation",
+        "statement": "Authors fit forward/reverse ESIPT times of 4.6/26 ps and coupled 362 ps N*/T* decay/E* rise; reversible ESIPT channels population through N* to E*.",
+        "limitations": "Model-dependent fits; kT is taken from CF3-MTTH. These are reported author simulations, not new calculations. Fig. 5 inset contains an apparent 362 ns typo unlike equations."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F011",
+        "pdf_page": 6,
+        "quote": "the emission spectra become similar to that of pristine powder",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Crystal grinding at room temperature, Fig. 6 on p.7 visually inspected.",
+        "kind": "observation",
+        "statement": "Grinding increases relative normal/tautomer contributions and makes the crystal spectrum resemble powder; vapor-deposited film lacks the excimer band.",
+        "limitations": "Normalized spectra show relative spectral redistribution, not absolute integrated quantum-yield changes."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F011",
+        "pdf_page": 7,
+        "quote": "crystal surface has significantly more and narrower lifetime distribution at 1.5–1.7 ns",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Two-photon microscopy, 800 nm excitation; surface vs approximately 6 micrometers depth, Fig. 7 visually inspected.",
+        "kind": "observation",
+        "statement": "Crystal interior is more excimer-dominated; the surface shows larger 1.5-1.7 ns normal/tautomer components.",
+        "limitations": "Three-exponential fitting and spatial resolution limit separation; surface spectra can still contain red contributions, so do not call the measured surface entirely excimer-free."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F011",
+        "pdf_page": 8,
+        "quote": "proper orientation of neighbor molecules facilitates the for- mation of excimer after fast equilibrium of ESIPT reaction.",
+        "subject": "CF3-HTTH",
+        "scope": "target",
+        "conditions": "Discussion of morphology and depth-resolved spectra.",
+        "kind": "author_interpretation",
+        "statement": "Authors explain mechanochromism by different surface/interior packing that alters excimer formation after reversible ESIPT equilibration.",
+        "limitations": "Bounded source model: not a generic RIM assignment and not demonstrated for every congener."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Matched normal decay/tautomer rise and reversible kinetic modeling support ESIPT coupled to later excimer population."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E06"
+        ],
+        "rationale": "Broad red-band morphology dependence and delayed formation support the authors' excimer interpretation, not just generic aggregation."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Explicit coupled N*/T*/E* populations provide a state-balance interpretation. This overlaps with ESIPT/excimer kinetics and does not imply independently measured radiative rates."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of internal motion is established here; AIE or aggregation alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No host or analyte binding mechanism changing target emission is established in this extraction."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT excited-state mechanism is established here; donor-acceptor structure alone is insufficient."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Matched normal decay/tautomer rise and reversible kinetic modeling support ESIPT coupled to later excimer population."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E06"
+        ],
+        "rationale": "Broad red-band morphology dependence and delayed formation support the authors' excimer interpretation, not just generic aggregation."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Explicit coupled N*/T*/E* populations provide a state-balance interpretation. This overlaps with ESIPT/excimer kinetics and does not imply independently measured radiative rates."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "df5b3e4cd7e106774dce64344db6f1a7a56749d1db6352982edb48b78c0d82c6",
+    "label_record_sha256": "d3408d90574158235c8725cd0003a78a10cf07ef08c4733ac43fc479c8f87f8f"
+  }
+}

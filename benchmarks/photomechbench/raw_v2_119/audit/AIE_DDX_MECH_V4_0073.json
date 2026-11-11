@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0073",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F031",
+    "pdf_page": 2,
+    "figure": "Scheme 1b, Si2s-2E",
+    "rationale": "Si2s-2E is named in synthesis section 2.b.1; separate from Si4s-2E and cyano-acceptor analogues.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "No aggregation series or AIE mechanism is established in this solution-dynamics source.",
+    "Request SI Figs. S3 and S10. No Si2s-2E cyclohexane TA lifetime appears in Table 3; do not transfer the Si4s-2E 45 ps value."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,268 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0055",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=S(=O)(c1ccc(-n2c3ccccc3c3cc(-c4cccc(-n5c6ccccc6c6ccccc65)c4)ccc32)cc1)c1ccc(N2c3ccccc3Oc3ccccc32)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "mPhDCzDPSPXZ",
+    "source_documents": [
+      {
+        "source_id": "S0102",
+        "title": "Modifying the AIE-TADF chromophore with host-substituents to achieve high efficiency and low roll-off non-doped OLEDs",
+        "doi": "10.1016/j.orgel.2019.105602",
+        "pdf_sha256": "90cddf1b392f07d9ef4acbd967814d82695a58007d643d198770a39f451fa75b",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0102",
+        "pdf_page": 4,
+        "quote": "They all showed obvious solvatochromic, which indicated strong CT state in these four molecules.",
+        "subject": "Four emitters including mPhDCzDPSPXZ",
+        "scope": "series_including_target",
+        "conditions": "Solvent-dependent emission, main Figure 3b specifically shows the meta target.",
+        "kind": "author_interpretation",
+        "statement": "The source assigns core CT character from solvatochromism.",
+        "limitations": "Do not infer TICT geometry or assign peripheral carbazole groups to the CT channel."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0102",
+        "pdf_page": 3,
+        "quote": "host-substituents didn’t participate in intramolecular charge transfer.",
+        "subject": "Four emitters including mPhDCzDPSPXZ",
+        "scope": "series_including_target",
+        "conditions": "Calculated frontier orbitals.",
+        "kind": "author_interpretation",
+        "statement": "The peripheral covalent host substituents are excluded from the CT channel.",
+        "limitations": "Self-host design is not supramolecular guest binding."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0102",
+        "pdf_page": 4,
+        "quote": "The PL intensities of pPhDCzDPSPXZ and mPhDCzDPSPXZ were increased by 6.4–6.7 times",
+        "subject": "Para and meta emitters",
+        "scope": "series_including_target",
+        "conditions": "90% water relative to THF; main Figure 3c shows the meta target.",
+        "kind": "observation",
+        "statement": "The pair shows a 6.4-6.7-fold aggregation-associated increase.",
+        "limitations": "Do not assign an endpoint of this range to one compound without curve-based quantification."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0102",
+        "pdf_page": 4,
+        "quote": "the molecular rotations were restricted more easily when the water content was increased.",
+        "subject": "Para and meta emitters",
+        "scope": "series_including_target",
+        "conditions": "Authors' explanation of stronger AIE in the N-linked pair.",
+        "kind": "author_interpretation",
+        "statement": "The source attributes enhanced emission to easier motion restriction.",
+        "limitations": "Solvation and aggregation change together; this is a bounded mechanistic interpretation."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0102",
+        "pdf_page": 4,
+        "quote": "mPhDCzDPSPXZ 55.2 765.0 29 27 56 6.8 5.4 548",
+        "subject": "mPhDCzDPSPXZ",
+        "scope": "target",
+        "conditions": "Table 2, neat-film photophysics under nitrogen.",
+        "kind": "observation",
+        "statement": "Prompt/delayed lifetimes are 55.2/765.0 ns; prompt/delayed yields 29/27%, total 56%, peak 548 nm. Derived kRISC and Kf are 6.8 x 10^5 and 5.4 x 10^6 s^-1.",
+        "limitations": "Rates and yield decomposition use the source model; missing SI derivations are not revalidated."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0102",
+        "pdf_page": 5,
+        "quote": "The delayed component exhibited a clear temperature dependence effect",
+        "subject": "mPhDCzDPSPXZ shown in Figure 4a; other emitters in SI",
+        "scope": "target",
+        "conditions": "Neat-film PL at 100-300 K.",
+        "kind": "observation",
+        "statement": "The displayed target has a temperature-dependent delayed component.",
+        "limitations": "Temperature dependence is interpreted jointly with oxygen response and prompt/delayed kinetics."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0102",
+        "pdf_page": 5,
+        "quote": "the intensity of the delayed portion was obviously increased after oxy­ gen removal.",
+        "subject": "mPhDCzDPSPXZ shown in Figure 4b; other emitters in SI",
+        "scope": "target",
+        "conditions": "Neat-film fluorescence decay in nitrogen versus air.",
+        "kind": "observation",
+        "statement": "The main-figure target shows enhanced delayed emission after oxygen removal.",
+        "limitations": "Do not label phosphorescence solely from oxygen sensitivity."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "S0102",
+        "pdf_page": 5,
+        "quote": "The introduction of host-substituents didn’t participate in ICT but functioned on dispersing excitons",
+        "subject": "Four emitters including mPhDCzDPSPXZ",
+        "scope": "series_including_target",
+        "conditions": "Authors' interpretation of covalent self-host groups.",
+        "kind": "author_interpretation",
+        "statement": "The peripheral groups are assigned an exciton-dispersing role.",
+        "limitations": "No separate binding complex or resolved excimer channel is demonstrated."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "rationale": "Motion restriction is central to the proposed AIE mechanism."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "The core CT state is supported, with peripheral groups explicitly excluded."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Target-specific delayed, temperature- and oxygen-dependent emission supports the source TADF account."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "rationale": "Motion restriction is central to the proposed AIE mechanism."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E02",
+          "E08"
+        ],
+        "rationale": "Covalent self-host groups are not evidence of a host-guest binding event."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "The core CT state is supported, with peripheral groups explicitly excluded."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Target-specific delayed, temperature- and oxygen-dependent emission supports the source TADF account."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "f8dd07d2a71425cebdfb2bf91e6fa14ecec8a5a8e31443299f69f5dc41143fc6",
+    "label_record_sha256": "96dbf98d5beb6f6b3a7e67c77a8e6b2eaa409d2de1d3e603780f99d239db7c9a"
+  }
+}

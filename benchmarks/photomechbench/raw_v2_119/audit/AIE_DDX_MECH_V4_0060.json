@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0060",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F025",
+    "pdf_page": 3,
+    "figure": "Figure 1 (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI Table S2/S3 and original lifetime fits; source static-quenching claim is not resolved by linear Stern-Volmer behavior and conflicts with shortened lifetimes.",
+    "Main Table 2 reverses THF:water ratios relative to methods/results; retain THF/water 10:90 from repeated experimental descriptions. L1 detection limit is 0.163 micromolar in prose but 0.63 micromolar in Table 2.",
+    "PET versus PET inhibition wording remains unresolved; metal binding alone is not triplet/metal-emission evidence, and no ESIPT is demonstrated."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,239 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0071",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Cc1c(Cl)cccc1Nc1ccccc1C(=O)O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "Tolfenamic acid (TFA)",
+    "source_documents": [
+      {
+        "source_id": "F030",
+        "title": "Aggregation-induced emission and polymorphism/shape/size-dependent emission behaviours of fenamates for potential drug evaluation",
+        "doi": "10.1039/c9ob00338j",
+        "pdf_sha256": "36ea32b82393e28db299fb5c3493ed63a8f52a2cf8edd2392dee177567cfef53",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F030",
+        "pdf_page": 3,
+        "quote": "the emission was switched on starting from 50% volume fraction of water",
+        "subject": "TFA",
+        "scope": "target",
+        "conditions": "Ethanol/water anti-solvent crystallization; two supersaturation protocols, Fig. 2.",
+        "kind": "observation",
+        "statement": "TFA fluorescence appears from 50% water and increases with crystal formation.",
+        "limitations": "This onset belongs to TFA, not automatically FFA or MFA."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F030",
+        "pdf_page": 3,
+        "quote": "Metastable TFA II was obtained under high supersaturation while the stable TFA I emerged under low supersaturation",
+        "subject": "TFA polymorph selection",
+        "scope": "target",
+        "conditions": "Different initial solution supersaturations; Fig. 2 and p.6 preparations.",
+        "kind": "observation",
+        "statement": "Supersaturation controls crystal form and emission color.",
+        "limitations": "Source-reported stability; no new thermodynamic assessment."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F030",
+        "pdf_page": 3,
+        "quote": "TFA I and TFA II emit blueviolet light (λem = 421 nm) and turquoise light (λem = 473 nm), respectively",
+        "subject": "TFA polymorphs",
+        "scope": "target",
+        "conditions": "365 nm excitation; Table 1 and SI Fig. S13 referenced.",
+        "kind": "observation",
+        "statement": "Polymorph II is red-shifted 52 nm relative to I.",
+        "limitations": "473 nm corresponds to specified large crystals, not every TFA II morphology."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F030",
+        "pdf_page": 4,
+        "quote": "φF c 44.1 52.6 67.7 19.3 58.7 10.3",
+        "subject": "TFA polymorphs",
+        "scope": "target",
+        "conditions": "Table 1 integrating sphere, visually inspected.",
+        "kind": "observation",
+        "statement": "TFA I/II reported QY values are 67.7/19.3 and lifetimes 4.25/6.74; II column specifies large crystals 2-3 mm.",
+        "limitations": "Printed table omits explicit QY/lifetime units; retain values as printed. Other fenamate values not transferred."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F030",
+        "pdf_page": 4,
+        "quote": "a better coplanarity of TFA II is prone to make the lone pair of electrons on nitrogen form conjugation with two adjacent benzene rings.",
+        "subject": "TFA polymorphs",
+        "scope": "target",
+        "conditions": "Fig. 3 conformation/orbital comparison.",
+        "kind": "author_interpretation",
+        "statement": "Authors explain narrower gap and redder lower-QY II emission through better conjugation.",
+        "limitations": "No direct CT-state assignment; no independent rate calculation is inferred."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F030",
+        "pdf_page": 4,
+        "quote": "which obviously limits the rotation and vibration of molecules",
+        "subject": "fenamate dimers including TFA",
+        "scope": "series_including_target",
+        "conditions": "Hydrogen-bonded dimers in Fig. 3; TFA I/II interactions broadly similar.",
+        "kind": "author_interpretation",
+        "statement": "Authors invoke hydrogen bonding limiting rotation/vibration as an enabling series mechanism.",
+        "limitations": "MFA dominates this passage; retain series scope and do not claim directly measured TFA RIM."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F030",
+        "pdf_page": 4,
+        "quote": "Emission differences were also founded in the large- size crystals and small-size crystals of TFA II",
+        "subject": "TFA II size control",
+        "scope": "target",
+        "conditions": "Fig. 4f-j, visually inspected; same polymorph checked by reported SI PXRD.",
+        "kind": "observation",
+        "statement": "Small and large TFA II crystals differ; plot labels show maxima 462 and 473 nm.",
+        "limitations": "SI facet-resolved and PXRD controls not inspected; do not transfer MFA shape effects."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F030",
+        "pdf_page": 4,
+        "quote": "different crystal faces may have different photoluminescence behaviours",
+        "subject": "TFA and MFA crystal-face interpretation",
+        "scope": "series_including_target",
+        "conditions": "Micro-Raman spatially resolved PL and morphology comparison.",
+        "kind": "author_interpretation",
+        "statement": "Authors attribute size/shape spectral differences to different contributions of crystal faces.",
+        "limitations": "Bounded morphology interpretation, not proof of new intermolecular excited state."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Explicit dimer rotation/vibration restriction retained only at series-level scope."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Crystal conformation, polymorph and face contributions are the main source explanations."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Explicit dimer rotation/vibration restriction retained only at series-level scope."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Crystal conformation, polymorph and face contributions are the main source explanations."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in the selected evidence."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "0edb1efd0b175f9bbed53e7168a5046ff21c0cef7c0aff378e9558a862739c97",
+    "label_record_sha256": "c92f7576ff98fa94011dca1db24ff6e56cad0cc139ee19017cda862c96a51d39"
+  }
+}

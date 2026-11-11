@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0056",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0056b",
+    "pdf_page": 1,
+    "figure": "Figure 1a; S0056a Chart 1 compound 1",
+    "rationale": "The diphenyldibenzofulvene connectivity agrees with both source drawings. The two papers describe the same target at different explanatory levels.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Review the S2 fluorescence assignment and its excitation dependence before approving the additional anti-Kasha reference.",
+    "Keep the 2007 experimental explanation and 2013 theoretical refinement linked; do not merge roles by taking the maximum gain.",
+    "Recover SI coordinates and verify the DPDBF crystal identity used by both studies.",
+    "E09 argues against strong exciton formation in the specific crystal model; do not turn crystallization-enhanced emission into an automatic aggregate-exciton label."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

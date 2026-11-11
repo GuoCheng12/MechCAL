@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0084",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0084",
+    "pdf_page": 3,
+    "figure": "Figure 1, TPC",
+    "rationale": "The tetraphenyl-substituted cyclopentadiene connectivity agrees visually with the source.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Inspect SI crystal coordinates and validate the candidate graph before expert approval.",
+    "Adjudicate overlapping RIM/RACI/rate-balance labels using a consistent policy rather than multiplying synonymous explanations.",
+    "Retain the 500 fs limit and CI-method mismatch in the raw record.",
+    "The calculated packing restriction and limited electronic perturbation (E07) must not be replaced by a generic excitonic aggregation explanation."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

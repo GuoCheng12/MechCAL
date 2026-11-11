@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0039",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F017",
+    "pdf_page": 12,
+    "figure": "Figure 6a (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Obtain SI Figures S44-S49 and synthesis Scheme S6 for fuller solvent, aggregate and solid-state provenance; no direct SI review is claimed."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

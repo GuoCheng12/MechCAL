@@ -1,0 +1,283 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0039",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC1=C(C)N2C1=C(c1ccc(N3CCC3)cc1)C(C)=C(C)[N+](=C(C)C)[B-]2(F)F"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "AZE-Ph-BDP",
+    "source_documents": [
+      {
+        "source_id": "F017",
+        "title": "Quantitative Design of Bright Fluorophores and AIEgens via the Accurate Prediction of Twisted Intramolecular Charge Transfer (TICT)",
+        "doi": "10.1002/anie.201916357",
+        "pdf_sha256": "eeb99e3bd698daf11ea4ae820e1307a403f810ea3010dd2a6ff2e67370f19f1d",
+        "page_count": 15
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "the rotation of θ towards 90° is almost barrierless in AZE-Ph-BDP.",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "CAM-B3LYP/cLR-SMD scans in THF; Figure 6.",
+        "kind": "computation",
+        "statement": "The source predicts almost barrierless meso-phenyl/BODIPY twisting toward a TICT geometry.",
+        "limitations": "This is the authors' calculation, not a new simulation; it does not identify azetidine twisting as the favorable rotor."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "the further rotation of the azetidine group is energetically unfavorable on the S1 and S2 PESs.",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "THF energy scans of both candidate rotation coordinates.",
+        "kind": "computation",
+        "statement": "Azetidine remains aligned with the phenyl group; its further rotation is unfavorable.",
+        "limitations": "Coordinate assignment is model-dependent; Figure 6b-c visually inspected."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "resulting in a negligible oscillator strength (f = 0.00; Figure 6c).",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Computed lowest singlet perpendicular conformation in THF.",
+        "kind": "computation",
+        "statement": "The fully separated TICT configuration is calculated to be dark.",
+        "limitations": "Calculated oscillator strength is not an experimentally determined radiative rate; S2 in the scan is not evidence of S2 emission."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "AZE-Ph-BDP is emissive only in hexane (Φ = 0.36; Figure 6d).",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Solvent comparison; Figure 6d visually inspected.",
+        "kind": "observation",
+        "statement": "Hexane quantum yield is 0.36; tested polar solvents have negligible yield.",
+        "limitations": "Only the tested solvent set is covered, not all possible environments."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "the fluorescence of AZE-Ph-BDP greatly intensifies in highly viscous solvents.",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Ethanol/glycerol volume-ratio series, Figure 6e.",
+        "kind": "observation",
+        "statement": "Increasing the glycerol-rich viscous fraction strongly enhances fluorescence.",
+        "limitations": "Viscosity and solvent composition co-vary; this is not an isolated torsion-rate measurement."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "The molecular aggregates effectively inhibit TICT rotations.",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Dioxane/water aggregation series, Figure 6f.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign aggregation turn-on to restriction of TICT rotations.",
+        "limitations": "A bounded source interpretation supported by solvent, viscosity and calculation comparisons, not definitive exclusion of other mechanisms."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "we observed a great enhancement of emission intensities, up to ~27 times.",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Dioxane/water series; main Figure 6f.",
+        "kind": "observation",
+        "statement": "Aggregation produces reported fluorescence enhancement up to about 27-fold.",
+        "limitations": "The fold change is relative intensity, not a quantum yield; aggregate molecular packing is not resolved."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "shows bright fluorescence in the solid state (Φ = 0.11; Figure S49).",
+        "subject": "AZE-Ph-BDP",
+        "scope": "target",
+        "conditions": "Solid-state result reported in main text with SI reference.",
+        "kind": "observation",
+        "statement": "Solid quantum yield is reported as 0.11.",
+        "limitations": "Figure S49 itself was not inspected."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F017",
+        "pdf_page": 11,
+        "quote": "the highly emissive LE state of Ph-BDP remains the most stable singlet excited state on a flat PES",
+        "subject": "Ph-BDP",
+        "scope": "comparator",
+        "conditions": "Parent BODIPY model, Figure 6b-c.",
+        "kind": "computation",
+        "statement": "Parent Ph-BDP provides the bright LE comparator for the designed dark TICT monomer.",
+        "limitations": "Do not transfer the parent's emissive state or quantum yield to AZE-Ph-BDP."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Restriction of the identified TICT twisting coordinate describes the same pathway at the motion level."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Aggregate environment is proposed to constrain TICT rotations; no particular crystal packing motif is assigned."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E06"
+        ],
+        "rationale": "The source's central explanation is dark TICT formation in polar monomers and inhibition in aggregates; the favorable rotor is meso-phenyl/BODIPY, not the azetidine bond."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E03",
+          "E06",
+          "E09"
+        ],
+        "rationale": "Calculated dark TICT versus emissive LE/less-twisted states supplies a state-brightness interpretation, overlapping rather than independent of TICT."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Restriction of the identified TICT twisting coordinate describes the same pathway at the motion level."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Aggregate environment is proposed to constrain TICT rotations; no particular crystal packing motif is assigned."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E04",
+          "E06"
+        ],
+        "rationale": "The source's central explanation is dark TICT formation in polar monomers and inhibition in aggregates; the favorable rotor is meso-phenyl/BODIPY, not the azetidine bond."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E03",
+          "E06",
+          "E09"
+        ],
+        "rationale": "Calculated dark TICT versus emissive LE/less-twisted states supplies a state-brightness interpretation, overlapping rather than independent of TICT."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "a3f4246decd9a6ca2996481456dac088a6e8bc267463c97c773f35ce11514ed0",
+    "label_record_sha256": "f675e13329fe2a227b3f3a564195687e05a138c685adf51f078b45fa0e1a1101"
+  }
+}

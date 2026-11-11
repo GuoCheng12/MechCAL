@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0148",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F055",
+    "pdf_page": 2,
+    "figure": "Fig. 1a, compound B and Fig. 1b radical-generation scheme",
+    "rationale": "Source designation B is identified in Figure 1; graph confirmation is deferred.",
+    "limitations": "Legacy neutral-precursor SMILES remains unchanged and unverified. Photogenerated radical-cation identity and charge-state mapping are not graph-validated."
+  },
+  "notes": [
+    "Structure review is deferred; distinguish the neutral legacy candidate from the photoinduced radical cation responsible for the proposed mechanism.",
+    "Obtain SI for detailed quantum-chemical methods, Table S1 state energies, solution/film spectra and radical stability/FTIR data. Main-text references to SI were not inspected directly.",
+    "PMMA SET is proposed, with broad LUMO estimates and a conflicting direction in the Figure 4 caption; experimental verification of radical-cation generation remains needed.",
+    "Film-loading notation is internally inconsistent: the preparation volumes with 500 mg PMMA do not match the later stated mg-per-100-mg labels. Report nominal sample names and do not silently recalculate loadings.",
+    "Figure 3a caption says 356 nm whereas prose consistently uses 365 nm; B Fig.3g legend uses 3 min while PLQY prose uses 1 min. Do not merge those measurements.",
+    "Neat-powder/concentration quenching is not evidence for AIE or a particular aggregate excited state; no expert approval is asserted."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

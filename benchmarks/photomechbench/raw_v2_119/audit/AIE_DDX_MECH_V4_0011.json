@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0011",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F007",
+    "pdf_page": 5,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Obtain separate SI for Fig. S22 and related target-specific curves.",
+    "Expert adjudication must resolve whether conditional PET in a protonated species belongs in the neutral-SMILES reference.",
+    "Resolve lifetime prose/Table 4 inconsistency before quantitative reuse; do not repair by assumption.",
+    "Do not promote protonation to ESIPT or TFA association to host-guest confinement."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

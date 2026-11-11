@@ -1,0 +1,252 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0151",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Oc1cc2cccccc-2c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "Az-OH",
+    "source_documents": [
+      {
+        "source_id": "F053",
+        "title": "Excited state dynamics of azulene and its derivatives: The impact of energy gap and vibronic coupling on anti-Kasha emission in solution",
+        "doi": "10.1016/j.molliq.2025.127260",
+        "pdf_sha256": "1dcd024d6cbfd5fd467595f7de76a918bb8f6b9c1151bd5e40c9cea0c6144807",
+        "page_count": 10
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F053",
+        "pdf_page": 2,
+        "quote": "Az-OH 2.78 0.008 3.65 0.019 0.87",
+        "subject": "Az-OH / 2-hydroxyazulene",
+        "scope": "target",
+        "conditions": "Table 1; same computational level as subsequent dynamics.",
+        "kind": "computation",
+        "statement": "Calculated S1/S2 vertical energies are 2.78/3.65 eV, oscillator strengths 0.008/0.019 and gap 0.87 eV.",
+        "limitations": "Vertical gap is not an adiabatic/0-0 energy. Source designation, not confirmed candidate SMILES."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F053",
+        "pdf_page": 2,
+        "quote": "The initial wavefunction is vertically excited into the S2 state at the FC",
+        "subject": "Az, Az-Cl, Az-OH, Az-NMe2",
+        "scope": "series_including_target",
+        "conditions": "F053 LVC/MCTDH two-singlet-state model; TDDFT B3LYP/TZP with COSMO cyclohexane; selected normal modes; first 20 ps after S0-to-S2 excitation.",
+        "kind": "computation",
+        "statement": "The model initializes S2 at the Franck-Condon geometry and evolves selected nuclear degrees of freedom; convergence checks are described for early propagation.",
+        "limitations": "Two excited singlets and selected modes, not full-dimensional S0/S1/S2/triplet/emission dynamics; SI convergence figures not inspected."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F053",
+        "pdf_page": 5,
+        "quote": "Az (2 %) > Az-Cl (0.4 %) > Az-OH (5 ⋅ 10−5 %) > Az-NMe2 (10−6 %)",
+        "subject": "Four azulenes; target Az-OH",
+        "scope": "series_including_target",
+        "conditions": "Solution PLQY values from external experimental ref44, quoted in the main text.",
+        "kind": "observation",
+        "statement": "Az-OH is assigned experimental PLQY 5 x10^-5% in the source's comparison, with the order Az > Az-Cl > Az-OH > Az-NMe2.",
+        "limitations": "F053 did not measure these yields anew; original ref44 not inspected. Preserve percent units, especially the very small OH/NMe2 values."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F053",
+        "pdf_page": 5,
+        "quote": "the exciton population of Az-OH drops rapidly from 96 % to 76 %, followed by a gradual decrease to ca. 68 % by 20 ps.",
+        "subject": "Az-OH",
+        "scope": "target",
+        "conditions": "F053 LVC/MCTDH two-singlet-state model; TDDFT B3LYP/TZP with COSMO cyclohexane; selected normal modes; first 20 ps after S0-to-S2 excitation. Figure 5 visually inspected.",
+        "kind": "computation",
+        "statement": "Az-OH S2 population drops from 96% to 76% during 0.3-4 ps and reaches 68.2% at 20 ps.",
+        "limitations": "Remaining S2 population at 20 ps is not fluorescence yield, experimental lifetime, or emission intensity."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F053",
+        "pdf_page": 5,
+        "quote": "stretching along C-O bond, which is observed for Q6 and Q11 normal modes of Az- OH",
+        "subject": "Az-OH",
+        "scope": "target",
+        "conditions": "F053 LVC/MCTDH two-singlet-state model; TDDFT B3LYP/TZP with COSMO cyclohexane; selected normal modes; first 20 ps after S0-to-S2 excitation. Main-text description of selected vibrational modes.",
+        "kind": "computation",
+        "statement": "C-O stretching modes Q6/Q11 contribute large intrastate couplings. Core modes Q15/Q37/Q42 resemble important azulene core motions.",
+        "limitations": "Mode assignments/couplings are computational; referenced SI mode tables not personally inspected."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F053",
+        "pdf_page": 7,
+        "quote": "Az-OH 68.2 % 76.7 % 26.7 %",
+        "subject": "Az-OH",
+        "scope": "target",
+        "conditions": "F053 LVC/MCTDH two-singlet-state model; TDDFT B3LYP/TZP with COSMO cyclohexane; selected normal modes; first 20 ps after S0-to-S2 excitation. Table 2 and Figure 5 visually inspected.",
+        "kind": "computation",
+        "statement": "Turning off Q15/Q37/Q42 raises 20 ps S2 population from 68.2% to 76.7%; those core modes account for 26.7% of modeled decay.",
+        "limitations": "Virtual mode removal is not physical rigidification by aggregation. It isolates only the chosen model degrees of freedom."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F053",
+        "pdf_page": 7,
+        "quote": "both the shape of the curves and the amount of the population loss are different in these simulations",
+        "subject": "Parent Az with artificially changed energy gaps",
+        "scope": "comparator",
+        "conditions": "Az Hamiltonian with gap set to 1.10, 0.87 or 0.56 eV, compared with actual derivative Hamiltonians.",
+        "kind": "computation",
+        "statement": "The parent-Az gap-only controls do not reproduce substituted compounds; coupling/structure matters as well as gap.",
+        "limitations": "Counterfactual controls on Az, not additional target dynamics or measured target yields."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F053",
+        "pdf_page": 7,
+        "quote": "The rate of the non-radiative decay of the S2 state for all compounds correlates well with the decrease of their anti-Kasha photoluminescence quantum yield",
+        "subject": "Az and derivatives including Az-OH",
+        "scope": "series_including_target",
+        "conditions": "Comparison of modeled early S2 loss with cited experimental PLQY ordering.",
+        "kind": "author_interpretation",
+        "statement": "Authors interpret early S2-to-S1 nonradiative loss and the gap/coupling interplay as determinants of relative anti-Kasha efficiency.",
+        "limitations": "Correlation across four compounds and a 20 ps model, not calculation of absolute radiative yields or definitive exclusive causation."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E08"
+        ],
+        "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "Virtual mode ablation demonstrates vibrational contributions but not actual motion restriction causing target aggregation enhancement. No positive RIM label."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state mechanism established in the extracted evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04"
+        ],
+        "rationale": "Source discusses S1/S2 crossing points in model diabatic cuts, but does not establish target-specific conical-intersection-mediated nonradiative decay or restricted CI access. Do not import parent Az's literature S1/S0 CI claim."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E08"
+        ],
+        "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "26eb9b438ea1dcb093607c59ef23845fce88e6bc8c4fe5162a5ccbbad0763e16",
+    "label_record_sha256": "c38b9be008cf14eaddc85041827cca7e42bbece343fab4d60715331643eda7fd"
+  }
+}

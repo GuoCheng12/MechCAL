@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0002",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0002",
+    "pdf_page": 2,
+    "figure": "Scheme 1",
+    "rationale": "The pyrene-linked azine and dimethylaminocinnamaldehyde scaffold agree visually; alkene/imine stereochemistry is not certified.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Confirm E/Z specifications against synthesis/SI before certifying the SMILES.",
+    "Review whether the viscosity-based secondary RIM assignment should remain given the simultaneous dielectric change.",
+    "The fitted CT components are reported below the instrumental response function (E08); do not convert them into independently measured ultrafast transfer rates."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

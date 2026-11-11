@@ -1,0 +1,265 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0094",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCCCCCCCCCCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)cc3)nn2)cc1OCCCCCCCCCCCC"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "2",
+    "source_documents": [
+      {
+        "source_id": "F041",
+        "title": "Advantages of Mobile Liquid-Crystal Phase of AIE Luminogens for Effective Solid-State Emission",
+        "doi": "10.1021/acs.jpcc.6b10026",
+        "pdf_sha256": "0c149cf7a99733779f5389ce4a5c0fd8c1f0d5cb857c183aca721d840b37f97a",
+        "page_count": 10
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F041",
+        "pdf_page": 3,
+        "quote": "Bulk sam- ples were prepared by fast evaporation with an aspirator vac- uum pump.",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "series_including_target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "observation",
+        "statement": "The bulk comparison uses rapid solvent removal, which can leave heterogeneous local packing.",
+        "limitations": "This preparation detail is shared by 1-3 and is important to the source's defect-site explanation."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F041",
+        "pdf_page": 4,
+        "quote": "bulks 1 and 2 show hexagonal and rectangular columnar LC phases at room temperature, respec- tively.",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "series_including_target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "observation",
+        "statement": "Compound 2 forms a rectangular columnar LC phase at room temperature, not the hexagonal phase of compound 1.",
+        "limitations": "Assignment is from earlier XRD work cited in this main paper."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F041",
+        "pdf_page": 4,
+        "quote": "2 Bulk 456 513 (3950) 2450 0.33",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "observation",
+        "statement": "Table 1 gives bulk 2 absorption/emission 456/513 nm, emission bandwidth 3950 cm^-1, Stokes shift 2450 cm^-1 and yield 0.33; THF/water aggregate yield is 0.19.",
+        "limitations": "Table visually inspected. Prose on PDF p3 inconsistently gives bandwidth 2450 cm^-1, apparently repeating the Stokes shift."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F041",
+        "pdf_page": 5,
+        "quote": "the radiative rates of bulks 1 and 2 are 2.9 and 2.0 times accelerated",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "observation",
+        "statement": "Bulk 2's derived radiative rate doubles relative to its THF/water aggregate: 1.4 versus 0.69 x10^8 s^-1; nonradiative rates are similar, 2.8 versus 2.9 x10^8 s^-1.",
+        "limitations": "Rates are calculated from yield and amplitude-averaged lifetime, not independent microscopic measurements; compound 1's 2.9-fold change is not transferred."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F041",
+        "pdf_page": 5,
+        "quote": "the red-shifted absorption and emission bands and the acceler- ated radiative rates of bulks 1 and 2 are caused by J-type transi- tion dipole-dipole coupling",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "series_including_target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose J-type coupling in zigzag columns as the explanation for spectral shifts and faster radiation.",
+        "limitations": "Spectroscopic/packing inference using a point-dipole approximation, not direct exciton-wavefunction measurement."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F041",
+        "pdf_page": 5,
+        "quote": "probably due to thermally activated intra- molecular motions and a subsequently accelerated nonradiative decay process",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "series_including_target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "author_interpretation",
+        "statement": "Initial thermal PL quenching is interpreted as activation of intramolecular motions.",
+        "limitations": "This is a proposed temperature effect, not the main reason bulk 2 outperforms solvent aggregates."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F041",
+        "pdf_page": 7,
+        "quote": "The 55% faster nonradiative rate of bulk 2 compared to that of bulk 1 is presumably caused by an imper- fect stacking condition",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "author_interpretation",
+        "statement": "Bulk 2's lower mobility and imperfect stacking are proposed to increase nonradiative loss relative to bulk 1.",
+        "limitations": "Heterogeneity/defect attribution is inferential, not direct counting of trap states."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F041",
+        "pdf_page": 7,
+        "quote": "The rearrange- ments of TPE derivatives of bulks 2 and 3 occur gradually over a wide temperature range, from 140 ℃ to the isotropization temperature.",
+        "subject": "Compound 2 (eight-dodecyl-chain TPE derivative)",
+        "scope": "series_including_target",
+        "conditions": "Fast-dried bulk at room temperature versus self-assembled THF/water aggregates; temperature-dependent PL/TCSPC excited at 375 nm.",
+        "kind": "author_interpretation",
+        "statement": "Temperature-dependent intensity/lifetime and DSC behavior are assigned to gradual rearrangement above about 140 C.",
+        "limitations": "Compound 2 and 3 share the trend, but their phase states and transition temperatures differ."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Preserve the weaker explicit thermal-motion explanation; no claim that stronger restriction causes the main bulk enhancement."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Columnar arrangement, mobility and imperfect stacking control both useful coupling and loss channels."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "Proposed J-type coupling explains the faster radiative process in bulk 2, with the source's approximate exciton assignment retained."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "rationale": "Derived rates identify radiative acceleration, not additional knr suppression, as the principal bulk-versus-solvent-aggregate advantage; overlaps with the J assignment."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Preserve the weaker explicit thermal-motion explanation; no claim that stronger restriction causes the main bulk enhancement."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Columnar arrangement, mobility and imperfect stacking control both useful coupling and loss channels."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is established."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "Proposed J-type coupling explains the faster radiative process in bulk 2, with the source's approximate exciton assignment retained."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "rationale": "Derived rates identify radiative acceleration, not additional knr suppression, as the principal bulk-versus-solvent-aggregate advantage; overlaps with the J assignment."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "6b4ca403a3eb1e4c0b1f36eda326345c9214ce4c71fc43d7e96d4d734c7b3d8d",
+    "label_record_sha256": "518ef5afab102caa0d297e2583a12d0a174a580b4332fd0e885d3cb54dd86f9b"
+  }
+}

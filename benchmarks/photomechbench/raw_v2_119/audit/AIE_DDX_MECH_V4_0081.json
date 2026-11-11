@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0081",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F033",
+    "pdf_page": 3,
+    "figure": "Scheme 1 probe L; Fig. 3d binding proposal",
+    "rationale": "Probe L is the final condensation product, not intermediates 1-3. Identity by source designation only.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI absorption, NMR titration, spectra and characterization; no SI inspected.",
+    "Resolve pH 7.40 methods versus 7.20 results and 100 mM versus 100 micromolar cellular Zn concentration.",
+    "Do not treat suggested C=C rotation restriction as a directly demonstrated molecular mechanism."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

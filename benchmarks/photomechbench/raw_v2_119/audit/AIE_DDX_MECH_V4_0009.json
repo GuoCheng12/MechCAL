@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0009",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F005",
+    "pdf_page": 3,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Retrieve the computational SI and reference 51 spectra for an independent check of reported experiments.",
+    "Keep isolated ADB, anthracene comparator models and framework-bound ADB separate.",
+    "Source oscillator strengths and geometry constraints are theoretical, not experimentally measured probabilities or rates."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,245 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0084",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "c1ccc(C2=C(c3ccccc3)C(c3ccccc3)=C(c3ccccc3)C2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPC",
+    "source_documents": [
+      {
+        "source_id": "S0084",
+        "title": "Understanding aggregation induced emission in a propeller-shaped blue emitter",
+        "doi": "10.1002/cptc.201900075",
+        "pdf_sha256": "e4caab7193cac377f197e735e20042baee2206ff7a8299c0348bf6b17e95f480",
+        "page_count": 24
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0084",
+        "pdf_page": 7,
+        "quote": "The radiative rates obtained for both phases are very similar, the value for solution is slightly larger than the solid state rate.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Calculated spontaneous-emission rates in solution and crystal.",
+        "kind": "computation",
+        "statement": "Radiative-rate enhancement does not explain the brighter crystal in this model.",
+        "limitations": "The result concerns this computational comparison, not every possible sample condition."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0084",
+        "pdf_page": 11,
+        "quote": "the out-of-plane rotation of the phenyl rings with respect to cyclopentadienyl ring are hampered because of geometrical restrictions imposed by the packing",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Normal-mode and reorganization-energy analysis in solution and solid.",
+        "kind": "computation",
+        "statement": "Packing restricts specific phenyl motions.",
+        "limitations": "Model-based motion restriction should not be represented as a measured molecular trajectory."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0084",
+        "pdf_page": 12,
+        "quote": "The modes associated with the out-of-plane bending of the cyclopentadiene ring leading to the corresponding conical intersection are not significantly activated during the first 500 fs of dynamics.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Initial 500 fs of simulated excited-state dynamics.",
+        "kind": "computation",
+        "statement": "The simulated early dynamics do not directly exhibit the CI-driving puckering motion.",
+        "limitations": "This is a limit of the trajectory window, not proof that CI decay is absent."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0084",
+        "pdf_page": 15,
+        "quote": "In the molecular crystal, because the S1–S0 MECI is classically inaccessible, the relaxation through this mechanism is disfavoured.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Comparison of optimized CI energies in vacuum and crystal.",
+        "kind": "computation",
+        "statement": "The calculated crystal energy landscape suppresses access to a puckered CI.",
+        "limitations": "CI geometries and correlation-corrected energies use different methods; the claim is qualitative."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0084",
+        "pdf_page": 16,
+        "quote": "the enhancement of emission in the solid state is associated with the minimisation of decay through nonradiative mechanisms.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Source conclusion from vibrational and excited-state calculations.",
+        "kind": "author_interpretation",
+        "statement": "The source attributes solid-state enhancement to suppressing nonradiative decay.",
+        "limitations": "This is an interpretation supported by calculations, not a new experimental result."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0084",
+        "pdf_page": 16,
+        "quote": "the complementary descriptions provided the RIR and RACI models.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Conclusion discussing both descriptions.",
+        "kind": "author_interpretation",
+        "statement": "The paper explicitly treats RIR and RACI as complementary accounts.",
+        "limitations": "The two labels are not assumed to represent independent experimentally separated causes."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0084",
+        "pdf_page": 16,
+        "quote": "The crystal structure shows minimal π −π interactions and electronic ex- citations are not significantly perturbed by the crystal environment.",
+        "subject": "TPC",
+        "scope": "target",
+        "conditions": "Source summary of the modeled crystal compared with isolated/solution descriptions.",
+        "kind": "author_interpretation",
+        "statement": "The source distinguishes crystal-induced motion restriction from a major change in electronic excitation caused by intermolecular interaction.",
+        "limitations": "Crystal packing alone must not be converted into an aggregate-exciton label; this statement does not exclude all weak intermolecular coupling."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The paper also explicitly relies on restricting modes that enable nonradiative relaxation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E04"
+        ],
+        "rationale": "Crystal packing supplies the external constraint for the two central descriptions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The modeled restriction of puckering-CI access is a central explanation."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The paper also explicitly relies on restricting modes that enable nonradiative relaxation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E04"
+        ],
+        "rationale": "Crystal packing supplies the external constraint for the two central descriptions."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E05"
+        ],
+        "rationale": "Do not add a separate radiative-enhancement label: the computed radiative rates barely change. The broad knr-balance reading overlaps RIM/RACI and requires a consistent benchmark-wide policy."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The modeled restriction of puckering-CI access is a central explanation."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "c45c83927f1d9e51fbc427b81f0ecc85193a1b698cb85c9b4468b007b09f9f93",
+    "label_record_sha256": "c47f31e1ba5aa7a7c99681dd722b42b7d38708fcda06ad210ffe42a605e7051c"
+  }
+}

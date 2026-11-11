@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0007",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F003",
+    "pdf_page": 5,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Do not transfer organoiron redox or metal-mediated photophysics to demetallated D5.",
+    "Target-specific morphology and intramolecular/extramolecular excimer separation require further evidence; D3a TEM is only comparator evidence.",
+    "Obtain SI characterization and independently confirm the very large inherited dendrimer graph later."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

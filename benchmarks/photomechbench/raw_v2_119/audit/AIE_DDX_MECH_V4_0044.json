@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0044",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F019",
+    "pdf_page": 8,
+    "figure": "Figure 1a (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI S4-S7 for dimer calculations, wavelength-dependent lifetimes and low-temperature phosphorescence.",
+    "Resolve source powder/crystal yield ordering and inconsistent synthesis wording (p.6 isophthalic acid versus p.8 tert-butylbenzoic acid); target naming/figure is usable but graph review deferred."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

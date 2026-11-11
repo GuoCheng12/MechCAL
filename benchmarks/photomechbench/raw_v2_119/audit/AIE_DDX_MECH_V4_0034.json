@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0034",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "S0034",
+    "pdf_page": 2,
+    "figure": "Scheme 1 (pointer only; structure not adjudicated)",
+    "rationale": "Evidence-first reconstruction requested by the user; molecular graph adjudication is deferred.",
+    "limitations": "Legacy SMILES retained unverified. The figure is a future review pointer, not approval of chemical identity."
+  },
+  "notes": [
+    "Structure review is deferred; the legacy SMILES is retained without verification.",
+    "Retrieve the ESI for target-resolved titrations, Job plots and fit diagnostics; only the main-paper table and reports are currently checked.",
+    "Expert review should adjudicate the proposed roles and the strength of the source's J-aggregate interpretation, particularly for TPA1p/TPA2p.",
+    "Table 2 uses 5 x 10^-6 M; preserve micromolar units rather than the PDF extraction's corrupted mM rendering."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

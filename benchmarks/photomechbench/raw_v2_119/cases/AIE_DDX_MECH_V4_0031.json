@@ -1,0 +1,279 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0031",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCCCN1C(=O)c2cc3ccc(N(C)C)cc3cc2C1=O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "DMN-Bu",
+    "source_documents": [
+      {
+        "source_id": "S0031",
+        "title": "Customized Tuning of Aggregation-Induced Emission of a Napthalimide Dye by Surfactants and Cyclodextrin",
+        "doi": "10.1016/j.jcis.2017.03.097",
+        "pdf_sha256": "8d3168b9e7106fffdd5850f08b1382277b9c741ac9da0d7d8e64cc747ef2cf60",
+        "page_count": 27
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0031",
+        "pdf_page": 10,
+        "quote": "In water the dye has an emission maximum around 486 nm",
+        "subject": "DMN-Bu",
+        "scope": "target",
+        "conditions": "Aqueous dye, 10 micromolar; surfactant titrations at near-neutral pH.",
+        "kind": "observation",
+        "statement": "The aqueous aggregate emission is near 486 nm. CTAB addition produces a longer-wavelength band near 600 nm above the micellar regime.",
+        "limitations": "The spectral change is observed; assignment to monomers and aggregates requires the source comparisons below."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0031",
+        "pdf_page": 11,
+        "quote": "A clear isoemissive point at 554 nm shows a clear transformation",
+        "subject": "DMN-Bu with CTAB",
+        "scope": "target",
+        "conditions": "CTAB titration; aqueous dye 10 micromolar.",
+        "kind": "author_interpretation",
+        "statement": "The authors interpret the isoemissive point and opposite changes in the two bands as aggregate-to-monomer conversion.",
+        "limitations": "An isoemissive point is consistent with conversion but does not independently prove aggregate geometry."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0031",
+        "pdf_page": 12,
+        "quote": "rotational correlation time increases to 0.85 ns",
+        "subject": "DMN-Bu in CTAB micelles",
+        "scope": "target",
+        "conditions": "Time-resolved anisotropy under CTAB micellar conditions.",
+        "kind": "observation",
+        "statement": "The micelle-associated dye has a reported rotational correlation time of 0.85 ns.",
+        "limitations": "Whole-body rotational reorientation is not direct measurement of an intramolecular torsional barrier."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0031",
+        "pdf_page": 13,
+        "quote": "Here we required more than 4 mM of Tween-20 to complete the deaggregation process",
+        "subject": "DMN-Bu with Tween-20",
+        "scope": "target",
+        "conditions": "Nonionic Tween-20 titration in water.",
+        "kind": "observation",
+        "statement": "Complete deaggregation requires more than 4 mM Tween-20, substantially above the stated approximately 0.06 mM CMC.",
+        "limitations": "Do not infer that the dye's transition locates the CMC equally well for every surfactant."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0031",
+        "pdf_page": 14,
+        "quote": "This can be explained by the presence of high dipole moment of DMN-Bu due to an intramolecular charge transfer nature of the dye.",
+        "subject": "DMN-Bu in surfactant environments",
+        "scope": "target",
+        "conditions": "Comparison of monomer emission and lifetime in ionic and nonionic micelles.",
+        "kind": "author_interpretation",
+        "statement": "The authors invoke the dye's ICT character to explain sensitivity to the polarity of different micellar environments.",
+        "limitations": "This is an ICT interpretation, not a demonstrated twisted CT geometry or an independent electron-transfer reaction."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0031",
+        "pdf_page": 16,
+        "quote": "Since the aggregates are blue shifted with respect to the monomers in the case of both ionic as well as non-ionic surfactants, we confirm the existence of H-aggregates of DMN-Bu molecules in water.",
+        "subject": "DMN-Bu",
+        "scope": "target",
+        "conditions": "Excitation spectra before and after surfactant-induced deaggregation.",
+        "kind": "author_interpretation",
+        "statement": "The source assigns aqueous dye aggregates as H-aggregates from their blue-shifted spectra relative to monomers.",
+        "limitations": "A source-supported spectral assignment, not crystal-resolved packing or definitive exciton geometry."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0031",
+        "pdf_page": 17,
+        "quote": "cyclodextrin is too small to accommodate any napthalimide dye, but it has a good affinity towards SDS.",
+        "subject": "alpha-cyclodextrin, SDS and DMN-Bu",
+        "scope": "target",
+        "conditions": "Alpha-cyclodextrin is added to the previously deaggregated dye-SDS solution.",
+        "kind": "author_interpretation",
+        "statement": "The proposed host-guest step captures SDS rather than inserting DMN-Bu into the cyclodextrin cavity.",
+        "limitations": "Host binding is system-mediated and involves a different guest. This must not become a direct dye-inclusion claim."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "S0031",
+        "pdf_page": 17,
+        "quote": "the emission maxima at 620 nm start to decrease",
+        "subject": "DMN-Bu in SDS with added alpha-cyclodextrin",
+        "scope": "target",
+        "conditions": "Titration with alpha-cyclodextrin; changes begin near 2 mM.",
+        "kind": "observation",
+        "statement": "The 620 nm band decreases and a band near 470 nm grows; the source also reports a 13 nm blue shift of excitation.",
+        "limitations": "Consistent with restored dye aggregation through micelle disruption, not proof of direct dye-host inclusion."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "S0031",
+        "pdf_page": 26,
+        "quote": "Plot of the fluorescence intensity of 10 μM DMN-Bu with varying concentration",
+        "subject": "DMN-Bu with alpha-cyclodextrin alone",
+        "scope": "target",
+        "conditions": "Embedded SI Fig. S6, water without SDS; 0, 2, 6 and 10.8 mM alpha-cyclodextrin.",
+        "kind": "observation",
+        "statement": "The plotted spectra retain a similar shape and show a modest intensity decrease rather than the large spectral conversion seen with SDS present.",
+        "limitations": "Figure visually inspected. The effect is small relative to the SDS-mediated conversion, not literally zero; no digitized intensity or binding constant is inferred."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05"
+        ],
+        "rationale": "Preserve the source's ICT interpretation of environment-dependent monomer photophysics, without promoting it to verified TICT."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The central source explanation is reversible conversion of H-aggregates and monomers. The H assignment is spectroscopic."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of internal motion is established in the selected evidence. Whole-molecule reorientation or aggregation alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05"
+        ],
+        "rationale": "Preserve the source's ICT interpretation of environment-dependent monomer photophysics, without promoting it to verified TICT."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism is established. Changing solution pH or ground-state protonation alone does not establish ESIPT."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer pathway is established by the selected source evidence."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E06",
+          "E08"
+        ],
+        "rationale": "The central source explanation is reversible conversion of H-aggregates and monomers. The H assignment is spectroscopic."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "fee8dbe789077356597f7773ddb88d1dea2bef92549514a3f4df202676a37b44",
+    "label_record_sha256": "d3e3b4b94ea280b69b30a01e2d7e3c0485fc25d862e8f9acfd1eff280f9cad32"
+  }
+}

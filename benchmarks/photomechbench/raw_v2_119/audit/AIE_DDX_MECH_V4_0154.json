@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0154",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F057",
+    "pdf_page": 6,
+    "figure": "Fig. 3, mFDBP (2)",
+    "rationale": "Compound number 2 and the mFDBP designation identify the source target; structure review is deferred.",
+    "limitations": "No chemical-graph verification of legacy SMILES. The p.9 spelling mFBDBF is treated as a source abbreviation inconsistency, not as a different target."
+  },
+  "notes": [
+    "Structure review is deferred and human review remains pending.",
+    "Obtain SI Figs.S1,S4-S8,S10-S14 and Tables S1-S5 for mFDBP-specific orbital, lifetime and phase characterization; only main-text reports were inspected.",
+    "The detailed representative BDBF experiments are comparator evidence, not mFDBP measurements. mFDBP values are 201 ms and 17.7% in main figures, not 0.23 s/34.5% or the series maximum 36%.",
+    "The source p.9 uses mFBDBF (2), whereas figures and compound list use mFDBP (2); retain this editorial discrepancy for review.",
+    "Series-level RIM and orbital-mixing interpretations require expert adjudication before becoming benchmark reference labels."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0076",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0077",
+    "pdf_page": 2,
+    "figure": "Figure 1b, AV",
+    "rationale": "Anthraquinone connectivity and aryl substituent positions agree provisionally with the guest drawing after omitting sodium counterions. The inherited candidate represents the dye anion, not the full host-guest system.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Resolve parent-ion versus salt representation consistently across all dye cases.",
+    "Keep the hidden-reference labels tied to the cage-containing source conditions; those conditions are not inferable uniquely from the guest-only SMILES.",
+    "Check SI for the CV/TA interpretation and inconsistent uncertainty/yield values.",
+    "Have experts adjudicate co-primary roles; current records are assistant-curated drafts."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

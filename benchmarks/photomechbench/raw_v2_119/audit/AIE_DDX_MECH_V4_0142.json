@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0142",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F052",
+    "pdf_page": 8,
+    "figure": "Figure 1: azulene 1a; F053 Az",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "F051 relevant methods/azulene discussion pp2-5, F052 methods/results pp8-30 and F053 pp1-7 were considered; none establishes aggregation-induced enhancement for free azulene.",
+    "Request F052 SI geometry/orbital/NACME/rate tables and F053 SI mode sets/convergence data; no separate SI inspected.",
+    "F053 cites an S1/S0 CI mechanism from prior literature; expert review should decide whether to retain this secondary family or require original ref45.",
+    "Source-specific PLQYs differ and must not be merged. F053 population=90.5% at 20 ps is not 90.5% fluorescence yield."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

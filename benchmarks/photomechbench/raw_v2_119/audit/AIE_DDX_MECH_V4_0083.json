@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0083",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F036",
+    "pdf_page": 2,
+    "figure": "Schemes 1-2 compound 1",
+    "rationale": "Target is the chlorinated ethanolamine-functional naphthalimide 1; nonchlorinated 2 and dimethylamine 3 are comparators.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI synthesis, spectra, concentration-series and comparator controls; main text only inspected.",
+    "Ground-state acid/base switching is not ESIPT. Mention of Kasha exciton theory must not trigger SOKR/anti-Kasha.",
+    "Strong-acid paper threshold versus near-neutral solution response is explicitly unresolved by authors; do not invent a confinement mechanism."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

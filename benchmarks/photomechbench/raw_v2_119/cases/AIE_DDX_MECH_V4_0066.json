@@ -1,0 +1,252 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0066",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "COc1ccc(C(=NN=C(c2ccccc2)c2ccc(OC)cc2O)c2ccccc2)c(O)c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "compound 1 (benzophenone azine)",
+    "source_documents": [
+      {
+        "source_id": "F028",
+        "title": "Reversible Thermochromism of Aggregation-Induced Emission-Active Benzophenone Azine Based on Polymorph-Dependent Excited-State Intramolecular Proton Transfer Fluorescence",
+        "doi": "10.1021/jp311020w",
+        "pdf_sha256": "38ec20116bd3844dcaabfe96da101035340e6e318d42768149fa0d6890ff65c1",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F028",
+        "pdf_page": 2,
+        "quote": "10 μmol L−1 1 displayed nearly no fluorescence in the low water fraction range from 0 to 60%",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Water/EtOH, 10 micromolar, 10 mM HEPES pH 7.0; excitation 390 nm.",
+        "kind": "observation",
+        "statement": "Nearly absent emission below 60% water; 542 nm band grows at 70-90%.",
+        "limitations": "Intensity and absorption tail indicate aggregation but not a unique microscopic pathway."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F028",
+        "pdf_page": 2,
+        "quote": "free rotations around N−N and C−C single bonds",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Proposed solution versus aggregate mechanism.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose rotations as nonradiative pathways, inhibited by aggregate packing to allow ESIPT fluorescence.",
+        "limitations": "No direct torsional dynamics or viscosity test in selected evidence."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F028",
+        "pdf_page": 2,
+        "quote": "a Stokes shift as large as 152 nm was observed for 1 as a result of ESIPT.",
+        "subject": "compound 1",
+        "scope": "target",
+        "conditions": "Aggregate absorption/emission 390/542 nm.",
+        "kind": "author_interpretation",
+        "statement": "Authors assign the large Stokes shift to ESIPT.",
+        "limitations": "Does not directly time-resolve proton transfer."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F028",
+        "pdf_page": 2,
+        "quote": "1-Crys.(G) (quantum yield 17% and lifetime 1.24 ns) and 1-Crys.(YG) (quantum yield 13% and lifetime 1.15 ns)",
+        "subject": "compound 1 crystal polymorphs",
+        "scope": "target",
+        "conditions": "Ethyl acetate slow evaporation; integrating sphere QY, 372 nm lifetime excitation.",
+        "kind": "observation",
+        "statement": "G and YG have QY/lifetime 17%/1.24 ns and 13%/1.15 ns; peaks 521 and 540 nm.",
+        "limitations": "Crystal measurements, not aqueous aggregate QY; no separate rate mechanism inferred."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F028",
+        "pdf_page": 2,
+        "quote": "intramolecular hydrogen bonds from the salicylaldimine, which provided a structural basis for ESIPT process, were observed for both of the two polymorphs.",
+        "subject": "compound 1 polymorphs",
+        "scope": "target",
+        "conditions": "Single-crystal X-ray Fig. 3.",
+        "kind": "author_interpretation",
+        "statement": "H bonds are invoked as structural basis for ESIPT.",
+        "limitations": "Ground-state structures do not demonstrate excited-state proton motion."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F028",
+        "pdf_page": 3,
+        "quote": "molecules in polymorph 1-Crys.(YG) packed in a much tighter mode, resulting in the fluorescence in a relative longer wavelength range.",
+        "subject": "compound 1 polymorphs",
+        "scope": "target",
+        "conditions": "Figs. 3-4, Table 1.",
+        "kind": "author_interpretation",
+        "statement": "Tighter YG packing is proposed to explain redder emission; interplane spacing is smaller.",
+        "limitations": "Fig. 4/Table 1 visually inspected. Prose says larger YG angles, but table angles are smaller; inconsistency not silently corrected."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F028",
+        "pdf_page": 3,
+        "quote": "they both existed as crystallines rather than amorphous powders",
+        "subject": "compound 1 powders",
+        "scope": "target",
+        "conditions": "PXRD after synthesis or THF evaporation, Fig. 6.",
+        "kind": "observation",
+        "statement": "Both powder states are crystalline, matching their crystal polymorphs.",
+        "limitations": "Not merely an amorphous/crystalline transition; no raw refinement inspected."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F028",
+        "pdf_page": 4,
+        "quote": "upon repeated thermal cycles, the emission peak of 1 shifted between 522 and 541 nm as expected.",
+        "subject": "compound 1 thermal switching",
+        "scope": "target",
+        "conditions": "231 C annealing; 236 C melting followed by cooling; Fig. 8.",
+        "kind": "observation",
+        "statement": "Repeated thermal treatment switches emission between 522 and 541 nm.",
+        "limitations": "Detailed thermal-treatment PXRD and stability plots in SI were not inspected."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Preserve explicitly proposed rotation restriction without treating it as uniquely proven."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Polymorph packing interconversion is central to reversible thermochromism."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "Explicit ESIPT assignment supported by Stokes shift and H bonds, not direct time-resolved proton transfer."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Preserve explicitly proposed rotation restriction without treating it as uniquely proven."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E04",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Polymorph packing interconversion is central to reversible thermochromism."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "Explicit ESIPT assignment supported by Stokes shift and H bonds, not direct time-resolved proton transfer."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in the selected evidence."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "8df455bf777f1fcd40b9318cb132d91f4243c6b7ced6883d8a8da1b6ec40af67",
+    "label_record_sha256": "91838f4c1c95aa5ccf06c8611e7053c9b54f528d1334eb568d4e677287fd1fcf"
+  }
+}

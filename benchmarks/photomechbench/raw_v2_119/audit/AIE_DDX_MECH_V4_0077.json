@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0077",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0077",
+    "pdf_page": 2,
+    "figure": "Figure 1b, ICG",
+    "rationale": "Figure 1b shows the ICG chromophore with a seven-methine bridge, an iminium terminus and two sulfobutyl sulfonates. Restoring the missing bridge carbon and terminal bond order removes the artificial radical in the inherited graph.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "The seven-methine closed-shell ICG parent is applied to this draft. It retains the inherited single-component, net -1 input convention. The neutral sodium salt is recorded separately, not supplied as an additional input. Independently review this convention before release.",
+    "Decide how to retain a guest-only SMILES case whose literature mechanism depends on a specific cage; no new condition is added to model input in this smoke.",
+    "Obtain the SI for ICG-specific binding/electrochemical measurements. No ICG fsTA measurement is claimed.",
+    "Parent formula C43H47N2O6S2-; sodium salt C43H47N2NaO6S2.",
+    "Do not infer E/Z stereochemistry from the abbreviated bridge drawing.",
+    "The source concerns cage-guest observations; correcting the guest graph does not resolve the separate context/evidence-scope question."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

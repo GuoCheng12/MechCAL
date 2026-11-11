@@ -1,0 +1,272 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0028",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "c1ccc(CNCc2ccc(C(=C(c3ccccc3)c3ccc(CNCc4ccccc4)cc3)c3ccccc3)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPE–DBA",
+    "source_documents": [
+      {
+        "source_id": "F015",
+        "title": "A self-assembly induced emission system constructed by the host–guest interaction of AIE-active building blocks",
+        "doi": "10.1039/c4cc06510g",
+        "pdf_sha256": "991737e6e8d21bec37da6dde71c888ddb86e56594c7dedc863ba854f4e36984d",
+        "page_count": 3
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F015",
+        "pdf_page": 2,
+        "quote": "which perform as the host and guest molecules due to their dibenzo[24]crown-8 moieties and benzylamino groups, respectively.",
+        "subject": "TPE–DBA",
+        "scope": "target",
+        "conditions": "Source designations and synthesis, Scheme 1.",
+        "kind": "observation",
+        "statement": "The source identifies TPE–DBA as the guest building block of the TPE-DDBC/TPE-DBA system.",
+        "limitations": "Name/function mapping only; molecular graph, E/Z configuration and legacy SMILES remain unverified. DBA is reported as an E/Z mixture."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F015",
+        "pdf_page": 2,
+        "quote": "When the fW reaches 90%, the system becomes highly emissive",
+        "subject": "TPE–DBA",
+        "scope": "target",
+        "conditions": "10 micromolar THF/water, excitation 360 nm; Fig. 1 visually inspected.",
+        "kind": "observation",
+        "statement": "TPE-DBA is reported nonemissive through 80% water and becomes emissive around 485 nm at 90% water.",
+        "limitations": "The two compounds have separate traces. Do not transfer the DBA threshold or quantitative enhancement to DDBC; no numerical DDBC threshold is claimed."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F015",
+        "pdf_page": 2,
+        "quote": "the protonated amines are capable of recognizing the crown ethers",
+        "subject": "TPE–DBA in the two-component mixture",
+        "scope": "target",
+        "conditions": "Equimolar TPE-DBA/TPE-DDBC in THF; acid/base switching, Fig. 2A.",
+        "kind": "author_interpretation",
+        "statement": "Protonation permits ammonium-crown binding; base-induced deionization is proposed to dissociate the supramolecular assembly.",
+        "limitations": "Ground-state protonation is not ESIPT. Detailed stoichiometry/association kinetics are not established by the inspected main text."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F015",
+        "pdf_page": 2,
+        "quote": "The non-covalent inter- action of the host will lock on the rotations of benzylamino groups",
+        "subject": "TPE–DBA in the two-component assembly",
+        "scope": "target",
+        "conditions": "Acidified equimolar mixture; source's target-specific RIR explanation.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose crown binding to protonated benzylamino groups locks rotations coupled to the TPE phenyls, turning on emission of the DBA guest.",
+        "limitations": "The fluorescent mixture was not spectrally decomposed into separate guest and host contributions; retain the author's proposed attribution, not measured component fractions."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F015",
+        "pdf_page": 2,
+        "quote": "The FL ‘‘turn-on/turn-off’’ behaviours are reversible",
+        "subject": "TPE–DBA with complementary building block",
+        "scope": "target",
+        "conditions": "Each building block 5e-4 M in THF, 1:1; HCl/NaOH aqueous stocks 1 M; excitation 360 nm; Fig. 2B-C inspected.",
+        "kind": "observation",
+        "statement": "Acid produces a fluorescent white precipitate after 10 min sonication; base removes precipitate and fluorescence. Three cycles are shown.",
+        "limitations": "These are mixture-level measurements, not isolated-target acid/base titrations. PDF extraction corrupts microliter glyphs; do not use the extracted mL aliquots literally."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F015",
+        "pdf_page": 3,
+        "quote": "such low water fraction cannot lead to the aggregation of TPE–DBA and TPE–DDBC.",
+        "subject": "TPE–DBA with complementary building block",
+        "scope": "target",
+        "conditions": "Control comparison between approximately 2% cumulative water after three acid/base cycles and Fig. 1 solvent titrations.",
+        "kind": "author_interpretation",
+        "statement": "Authors argue the initial turn-on is from host-guest-induced insoluble assembly, not water alone.",
+        "limitations": "This is a water-fraction control, not a complete exclusion of ionic strength, counterion or protonation-related contributions."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F015",
+        "pdf_page": 3,
+        "quote": "the emission became stronger and the emission peak blue-shifted after every cycle.",
+        "subject": "TPE–DBA in cyclic mixture assemblies",
+        "scope": "target",
+        "conditions": "Three acid/base cycles, Fig. 2B-C and Fig. 3.",
+        "kind": "author_interpretation",
+        "statement": "Authors associate stepwise intensity increases with tighter packing as water accumulates, and blue shifts with increased structural order/twisting.",
+        "limitations": "The cycle is reversible in on/off behavior but not identical in brightness. Packing/twisting explanation is proposed, not molecularly resolved."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F015",
+        "pdf_page": 3,
+        "quote": "microscopic wires with diameters of about 100 nm",
+        "subject": "TPE–DBA in mixture assemblies",
+        "scope": "target",
+        "conditions": "SEM of neutral/acid/base preparations, Fig. 3.",
+        "kind": "observation",
+        "statement": "Acidified mixtures form bundled wire-like networks; base-treated material becomes featureless. Wire widths grow from about 100 nm toward over 500 nm over cycles.",
+        "limitations": "SEM samples are prepared solids; morphology does not by itself quantify internal rotation or resolve each component."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F015",
+        "pdf_page": 3,
+        "quote": "can form a strongly-bonded counter-ion pair with a protonated secondary amine",
+        "subject": "TPE–DBA in chloride-containing assembly",
+        "scope": "target",
+        "conditions": "Discussion of chloride and alternative anions.",
+        "kind": "author_interpretation",
+        "statement": "Authors note that chloride can compete through strong ion pairing, and suggest PF6 or BF4 as potentially better anions for host-guest interaction.",
+        "limitations": "Alternative counterions are a proposal, not experiments inspected here; retain this limitation on the HCl-driven model."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E07"
+        ],
+        "rationale": "Target-specific author interpretation links supramolecular assembly to restricted phenyl rotations. Component emission fractions and torsional dynamics were not measured."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Precipitation, network formation and changing microstructure provide the environment for RIR and cycle-dependent intensity/color changes."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E05",
+          "E06",
+          "E09"
+        ],
+        "rationale": "Source assigns acid-enabled ammonium-crown recognition to the two-component assembly and its reversible emission response; target role is explicitly guest."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E04",
+          "E07"
+        ],
+        "rationale": "Target-specific author interpretation links supramolecular assembly to restricted phenyl rotations. Component emission fractions and torsional dynamics were not measured."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Precipitation, network formation and changing microstructure provide the environment for RIR and cycle-dependent intensity/color changes."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E05",
+          "E06",
+          "E09"
+        ],
+        "rationale": "Source assigns acid-enabled ammonium-crown recognition to the two-component assembly and its reversible emission response; target role is explicitly guest."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT excited-state mechanism is established here; donor-acceptor structure alone is insufficient."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03"
+        ],
+        "rationale": "Acid/base protonation enables host binding in the ground state; no excited-state proton-transfer mechanism is established."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "The blue shift and assembly morphology are attributed to packing/twisting, not an explicitly identified exciton or excimer state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or state-population explanation is established; intensity or lifetime changes alone do not isolate it."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "654a61c64921d2fbccac3b8ec7918bcfa689470ef65f829100a403a9236a685b",
+    "label_record_sha256": "abf21b43ccd4e52bf7920737d3b804a982c9f7dd45ec51af2b91ae8546e4f979"
+  }
+}

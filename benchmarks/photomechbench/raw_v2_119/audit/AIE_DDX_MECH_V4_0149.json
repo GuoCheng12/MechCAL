@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0149",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F053",
+    "pdf_page": 6,
+    "figure": "Figure 5 molecular designation: Az-Cl / 2-chloroazulene",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F053 SI target mode tables, coordinates, gradients/Hessians and convergence checks; none separately inspected.",
+    "Az-Cl is 2-chloroazulene in this paper, not F052's 1,3-dichloro 1c. Never transfer 1c quantum yield or CT analysis.",
+    "20 ps population fractions and percent PLQYs have entirely different meanings. Longer-time emission kinetics and original experimental ref44 require separate review."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

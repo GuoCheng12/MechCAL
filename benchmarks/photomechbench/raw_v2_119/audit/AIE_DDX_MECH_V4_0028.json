@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0028",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F015",
+    "pdf_page": 1,
+    "figure": "Scheme 1: TPE–DBA; Fig. 1 inset on p.2",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Request SI synthesis/isomer characterization and full experimental procedures, including corrected aliquot units and counterion controls.",
+    "The key switching experiment is a two-component mixture; emission cannot be partitioned quantitatively between TPE-DBA and TPE-DDBC from this source.",
+    "Host/guest roles are not interchangeable. RIR is an explicit proposed mechanism but no motion-resolved experiment is supplied."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

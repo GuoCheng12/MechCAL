@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0069",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F030",
+    "pdf_page": 2,
+    "figure": "Fig. 1c FFA; Fig. 3 structural comparison",
+    "rationale": "Named target flufenamic acid (FFA), evaluated separately as polymorphs I and III; no graph verification.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request FFA SI PXRD, lifetimes, AIE water series and facet controls (Figs. S3, S14, S17, S19, S22-S24).",
+    "Table 1 lacks explicit units for QY/lifetime in this accepted manuscript; do not normalize numerical units without source confirmation.",
+    "Shape/size dependence is not established for FFA III under the tested conditions."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

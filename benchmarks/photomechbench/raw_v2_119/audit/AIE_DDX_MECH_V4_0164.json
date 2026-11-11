@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0164",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F058",
+    "pdf_page": 2,
+    "figure": "Scheme 1, 5-Cz-Sac; Fig. 3A on PDF p.5",
+    "rationale": "The named emitter is identified in the main-text series and figure designations. Chemical-graph confirmation is deferred.",
+    "limitations": "Legacy SMILES is unchanged and not verified. No structural, regioisomeric, crystal-purity or impurity-identity approval is asserted."
+  },
+  "notes": [
+    "Structure review is deferred; legacy SMILES was not changed or confirmed.",
+    "Obtain SI Figs.S14-S19 for solvatochromism, delay-resolved crystal spectra, fitted RTP lifetimes, lab-carbazole controls and oxygen-dependent solution decays. These were reported in main text, not personally inspected.",
+    "The ultralong commercial-carbazole lifetimes are impurity-sensitive; resolve the trace-isomer identity/content and mechanism before calling the hundreds-of-ms lifetime an intrinsic property.",
+    "Packing and RIM interpretations are retained as bounded source explanations, not definitive causality. Close pi contacts do not establish excimer/H/J emission.",
+    "Do not transfer DiCz-Sac TADF or its 3.2 microsecond lifetime to this mono-carbazole target; the source reports no delayed fluorescence component.",
+    "The main text and Table 1 appear inconsistent in assigning the origin of some S1 energies (computed versus spectral); only the explicitly described 0.31/0.28/0.20 eV spectroscopic gap series is used."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

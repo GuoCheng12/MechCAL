@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0072",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F031",
+    "pdf_page": 2,
+    "figure": "Scheme 1c, Si2s-2C",
+    "rationale": "Si2s-2C is explicitly synthesized in section 2.b.3 and distinguished from Si4s-2C and diester acceptor compounds.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "No aggregation experiment or AIE mechanism is established for this target in F031. Consider benchmark-scope review, not target identity quarantine.",
+    "Request SI Figs. S3-S7 and global-fit details. These are reported in main text, not personally inspected."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

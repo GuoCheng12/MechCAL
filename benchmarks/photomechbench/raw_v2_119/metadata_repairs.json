@@ -1,0 +1,101 @@
+[
+  {
+    "case_id": "AIE_DDX_MECH_V4_0003",
+    "source_id": "F002",
+    "doi": "10.1039/c3cc00157a",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Aggregation-induced emission (AIE) behavior and thermochromic luminescence properties of a new gold(I) complex",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0011",
+    "source_id": "F007",
+    "doi": "10.1016/j.dyepig.2023.111182",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Novel Y-shaped multi-stimuli responsive pyrene substituted quinoxaline and pyridopyrazine-based push-pull molecules showing solvatochromism, aggregation induced excimer emission, acidofluorochromism and moisture detection",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0023",
+    "source_id": "F012",
+    "doi": "10.1039/d0qm00623h",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Multifunctional AIE-ESIPT dual mechanism tetraphenylethene-based Schiff base for inkless rewritable paper and colorimetric/fluorescent dual-channel Zn2+ sensor",
+    "source_pdf_page": 2
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0030",
+    "source_id": "F016",
+    "doi": "10.1039/c7tb02399e",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Aggregation-Induced Emission (AIE)-Active Fluorescent Probes with Multi-Binding Sites toward ATP Sensing and the Live Cell Imaging",
+    "source_pdf_page": 3
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0044",
+    "source_id": "F019",
+    "doi": "10.1021/jp5089433",
+    "field": "title",
+    "old_value": "",
+    "new_value": "From dark TICT state to Emissive quasi-TICT State: The AIE Mechanism of N-(3-(benzo[d]oxazol-2-yl)phenyl)-4-tert-butylbenzamide",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0081",
+    "source_id": "F033",
+    "doi": "10.1039/d0nj03667f",
+    "field": "title",
+    "old_value": "",
+    "new_value": "An AIE and PET fluorescent probe for effective Zn(II) detection and imaging in living cells",
+    "source_pdf_page": 2
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0098",
+    "source_id": "F044",
+    "doi": "10.1039/d4dt02458c",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0099",
+    "source_id": "F044",
+    "doi": "10.1039/d4dt02458c",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0100",
+    "source_id": "F044",
+    "doi": "10.1039/d4dt02458c",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0147",
+    "source_id": "F055",
+    "doi": "10.1016/j.dyepig.2023.111625",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Achieving short-wavelength free radical emission by combining small conjugated structure and anti-Kasha emission",
+    "source_pdf_page": 1
+  },
+  {
+    "case_id": "AIE_DDX_MECH_V4_0148",
+    "source_id": "F055",
+    "doi": "10.1016/j.dyepig.2023.111625",
+    "field": "title",
+    "old_value": "",
+    "new_value": "Achieving short-wavelength free radical emission by combining small conjugated structure and anti-Kasha emission",
+    "source_pdf_page": 1
+  }
+]

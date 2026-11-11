@@ -1,0 +1,264 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0049",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "COc1ccc(C(=C(c2ccc(C=C3SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)c2ccccc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPR",
+    "source_documents": [
+      {
+        "source_id": "F022",
+        "title": "Supramolecular Aggregation-Induced Emission Nanodots with Programmed Tumor Microenvironment Responsiveness for Image-Guided Orthotopic Pancreatic Cancer Therapy",
+        "doi": "10.1021/acsnano.0c02197",
+        "pdf_sha256": "780f0146675b12e66928d5d129795db3c8e79faab8ced84da275cb5efd86fc9b",
+        "page_count": 45
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F022",
+        "pdf_page": 7,
+        "quote": "when increasing the water fraction from 0% to 70%, the maximal PL red-shifted gradually from ~600 to ~645 nm along with an intensity decrease",
+        "subject": "TPR",
+        "scope": "target",
+        "conditions": "THF/water PL series; main Figure 1A.",
+        "kind": "observation",
+        "statement": "Low-to-intermediate water fractions red-shift and weaken emission.",
+        "limitations": "Polarity and solubility co-vary; no numeric quantum yield is reported."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F022",
+        "pdf_page": 7,
+        "quote": "The PL intensity greatly intensified in high water fractions (80% and 90%) because of the aggregates formation restricting the intramolecular motion of TPR.",
+        "subject": "TPR",
+        "scope": "target",
+        "conditions": "THF/water 80-90% water.",
+        "kind": "author_interpretation",
+        "statement": "Authors assign high-water emission enhancement to aggregation-induced restriction of motion.",
+        "limitations": "Motion restriction is inferred rather than directly measured."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F022",
+        "pdf_page": 7,
+        "quote": "formation of large aggregates offering a hydrophobic microenvironment against water invasion, thus reducing TICT effect.",
+        "subject": "TPR",
+        "scope": "target",
+        "conditions": "90% water; emission maximum approximately 630 nm.",
+        "kind": "author_interpretation",
+        "statement": "Hydrophobic aggregate interior is proposed to reduce TICT, explaining blue-shifted aggregate emission.",
+        "limitations": "No measured microenvironment polarity or TICT torsional surface."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F022",
+        "pdf_page": 7,
+        "quote": "the LUMO was primarily distributed on the rhodanine- 3-acetic acid",
+        "subject": "TPR",
+        "scope": "target",
+        "conditions": "B3LYP/6-31G* optimized geometry/orbitals.",
+        "kind": "computation",
+        "statement": "HOMO is mainly on methoxy-TPE and LUMO on rhodanine-acetic acid; the structure is twisted.",
+        "limitations": "Ground-state orbital separation supports D-A character, not a quantitatively resolved TICT rate."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F022",
+        "pdf_page": 8,
+        "quote": "each α-CD had one TPR group or one GEM group attached via triethylenetetramine.",
+        "subject": "Covalently conjugated TPR in alpha-CD-TPR",
+        "scope": "comparator",
+        "conditions": "Main-text NMR interpretation referring to SI S5-S8.",
+        "kind": "author_interpretation",
+        "statement": "TPR is covalently attached to alpha-CD; it is not the PEG guest threaded through its cavity.",
+        "limitations": "This material is a TPR derivative, not chemically identical free TPR; SI not inspected."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F022",
+        "pdf_page": 9,
+        "quote": "The successful inclusion complexation between α-CD and PEG chain could be proved by 2D 1H NOESY spectrum",
+        "subject": "TPR-bearing alpha-CD/PEG nanoparticle assembly",
+        "scope": "comparator",
+        "conditions": "NOESY evidence reported in main for SI S14; PEG/inside-CD proximity.",
+        "kind": "author_interpretation",
+        "statement": "Host-guest interaction is alpha-CD/PEG, forming the TPR-containing fluorescent assembly.",
+        "limitations": "System-level evidence only; no direct free-TPR inclusion and SI spectrum not inspected."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F022",
+        "pdf_page": 9,
+        "quote": "the PL peaks of α-CD-TPR-GEM-mmp(+) NPs and bare TPR were both at 630 nm",
+        "subject": "TPR and TPR-bearing nanoparticles",
+        "scope": "target",
+        "conditions": "Main-text comparison in water.",
+        "kind": "observation",
+        "statement": "Both bare aggregated TPR and formulated nanoparticles are reported to peak at 630 nm.",
+        "limitations": "Matching peaks do not prove binding geometry or a host-induced quantum-yield change."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F022",
+        "pdf_page": 12,
+        "quote": "The electropositive R8 shell could hence accelerate the cellular internalization of the NPs, resulting in higher intracellular FR/NIR fluorescence of TPR.",
+        "subject": "TPR-bearing mmp(+) nanoparticles versus mmp(-) control",
+        "scope": "comparator",
+        "conditions": "BxPC-3 cells, 2 h and 5 h incubation.",
+        "kind": "author_interpretation",
+        "statement": "Increased cellular signal is assigned to uptake following peptide deshielding.",
+        "limitations": "This is delivery-mediated intensity, not intrinsic TPR turn-on or a photoinduced electron-transfer reaction."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F022",
+        "pdf_page": 11,
+        "quote": "without DTT treatment, the release of GEM from α-CD-TPR-GEM-mmp(+) NPs was slow and scarce with less than 20% release after 96 h.",
+        "subject": "GEM cargo in TPR-containing formulation",
+        "scope": "comparator",
+        "conditions": "10 mM DTT versus no DTT.",
+        "kind": "observation",
+        "statement": "Reductive cleavage controls GEM release; no-DTT release stays below 20% at 96 h.",
+        "limitations": "GEM release is not a TPR excited-state mechanism; no triplet/PET label follows."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Source assigns solution quenching and spectral shifts to TICT, with aggregate hydrophobicity reducing it."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "The demonstrated host-guest pair is alpha-CD/PEG in a covalently modified TPR formulation. It does not establish host-guest binding or host-induced emission of the free TPR target. Retain the derivative findings as comparator context."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Source assigns solution quenching and spectral shifts to TICT, with aggregate hydrophobicity reducing it."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state mechanism established beyond generic changes in fluorescence intensity."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "b5091a0a84a3112991538e786231e271e93d957c85d5d91a6a804fbb3187f8b2",
+    "label_record_sha256": "901a9bb1637fefb1b0a8fc13bc87a484e8a49377a565da621b4a4c8a82d4d401"
+  }
+}

@@ -14,7 +14,8 @@ for its options.
 
 ## Case Interface
 
-Each case JSON contains `case_id`, `smiles`, and
+Each released case JSON contains `case_id`,
+`public_input.molecule.structure.value` (SMILES), and
 `hidden_reference.reference_mechanisms`. Each reference mechanism has a
 canonical `label`, a `role`, and a relevance `gain`. The mechanism pool is
 defined in `mechcal/mechanism_pool.py`.
@@ -25,9 +26,13 @@ prediction contract contains ranked mechanism labels, evidence, limitations,
 and claim-related fields. Pydantic contracts live in `mechcal/schemas/`;
 the direct baseline JSON contract is in `mechcal/eval/mechanism_baselines.py`.
 
-The release contains no benchmark examples with real hidden references.
-`examples/offline_score.py` uses explicitly synthetic labels and scores to
-demonstrate the metric interface.
+The reconstructed 119-case references are now public at
+`benchmarks/photomechbench/raw_v2_119/cases/`, with source-linked evidence and
+annotation provenance. Read the [dataset card](../benchmarks/photomechbench/README.md)
+for reconstruction status, CC BY 4.0 licensing and version-specific limitations.
+"Hidden" describes separation from inference, not a restriction on downloading
+the dataset. `examples/offline_score.py` still uses explicitly synthetic labels
+and scores to demonstrate the metric interface without an API call.
 
 ## Metrics and Rubric
 
@@ -46,7 +51,7 @@ installing this package does not silently convert an old result to v3.
 Rubric suffixes are revision identifiers, not software release names. The
 judge scores submitted evidence independently of the hidden reference.
 Reference relevance and evidence support are combined by the metric code.
-Full v3 benchmark orchestration and private references are not part of the
+Full v3 benchmark orchestration and reference loading are not part of the
 new single-molecule launcher. Keep judge access separate from inference access.
 
 ## Runs and Ablations
@@ -61,6 +66,12 @@ mechcal-shards merge --case-dir /path/to/cases --output-dir outputs/sharded
 The registered ablations also include `parallel_worker_summary`,
 `one_pass_mechcal`, and `mechcal_wo_microscopic`. These are workflow variants;
 their names do not imply matched numbers of model or tool calls.
+
+For the released snapshot, replace `/path/to/cases` with
+`benchmarks/photomechbench/raw_v2_119/cases`. Those case files are readable by
+the existing evaluators without conversion. They must not be mounted as agent
+memory or included in subject prompts. References score agreement with the
+source interpretation, while the judge scores the system's own submitted evidence.
 
 Supply the same explicit case set to each method. No benchmark selection
 policy or private case exclusion is applied by the public commands. Check

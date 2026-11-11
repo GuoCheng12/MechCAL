@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0030",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F016",
+    "pdf_page": 4,
+    "figure": "Scheme 1: TPA-PPA-2 (two-arm member); synthesis on p.8",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Request SI for target-specific ATP titration, binding/selectivity and aggregation controls; main selectivity and detection-limit claims concern PPA-3.",
+    "Resolve the printed calculated-gap units before numerical reuse; no new calculations were performed.",
+    "Resolve lifetime medium and inconsistent cell-incubation timing (30 vs 60 min) before quantitative reuse.",
+    "The ATP-binding and RIR labels are bounded source interpretations; no claim of ATP-specific intracellular emission is justified."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

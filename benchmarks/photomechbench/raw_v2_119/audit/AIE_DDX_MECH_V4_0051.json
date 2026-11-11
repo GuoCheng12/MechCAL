@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0051",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F023",
+    "pdf_page": 3,
+    "figure": "Chart 1 (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI S1, S3-S4 and S23-S26 for rates, structures and formulation controls.",
+    "Do not transfer TAA-4P oscillator strengths, crystal packing or reorganization-energy percentages to TAA-4PTPA. Main p.6 occasionally drops P from the nanoparticle name; context identifies the formulated target."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

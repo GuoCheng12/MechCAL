@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0023",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F012",
+    "pdf_page": 2,
+    "figure": "Scheme 1, TPESB synthesis/designation",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Request SI S1-S12 for water-dependent emission, aggregate and H-bond controls; S15-S19 for zinc stoichiometry/coordination and PET/ESIPT interpretation.",
+    "Distinguish fresh high-water AIE from low-water aging and from Zn-bound emission.",
+    "PET suppression remains an author hypothesis supported indirectly, not a measured electron-transfer process."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

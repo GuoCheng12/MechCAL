@@ -1,0 +1,281 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0154",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=C(c1ccc(F)cc1)c1cccc(C(=O)c2ccc(F)cc2)c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "mFDBP / compound 2",
+    "source_documents": [
+      {
+        "source_id": "F057",
+        "title": "Rational Molecular Design for Achieving Persistent and Efficient Pure Organic Room-Temperature Phosphorescence",
+        "doi": "10.1016/j.chempr.2016.08.010",
+        "pdf_sha256": "955aa0c8e11d9153cb0b4ea8f29a4634d6c9882ddd86e97fa14b1c4df9dce288",
+        "page_count": 12
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F057",
+        "pdf_page": 6,
+        "quote": "(mFDBP, 2), BDBF (3)",
+        "subject": "mFDBP, compound 2",
+        "scope": "target",
+        "conditions": "Source compound list and Fig.3; crystal emission under ambient conditions.",
+        "kind": "observation",
+        "statement": "Compound 2 is designated mFDBP, distinct from representative BDBF compound 3. Fig.3 gives mFDBP lifetime 201 ms and phosphorescence yield 17.7%.",
+        "limitations": "Fig.3 visually inspected. The figure-based lifetime is not extracted from SI; graph correspondence to candidate SMILES remains unverified."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F057",
+        "pdf_page": 6,
+        "quote": "These molecules were found to be non-luminescent in the solution and amorphous states but strongly emissive in the crystalline phase in ambient conditions.",
+        "subject": "Compounds 1-5, including mFDBP",
+        "scope": "series_including_target",
+        "conditions": "Solution, amorphous solid and crystalline states at ambient conditions.",
+        "kind": "observation",
+        "statement": "The source reports crystallization-induced emission for the named series including compound 2.",
+        "limitations": "A series-level explicit statement; detailed BDBF controls on p.7 are not target-specific measurements on mFDBP."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F057",
+        "pdf_page": 4,
+        "quote": "the vibrational motions are largely suppressed to block the nonradia- tive decay of T1 as a result of the environmental constraint.",
+        "subject": "Designed arylphenone series including compound 2",
+        "scope": "series_including_target",
+        "conditions": "Crystalline state, compared with non-rigid conditions.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose that crystalline environmental constraints suppress vibration and nonradiative T1 decay, while reducing oxygen quenching.",
+        "limitations": "A series-level proposed rigidification mechanism, not direct vibrational dynamics or independent proof that mFDBP matches every BDBF control."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F057",
+        "pdf_page": 6,
+        "quote": "molecules 1–3 possessed large aromatic subunits.",
+        "subject": "Compounds 1-3 including mFDBP",
+        "scope": "series_including_target",
+        "conditions": "DFT/TDDFT orbital-character analysis, Fig.4 discussion.",
+        "kind": "computation",
+        "statement": "The source assigns molecules 1-3 more than 70% pi-pi* character in T1 and links that character to slower phosphorescence decay than the n-pi*-dominated comparators 6-8.",
+        "limitations": "This is a subgroup result, not the full BDBF S1/T2 state diagram or mFDBP-specific SOC constant. Full SI computational results were not inspected."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F057",
+        "pdf_page": 5,
+        "quote": "The calculated energy gaps between S1 and T1 were considerably large for 1–8 (>0.6 eV)",
+        "subject": "Calculated molecules 1-8 including mFDBP",
+        "scope": "series_including_target",
+        "conditions": "DFT/TDDFT lowest singlet-triplet gaps.",
+        "kind": "computation",
+        "statement": "The authors argue that gaps greater than 0.6 eV block thermally activated reverse ISC and exclude TADF as the explanation for this series' delayed emission.",
+        "limitations": "This negative finding concerns TADF, not the entire triplet family, which remains supported by phosphorescence."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F057",
+        "pdf_page": 9,
+        "quote": "crystalline powders of mFBDBF (2) showed a more intense green light with a higher FP of 17.7%.",
+        "subject": "Compound 2, mFDBP",
+        "scope": "target",
+        "conditions": "365 nm excitation, crystalline powder under ambient conditions; Fig.6.",
+        "kind": "observation",
+        "statement": "The reported compound-2 phosphorescence yield is 17.7%; Figure 6B inset independently lists mFDBP at 201 ms and 17.7%.",
+        "limitations": "Fig.6 visually inspected. Prose misspells the abbreviation as mFBDBF; compound number, Fig.3 and Fig.6 identify mFDBP. Do not replace these values with BDBF's 232 ms/34.5%."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F057",
+        "pdf_page": 9,
+        "quote": "No emis- sion decay was detected in the nanosecond range",
+        "subject": "Synthesized phosphor series including mFDBP",
+        "scope": "series_including_target",
+        "conditions": "Nanosecond decay control compared with absence of sample, reported for Fig.S8.",
+        "kind": "observation",
+        "statement": "The source reports no detected nanosecond emission decay and interprets the synthesized series as pure phosphors.",
+        "limitations": "The detection limit is not stated; Fig.S8 was not inspected. Absence of detectable fast fluorescence does not prove its mathematical absence."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F057",
+        "pdf_page": 8,
+        "quote": "these molecules exhibited bright phosphorescence in solutions",
+        "subject": "pDBP, mFDBP, FBDBT and ClBCZ",
+        "scope": "series_including_target",
+        "conditions": "77 K solution and amorphous samples, low-temperature crystals; main-text description of Figs.S5-S7.",
+        "kind": "observation",
+        "statement": "The source reports low-temperature phosphorescence for compound 2 and the named comparison series even outside the crystalline state.",
+        "limitations": "Only the main-text SI description was read; do not transfer BDBF's detailed temperature spectra or oxygen-control ratios to mFDBP."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F057",
+        "pdf_page": 10,
+        "quote": "The large dependence of tP on bp reveals that the molecular-orbital feature of T1 determines the kP.",
+        "subject": "Arylphenone phosphor series including mFDBP",
+        "scope": "series_including_target",
+        "conditions": "Cross-compound comparison of orbital character, lifetimes and calculated phosphorescence rates.",
+        "kind": "author_interpretation",
+        "statement": "The source's central design argument tunes T1 orbital mixing to balance efficient ISC with a slow radiative phosphorescence rate and long lifetime.",
+        "limitations": "A cross-series mechanistic interpretation, not a separately measured mFDBP radiative-rate decomposition. Maximum series performance must not be attached to every compound."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E08"
+        ],
+        "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E09"
+        ],
+        "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Persistent pure-organic phosphorescence is supported for compound 2 (201 ms, 17.7%). The family is RTP/ISC, not metal emission or TADF."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E08"
+        ],
+        "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E04",
+          "E09"
+        ],
+        "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Persistent pure-organic phosphorescence is supported for compound 2 (201 ms, 17.7%). The family is RTP/ISC, not metal emission or TADF."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "54e566445d27e2172893f798bfbe87a2c3a4330af84ab68e6174ea444e40603a",
+    "label_record_sha256": "b1a0d5fe922d633b6349576fb34330e09ad74c5e23386525838d4f39a3db79ed"
+  }
+}

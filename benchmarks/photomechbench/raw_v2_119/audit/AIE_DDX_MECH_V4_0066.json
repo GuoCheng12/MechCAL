@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0066",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "F028",
+    "pdf_page": 2,
+    "figure": "Scheme 1 compound 1; Fig. 3 crystals",
+    "rationale": "Legacy evidence E01 explicitly points to the Compound 1 subsection. Its 542 nm aggregation band and G/YG polymorph context match the linked paper. Scheme 1 matches the inherited azine graph, with ortho hydroxyl and para methoxy groups relative to each azine attachment.",
+    "limitations": "Connectivity-only assistant review. No new C=N stereochemistry assignment, SI verification or expert certification."
+  },
+  "notes": [
+    "Main-paper connectivity is assistant-reviewed against Scheme 1. SI, stereochemical detail and independent review remain pending.",
+    "Compound 1 is reconciled through the original evidence subsection, photophysical context and matching molecular graph.",
+    "Request SI thermal stability, switching PXRD, spectra and CIFs; main text only inspected.",
+    "Resolve larger/smaller torsion-angle wording against Table 1."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

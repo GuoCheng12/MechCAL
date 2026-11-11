@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0016",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0017",
+    "pdf_page": 2,
+    "figure": "Scheme 1, 6c",
+    "rationale": "Scheme 1 identifies 6c as R1=R2=TPA. Each TPA abbreviation contains an attachment phenylene. Both omitted phenylene groups are restored; the hydroxyphenyl-oxazole C2/C5 connectivity is retained.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "Obtain SI including structural characterization, spectra and calculation details; do not confuse the duplicate main paper with SI.",
+    "Expert review is needed for local versus overall ICT and for whether a tentative high-state RISC proposal warrants a secondary reference label.",
+    "The source-drawn graph has been applied to this draft. Independent connectivity review remains required before release; retain the PL versus OLED experimental conditions.",
+    "The formula is calculated from the interpreted drawing, not confirmed by an acquired SI mass spectrum."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

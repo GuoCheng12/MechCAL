@@ -1,0 +1,219 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0003",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCCCCCCCCCOc1ccc([N+]#[C-]->[Au]c2c(F)c(F)c(F)c(F)c2F)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "complex 1",
+    "source_documents": [
+      {
+        "source_id": "F002",
+        "title": "Aggregation-induced emission (AIE) behavior and thermochromic luminescence properties of a new gold(I) complex",
+        "doi": "10.1039/c3cc00157a",
+        "pdf_sha256": "19648ae0db8d1b5f5f939c5059aeb50c3066f2a8f80118689083b69ef66e9305",
+        "page_count": 3
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F002",
+        "pdf_page": 2,
+        "quote": "an emission band was observed with lmax at 402 nm and 425 nm",
+        "subject": "gold(I) complex 1",
+        "scope": "target",
+        "conditions": "EtOH/water at approximately 20 micromolar, excitation 310 nm.",
+        "kind": "observation",
+        "statement": "Water addition first enhances blue emission; higher water fractions decrease blue emission and produce a 559 nm band.",
+        "limitations": "The response is nonmonotonic, with further water eventually weakening the yellow-green emission."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F002",
+        "pdf_page": 2,
+        "quote": "We speculate that two kinds of nano-aggregates might be formed",
+        "subject": "gold(I) complex 1",
+        "scope": "target",
+        "conditions": "Water-fraction-dependent spectra and main-text description of DLS in SI.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose different aggregates and packing-dependent Au-Au interactions as the cause of color changes.",
+        "limitations": "The authors' speculative wording is retained; DLS does not resolve Au-Au distances in the emitting aggregates."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F002",
+        "pdf_page": 2,
+        "quote": "a broad emission band, with a maximum wavelength of 530 nm",
+        "subject": "gold(I) complex 1 solid",
+        "scope": "target",
+        "conditions": "Heating above approximately 55 degrees C, then cooling to 25 degrees C, Fig. 2.",
+        "kind": "observation",
+        "statement": "The blue solid develops a broad 530 nm band on heating and recovers the original emission after cooling.",
+        "limitations": "Thermochromism is observed; a particular amorphous packing geometry is not directly established by this observation."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F002",
+        "pdf_page": 2,
+        "quote": "ligand-to-metal–metal charge transfer (LMMCT) excited state",
+        "subject": "gold(I) complex 1 solid",
+        "scope": "target",
+        "conditions": "Interpretation of thermally induced lower-energy emission.",
+        "kind": "author_interpretation",
+        "statement": "Aurophilic interactions and an LMMCT state are proposed for the yellow-green emission.",
+        "limitations": "This metal-associated assignment does not itself establish a measured triplet lifetime or phosphorescence."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F002",
+        "pdf_page": 3,
+        "quote": "no obvious intermolecular gold–gold interaction is indicated.",
+        "subject": "gold(I) complex 1 initial crystal",
+        "scope": "target",
+        "conditions": "Reported X-ray packing, Fig. 3; initial crystal before thermal transformation.",
+        "kind": "observation",
+        "statement": "The initial crystal has Au-Au separations reported as 3.782 and 4.83 angstrom, too long for the strong aurophilic contacts proposed for the emitting transformed material.",
+        "limitations": "Do not claim the initial crystal directly proves the short Au-Au contact of the heated or aggregated phase; graph identity is not adjudicated here."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F002",
+        "pdf_page": 3,
+        "quote": "Cooling then made the amorphous phase rearrange into the more stable crystalline phase.",
+        "subject": "gold(I) complex 1",
+        "scope": "target",
+        "conditions": "Reversible thermal emission cycle.",
+        "kind": "author_interpretation",
+        "statement": "The paper interprets recovery as a packing/phase rearrangement after cooling.",
+        "limitations": "A bounded phase explanation; obtain SI or additional phase characterization before treating all phase assignments as independently verified."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Changes in assembly and solid-state packing are central to the source explanation; specific transformed geometries are inferred."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The broad family covers the proposed aurophilic metal-associated LMMCT state. Do not equate this with independently measured triplet dynamics."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Changes in assembly and solid-state packing are central to the source explanation; specific transformed geometries are inferred."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The broad family covers the proposed aurophilic metal-associated LMMCT state. Do not equate this with independently measured triplet dynamics."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "4e888cfbe13934b2ea3fd11bba780586d21d206927e86dde903b8e61eca3459b",
+    "label_record_sha256": "1ffb929c5987d0b94b1f0458d24109f589f89994fb8097f1f5cb49b65a95cce7"
+  }
+}

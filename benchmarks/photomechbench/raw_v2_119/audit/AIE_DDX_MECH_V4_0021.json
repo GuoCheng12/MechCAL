@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0021",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0021",
+    "pdf_page": 2,
+    "figure": "Scheme 1, compound 1",
+    "rationale": "The diethylamino salicylaldehyde and dimethylamino phenyl imine connectivity agrees visually. Imine geometry is not independently certified.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Check the SI for direct target-specific RIM or CT evidence before final exclusion; this smoke extraction does not certify absence from all source materials.",
+    "Verify the inconsistent figure cross-reference in the ESIPT discussion against the actual spectra.",
+    "Do not force multiple labels when only one mechanism is established by the extracted target-specific explanation.",
+    "SI should clarify target-1 decay fits and the microsecond units printed in E07. Compound-2 Zn2+ sensing and compound-3 hydrolysis MS are comparator results (E08/E09), not extra target-1 mechanisms."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

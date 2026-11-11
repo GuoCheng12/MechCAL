@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0032",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "S0032",
+    "pdf_page": 2,
+    "figure": "Fig. 1 (pointer only; structure not adjudicated)",
+    "rationale": "Evidence-first reconstruction requested by the user; molecular graph adjudication is deferred.",
+    "limitations": "Legacy SMILES retained unverified. The figure is a future review pointer, not approval of chemical identity."
+  },
+  "notes": [
+    "Molecular structure review is deferred; the legacy SMILES is not confirmed.",
+    "Retrieve SI Fig. S58-S61 to inspect target NMR, DOSY and particle measurements rather than only the main-text reports.",
+    "Expert review is needed for proposed roles and for the distinction between host-binding necessity and sufficiency."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

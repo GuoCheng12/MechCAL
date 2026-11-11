@@ -1,0 +1,269 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0077",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CC1(C)C(=CC=CC=CC=CC2=[N+](CCCCS(=O)(=O)[O-])c3ccc4ccccc4c3C2(C)C)N(CCCCS(=O)(=O)[O-])c2ccc3ccccc3c21"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "ICG / indocyanine green",
+    "source_documents": [
+      {
+        "source_id": "S0077",
+        "title": "Efficient Photoinduced Energy and Electron Transfers in a Tetraphenylethene-Based Octacationic Cage Through Host-Guest Complexation",
+        "doi": "10.1021/acsami.1c01867",
+        "pdf_sha256": "ae2f227d5b7f6356cdb90e8aa4eb8b21c004a83a8a19dc0e7644e2904af02f1b",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0077",
+        "pdf_page": 4,
+        "quote": "downfield shifts were observed for pyridinium protons",
+        "subject": "ICG with cage 1",
+        "scope": "target",
+        "conditions": "1H NMR titration of the cage with ICG.",
+        "kind": "observation",
+        "statement": "The cage proton shifts change on adding ICG.",
+        "limitations": "The signal belongs to the cage; binding is a system-level explanation, not an isolated ICG property."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0077",
+        "pdf_page": 4,
+        "quote": "the ICG molecule was entirely located within and shielded by the cavity",
+        "subject": "ICG with cage 1",
+        "scope": "target",
+        "conditions": "Interpretation of broadening/disappearance of guest NMR signals.",
+        "kind": "author_interpretation",
+        "statement": "The source interprets the NMR behavior as inclusion of ICG in the cage.",
+        "limitations": "NMR broadening supports but does not independently determine an atomic guest pose."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0077",
+        "pdf_page": 5,
+        "quote": "the addition of ICG/AG/AV into an aqueous solution of 1·8Cl−induce an obvious fluorescence quenching of the host−guest systems",
+        "subject": "ICG, AG and AV with cage 1",
+        "scope": "series_including_target",
+        "conditions": "Aqueous cage/guest fluorescence titrations.",
+        "kind": "observation",
+        "statement": "Adding these guests quenches emission in the host-guest systems.",
+        "limitations": "Different guests must not be assigned each other's rate constants or transient spectra."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0077",
+        "pdf_page": 5,
+        "quote": "the fluorescence quenching was caused by the PET process from the electron-rich dye to the electro-deficient cage",
+        "subject": "ICG, AG and AV with cage 1",
+        "scope": "series_including_target",
+        "conditions": "Authors' proposed interpretation of quenching.",
+        "kind": "author_interpretation",
+        "statement": "The source proposes guest-to-cage electron transfer.",
+        "limitations": "The sentence continues with an alternative energy-transfer possibility; the PET explanation is not a uniquely demonstrated channel for every guest."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0077",
+        "pdf_page": 6,
+        "quote": "when R700, R800, ICG, or AG as the guest, the first reduction of the bound cage in the complexes exhibits negative shifts",
+        "subject": "Cage complexes including ICG",
+        "scope": "series_including_target",
+        "conditions": "Cyclic-voltammetry comparison of free cage and bound cage.",
+        "kind": "observation",
+        "statement": "Guest binding shifts cage reduction potentials.",
+        "limitations": "Redox shifts support electronic interaction; they do not directly measure the excited-state transfer rate."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0077",
+        "pdf_page": 6,
+        "quote": "the excited-state dynamics of 1·8Cl−, 1·8PF6 −⊃NiR (which exhibits PEnT), and 1·8Cl−⊃AV (which exhibits PET) were probed by femtosecond transient absorption",
+        "subject": "Free cage, cage-NiR and cage-AV",
+        "scope": "comparator",
+        "conditions": "fsTA experiments described in section 2.6.",
+        "kind": "observation",
+        "statement": "The listed ultrafast experiments do not include cage-ICG.",
+        "limitations": "Do not transfer AV's ultrafast PET evidence to the ICG target."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0077",
+        "pdf_page": 5,
+        "quote": "The negligible overlap between the absorption band of ICG and the emission of the cage results in that there is no PEnT process in 1·8Cl−⊃ICG.",
+        "subject": "ICG with cage 1",
+        "scope": "target",
+        "conditions": "Comparison of guest absorption and cage emission.",
+        "kind": "author_interpretation",
+        "statement": "The source argues against energy transfer for the ICG complex based on spectral overlap.",
+        "limitations": "This is the source's specific exclusion argument, not a universal exclusion of all energy-transfer pathways."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "S0077",
+        "pdf_page": 3,
+        "quote": "1·8Cl−⊃ICG (2.30 ± 0.21) × 105 20.5c 4.57",
+        "subject": "Cage 1 with ICG",
+        "scope": "target",
+        "conditions": "Table 1: aqueous sample at 10 micromolar; fluorescence decay monitored at 545 nm according to footnotes c and e.",
+        "kind": "observation",
+        "statement": "The ICG complex has a reported fluorescence quantum yield of 20.5%, an average lifetime of 4.57 ns, and a binding constant of (2.30 +/- 0.21) x 10^5 M^-1.",
+        "limitations": "The lifetime is for cage-band emission of the complex, not isolated ICG emission or an ICG electron-transfer time. These values do not independently identify PET. Table row and footnotes were visually checked."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "S0077",
+        "pdf_page": 3,
+        "quote": "1·8Cl− 27.2c 4.79",
+        "subject": "Free cage 1, without ICG",
+        "scope": "comparator",
+        "conditions": "Table 1: aqueous cage at 10 micromolar, decay at 545 nm.",
+        "kind": "observation",
+        "statement": "The corresponding free-cage quantum yield and lifetime are 27.2% and 4.79 ns.",
+        "limitations": "The lifetime change to 4.57 ns is modest and lacks a stated uncertainty in this table. Do not describe it as strong proof of ultrafast ICG PET or substitute it for the missing ICG fsTA."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E08"
+        ],
+        "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+      },
+      {
+        "label": "PET_ET",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Guest-to-cage PET is a central source-supported interpretation, not uniquely demonstrated for ICG. The cage-ICG lifetime and quantum yield in E08 are available; only the ICG-specific fsTA is missing. The modest cage-band lifetime change relative to E09 does not establish an ultrafast PET rate."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E08"
+        ],
+        "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "The CT discussed here belongs to the proposed intermolecular PET pathway; no separate intramolecular CT label is added."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Guest-to-cage PET is a central source-supported interpretation, not uniquely demonstrated for ICG. The cage-ICG lifetime and quantum yield in E08 are available; only the ICG-specific fsTA is missing. The modest cage-band lifetime change relative to E09 does not establish an ultrafast PET rate."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03",
+          "E06",
+          "E08",
+          "E09"
+        ],
+        "rationale": "Cage-ICG does have a measured quantum yield and cage-band lifetime (E08/E09). Those observations support the photophysical response but do not independently establish a separate rate-balance explanation beyond the proposed PET pathway. Keep this label unestablished in this extraction rather than claiming target-specific lifetime data are absent."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "478431fc1d0d37542a94dbcd96beff30afc6458498cb8fa43a3c9331d39d7b1b",
+    "label_record_sha256": "c40444ad22c6aba34b764fc592e8d006a79a67c4dac005cf4db917bc6104a90a"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0079",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F032",
+    "pdf_page": 2,
+    "figure": "Chart 1 NI-O-PTZ",
+    "rationale": "Named trioxaundecyl-linked NI-O-PTZ target; separate from alkyl-linked dyads and NI-O reference.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI Table S1 and reference transients; no SI inspected.",
+    "Resolve the Table 3 positive NI-O-PTZ hexane singlet energy versus negative-all-solvents prose before stronger claims.",
+    "No aggregation or AIE experiment is established in this source."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

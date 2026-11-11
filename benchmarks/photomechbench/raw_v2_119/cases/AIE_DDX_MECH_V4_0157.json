@@ -1,0 +1,284 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0157",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=C(c1ccccc1)c1ccc(Oc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPA3",
+    "source_documents": [
+      {
+        "source_id": "S0155",
+        "title": "Thermochromic aggregation-induced dual phosphorescence via temperature-dependent sp3-linked donor-acceptor electronic coupling",
+        "doi": "10.1038/s41467-021-21676-5",
+        "pdf_sha256": "3393e478a8a6eea9e9e67eb952e9d77a2c50132cac90811408957d73aacbdb54",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0155",
+        "pdf_page": 2,
+        "quote": "the lowest singlet excited state (S1) is a dark state with a strong CT character",
+        "subject": "TPA1-5",
+        "scope": "series_including_target",
+        "conditions": "TD-DFT LC-omegaPBE*/TZVP and hole-electron analysis.",
+        "kind": "computation",
+        "statement": "The authors assign a dark lowest singlet CT state in the studied five-compound series.",
+        "limitations": "The dominant absorption bands are localized higher singlet states. Absorption into S2/S3 does not demonstrate higher-state emission."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0155",
+        "pdf_page": 3,
+        "quote": "all TPA aggregates in THF/water (5/95, v/v) contain long-lived emissions",
+        "subject": "TPA1-5",
+        "scope": "series_including_target",
+        "conditions": "THF/water aggregation series, 2.0 millimolar.",
+        "kind": "observation",
+        "statement": "The main text reports long-lived aggregate emission across TPA1-5.",
+        "limitations": "Long-lived emission and SI traces are not interchangeable with direct measurement of triplet population."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0155",
+        "pdf_page": 3,
+        "quote": "due to the restriction of intramolecular motions and possibly newly emerged, lowest emissive states as aggregates",
+        "subject": "TPA1-5",
+        "scope": "series_including_target",
+        "conditions": "Authors' interpretation of AIE with increasing water fraction.",
+        "kind": "author_interpretation",
+        "statement": "The source associates aggregate emission with motion restriction and possibly altered lowest states.",
+        "limitations": "The authors separately attribute peak shifts mainly to solvent polarity; an aggregate excited-state family is not established from brightness alone."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0155",
+        "pdf_page": 3,
+        "quote": "except for TPA2 which always generates polycrystals",
+        "subject": "TPA1-5",
+        "scope": "series_including_target",
+        "conditions": "Single-crystal comparison of TPA1 and TPA3-5.",
+        "kind": "observation",
+        "statement": "Single-crystal structures were obtained for TPA1/3/4/5, not TPA2.",
+        "limitations": "Do not attach a single-crystal packing structure to TPA2."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0155",
+        "pdf_page": 5,
+        "quote": "all three samples (TPA3–5) exhibit a broad RTP emission dominated by T1L",
+        "subject": "TPA3-5",
+        "scope": "series_including_target",
+        "conditions": "Molecular aggregates at room temperature.",
+        "kind": "observation",
+        "statement": "The ketone subgroup exhibits broad low-energy RTP with shorter lifetimes than TPA1/2.",
+        "limitations": "Do not substitute the greater-than-300-ms lifetimes of TPA1/2 for these compounds."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0155",
+        "pdf_page": 5,
+        "quote": "phosphorescence emissions consist of two emissive triplet states from benzophenone and TPA subunits",
+        "subject": "TPA3 and TPA4",
+        "scope": "series_including_target",
+        "conditions": "3 wt% PMMA, low-temperature delayed spectra, Figure 5.",
+        "kind": "author_interpretation",
+        "statement": "Vibronic spectral patterns support donor- and acceptor-localized triplet emission.",
+        "limitations": "The detailed TPA1/TPA4 computations must not be assigned as calculations on TPA3/TPA5."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0155",
+        "pdf_page": 5,
+        "quote": "the ﬂuorescence emission almost totally turns into RTP because of a promoted ISC process",
+        "subject": "TPA3-5",
+        "scope": "series_including_target",
+        "conditions": "Authors' interpretation of carbonyl substitution and time-resolved emission.",
+        "kind": "author_interpretation",
+        "statement": "Promoted ISC is used to explain the fluorescence/phosphorescence balance.",
+        "limitations": "ISC enhancement is inferred; no direct ISC rate measurement is quoted."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "two T1 species are localized on TPA and benzophenone subunits",
+        "subject": "TPA4",
+        "scope": "comparator",
+        "conditions": "TD-DFT conformational analysis of TPA4.",
+        "kind": "computation",
+        "statement": "Target TPA4 supports the proposed dual-localized T1 account.",
+        "limitations": "For TPA3/5 this is comparator evidence, not their own calculated landscape."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E06"
+        ],
+        "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "Retain the calculated dark singlet CT channel, not CT phosphorescence inferred solely from donor/acceptor motifs."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Temperature changes the relative emissive-state contributions in the source account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Long-lived and temperature-dependent spectra support the source's RTP/dual-phosphorescence assignment."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E04",
+          "E06"
+        ],
+        "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "Retain the calculated dark singlet CT channel, not CT phosphorescence inferred solely from donor/acceptor motifs."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03",
+          "E06"
+        ],
+        "rationale": "The two-band behavior also appears in PMMA and is assigned mainly to conformational triplet states, not a demonstrated excimer."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Temperature changes the relative emissive-state contributions in the source account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "Long-lived and temperature-dependent spectra support the source's RTP/dual-phosphorescence assignment."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E06",
+          "E08"
+        ],
+        "rationale": "Two phosphorescence bands do not establish emission from T2; the source's final interpretation uses T1 conformational minima."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "9edde5fa8c883aaf85c333ce580ea610555fccaa870d7d5c5b8cf81c37502a60",
+    "label_record_sha256": "e0202b8618a00eedb6165a9c6a1ba2c12a1b917ff92e39edf4dfe4276645c777"
+  }
+}

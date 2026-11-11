@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0027",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F014",
+    "pdf_page": 5,
+    "figure": "Scheme 1B: TPE-4EP and its CB[8] assembly",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Obtain SI S2 for the binding model, units and fit quality; S3-S7 for morphology and uptake controls.",
+    "Host stoichiometry used in sample preparation is not the same as directly measured fractional arm occupancy.",
+    "Cell fluorescence depends on assembly uptake as well as emission efficiency; do not turn cell classification performance into photophysical causality."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

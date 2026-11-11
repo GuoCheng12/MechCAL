@@ -1,0 +1,220 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0037",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CN(C)C1=C2C=CC=[N+]2[B-](F)(F)n2cccc21"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "BODIPY 2",
+    "source_documents": [
+      {
+        "source_id": "S0037",
+        "title": "Photoexcitation Induced Twisted Intramolecular Charge Shuttle (TICS)",
+        "doi": "10.1002/anie.201902766",
+        "pdf_sha256": "d8fd2f498db755792710f645e5d414a85b40218ae5b4bc01a943515edab74efa",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "the ~90° rotation in 2 is accompanied by a “charge shuttle” process",
+        "subject": "BODIPY 2",
+        "scope": "target",
+        "conditions": "Excited-state calculations along the amino rotation coordinate.",
+        "kind": "computation",
+        "statement": "Rotation in the target changes the direction of charge redistribution.",
+        "limitations": "The source calls this TICS, not ordinary TICT; mapping uses the broader shared CT family."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "the TICS conformation is the global minima and the oscillator strength of the TICS conformation is almost zero, indicating that TICS is a dark state.",
+        "subject": "BODIPY 2",
+        "scope": "target",
+        "conditions": "Calculated S1 potential-energy surface and oscillator strengths.",
+        "kind": "computation",
+        "statement": "The accessible twisted minimum is predicted to be dark.",
+        "limitations": "A calculated state is not direct experimental observation of that state in compound 2."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "The low quantum yield of 2 was thus ascribed to the formation of the TICS state.",
+        "subject": "BODIPY 2",
+        "scope": "target",
+        "conditions": "Interpretation combining reported quantum yield with the calculated PES.",
+        "kind": "author_interpretation",
+        "statement": "The authors explain the target's low emission by population of a twisted dark CT state.",
+        "limitations": "The mechanistic attribution relies on theory for the target."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0037",
+        "pdf_page": 4,
+        "quote": "we noticed considerable enhancement of fluorescence intensities by up to ~6 times in 5",
+        "subject": "BODIPY 5",
+        "scope": "comparator",
+        "conditions": "Ethylene glycol/glycerol viscosity series.",
+        "kind": "observation",
+        "statement": "The close analogue brightens with increased solvent viscosity.",
+        "limitations": "This is not a viscosity experiment on target compound 2."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0037",
+        "pdf_page": 5,
+        "quote": "We continued to perform transient absorption spectroscopy measurements on 5",
+        "subject": "BODIPY 5",
+        "scope": "comparator",
+        "conditions": "Femtosecond transient absorption; subsequent LE/TICS assignments.",
+        "kind": "observation",
+        "statement": "The paper's ultrafast experiment was performed on compound 5.",
+        "limitations": "The reported 3.0 ps and 78.3 ps components must not be presented as measurements on compound 2."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0037",
+        "pdf_page": 3,
+        "quote": "The energy levels of 2 was computed using the linear solvation method.",
+        "subject": "BODIPY 2",
+        "scope": "target",
+        "conditions": "Figure 1c and the calculated S1 surfaces in ethanol.",
+        "kind": "computation",
+        "statement": "Figure 1 identifies compound 2's energy landscape as a calculation.",
+        "limitations": "Figure 1g uses compound 5 for viscosity and Figure 1i-k uses compound 5 for transient absorption; their coexistence in one figure does not make them target-2 measurements."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "ICT_TICT_CT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03"
+        ],
+        "rationale": "The target-specific calculations support a torsion-driven CT/shuttle mechanism. Preserve the source term TICS within the broad CT family."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "The dark-state oscillator strength explains low emission, as part of the same CT pathway rather than an independent primary mechanism."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E04",
+          "E05"
+        ],
+        "rationale": "Target rotation is established computationally, but the restriction-induced brightening and ultrafast validation are for analogue 5. Keep this as a review question instead of transferring experimental support."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03"
+        ],
+        "rationale": "The target-specific calculations support a torsion-driven CT/shuttle mechanism. Preserve the source term TICS within the broad CT family."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E03"
+        ],
+        "rationale": "Do not automatically count the same intramolecular charge-shuttle pathway twice as CT and PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03"
+        ],
+        "rationale": "The dark-state oscillator strength explains low emission, as part of the same CT pathway rather than an independent primary mechanism."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "f6b372598d999b2b9ecc936b6bfbcd4d834a77fe1b15b517fc0e4401153bba54",
+    "label_record_sha256": "bb6787f11be2cb5db9d1f7b4506a7a3bb64421f87f9685e0945fdb792dc04826"
+  }
+}

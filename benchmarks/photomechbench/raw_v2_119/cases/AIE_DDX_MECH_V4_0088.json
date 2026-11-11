@@ -1,0 +1,291 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0088",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "COc1ccc(C(=O)/C=C/c2ccc(N(C)C)cc2)c(O)c1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "Compound 2",
+    "source_documents": [
+      {
+        "source_id": "F038",
+        "title": "How Inter- and Intramolecular Processes Dictate Aggregation Induced Emission in Crystals Undergoing Excited State Proton Transfer",
+        "doi": "10.1021/acs.jpclett.7b02893",
+        "pdf_sha256": "6f924fafb1bfbc03f38114e99c4a797d12c40404a6709fabf00da4942d08aea6",
+        "page_count": 12
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F038",
+        "pdf_page": 3,
+        "quote": "compound 2 is dark in both solution and the solid state.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "observation",
+        "statement": "The target is the non-emissive negative-control compound, not an AIE turn-on emitter.",
+        "limitations": "Reported experimental phenotype from reference 41; labels below explain quenching rather than enhancement."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F038",
+        "pdf_page": 3,
+        "quote": "in 2 the dominant motif is the face to face π-π stacking of chromophores.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "observation",
+        "statement": "Compound 2 has face-to-face stacking distinct from compound 1's herringbone packing.",
+        "limitations": "No value measured for compound 1 is assigned to compound 2."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F038",
+        "pdf_page": 4,
+        "quote": "There is no signiﬁcant intermolec- ular charge transfer upon excitation in either material.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "series_including_target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "computation",
+        "statement": "Vertical-excitation calculations show no substantial intermolecular CT.",
+        "limitations": "Does not exclude charge redistribution within each molecule."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F038",
+        "pdf_page": 5,
+        "quote": "For 2, oscillator strengths from E* are extremely small.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "computation",
+        "statement": "The relaxed E* dimer state is effectively dark and delocalized; Table 1 gives oscillator strengths 0.002 and 0.000 for parallel/antiparallel dimers.",
+        "limitations": "Table visually inspected. E* is not stable in vacuum or monomer models, so this is a dimer-specific result."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F038",
+        "pdf_page": 5,
+        "quote": "radiative mechanisms alone cannot ex- plain the negligible quantum yield of 2.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "author_interpretation",
+        "statement": "The localized single-proton-transfer K* state retains appreciable oscillator strength, so purely radiative suppression is insufficient.",
+        "limitations": "The doubly transferred dark K* state lies above bright FC and is not assumed to dominate."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "For 2, the S1-S0 MECI is classically accessible with a barrier of 0.4 eV from the K* minimum.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "computation",
+        "statement": "After bright-state excitation, the keto CI remains energetically accessible in compound 2.",
+        "limitations": "This is residual CI access and nonradiative quenching, not successful restriction that causes AIE."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "the accessibility of the MECI in 2 is aided by the short-range electrostatic interactions with the surrounding molecules.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "computation",
+        "statement": "Crystal electrostatics stabilizes compound 2's MECI relative to S1.",
+        "limitations": "Mechanical-only embedding puts both compounds' MECIs above the populated state; electrostatic treatment is consequential."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F038",
+        "pdf_page": 6,
+        "quote": "the larger stabil- ity of the MECI for 2 is mainly explained by the electronic eﬀects provided by the methoxy substituent",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "author_interpretation",
+        "statement": "Methoxy substitution, assisted by crystal electrostatics, favors CI deactivation despite packing restrictions.",
+        "limitations": "Do not infer this substituent effect from unverified legacy SMILES; attribution uses source compound 2."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F038",
+        "pdf_page": 7,
+        "quote": "The π-π stacking interactions in 2 increase the excitonic coupling.",
+        "subject": "Compound 2 (methoxy-substituted 2'-hydroxychalcone derivative)",
+        "scope": "target",
+        "conditions": "Same source computational protocol as compound 1; non-emissive compound 2 in solution and crystal.",
+        "kind": "author_interpretation",
+        "statement": "Stronger excitonic coupling and delocalized E* character provide an additional nonradiative route relative to compound 1.",
+        "limitations": "The source also requires localized ESIPT/K* CI deactivation; coupling alone is not a complete explanation."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E07"
+        ],
+        "rationale": "Crystal packing changes distortion possibilities and short-range electrostatics stabilizes the nonradiative channel."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "The calculated single-proton-transfer keto state leads to the accessible CI; proton transfer is part of quenching rather than proof of bright emission."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E09"
+        ],
+        "rationale": "Face-to-face excitonic interactions produce a dark delocalized E* channel; the source regards it as contributory, not sufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "Dark E* versus still-bright K* oscillator strengths explicitly distinguish state channels; radiative differences alone cannot explain the near-zero yield."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "The broad family includes CI-mediated nonradiative decay: compound 2 retains access and remains dark. This must not be rendered as RACI-induced enhancement."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "Steric hindrance does not shut the operative K* CI. No independent harmonic RIM explanation of the target's behavior is established."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E07"
+        ],
+        "rationale": "Crystal packing changes distortion possibilities and short-range electrostatics stabilizes the nonradiative channel."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "The calculated single-proton-transfer keto state leads to the accessible CI; proton transfer is part of quenching rather than proof of bright emission."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E09"
+        ],
+        "rationale": "Face-to-face excitonic interactions produce a dark delocalized E* channel; the source regards it as contributory, not sufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E05"
+        ],
+        "rationale": "Dark E* versus still-bright K* oscillator strengths explicitly distinguish state channels; radiative differences alone cannot explain the near-zero yield."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "The broad family includes CI-mediated nonradiative decay: compound 2 retains access and remains dark. This must not be rendered as RACI-induced enhancement."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "148d33cf735613d89243dc112d4356c9e1cca212a7838360e3a89d176618ca7e",
+    "label_record_sha256": "a3c20b1c881d063d9ebbcc8f7b50b71283cc26cc8ac0c354843eb5290392a52c"
+  }
+}

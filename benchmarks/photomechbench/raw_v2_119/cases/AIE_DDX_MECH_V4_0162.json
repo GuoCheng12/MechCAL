@@ -1,0 +1,237 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0162",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "COc1ccc(C(=C(c2ccccc2)c2ccc(C(C)=C(C#N)C#N)cc2)c2ccc(OC)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPDC",
+    "source_documents": [
+      {
+        "source_id": "S0161",
+        "title": "Tuning the singlet-triplet energy gap: a unique approach to efficient photosensitizers with aggregation-induced emission (AIE) characteristics",
+        "doi": "10.1039/c5sc01733e",
+        "pdf_sha256": "e3cb557a3d322f1483d261020303b57f5be6954eb2474e1e43da05cc001cad52",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0161",
+        "pdf_page": 3,
+        "quote": "the DEST values of TPDC, TPPDC and PPDC are 0.48, 0.35 and 0.27 eV, respectively",
+        "subject": "TPDC, TPPDC and PPDC",
+        "scope": "series_including_target",
+        "conditions": "TD-DFT B3LYP/6-31G(d), Figure 1.",
+        "kind": "computation",
+        "statement": "TPDC has a calculated singlet-triplet gap of 0.48 eV.",
+        "limitations": "Calculated gaps are not directly measured ISC rates. The interpretation assumes similar spin-orbit couplings across analogues."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0161",
+        "pdf_page": 3,
+        "quote": "close molecular structures suggest a similar amount of spin–orbit coupling between S1 and T1",
+        "subject": "TPDC, TPPDC and PPDC",
+        "scope": "series_including_target",
+        "conditions": "Stated molecular-design assumption.",
+        "kind": "author_interpretation",
+        "statement": "The authors use approximately comparable spin-orbit coupling to relate gap reduction to increased ISC.",
+        "limitations": "Keep this as an assumption; chemical similarity does not prove equal spin-orbit coupling."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0161",
+        "pdf_page": 4,
+        "quote": "all three compounds are almost non- emissive in pure DMSO and they gradually become emissive",
+        "subject": "TPDC, TPPDC and PPDC",
+        "scope": "series_including_target",
+        "conditions": "DMSO/water series, Figure 2; 10 micromolar as visually checked in the figure caption.",
+        "kind": "observation",
+        "statement": "The three compounds show aggregation-associated emission enhancement.",
+        "limitations": "PDF text extraction corrupts micro to m in some places. No isolated viscosity or motion intervention is reported in this selected evidence."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0161",
+        "pdf_page": 5,
+        "quote": "PPDC, TPPDC and TPDC were calculated to be 0.89, 0.32 and 0.28, respectively",
+        "subject": "TPDC, TPPDC and PPDC",
+        "scope": "series_including_target",
+        "conditions": "ABDA photodegradation relative to Rose Bengal, absorption-normalized quantum yield.",
+        "kind": "observation",
+        "statement": "TPDC has a reported singlet-oxygen yield of 0.28.",
+        "limitations": "This is a probe-based derived yield, not a direct triplet-population measurement."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0161",
+        "pdf_page": 4,
+        "quote": "the white light irradi- ation on ABDA alone does not lead to an obvious change in absorbance",
+        "subject": "ABDA-only negative control",
+        "scope": "comparator",
+        "conditions": "Same white-light conditions as photosensitizer experiments.",
+        "kind": "observation",
+        "statement": "The probe-only control does not show the photosensitizer-associated absorbance loss.",
+        "limitations": "This supports photosensitization but does not by itself rule out all probe interferences."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0161",
+        "pdf_page": 3,
+        "quote": "small DEST values can be realized via intramolecular charge transfer within molecular systems containing spatially separated donor and acceptor moieties",
+        "subject": "TPDC, TPPDC and PPDC design",
+        "scope": "series_including_target",
+        "conditions": "Design rationale with target-specific HOMO/LUMO plots in Figure 1.",
+        "kind": "author_interpretation",
+        "statement": "The source uses donor-acceptor charge separation to explain the reduced gap across the series.",
+        "limitations": "This supports a CT design account, not independently verified TICT kinetics."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0161",
+        "pdf_page": 5,
+        "quote": "they were chosen for 1O2 generation comparison in cells",
+        "subject": "TPDC and PPDC",
+        "scope": "target",
+        "conditions": "Cell studies on TAT-functionalized nanoparticle formulations.",
+        "kind": "observation",
+        "statement": "Only TPDC and PPDC were selected for the cell comparison.",
+        "limitations": "Do not attribute those cellular results to TPPDC or to free isolated dyes."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E06"
+        ],
+        "rationale": "Charge-separated donor-acceptor design is the proposed route to the smaller singlet-triplet gap."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The central source hypothesis links gap-dependent ISC to triplet-mediated oxygen sensitization, supported by the probe comparison."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03"
+        ],
+        "rationale": "AIE is observed, but the selected source does not separately demonstrate target-specific motion restriction."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03",
+          "E07"
+        ],
+        "rationale": "Aggregation and encapsulation are reported, but a distinct confinement mechanism is not isolated."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "Polymer nanoparticle formulation and peptide conjugation are not evidence of a host-cavity binding mechanism."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E06"
+        ],
+        "rationale": "Charge-separated donor-acceptor design is the proposed route to the smaller singlet-triplet gap."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E04"
+        ],
+        "rationale": "Oxygen photosensitization is assigned through a triplet energy-transfer account, not direct evidence for electron-transfer quenching."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The central source hypothesis links gap-dependent ISC to triplet-mediated oxygen sensitization, supported by the probe comparison."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "6b3286811bb69af12d7485fc1cd89811fe6545fce0a780b545719576a9f5ab8e",
+    "label_record_sha256": "30b61acc4121064232c42ca90e4119de9a798443dde2cced585320c9054367ad"
+  }
+}

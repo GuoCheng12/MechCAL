@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0024",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F013",
+    "pdf_page": 2,
+    "figure": "Scheme 1: G; Scheme 2 on p.3",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Obtain SI S10-S18 to independently assess threading, PET, host relocation, affinities and morphology.",
+    "Acidic optical assays use pH 5; cell viability assay uses pH 6. Do not merge these conditions.",
+    "The source reports both good aqueous solubility and free-G vesicles; emission controls must be reported without asserting a wholly monomeric solution."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

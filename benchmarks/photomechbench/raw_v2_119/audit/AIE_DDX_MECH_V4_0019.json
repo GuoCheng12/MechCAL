@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0019",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F010",
+    "pdf_page": 2,
+    "figure": "Figure 1a, HPIP tautomers; crystal conformers in Fig. 3 on p.3",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "Obtain SI geometries/crystallographic tables; the two CI angles arise from different computational protocols and must remain distinguished.",
+    "Polymorph color differences remain unresolved by the reported calculations.",
+    "Roles are assistant proposals; CI access, RIM and confinement are overlapping, not independent causal labels."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

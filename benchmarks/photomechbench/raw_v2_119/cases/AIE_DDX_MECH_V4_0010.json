@@ -1,0 +1,243 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0010",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=Cc1c2ccccc2cc2ccccc12"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "9-anthraldehyde",
+    "source_documents": [
+      {
+        "source_id": "F006",
+        "title": "A novel ratiometric fluorescent probe through aggregation-induced emission and analyte-induced excimer dissociation",
+        "doi": "10.1016/j.snb.2014.07.012",
+        "pdf_sha256": "75b81c29228c04e043efd6f64e310c54337ddf8c4b0256834ca09866f3578bc8",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F006",
+        "pdf_page": 2,
+        "quote": "almost no photoluminescence signals can be recorded",
+        "subject": "9-anthraldehyde",
+        "scope": "target",
+        "conditions": "Good solvents including DMSO; excitation 365 nm.",
+        "kind": "observation",
+        "statement": "The parent molecule is nearly nonemissive in molecularly dissolved conditions.",
+        "limitations": "The paper attributes this to ICT; low emission alone would not identify a unique quenching pathway."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F006",
+        "pdf_page": 2,
+        "quote": "intramolecular charge transfer occurs from the electron-donating anthracene moiety to the electron-accepting aldehyde group.",
+        "subject": "9-anthraldehyde",
+        "scope": "target",
+        "conditions": "Interpretation of emission in good solvents and reaction-induced changes.",
+        "kind": "author_interpretation",
+        "statement": "The source assigns solution quenching to anthracene-to-aldehyde ICT.",
+        "limitations": "A source interpretation supported by chemical perturbation, not an independently time-resolved charge-transfer measurement."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F006",
+        "pdf_page": 2,
+        "quote": "a new and strong emission peak emerges at 516 nm",
+        "subject": "9-anthraldehyde aggregates",
+        "scope": "target",
+        "conditions": "20 micromolar parent dye in DMSO/water or methanol/water mixtures.",
+        "kind": "observation",
+        "statement": "Adding water produces a 516 nm band assigned to excimers; the source reports about 90-fold enhancement at 99% water.",
+        "limitations": "Poor-solvent aggregation is not by itself proof of a specific excimer geometry; the source assignment is preserved with this limit."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F006",
+        "pdf_page": 2,
+        "quote": "the hydrodynamic ones in the solution.",
+        "subject": "9-anthraldehyde aggregates",
+        "scope": "target",
+        "conditions": "TEM of dried aggregates and DLS of dispersion, Fig. 3.",
+        "kind": "observation",
+        "statement": "TEM sizes are reported as 80-100 nm while DLS gives about 200 nm, attributed to the hydrodynamic measurement.",
+        "limitations": "Dry-state TEM and solution DLS dimensions are different observables; do not present them as contradictory measurements of an identical state."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F006",
+        "pdf_page": 4,
+        "quote": "the aldehyde group turns into the alkyl sulfonate moiety",
+        "subject": "9-anthraldehyde and sulfite reaction product",
+        "scope": "target",
+        "conditions": "Parent/product proton NMR comparison in DMSO-d6, Fig. 7.",
+        "kind": "observation",
+        "statement": "The aldehyde proton signal near 11.48 ppm is replaced by a product signal near 5.48 ppm, supporting nucleophilic addition.",
+        "limitations": "The product is chemically different from the parent input. This is a covalent response, not reversible noncovalent host-guest binding."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F006",
+        "pdf_page": 4,
+        "quote": "the nanoaggregates display a quantum yield of 14.2%",
+        "subject": "parent aggregates and sulfite adduct",
+        "scope": "target",
+        "conditions": "Main-text report of Table S1 yields and spectral response.",
+        "kind": "observation",
+        "statement": "The reported yield is 14.2% for parent aggregates and 23.5% for the charged product, whose emission moves toward 416 nm as aggregates dissolve.",
+        "limitations": "Product yield and blue emission must not be reported as properties of unchanged 9-anthraldehyde."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F006",
+        "pdf_page": 3,
+        "quote": "react with these biothiols (more than 2 h, Fig. S11)",
+        "subject": "9-anthraldehyde responding to biothiols versus sulfite",
+        "scope": "target",
+        "conditions": "Selectivity assays use approximately 2 min incubation; text contrasts kinetics.",
+        "kind": "observation",
+        "statement": "Sulfite responds within minutes, whereas thiol reactions require much longer; short-window selectivity is partly kinetic.",
+        "limitations": "No response in the short assay does not establish absolute nonreactivity toward biothiols."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F006",
+        "pdf_page": 5,
+        "quote": "in MeCN:H2O = 1:99 (v/v)) placed on copper grid",
+        "subject": "9-anthraldehyde TEM samples",
+        "scope": "target",
+        "conditions": "Fig. 6 caption for reaction-dependent TEM; bulk sensing mainly DMSO/water.",
+        "kind": "observation",
+        "statement": "The TEM caption specifies MeCN/water although the main sensing protocol uses DMSO/water.",
+        "limitations": "Keep this source-level medium discrepancy visible rather than silently merging all conditions."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "ICT_TICT_CT",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source links dark parent emission and its chemical release to ICT involving the aldehyde. Do not relabel this automatically as a separately established PET mechanism."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source's central ratiometric explanation is aggregate/excimer formation followed by reaction-induced dissociation."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source links dark parent emission and its chemical release to ICT involving the aldehyde. Do not relabel this automatically as a separately established PET mechanism."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source's central ratiometric explanation is aggregate/excimer formation followed by reaction-induced dissociation."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "bfc2d85c66c5ede48a9fd25dcc4fdfcc990ef487e12b738393e20b107cc04cbf",
+    "label_record_sha256": "8e318cff2bb61cfc1d3ffe06c3e55e960bfecf490d2b8926bb531a6e8ee1d880"
+  }
+}

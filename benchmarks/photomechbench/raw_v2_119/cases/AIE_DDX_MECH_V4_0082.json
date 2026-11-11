@@ -1,0 +1,296 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0082",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCCCCCCCCCCCCCCCCCN1C(=O)c2cccc3cccc(c23)C1=O"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "ODNI",
+    "source_documents": [
+      {
+        "source_id": "F034",
+        "title": "Spontaneously Self-Assembled Naphthalimide Nanosheets: Aggregation Induced Emission and Unveiling a-PET for Sensitive Detection of Organic Volatile Contaminants in Water",
+        "doi": "10.1002/ange.201802842",
+        "pdf_sha256": "db880f297dbd0e96e83c0bb4c83f9a3bd5116adfad5cc46c91abc30ca47489e1",
+        "page_count": 7
+      },
+      {
+        "source_id": "F035",
+        "title": "Spontaneously Self-Assembled Naphthalimide Nanosheets: Aggregation Induced Emission and Unveiling a-PET for Sensitive Detection of Organic Volatile Contaminants in Water",
+        "doi": "10.1002/anie.201802842",
+        "pdf_sha256": "5b2418d04fc8526d016bb002e1abf2d6561c2709e8bb75587f44e393f46e17a3",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F034",
+        "pdf_page": 3,
+        "quote": "ODNI started aggregating at 40% fw with redshifted intense AIE emission",
+        "subject": "ODNI",
+        "scope": "target",
+        "conditions": "DMF/water, excitation 350 nm; main-text discussion of SI Figs. S3-S4.",
+        "kind": "observation",
+        "statement": "ODNI aggregation begins near 40% water with more than 5- to 8-fold enhanced emission; HNI remains molecularly dispersed up to 90%.",
+        "limitations": "SI not inspected; thresholds differ between congeners."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F034",
+        "pdf_page": 3,
+        "quote": "with two emission bands at 380 nm and 530-540 nm which could be assigned to π- π transition and excimer emission respectively",
+        "subject": "ODNI and HNI",
+        "scope": "series_including_target",
+        "conditions": "Very weak emission in nominally molecularly dissolved pure DMF, 350 nm excitation.",
+        "kind": "author_interpretation",
+        "statement": "Authors tentatively assign the long-wavelength DMF band to excimer emission.",
+        "limitations": "Preserve weak assignment but note tension with the stated molecularly dissolved condition; not proof that 465 nm nanosheet emission is excimer emission."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F035",
+        "pdf_page": 3,
+        "quote": "AFM images displayed that the ODNI-NS had a height of ~8-10 nm",
+        "subject": "ODNI nanosheets",
+        "scope": "target",
+        "conditions": "DMF solution added to water with vigorous stirring; dialysis removes residual DMF; FESEM/AFM Fig. 2.",
+        "kind": "observation",
+        "statement": "Source reports sheet-like nanoaggregates with 8-10 nm height.",
+        "limitations": "Thickness measurement does not by itself prove an exact bilayer; source molecular-length/bilayer geometry remains model-dependent."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F035",
+        "pdf_page": 3,
+        "quote": "All these interactions were almost abolished in ODNI-NS indicating the existence of NI cores in an amorphous phase in the NS.",
+        "subject": "ODNI nanosheet packing",
+        "scope": "target",
+        "conditions": "PXRD compared with naphthalic anhydride and octadecylamine; Fig. 3.",
+        "kind": "author_interpretation",
+        "statement": "Loss of NA-like pi-stacking reflections is interpreted as amorphous NI cores; retained alkyl-chain reflections support chain-directed assembly.",
+        "limitations": "No ODNI single crystal: HNI SCXRD must not be represented as ODNI crystallography."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F035",
+        "pdf_page": 3,
+        "quote": "The ODNI-NS suspension in water having strong and stable blue emission centered at 465 nm",
+        "subject": "ODNI nanosheets with OVCs",
+        "scope": "target",
+        "conditions": "Water, p-xylene or mesitylene titration; Fig. 6, 20 micromolar ODNI, 350 nm excitation.",
+        "kind": "observation",
+        "statement": "Aqueous nanosheet emission peaks at 465 nm and is quenched approximately 75% by 20 ppm p-xylene or mesitylene.",
+        "limitations": "Not complete quenching; authors suggest some NI cores remain inaccessible."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F034",
+        "pdf_page": 3,
+        "quote": "favoring strong intermolecular π-π interactions between electron deficit NI core and electron rich phenyl derivatives.",
+        "subject": "ODNI nanosheet analyte interaction",
+        "scope": "target",
+        "conditions": "OVC association with nanosheet surfaces in water.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose hydrophobic and pi interactions bringing electron-rich analytes to exposed NI cores.",
+        "limitations": "Surface-association model, not measured cavity inclusion or an exact stoichiometric host complex."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F035",
+        "pdf_page": 5,
+        "quote": "from 3.511 ns to 1.946 ns on addition of 100 ppm p-xylene",
+        "subject": "ODNI nanosheets",
+        "scope": "target",
+        "conditions": "Time-resolved emission in water; Fig. 6d visually inspected.",
+        "kind": "observation",
+        "statement": "Lifetime shortens with p-xylene, consistent with an additional excited-state quenching route.",
+        "limitations": "Lifetime alone does not uniquely prove electron transfer or exclude mixed static/dynamic quenching."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F035",
+        "pdf_page": 5,
+        "quote": "the process of a-PET from electron rich OVCs to ODNI-NS could be involved in the suppression of fluorescence emission.",
+        "subject": "ODNI OVC sensing",
+        "scope": "target",
+        "conditions": "Electron-deficient NI acceptor excited at 350 nm; OVC titration.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose acceptor-excited PET from OVC to NI for xylene/mesitylene quenching.",
+        "limitations": "Distinct from donor-excited PET proposed for nitrobenzenes; not an intramolecular CT assignment."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F035",
+        "pdf_page": 5,
+        "quote": "The obtained HOMO value for ODNI was −6.565 eV",
+        "subject": "ODNI/OVC energetics",
+        "scope": "target",
+        "conditions": "Reported DFT frontier levels; Fig. 6f visually inspected and Table S3 referenced.",
+        "kind": "computation",
+        "statement": "Calculated HOMO ordering is used to argue for a-PET from p-xylene and mesitylene.",
+        "limitations": "Orbital energies alone are not measured transfer free energies or kinetics; SI computational details not inspected."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F034",
+        "pdf_page": 5,
+        "quote": "A steady enhancement in the hydrodynamic diameter of the NS with increasing analytes concentration",
+        "subject": "ODNI disaggregation control",
+        "scope": "target",
+        "conditions": "Main-text account of DLS versus analyte concentration, SI Figs. S22-S23.",
+        "kind": "observation",
+        "statement": "Reported increasing size argues against disaggregation as the cause of quenching.",
+        "limitations": "SI DLS not inspected; the stronger claim that sensing is completely a surface phenomenon remains interpretation, not established solely by DLS."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Chain-directed assembly suppresses detrimental core stacking according to source; not automatically internal RIM."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Broad host/analyte interaction family applied provisionally to nanosheet-surface association, not pore or cavity inclusion."
+      },
+      {
+        "label": "PET_ET",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Central sensing explanation is a-PET from electron-rich analyte to excited NI; retained as supported but not uniquely proven."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Retain the explicitly tentative excimer assignment for the weak DMF band only; do not recast the nanosheet AIE peak as established excimer emission."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Chain-directed assembly suppresses detrimental core stacking according to source; not automatically internal RIM."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "Broad host/analyte interaction family applied provisionally to nanosheet-surface association, not pore or cavity inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E08",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Central sensing explanation is a-PET from electron-rich analyte to excited NI; retained as supported but not uniquely proven."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02"
+        ],
+        "rationale": "Retain the explicitly tentative excimer assignment for the weak DMF band only; do not recast the nanosheet AIE peak as established excimer emission."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "9f4cf624eca932e3325a39009db756f2a932fbdb35da39ec119575e64ce227e6",
+    "label_record_sha256": "50733e4b49cc56f9ba6bfd39b9988ca71218a3074b51c54ae584a6ec0c0ada45"
+  }
+}

@@ -1,0 +1,274 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0081",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=NNc1nc2ccccc2s1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "probe L",
+    "source_documents": [
+      {
+        "source_id": "F033",
+        "title": "An AIE and PET fluorescent probe for effective Zn(II) detection and imaging in living cells",
+        "doi": "10.1039/d0nj03667f",
+        "pdf_sha256": "e2485091eafe6c5bff5819c5d6b82c8c82b88b0db2a56556592fe2193deca148",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F033",
+        "pdf_page": 4,
+        "quote": "the fluorescence intensity of probe L increased 50-fold from 0 % to 100 %",
+        "subject": "probe L",
+        "scope": "target",
+        "conditions": "10 micromolar L, EtOH/water fraction series, Fig. 1 visually inspected.",
+        "kind": "observation",
+        "statement": "Water addition enhances emission around 550 nm; source reports about 50-fold increase.",
+        "limitations": "This is aggregation series, distinct from Zn-binding emission at 484 nm; no particle-size characterization in selected evidence."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F033",
+        "pdf_page": 4,
+        "quote": "the rotation of C = C double bond was limited to some extent",
+        "subject": "probe L aggregate mechanism",
+        "scope": "target",
+        "conditions": "EtOH/water increasing water fraction.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose restriction of C=C rotation to explain aggregate brightening.",
+        "limitations": "Preserve the specific weaker interpretation without replacing it with proven phenyl single-bond RIR; no torsional or isomerization kinetics reported."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F033",
+        "pdf_page": 4,
+        "quote": "the smoothly photoinduced electron transfer between tetrastyrene and N donor suppressed its emission.",
+        "subject": "probe L in low water fractions",
+        "scope": "target",
+        "conditions": "EtOH-rich solution before Zn(II) binding.",
+        "kind": "author_interpretation",
+        "statement": "Authors invoke PET between the fluorophore and nitrogen donor as the low-emission pathway.",
+        "limitations": "Qualitative proposal; radical-ion or ultrafast PET measurements are not shown."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F033",
+        "pdf_page": 5,
+        "quote": "the fluorescence intensity at 484 nm increased by 30-fold.",
+        "subject": "probe L with Zn(II)",
+        "scope": "target",
+        "conditions": "EtOH/water 4:1, 20 mM HEPES pH 7.20, excitation 416 nm.",
+        "kind": "observation",
+        "statement": "Zn(II) increases 484 nm intensity about 30-fold; reported QY changes 0.008 to 0.034.",
+        "limitations": "Relative intensity enhancement is not identical to QY ratio; absorption also changes. Methods p.3 says pH 7.40, inconsistent with results/captions."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F033",
+        "pdf_page": 5,
+        "quote": "other coexisting metal ions have little effect on the detection results, but the addition of Cu2+",
+        "subject": "probe L selectivity control",
+        "scope": "target",
+        "conditions": "10 micromolar probe; competing ions 100 micromolar, Fig. 2b visually inspected.",
+        "kind": "observation",
+        "statement": "Most tested ions do not interfere; Cu(II) suppresses the Zn-response.",
+        "limitations": "Source suggests paramagnetic quenching; do not describe unconditional metal selectivity."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F033",
+        "pdf_page": 6,
+        "quote": "the probe L forms a 1: 1 complex with Zn2+.",
+        "subject": "probe L-Zn(II)",
+        "scope": "target",
+        "conditions": "Job plot maximum near 0.5 and mass peak m/z 588.0, Fig. 3.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose 1:1 complexation, supported by Job plot and assigned [L+Zn-H]+ mass peak.",
+        "limitations": "No resolved crystal structure; binding constant fit assumes this stoichiometry."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F033",
+        "pdf_page": 6,
+        "quote": "coordination of oxygen atom of phenolic hydroxyl, nitrogen atom of imine and nitrogen atom of thiazole ring",
+        "subject": "probe L-Zn(II)",
+        "scope": "target",
+        "conditions": "Main-text description of DMSO-d6 NMR titration, SI Fig. S13.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose O,N,N coordination from OH disappearance and nitrogen-adjacent proton changes.",
+        "limitations": "SI NMR not personally inspected; proton assignments and exact coordination geometry remain provisional."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F033",
+        "pdf_page": 6,
+        "quote": "due to the interruption of the PET phenomenon on pure probe L",
+        "subject": "probe L Zn-induced turn-on",
+        "scope": "target",
+        "conditions": "Binding mechanism Fig. 3d; Zn(II) addition.",
+        "kind": "author_interpretation",
+        "statement": "Chelation is proposed to interrupt PET and restore emission.",
+        "limitations": "Explicit mechanism proposal, not direct PET rate measurement; does not imply Zn-centered luminescence."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F033",
+        "pdf_page": 6,
+        "quote": "pure probes L have only weak fluorescence intensity in the pH range of 2.0- 12.0.",
+        "subject": "probe L pH control",
+        "scope": "target",
+        "conditions": "EtOH/water 4:1; Fig. 4; free probe versus Zn-complex.",
+        "kind": "observation",
+        "statement": "Free L remains weak across pH 2-12, while Zn-containing samples respond strongly at pH 4.8-12.",
+        "limitations": "This is sensing pH dependence, not ESIPT evidence."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F033",
+        "pdf_page": 6,
+        "quote": "After adding RPMI-1640 solution containing 100 μM Zn2+ and incubation for 15 min",
+        "subject": "probe L cellular control",
+        "scope": "target",
+        "conditions": "HeLa cells with L 10 micromolar, 37 C 24 h then Zn; Fig. 5.",
+        "kind": "observation",
+        "statement": "Main results report no obvious fluorescence with L alone and blue fluorescence after Zn addition.",
+        "limitations": "Methods p.4 says 100 mM zinc whereas results say 100 micromolar. Dose conflict prevents reliable biological-protocol reconstruction; endogenous Zn detection not demonstrated by this control."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "Authors explicitly propose restricted C=C rotation in aggregates; limited mechanistic evidence, not inferred merely from AIE."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E04",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Zn(II) chelation is supported under broad ion-binding family; geometry and SI titration remain provisional."
+      },
+      {
+        "label": "PET_ET",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E08"
+        ],
+        "rationale": "Explicit proposed PET quenching and Zn-induced PET interruption; retain as bounded author interpretation without direct transient evidence."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "Authors explicitly propose restricted C=C rotation in aggregates; limited mechanistic evidence, not inferred merely from AIE."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No packing, host or matrix constraint on target photophysics is established in the selected evidence."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E04",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Zn(II) chelation is supported under broad ion-binding family; geometry and SI titration remain provisional."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E03",
+          "E08"
+        ],
+        "rationale": "Explicit proposed PET quenching and Zn-induced PET interruption; retain as bounded author interpretation without direct transient evidence."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "bee9131347d0d23369b1531e2f8dd40a3ca27408b8300f04842630203ce458dc",
+    "label_record_sha256": "3aaed00f16df059d594b1ffc1ef218dd1f5039644941950e1756b453ca179447"
+  }
+}

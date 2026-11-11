@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0015",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0017",
+    "pdf_page": 2,
+    "figure": "Scheme 1, 6b",
+    "rationale": "The inherited graph agrees provisionally with the phenol-side TPA arm and oxazole-C5 biphenyl-TPB arm of Scheme 1.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Obtain SI including structural characterization, spectra and calculation details; do not confuse the duplicate main paper with SI.",
+    "Expert review is needed for local versus overall ICT and for whether a tentative high-state RISC proposal warrants a secondary reference label.",
+    "Resolve all candidate-structure discrepancies before release and retain conditions of PL versus OLED experiments."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

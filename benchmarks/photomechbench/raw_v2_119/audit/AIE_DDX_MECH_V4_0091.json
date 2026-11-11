@@ -1,0 +1,18 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0091",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0092",
+    "pdf_page": 2,
+    "figure": "Figure 1b, 4CzIPN",
+    "rationale": "The inherited graph has four N-linked carbazoles and two meta cyano groups on the central benzene, matching Figure 1b.",
+    "limitations": "Assistant comparison with the published figure, not independent identity certification. Missing SI and chemical representation conventions remain subject to review."
+  },
+  "notes": [
+    "Retrieve reference 46 and SI to trace experimental sample conditions and rate extraction.",
+    "Review whether additional target-specific CT evidence exists outside this selected source; missing evidence is not evidence of impossibility."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0167",
+  "prior_status": "identity_blocked",
+  "structure_review": {
+    "status": "unresolved",
+    "source_id": "F059",
+    "pdf_page": 3,
+    "figure": "Fig. 1, ODFRPTZ; provisional source designation only",
+    "rationale": "Legacy source_article.target_molecule explicitly names ODFRPTZ and the source Figure 1 uses the same designation. Name assignment is resolved. Keep the inherited graph unchanged: the manuscript drawing/discussion identifies dibenzofuran but the synthesis paragraph names a dibenzothiophenyl reagent. This material-identity conflict is not resolved by recovering the name.",
+    "limitations": "Name reconciliation only, not molecular-graph approval. Official SI and CIF links were found but no valid files were obtained."
+  },
+  "notes": [
+    "ODFRPTZ is confirmed as the intended legacy target via target_molecule and Figure 1. The O/S source conflict still blocks structural confirmation and release; positive labels remain draft proposals.",
+    "The accepted manuscript's synthesis paragraph names a dibenzothiophenyl reagent whereas Figure 1 and repeated photophysical discussion specify dibenzofuran. Obtain SI Scheme S1 and characterization to resolve the source editorial inconsistency without altering the legacy SMILES.",
+    "Some introductory donor/acceptor wording is inconsistent; the Results opening and Figure 1 identify dibenzofuran/PTZ donors and benzophenone acceptor, used here as the operative source description.",
+    "Obtain SI for synthesis, NMR/MS, crystal coordinates, DSC, oxygen controls, prompt lifetimes and detailed TDDFT results. Main-text SI references were read but SI itself was not inspected.",
+    "Ground-powder emission is assigned DF by the paper, but thermal activation and the exact quasi-equatorial conformer are not directly established in the selected main-text evidence.",
+    "Do not merge 300 K crystal phosphorescence (0.4 ms), 77 K crystal phosphorescence (121.1 ms), and ground-powder delayed fluorescence (0.9 microseconds). No expert approval is asserted."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

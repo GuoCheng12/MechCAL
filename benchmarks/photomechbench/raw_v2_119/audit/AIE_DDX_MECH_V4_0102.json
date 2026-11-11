@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0102",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0102",
+    "pdf_page": 2,
+    "figure": "Scheme 1, pPhDCzDPSPXZ",
+    "rationale": "The N-linked phenoxazine/sulfone and para-linked carbazole substituent arrangement agrees with the named target, distinct from the meta-linked analogue.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Review the boundary of the external packing family for covalent self-host emitters; do not map by the word host alone.",
+    "Retrieve target-specific SI spectra for temperature dependence, oxygen response and solvatochromism.",
+    "Revisit co-primary versus secondary roles after domain review; these are annotation proposals, not labels supplied by the paper.",
+    "Use the target-specific Table 2 values in E09 instead of assigning endpoints of a series range to the para isomer. E10 is a main-text oxygen-response report; the target SI trace remains unchecked."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

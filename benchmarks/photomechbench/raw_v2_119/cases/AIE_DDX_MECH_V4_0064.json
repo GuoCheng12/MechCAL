@@ -1,0 +1,239 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0064",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "N#CC(N)=C(C#N)N=Cc1ccc(N(c2ccccc2)c2ccccc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "compound 1",
+    "source_documents": [
+      {
+        "source_id": "F027",
+        "title": "Schiff base derivatives based on diaminomaleonitrile: Colorimetric and fluorescent recognition of Cu(II), cell imaging application, polymorph-dependent fluorescence and aggregation-enhanced emission",
+        "doi": "10.1016/j.snb.2014.08.068",
+        "pdf_sha256": "6e9f2912133a5b953b1c8724ac9c327f07dbfb36525acf2a980743fd82dc914b",
+        "page_count": 10
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F027",
+        "pdf_page": 3,
+        "quote": "the emission peaks move gradually from 462 and 488 nm to 551 and 550 nm for compounds 1 and 2.",
+        "subject": "compound 1 and comparator 2",
+        "scope": "series_including_target",
+        "conditions": "1e-5 M, room temperature, hexane to DMF; excitation 420 nm for 1 and 382 nm for 2.",
+        "kind": "observation",
+        "statement": "Compound 1 emission shifts 462 to 551 nm; 488 to 550 nm belongs to 2.",
+        "limitations": "Solvatochromism alone does not prove TICT; authors discuss dipolar solvent stabilization."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F027",
+        "pdf_page": 3,
+        "quote": "After adding 1 equiv. of Cu2+, the emission intensity reaches its maximum at a wavelength of 501 nm.",
+        "subject": "compound 1 with Cu(II)",
+        "scope": "target",
+        "conditions": "Acetonitrile, 1e-5 M; Fig. 3 titration.",
+        "kind": "observation",
+        "statement": "Cu(II) switches on 501 nm emission, saturating near one equivalent.",
+        "limitations": "The thousand-fold response at three equivalents belongs to comparator 2."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F027",
+        "pdf_page": 3,
+        "quote": "These results indicate a 1:1 ratio for 1-Cu2+ complex, in which one Cu2+ ion is bound with one molecule 1.",
+        "subject": "compound 1-Cu(II)",
+        "scope": "target",
+        "conditions": "Main-text discussion of Job plot and NMR, Figs. S4-S5.",
+        "kind": "author_interpretation",
+        "statement": "Authors propose 1:1 binding and chelation-enhanced fluorescence.",
+        "limitations": "SI not inspected; no resolved complex structure or direct PET kinetics."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F027",
+        "pdf_page": 3,
+        "quote": "the sensing of Cu2+ by 1 is hardly affected by these commonly coexisting ions.",
+        "subject": "compound 1 competition control",
+        "scope": "target",
+        "conditions": "One equivalent Cu(II), two equivalents competing ions; Fig. 4.",
+        "kind": "observation",
+        "statement": "Common competing ions have little effect under tested conditions.",
+        "limitations": "Hg(II) changes absorption; only Cu(II) gives pronounced fluorescence enhancement. Not universal specificity."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F027",
+        "pdf_page": 5,
+        "quote": "the emission peaks locate at 527 and 655 nm accordingly.",
+        "subject": "compound 1 polymorphs I and II",
+        "scope": "target",
+        "conditions": "Slow evaporation from dichloromethane/ethanol or dichloromethane/ethyl acetate.",
+        "kind": "observation",
+        "statement": "I emits strong yellow at 527 nm; II weaker red at 655 nm.",
+        "limitations": "Main text refers to SI Fig. S9; powder maxima are different."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F027",
+        "pdf_page": 6,
+        "quote": "The prepared powder of the two polymorphs emit yellow and red fluorescence with the fluorescence peaks at 531 and 628 nm, respectively",
+        "subject": "compound 1 powders",
+        "scope": "target",
+        "conditions": "Crushed polymorphic crystals, UV illumination, Fig. 9.",
+        "kind": "observation",
+        "statement": "Powder peaks are 531 and 628 nm; crushing also increases intensity.",
+        "limitations": "Do not merge powder and crystal wavelengths or infer quantum yields."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F027",
+        "pdf_page": 7,
+        "quote": "Such close pack- ing model results in the red shift of the emission peak.",
+        "subject": "compound 1 polymorph II versus I",
+        "scope": "target",
+        "conditions": "X-ray packing Figs. 10-12; parallel layers in II, wavy sheets in I.",
+        "kind": "author_interpretation",
+        "statement": "Authors attribute red shift and weaker II emission to closer packing and pi interactions; adjacent-sheet distance reported as 2.559 angstrom.",
+        "limitations": "Packing correlation, not independent exciton identification or internal-motion restriction."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F027",
+        "pdf_page": 8,
+        "quote": "But compound 1 does not display prominent AEE features due to the subtle change of molecular structure.",
+        "subject": "compound 1 negative AEE control",
+        "scope": "target",
+        "conditions": "Same THF/water protocol as 2: 5e-5 M, up to 95% water; main refers to Fig. S10.",
+        "kind": "observation",
+        "statement": "No prominent AEE is reported for 1, whereas 2 brightens at 90-95% water.",
+        "limitations": "SI not inspected; comparator 2 rotation restriction and TICT must not transfer to 1."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Explicit polymorph-packing explanation; no assertion of target AEE."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Cu(II) chelation turns on fluorescence under solution sensing conditions; broad ion-binding family, not cavity inclusion."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E05",
+          "E06",
+          "E07"
+        ],
+        "rationale": "Explicit polymorph-packing explanation; no assertion of target AEE."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Cu(II) chelation turns on fluorescence under solution sensing conditions; broad ion-binding family, not cavity inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established in the selected evidence."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection access mechanism is established."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "237366b206d79a1926f85e53eb6b85553ec3938bf7091d56898933a0226b4b04",
+    "label_record_sha256": "bcd0501b05c6bfb53938e6c671512e76b09a8ba737833b87918b622b0f87a5dd"
+  }
+}

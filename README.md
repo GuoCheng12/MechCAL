@@ -85,11 +85,15 @@ Large arrays may be stored in the case directory's `_payloads` folder. Keep it
 with the checkpoints when copying runs, and use the documented
 [snapshot reader](docs/runtime-state-storage.md) in analysis scripts.
 
-The public [PhotoMechBench inputs](benchmarks/photomechbench/README.md) contain
-119 case IDs and SMILES. Hidden references, source papers, inference histories,
-model weights and credentials are not included. Inference from an arbitrary
-SMILES needs no benchmark files. Scoring additionally needs authorized reference
-data and separately configured judge access. See [Evaluation](docs/evaluation.md).
+The public [PhotoMechBench dataset](benchmarks/photomechbench/README.md) contains
+119 molecular inputs, 401 reference mechanism assignments and 998 source-linked
+evidence records from 76 papers, with schema, provenance and review notes.
+Original annotations are CC BY 4.0 licensed. References remain withheld from
+inference agents and the evidence-support judge even though they are public.
+Source PDFs, inference histories, model weights and credentials are not included.
+Inference from an arbitrary SMILES needs no benchmark files. Scoring uses the
+released references and separately configured judge access; see
+[Evaluation](docs/evaluation.md).
 
 ## Layout
 
@@ -105,7 +109,7 @@ mechcal/eval/            Metrics, rubrics and judge implementations
 mechcal/cli/             Installed portable and historical entry points
 configs/                Credential-free deployment examples
 tests/                  Portable synthetic regression tests
-benchmarks/             Previously released public molecular inputs
+benchmarks/             PhotoMechBench inputs, reference annotations and schema
 ```
 
 ## Development
@@ -128,6 +132,7 @@ memory isolation and custom-launcher configuration.
 
 ## License
 
-MechCAL is [MIT licensed](LICENSE). External software and datasets retain
-their own licenses. No credentials or proprietary tool distributions are
-included in the source or Python package.
+MechCAL code is [MIT licensed](LICENSE). PhotoMechBench's original annotations
+are [CC BY 4.0 licensed](benchmarks/photomechbench/LICENSE.md). External software
+and source publications retain their own licenses. No credentials or proprietary
+tool distributions are included in the source or Python package.

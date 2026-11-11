@@ -1,0 +1,248 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0125",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "COc1ccc(N(c2ccc(/C=C/c3csc(C=C(C#N)C#N)c3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPE-TTMN-OMe",
+    "source_documents": [
+      {
+        "source_id": "F046",
+        "title": "Molecular Engineering of High-Performance Aggregation-Induced Emission Photosensitizers to Boost Cancer Theranostics Mediated by Acid-Triggered Nucleus-Targeted Nanovectors",
+        "doi": "10.1021/acsnano.1c03700",
+        "pdf_sha256": "d3ae314fe99a5073d6078ea6e26feaa7ed52990504146446b9de1575633eb341",
+        "page_count": 11
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F046",
+        "pdf_page": 2,
+        "quote": "showed high D−A strength and extended π-conjugation with varying degrees.",
+        "subject": "Four named photosensitizers including TPE-TTMN-OMe",
+        "scope": "series_including_target",
+        "conditions": "Molecular design, Scheme 1A; donor-acceptor substitution series.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign increasing donor-acceptor strength and ICT as the design basis for red-shifted spectra across TTMN, TPE-TTMN, TPE-TTMN-OMe and TPE-TTMN-TPA.",
+        "limitations": "Series design interpretation, not measured target-specific charge-transfer kinetics."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F046",
+        "pdf_page": 3,
+        "quote": "the suﬃcient rotations could consume exciton energy upon photoexcitation, thus allowing weak or no emission when dissolved in solution.",
+        "subject": "Four photosensitizers including TPE-TTMN-OMe",
+        "scope": "series_including_target",
+        "conditions": "Dissolved molecules contrasted with twisted aggregated conformations.",
+        "kind": "author_interpretation",
+        "statement": "The authors invoke freely rotating groups for solution deactivation and twisted TPE/TPA groups to prevent close pi stacking on aggregation.",
+        "limitations": "Explicit source interpretation supports a bounded RIM account; no target torsional barrier or viscosity control in this passage."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F046",
+        "pdf_page": 3,
+        "quote": "the maximum emissions peaked at 662, 656, 667, and 685 nm, respectively",
+        "subject": "Ordered series TTMN, TPE-TTMN, TPE-TTMN-OMe, TPE-TTMN-TPA",
+        "scope": "series_including_target",
+        "conditions": "Acetonitrile solutions; water-fraction experiment, Figure 1.",
+        "kind": "observation",
+        "statement": "OMe is third: its solution emission maximum is 667 nm. All four solutions are faintly emissive.",
+        "limitations": "The maximum quantum yield 0.32% is a series upper bound, not an OMe-specific value."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F046",
+        "pdf_page": 3,
+        "quote": "their emission maxima were respectively red-shifted to 664, 670, 685, and 712 nm in aggregates",
+        "subject": "Ordered four-member series; third member TPE-TTMN-OMe",
+        "scope": "series_including_target",
+        "conditions": "Acetonitrile/water aggregation; Figure 1C visually inspected.",
+        "kind": "observation",
+        "statement": "OMe has an aggregate maximum of 685 nm and approximately 129-fold peak-intensity enhancement; the other enhancements are 12, 104 and 41 in series order.",
+        "limitations": "Peak intensity is not quantum yield. The 712 nm aggregate peak belongs to TPA, not OMe."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F046",
+        "pdf_page": 4,
+        "quote": "in the solid state peaked at 691, 694, 722, and 770 nm, respectively",
+        "subject": "Four photosensitizers; third member TPE-TTMN-OMe",
+        "scope": "series_including_target",
+        "conditions": "Solid-state PL, Figure 1D.",
+        "kind": "observation",
+        "statement": "The solid-state OMe emission maximum is 722 nm.",
+        "limitations": "Quantum yields 1.4-26.2% and lifetimes 5.94-7.6 ns are ranges; absent SI Table S1 prevents assigning endpoints to OMe."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F046",
+        "pdf_page": 4,
+        "quote": "TPE-TTMN, TPE-TTMN-OMe, and TPE-TTMN-TPA even exceeded Rose Bengal",
+        "subject": "Three AIEgens including OMe; Rose Bengal control",
+        "scope": "series_including_target",
+        "conditions": "DCFH ROS indicator; 0.2 micromolar AIEgen, white light 22.1 mW cm^-2, Figure 1F.",
+        "kind": "observation",
+        "statement": "OMe exceeds the Rose Bengal response; DCFH alone is nearly nonemissive and TPA has the largest response.",
+        "limitations": "Indirect ROS assay. Approximately 600-fold response and Type I species discrimination belong to TPA, not OMe."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F046",
+        "pdf_page": 4,
+        "quote": "0.011 eV for TPE-TTMN-OMe",
+        "subject": "TPE-TTMN-OMe",
+        "scope": "target",
+        "conditions": "Main-text account of singlet-triplet gaps; calculations referred to SI.",
+        "kind": "computation",
+        "statement": "A singlet-triplet gap of 0.011 eV is reported for OMe; small gaps rationalize favorable ISC and ROS production.",
+        "limitations": "Computed gap reported in main; underlying SI not inspected. No phosphorescence assignment."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F046",
+        "pdf_page": 5,
+        "quote": "TPA-loaded NPs (abbreviated as T4-NPs)",
+        "subject": "TPE-TTMN-TPA nanocarrier formulation",
+        "scope": "comparator",
+        "conditions": "SA-TAT-PEG-PLA/PEG-PLA coassembly and nanoprecipitation for biological studies.",
+        "kind": "observation",
+        "statement": "T4-NPs contain TPE-TTMN-TPA. Subsequent acid-triggered delivery, nuclear localization and tumor results are not OMe experiments.",
+        "limitations": "Comparator identity boundary; carrier confinement and acid response are not OMe evidence."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Explicit series rotational-deactivation interpretation and target-included aggregation response support RIM provisionally, not merely the AIE name."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "Retain the donor-acceptor/ICT interpretation without claiming TICT geometry."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "Reported small singlet-triplet gap and ROS assay support the authors' ISC/photosensitization interpretation, not phosphorescent emission."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04"
+        ],
+        "rationale": "Explicit series rotational-deactivation interpretation and target-included aggregation response support RIM provisionally, not merely the AIE name."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "Retain the donor-acceptor/ICT interpretation without claiming TICT geometry."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No separate radiative-rate or bright/dark-state balance mechanism established in the extracted evidence."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E06",
+          "E07"
+        ],
+        "rationale": "Reported small singlet-triplet gap and ROS assay support the authors' ISC/photosensitization interpretation, not phosphorescent emission."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-excited-state emission established in the extracted evidence."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "bf69c113f0bc00d0b6cf3b115c8fd946fe2a775d4fd46ae9cf3a02c35fb382ae",
+    "label_record_sha256": "d68ea4b5f557ef40c8f2495f4cb38e8f6fd43711abb1a7fb1a805e73cf215c7e"
+  }
+}

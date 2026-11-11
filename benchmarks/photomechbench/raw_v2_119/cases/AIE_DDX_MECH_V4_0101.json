@@ -1,0 +1,308 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0101",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "O=C(Nc1ccc(-c2nc3ccccc3s2)c(O)c1)c1ccccc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "BTHPB",
+    "source_documents": [
+      {
+        "source_id": "F045",
+        "title": "Understanding the aggregation induced emission enhancement for a compound with excited state intramolecular proton transfer character",
+        "doi": "10.1039/c0cp01181a",
+        "pdf_sha256": "5add7e7bc11649eda0916759930961ae1bdd238e2bcead5056652d299413277a",
+        "page_count": 8
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F045",
+        "pdf_page": 3,
+        "quote": "no enol but only ESIPT emission was observed.",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "Water aggregates and cyclohexane show only the approximately 509 nm keto/ESIPT band, unlike polar solvents that also show approximately 400 nm enol emission.",
+        "limitations": "State assignment is spectroscopic; aggregation is not assumed to give unit ESIPT yield."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F045",
+        "pdf_page": 3,
+        "quote": "The luminescent quantum eﬃciency of BTHPB aggregates was as high as 0.27",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "Quantum yield increases from 0.018 in cyclohexane to 0.27 in water aggregates, with lifetime increasing from 0.23 to 7.0 ns.",
+        "limitations": "Approximately 15-fold yield versus 30-fold lifetime increase is crucial; these are not interchangeable enhancement metrics."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F045",
+        "pdf_page": 3,
+        "quote": "the excited state of cis-keto was the form without intramolecular charge transfer character.",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "author_interpretation",
+        "statement": "Nearly unchanged ESIPT emission energy and shape with solvent polarity argues against ICT for the cis-keto emitting state.",
+        "limitations": "Negative result limited to the keto emission assignment, not all possible electronic polarization."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F045",
+        "pdf_page": 4,
+        "quote": "The emission quantum eﬃciency of BTHPB in paraﬃn oil (80% volume ratio) was calculated as 0.050",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "Raising viscosity with 80% paraffin oil increases yield to 0.050 while absorption stays similar.",
+        "limitations": "Solvent control supports restricted torsion but cannot alone locate the principal nonradiative coordinate; source's aggregate viscosity is only an estimate."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F045",
+        "pdf_page": 4,
+        "quote": "with large reorganization energy corresponded to rotation around the bond",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "computation",
+        "statement": "Linear-coupling TDDFT/B3LYP analysis assigns the 19 cm^-1 mode to inter-subunit rotation; Table 1 gives Huang-Rhys factor 13.12 and reorganization energy 245 cm^-1.",
+        "limitations": "Harmonic qualitative model. Other high-frequency modes contribute substantial reorganization energy; the rotational contribution is not the only possible IC mode."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F045",
+        "pdf_page": 5,
+        "quote": "These decay kinetics were insensitive to the presence of oxygen and thus could not be assigned to a triplet state.",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "The long-lived 400-500 nm cyclohexane transient is oxygen-insensitive and assigned to a trans-keto photoproduct rather than a triplet.",
+        "limitations": "Assignment uses oxygen response and analogy. PDF text mangles the microsecond symbol; Figure 4 visually checked, no exact lifetime inferred beyond the source's approximate estimate."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F045",
+        "pdf_page": 5,
+        "quote": "In the aggregates, however, no transient absorption signals were detected",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "Flash-photolysis photoproduct absorption detected in solution is not detected in aggregates, supporting blocked inter-subunit rotation.",
+        "limitations": "Detection-limited absence, not literal proof of zero photoproduct."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F045",
+        "pdf_page": 5,
+        "quote": "a polystyrene matrix instead of cyclohexane and aggregates (bad signal/noise ratio), respectively",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "observation",
+        "statement": "Femtosecond comparison substitutes THF and polystyrene for cyclohexane and aggregates; the 440-500 nm trans-keto band is absent in the solid matrix.",
+        "limitations": "Polystyrene is a proxy, not the same water-aggregate sample. Figure 5 visually inspected; source reports approximately 40 ps cis-keto decay in THF."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F045",
+        "pdf_page": 6,
+        "quote": "suggesting that the aggregation process induced the decrease of the ESIPT yield.",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "author_interpretation",
+        "statement": "The source infers about a factor-two lower ESIPT formation yield in aggregates from the unequal yield/lifetime enhancements.",
+        "limitations": "Depends on assuming equal keto radiative rates from similar spectra; ESIPT yields were not directly measured."
+      },
+      {
+        "evidence_id": "E10",
+        "source_id": "F045",
+        "pdf_page": 6,
+        "quote": "resulted from the strong intermolecular interactions of the enol forms",
+        "subject": "BTHPB",
+        "scope": "target",
+        "conditions": "BTHPB dilute solution and water aggregates, 10^-5 M, 360 nm steady-state excitation; cyclohexane/paraffin viscosity control, 355 nm flash photolysis, 360 nm femtosecond pump-probe in THF or polystyrene.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose an opposing aggregation-induced loss before keto formation, while rotational restriction improves keto fluorescence.",
+        "limitations": "Competing ultrafast route is explicitly unclear; ordinary Forster diffusion is argued against. No specific J aggregate, excimer, or measured electron transfer is established."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E10"
+        ],
+        "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
+      },
+      {
+        "label": "ESIPT_PT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Keto emission follows ESIPT, whose yield is not assumed to be 100%; a proposed decrease opposes the net enhancement."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E09"
+        ],
+        "rationale": "Source explicitly separates keto-state formation yield and fluorescence survival; the factor-two ESIPT-yield estimate is conditional on unchanged radiative rate."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E07",
+          "E08",
+          "E10"
+        ],
+        "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03"
+        ],
+        "rationale": "The authors argue that cis-keto emission lacks ICT character from its weak solvent dependence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E09",
+          "E10"
+        ],
+        "rationale": "Keto emission follows ESIPT, whose yield is not assumed to be 100%; a proposed decrease opposes the net enhancement."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E10"
+        ],
+        "rationale": "The negative intermolecular effect is an unspecified competing route, not a demonstrated exciton/J-aggregate/excimer mechanism."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E09"
+        ],
+        "rationale": "Source explicitly separates keto-state formation yield and fluorescence survival; the factor-two ESIPT-yield estimate is conditional on unchanged radiative rate."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E06"
+        ],
+        "rationale": "The observed long-lived species is assigned to trans-keto rather than triplet; no operative triplet mechanism established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E05",
+          "E07"
+        ],
+        "rationale": "Restricted rotation and photoproduct suppression are demonstrated, but this paper does not locate or specifically assign a target CI."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "The source states high excited levels relax to the same lowest excited state; no higher-state emission is established."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "36ea4734ff17958f73b616ff1ae6ad40ea595097f904b1be6ca3456f4110cb45",
+    "label_record_sha256": "d682bfe74a331ccbdbc226ee259bc8676f712665cc7dbf668f25035e3175195d"
+  }
+}

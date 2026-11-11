@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0140",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F049",
+    "pdf_page": 3,
+    "figure": "Figure 1a: triformyl azulene TA",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F049 SI Figures S10-S29 and Table S1 to examine lifetimes, solvatochromism, negative controls and state ordering directly.",
+    "Do not label ESIPT/PET from background sensor references on p5. TA-water hydrogen bonding is not proton transfer.",
+    "Reported polymer naming differs between discussion (polyacrylic acid sodium salt) and methods (sodium polymethacrylate); resolve formulation nomenclature if reproducing the film."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

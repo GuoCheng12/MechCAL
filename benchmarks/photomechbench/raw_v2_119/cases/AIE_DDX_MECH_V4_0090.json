@@ -1,0 +1,255 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0090",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "CCCCC(CC)c1cc(=O)[nH]c(NC(=O)Nc2ccc(/C(=C(/c3ccccc3)c3ccc(NC(=O)Nc4nc(C(CC)CCCC)cc(=O)[nH]4)cc3)c3ccccc3)cc2)n1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "(E)-TPE-UPy",
+    "source_documents": [
+      {
+        "source_id": "F040",
+        "title": "“Seeing” and Controlling Photoisomerization by (Z)‑/(E)‑Isomers with Aggregation-Induced Emission Characteristics",
+        "doi": "10.1021/acsnano.9b06578",
+        "pdf_sha256": "cee069a13a1d431055e90230ca6c99e0864b9abfd11f7c465143155efd8cb392",
+        "page_count": 7
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F040",
+        "pdf_page": 3,
+        "quote": "(Z)- and (E)-isomers without hydrogen-bonding exist in approximately 50/50 proportion in the photostationary state",
+        "subject": "(E)-TPE-UPy",
+        "scope": "series_including_target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "Adding 5 microliters TFA to 500 microliters of 5.3 mM chloroform solution gives approximately equal isomer proportions at photostationarity.",
+        "limitations": "TFA disrupts self-complementary hydrogen bonding; this is not evidence of an ESIPT photocycle."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F040",
+        "pdf_page": 3,
+        "quote": "while that of its (E)- cousin is merely 28.3%.",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "The E-to-Z conversion yield is 28.3% in chloroform with hydrogen bonding; the reverse Z-to-E value is 68.1%.",
+        "limitations": "Reaction yields, not fluorescence quantum yields. Main reports SI Table S1; SI not inspected."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F040",
+        "pdf_page": 3,
+        "quote": "At the same time, the intramolecular motions are somewhat restricted to turn on the PL of the solution.",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "author_interpretation",
+        "statement": "The authors attribute PL turn-on of E-rich long supramolecular polymers to restricted internal motion.",
+        "limitations": "The preceding text assigns linear polymer formation to E; cyclic dimers/small oligomers characterize Z under these conditions."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F040",
+        "pdf_page": 4,
+        "quote": "relative isomerization yields of (E)-TPE-UPy decrease at high solution concentrations.",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "E photoisomerization becomes less effective as concentration and polymerization increase.",
+        "limitations": "Main reports Figure S12; do not claim its raw data were inspected."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F040",
+        "pdf_page": 4,
+        "quote": "0.16 eV for (E)-TPE-UPy",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "computation",
+        "statement": "A B3LYP/6-31G** torsional scan gives a minimum S1-S0 gap of 0.16 eV for E near 90 degrees; the source assigns a CI-mediated nonradiative route.",
+        "limitations": "Figure 3 visually inspected. A finite-gap torsional scan is not an exact optimized degeneracy; no aggregate CI surface was computed."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F040",
+        "pdf_page": 4,
+        "quote": "no photochemical reaction including photoisomerization occurs in a THF suspension of (E)-isomer",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "A 5.3 mM THF suspension of E remains unchanged after 365 nm irradiation for 5 h according to the main text.",
+        "limitations": "Main cites SI Figure S15; detection limit and raw NMR unavailable here. Limited solubility/precipitation differs from dissolved E."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F040",
+        "pdf_page": 4,
+        "quote": "bright blue emission is detected when aggregates of (E)-TPE-UPy are formed",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "Formation of E polymer aggregates during irradiation of Z in THF accompanies bright blue fluorescence.",
+        "limitations": "A reacting mixture observation; not a numeric quantum-yield measurement of isolated E."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F040",
+        "pdf_page": 6,
+        "quote": "some (Z)-TPE-UPy molecules may coprecipitate with their (E)-cousins.",
+        "subject": "(E)-TPE-UPy",
+        "scope": "target",
+        "conditions": "UV 365 nm photoisomerization, typically 5.3 mM in chloroform or THF; comparisons with (Z)-TPE-UPy and acid-disrupted UPy hydrogen bonding.",
+        "kind": "observation",
+        "statement": "Concentrated THF reaction mixtures can coprecipitate Z; redissolution in chloroform and reprecipitation in THF purifies E.",
+        "limitations": "Limits the blanket claim of 100% pure isolated E under every reaction condition."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RIM_RIR_RIV",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E06"
+        ],
+        "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E03",
+          "E04"
+        ],
+        "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E03",
+          "E06"
+        ],
+        "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E03"
+        ],
+        "rationale": "UPy self-complementary hydrogen-bonded polymerization is not demonstrated host-cavity/guest binding; acid disruption is a control."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01"
+        ],
+        "rationale": "Hydrogen bonding and acid addition do not establish excited-state proton transfer."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton or excimer mechanism is established; aggregation alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No additional radiative-rate or state-balance explanation is isolated by the selected evidence."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E06"
+        ],
+        "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "fed47587c06a8bce9a9c277c508e89d1133fb42243bafbd75460d5c343ec187f",
+    "label_record_sha256": "f50b1dd584c428a8cf7af138211ef7050421bbe555e94de866219322e86b3836"
+  }
+}

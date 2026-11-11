@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0010",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F006",
+    "pdf_page": 3,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Obtain SI yields, spectra and kinetics; distinguish parent molecule from the covalently modified sulfite adduct.",
+    "Resolve the TEM MeCN/water versus sensing DMSO/water condition mismatch.",
+    "The excimer and ICT interpretations remain source-supported explanations rather than definitive causal truth."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0062",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F026",
+    "pdf_page": 3,
+    "figure": "Scheme 2 (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI S1, S9-S22 and Table S2 for solvent data, crystallography, PXRD/SEM and grinding/heating details.",
+    "Correct Figure 3/4 caption duplication using prose and displayed values; keep 473 versus 477 nm initial-peak discrepancy visible.",
+    "No triplet mechanism is inferred from bromine in TPEB; no radiative/nonradiative rates are established from yield alone."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

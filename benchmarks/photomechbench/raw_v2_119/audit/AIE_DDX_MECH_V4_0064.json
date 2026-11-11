@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0064",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "F027",
+    "pdf_page": 2,
+    "figure": "Scheme 1 compound 1; Fig. 10 polymorphs",
+    "rationale": "Legacy source_article.target_entity explicitly names compound 1. The inherited graph matches the Scheme 1 triphenylamine Schiff-base connectivity, unlike the carbazole comparator 2. The assignment hold arose from a missing designation in the reconstruction manifest, not absent legacy provenance.",
+    "limitations": "Connectivity-only assistant review. No new E/Z assignment or independent expert approval; SI remains uninspected."
+  },
+  "notes": [
+    "Main-paper connectivity is assistant-reviewed against compound 1. SI, stereochemical detail and independent expert review remain pending.",
+    "The compound 1 assignment is recovered from the legacy target_entity field and corroborated by Scheme 1. Do not transfer evidence specific to comparator 2.",
+    "Request SI Figs. S4-S5, S9-S10; all SI findings here are main-text reports.",
+    "Do not transfer compound 2 AEE, RIR or TICT. Introduction says triphenylethene but Scheme 1 and subsequent discussion identify triphenylamine."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,210 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0160",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "c1ccc(N(c2ccccc2)c2ccc(Oc3ccncc3)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPA6",
+    "source_documents": [
+      {
+        "source_id": "S0155",
+        "title": "Thermochromic aggregation-induced dual phosphorescence via temperature-dependent sp3-linked donor-acceptor electronic coupling",
+        "doi": "10.1038/s41467-021-21676-5",
+        "pdf_sha256": "3393e478a8a6eea9e9e67eb952e9d77a2c50132cac90811408957d73aacbdb54",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "the TPA6 solid exhibits a ﬂuorescence emission at 425 nm (τ = 0.7 ns)",
+        "subject": "TPA6",
+        "scope": "target",
+        "conditions": "Solid in air at room temperature, Figure 7b.",
+        "kind": "observation",
+        "statement": "Prompt fluorescence is reported at 425 nm with 0.7 ns lifetime.",
+        "limitations": "This is distinct from the delayed phosphorescence band."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "an RTP emission band can be collected at 550 nm with a lifetime of 83 ms in air at room temperature",
+        "subject": "TPA6",
+        "scope": "target",
+        "conditions": "Solid-state delayed emission in air.",
+        "kind": "observation",
+        "statement": "The source reports long-lived 550 nm emission and visible afterglow.",
+        "limitations": "No added PMMA matrix is used for this target."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "a new phosphores- cence band (T1H) appears with an emission maximum at 455 nm",
+        "subject": "TPA6",
+        "scope": "target",
+        "conditions": "Cooling the solid; Figure 7c-e.",
+        "kind": "observation",
+        "statement": "A higher-energy delayed band emerges on cooling.",
+        "limitations": "A new band alone does not prove a higher electronic Tn state."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "no PMMA matrix is needed for the TPA6-based phosphorescence sensing module",
+        "subject": "TPA6",
+        "scope": "target",
+        "conditions": "Authors' target-specific design discussion.",
+        "kind": "author_interpretation",
+        "statement": "The target is used as a solid-state temperature reporter without PMMA.",
+        "limitations": "The detailed PMMA and AIE-mixture controls on TPA1-5 are not target-6 experiments."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0155",
+        "pdf_page": 6,
+        "quote": "the presence of a TPA-localized T1L state, which couples to a higher acceptor T1H state at room temperature",
+        "subject": "TPA1-6 design family",
+        "scope": "series_including_target",
+        "conditions": "Authors' general interpretation and TPA6 application.",
+        "kind": "author_interpretation",
+        "statement": "Dual phosphorescence is interpreted via temperature-dependent communication between locally emitting triplet configurations.",
+        "limitations": "The detailed calculations are on TPA1 and TPA4, not TPA6."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "Temperature-dependent redistribution between delayed bands is the sensor's source explanation."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03"
+        ],
+        "rationale": "Target-specific delayed emission and long lifetime support RTP."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04"
+        ],
+        "rationale": "Do not transfer the TPA1-5 water-fraction experiment to TPA6. A common design alone is insufficient for a separate target-specific RIM label."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "Temperature-dependent redistribution between delayed bands is the sensor's source explanation."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03"
+        ],
+        "rationale": "Target-specific delayed emission and long lifetime support RTP."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E03",
+          "E05"
+        ],
+        "rationale": "T1H and T1L are part of the source's conformational triplet model, not independently established T2 emission."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "aa3108643b5e83aaf4846252ff07afebf4538c09f9272d12a99c825661506bd1",
+    "label_record_sha256": "ff4e83fb73f3da76ab8860ecbcd3491d05f8a576ca2d94c8c2d6ba06b29f5657"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0013",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F008",
+    "pdf_page": 19,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "No ITP4-resolved crystal structure is listed; do not treat ITP3 J packing as ITP4 evidence.",
+    "Experts must decide whether series-level self-assembly interpretation is sufficient for a secondary packing label.",
+    "No new independent RIM or exciton label is inferred merely from the scaffold or the comparator crystal.",
+    "Embedded SI is present, including NMR and other compounds' crystals; inherited ITP4 SMILES remains unverified."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

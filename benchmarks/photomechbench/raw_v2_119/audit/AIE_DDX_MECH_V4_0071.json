@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0071",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F030",
+    "pdf_page": 2,
+    "figure": "Fig. 1b TFA; Figs. 2-3",
+    "rationale": "Named target tolfenamic acid (TFA); polymorphs I and II considered separately without graph confirmation.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "Request SI TFA PXRD, PL/lifetime and facet controls; cited SI was not inspected.",
+    "Table 1 lacks explicit QY/lifetime units. Table specifies 2-3 mm for measured large II crystals; preparation range is broader (0.1-1 cm).",
+    "Do not infer ICT solely from improved conjugation or assign FFA a TFA-like size effect."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

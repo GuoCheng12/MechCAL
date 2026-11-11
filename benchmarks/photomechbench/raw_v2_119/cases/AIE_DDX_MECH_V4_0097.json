@@ -1,0 +1,276 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0097",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "N#CC(=C(C#N)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "TPETPAFN",
+    "source_documents": [
+      {
+        "source_id": "F043",
+        "title": "Silica shelled and block copolymer encapsulated red-emissive AIE nanoparticles with 50% quantum yield for two-photon excited vascular imaging",
+        "doi": "10.1039/c5cc03603h",
+        "pdf_sha256": "866a8f6d9c5c0b6ed5f6b08257da87ca5abc7aa25c10d7b39b08b1e52c947cf2",
+        "page_count": 5
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "When fw reaches 90%, the corresponding fluorescence intensities of TPETPAFN and TPE are increased up to 70-fold and 86-fold, respectively",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "Main text reports 70-fold TPETPAFN enhancement at 90% water in THF/water; 86-fold belongs to TPE.",
+        "limitations": "Raw Figure S1 not inspected; intensities are not absolute quantum yields."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "the emission maximum of TPETPAFN is red-shifted from 597 nm in hexane to 643 nm in toluene and 652 nm in THF",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "TPETPAFN red-shifts and weakens as solvent polarity increases.",
+        "limitations": "Main reports SI solvent spectra; these are solution measurements, not nanoparticle emission peaks."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "demonstrates its strong ICT character.",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "author_interpretation",
+        "statement": "The authors assign TPETPAFN's solvent-dependent emission to ICT.",
+        "limitations": "Phenomenological ICT assignment; no specific TICT geometry or electron-transfer reaction established."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "The obtained AIE-F127 NPs were further coated with a silica shell by a sol-gel procedure.",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "THF-dissolved F127/dye are dried, redispersed by sonication in water, then silica-coated and dialyzed.",
+        "limitations": "Encapsulation is an engineered matrix, not a demonstrated stoichiometric host-cavity inclusion complex."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "TPETPAFN-F127-SiO2 NPs ( = 50 ± 1%) display much higher brightness than that of TPETPAFN- F127 NPs (24 ± 1%).",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "Silica coating raises nanoparticle yield from 24 +/- 1% to 50 +/- 1% at similar absorbance; emission shifts from 655 to 641 nm.",
+        "limitations": "Figure 1 inspected. The figure citation in prose says 1B for peak positions, but spectra are in 1A."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F043",
+        "pdf_page": 3,
+        "quote": "No obvious fluorescence enhancement has been observed for TPE based NPs with and without SiO2 coating",
+        "subject": "TPE-F127 and TPE-F127-SiO2 nanoparticles",
+        "scope": "comparator",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "TPE comparator yields change only from 21 +/- 1% to 23 +/- 1%, unlike TPETPAFN.",
+        "limitations": "Comparator values are not transferred to TPETPAFN; this control supports a polarity-dependent effect."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F043",
+        "pdf_page": 4,
+        "quote": "the average fluorescence lifetime of TPETPAFN-F127-SiO2 NPs (4.18 ns, Table S1) is more than twice longer",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "observation",
+        "statement": "TPETPAFN mean lifetime rises from 1.81 ns without silica to 4.18 ns with silica.",
+        "limitations": "Table S1 values are reported in main, not personally inspected; Figure 1B provides the visible decay comparison."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F043",
+        "pdf_page": 4,
+        "quote": "The protective silica layer thus provides a relatively less polar environment for TPETPAFN by minimizing its contact with water.",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "author_interpretation",
+        "statement": "The proposed shell mechanism is a less-polar microenvironment and reduced water contact.",
+        "limitations": "Water/oxygen shielding is inferred; no direct oxygen titration, local polarity measurement or binding constant is supplied."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F043",
+        "pdf_page": 4,
+        "quote": "The longer lifetime of TPETPAFN-F127-SiO2 NPs should be due to blocking of nonradiative decay pathways",
+        "subject": "TPETPAFN",
+        "scope": "target",
+        "conditions": "TPETPAFN in organic solvents and aqueous F127 nanoparticles, with and without silica shell; TPE particles as polarity-insensitive comparator.",
+        "kind": "author_interpretation",
+        "statement": "The authors attribute joint lifetime/yield enhancement to reduced nonradiative loss, assuming roughly invariant radiative rate.",
+        "limitations": "The source assumption of constant intrinsic radiative rate is not independently demonstrated. This does not specifically identify intramolecular rotation as the silica-shell effect."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "F127/silica environmental shielding is the main intervention and proposed origin of enhancement."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E06",
+          "E08"
+        ],
+        "rationale": "Polarity-sensitive ICT emission explains why TPETPAFN benefits more than the TPE comparator."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E09"
+        ],
+        "rationale": "The source explicitly interprets the lifetime/yield pair as reduced knr under a near-constant-kr assumption; it is a bounded kinetic account."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E09"
+        ],
+        "rationale": "General TPE rotation background and AIE intensity trends do not independently establish internal-motion restriction as the silica-induced enhancement mechanism."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E04",
+          "E05",
+          "E07",
+          "E08"
+        ],
+        "rationale": "F127/silica environmental shielding is the main intervention and proposed origin of enhancement."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E04",
+          "E08"
+        ],
+        "rationale": "Matrix encapsulation and exclusion of water are not specific guest binding or host inclusion."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E06",
+          "E08"
+        ],
+        "rationale": "Polarity-sensitive ICT emission explains why TPETPAFN benefits more than the TPE comparator."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is established."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific aggregate exciton or excimer mechanism is established; aggregation alone is insufficient."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E05",
+          "E07",
+          "E09"
+        ],
+        "rationale": "The source explicitly interprets the lifetime/yield pair as reduced knr under a near-constant-kr assumption; it is a bounded kinetic account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "f08e31cdeef50875fcc1277cc5b999778ce5cced4c515546f76639368eea048b",
+    "label_record_sha256": "bdaa0e76a58246c5b920d516b1fdcb3e69d9e8ffc70b8faca1857aa7b6389d59"
+  }
+}

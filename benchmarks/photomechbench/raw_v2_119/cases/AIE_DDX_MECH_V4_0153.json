@@ -1,0 +1,261 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0153",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "c1ccc2c(c1)ccc1c2ccc2c3ccccc3ccc21"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "3,4-benzopyrene",
+    "source_documents": [
+      {
+        "source_id": "F056",
+        "title": "Non-adiabatic quantum dynamics of polycyclic aromatic hydrocarbons exhibiting anti-Kasha emission from the S2 state",
+        "doi": "10.1039/d5cp03865k",
+        "pdf_sha256": "ee33cfbb6a018877a06aabf3ceeb770aa418248aa8ac427305234874c39a0d9a",
+        "page_count": 14
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "F056",
+        "pdf_page": 3,
+        "quote": "All MCTDH dynamics were run at 0 K",
+        "subject": "Four PAHs including the target",
+        "scope": "series_including_target",
+        "conditions": "LVC/MCTDH initial vibrational ground state; B3LYP/TZP gradients and Hessians with ADC(2)/def2TZVP excitation-energy corrections.",
+        "kind": "computation",
+        "statement": "The study uses reduced-mode quantum dynamics after initial S1 or S2 population, not new experimental fluorescence or aggregation measurements.",
+        "limitations": "The 0 K refers to the initial vibrational state; conclusions concern an ultrafast simulated window. SI parameters were not inspected."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "F056",
+        "pdf_page": 3,
+        "quote": "The oscillator strength for the transition to the bright state S2 (0.3834) is an order of magnitude higher",
+        "subject": "3,4-benzopyrene",
+        "scope": "target",
+        "conditions": "ADC(2)/def2TZVP vertical states at B3LYP/TZP ground-state geometry.",
+        "kind": "computation",
+        "statement": "The computed S2 oscillator strength is 0.3834 versus 0.0320 for S1, with a 0.115 eV gap; S3 lies about 0.84 eV above S2.",
+        "limitations": "The states are delocalized pi-pi* excitations rather than an established donor-acceptor CT pair; vertical properties do not equal emission rates."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "F056",
+        "pdf_page": 6,
+        "quote": "85% of the exciton population has relaxed to S1.",
+        "subject": "3,4-benzopyrene",
+        "scope": "target",
+        "conditions": "Gas-phase MCTDH following initial S2 excitation.",
+        "kind": "computation",
+        "statement": "At 200 fs approximately 85% has reached S1; early S2-to-S1 transfer fits approximately 70 fs and later populations oscillate near 70% S1/30% S2 over 200 fs-3 ps.",
+        "limitations": "Computed populations, not direct measurements. The paper notes the lack of target-specific experimental decay data; its pyrene comparison is a comparator, not target validation."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "F056",
+        "pdf_page": 7,
+        "quote": "the populations of S1 and S2 oscillate around 90% and 10%, respectively.",
+        "subject": "3,4-benzopyrene",
+        "scope": "target",
+        "conditions": "Initial S1 excitation, gas-phase 3 ps model.",
+        "kind": "computation",
+        "statement": "Uphill transfer creates a small sustained S2 population even when the nominally dark S1 is initially occupied.",
+        "limitations": "The initial S1 and S2 conditions produce different average populations, not one universal thermodynamic equilibrium."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "F056",
+        "pdf_page": 7,
+        "quote": "This dynamic equilibrium between the S1 and S2 states results in a steady population of S2",
+        "subject": "3,4-benzopyrene",
+        "scope": "target",
+        "conditions": "Interpretation of early-time simulations and previously reported fluorescence.",
+        "kind": "author_interpretation",
+        "statement": "The authors propose vibronically sustained S2 population as the basis for spontaneous S2-to-S0 anti-Kasha fluorescence.",
+        "limitations": "The simulations are much shorter than the reported emission lifetime scale; extrapolation to longer times relies on earlier literature, not direct simulation."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "F056",
+        "pdf_page": 9,
+        "quote": "the simulations starting from either S1 and S2 yield identical kinetics with almost equal average populations",
+        "subject": "3,4-benzopyrene, modified model",
+        "scope": "target",
+        "conditions": "Artificially reduce S1-S2 gap to 25% of the original, 0.029 eV; 100-1500 fs.",
+        "kind": "computation",
+        "statement": "The authors' sensitivity calculation approaches equal S1/S2 populations at the smallest imposed gap, supporting the importance of gap size.",
+        "limitations": "This is an artificial Hamiltonian control, not a measured or chemically synthesized lower-gap target."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "F056",
+        "pdf_page": 9,
+        "quote": "does not significantly disrupt the dynamic equilibrium between the S1 and S2 states.",
+        "subject": "3,4-benzopyrene, modified mode sets",
+        "scope": "target",
+        "conditions": "Turn off six low-, mid-, or high-energy modes in separate model calculations; Fig.9 visually inspected.",
+        "kind": "computation",
+        "statement": "The remaining modes compensate qualitatively, retaining coupled-state dynamics although oscillation amplitudes and periods change.",
+        "limitations": "Mode deletion is not experimental restriction of intramolecular motion and must not be converted into an AIE/RIM claim."
+      },
+      {
+        "evidence_id": "E08",
+        "source_id": "F056",
+        "pdf_page": 9,
+        "quote": "oscillate around 50% throughout the entire simulation window",
+        "subject": "3,4-benzopyrene in modeled MeCN",
+        "scope": "target",
+        "conditions": "COSMO acetonitrile correction, compared with gas-phase model.",
+        "kind": "computation",
+        "statement": "The source reports a more nearly balanced S1/S2 population in the solvent model for either initial state.",
+        "limitations": "This result is reported in main text with Fig.S6; SI was not inspected. No physical host confinement or PET is demonstrated."
+      },
+      {
+        "evidence_id": "E09",
+        "source_id": "F056",
+        "pdf_page": 3,
+        "quote": "fails to predict the correct dimensionality of the conical intersection seams.",
+        "subject": "ADC(2) methodology",
+        "scope": "series_including_target",
+        "conditions": "Acknowledged electronic-structure limitation.",
+        "kind": "author_interpretation",
+        "statement": "The authors acknowledge ADC(2)'s CI-topology limitation; their reduced LVC dynamics should not be treated as a definitive CI-access map.",
+        "limitations": "No target-specific ground-state CI decay or aggregation-induced CI restriction is established."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "role": "co_primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific suppression of internal rotations or vibrations is established by the selected evidence; rigidity or emission enhancement alone is insufficient."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "The selected source does not establish a target packing, host or matrix confinement mechanism."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E06",
+          "E07",
+          "E08"
+        ],
+        "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E09"
+        ],
+        "rationale": "Diabatic MECP-based mode selection and coupled-state dynamics do not independently establish a CI-mediated emission/quenching mechanism; ADC(2) CI topology is explicitly limited."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "supported",
+        "role": "co_primary",
+        "evidence_ids": [
+          "E02",
+          "E03",
+          "E04",
+          "E05"
+        ],
+        "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "476a62c1a333e7dfe6861502312621ea3fbb57dbaec7636d9be2c9094116a7c2",
+    "label_record_sha256": "d65f6024f31b62d8026b24dbaf5ac576285e75b8693b8dc3115f894669f4accd"
+  }
+}

@@ -1,0 +1,236 @@
+{
+  "schema_version": "photomechbench.raw.v2",
+  "case_id": "AIE_DDX_MECH_V4_0091",
+  "public_input": {
+    "molecule": {
+      "structure": {
+        "format": "smiles",
+        "value": "N#Cc1c(-n2c3ccccc3c3ccccc32)c(C#N)c(-n2c3ccccc3c3ccccc32)c(-n2c3ccccc3c3ccccc32)c1-n1c2ccccc2c2ccccc21"
+      }
+    }
+  },
+  "hidden_reference": {
+    "target_name": "4CzIPN",
+    "source_documents": [
+      {
+        "source_id": "S0092",
+        "title": "Unified Framework for Photophysical Rate Calculations in TADF Molecules",
+        "doi": "10.1021/acs.jctc.1c00476",
+        "pdf_sha256": "ed90ff635c17e0cbd5a5fcf8f76d8d7f8f8ba8b71f979d936d5c69bb65201a20",
+        "page_count": 9
+      }
+    ],
+    "reference_evidence_units": [
+      {
+        "evidence_id": "E01",
+        "source_id": "S0092",
+        "pdf_page": 4,
+        "quote": "For the 4CzIPN molecule, great agreement is found between predicted and experimental ISC rates.",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Nuclear-ensemble rate calculation versus literature experimental rates.",
+        "kind": "computation",
+        "statement": "The authors report good ISC agreement.",
+        "limitations": "Experimental values are cited from earlier studies, not newly measured in this paper."
+      },
+      {
+        "evidence_id": "E02",
+        "source_id": "S0092",
+        "pdf_page": 4,
+        "quote": "underestimate the experimental value by 2 orders of magnitude",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Calculated rISC rate compared with cited experiment.",
+        "kind": "computation",
+        "statement": "The target rISC rate is substantially underestimated.",
+        "limitations": "Do not replace this mismatch with the smaller factor-of-three mismatch of PTZ-DBTO2."
+      },
+      {
+        "evidence_id": "E03",
+        "source_id": "S0092",
+        "pdf_page": 6,
+        "quote": "4CzIPN simulated time- resolved decay shows no contribution from phosphorescence",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Kinetic model populated by calculated rates.",
+        "kind": "computation",
+        "statement": "The model predicts fluorescence-dominated decay with negligible phosphorescence.",
+        "limitations": "A computed absence is not a new experimental exclusion of every triplet process; rISC still participates."
+      },
+      {
+        "evidence_id": "E04",
+        "source_id": "S0092",
+        "pdf_page": 6,
+        "quote": "a strong prompt component with a 6 ns lifetime, close to the experimental value of 14 ns",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Simulated prompt fluorescence compared with cited experimental decay.",
+        "kind": "computation",
+        "statement": "The prompt lifetime is 6 ns in the calculation versus 14 ns in the cited experiment.",
+        "limitations": "Preserve numerical mismatch rather than calling it quantitative agreement."
+      },
+      {
+        "evidence_id": "E05",
+        "source_id": "S0092",
+        "pdf_page": 6,
+        "quote": "an estimated lifetime of 45 μs, again overestimating the experimental value of almost 2 μs",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Delayed fluorescence kinetic model versus literature experiment.",
+        "kind": "computation",
+        "statement": "Delayed fluorescence is much too long in the model.",
+        "limitations": "The calculated curve resembles lower-temperature data; it should not be treated as an accurately validated room-temperature lifetime."
+      },
+      {
+        "evidence_id": "E06",
+        "source_id": "S0092",
+        "pdf_page": 6,
+        "quote": "4CzIPN 9.3 × 107 1.7 × 101 1.7 × 107 46",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Table 3, calculated kF/kP and experimental kF from reference 46.",
+        "kind": "computation",
+        "statement": "Calculated kF is 9.3 x 10^7 and kP is 1.7 x 10^1 s^-1; cited experimental kF is 1.7 x 10^7 s^-1.",
+        "limitations": "The source's calculations and referenced experiments are separate provenance layers."
+      },
+      {
+        "evidence_id": "E07",
+        "source_id": "S0092",
+        "pdf_page": 6,
+        "quote": "the harmonic approximation that is behind the procedure of geometry sampling may overlook important anharmonic contributions",
+        "subject": "4CzIPN",
+        "scope": "target",
+        "conditions": "Authors' discussion of the simulated temperature mismatch.",
+        "kind": "author_interpretation",
+        "statement": "The authors suggest missing anharmonic contributions as one explanation for disagreement.",
+        "limitations": "This is a proposed model limitation, not demonstrated RIM or conical-intersection evidence."
+      }
+    ],
+    "reference_mechanisms": [
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "role": "primary",
+        "gain": 2,
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The paper's central contribution is a unified radiative/ISC/rISC rate and state-population account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "role": "secondary",
+        "gain": 1,
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "TADF and ISC/rISC are explicit target processes; computed phosphorescence is negligible."
+      }
+    ],
+    "mechanism_decisions": [
+      {
+        "label": "RIM_RIR_RIV",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E07"
+        ],
+        "rationale": "Vibrational sampling or a suggested anharmonic correction is not proof of aggregation-induced motion restriction."
+      },
+      {
+        "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "HOST_GUEST_INTERACTION",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "ICT_TICT_CT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [
+          "E01",
+          "E02"
+        ],
+        "rationale": "The detailed conformation-dependent CT/localized NTO example in this paper is PTZ-DBTO2. Do not transfer it to 4CzIPN merely because both are TADF emitters."
+      },
+      {
+        "label": "ESIPT_PT",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "PET_ET",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "AGGREGATE_EXCITON_EXCIMER",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "RADIATIVE_RATE_STATE_BALANCE",
+        "status": "supported",
+        "role": "primary",
+        "evidence_ids": [
+          "E03",
+          "E04",
+          "E05",
+          "E06"
+        ],
+        "rationale": "The paper's central contribution is a unified radiative/ISC/rISC rate and state-population account."
+      },
+      {
+        "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+        "status": "supported",
+        "role": "secondary",
+        "evidence_ids": [
+          "E01",
+          "E02",
+          "E03",
+          "E05"
+        ],
+        "rationale": "TADF and ISC/rISC are explicit target processes; computed phosphorescence is negligible."
+      },
+      {
+        "label": "RACI_CI_ACCESS",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      },
+      {
+        "label": "SOKR_ANTI_KASHA",
+        "status": "not_established",
+        "role": null,
+        "evidence_ids": [],
+        "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+      }
+    ]
+  },
+  "provenance": {
+    "annotation_method": "assistant_source_reconstruction",
+    "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+    "raw_record_sha256": "70f21f62d16e4099ff81a94333be1f4f4ed6a66a154cacdee9e7a9d33d501ec0",
+    "label_record_sha256": "e1f83146c84b7d095e3b3a31feb35aa397a9409d380963cd26aa9763ec624af7"
+  }
+}

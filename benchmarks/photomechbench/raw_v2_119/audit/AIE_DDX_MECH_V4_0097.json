@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0097",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F043",
+    "pdf_page": 2,
+    "figure": "Scheme 1A (pointer only)",
+    "rationale": "Source designation TPETPAFN is used for evidence attribution only; molecular graph confirmation is deferred as requested.",
+    "limitations": "Legacy candidate SMILES is retained unmodified and UNVERIFIED. The page/figure is a future structure-review pointer, not confirmation of connectivity, substitution positions, stereochemistry or charge."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy candidate SMILES has not been verified against the original structure.",
+    "Assistant source-reading draft only; human review remains pending and mechanism roles are proposals, not expert-approved causal ground truth.",
+    "Only the supplied main PDF was inspected. Supporting Information referenced in the main text was not personally inspected; obtain SI for the reported underlying data and methodological detail.",
+    "Retrieve SI for NP formulation amounts, fitted lifetime components, solvent spectra and oxygen/polarity controls.",
+    "Keep the 70-fold THF/water enhancement separate from the approximately twofold silica-induced quantum-yield increase."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

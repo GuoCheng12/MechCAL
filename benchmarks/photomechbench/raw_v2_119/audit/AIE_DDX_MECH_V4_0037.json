@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0037",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0037",
+    "pdf_page": 3,
+    "figure": "Figure 1a, compound 2",
+    "rationale": "The meso-dimethylamino BODIPY connectivity agrees visually with compound 2. The crystal structure and ultrafast data shown later concern analogue 5.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Review whether theoretical torsional evidence alone warrants an additional secondary RIM label for compound 2; comparator experiments remain explicitly separate.",
+    "The DOI counterpart question is resolved at source level: physical PDF page 1 lists both anie.201902766 and ange.201902766 and the corresponding version-of-record links. Preserve the accepted-manuscript version in provenance; this does not constitute a comparison with the final version of record.",
+    "Obtain the SI for compound definitions and detailed calculations; no SI-only trace is claimed verified here."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

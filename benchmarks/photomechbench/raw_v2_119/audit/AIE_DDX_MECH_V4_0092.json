@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0092",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0092",
+    "pdf_page": 2,
+    "figure": "Figure 1a, PTZ-DBTO2",
+    "rationale": "The phenothiazine donor and dibenzothiophene dioxide acceptor connectivity agrees with Figure 1a, not the separate 4CzIPN comparator.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Keep simulated rates, emission fractions and lifetimes distinct from cited experimental values.",
+    "Review the role ordering of state balance and triplet photophysics; these labels describe coupled parts of the same model.",
+    "Do not narrow the triplet family's scope to metal-containing molecules.",
+    "Table 3 reports a 15-fold difference between calculated and cited experimental fluorescence rates (E06); recover references 44/45 before describing quantitative agreement."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

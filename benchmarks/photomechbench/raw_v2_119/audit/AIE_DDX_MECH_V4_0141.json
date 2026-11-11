@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0141",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F050",
+    "pdf_page": 2,
+    "figure": "Chart 1: (2-ferrocenyl)indene 1",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F050 SI TCSPC curve; the approximately 1.3 ns fit is reported in main but the trace was not inspected.",
+    "Source methods print excitation '375 ns', whereas results specify 375 nm; retain results wavelength and flag likely unit typo.",
+    "Do not infer AIE, RIM or solid-state packing from this solution study. Candidate Fe bonding/charge representation remains unverified."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0085",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F037",
+    "pdf_page": 2,
+    "figure": "Figure 1; alpha-DCS designation (pointer only)",
+    "rationale": "Source designation alpha-DCS is used for evidence attribution only; molecular graph confirmation is deferred as requested.",
+    "limitations": "Legacy candidate SMILES is retained unmodified and UNVERIFIED. The page/figure is a future structure-review pointer, not confirmation of connectivity, substitution positions, stereochemistry or charge."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy candidate SMILES has not been verified against the original structure.",
+    "Assistant source-reading draft only; human review remains pending and mechanism roles are proposals, not expert-approved causal ground truth.",
+    "Only the supplied main PDF was inspected. Supporting Information referenced in the main text was not personally inspected; obtain SI for the reported underlying data and methodological detail.",
+    "Resolve the Table 3/prose 'nonradiative rates only increase' inconsistency using reference 5 and SI.",
+    "A crystal MECI could not be reliably evaluated; the inaccessible-CI conclusion is bounded to the source model."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

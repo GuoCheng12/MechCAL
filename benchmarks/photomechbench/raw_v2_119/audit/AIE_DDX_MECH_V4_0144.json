@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0144",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F052",
+    "pdf_page": 8,
+    "figure": "Figure 1: 1c / 1,3-dichloroazulene",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F052 SI orbital maps, reorganization-energy data and NACME/rate details; no SI directly inspected.",
+    "HT effects are explicitly said to be important for 1c on p16, unlike 1b; SI Figure S5 not inspected.",
+    "Proposed weak CT secondary label requires human review; it describes a reported component of the excited states, not definitive causal dominance."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

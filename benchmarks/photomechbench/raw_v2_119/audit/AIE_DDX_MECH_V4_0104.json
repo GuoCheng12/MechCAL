@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0104",
+  "prior_status": "ready_for_adjudication",
+  "structure_review": {
+    "status": "figure_consistent_provisional",
+    "source_id": "S0104",
+    "pdf_page": 6,
+    "figure": "Chart 1, HPDMCb",
+    "rationale": "The four-membered core, two exocyclic diphenylmethylene groups and two directly attached phenyl groups agree with Chart 1. The RDKit drawing has overlapping phenyls, which are not extra bonds.",
+    "limitations": "Assistant visual comparison with the source figure, not independent chemical identity certification. No supplementary structure file or expert approval is claimed."
+  },
+  "notes": [
+    "Recover the original experimental paper, reference 28 on physical PDF page 21: Dong et al., Aggregation-Induced and Crystallization-Enhanced Emissions of 1,2-Diphenyl-3,4-bis(Diphenylmethylene)-1-Cyclobutene, Chem. Commun. 2007, 3255-3257. Its original measurements and the current paper's SI remain unchecked.",
+    "Keep calculated resonance Raman spectra marked as predictions rather than completed validation.",
+    "Review overlap of RIM, packing and rate-balance labels consistently across the benchmark."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

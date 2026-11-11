@@ -1,0 +1,19 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0125",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F046",
+    "pdf_page": 2,
+    "figure": "Scheme 1A: TPE-TTMN-OMe",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F046 SI Table S1 and Figures S38-S39 for OMe-specific quantum yield, lifetime and calculation details; SI references in main are not direct SI inspection.",
+    "Do not transfer T4-NP bioactivity, Type I ROS identification, 600-fold response or TPA 712/770 nm maxima to OMe."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

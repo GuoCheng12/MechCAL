@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0041",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F017",
+    "pdf_page": 10,
+    "figure": "Figure 4a (identity pointer only; chemical graph not adjudicated)",
+    "rationale": "Target associated by source name and designation. Structure confirmation explicitly deferred by user.",
+    "limitations": "Legacy candidate SMILES retained unmodified and UNVERIFIED. Neither connectivity, stereochemistry nor chemical graph equivalence has been confirmed."
+  },
+  "notes": [
+    "Structure confirmation remains deferred; candidate SMILES is legacy-unverified and must not be treated as source-validated.",
+    "Only the supplied main PDF was inspected. SI references below describe what the main text reports, not personally inspected SI. Human adjudication is pending.",
+    "Request SI Table S2, Figure S41 and detailed transient-fitting methods. Hydrogen-bond quenching is explicitly retained but not recast as ESIPT or guest inclusion.",
+    "P2/P4 data are solution-state photophysics and bioimaging; no target-specific AIE claim is established here."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

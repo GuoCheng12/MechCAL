@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0001",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F001",
+    "pdf_page": 2,
+    "figure": "Structure adjudication deferred; source retained for later inspection.",
+    "rationale": "User requested evidence reconstruction without confirming molecular structure.",
+    "limitations": "Original candidate SMILES preserved unverified; molecular naming and evidence scope do not certify the graph."
+  },
+  "notes": [
+    "Structural identity and the inherited SMILES remain unverified by request.",
+    "Proposed roles require expert adjudication; only selected source evidence is reconstructed.",
+    "Check the main-text versus Table 2 PLQ lifetime discrepancy before fixing a numerical lifetime.",
+    "Obtain SI for short-time excimer formation and detailed rate fits.",
+    "Expert adjudication should confirm whether electrode-driven ET lies within the intended broad PET_ET family and benchmark scope."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

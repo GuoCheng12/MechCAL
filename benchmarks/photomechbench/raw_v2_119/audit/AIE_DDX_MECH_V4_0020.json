@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0020",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F011",
+    "pdf_page": 2,
+    "figure": "Figure 1a, CF3-HTTH; crystal packing Fig. 1e",
+    "rationale": "Target is followed by its source name/designation only. Chemical graph adjudication is deferred as requested.",
+    "limitations": "Legacy candidate SMILES retained unmodified and not verified. This source pointer is not a structure confirmation or expert approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; candidate SMILES is unverified and unchanged.",
+    "Only the supplied main PDF was inspected. Separately cited supporting information was not inspected; statements about SI are main-text reports, not SI verification.",
+    "SI solution controls, reference-compound kinetics and crystallography should be independently inspected.",
+    "The model uses comparator-derived kT; observed and elementary time constants must not be interchanged.",
+    "Main Fig. 5 inset prints 362 ns while equations/text give 362 ps; use the equation-supported ps timescale and flag the discrepancy."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

@@ -1,0 +1,21 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0082",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F035",
+    "pdf_page": 2,
+    "figure": "Scheme 1 ODNI; Fig. 4 ODNI model",
+    "rationale": "ODNI is octadecyl-substituted naphthalimide; HNI is a hexyl comparator. F034/F035 are parallel accepted editions of the same study, not independent replications.",
+    "limitations": "Source designation only; candidate legacy SMILES and the full molecular graph have not been verified. Structure confirmation is deferred at the user's request."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the legacy SMILES remains unchanged and unverified. All roles are assistant proposals requiring human review.",
+    "F034 and F035 are parallel DOI editions of the same accepted article; evidence is not independent replication.",
+    "Request SI S1-S23, ODNI spectra, DLS, frontier-level calculation details and HNI crystal data; not inspected here.",
+    "Review broad surface-association HOST_GUEST family scope and weak DMF excimer interpretation.",
+    "No ODNI crystal structure or direct RIM experiment is established; HNI packing is comparator-only."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}

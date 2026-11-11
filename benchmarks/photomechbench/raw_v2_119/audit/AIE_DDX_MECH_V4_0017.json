@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0017",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "S0017",
+    "pdf_page": 2,
+    "figure": "Scheme 1, compound 6d",
+    "rationale": "Scheme 1 identifies 6d as R1=R2=TPB. The hydroxyl-bearing aryl belongs at oxazole C2, the other aryl at C5. TPB includes a para-phenylene bearing B(mesityl)2, so the oxazole-side arm contains a biphenyl linker.",
+    "limitations": "Assistant visual source review and graph checks, not independent expert certification. SI corroboration remains incomplete."
+  },
+  "notes": [
+    "The source-drawn C63H61B2NO2 graph is now applied to this draft. Obtain SI characterization and independent connectivity review before release.",
+    "Adjudicate whether local CT effects merit a separate reference label under the broad existing CT family.",
+    "Reference proposals remain assigned to source compound 6d. The repaired graph is assistant-reviewed, not verified gold.",
+    "The formula is calculated from the interpreted drawing, not confirmed by an acquired SI mass spectrum."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

@@ -1,0 +1,22 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0096",
+  "prior_status": "structure_repaired_pending_adjudication",
+  "structure_review": {
+    "status": "source_figure_consistent_assistant_reviewed",
+    "source_id": "F042",
+    "pdf_page": 3,
+    "figure": "Scheme 1, sole newly studied emitter PXZ-TPB-CN (pointer only)",
+    "rationale": "Legacy evidence E01 explicitly names PXZ-TPB-CN, as does Scheme 1. The source-target assignment is resolved. However, the inherited SMILES contains six aryl substituents on the central benzene whereas the source has four. Remove the two excess phenyl groups; the synthesis precursor independently confirms the substitution pattern within the same paper.",
+    "limitations": "Source-drawn repair, not expert certification. Some source text says PXZ-TPE-CN; use the Scheme 1 designation while retaining the naming inconsistency. SI and CCDC 1982004 remain uninspected."
+  },
+  "notes": [
+    "The source-drawn four-substituted core replaces the inherited six-substituted core in this draft; independent review remains pending.",
+    "Assistant source-reading draft only; human review remains pending and mechanism roles are proposals, not expert-approved causal ground truth.",
+    "Only the supplied main PDF was inspected. Supporting Information referenced in the main text was not personally inspected; obtain SI for the reported underlying data and methodological detail.",
+    "The PXZ-TPB-CN target assignment is resolved from legacy E01 and Scheme 1. The repaired graph remains an assistant-reviewed draft, not verified gold.",
+    "Accepted text inconsistently uses PXZ-TPE-CN in parts of p4, while title, Scheme 1 and conclusions use PXZ-TPB-CN. This is flagged as a source nomenclature inconsistency, not silently treated as a second emitter.",
+    "Obtain SI and crystal data CCDC 1982004; hRISC needs stronger evidence than energy matching and inferred OLED efficiency."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "source_figure_reconstructed_assistant_reviewed"
+}

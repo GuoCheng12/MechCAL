@@ -1,0 +1,20 @@
+{
+  "case_id": "AIE_DDX_MECH_V4_0143",
+  "prior_status": "structure_review_pending",
+  "structure_review": {
+    "status": "deferred",
+    "source_id": "F052",
+    "pdf_page": 8,
+    "figure": "Figure 1: 1b, guaiazulene",
+    "rationale": "Target designation is assessed from the source; chemical graph confirmation is deferred at the user's request.",
+    "limitations": "Legacy candidate SMILES retained unverified. This source pointer is not chemical-structure approval."
+  },
+  "notes": [
+    "Structure confirmation is deferred; the candidate SMILES has not been verified.",
+    "Request F052 SI S5 spectra, accepting modes and rate/coupling tables. Only main PDF inspected.",
+    "The paper briefly calls 1b 'methyl substitutions on 1,4,7' on p14; p8 identifies the 7-isopropyl substituent. Preserve the precise name, with graph review deferred.",
+    "Computed and compiled experimental yields disagree by about fivefold; retain both and their provenance."
+  ],
+  "human_review": "pending",
+  "smiles_origin": "legacy_unverified"
+}
