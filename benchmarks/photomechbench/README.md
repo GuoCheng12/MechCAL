@@ -31,8 +31,23 @@ raw_v2_119/
   manifest.json                Membership, statistics and original checksums
   excluded_cases.json           Excluded case and reason
   metadata_repairs.json         Source-title repairs from reconstruction
+  inputs.csv                   Original input CSV export
+  public_inputs.jsonl          Original public-input JSONL export
+  references.jsonl             Original reference JSONL export
+  validation.json              Original reconstruction validation report
+  README.md                    Original construction instructions
+  FORMAT_CHECK_ZH.md            Original Chinese format-check notes
+raw_v2_119_checksums.json       SHA-256 inventory of all 249 original files
 LICENSE.md                     Annotation license and third-party notice
 ```
+
+`raw_v2_119/` is a byte-for-byte copy of the complete original
+`PhotoMechBench_raw_v2_119/` directory: 249 files, 2,683,619 file-content bytes
+(about 3.2 MB of allocated disk space on the source machine). Nothing in that
+directory has been rewritten for publication. The original README and format
+report describe the historical reconstruction environment; their commands and
+test counts are retained as provenance, not current installation instructions.
+Use the validation command in this parent README for the standalone repository.
 
 Paper/SI PDFs, full-text archives, model responses, inference histories,
 credentials and provider settings are **not** distributed. Source records
@@ -129,9 +144,11 @@ or benchmark reruns were made to prepare this data release.
 
 ## Versioning And Checks
 
-The original CSV and all complete case records are unchanged from the saved
-reconstruction snapshot. The two manifests separately verify the CSV and case
-files. The reference manifest also retains hashes of private construction
+All 249 files are unchanged from the saved reconstruction snapshot. The
+external `raw_v2_119_checksums.json` inventory covers every file, including
+the original JSONL exports and documentation, without modifying the snapshot.
+The two original manifests separately verify the CSV and case files.
+The reference manifest also retains hashes of private construction
 inputs for provenance; those source files and PDF binaries are not bundled.
 
 From the repository root, run:

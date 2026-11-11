@@ -11,6 +11,8 @@ recursive-include mechcal/prompts *.md
 recursive-include mechcal/eval/prompts *.md
 recursive-include mechcal/eval/rubrics *.json
 global-exclude *.py[cod] *.local.sh *.log *.jsonl
+include benchmarks/photomechbench/raw_v2_119/public_inputs.jsonl
+include benchmarks/photomechbench/raw_v2_119/references.jsonl
 prune outputs
 prune data
 prune var

@@ -2,6 +2,10 @@
 
 ## 0.2.0 (Unreleased)
 
+- Complete the original PhotoMechBench raw-v2-119 snapshot: include all 249
+  files unchanged, including JSONL/CSV exports and historical validation notes.
+  Add an external full-file SHA-256 inventory and narrowly allow the two dataset
+  JSONL files in Git and source distributions; runtime logs remain excluded.
 - Publish reconstructed PhotoMechBench references under CC BY 4.0: 119 cases,
   401 reference mechanisms, 998 evidence records and 76 source DOIs, with
   unchanged case files, JSON Schema, provenance and original review notes.

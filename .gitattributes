@@ -1,0 +1,3 @@
+# Preserve the original benchmark snapshot across Git line-ending settings.
+benchmarks/photomechbench/raw_v2_119/** -text
+benchmarks/photomechbench/raw_v2_119/inputs.csv whitespace=cr-at-eol

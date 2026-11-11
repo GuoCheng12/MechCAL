@@ -24,6 +24,8 @@ checkpoints/
 third_party/
 *.log
 *.jsonl
+!/benchmarks/photomechbench/raw_v2_119/public_inputs.jsonl
+!/benchmarks/photomechbench/raw_v2_119/references.jsonl
 *.aip
 *.aop
 *.chk

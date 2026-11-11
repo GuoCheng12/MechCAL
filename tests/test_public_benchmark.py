@@ -121,6 +121,38 @@ def test_csv_agrees_with_references_and_stays_input_only():
     ]
 
 
+def test_complete_original_snapshot_checksums():
+    inventory = read_json(DATASET / "raw_v2_119_checksums.json")
+    files = {str(path.relative_to(SNAPSHOT)): path
+             for path in SNAPSHOT.rglob("*") if path.is_file()}
+    assert set(files) == set(inventory["files_sha256"])
+    assert len(files) == inventory["file_count"] == 249
+    assert sum(path.stat().st_size for path in files.values()) == (
+        inventory["total_bytes"]
+    ) == 2683619
+    for name, path in files.items():
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == inventory["files_sha256"][name]
+
+
+def test_original_exports_agree_with_complete_cases():
+    cases = [read_json(path) for path in CASE_FILES]
+    for name, field in [("public_inputs.jsonl", "public_input"),
+                        ("references.jsonl", "hidden_reference")]:
+        rows = [json.loads(line) for line in (SNAPSHOT / name).read_text(
+            encoding="utf-8").splitlines()]
+        assert rows == [{"case_id": case["case_id"], field: case[field]} for case in cases]
+    # The original CSV uses CRLF; the earlier input-only export uses LF.
+    with (SNAPSHOT / "inputs.csv").open(encoding="utf-8", newline="") as original:
+        with (DATASET / "raw_v2_119.csv").open(encoding="utf-8", newline="") as public:
+            assert list(csv.DictReader(original)) == list(csv.DictReader(public))
+    validation = read_json(SNAPSHOT / "validation.json")
+    manifest = read_json(SNAPSHOT / "manifest.json")
+    assert validation["valid"] is True and validation["errors"] == []
+    for key in ["case_count", "unique_structures", "source_dois", "evidence_count",
+                "reference_count", "role_counts", "label_counts", "case_ids"]:
+        assert validation[key] == manifest[key]
+
+
 def test_audit_and_distribution_scope():
     audits = sorted((SNAPSHOT / "audit").glob("*.json"))
     assert [path.stem for path in audits] == [path.stem for path in CASE_FILES]
@@ -129,7 +161,10 @@ def test_audit_and_distribution_scope():
     for path in DATASET.rglob("*"):
         if not path.is_file():
             continue
-        assert path.suffix in {".md", ".csv", ".json"}, path
+        if path.suffix == ".jsonl":
+            assert path in {SNAPSHOT / "public_inputs.jsonl", SNAPSHOT / "references.jsonl"}
+        else:
+            assert path.suffix in {".md", ".csv", ".json"}, path
         assert not re.search(
             r"/home/|/tmp/|sk-[a-zA-Z0-9]{16,}|hf_[a-zA-Z0-9]{20,}|"
             r"-----BEGIN (?:RSA |OPENSSH )?PRIVATE KEY-----",
