@@ -133,7 +133,11 @@ and dollar cost under a fixed price table. Comparisons are reported at matched b
    Layer A checker (`mechcal/eval/grounding.py`).
 3. Done — perturbation operators and suite runner (`mechcal/eval/perturb.py`). The scorer is
    a plain callable, so text-only, v3 and v4 judges are compared on identical perturbations.
-4. Rubric v4 + Layer B validator changes; freeze manifest.
+4. Drafted, pending author review — rubric v4 (`mechcal/eval/rubrics/mechanism_evidence_rubric_v4.json`:
+   v3 route text plus per-condition `accepts`, derived ceilings and evaluator-only coverage notes),
+   Layer B judge (`mechcal/eval/judge_v4.py`, prompt `mechanism_evidence_support_judge_v4.md`)
+   and the freeze manifest (`mechanism_evidence_rubric_v4.freeze.json`, enforced by tests).
+   Chemistry review sheet: [rubric-v4-review-zh.md](rubric-v4-review-zh.md).
 5. API-dependent: judge runs, probes, human-subset export.
 
 ### Layer A notes

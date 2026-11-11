@@ -1,0 +1,1185 @@
+{
+ "mechanism_evidence_rubric_version": "v4",
+ "status": "draft_pending_author_review",
+ "based_on": "v3",
+ "revision_date": "2026-11-11",
+ "revision_scope": "Keep v3 route and condition text. Add per-condition evidence requirements (which claim kinds may satisfy each condition), derived structure-only and closed-book ceilings, and the Layer A grounding gate. Experimental observations are not available in the SMILES-only protocol; observation-only conditions are retained for a future condition-aware subset.",
+ "mechanism_pool": [
+  "RIM_RIR_RIV",
+  "PACKING_HOST_MATRIX_CONFINEMENT",
+  "HOST_GUEST_INTERACTION",
+  "ICT_TICT_CT",
+  "ESIPT_PT",
+  "PET_ET",
+  "AGGREGATE_EXCITON_EXCIMER",
+  "RADIATIVE_RATE_STATE_BALANCE",
+  "TRIPLET_METAL_ENERGY_TRANSFER",
+  "RACI_CI_ACCESS",
+  "SOKR_ANTI_KASHA"
+ ],
+ "support_score_scale": {
+  "strong": 1,
+  "partial": 0.5,
+  "unsupported": 0
+ },
+ "global_rules": [
+  "Evaluate support provided by submitted, case-specific evidence for each predicted mechanism, not ultimate causal truth or agreement with the hidden paper. Strong support concerns the bounded mechanism interpretation, not proof of the complete causal chain or the uniquely correct explanation.",
+  "Evaluate every condition in an all_of group. Every condition must hold. Within an any_of group, at least one complete route must hold; one attractive phrase from a route is not sufficient.",
+  "A finding must be attributable to the current molecular input and the conditions it actually describes. General domain knowledge can explain a finding but cannot replace one.",
+  "Do not reward a tool name, number of calls, model identity, verbosity, confidence, or self-reported support strength. Equivalent verified findings and warrants receive equivalent support regardless of whether a subject used tools.",
+  "Score each mechanism independently. Evidence can support multiple coexisting mechanisms when it establishes the required link for each one; do not assign zero merely because another mechanism is also supported.",
+  "Distinguish an accurate observation from its interpretation. Discard an unsupported interpretation without discarding the underlying valid observation.",
+  "Missing strong-support evidence does not automatically imply zero. Assess the partial-support routes next.",
+  "Proposed experiments, calculation plans, and validation requests are not completed evidence. A cautionary phrase cannot promote zero to partial support, and absence of a stock caveat cannot erase valid partial support.",
+  "Support strength is bounded by the evidence, not by the author's certainty. Note overstatement separately; a confident sentence cannot turn partial evidence into strong support.",
+  "Keep calculations scoped to their molecule, charge/state, modeled geometry, and environment. A proxy or isolated-molecule calculation must not be relabeled as an observed excited-state pathway or real aggregate.",
+  "Do not require wet-lab confirmation, measured emission changes, a matched control, full rate decomposition, or complete dynamics as universal prerequisites. A directly relevant structural, computational, or observational finding with a sound mechanism-specific explanation can satisfy a strong-support route. The finding must still address the defining mechanism, not just a generic motif.",
+  "Do not require exclusion of all plausible alternatives or a separate counterevidence search. Consider supplied contradictions only when they materially undermine the particular finding or interpretation being scored; unrelated ambiguity does not veto otherwise valid support.",
+  "Each submitted claim carries an evaluator grounding outcome. Only grounded computed claims and structural claims consistent with the input graph may satisfy a finding condition, and only if their kind is listed in that condition's accepts. A fabricated, mismatched or failed-artifact claim cannot support anything, even partially.",
+  "For a computed claim, compare the stated interpretation with the cited artifact values shown in the payload. If the direction, state identity, magnitude class or comparison stated in prose disagrees with those values (for example calling a state dark while the cited oscillator strength is large), mark the claim contradicted even though its number is grounded.",
+  "A modeled dimer, contact pose or implicit-solvent calculation is a computed finding about the modeled configuration. It may satisfy a computed condition when the claim keeps that scope; it is never an observation of real packing, aggregation or solvatochromism.",
+  "Prior-knowledge claims and remembered literature can only contribute to warrant conditions."
+ ],
+ "decision_policy": {
+  "prerequisite": "Apply the verification policy to individual submitted findings before judging their mechanism support. Use the remaining eligible findings, not model-generated replacements for missing data.",
+  "order": [
+   "strong_support",
+   "partial_support",
+   "zero"
+  ],
+  "strong_support": {
+   "score": 1,
+   "all_of": [
+    "The global rules are satisfied; supplied evidence must not directly contradict the essential finding used for support.",
+    "At least one complete label-specific strong_support route is satisfied by eligible findings. Do not append extra confirmation requirements beyond that route."
+   ]
+  },
+  "partial_support": {
+   "score": 0.5,
+   "all_of": [
+    "No complete strong_support route is satisfied.",
+    "At least one complete label-specific partial_support route is satisfied by eligible findings.",
+    "The findings establish a case-specific mechanism link, not just generic possibility."
+   ]
+  },
+  "zero": {
+   "score": 0,
+   "all_of": [
+    "Neither strong_support nor partial_support is satisfied.",
+    "There is no unresolved record-availability issue that could change this judgement."
+   ]
+  },
+  "missing_records": "If a missing record is essential to judging a submitted finding and could change the score, flag the judgement for review instead of forcing 0, 0.5, or 1. Missing auxiliary files must not block scoring. This is a pending judgement, not a fourth support level.",
+  "examples_policy": "zero_support_examples illustrate failures of the positive routes. They are not blanket vetoes over other valid evidence.",
+  "evidence_combination": "Several eligible findings may jointly satisfy one route if they concern compatible objects, states and conditions. Do not combine incompatible calculations or observations into a fictitious single experiment."
+ },
+ "verification_policy": {
+  "implementation_status": "Implemented for v4: Layer A (code) checks artifacts, molecule identity and cited values; the judge verifies interpretation against the shown artifact values and structural claims against the graph.",
+  "structural_findings": {
+   "source": "The verified input SMILES and evaluator-derived structure checks.",
+   "checks": [
+    "The named atoms, groups, connectivity, or derived structural property match the current input.",
+    "A topology-based inference is not described as a measured geometry, excited-state result, or environmental observation."
+   ]
+  },
+  "tool_findings": {
+   "source": "Actual tool inputs, execution status and relevant outputs obtained from runner-controlled records, not a second model-written account.",
+   "checks": [
+    "The record resolves to the current molecule and the stated calculation object and conditions.",
+    "The claimed analysis produced the specific result being cited; process exit status alone is insufficient.",
+    "Reported values, units, comparison direction, state identity and limitations agree with the actual output."
+   ]
+  },
+  "experimental_findings": {
+   "source": "Only observations explicitly permitted and available in the evaluation protocol.",
+   "checks": [
+    "The record concerns the relevant molecule and conditions.",
+    "Hidden references, source-paper contents, or remembered experimental values are not injected into the closed-book evidence-support judgement."
+   ]
+  },
+  "outcomes": {
+   "consistent": "The submitted finding agrees with the available source and is eligible for mechanism-support assessment.",
+   "contradicted": "The submitted finding disagrees with the actual input/output. Do not use the incorrect finding as support; assess other eligible findings.",
+   "beyond_source": "The source does not establish the reported result or scope. Retain only what the source actually supports; do not supply a missing mechanistic argument on the agent's behalf.",
+   "unavailable": "The evaluator lacks the record needed for the comparison. Mark this separately from contradiction or fabrication and request record recovery/review if it could affect the score."
+  },
+  "zero_shot_fairness": "Evaluator-side checks may verify submitted structural facts without giving new evidence back to the subject or credit for findings the subject did not submit. Absence of tool calls is not a penalty.",
+  "output_boundary": "Keep verification outcomes separate from evidence-support levels. A true structural fact may still provide zero mechanism support.",
+  "scope": "Check only the structural facts and tool results material to the submitted support. Do not require tool logs for a structural fact checkable from SMILES, or a full archive when the relevant runner-controlled record is sufficient. Missing auxiliary files or metadata that cannot affect the judgement must not block scoring."
+ },
+ "labels": {
+  "RIM_RIR_RIV": {
+   "mechanism_meaning": "Restriction of intramolecular motion, rotation, or vibration that suppresses nonradiative channels.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "motion_restriction_and_consequence",
+      "all_of": [
+       {
+        "text": "A case-specific structural, computational, or observational finding shows restriction of an identified intramolecular motion under specified conditions.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain why restriction of that motion supports reduced nonradiative relaxation. Separate emission measurements or a full decay-rate analysis are not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "motion_pathway_calculation",
+      "all_of": [
+       {
+        "text": "A calculation identifies a specific motion-dependent nonradiative pathway for this molecule.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how restricting that coordinate could limit the identified pathway. A full unrestricted-versus-restricted dynamics comparison is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_structural_motion",
+      "all_of": [
+       {
+        "text": "Identify the location and type of a plausible intramolecular motion from the actual molecular structure.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how that particular motion could contribute to nonradiative relaxation; naming a rotatable bond without this link is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "motion_sensitive_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific conformation, torsion, vibration, or environmental-response finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect the finding to a specific motion and its possible nonradiative role, while the full restriction-to-emission link remains unestablished.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only an AIE label, aromatic rings, phenyl groups, or a rotor count is supplied without a case-specific motion-to-relaxation argument.",
+    "Only fluorescence enhancement or a proposed viscosity experiment is supplied, without a finding connected to a particular intramolecular motion."
+   ],
+   "confounder_boundaries": [
+    "Packing or host confinement can also be supported by the same evidence. RIM requires its own link to a specific intramolecular motion.",
+    "Restricted motion does not by itself establish a conical intersection. RACI requires a separate coordinate-to-crossing argument."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "PACKING_HOST_MATRIX_CONFINEMENT": {
+   "mechanism_meaning": "External packing, host, matrix, framework, pressure, or morphology constrains structure or nonradiative channels.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "environment_structure_and_emission",
+      "all_of": [
+       {
+        "text": "A case-specific structural or computational finding identifies an external packing, host, matrix, framework, pressure, or morphology constraint and what it constrains.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain how that constraint can affect a relevant molecular motion or emission channel. An additional measured emission change or matched environmental control is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "environment_switching",
+      "all_of": [
+       {
+        "text": "A comparison of specified polymorphs, matrices, pressures, or other external conditions documents a structural or morphological change alongside an emission response.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the connection between the environmental change and the response. Full decomposition of the emission mechanism is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_confinement_proxy",
+      "all_of": [
+       {
+        "text": "Identify a concrete contact, steric constraint, free-volume feature, or environment-dependent structural finding for this molecule.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain what the proposed external environment could constrain and why that constraint is relevant to emission, without claiming an unobserved packing arrangement.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "specific_structure_based_hypothesis",
+      "all_of": [
+       {
+        "text": "Identify particular structural sites or geometry that could enable an external contact or confinement effect.",
+        "accepts": [
+         "structural"
+        ]
+       },
+       {
+        "text": "Explain the proposed contact and the molecular freedom or emission channel it could affect; aromaticity, planarity, or aggregate propensity alone is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only the existence of a crystal, solid, MOF, host, or aggregate is supplied, with no specific environmental constraint argument.",
+    "Only intramolecular flexibility or fluorescence enhancement is supplied without a connection to an external constraint."
+   ],
+   "confounder_boundaries": [
+    "A host-induced restriction may support both this family and RIM if each link is established.",
+    "Host presence does not establish guest binding. Packing contacts do not by themselves establish a new aggregate excited state."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "HOST_GUEST_INTERACTION": {
+   "mechanism_meaning": "Guest molecules, gases, solvents, ions, or analytes enter or bind a host, pore, or cavity and alter emission.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "binding_and_emission",
+      "all_of": [
+       {
+        "text": "Binding, inclusion, occupancy, adsorption, or interaction evidence identifies the relevant host/receptor and guest pair.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain how the specific interaction can affect the emissive unit. Direct measurement of the entire binding-to-emission chain is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "computed_interaction_and_consequence",
+      "all_of": [
+       {
+        "text": "A calculation supports a relevant interaction for a specified host-guest pair through contact geometry together with an interaction or binding analysis, rather than just a proposed pose.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how that interaction can affect a chromophore, motion, or electronic property relevant to emission. An additional before/after emission calculation is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_binding_hypothesis",
+      "all_of": [
+       {
+        "text": "Identify a concrete receptor, cavity, or binding site in the molecule and a specified or explicitly hypothetical guest interaction.",
+        "accepts": [
+         "structural"
+        ]
+       },
+       {
+        "text": "Explain how that interaction could affect the emissive unit, without presenting hypothetical binding as an observed event.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "guest_response_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific guest-dependent response or contact finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain its connection to binding or inclusion while direct binding evidence or the emission consequence remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only sensing activity, a cavity, a MOF label, or an unspecified ion-binding motif is supplied without a concrete interaction-to-emission argument.",
+    "The claimed contact is contradicted by supplied accessibility or binding results, and no other eligible interaction evidence remains."
+   ],
+   "confounder_boundaries": [
+    "Polarity, pressure, viscosity, and matrix changes can accompany guest exposure. Guest response alone does not establish binding.",
+    "A binding event can also alter PET, CT, or RIM. Support for this family does not exclude those downstream mechanisms."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "ICT_TICT_CT": {
+   "mechanism_meaning": "Intramolecular charge transfer, twisted intramolecular charge transfer, or charge-transfer excited-state behavior.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "excited_state_charge_transfer",
+      "all_of": [
+       {
+        "text": "A case-specific excited-state orbital, transition-density, electron-hole, charge-density, or dipole analysis shows charge redistribution between identified regions.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how the finding supports the proposed CT interpretation. Separate confirmation of an emission shift or quenching response is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "spectral_charge_transfer_assignment",
+      "all_of": [
+       {
+        "text": "Provide a case-specific spectral or polarity-dependent finding that supports CT, rather than an unexplained color or solvent response.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the CT assignment using the actual molecular or electronic features. Do not require ruling out every other photophysical mechanism.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_structural_charge_transfer",
+      "all_of": [
+       {
+        "text": "Identify the actual donor and acceptor regions and their electronic connection in the molecule.",
+        "accepts": [
+         "structural"
+        ]
+       },
+       {
+        "text": "Explain a plausible direction or distribution of charge transfer specific to those regions, while excited-state character or its photophysical consequence remains unestablished.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "charge_transfer_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific orbital, charge, dipole, torsional, or polarity-dependent finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect the finding to charge redistribution in the proposed mechanism; a twisted geometry or a solvent response alone is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only donor/acceptor words, generic quenching, or a color change is supplied without a specific charge-transfer argument.",
+    "Any torsion is called TICT without a link to charge-transfer character."
+   ],
+   "confounder_boundaries": [
+    "CT evidence can support this combined family without establishing TICT. If the answer specifically claims TICT, assess whether a twisted excited-state geometry or accessible torsional state is connected to CT character; do not require TICT evidence for an ordinary CT interpretation.",
+    "PET, ESIPT, aggregation, or packing may coexist. Penalize a missing CT link, not the mere plausibility of another mechanism."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "ESIPT_PT": {
+   "mechanism_meaning": "Excited-state intramolecular proton transfer or proton-transfer photophysics.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "proton_transfer_pathway",
+      "all_of": [
+       {
+        "text": "Identify a feasible proton donor-acceptor route in this molecule.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "A relevant excited-state pathway, barrier, or tautomer-state calculation supports transfer along that route. A separate calculation or measurement of the resulting emission is not mandatory.",
+        "accepts": [
+         "computed"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "proton_transfer_specific_observations",
+      "all_of": [
+       {
+        "text": "Identify a feasible donor-acceptor transfer route in this molecule.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Provide a transfer-specific tautomer assignment, kinetic, isotope, site-blocking/recovery, or comparable finding and explain its connection to that route. A large Stokes shift or dual emission alone is insufficient.",
+        "accepts": [
+         "observation"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_structural_transfer",
+      "all_of": [
+       {
+        "text": "Identify both proton donor and acceptor, and explain their plausible intramolecular arrangement from the actual structure.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the proposed transfer or tautomeric change and its possible photophysical role, without asserting an uncomputed geometry or excited-state pathway.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "proton_transfer_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific hydrogen-bond geometry, spectral, or tautomer-related finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect it to an identified donor-acceptor transfer route, while excited-state transfer or the emission assignment remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only an OH or NH group, a large Stokes shift, dual emission, or resemblance to an ESIPT probe is supplied without a specific feasible transfer route.",
+    "The proposed intramolecular route lacks a compatible donor-acceptor arrangement, and no other eligible proton-transfer argument is supplied."
+   ],
+   "confounder_boundaries": [
+    "A donor-acceptor motif or hydrogen bond alone is not sufficient for strong support of excited-state proton transfer.",
+    "CT, RIM, and proton transfer can coexist; assess the proton-transfer-specific link instead of forcing an exclusive mechanism choice."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "PET_ET": {
+   "mechanism_meaning": "Photoinduced electron transfer or electron-transfer quenching/turn-on.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "electron_transfer_energetics",
+      "all_of": [
+       {
+        "text": "Identify electron donor, electron acceptor, and a plausible transfer direction relevant to the fluorophore.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "State-appropriate energy alignment, redox analysis, or a relevant calculation supports that transfer, with an explanation of its possible role in emission. Observing actual quenching or completing transfer dynamics is not mandatory.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "electron_transfer_species_or_control",
+      "all_of": [
+       {
+        "text": "An assigned transient/radical-ion species or a controlled binding, protonation, or reaction result supports a particular electron-transfer channel.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect the finding to identified transfer partners and the fluorophore. Full kinetic reconstruction and an additional emission control are not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_structural_transfer_channel",
+      "all_of": [
+       {
+        "text": "Identify the actual donor/receptor and acceptor/fluorophore regions and a plausible transfer direction.",
+        "accepts": [
+         "structural"
+        ]
+       },
+       {
+        "text": "Explain why electron transfer could affect this fluorophore's emission, while energetics, transferred species, or channel switching remains unestablished.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "electron_transfer_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific energy-level, binding-state, or quenching-response finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect the finding to identified transfer partners and direction, while a complete transfer-to-emission link remains missing.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only a receptor, fluorophore, turn-on response, or quenching observation is supplied without a specific electron-transfer channel argument.",
+    "Radical or electrochemical terminology is repeated without identifying transfer partners or explaining the relevance to emission."
+   ],
+   "confounder_boundaries": [
+    "Missing redox or transient evidence prevents strong support when required by a route; it does not erase a valid partial structural argument.",
+    "A donor-acceptor motif may also suggest ICT. PET needs its own transfer-channel and emission-consequence argument, without requiring CT to be impossible."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "AGGREGATE_EXCITON_EXCIMER": {
+   "mechanism_meaning": "Aggregate exciton, H/J aggregation, excimer, exciplex, or new intermolecular excited-state emission.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "aggregate_species_observations",
+      "all_of": [
+       {
+        "text": "A case-specific aggregate- or concentration-dependent finding supports a new intermolecular excited or emissive species rather than only aggregate formation.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the species assignment using the relevant spectral, lifetime, time-resolved, or excitonic evidence. Do not require all these measurements together; size, close contacts, or a red shift alone is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "aggregate_excited_state_calculation",
+      "all_of": [
+       {
+        "text": "A calculation for a specified dimer or aggregate configuration identifies intermolecular excited-state character, coupling, or excimer/exciplex formation rather than only a ground-state contact.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how the result supports the proposed aggregate-state mechanism within the modeled configuration. Experimental confirmation of the aggregate or its emission is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_contact_hypothesis",
+      "all_of": [
+       {
+        "text": "Identify particular molecular surfaces, partners, or a contact/dimer geometry that could support intermolecular excited-state interaction.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the proposed interaction using those features, while aggregate-state electronic or emissive-species evidence remains absent.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "aggregate_species_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific aggregate-dependent spectral or contact finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain why it suggests intermolecular excited-state interaction, while species assignment or separation from confinement effects remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only aggregate formation, DLS particle size, aromaticity, or brighter aggregate emission is supplied without a specific intermolecular excited-state argument.",
+    "Generic pi-stacking or contact language is presented as proof of an excimer without case-specific interacting features or electronic evidence."
+   ],
+   "confounder_boundaries": [
+    "Packing contacts can support a partial aggregate-state argument but are not independently sufficient for strong support.",
+    "The same aggregate may involve confinement, RIM, and excitonic effects. Score the evidence for each link separately."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "RADIATIVE_RATE_STATE_BALANCE": {
+   "mechanism_meaning": "Emission changes arise from radiative rate, oscillator strength, bright/dark state balance, state population, or Kr/knr balance.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "rate_decomposition",
+      "all_of": [
+       {
+        "text": "Provide a case-specific radiative/nonradiative rate result, or compatible lifetime and quantum-yield findings that support a rate/state interpretation under specified conditions.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the particular radiative channel or state-balance contribution supported by the result. Full decomposition of all decay pathways or an additional matched control is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "computed_state_balance",
+      "all_of": [
+       {
+        "text": "An analysis of relevant states or conformations shows a specific bright/dark-state relation or radiative-channel change using transition properties, state character, ordering, or populations.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the resulting rate/state-balance interpretation. Full population dynamics or measured emission validation is not mandatory; one isolated oscillator strength without a state/rate relation is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_state_or_rate_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific oscillator-strength, lifetime, quantum-yield, transition, ordering, or population finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain its relevance to a particular radiative channel or state-balance hypothesis, while a matched comparison or full rate/state analysis remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only fluorescence intensity changes, generic bright/dark language, or an unconnected numerical output is supplied.",
+    "A reported oscillator strength or radiative rate is not connected to any specific state/rate explanation."
+   ],
+   "confounder_boundaries": [
+    "Intensity alone is not partial support. A specific rate/state finding and its mechanistic connection are needed.",
+    "A radiative-state result may also relate to CT or proton transfer. It does not establish anti-Kasha emission without the additional higher-state evidence required by that family."
+   ],
+   "ceilings": {
+    "structure_only": 0.0,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "TRIPLET_METAL_ENERGY_TRANSFER": {
+   "mechanism_meaning": "Triplet photophysics, RTP, TADF, heavy atom effect, lanthanide antenna effect, ligand-to-metal transfer, or metal-centered emission.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "triplet_state_pathway",
+      "all_of": [
+       {
+        "text": "A case-specific state, spectral, kinetic, coupling, or sensitization finding directly supports the proposed triplet-associated state or pathway.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the particular triplet interpretation supported by that finding. Multiple independent validation modalities or complete ISC/rISC kinetics are not mandatory; a heavy atom or long lifetime alone is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "metal_sensitization",
+      "all_of": [
+       {
+        "text": "A case-specific state-energy, sensitization, excitation/emission, or transfer analysis supports a particular ligand-to-metal energy-transfer route.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Identify the ligand and metal states and explain the transfer interpretation. Complete transfer-efficiency or kinetic measurements are not mandatory; metal presence alone is insufficient.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "specific_triplet_hypothesis",
+      "all_of": [
+       {
+        "text": "Identify case-specific structural or electronic features relevant to a proposed triplet-associated state or pathway.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the particular state or transition those features could affect, while direct state, kinetic, or transfer evidence remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "triplet_or_transfer_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific gap, orbital, oxygen/temperature response, delayed signal, or metal-emission finding.",
+        "accepts": [
+         "computed",
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect it to an identified triplet or transfer hypothesis, while a decisive state assignment or pathway link remains absent.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only a heavy atom, metal, carbonyl, low-gap label, or photosensitizer application is supplied without a specific state/pathway argument.",
+    "A nonspecific emission color or long lifetime is treated as sufficient identification of a triplet or metal-transfer mechanism."
+   ],
+   "confounder_boundaries": [
+    "Organic triplet routes do not require metal emission. Missing lanthanide evidence must not invalidate a supported organic triplet explanation.",
+    "Evidence for one subtype does not establish all subtypes. A secondary role or lower ranking is not itself a reason to reduce evidence support."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "RACI_CI_ACCESS": {
+   "mechanism_meaning": "Restricted access to conical intersections or conical-intersection-mediated nonradiative decay.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "crossing_access_and_restriction",
+      "all_of": [
+       {
+        "text": "An appropriate calculation identifies a conical intersection or relevant excited/ground-state crossing connected to a specific molecular relaxation coordinate.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how that coordinate supports crossing-mediated relaxation. If reduced access is claimed, provide a relevant constraint or coordinate-access finding, without requiring a full solution-versus-aggregate comparison.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "nonadiabatic_pathway",
+      "all_of": [
+       {
+        "text": "Nonadiabatic dynamics or comparable excited-state analysis supports a crossing-mediated relaxation route for the molecule.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the relevant motion or access mechanism. Evidence for a restriction claim must concern restricted access, but a complete emission-yield calculation or a second environmental simulation is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "coordinate_linked_crossing_proxy",
+      "all_of": [
+       {
+        "text": "Identify a specific torsional, flapping, puckering, ring-opening, or other coordinate in this molecule.",
+        "accepts": [
+         "structural",
+         "computed"
+        ]
+       },
+       {
+        "text": "Provide a coordinate-dependent state-gap/electronic finding, or an explicit case-specific explanation linking that coordinate to approach toward a crossing.",
+        "accepts": [
+         "computed",
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only general flexibility, rigidification, a rotor count, or nonradiative decay is supplied without a coordinate-to-crossing argument.",
+    "A brightness change or an isolated energy gap is called a conical intersection without a relevant coordinate or crossing-access argument."
+   ],
+   "confounder_boundaries": [
+    "Absence of explicit crossing/pathway evidence prevents strong support but does not erase a valid coordinate-linked proxy. Do not require the answer to contain a stock disclaimer; the judge must keep a proxy distinct from a located CI.",
+    "RIM and RACI may coexist. RACI requires the additional crossing-access link; RIM evidence alone cannot establish that link."
+   ],
+   "ceilings": {
+    "structure_only": 0.5,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  },
+  "SOKR_ANTI_KASHA": {
+   "mechanism_meaning": "Suppression of Kasha's rule, anti-Kasha emission, or higher-state emission.",
+   "strong_support": {
+    "any_of": [
+     {
+      "id": "higher_state_emission_assignment",
+      "all_of": [
+       {
+        "text": "Identify the relevant state ordering and provide state-resolved emission, kinetic, or comparable evidence assigning emission above the lowest excited state of the relevant multiplicity.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Explain the higher-state-emission interpretation. Full population kinetics or a quantified competition with every lower-state relaxation channel is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "computed_higher_state_emission",
+      "all_of": [
+       {
+        "text": "State ordering and transition properties identify a candidate higher emissive state for this molecule.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "A relevant pathway, rate, dynamics, or comparable mechanism-specific result supports higher-state emission before relaxation to lower states. A complete population model or experimental confirmation is not mandatory; higher-state brightness alone remains partial support.",
+        "accepts": [
+         "computed"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "partial_support": {
+    "any_of": [
+     {
+      "id": "ordered_state_proxy",
+      "all_of": [
+       {
+        "text": "Provide case-specific state ordering together with transition or oscillator-strength information identifying a candidate higher emissive state and its relation to the lower state.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the higher-state-emission hypothesis, while population dynamics or competition with internal conversion remains unestablished.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "state_linked_emission_proxy",
+      "all_of": [
+       {
+        "text": "Provide a case-specific excitation-dependent, time-resolved, or other state-related observation.",
+        "accepts": [
+         "observation"
+        ]
+       },
+       {
+        "text": "Connect it to an identified higher-state assignment, while that assignment or its kinetic support remains incomplete.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "zero_support_examples": [
+    "Only a single oscillator strength, radiative-rate change, AIE response, delayed fluorescence, or RTP is supplied without an ordered-state argument.",
+    "Radical formation, EPR, strong emission, or a nanosecond lifetime is presented as proof of higher-state emission without identifying the emitting state."
+   ],
+   "confounder_boundaries": [
+    "A dark lower state and bright higher state constitute a relevant proxy, not sufficient evidence that emission actually occurs before internal conversion.",
+    "Use singlet or doublet state ordering as appropriate to the claimed species; do not force radical cases into S1/Sn notation. Triplet participation alone does not establish anti-Kasha emission."
+   ],
+   "ceilings": {
+    "structure_only": 0.0,
+    "closed_book_with_computation": 1.0,
+    "with_observations": 1.0
+   }
+  }
+ },
+ "evidence_kinds": {
+  "structural": "A fact about the verified input graph (atoms, bonds, rings, conjugation, motifs). Checked by the evaluator.",
+  "computed": "A result of a calculation recorded as an artifact for this molecule. Values are checked by the evaluator (Layer A) before the judge sees them.",
+  "observation": "An experimental observation supplied by the evaluation protocol. None are supplied in the SMILES-only protocol; remembered literature values are prior knowledge, not observations.",
+  "warrant": "A case-specific explanation connecting cited eligible claims to the mechanism. It adds no new finding.",
+  "prior": "General chemical knowledge. May support a warrant; never satisfies a finding condition."
+ },
+ "evaluator_coverage_notes": {
+  "not_sent_to_judge": true,
+  "capabilities_producing_computed_findings": {
+   "RIM_RIR_RIV": [
+    "microscopic.run_torsion_snapshots",
+    "microscopic.run_torsion_brightness_coupling_scan",
+    "microscopic.run_relaxed_coordinate_scan",
+    "microscopic.analyze_ground_state_vibrations",
+    "microscopic.compare_contact_torsion_response",
+    "microscopic.evaluate_cis_s1_gradient"
+   ],
+   "PACKING_HOST_MATRIX_CONFINEMENT": [
+    "microscopic.search_dimer_contacts",
+    "microscopic.scan_intermolecular_distance",
+    "microscopic.compare_contact_torsion_response"
+   ],
+   "HOST_GUEST_INTERACTION": [],
+   "ICT_TICT_CT": [
+    "microscopic.analyze_hole_electron_from_bundle",
+    "microscopic.extract_ct_descriptors_from_bundle",
+    "microscopic.run_frontier_orbital_partition",
+    "microscopic.run_targeted_charge_redistribution_analysis",
+    "microscopic.run_solvation_polarity_proxy",
+    "microscopic.run_torsion_brightness_coupling_scan"
+   ],
+   "ESIPT_PT": [
+    "microscopic.scan_cis_excitation_coordinate",
+    "microscopic.extract_geometry_descriptors_from_bundle"
+   ],
+   "PET_ET": [
+    "microscopic.estimate_vertical_ip_ea",
+    "microscopic.run_frontier_orbital_partition",
+    "microscopic.analyze_hole_electron_from_bundle"
+   ],
+   "AGGREGATE_EXCITON_EXCIMER": [
+    "microscopic.search_dimer_contacts (+ excited states on the selected dimer geometry)"
+   ],
+   "RADIATIVE_RATE_STATE_BALANCE": [
+    "microscopic.run_bright_dark_state_ordering",
+    "microscopic.run_baseline_bundle",
+    "microscopic.run_conformer_state_probe",
+    "microscopic.run_targeted_transition_dipole_analysis"
+   ],
+   "TRIPLET_METAL_ENERGY_TRANSFER": [
+    "microscopic.compare_singlet_triplet_states",
+    "microscopic.compare_spin_states_pyscf",
+    "microscopic.evaluate_spin_orbit_couplings"
+   ],
+   "RACI_CI_ACCESS": [
+    "microscopic.evaluate_cis_s1_gradient (proxy only)",
+    "microscopic.scan_cis_excitation_coordinate (proxy only)"
+   ],
+   "SOKR_ANTI_KASHA": [
+    "microscopic.run_bright_dark_state_ordering (ordering proxy only)"
+   ]
+  },
+  "known_gaps": {
+   "HOST_GUEST_INTERACTION": "No host-guest or guest-binding calculation is available; only structural hypotheses are reachable.",
+   "RACI_CI_ACCESS": "No conical-intersection search or nonadiabatic dynamics; strong routes are unreachable with the current tools.",
+   "SOKR_ANTI_KASHA": "No pathway/rate calculation for higher-state emission; strong computed route needs a second computed finding the tools do not provide.",
+   "AGGREGATE_EXCITON_EXCIMER": "Dimer excited states require running state calculations on a modeled dimer geometry; modeled dimers are not observed aggregates."
+  }
+ }
+}

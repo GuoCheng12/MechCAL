@@ -1,0 +1,10 @@
+{
+ "version": "v4",
+ "status": "draft_pending_author_review",
+ "created": "2026-11-11",
+ "note": "Update only together with a deliberate rubric/prompt/schema/grounding revision; a mismatch fails tests.",
+ "rubric_sha256": "456012c9f44e3a93772d12ea88a71ebb7a84982d7c020765840ffbf0906858a3",
+ "prompt_sha256": "dab02a726ae1b6dd7371c0a9182ed8a83c64cd9d0eb087a975ce0127d4a2abd4",
+ "schema_sha256": "96c03997ee8939b1160b3b727f4421a5f8bf4858a2106b0fb76397dcd9f058e3",
+ "grounding_module_sha256": "abd56ee8b6d1f33e78b72c095dcd2a992c0e5f1e57d832e2c3148fee0e1710b1"
+}
