@@ -74,3 +74,18 @@ judge, and cannot infer benchmark scores without separate reference data.
 Judge and baseline settings are documented in [Evaluation](evaluation.md).
 For private deployments, keep TOML files named `*.local.toml` and credentials
 in the configured environment or a user-owned secret store outside Git.
+
+## DeepSeek key (development machine)
+
+Run once, in your own terminal (the key is read without echo and never enters the repository):
+
+```bash
+bash env/set_deepseek_key.sh
+```
+
+It stores `DEEPSEEK_API_KEY` in `~/.config/mechcal/secrets.env` (mode 600) and adds a block to
+`~/.bashrc` that loads it together with `env/deepseek.env.sh`. That file holds the non-secret
+settings: base URL `https://api.deepseek.com`, model `deepseek-flash`, Responses API, backbone
+effort `high`, and the evidence judge at effort `max` (override `MECHCAL_JUDGE_*` to use another
+judge). `mechcal ... doctor` then reports `credential_present: true`; `mechcal ... probe` makes
+one short paid request to confirm access. To rotate the key, run the script again.
