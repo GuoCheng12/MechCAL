@@ -126,8 +126,24 @@ and dollar cost under a fixed price table. Comparisons are reported at matched b
 
 ## Implementation order
 
-1. Offline statistics + dataset analyses (`mechcal/eval/stats.py`, `mechcal/eval/dataset_analysis.py`).
-2. Submission contract v4 + Layer A checker (`mechcal/eval/grounding.py`), with tests on synthetic artifacts.
-3. Perturbation operators (`mechcal/eval/perturb.py`).
+1. Done — offline statistics + dataset analyses (`mechcal/eval/stats.py`,
+   `mechcal/eval/dataset_analysis.py`, `examples/dataset_report.py`).
+2. Done — submission contract v4 and artifact records (`mechcal/eval/evidence_v4.py`,
+   including `store_from_mechcal_run` for persisted `ToolExecutionResult` files) and the
+   Layer A checker (`mechcal/eval/grounding.py`).
+3. Done — perturbation operators and suite runner (`mechcal/eval/perturb.py`). The scorer is
+   a plain callable, so text-only, v3 and v4 judges are compared on identical perturbations.
 4. Rubric v4 + Layer B validator changes; freeze manifest.
 5. API-dependent: judge runs, probes, human-subset export.
+
+### Layer A notes
+
+- The precision of a claimed value is taken from the number as written in the statement
+  ("0.40" asserts two decimals; JSON would drop the trailing zero).
+- Numbers that are parts of identifiers (S1, T2, C10, 6-31G, def2-SVP, B3LYP) are ignored;
+  any other number in a computed claim must match a declared quantity, otherwise the claim is
+  `statement_mismatch`. Undeclared extra numbers are listed but not penalised in v1.
+- `flip_conclusion` is intentionally invisible to Layer A (numbers and sources unchanged);
+  detecting it is the job of Layer B, which sees the artifact values next to the prose.
+- The perturbation donor for `swap_molecule` must come from a different case with the same
+  tool, so the swapped artifact is realistic rather than random noise.
