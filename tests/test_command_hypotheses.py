@@ -275,7 +275,7 @@ def test_batch_yields_one_assessment_boundary_and_preserves_all_receipts(tmp_pat
 def test_combined_formal_update_retains_review_and_separate_confidence(tmp_path):
     o, c = enabled(tmp_path), case()
     o.config = replace(o.config, enable_support_auditor=True)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([prose("Offline advisory review.")])
+    o.deps.scientific_reviewer.llm_client = NativeFake([prose("Offline advisory review.")])
     formal = reply("revise_judgment", judgment().model_dump(mode="json", exclude={"kind"}), call_id="formal")
     incoming = combined(formal, update(.7))
     c = put(c, latest_exchange=incoming)

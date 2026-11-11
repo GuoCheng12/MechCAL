@@ -6,9 +6,9 @@ import signal
 import threading
 import time
 
-from mechcal.agents.command_client import ask, ask_reviewer_text, ask_worker_text
+from mechcal.agents.command_client import ask, ask_worker_text
 from mechcal.agents.command_tools import ask_tools, parse_tool_turn, tool_contracts
-from mechcal.agents.command_worker import scoped_commentary_turn, worker_turn
+from mechcal.agents.command_worker import worker_turn
 from mechcal.agents.observation_view import observation_view
 from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime.command_operations import (
@@ -29,6 +29,7 @@ from mechcal.runtime import command_review_workflow as workflow
 from mechcal.runtime import command_investigation as investigation
 from mechcal.runtime import command_exploration_review as exploration_review
 from mechcal.runtime import computational_review
+from mechcal.runtime import execution_inventory
 from mechcal.runtime import command_read_handoff as handoff
 from mechcal.runtime import command_query_state as query_state
 from mechcal.runtime import command_numeric as numeric
@@ -94,18 +95,19 @@ def save(case, store):
         if existing.exists() and json.loads(existing.read_text()) != completed:
             raise RuntimeError("Completed tool message conflicts with its committed checkpoint.")
         projections.append((relative, completed))
-    store.write_json("command_checkpoint.json", case)
-    write_event(store, protocol(case)["state_event"])
-    exploration_event = (protocol(case).get("exploration") or {}).get("event")
-    if exploration_event:
-        write_event(store, exploration_event)
-    for relative, data in projections:
-        if not (store.root / relative).exists():
-            store.write_json(relative, data)
-        if relative.startswith("operations/"):
-            write_event(store, CommandEvent(event_id="operation:" + str(data["turn"]),
-                kind="operation", role="planner", status=data["status"], details=data).model_dump())
-    store.write_case_run(case)
+    with store.snapshots.batch():
+        store.write_json("command_checkpoint.json", case)
+        write_event(store, protocol(case)["state_event"])
+        exploration_event = (protocol(case).get("exploration") or {}).get("event")
+        if exploration_event:
+            write_event(store, exploration_event)
+        for relative, data in projections:
+            if not (store.root / relative).exists():
+                store.write_json(relative, data)
+            if relative.startswith("operations/"):
+                write_event(store, CommandEvent(event_id="operation:" + str(data["turn"]),
+                    kind="operation", role="planner", status=data["status"], details=data).model_dump())
+        store.write_case_run(case)
     if case.final_answer:
         store.write_final_answer(case.final_answer)
     return case
@@ -157,7 +159,7 @@ def planner_payload(o, case, *, native=False):
         "stage": "planner_command", "smiles": case.input.smiles,
         "operation_policy": action_policy(case, index=index,
             scientific_read_limit_enabled=o.config.command_hypothesis_tracking).model_dump(mode="json"),
-        "delivery_recovery": recovery.view(case),
+        "delivery_recovery": recovery.view(case, index=index),
         "mechanism_pool": list(MECHANISM_POOL), "task": case.input.user_query,
         "mechanism_definitions": mechanism_definitions(),
         "ranking": ordered_ranking(case),
@@ -236,8 +238,10 @@ def planner_payload(o, case, *, native=False):
         payload.pop("candidate_overview", None)
         payload["evidence_associations"] = comparison_view(case, index=index)["source_directory"]
     if o.config.command_computational_review:
-        stop_context = computational_review.context(case, _catalog(o, case), **_route_context(o, case))
+        stop_context = computational_review.context(case, _catalog(o, case), index=index, **_route_context(o, case))
         payload["computational_review"] = {k: stop_context[k] for k in ("basis", "previous", "policy")}
+        payload["untried_routes"] = stop_context["untried_routes"]
+        payload["execution_inventory"] = execution_inventory.view(case, index=index)
     if workflow_enabled(case):
         payload["computation_allowance"] = computation_allowance(case)
         payload["review_workflow"] = {"issues": workflow.issue_view(case, index=index), "state_ref": "review:issues",
@@ -252,7 +256,7 @@ def planner_payload(o, case, *, native=False):
             payload["correction_context"] = correction_context(case, index=index)
         payload["comparison_options"] = workflow.comparison_options(case, _catalog(o, case), **_route_context(o, case))
         if investigation.enabled(case):
-            payload["investigation_policy"] = investigation.view(case, payload["comparison_options"])
+            payload["investigation_policy"] = investigation.view(case, payload["comparison_options"], index=index)
         feedback = payload.get("review_feedback")
         if feedback and feedback.get("findings") is not None:
             payload["review_feedback"] = {"status": feedback["status"], "text": feedback["text"]}
@@ -609,7 +613,7 @@ def _review_reference_ids(payload, available):
 
     for key in ("observations", "execution_context", "arguments", "ranking", "final_proposal", "assembled_answer",
                 "citations", "candidate_overview", "pending_experiments", "evidence_followup", "review_targets",
-                "review_workflow", "computational_review", "worker_interpretations"):
+                "review_workflow", "computational_review", "worker_interpretations", "execution_inventory"):
         visit(payload.get(key))
     return sorted(found)
 
@@ -634,8 +638,7 @@ def _comment(o, case, store):
                        request=p["ticket"]["request"],
                        execution_context=review_execution_context(case, {p["pending_result"]}, index.available))
     else:
-        client = (o.deps.mechanism_agenda if role in {"final_reviewer", "coverage_reviewer"}
-                  else o.deps.photophysics_arbiter).llm_client
+        reviewer = o.deps.scientific_reviewer
         changes = p.get("review_changes", [])
         affected = {c["id"] for c in changes if c["kind"] == "argument"}
         affected.update(aid for c in changes if c["kind"] == "ranking" for aid in c["argument_ids"])
@@ -672,7 +675,9 @@ def _comment(o, case, store):
                 ("capability_id", "description", "status", "missing_inputs", "reason") if k in row}
                 for row in catalog]
         if o.config.command_computational_review:
-            payload["computational_review"] = computational_review.context(case, catalog, **_route_context(o, case))
+            payload["execution_inventory"] = execution_inventory.view(case, index=index,
+                refs=None if role == "final_reviewer" else refs)
+            payload["computational_review"] = computational_review.context(case, catalog, index=index, **_route_context(o, case))
             payload["tool_catalog"] = catalog_table(catalog)
             if role == "final_reviewer":
                 comparison = payload["computational_review"]["candidate_comparison"]
@@ -752,7 +757,7 @@ def _comment(o, case, store):
             state = p.get("reviewer_session") or {"context_key": context_key, "queries": 0}
             if state["context_key"] != context_key:
                 raise RuntimeError("Reviewer read session belongs to a different judgment")
-            feedback, session = scoped_commentary_turn(client, case, payload, store,
+            feedback, session = reviewer.review(case, payload, store,
                 scope=read_scope, state=state, role=role, prompt_name=prompt_name, index=index, completion=completion,
                 describe_tools=(lambda cmd: _describe_tools(o, case, cmd))
                     if o.config.command_computational_review and not proofreading else None,
@@ -768,8 +773,8 @@ def _comment(o, case, store):
                                                        "session": failed_session})
             feedback.update(scope)
         else:
-            comment = ask_worker_text(client, payload, store) if explaining else ask_reviewer_text(
-                client, payload, store, role=role)
+            comment = ask_worker_text(client, payload, store) if explaining else reviewer.review_text(
+                case, payload, store, role=role)
             feedback = {"status": "available", **comment.model_dump(mode="json"), **scope}
     except OperationRejected as exc:
         feedback = {"status": "unavailable", "issues": exc.issues, **({} if explaining else scope),
@@ -807,7 +812,7 @@ def _comment(o, case, store):
         selections = (p.get("reviewer_session") or {}).get("source_reads", [])
         if selections:
             completed.update(source_reads=selections,
-                             read_versions={h["ref"]: digest(index.available[h["ref"]]) for h in selections})
+                             read_versions={h["ref"]: index.version(h["ref"]) for h in selections})
         completed["ref"] = f"review:{role}:" + digest({k: v for k, v in completed.items() if k != "ref"})
         memory = {**memory, role: completed}
         receipts = {**receipts, completed["ref"]: completed}
@@ -852,7 +857,7 @@ def run_command_loop(o, case, store, *, resume=False):
         path = store.root / "command_checkpoint.json"
         fingerprint = configuration_fingerprint(o, case)
         if resume:
-            saved = CaseRun.model_validate_json(path.read_text())
+            saved = store.read_case_run("command_checkpoint.json")
             check_owner(saved)
             if saved.case_id != case.case_id or saved.input != case.input or protocol(saved)["fingerprint"] != fingerprint:
                 raise ValueError("Resume case/configuration/code does not match command checkpoint.")
@@ -949,6 +954,9 @@ def run_command_loop(o, case, store, *, resume=False):
                                 command, exchange = ask_tools(o.deps.planner.llm_client,
                                     o.deps.capability_registry, p.get("visible_tools", []), payload, store,
                                     exchange=p.get("latest_exchange"), outcome=p.get("outcome"))
+                                if o.config.command_task_context and exchange.get("current_payload_delivered"):
+                                    from mechcal.runtime.command_task_context import acknowledge_planner
+                                    case = acknowledge_planner(case)
                                 case = put(case, latest_exchange=exchange)
                                 key = ("hypothesis_step" if isinstance(command, HypothesisStep) else
                                        "read_batch" if isinstance(command, ReadBatch) else
@@ -959,6 +967,10 @@ def run_command_loop(o, case, store, *, resume=False):
                                 response = ask(o.deps.planner.llm_client, model, planner_payload(o, case), store)
                                 pending = response.model_dump(mode="json")
                         except OperationRejected as exc:
+                            if (o.config.command_task_context and exc.exchange is not None
+                                    and exc.exchange.get("current_payload_delivered")):
+                                from mechcal.runtime.command_task_context import acknowledge_planner
+                                case = acknowledge_planner(case)
                             case = _local_error(case, exc.issues, store, exchange=exc.exchange,
                                                 judgment_draft=exc.judgment_draft)
                             continue
@@ -1005,7 +1017,7 @@ def run_command_loop(o, case, store, *, resume=False):
         except Exception as exc:
             # Reload the authoritative checkpoint: an interrupted optional
             # explanation cannot erase a completed calculation.
-            latest = CaseRun.model_validate_json(path.read_text())
+            latest = store.read_case_run("command_checkpoint.json")
             failure = {"kind": "delivery_recovery_limit" if isinstance(exc, recovery.DeliveryRecoveryLimit) else
                        "local_no_progress" if isinstance(exc, LocalProgressError) else "system_interruption",
                        "type": type(exc).__name__, "message": str(exc),

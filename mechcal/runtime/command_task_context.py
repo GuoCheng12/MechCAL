@@ -1,7 +1,7 @@
 """Task-scoped wire views with exact, case-local deferred context.
 
-Repair/delivery/revision context is deferred. Scientific action selection retains
-the complete compact directory. Nothing in this module decides claim validity.
+All stages retain a small current working view and exact, readable background.
+Nothing in this module decides claim validity or whether a route is worth testing.
 """
 
 from copy import deepcopy
@@ -9,13 +9,42 @@ from copy import deepcopy
 from mechcal.runtime.command_compact import comparison_rows, expand_text
 from mechcal.runtime.command_context import share_text
 from mechcal.runtime.command_memory import digest, pointer_child
+from mechcal.runtime.command_context_memory import brief_rows, compact_catalog, read_pointer
+from mechcal.runtime.command_compact import table_rows
+from mechcal.runtime.command_context import record_table
 from mechcal.runtime.command_operations import protocol, put, reject
 from mechcal.runtime.command_review_workflow import investigation_frontier
 from mechcal.runtime import command_investigation as investigation
 from mechcal.schemas.commands import ReadEvidence
+from mechcal.runtime.prompts import load_prompt
 
 
 CONTEXT_REF = "context:planner"
+
+
+def operation_guides(payload):
+    """Exact existing manuals remain readable; schemas still define operations."""
+    names = ["planner_tools", "numeric_evidence"]
+    for field, guides in (
+        ("worker_delegation", ["planner_worker_tasks"]),
+        ("exploration_state", ["planner_exploration_state"]),
+        ("review_workflow", ["planner_review_workflow"]),
+        ("computational_review", ["computational_mission"]),
+        ("investigation_policy", ["planner_investigation"]),
+    ):
+        if field in payload:
+            names.extend(guides)
+    if "evidence_followup" in payload.get("exploration_state", {}):
+        names.append("planner_evidence_followup")
+    return {name: load_prompt(name + ".md") for name in names}
+
+
+def read_continuation(case):
+    p = protocol(case)
+    calls = (p.get("latest_exchange") or {}).get("calls", [])
+    return bool(calls) and all(c["name"] in {
+        "read_evidence", "reduce_evidence", "compare_evidence", "read_context", "describe_tools",
+    } for c in calls)
 
 
 def task_for(case, payload):
@@ -58,66 +87,135 @@ def prepare_planner(case, payload):
                                "paths": [f"/command/changes/{i}"], "view": "data", "page": None}
     task = task_for(case, value)
     value["context_task"] = task
-    value["task_context_version"] = 2
-    deferred = {}
-    if task in {"repair", "delivery", "revision"} and value.get("comparison_options"):
+    value["task_context_version"] = 4
+    value["input_phase"] = "query_continuation" if read_continuation(case) else "decision"
+    deferred = {"operation_guides": operation_guides(value)}
+    value["operation_guide_names"] = list(deferred["operation_guides"])
+    if value.get("comparison_options"):
         value["comparison_options"] = comparison_rows(value)
-    full = deepcopy(value)
-    if task in {"repair", "delivery", "revision"}:
-        if value.get("comparison_options"):
-            value["investigation_frontier"] = investigation_frontier(value["comparison_options"])
-        for name in ("tool_catalog", "comparison_options", "shared_tool_guidance",
-                     "action_index", "artifact_index", "explanation_index", "evidence_associations"):
-            if name in value:
-                deferred[name] = value.pop(name)
-        # Keep the short source indexes intact: tool identity and failed-result
-        # citation permissions are needed even for a wording-only amendment.
-        if "exploration_state" in value:
-            exploration = value["exploration_state"]
-            deferred["exploration_state"] = deepcopy(exploration)
-            view = dict(exploration)
-            view["confidence_ranking"] = [{k: row[k] for k in
-                ("label", "confidence", "rank", "explanation", "refs", "limitation_refs", "argument_refs",
-                 "formal_matches_assessment") if k in row}
-                for row in exploration.get("confidence_ranking", [])]
-            # Presence still advertises the same command contracts. The detailed
-            # question state remains explicitly reachable, not silently absent.
-            if "evidence_followup" in view:
-                view["evidence_followup"] = {"read_ref": "followup:state", **{k: v for k, v in
-                    exploration["evidence_followup"].items() if k in {"pending_impacts", "pending_impact_count",
-                    "open_question_count", "stale_formal_labels", "unreviewed_result_count"}}}
-            view.pop("last_note", None)
-            value["exploration_state"] = view
-        if "ranking" in value:
-            deferred["ranking"] = value["ranking"]
-            value["ranking"] = [{k: v for k, v in row.items() if k != "validation_needed"}
-                                for row in value["ranking"]]
+    inventory = value.get("execution_inventory")
+    inventory_seen = protocol(case).get("planner_inventory_seen", {})
+    if inventory is not None:
+        previous = inventory_seen if inventory_seen.get("case_id") == case.case_id else {}
+        versions = {cid: row["version"] for cid, row in inventory["by_capability"].items()}
+        changed = {cid: row for cid, row in inventory["by_capability"].items()
+                   if previous.get("versions", {}).get(cid) != row["version"]}
+        if len(changed) < len(versions):
+            deferred["execution_inventory"] = deepcopy(inventory)
+            value["execution_inventory"] = {**inventory, "by_capability": changed,
+                "view": "changed_routes", "unchanged_routes": len(versions) - len(changed),
+                "removed_routes": sorted(set(previous.get("versions", {})) - set(versions)),
+                "read_all": {"ref": CONTEXT_REF, "paths": ["/fields/execution_inventory"]}}
+        inventory_seen = {"case_id": case.case_id, "versions": versions}
+    editing = task in {"repair", "delivery", "revision"}
+    for name in ("tool_catalog", "comparison_options", "shared_tool_guidance", "action_index",
+                 "artifact_index", "explanation_index", "evidence_associations", "untried_routes"):
+        if name in value:
+            deferred[name] = deepcopy(value.pop(name))
+    if deferred.get("comparison_options"):
+        focused = value.get("proposal_decision", {}).get("question_ids", [])
+        choice = investigation.current(case)
+        if choice and choice["choice"].get("question_id"):
+            focused = [*focused, choice["choice"]["question_id"]]
+        value["investigation_frontier"] = investigation_frontier(deferred["comparison_options"], focus_ids=focused)
+    if not editing and "tool_catalog" in deferred:
+        value["tool_catalog"] = compact_catalog(deferred["tool_catalog"], navigation_only=read_continuation(case))
+        value["tool_catalog_details"] = read_pointer(CONTEXT_REF, "tool_catalog", deferred["tool_catalog"])
+        if read_continuation(case):
+            value["context_directory_policy"] = (
+                "All capability IDs, purposes and live statuses remain listed. Detailed inputs, outputs and "
+                "preconditions are at tool_catalog_details or describe_tools, not inferred from the short row. "
+                "Source indexes are navigation, not evidence; omitted facts are not absent or negative.")
+
+    feedback = value.get("review_feedback")
+    if isinstance(feedback, dict) and len(feedback.get("text", "")) > 480:
+        deferred["review_feedback"] = deepcopy(feedback)
+        value["review_feedback"] = {k: v for k, v in feedback.items() if k != "text"}
+        value["review_feedback"].update(text_preview=feedback["text"][:480], text_truncated=True,
+            read={"ref": CONTEXT_REF, "paths": ["/fields/review_feedback/text"], "view": "data", "page": None})
+
+    latest = set(value.get("exploration_state", {}).get("new_result_ids", []))
+    latest.update(h.get("ref") for h in protocol(case).get("planner_read_handles", [])[-6:])
+    if "artifact_index" in deferred:
+        rows = table_rows(deferred["artifact_index"])
+        # Keep addresses in the working view; coordinates and historical detail stay deferred.
+        preferred = [r for r in rows if r.get("kind") == "initial_structure"]
+        preferred += [r for r in rows if r.get("ref") in latest and r not in preferred]
+        recent = [r for r in reversed(rows) if r not in preferred][:6]
+        shown = (preferred + recent)[:12] if len(rows) > 12 else rows
+        value["artifact_index"] = record_table([{k: r[k] for k in ("ref", "kind", "status") if k in r}
+                                                for r in shown])
+        value["artifact_index_counts"] = {"total": len(rows), "shown": len(shown)}
+    for name in ("result_index", "evidence_index"):
+        table = value.get(name)
+        if table and len(table.get("rows", [])) > 12:
+            deferred[name] = deepcopy(table)
+            rows = table_rows(table)
+            shown = [r for r in rows if r["ref"] in latest or r.get("source_result_ref") in latest]
+            shown += [r for r in rows[-6:] if r not in shown]
+            value[name] = record_table(shown)
+            value[name + "_counts"] = {"total": len(rows), "shown": len(shown)}
+    pending = value.get("pending_experiments")
+    if pending:
+        deferred["pending_experiments"] = deepcopy(pending)
+        value["pending_experiments"] = brief_rows(pending, fields=(
+            "ref", "experiment_id", "status", "capability_id", "workspace_read", "record_kind", "citation_uses"))["items"]
+        value["pending_experiment_count"] = len(pending)
+    if "exploration_state" in value:
+        exploration = value["exploration_state"]
+        deferred["exploration_state"] = deepcopy(exploration)
+        view = dict(exploration)
+        view["confidence_ranking"] = [
+            {**{k: row[k] for k in ("label", "confidence", "rank", "refs", "limitation_refs",
+                                   "argument_refs", "formal_matches_assessment") if k in row},
+             "explanation_preview": (row.get("explanation") or "")[:160],
+             "read": {"ref": CONTEXT_REF, "paths": [f"/fields/exploration_state/confidence_ranking/{i}"]}}
+            for i, row in enumerate(exploration.get("confidence_ranking", []))]
+        if "evidence_followup" in view:
+            followup = exploration["evidence_followup"]
+            view["evidence_followup"] = {"read_ref": "followup:state", **{k: v for k, v in
+                followup.items() if k in {"pending_impacts", "pending_impact_count", "open_question_count",
+                                        "stale_formal_labels", "unreviewed_result_count"}}}
+        view.pop("last_note", None)
+        value["exploration_state"] = view
+    if "ranking" in value:
+        deferred["ranking"] = deepcopy(value["ranking"])
+        value["ranking"] = [{k: v for k, v in row.items() if k in
+                            {"label", "rank", "priority", "confidence", "argument_ids", "support", "claim"}}
+                            for row in value["ranking"]]
     snapshot = {"case_id": case.case_id, "fields": deferred}
     reads = protocol(case).get("context_reads", {})
     used = reads.get("count", 0) if reads.get("snapshot") == digest(snapshot) else 0
     value["context_reads_remaining"] = max(0, 2 - used)
     expanded = (reads.get("snapshot") == digest(snapshot)
                 and "tool_catalog" in reads.get("requested_fields", []))
-    if used >= 2 or expanded:
-        value = full
-        value["context_reads_remaining"] = max(0, 2 - used)
-        value["task_context_fallback"] = ("scientific_interface_requested" if expanded else
-                                         "context_read_allowance_exhausted; keep complete current context")
-    value["planner_interface"] = (task if task in {"repair", "delivery", "revision"}
+    value["planner_interface"] = (task if editing
                                   and used < 2 and not expanded and "tool_catalog" in deferred else "full")
-    value["deferred_context"] = [{"field": name, "ref": CONTEXT_REF,
-        "path": pointer_child("/fields", name), "sha256": digest(data)}
-        for name, data in deferred.items()] if used < 2 and not expanded else []
+    value["deferred_context"] = [dict(field=name, **read_pointer(CONTEXT_REF, name, data))
+                                 for name, data in deferred.items()]
     value["task_context_policy"] = (
         "This is a task view, not a restriction on scientific decisions. Deferred fields are exact current "
         "context, not absent evidence. Use read_context(fields=[...]) to retrieve the named fields. "
-        "Reading tool_catalog also restores the full scientific operation interface on your next turn. "
+        "Reading tool_catalog restores the scientific operation interface, not the full background. "
+        "After the context-read allowance, ordinary read_evidence can address these exact fields or child paths "
+        "subject to the current action policy. Exhaustion never expands the entire context. "
         "All original source IDs remain readable; context:planner is not evidence. Current ranking, "
-        "outstanding findings and computation allowance remain authoritative.")
+        "outstanding findings and computation allowance remain authoritative. "
+        "operation_guides stores exact detailed manuals by name; read a needed child path, not the entire manual set. "
+        "In query_continuation the catalog lists IDs, purposes and live status; prerequisites and outputs "
+        "remain at tool_catalog_details or describe_tools. A truncated review preview is not the full advice.")
     workflow = value.get("review_workflow")
     if workflow:
         workflow["issue_groups"] = issue_groups(workflow.get("issues", []))
-    return put(case, planner_context=snapshot), share_text(value)
+    return put(case, planner_context=snapshot, planner_inventory_pending=inventory_seen), share_text(value)
+
+
+def acknowledge_planner(case):
+    """A transport interruption must not acknowledge context that was never returned."""
+    pending = protocol(case).get("planner_inventory_pending")
+    if pending and pending.get("case_id") == case.case_id:
+        return put(case, planner_inventory_seen=pending, planner_inventory_pending=None)
+    return case
 
 
 def context_selection(case, command):
@@ -131,7 +229,7 @@ def context_selection(case, command):
     used = previous.get("count", 0) if previous.get("snapshot") == revision else 0
     if used >= 2:
         reject(["fields"], "context_read_limit", "Two context reads already used for this exact snapshot.",
-               "The next task view includes complete context. Choose the next operation.")
+               "Use the current working view or a permitted exact read_evidence selection; background stays in memory.")
     receipt = {"snapshot": revision, "count": used + 1}
     unknown = set(command.fields) - snapshot["fields"].keys()
     if unknown:

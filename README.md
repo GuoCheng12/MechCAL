@@ -6,6 +6,8 @@ and submits a three-mechanism ranking with molecule-specific evidence.
 
 The current workflow includes native structured commands, bounded autonomous
 workers, case-local evidence memory, incremental review, and local MCP tools.
+Scientific Reviewer and Exploration Agent are separate components with isolated
+private memory; only their published feedback and proposals go to Planner.
 Scientific decisions remain with the agents. Execution status, parameters,
 artifacts, references, and partial results are recorded by the runtime.
 
@@ -79,6 +81,9 @@ Each run writes `manifest.json`, `qc_config.json`, `status.json`, API usage,
 and a case directory containing checkpoints, actions, evidence and artifacts.
 `summary.json` is produced after the orchestrator returns; an interrupted run
 keeps its records and is not assigned a zero score. Outputs are ignored by Git.
+Large arrays may be stored in the case directory's `_payloads` folder. Keep it
+with the checkpoints when copying runs, and use the documented
+[snapshot reader](docs/runtime-state-storage.md) in analysis scripts.
 
 The public [PhotoMechBench inputs](benchmarks/photomechbench/README.md) contain
 119 case IDs and SMILES. Hidden references, source papers, inference histories,
@@ -89,7 +94,7 @@ data and separately configured judge access. See [Evaluation](docs/evaluation.md
 ## Layout
 
 ```text
-mechcal/agents/          Planner and workers
+mechcal/agents/          Planner, workers and independent review agents
 mechcal/runtime/         Commands, memory, review and persistence
 mechcal/capabilities/    Tool registry, discovery and preconditions
 mechcal/tools/           Scientific adapters and subprocess boundaries
@@ -116,6 +121,10 @@ Research-only replay tests requiring private experiments and raw calculation
 fixtures stay in the research archive, not this code release. Their omission
 is not a claim that those scientific checks passed on a new machine.
 See [Validation](docs/validation.md) for the deployment acceptance scope.
+See [Task memory and message transmission](docs/context-transmission.md) for
+role-local context, exact retrieval and the offline input-size audit.
+See [Independent review agents](docs/review-agents.md) for responsibilities,
+memory isolation and custom-launcher configuration.
 
 ## License
 

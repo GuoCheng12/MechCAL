@@ -14,6 +14,8 @@ def selection_handles(outcome):
         return handles
     handles = []
     for row in outcome.get("records", []):
+        if row.get("ref", "").startswith("context:"):
+            continue  # Role-local background must not become a shared evidence handoff.
         selection = row.get("selection", {})
         if "data" not in row or selection.get("view") != "data":
             continue
@@ -30,7 +32,7 @@ def capture(case, result_id, handles, *, index=None):
     # session are eligible; the producing result binds even input-artifact reads.
     refs = {result_id, *(h["ref"] for h in handles)}
     return {"case_id": case.case_id, "result_id": result_id, "reads": handles,
-            "sources": {ref: digest(index.available[ref]) for ref in sorted(refs)}}
+            "sources": {ref: index.version(ref) for ref in sorted(refs)}}
 
 
 def retained(case, *, allowed_refs=None, result_ids=None, index=None):
@@ -45,7 +47,7 @@ def retained(case, *, allowed_refs=None, result_ids=None, index=None):
             continue
         for ref, version in bundle["sources"].items():
             if ref not in versions:
-                versions[ref] = digest(index.available[ref]) if ref in index.available else None
+                versions[ref] = index.version(ref) if ref in index.available else None
         for handle in bundle["reads"]:
             ref = handle["ref"]
             if allowed_refs is not None and ref not in allowed_refs:

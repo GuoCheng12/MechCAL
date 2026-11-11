@@ -18,6 +18,7 @@ from mechcal.runtime.command_context import scope_card, scoped_directory, record
 from mechcal.runtime.command_memory import result_report, json_bytes, digest, READ_BYTES
 from mechcal.runtime import command_read_handoff as handoff
 from mechcal.runtime.worker_memory import receipt_handles, task_memory, remember_directories, directory_memory, progress_note
+from mechcal.runtime.worker_inputs import input_paths, gap_report
 from mechcal.runtime.command_operations import (
     OperationRejected, check_owner, check_refs, protocol, put, record_identity,
     record_index, prepare_computation, cached_computation, reject,
@@ -102,6 +103,21 @@ def begin(o, case, command):
     now = time.time()
     task = WorkerTaskState(case_id=case.case_id, task_id="worker-task:" + uuid.uuid4().hex,
                            contract=command, started_at=now, deadline=now + o.config.worker_task_seconds)
+    available = scope(case, task)
+    artifacts = set(case.artifact_manifest.artifact_ids())
+    for i, item in enumerate(command.fixed_parameters):
+        if item.name.endswith("artifact_id") and (item.value not in available or item.value not in artifacts):
+            reject(["fixed_parameters", i, "value"], "binding_input_scope",
+                   "A fixed input must be an existing, delegated artifact.",
+                   "Include the chosen artifact in input_refs. Leave future product IDs unbound.", record_id=item.value)
+    paths = task_input_paths(o, case, task, available=available)
+    # A saved usable result can still be inspected and delivered without new computation.
+    has_result = any(protocol(case).get("results", {}).get(ref, {}).get("status") in {"success", "partial"}
+                     for ref in available)
+    if not paths["input_ready"] and not has_result:
+        report = gap_report(paths, case.artifact_manifest)
+        reject(["input_refs"], "delegation_input_gap", "No authorized tool can start with the delegated inputs.",
+               "Correct input_refs or allowed_capability_ids before starting a Worker.", details=report)
     return retain(case, task, phase="worker_task", pending_command=None)
 
 
@@ -123,6 +139,13 @@ def scoped_case(case, task, available):
     manifest = case.artifact_manifest.model_copy(update={
         "artifacts": [a for a in case.artifact_manifest.artifacts if a.artifact_id in available]})
     return put(case.touch(artifact_manifest=manifest), loaded_tools=task.loaded_tools)
+
+
+def task_input_paths(o, case, task, *, available=None):
+    available = scope(case, task) if available is None else available
+    narrowed = scoped_case(case, task, available)
+    return input_paths(o.deps.capability_registry, task.contract.allowed_capability_ids,
+                       narrowed.artifact_manifest, amesp_enabled=o.config.enable_amesp)
 
 
 def payload(o, case, task):
@@ -151,6 +174,8 @@ def payload(o, case, task):
         "working_memory": task_memory(task, available),
         "navigation_memory": directory_memory(task, available),
         "previous_work_note": progress_note(task),
+        "input_access": task_input_paths(o, case, task, available=available),
+        "last_input_error": task.input_error,
         "remaining": {"model_calls_including_this": o.config.worker_task_max_calls - task.model_calls + 1,
                       "computations": o.config.worker_task_max_computations - task.tool_attempts,
                       "seconds": max(0, round(task.deadline - time.time(), 1))},
@@ -200,7 +225,7 @@ def read_log(case, task, command):
             "chunk_sha256": hashlib.sha256(data).hexdigest(), "text": data.decode("utf-8", errors="replace")}
 
 
-def finish(case, task, store, *, status, summary, refs, reason="worker_report"):
+def finish(case, task, store, *, status, summary, refs, reason="worker_report", input_request=None):
     index = record_index(case)
     available = scope(case, task, index)
     p = protocol(case)
@@ -229,6 +254,8 @@ def finish(case, task, store, *, status, summary, refs, reason="worker_report"):
               "summary_role": "worker_interpretation",
               "source_observations": task_memory(task, available),
               "execution_context": review_execution_context(case, source_ids | set(task.result_ids), available)}
+    if input_request is not None:
+        report.update(input_request=input_request, summary_role="runtime_input_handoff")
     reports = {**p.get("worker_task_reports", {}), task.task_id: report}
     read_handoffs = dict(p.get("read_handoffs", {}))
     if task.result_ids:
@@ -240,7 +267,7 @@ def finish(case, task, store, *, status, summary, refs, reason="worker_report"):
         read_handoffs[rid] = handoff.capture(case, rid, merge_handles(previous, delivered), index=index)
     # Existing explanation records keep Worker prose visible to later review.
     explanations = dict(p.get("explanations", {}))
-    for rid in task.result_ids:
+    for rid in task.result_ids if input_request is None else []:
         explanations[rid] = {"status": "available", "text": summary, "refs": refs,
                              "task_id": task.task_id, "source_result_ids": sorted(source_ids | set(task.result_ids)),
                              "scientific_approval": False, "scope": "task_interpretation"}
@@ -258,6 +285,15 @@ def exhausted(case, task, store, reason):
                           "All recorded results are retained; the delegated objective is not confirmed complete.", reason=reason)
 
 
+def handoff_inputs(o, case, task, store, reason, *, issues=()):
+    usable = [r for r in task.result_ids if protocol(case)["results"][r]["status"] in {"success", "partial"}]
+    request = {**gap_report(task_input_paths(o, case, task), case.artifact_manifest), "issues": list(issues)}
+    return finish(case, task, store, status="partial" if usable else "blocked", refs=task.result_ids,
+                  reason=reason, input_request=request,
+                  summary="Execution input handoff required. No new calculation ran. Existing results are retained; "
+                          "Planner must correct the referenced input or change the delegated scope.")
+
+
 def validate_computation(o, case, task, command):
     if command.capability_id not in task.contract.allowed_capability_ids:
         reject(["capability_id"], "permission", "Tool is outside the delegation.", "Return the required route to Planner.")
@@ -265,6 +301,13 @@ def validate_computation(o, case, task, command):
         reject(["kind"], "task_limit", "No new computation can start within this task.", "Deliver partial or blocked results.")
     spec = o.deps.capability_registry.require(command.capability_id)
     args = command.arguments.model_dump(exclude_none=True)
+    requested_seconds = args.get("max_wall_seconds")
+    remaining_seconds = max(0, int(task.deadline - time.time()))
+    if requested_seconds is not None and requested_seconds > remaining_seconds:
+        reject(["arguments", "max_wall_seconds"], "task_time_remaining",
+               f"Requested {requested_seconds}s exceeds this Worker's remaining {remaining_seconds}s. Nothing started.",
+               "Choose an explicit shorter computation, or return partial/blocked and request a longer delegation. "
+               "The runtime will not silently shorten a scientific calculation.")
     fields = tool_argument_model(spec).model_fields
     locked = {name: field.default for name, field in fields.items()
               if name in FIXED_CONDITIONS and not field.is_required()}
@@ -309,6 +352,9 @@ def apply(o, case, task, command, store, *, read_allowance=READ_BYTES):
     elif command.kind == "complete_worker_task":
         return finish(case, task, store, status=command.status, summary=command.summary, refs=command.refs)
     elif command.kind == "compute":
+        paths = task_input_paths(o, case, task)
+        if command.capability_id in paths["unreachable"]:
+            return handoff_inputs(o, case, task, store, "input_scope_gap")
         request, key = validate_computation(o, case, task, command)
         if request is None:
             rid = protocol(case)["computations"][key]
@@ -357,6 +403,7 @@ def accept_result(case, result_id):
     if protocol(case)["ticket"].get("worker_task_id") != task.task_id:
         raise RuntimeError("Worker computation belongs to another task")
     task.result_ids = list(dict.fromkeys([*task.result_ids, result_id]))
+    task.input_error = None
     task.outcome = protocol(case)["outcome"]
     task.read_handles = merge_handles(task.read_handles, receipt_handles(task.outcome))
     return retain(case, task, phase="worker_task", ticket=None)
@@ -387,6 +434,7 @@ def turn(o, case, store):
         task.pending_command = reply
         case = save(retain(case, task), store)
     reply = task.pending_command
+    command = None
     try:
         calls = reply["calls"]
         is_reads = 1 < len(calls) <= 4 and all(call["name"] in READ_OPERATIONS for call in calls)
@@ -401,7 +449,22 @@ def turn(o, case, store):
     except OperationRejected as exc:
         task.pending_command = None
         task.outcome = {"status": "rejected", "executed": False, "issues": exc.issues}
-        candidate = retain(case, task)
+        input_error = (command is not None and command.kind == "compute" and any(
+            issue["code"] in {"missing_input", "unknown_artifact"}
+            and issue["path"] and str(issue["path"][-1]).endswith("artifact_id") for issue in exc.issues))
+        if input_error:
+            scoped = scoped_case(case, task, scope(case, task))
+            fingerprint = digest({"capability": o.deps.capability_registry.definition_version(command.capability_id),
+                "arguments": command.arguments.model_dump(mode="json"),
+                "artifacts": scoped.artifact_manifest.model_dump(mode="json")})
+            repeated = task.input_error is not None and task.input_error["fingerprint"] == fingerprint
+            task.input_error = {"fingerprint": fingerprint, "capability_id": command.capability_id,
+                                "issues": exc.issues,
+                                "remedy": "Select an exact visible artifact ID; unchanged input errors return to Planner."}
+            candidate = (handoff_inputs(o, case, task, store, "repeated_input_error", issues=exc.issues)
+                         if repeated else retain(case, task))
+        else:
+            candidate = retain(case, task)
     current = protocol(candidate).get("worker_task")
     store.append_jsonl("history/worker_tasks.jsonl", {"task_id": task.task_id, "request_id": reply["request_id"],
         "calls": reply["calls"], "phase": protocol(candidate)["phase"],

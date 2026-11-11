@@ -132,6 +132,7 @@ def execute_external(request, case_run, execution_plan=None, *, config=None, ame
     config = config or QCConfig.from_environment()
     backend, _, description = ROUTES[request.route]
     job = None
+    values = {}
     try:
         if request.capability_id != f"microscopic.{request.route}" or request.agent_name != "microscopic":
             raise QCError("invalid_args", "Capability ID, route and owner must agree.")
@@ -269,4 +270,8 @@ def execute_external(request, case_run, execution_plan=None, *, config=None, ame
             structured_results={"boundary_only": True, "failure_code": code,
                                 "timing": job.timing() if job else {"total_wall_seconds": time.monotonic()-started}},
             summary=f"No scientific result: {exc}", failure=tool_failure(code, str(exc),
-                details={"workdir": str(job.workdir) if job else None}))
+                details={"workdir": str(job.workdir) if job else None,
+                         "tool_args": values,
+                         **({"max_wall_seconds": job.max_wall_seconds,
+                             "elapsed_seconds": job.timing()["total_wall_seconds"]} if job else {}),
+                         **getattr(exc, "details", {})}))

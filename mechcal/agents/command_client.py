@@ -6,6 +6,7 @@ import time
 from jsonschema import Draft202012Validator
 from pydantic import ValidationError
 
+from mechcal.agents.commentary_delivery import delivery_issue
 from mechcal.runtime.command_operations import OperationRejected
 from mechcal.runtime.command_schema import native_format
 from mechcal.runtime.prompts import load_prompt
@@ -150,5 +151,8 @@ def _ask_text(client, payload, store, *, role, prompt_name):
             message=response.response_error or "No complete commentary text was returned.",
             remedy="Saved calculations and accepted judgment are retained. Complete commentary may be requested later.",
             record_id=None)])
+    issue = delivery_issue(response.raw_text)
+    if issue is not None:
+        raise OperationRejected([issue])
     # This is an internal record, not a schema or identifier the model must fill.
     return CommentaryText(text=response.raw_text)

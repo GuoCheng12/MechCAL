@@ -41,7 +41,7 @@ def test_computational_review_can_cite_unranked_execution(tmp_path):
         "status": "success", "capability_id": "macro.macro_structure_scan", "summary": "An actual stored result."}})
     cmd = proposal(id=None, source_refs=["R_unranked"])
     client = NativeFake([reply("record_review", cmd.model_dump(mode="json", exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     after = _comment(o, c, s)
     assert protocol(after)["review"]["status"] == "available"
     assert "R_unranked" in expand(client.requests[0]["payload"])["sections"]["reference_ids"]
@@ -54,7 +54,7 @@ def test_exhausted_reads_get_one_small_correction_without_planner_roundtrip(tmp_
     client = NativeFake([reply(call_id="r1"), reply(call_id="r2"),
         reply("record_review", bad.model_dump(mode="json", exclude={"kind"}), call_id="bad"),
         reply("repair_review_links", correction(), call_id="repair")])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     before = c
     for _ in range(3):
         c = _comment(o, c, s)
@@ -83,7 +83,7 @@ def test_failed_local_repair_is_not_retried_or_approved(tmp_path, bad_value):
     c, o, s = fixture(tmp_path)
     client = NativeFake([reply("record_review", proposal().model_dump(mode="json", exclude={"kind"})),
                         reply("repair_review_links", correction(value=bad_value))])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     pending = _comment(o, c, s)
     after = _comment(o, pending, s)
     assert protocol(after)["review"]["status"] == "unavailable" and not state(after).issues
@@ -109,7 +109,7 @@ def test_repair_boundary_failures_preserve_all_science(tmp_path, reply_kind):
         edit["edits"][0]["finding_index"] = 30
     client = NativeFake([reply("record_review", proposal().model_dump(mode="json", exclude={"kind"})),
                         reply(name, edit, complete=complete)])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     after = _comment(o, _comment(o, c, s), s)
     assert protocol(after)["review"]["status"] == "unavailable"
     assert not state(after).issues
@@ -133,7 +133,7 @@ def test_patch_changes_only_associations_and_revalidates_entire_report():
 def test_compact_read_directory_preserves_ownership_and_exact_paths(tmp_path):
     c, o, s = fixture(tmp_path)
     client = NativeFake([reply("record_review", proposal(id=None).model_dump(mode="json", exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     _comment(o, c, s)
     payload = expand(client.requests[0]["payload"])
     table = payload["read_scope"]

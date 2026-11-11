@@ -9,7 +9,7 @@ from mechcal.runtime.command_review import review_basis, review_execution_contex
 from mechcal.runtime.command_review_delta import retained_reads
 
 FACT_BYTES = 12000
-SCIENCE_FIELDS = {"smiles", "mechanism_pool", "mechanism_definitions", "ranking", "arguments", "candidate_overview",
+SCIENCE_FIELDS = {"smiles", "mechanism_pool", "mechanism_definitions", "ranking", "arguments", "candidate_overview", "execution_inventory",
                   "pending_experiments", "evidence_followup", "run_limits", "tool_catalog"}
 
 
@@ -56,7 +56,7 @@ def fact_packets(case, refs, *, citations=(), index=None):
             deferred.append({"ref": ref, "path": path, "visibility": "source_changed_or_missing"})
             continue
         selection = {"ref": ref, "paths": [path] if path else [], "view": "data", "page": page}
-        packet = {"source": selection, "source_version": digest(index.available[ref]), "value": value,
+        packet = {"source": selection, "source_version": index.version(ref), "value": value,
                   "coverage": selection_coverage(resolve_pointer(index.available[ref], path), page=page),
                   "parent_context": _parent_context(index.available[ref], path),
                   "visibility": "in_request", "execution": execution.get(ref)}
@@ -100,6 +100,8 @@ def prepare(case, payload, *, index):
     kept = {k: payload[k] for k in ("stage", "role", "draft_id", "ranking", "review_targets", "review_workflow")}
     answer = payload.get("assembled_answer") or {}
     kept["assembled_answer"] = {k: answer[k] for k in ("answer", "limitations") if k in answer}
+    if "execution_inventory" in payload:
+        kept["execution_inventory"] = payload["execution_inventory"]
     kept["review_facts"] = fact_packets(case, focused, citations=payload.get("citations", []), index=index)
     kept["delivery_task"] = {"mode": "proofread", "scientific_review_ref": anchor,
         "scientific_basis": basis, "current_draft_id": payload["draft_id"],

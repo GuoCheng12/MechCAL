@@ -25,7 +25,7 @@ def reviewed_case(tmp_path, *, native=False, text="Correct the source attributio
     c = _apply(o, c, judgment(), s)
     assert ops.protocol(c)["phase"] == "review"
     client = NativeFake([prose(text)]) if native else ScriptClient([text])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     after = _comment(o, c, s)
     unchanged_science(c, after)
     return after, o, s
@@ -112,7 +112,7 @@ def test_correction_then_compute_and_checkpoint_preserve_sources(tmp_path):
 
 def test_deferred_edits_still_need_exact_final_review(tmp_path):
     c, o, s = reviewed_case(tmp_path)
-    o.deps.mechanism_agenda.llm_client = ScriptClient(["Reporting error remains."])
+    o.deps.scientific_reviewer.llm_client = ScriptClient(["Reporting error remains."])
     c = _comment(o, _apply(o, c, Finalize(kind="finalize", answer="First draft."), s), s)
     old_id = ops.protocol(c)["final_draft"]["draft_id"]
     edit = judgment().model_copy(deep=True)
@@ -124,9 +124,9 @@ def test_deferred_edits_still_need_exact_final_review(tmp_path):
     c = _apply(o, c, Finalize(kind="finalize", answer="Revised draft."), s)
     assert ops.protocol(c)["phase"] == "review"
     assert not reviewed(c, ops.protocol(c)["final_draft"])
-    o.deps.mechanism_agenda.llm_client = ScriptClient(["The new assertion is unsupported."])
+    o.deps.scientific_reviewer.llm_client = ScriptClient(["The new assertion is unsupported."])
     new = _comment(o, c, s)
-    sent = o.deps.mechanism_agenda.llm_client.calls[0]["payload"]
+    sent = o.deps.scientific_reviewer.llm_client.calls[0]["payload"]
     assert sent["arguments"][0]["text"] == edit.changes[0].text
     assert "unsupported" in ops.protocol(new)["review"]["text"]
 
@@ -150,7 +150,7 @@ def test_reviewer_and_validator_share_citation_eligibility(tmp_path, native):
     edit.request_review = True
     c = _apply(o, c, edit, s)
     client = NativeFake([prose()]) if native else ScriptClient(["Use actual observations, not follow-up metadata."])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     _comment(o, c, s)
     sent = expand(client.requests[0]["payload"])["sections"] if native else client.calls[0]["payload"]
     assert "followup:state" in sent["reference_contract"]["context_only_refs"]

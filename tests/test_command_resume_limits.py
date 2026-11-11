@@ -41,7 +41,7 @@ def test_explicit_resume_refreshes_limits_without_replaying_science(
     o.config = replace(o.config, **{"unlimited_exploration": False, **overrides})
     client = ScriptClient([ConnectionError("inspect refreshed input")])
     o.deps.planner.llm_client = client
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     # This is the explicit configuration-fingerprint migration used by the
     # copy-on-resume launcher; it must not alter any accepted scientific state.
     saved = put(saved, phase=phase, review_role="reviewer", review_changes=[])

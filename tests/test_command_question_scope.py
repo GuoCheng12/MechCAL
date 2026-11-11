@@ -182,7 +182,7 @@ def test_final_review_sees_outside_top3_question_and_can_read_exact_sources(tmp_
     fake = NativeFake([reply("read_evidence", {"records": [{"ref": OTHER,
         "paths": ["/structured_results/parsed_observables"]}]}),
         reply("record_review", final_report().model_dump(exclude={"kind"}), call_id="complete")])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     queried = _comment(o, c, s)
     payload = expand(fake.requests[0]["payload"])["sections"]
     assert len(payload["computational_review"]["question_evidence"]["sources"]) == 2

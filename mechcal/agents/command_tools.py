@@ -161,6 +161,8 @@ class NativeCommandClient(OpenAIJsonClient):
                            role="planner", allow_text=False):
         settings = self.settings
         protocol = settings.api_protocol
+        from mechcal.runtime.command_review_wire import operation_wire
+        payload, outcome = operation_wire(payload, exchange, outcome)
         messages = [{"role": "system", "content": system_prompt}]
         messages += replay_exchange(exchange, outcome, protocol)
         # The current state/request follows the completed exchange; otherwise
@@ -263,6 +265,10 @@ def ask_tools(client, registry, visible_tools, payload, store, *, exchange=None,
                                   worker_tasks=bool(payload.get("worker_delegation")),
                                   strict_schema=strict_tool_schema(client),
                                   draft_id=(payload.get("judgment_draft") or {}).get("draft_id"))
+    for tool in tools:
+        if tool["name"] == "read_context":
+            tool["parameters"]["properties"]["fields"]["items"]["enum"] = sorted(
+                {entry["field"] for entry in payload["deferred_context"]})
     if payload.get("operation_policy") is not None:
         tools, models = ActionPolicy.model_validate(payload["operation_policy"]).filter_tools(tools, models)
     elif tracking and payload["exploration_state"]["query_turns_remaining"] == 0:
@@ -275,22 +281,25 @@ def ask_tools(client, registry, visible_tools, payload, store, *, exchange=None,
         from mechcal.agents.command_shape_repair import retry_local_command
         repaired = retry_local_command(client, tools, models, exchange, outcome, store, parse_tool_turn)
         if repaired is not None:
-            return repaired
+            command, reply = repaired
+            return command, {**reply, "current_payload_delivered": False}
     task_interface = payload.get("planner_interface", "full") != "full" and "read_context" in models
-    prompt = load_prompt("planner_task_edit.md" if task_interface else "planner_tools.md")
-    if payload.get("worker_delegation") and not task_interface:
+    task_memory = payload.get("task_context_version", 0) >= 4 and bool(payload.get("operation_guide_names"))
+    prompt = load_prompt("planner_task_edit.md" if task_interface else
+                        "planner_working_context.md" if task_memory else "planner_tools.md")
+    if payload.get("worker_delegation") and not task_interface and not task_memory:
         prompt += "\n" + load_prompt("planner_worker_tasks.md")
-    if any(t["name"] in {"reduce_evidence", "compare_evidence"} for t in tools):
+    if not task_memory and any(t["name"] in {"reduce_evidence", "compare_evidence"} for t in tools):
         prompt += "\n" + load_prompt("numeric_evidence.md")
-    if tracking and not task_interface:
+    if tracking and not task_interface and not task_memory:
         prompt += "\n" + load_prompt("planner_exploration_state.md")
-    if followup and not task_interface:
+    if followup and not task_interface and not task_memory:
         prompt += "\n" + load_prompt("planner_evidence_followup.md")
-    if workflow and not task_interface:
+    if workflow and not task_interface and not task_memory:
         prompt += "\n" + load_prompt("planner_review_workflow.md")
-    if "computational_review" in payload and not task_interface:
+    if "computational_review" in payload and not task_interface and not task_memory:
         prompt += "\n" + load_prompt("computational_mission.md")
-    if "investigation_policy" in payload:
+    if "investigation_policy" in payload and not task_memory:
         prompt += "\n" + load_prompt("planner_investigation.md")
     groups = turn_contract(models)
     if task_interface:
@@ -303,7 +312,7 @@ def ask_tools(client, registry, visible_tools, payload, store, *, exchange=None,
                           "For scientific operations, read_context(fields=['tool_catalog']) restores the full interface.")
     reply = client.complete_tool_turn(system_prompt=prompt,
         payload={**payload, "operation_groups": groups}, tools=tools, exchange=exchange, outcome=outcome, store=store)
-
+    reply = {**reply, "current_payload_delivered": True}
     return parse_tool_turn(reply, tools, models), reply
 
 

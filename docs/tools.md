@@ -172,6 +172,11 @@ The timeout is per Amesp subprocess, not per complete molecule. Start with
 one CPU worker and a 1000 MB Amesp memory setting. These settings do not
 impose a process-wide memory limit or a total MechCAL runtime limit.
 
+Hole-electron postprocessing has a separate whole-operation timeout, defaulting
+to 300 seconds. An explicit `max_wall_seconds` may request up to 1800 seconds,
+subject to `MECHCAL_SPATIAL_MAX_WALL_SECONDS` and the remaining Worker task time.
+See [execution recovery](evidence-recovery.md) for failure semantics and limits.
+
 ### Verify Real Computation
 
 From the MechCAL repository root in the activated Python environment:

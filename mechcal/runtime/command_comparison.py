@@ -54,7 +54,7 @@ def comparison_view(case, *, index=None):
         context = by_source.get(source)
         raw = index.available[source]
         entry = {k: sorted(v) if isinstance(v, set) else v for k, v in item.items()}
-        entry.update(source_version=digest(raw), status=raw.get("status", "not_recorded"))
+        entry.update(source_version=index.version(source), status=raw.get("status", "not_recorded"))
         if context:
             inputs = (context["request"] or {}).get("input_refs", [])
             entry.update(capability_id=context["capability_id"], report_ref="report:" + source,

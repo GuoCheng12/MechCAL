@@ -5,12 +5,12 @@ from dataclasses import replace
 
 import pytest
 
-from mechcal.runtime.command_compact import expand_text
+from mechcal.runtime.command_compact import expand_text, table_rows
 from mechcal.runtime.command_loop import planner_payload, _apply, _comment
 from mechcal.runtime.command_memory import json_bytes, resolve_pointer
 from mechcal.runtime.command_operations import protocol, put, record_index, read_records, check_refs, OperationRejected
 from mechcal.runtime.command_review import review_projection
-from mechcal.runtime.command_task_context import prepare_planner, review_view
+from mechcal.runtime.command_task_context import prepare_planner, review_view, operation_guides
 from mechcal.schemas.commands import ReadEvidence, ReadContext, Finalize
 from test_command_context_efficiency import review_material, with_review
 from test_command_review_workflow import setup
@@ -39,7 +39,8 @@ def test_deferred_fields_exact_readable_and_not_evidence(tmp_path):
     for entry in compact["deferred_context"]:
         rows = read_records(routed, ReadEvidence(kind="read_evidence", records=[
             {"ref": entry["ref"], "paths": [entry["path"]]}]))
-        assert rows[0]["data"][entry["path"]] == full[entry["field"]]
+        expected = operation_guides(full) if entry["field"] == "operation_guides" else full[entry["field"]]
+        assert rows[0]["data"][entry["path"]] == expected
     with pytest.raises(OperationRejected):
         check_refs(routed, ["context:planner"], ["refs"], scientific=True)
     for key in ("ranking", "arguments", "results", "rounds", "revision", "final_draft"):
@@ -82,8 +83,11 @@ def test_new_results_return_to_exploration_not_delivery(tmp_path):
     current, view = prepare_planner(c, payload)
     view = expand_text(view)
     assert view["context_task"] == "exploration"
-    assert view["tool_catalog"] == payload["tool_catalog"]
-    assert not view["deferred_context"]
+    assert [r["capability_id"] for r in table_rows(view["tool_catalog"])] == [
+        r["capability_id"] for r in table_rows(payload["tool_catalog"])]
+    assert protocol(current)["planner_context"]["fields"]["tool_catalog"] == payload["tool_catalog"]
+    assert view["deferred_context"] and view["planner_interface"] == "full"
+    assert view["exploration_state"]["new_result_ids"] == ["new:result"]
 
 
 def test_repair_retains_draft_and_defers_discoverable_background(tmp_path):
@@ -123,8 +127,10 @@ def test_exhausted_scientific_allowance_does_not_hide_context(tmp_path):
     new = _apply(o, new, ReadContext(kind="read_context", fields=["ranking"]), s)
     _, value = prepare_planner(new, full)
     value = expand_text(value)
-    assert value["tool_catalog"] == full["tool_catalog"]
-    assert not value["deferred_context"] and value["context_reads_remaining"] == 0
+    assert "tool_catalog" not in value and "task_context_fallback" not in value
+    assert value["deferred_context"] and value["context_reads_remaining"] == 0
+    assert value["planner_interface"] == "full"
+    assert protocol(new)["planner_context"]["fields"]["tool_catalog"] == full["tool_catalog"]
 
 
 def test_bad_context_reads_consume_allowance_without_claim_mutation(tmp_path):
@@ -212,7 +218,7 @@ def test_review_native_projection_accepts_reused_catalog(tmp_path):
     c, o, s = ready(tmp_path)
     client = NativeFake([reply("record_review", {"text": "Remaining uncertainty is scientific.", "findings": []}),
                          reply("record_review", {"text": "New wording reviewed.", "findings": []})])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     c = _comment(o, c, s)
     c = _apply(o, c, Finalize(kind="finalize", answer="A different bounded comparison."), s)
     c = _comment(o, c, s)

@@ -224,7 +224,7 @@ def test_impact_review_is_bounded_read_only_and_not_rescheduled(tmp_path):
     c, o = observed(), enabled(tmp_path)
     before = c.model_dump()
     client = NativeFake([reply("report_evidence_impacts", report().model_dump(exclude={"kind"}))])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     c = run_turn(o, put(c, phase="impact_review"), store(tmp_path, c))
     assert f.view(c)["pending_impact_count"] == 2 and not f.unreviewed_results(c)
     for field in ["portfolio", "evidence_ledger", "artifact_manifest"]:
@@ -244,7 +244,7 @@ def test_impact_read_and_bad_ref_correction_survive_resume(tmp_path):
     client = NativeFake([reply(arguments={"records": [{"ref": "result:new", "paths": ["/status"]}]}, call_id="read"),
                         reply("report_evidence_impacts", bad, call_id="bad"),
                         reply("report_evidence_impacts", report().model_dump(exclude={"kind"}), call_id="good")])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     c = save(run_turn(o, put(c, phase="impact_review"), s), s)
     assert protocol(c)["impact_session"]["queries"] == 1
@@ -266,7 +266,7 @@ def test_unavailable_review_is_preserved_without_infinite_retry(tmp_path, mode):
     if mode == "truncated": response["complete"] = False
     if mode == "text": response.update(calls=[], text="No machine-readable associations.")
     client = NativeFake([deepcopy(response) for _ in range(3)])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     c = put(c, phase="impact_review")
     for _ in range(3):
@@ -304,7 +304,7 @@ def test_candidate_sources_shown_to_impact_reviewer_are_readable(tmp_path):
     c = f.accept_review(c, ["result:old"], {"status": "available", "suggestions": [], "text": "Previous fixture."})
     client = NativeFake([reply(arguments={"records": [{"ref": "result:old", "paths": ["/status"]}]}, call_id="oldread"),
                         reply("report_evidence_impacts", report().model_dump(exclude={"kind"}), call_id="report")])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     c = run_turn(o, put(c, phase="impact_review"), s)
     assert protocol(c)["impact_session"]["outcome"]["status"] == "read"
@@ -366,8 +366,7 @@ def test_full_native_loop_and_final_delivery_with_unresolved_work(tmp_path, revi
 
     client = Client()
     o.deps.planner.llm_client = client
-    o.deps.photophysics_arbiter.llm_client = client
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     c = o.run(smiles="CCO", user_query="Offline protocol acceptance, not scientific performance.", case_id="followup-full")
     assert c.status == "finalized" and protocol(c)["rounds"] == 1
     assert len(c.final_answer.mechanism_predictions) == 3

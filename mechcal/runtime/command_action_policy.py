@@ -29,6 +29,8 @@ def turn_contract(available=None):
     names = set(available)
     contract["available_operations"] = sorted(names)
     contract["batch_read_operations"] = sorted(BATCH_READS & names)
+    contract["single_call_operations"] = sorted(name for name in names - BATCH_READS
+                                                if not name.startswith("compute_"))
     contract["hypothesis_followup_controls"] = (sorted(ASSESSMENT_CONTROLS & names)
                                                 if "update_hypotheses" in names else [])
     if not contract["batch_read_operations"]:
@@ -36,7 +38,8 @@ def turn_contract(available=None):
     if not any(name.startswith("compute_") for name in names):
         contract["compute_calls"] = 0
     contract["rule"] = ("Only available_operations may be called in this response. "
-        "Use one listed control, or the listed read/computation groups within their nonzero limits. "
+        "Use exactly one single_call_operation, or the listed read/computation groups within their nonzero limits. "
+        "Do not mix a single_call_operation with reads, including metadata queries. "
         "update_hypotheses may precede available computations or ONE listed hypothesis_followup_control. "
         "Never mix reads with mutations. Zero means unavailable, not permission to infer an operation.")
     return contract

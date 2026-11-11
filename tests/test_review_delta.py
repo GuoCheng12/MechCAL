@@ -88,6 +88,40 @@ def test_cross_role_reuse_and_exact_local_delta():
     assert receipt["ref"] in material["review_receipt_refs"]
 
 
+@pytest.mark.parametrize("field", ["question_evidence", "candidate_comparison", "investigation"])
+def test_computational_background_reuse_is_lossless_and_readable(field):
+    c = workflow.enable(case())
+    payload = review_material()
+    payload["computational_review"] = {
+        "basis": "current-source-basis", "suggestions": ["Compare competing hypotheses."],
+        field: {"version": 1, "rows": [{"source": "input:smiles", "text": "Unresolved. " * 200}],
+                "status": "needs_comparison"}}
+    c, prior, _ = with_review(c, payload)
+    material, _, _ = review_projection(c, payload, "final_reviewer", index=record_index(c))
+    packed = material["sections"]["computational_review"][field]
+    assert packed["previous_review_ref"] == prior["ref"]
+    assert resolve_pointer(prior, packed["path"]) == payload["computational_review"][field]
+    assert material["sections"]["computational_review"]["suggestions"] == payload["computational_review"]["suggestions"]
+    changed = deepcopy(payload)
+    changed["computational_review"][field]["status"] = "reconsider_with_new_evidence"
+    material, receipt, _ = review_projection(c, changed, "final_reviewer", index=record_index(c))
+    packed = material["sections"]["computational_review"][field]
+    assert packed["view"] == "exact_delta"
+    assert apply_changes(resolve_pointer(prior, packed["path"]), packed["changes"]) == changed["computational_review"][field]
+    assert receipt["sections"]["computational_review"] == changed["computational_review"]
+    assert json_bytes(material) < json_bytes(changed)
+
+
+def test_changed_comparison_contract_cannot_reuse_background():
+    c = workflow.enable(case())
+    payload = review_material()
+    payload["computational_review"] = {"candidate_comparison": {"version": 1, "text": "Old task. " * 100}}
+    c, _, _ = with_review(c, payload)
+    payload["computational_review"]["candidate_comparison"]["version"] = 2
+    material, _, _ = review_projection(c, payload, "final_reviewer", index=record_index(c))
+    assert material["sections"]["computational_review"] == payload["computational_review"]
+
+
 def test_prediction_scopes_reuse_two_unchanged_predictions():
     c = workflow.enable(case())
     payload = review_material()

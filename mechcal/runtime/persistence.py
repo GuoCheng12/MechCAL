@@ -10,6 +10,7 @@ from pydantic import BaseModel
 
 from mechcal.capabilities import CapabilityCatalog
 from mechcal.runtime.progress import atomic_json, write_activity
+from mechcal.runtime.snapshot_storage import SnapshotStorage, read_case_run
 from mechcal.schemas import (
     AgentExecutionPlan,
     AgentReport,
@@ -46,6 +47,7 @@ class RunStore:
     def __init__(self, base_dir: Path, case_id: str) -> None:
         self.root = base_dir.expanduser().resolve() / case_id
         self.case_id = case_id
+        self.snapshots = SnapshotStorage(self.root, case_id)
 
     def initialize(self) -> None:
         for relative in ("history", "artifacts", "claims", "rounds"):
@@ -68,8 +70,14 @@ class RunStore:
 
     def write_json(self, relative_path: str, payload: BaseModel | dict[str, Any]) -> Path:
         path = self.root / relative_path
-        atomic_json(path, _jsonable(payload))
+        if relative_path in {"command_checkpoint.json", "case_run.json", "artifacts/manifest.json", "evidence_units.json"}:
+            self.snapshots.write(path, payload)
+        else:
+            atomic_json(path, _jsonable(payload))
         return path
+
+    def read_case_run(self, relative_path="case_run.json") -> CaseRun:
+        return read_case_run(self.root / relative_path)
 
     def append_jsonl(self, relative_path: str, payload: BaseModel | dict[str, Any]) -> Path:
         path = self.root / relative_path

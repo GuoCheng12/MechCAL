@@ -13,6 +13,7 @@ from mechcal.schemas.artifacts import ArtifactManifest
 from mechcal.schemas.tool_results import ToolExecutionResult
 from mechcal.schemas.mechanisms import INPUT_SMILES_REF
 from mechcal.agents.observation_view import observation_view
+from mechcal.runtime.snapshot_storage import decode_json
 
 MAX_JUDGE_INPUT_BYTES: int | None = None
 # Optional caller limits count prompts, schemas and repair feedback as well.
@@ -64,7 +65,7 @@ def _read_json(path: Path, root: Path) -> tuple[Any, dict[str, str]]:
     if not resolved.is_relative_to(root):
         raise ValueError(f"Source is outside the case run: {path.name}")
     data = resolved.read_bytes()
-    return json.loads(data), {
+    return decode_json(data, blob_root=root), {
         "source_file": str(resolved.relative_to(root)),
         "source_sha256": hashlib.sha256(data).hexdigest(),
     }

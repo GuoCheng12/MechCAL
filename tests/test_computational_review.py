@@ -48,7 +48,7 @@ def test_final_reviewer_sees_full_catalog_and_can_describe_without_scientific_mu
     original = deepcopy(protocol(c))
     fake = NativeFake([reply("describe_tools", {"capability_ids": [TOOL]}),
                        reply("record_review", report().model_dump(exclude={"kind"}), call_id="report")])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     queried = _comment(o, c, s)
     payload = expand(fake.requests[0]["payload"])["sections"]
     assert payload["tool_catalog"] == expand(planner_payload(o, c, native=True))["tool_catalog"]
@@ -194,7 +194,7 @@ def test_review_wire_advertises_reuse_only_when_it_exists(tmp_path, has_previous
     if has_previous:
         c = reviewed(c, o, [])
     fake = NativeFake([reply("record_review", report().model_dump(exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     _comment(o, c, s)
     schema = next(t["parameters"] for t in fake.requests[0]["tools"] if t["name"] == "record_review")
     value = report().model_dump(exclude={"kind"})
@@ -248,7 +248,7 @@ def test_unknown_description_is_read_only_and_shares_bounded_query_allowance(tmp
     c, o, s = fixture(tmp_path)
     fake = NativeFake([reply("describe_tools", {"capability_ids": ["unknown"]}, call_id=str(i)) for i in range(2)] +
                       [reply("record_review", report().model_dump(exclude={"kind"}), call_id="finish")])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     original = deepcopy(protocol(c)["results"])
     c = _comment(o, c, s)
     assert protocol(c)["reviewer_session"]["queries"] == 1

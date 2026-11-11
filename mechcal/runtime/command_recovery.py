@@ -60,12 +60,12 @@ def before_model_turn(case, *, max_model_turns=12):
     return put(case, delivery_recovery=current.model_dump(mode="json"))
 
 
-def view(case):
+def view(case, *, index=None):
     current = state(case)
     if current is None:
         return None
     from mechcal.runtime.command_delivery import delivery_status
-    snapshot = delivery_status(case)
+    snapshot = delivery_status(case, index=index)
     previous = current.turn_starts[-1] if current.turn_starts else {}
     return {"model_turns_used": current.model_turns,
             "model_turns_remaining": max(0, current.max_model_turns - current.model_turns),

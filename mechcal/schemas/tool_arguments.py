@@ -57,7 +57,8 @@ class GeometryDescriptorArgs(SourceArgs):
 class HoleElectronArgs(SourceArgs):
     state_root: int = Field(default=1, ge=1, le=10)
     spatial_grid: Literal["medium", "high"] = "high"
-    max_wall_seconds: int = Field(default=300, ge=10, le=300)
+    max_wall_seconds: int = Field(default=300, ge=10, le=1800,
+        description="Whole postprocessing deadline; deployment and remaining Worker limits also apply. Default 300; an explicit longer request does not change numerical thresholds.")
     fragments: dict[str, list[Atom]] | None = Field(default=None,
         description="Optional named disjoint groups in the selected calculation atom map. Reports sums of heavy-atom contributions, excluding hydrogen without renormalization.")
 

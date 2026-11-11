@@ -136,7 +136,7 @@ def test_multiple_artifact_producers_are_not_arbitrarily_collapsed():
 def test_definition_shared_across_planner_review_and_impact_roles(tmp_path):
     c, o, s = fixture(tmp_path)
     fake = NativeFake([reply("record_review", report().model_dump(exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     _comment(o, c, s)
     assert expand_text(fake.requests[0]["payload"])["sections"]["mechanism_definitions"] == mechanism_definitions()
     assert planner_payload(o, c)["mechanism_definitions"] == mechanism_definitions()
@@ -154,7 +154,7 @@ def test_unranked_sources_are_readable_in_same_bounded_final_review(tmp_path):
     fake = NativeFake([
         reply("read_evidence", {"records": [{"ref": "alternative:result", "paths": ["/values"], "view": "data", "page": None}]}),
         reply("record_review", report().model_dump(exclude={"kind"}), call_id="finish")])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     before = deepcopy(protocol(c)["results"])
     c = _comment(o, c, s)
     assert protocol(c)["reviewer_session"]["outcome"]["status"] != "rejected"

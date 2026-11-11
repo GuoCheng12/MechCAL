@@ -17,8 +17,7 @@ def review(tmp_path, c, reply, role="coverage_reviewer"):
     c = put(c, phase="review", review_role=role)
     o, s = orchestrator(tmp_path, reviews=True), store(tmp_path, c)
     client = ScriptClient([reply])
-    o.deps.mechanism_agenda.llm_client = client
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     result = _comment(o, c, s)
     return o, s, result, client.calls[0]
 

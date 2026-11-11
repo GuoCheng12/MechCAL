@@ -84,6 +84,11 @@ def configuration_fingerprint(orchestrator, case):
     """Shared by strict resume checks and explicit, audited checkpoint migration."""
     clients = [orchestrator.deps.planner, orchestrator.deps.photophysics_arbiter,
                orchestrator.deps.mechanism_agenda]
+    if orchestrator.config.planner_command_protocol:
+        clients = [orchestrator.deps.planner, orchestrator.deps.scientific_reviewer,
+                   orchestrator.deps.exploration_agent]
+        if any(agent is None for agent in clients):
+            raise ValueError("Command workflow requires explicit ScientificReviewerAgent and ExplorationAgent dependencies")
     model_settings = []
     for agent in clients:
         settings = getattr(agent.llm_client, "settings", None)

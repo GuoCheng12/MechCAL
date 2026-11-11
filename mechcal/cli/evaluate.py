@@ -21,6 +21,7 @@ from mechcal.runtime.orchestrator import MechCALOrchestrator, OrchestratorConfig
 from mechcal.runtime.output_assembler import OutputAssembler
 from mechcal.runtime.progress import ExperimentProgress
 from mechcal.schemas import CaseRun
+from mechcal.runtime.snapshot_storage import read_case_run
 
 
 def main() -> None:
@@ -429,7 +430,7 @@ def _run_or_load_mas(
     if refresh and (run_base_dir / case_id).exists():
         shutil.rmtree(run_base_dir / case_id)
     if case_run_path.exists() and not refresh:
-        case_run = CaseRun.model_validate_json(case_run_path.read_text(encoding="utf-8"))
+        case_run = read_case_run(case_run_path)
         if case_run.status in {"finalized", "stopped", "failed", "paused"}:
             if case_run.runtime.get("decision_mode", "legacy") != decision_mode:
                 raise RuntimeError("Existing case uses a different decision mode; use a new directory.")
@@ -481,7 +482,7 @@ def _run_or_load_mas(
         )
     except Exception:
         if case_run_path.exists():
-            return CaseRun.model_validate_json(case_run_path.read_text(encoding="utf-8"))
+            return read_case_run(case_run_path)
         raise
 
 

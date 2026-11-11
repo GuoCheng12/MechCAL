@@ -7,9 +7,10 @@ from mechcal.runtime.command_views import ordered_ranking
 from mechcal.mechanism_pool import mechanism_definitions
 from mechcal.runtime.command_comparison import comparison_view, question_evidence_view
 from mechcal.runtime import command_investigation as investigation
+from mechcal.runtime import execution_inventory
 
 
-def context(case, catalog, *, registry=None, amesp_enabled=False):
+def context(case, catalog, *, registry=None, amesp_enabled=False, index=None):
     check_owner(case)
     p = protocol(case)
     tools = [{k: row[k] for k in ("capability_id", "description", "status", "missing_inputs", "reason")
@@ -17,9 +18,9 @@ def context(case, catalog, *, registry=None, amesp_enabled=False):
     executions = [{"result_id": rid, "capability_id": r["capability_id"], "status": r["status"]}
                   for rid, r in p.get("results", {}).items()]
     questions = comparison_options(case, catalog, include_closed=True, registry=registry, amesp_enabled=amesp_enabled)
-    comparison = comparison_view(case)
+    comparison = comparison_view(case, index=index)
     question_evidence = question_evidence_view(case)
-    investigation_context = investigation.review_context(case) if investigation.enabled(case) else None
+    investigation_context = investigation.review_context(case, index=index) if investigation.enabled(case) else None
     basis = digest({"case_id": case.case_id, "catalog": tools, "results": p.get("results", {}),
                     "definitions": mechanism_definitions(), "candidate_comparison": comparison,
                     "questions": questions, "ranking": [{k: r.get(k) for k in ("label", "confidence", "priority")}
@@ -31,6 +32,7 @@ def context(case, catalog, *, registry=None, amesp_enabled=False):
         raise RuntimeError("Computational review belongs to another case")
     current = previous if previous and previous["basis"] == basis else None
     return {"basis": basis, "executions": executions, "comparisons": questions,
+            "untried_routes": execution_inventory.opportunities(case, catalog, index=index),
             **({"investigation": investigation_context} if investigation_context else {}),
             **({"question_evidence": question_evidence} if question_evidence["questions"] else {}),
             "candidate_comparison": comparison,

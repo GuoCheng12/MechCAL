@@ -21,8 +21,7 @@ def review_case(tmp_path, client, role):
     c = put(c, phase="review", review_role=role,
             review_changes=[change.model_dump(mode="json") for change in judgment().changes])
     o, s = orchestrator(tmp_path, reviews=True), store(tmp_path, c)
-    o.deps.mechanism_agenda.llm_client = client
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     return o, c, s
 
 
@@ -126,20 +125,19 @@ def test_final_review_transport_interruption_resumes_without_repeating_judgment(
     ])
     reviews = ScriptClient(["Initial coverage advice.", "Regular review.\n\nNo endorsement.",
                             TimeoutError("offline final review timeout")])
-    o.deps.mechanism_agenda.llm_client = reviews
-    o.deps.photophysics_arbiter.llm_client = reviews
+    o.deps.scientific_reviewer.llm_client = reviews
     with pytest.raises(TimeoutError):
         o.run(smiles="CCO", user_query="Offline review-resume fixture.", case_id="review-resume")
     checkpoint = tmp_path / "review-resume/command_checkpoint.json"
     saved = CaseRun.model_validate_json(checkpoint.read_text())
     assert saved.status == "paused" and protocol(saved)["phase"] == "review"
     assert protocol(saved)["review_role"] == "final_reviewer"
-    o.deps.mechanism_agenda.llm_client = ScriptClient([TEXT])
+    o.deps.scientific_reviewer.llm_client = ScriptClient([TEXT])
     o.deps.planner.llm_client = ScriptClient([final])
     resumed = o.run(smiles="CCO", user_query="Offline review-resume fixture.", case_id="review-resume", resume=True)
     assert resumed.status == "finalized"
     for key in ("results", "arguments", "ranking", "revision", "rounds"):
         assert protocol(resumed)[key] == protocol(saved)[key]
-    assert len(o.deps.mechanism_agenda.llm_client.calls) == 1
+    assert len(o.deps.scientific_reviewer.llm_client.calls) == 1
     assert len(o.deps.planner.llm_client.calls) == 1
     assert o.deps.planner.llm_client.calls[0]["payload"]["review_feedback"]["text"] == TEXT

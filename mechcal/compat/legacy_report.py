@@ -5,14 +5,13 @@ from pathlib import Path
 from typing import Any, Literal
 
 from mechcal.schemas import CaseRun, FinalAnswer
+from mechcal.runtime.snapshot_storage import read_case_run
 
 LegacyReportFormat = Literal["json", "markdown"]
 
 
 def load_case_run(run_dir: Path) -> CaseRun:
-    return CaseRun.model_validate(
-        json.loads((run_dir.expanduser().resolve() / "case_run.json").read_text(encoding="utf-8"))
-    )
+    return read_case_run(run_dir.expanduser().resolve() / "case_run.json")
 
 
 def legacy_payload_from_case_run(case_run: CaseRun) -> dict[str, Any]:

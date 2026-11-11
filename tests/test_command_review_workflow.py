@@ -288,7 +288,7 @@ def test_native_reviewer_records_issue_without_changing_science(tmp_path):
     c = put(c, phase="review", review_role="reviewer", review_changes=[a.model_dump(mode="json") for a in judgment().changes])
     cmd = report(c)
     client = NativeFake([reply("record_review", cmd.model_dump(mode="json", exclude={"kind"}))])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     after = _comment(o, c, s)
     assert w.issue_view(after)[0]["status"] == "open"
     assert protocol(after)["arguments"] == protocol(c)["arguments"]
@@ -345,7 +345,7 @@ def test_partial_bad_review_then_local_correction_and_resume(tmp_path):
     bad = report(c, target="foreign")
     client = NativeFake([reply("record_review", bad.model_dump(mode="json", exclude={"kind"})),
                         reply("repair_review_links", {"edits": [{"finding_index": 0, "field": "target", "value": "A1"}]})])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     c = _comment(o, c, s)
     assert protocol(c)["reviewer_session"]["queries"] == 0 and not w.state(c).issues
     assert protocol(c)["reviewer_session"]["review_link_repair"]
@@ -361,7 +361,7 @@ def test_truncated_review_does_not_close_existing_issues(tmp_path):
     c = put(c, phase="review", review_role="reviewer", review_changes=[])
     broken = reply("record_review", {})
     broken["complete"] = False
-    o.deps.photophysics_arbiter.llm_client = NativeFake([broken, broken, broken])
+    o.deps.scientific_reviewer.llm_client = NativeFake([broken, broken, broken])
     after = c
     for _ in range(2):
         after = _comment(o, after, s)

@@ -258,3 +258,28 @@ def test_empty_run_is_not_fabricated_evidence(tmp_path):
     packet = build_tool_source_packet(tmp_path, [])
     assert packet.tool_action_count == 0
     assert packet.tool_records == packet.artifacts == packet.experimental_observations == []
+
+
+def test_packed_manifest_preserves_judge_sources_and_detects_missing_array(tmp_path):
+    from mechcal.runtime.snapshot_storage import SnapshotStorage
+    record = execution(status="partial")
+    record["evidence_units"][0]["artifact_refs"] = ["bundle"]
+    save_execution(tmp_path, record)
+    path = tmp_path / "artifacts/manifest.json"
+    manifest = {"case_id": "CASE", "artifacts": [{
+        "artifact_id": "bundle", "kind": "scan", "created_by_round": "R001",
+        "created_by_agent": "microscopic", "status": "partial",
+        "metadata": {"values": [{"state_index": i, "energy": i / 1000, "status": "partial"}
+                                for i in range(2000)]}}]}
+    write_json(path, manifest)
+    before = build_tool_source_packet(tmp_path, ["R001:scan:e"]).model_dump()
+    SnapshotStorage(tmp_path, "CASE").write(path, manifest)
+    after = build_tool_source_packet(tmp_path, ["R001:scan:e"]).model_dump()
+    # Storage bytes (and their provenance hash) change; all scientific fields do not.
+    for packet in (before, after):
+        for artifact in packet["artifacts"]:
+            artifact.pop("source_sha256", None)
+    assert after == before
+    next((tmp_path / "_payloads").glob("*.json")).unlink()
+    with pytest.raises(FileNotFoundError):
+        build_tool_source_packet(tmp_path, ["R001:scan:e"])

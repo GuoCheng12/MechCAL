@@ -43,7 +43,9 @@ def test_scientific_interface_can_be_restored_without_changing_science(tmp_path)
     c = _apply(o, c, ReadContext(kind="read_context", fields=["tool_catalog"]), s)
     c, view = prepare_planner(c, initial)
     assert view["planner_interface"] == "full"
-    assert expand_text(view)["tool_catalog"] == initial["tool_catalog"]
+    assert "tool_catalog" not in expand_text(view)
+    assert protocol(c)["planner_context"]["fields"]["tool_catalog"] == initial["tool_catalog"]
+    assert any(row["field"] == "tool_catalog" for row in view["deferred_context"])
     assert all(protocol(c).get(key) == data for key, data in saved.items())
     assert protocol(c)["context_reads"]["count"] == 1
     # A new source/catalog snapshot requires a new explicit expansion request.
@@ -186,7 +188,7 @@ def test_registered_review_background_survives_query_then_completion(tmp_path, m
             assert calls[-1]["query_result"]["status"] == "read"
             return reply("record_review", {"text": "Source and current limitations checked.", "findings": []})
 
-    o.deps.photophysics_arbiter.llm_client = Reviewer()
+    o.deps.scientific_reviewer.llm_client = Reviewer()
     c = _comment(o, c, s)
     assert protocol(c)["reviewer_session"]["queries"] == 1
     assert protocol(c)["reviewer_session"]["outcome"]["status"] == "read"

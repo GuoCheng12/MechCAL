@@ -43,7 +43,7 @@ def test_reviewer_gets_exact_omitted_row_not_another_coefficient(tmp_path):
     s = store(tmp_path, c)
     c = _apply(o, c, cited_judgment(), s)
     client = ScriptClient(["The exact cited row is present; evidence still needs scientific interpretation."])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     reviewed = _comment(o, c, s)
     payload = client.calls[0]["payload"]
     assert payload["citations"][0]["data"]["/components/0"]["coefficient"] == -.0023579
@@ -56,7 +56,7 @@ def test_wording_changes_defer_to_explicit_or_final_review_without_semantic_gues
     s = store(tmp_path, c)
     c = _apply(o, c, judgment(), s)
     assert protocol(c)["phase"] == "review"
-    o.deps.photophysics_arbiter.llm_client = ScriptClient(["Keep the claim bounded."])
+    o.deps.scientific_reviewer.llm_client = ScriptClient(["Keep the claim bounded."])
     c = _comment(o, c, s)
     updated = judgment().model_copy(deep=True)
     updated.changes[0].text = "A clearer description of the same structural hypothesis."

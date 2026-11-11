@@ -142,7 +142,8 @@ def test_schema_error_has_original_call_and_exact_argument_path(tmp_path):
     incoming = reply(arguments={"records": []})
     with pytest.raises(OperationRejected) as error:
         ask_tools(NativeFake([incoming]), REGISTRY, [], {}, store(tmp_path, c))
-    assert error.value.exchange == incoming
+    assert {k: v for k, v in error.value.exchange.items() if k != "current_payload_delivered"} == incoming
+    assert error.value.exchange["current_payload_delivered"] is True
     assert error.value.issues[0]["path"] == ["arguments", "records"]
     assert protocol(c)["revision"] == 0
 

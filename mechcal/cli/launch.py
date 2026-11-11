@@ -50,6 +50,8 @@ def create_orchestrator(runtime, settings):
     for agent in (deps.planner, deps.mechanism_agenda, deps.photophysics_arbiter,
                   deps.mechanism_critic, deps.conclusion_ledger):
         agent.llm_client = client
+    deps.scientific_reviewer.llm_client = NativeCommandClient(settings)
+    deps.exploration_agent.llm_client = NativeCommandClient(settings)
     for worker in deps.workers.values():
         worker.report_writer.llm_client = client
         worker.execution_planner.llm_client = client

@@ -140,7 +140,7 @@ def test_new_option_invalidates_choice_but_does_not_prevent_declining_it(tmp_pat
 def test_native_review_exposes_catalog_and_saves_options_in_same_call(tmp_path):
     c, o = prepared(tmp_path)
     client = NativeFake([reply("report_evidence_impacts", proposal().model_dump(mode="json", exclude={"kind"}))])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     c = run_turn(o, put(c, phase="impact_review"), store(tmp_path, c), catalog=catalog(c))
     assert len(client.requests) == 1 and len(f.state(c).questions) == 1
     material = client.requests[0]["payload"]
@@ -157,7 +157,7 @@ def test_bad_id_gets_one_local_correction_with_no_lost_results(tmp_path):
     c, o = prepared(tmp_path)
     client = NativeFake([reply("report_evidence_impacts", proposal(source_refs=["bad"]).model_dump(exclude={"kind"})),
                         reply("report_evidence_impacts", proposal().model_dump(exclude={"kind"}))])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     c = save(run_turn(o, c, s, catalog=catalog(c)), s)
     assert protocol(c)["impact_session"]["corrections"] == 1

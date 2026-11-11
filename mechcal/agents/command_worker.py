@@ -1,6 +1,7 @@
 """One durable Worker turn: scoped read-only retrieval or final prose."""
 
 from mechcal.agents.command_tools import NativeCommandClient, parse_tool_turn, tool_contracts, strict_tool_schema
+from mechcal.agents.commentary_delivery import delivery_issue
 from mechcal.runtime.command_context import scope_card, scoped_directory, share_text, record_table
 from mechcal.runtime.command_memory import working_reads, json_bytes
 from mechcal.runtime.command_operations import OperationRejected, protocol, record_identity, record_index, records
@@ -14,13 +15,18 @@ from mechcal.runtime import command_read_handoff as handoff
 from mechcal.runtime import command_query_state as query_state
 from mechcal.runtime import command_numeric as numeric
 from mechcal.runtime.command_review_wire import review_wire, task_binding
+from mechcal.runtime.command_context_memory import bind_scoped_context
+from mechcal.runtime.command_action_policy import turn_contract
 from mechcal.schemas.commands import ReadBatch, RepairReviewLinks
 
 
 def rejected_commentary(state, reply, outcome, store, role):
     """Keep a local failed call in its review job; never turn it into approval."""
     corrections = state.get("corrections", 0)
-    session = {**state, "exchange": reply, "outcome": outcome, "corrections": corrections + 1}
+    # The latest exchange now carries an error, not the previous query data.
+    # Keep all read handles, but stop suppressing their values as already sent.
+    session = {**state, "exchange": reply, "outcome": outcome, "corrections": corrections + 1,
+               "latest_handles": [], "latest_source_reads": []}
     store.append_jsonl("history/commentary_recovery.jsonl", {
         "role": role, "request_id": reply["request_id"], "correction": corrections + 1,
         "status": "retry" if corrections < 2 else "exhausted", "issues": outcome.get("issues", [])})
@@ -104,9 +110,11 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
         directory_table = None
     inherited, handoff_issues = handoff.retained(case, allowed_refs=scope, index=index) if compact_context else ([], [])
     reports = [payload["result"]] if "result" in payload else payload.get("results", [])
-    focus = {r["source_result_id"] for r in reports if r.get("source_result_id")} or set(scope)
+    display_focus = {r["source_result_id"] for r in reports if r.get("source_result_id")}
+    focus = display_focus or set(scope)
     if compact_context and "review_focus_refs" in payload:
         focus = set(payload["review_focus_refs"])
+        display_focus = focus
         from mechcal.runtime.command_review_delta import retained_reads
         inherited = merge_handles(inherited, retained_reads(case, role, index, scope))
     if proofreading:
@@ -154,9 +162,31 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
         prompt = load_prompt("review_link_repair.md")
     elif compact_context:
         material = commentary_view(material)
+    material["response_contract"] = {
+        "delivery": tools[0]["name"] if repair is not None else name if completion is not None else "natural_language",
+        "query_tools": [t["name"] for t in tools if t["name"] in READ_KINDS | {"describe_tools"}],
+        "call_groups": turn_contract(models),
+        "policy": "Queries use native tool calls only. Text describing a call does not execute it. "
+                  "When no query tools remain, deliver from retained facts and state unresolved limits."}
+    if (state.get("outcome") or {}).get("status") == "rejected" and not (state.get("exchange") or {}).get("calls"):
+        # There is no native call ID to attach a tool-result message to. The
+        # correction must still reach text-only and noncompact continuations.
+        material["delivery_error"] = state["outcome"]
+    if compact_context and review_task_context and repair is None:
+        material, index, scope, state = bind_scoped_context(
+            index, scope, state, material, role=role,
+            focus_refs=display_focus | {h["ref"] for h in state.get("read_handles", [])[-6:]}, store=store)
+        # A prior metadata read can outlive the latest exchange, just like a
+        # source read. Retain it only while its exact task-local record exists.
+        if state.get("task_context_record"):
+            material["working_memory"] = working_reads(
+                merge_handles(inherited, state.get("read_handles", [])), scope,
+                latest_rows=merge_handles(state.get("latest_handles", []), state.get("latest_source_reads", [])),
+                focus_refs=focus, explicit_handles=state.get("read_handles", []))
     wire_outcome = state.get("outcome")
     if compact_context and review_task_context and repair is None and role in {"reviewer", "final_reviewer"}:
-        binding = task_binding(case.case_id, payload, state, role, sources=scope)
+        binding = task_binding(case.case_id, payload, state, role,
+                               sources={ref: row for ref, row in scope.items() if ref not in index.contexts})
         state = {**state, "review_task": binding}
         original_bytes = json_bytes(material)
         material, wire_outcome = review_wire(material, binding=binding, state=state, scope=scope)
@@ -171,6 +201,10 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
               store=store, role=role, allow_text=True)
     reply = method(**kw) if method else NativeCommandClient.complete_tool_turn(client, **kw)
     if reply["complete"] and not reply["calls"] and reply.get("text", "").strip() and completion is None:
+        issue = delivery_issue(reply["text"], can_read=bool(remaining))
+        if issue is not None:
+            return rejected_commentary(state, reply, {"status": "rejected", "executed": False,
+                "committed": False, "issues": [issue]}, store, role)
         return {"status": "available", "text": reply["text"],
                 "read_record_ids": sorted(set(state.get("read_record_ids", [])))}, None
     if completion is None and (not reply["complete"] or (not remaining and not reply["calls"])):
@@ -182,6 +216,9 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
         if repair is not None:
             command = review_link_repair.apply_links(model, repair["proposal"], command)
         if completion is not None and command.kind == name:
+            issue = delivery_issue(getattr(command, "text", ""), can_read=bool(remaining))
+            if issue is not None:
+                raise OperationRejected([{**issue, "path": ["arguments", "text"]}])
             feedback = accept(command)
             feedback["read_record_ids"] = sorted(set(state.get("read_record_ids", [])))
             log = "review_issue_completions" if name == "record_review" else "impact_review_completions"
@@ -223,8 +260,8 @@ def scoped_commentary_turn(client, case, payload, store, *, scope, state, role, 
                 "reason": "No valid advisory associations within the bounded allowance."}, None
     session = {**state, "queries": state["queries"] + 1, "exchange": reply, "outcome": outcome,
                "read_handles": merge_handles(state.get("read_handles", []), handles), "latest_handles": handles,
-               "read_record_ids": sorted(set(state.get("read_record_ids", [])) | {h["ref"] for h in handles}
-                                         | numeric.outcome_refs(outcome))}
+               "read_record_ids": sorted((set(state.get("read_record_ids", [])) | {h["ref"] for h in handles}
+                                          | numeric.outcome_refs(outcome)) - set(index.contexts))}
     if compact_context:
         session["latest_source_reads"] = handoff.selection_handles(outcome)
         session["source_reads"] = merge_handles(state.get("source_reads", []), session["latest_source_reads"])

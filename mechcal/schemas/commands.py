@@ -85,9 +85,9 @@ class ReadContext(CommandModel):
     """Read already materialized task context, never raw scientific observations."""
 
     kind: Literal["read_context"]
-    fields: list[Literal["tool_catalog", "comparison_options", "shared_tool_guidance", "action_index",
-                         "artifact_index", "explanation_index", "result_index", "evidence_index",
-                         "exploration_state", "ranking"]] = Field(min_length=1, max_length=3)
+    fields: list[str] = Field(min_length=1, max_length=3,
+        description="Exact field names from the current deferred_context directory. "
+                    "The runtime checks these against this case's saved context.")
 
 
 class ReadCall(CommandModel):
@@ -276,7 +276,10 @@ class ReportExploration(CommandModel):
 
 class UpdateHypotheses(CommandModel):
     kind: Literal["update_hypotheses"]
-    changes: list[ExplorationChange] = unchanged(default_factory=list, max_length=12)
+    changes: list[ExplorationChange] = unchanged(default_factory=list, max_length=12,
+        description="Provisional confidence updates only, each with label, confidence and note. "
+                    "Not formal candidate edits: no kind or status fields. Use confidence=null for unassessed "
+                    "candidates, not a status entry. Comparison questions belong in questions, not changes.")
     note: str = Field(min_length=1, pattern=r"\S",
         description="Brief assessment of the available new results, or why confidence remains unchanged or unresolved.")
 

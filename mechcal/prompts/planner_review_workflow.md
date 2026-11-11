@@ -8,8 +8,9 @@ rationale field: link argument_ids. Put scientific explanations and comparisons
 in those arguments. Correct an argument once, not a second copy in a ranking.
 Ranks and remaining scientific computations are computed by runtime.
 
-During exploration, choose a useful comparison from comparison_options or add a
-new question. A question may name an exact route.capability_id and existing
+During exploration, choose a useful comparison from investigation_frontier
+(or comparison_options when supplied), read deferred comparisons if needed, or
+add a new question. A question may name an exact route.capability_id and existing
 route.input_refs. This is a plan, not execution. Load its parameter definition
 and use its normal compute tool with question_id when you decide to execute.
 The live route status describes basic prerequisites, not guaranteed success.
@@ -17,7 +18,7 @@ Different outcomes may support either candidate, both, or neither. Failed or
 unavailable tests do not refute a mechanism. Record why a comparison is deferred
 or resolved when useful; no required scientific checklist controls delivery.
 Confidence describes what you currently believe, not which test is most useful.
-The delivery view keeps an investigation_frontier of unresolved comparisons,
+The task view keeps an investigation_frontier of unresolved comparisons,
 including linked execution outcomes and current route readiness. Use the planned
 contrasting outcomes to decide whether another test could change the conclusion.
 Keep a new-result question linked to its broader mechanism question when relevant;

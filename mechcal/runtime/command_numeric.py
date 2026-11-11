@@ -158,7 +158,7 @@ def view(case, *, scope=None, index=None, exclude_ids=()):
             continue
         for op in row["operands"]:
             if op["ref"] not in versions:
-                versions[op["ref"]] = digest(index.available[op["ref"]]) if op["ref"] in index.available else None
+                versions[op["ref"]] = index.version(op["ref"]) if op["ref"] in index.available else None
         if any(versions[op["ref"]] != op["source_version"] for op in row["operands"]):
             continue
         if len(entries) < 4 and json_bytes(entries + [row]) <= 8000:

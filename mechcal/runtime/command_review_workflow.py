@@ -45,8 +45,14 @@ def focused_value(value, focus):
     return {"focus": focus.model_dump(mode="json"), "value": value}
 
 
-def binding(target, sources, available, focus=None):
-    bound = {ref: digest(available[ref]) for ref in dict.fromkeys([target, *sources]) if ref in available}
+def binding(target, sources, available, focus=None, *, index=None):
+    if index is not None and index.available is not available:
+        raise RuntimeError("Review binding index does not own these records")
+    version = index.version if index is not None else lambda ref: digest(available[ref])
+    bound = {ref: version(ref) for ref in dict.fromkeys([target, *sources]) if ref in available}
+    if index is not None:
+        from mechcal.runtime.execution_inventory import versions_for_refs
+        bound.update(versions_for_refs(index.case, sources, index=index))
     if target in available and focus is not None:
         try:
             bound[target] = digest(focused_value(available[target], focus))
@@ -62,9 +68,11 @@ def issue_view(case, *, index=None):
     index = record_index(case, index)
     rows = []
     for item in current.issues.values():
-        current_binding = binding(item.target, item.source_refs, index.available, item.focus)
+        current_binding = binding(item.target, item.source_refs, index.available, item.focus, index=index)
         changed = item.binding != current_binding
-        source_changed = any(item.binding.get(ref) != current_binding.get(ref) for ref in item.source_refs)
+        source_keys = set(item.source_refs) | {key for key in item.binding.keys() | current_binding.keys()
+                                               if key.startswith("execution_scope:")}
+        source_changed = any(item.binding.get(ref) != current_binding.get(ref) for ref in source_keys)
         # A broad legacy target changing is a new text-review task, not evidence
         # that every closed issue in that text has recurred. The exact final gate
         # still requires review of the changed content. Precise scopes and source
@@ -91,13 +99,13 @@ def prior_resolutions(case, *, index=None):
              "read_ref": "review:issues", "path": "/issues/" + item.id.replace("~", "~0").replace("/", "~1")}
             for item in current.issues.values()
             if item.status == "resolved" and item.id not in active
-            and item.binding != binding(item.target, item.source_refs, index.available, item.focus)]
+            and item.binding != binding(item.target, item.source_refs, index.available, item.focus, index=index)]
 
 
 def review_targets(case, *, index=None):
     index = record_index(case, index)
     refs = [*protocol(case).get("arguments", {}), "judgment:ranking", "followup:state", "delivery:answer"]
-    return {ref: digest(index.available[ref]) for ref in refs if ref in index.available}
+    return {ref: index.version(ref) for ref in refs if ref in index.available}
 
 
 def validate_report(case, command, *, targets, source_refs, index=None):
@@ -116,7 +124,7 @@ def validate_report(case, command, *, targets, source_refs, index=None):
         if row.target not in targets or row.target not in index.available:
             note(["findings", i, "target"], "review_target", "Target was not offered for this review.",
                  "Use an ID from review_targets; advice may also remain in the prose feedback.", record_id=row.target)
-        elif digest(index.available[row.target]) != targets[row.target]:
+        elif index.version(row.target) != targets[row.target]:
             raise RuntimeError("Review target changed during the read session")
         unknown = set(row.source_refs) - set(source_refs)
         for ref in sorted(unknown):
@@ -148,7 +156,7 @@ def validate_report(case, command, *, targets, source_refs, index=None):
         if identity in seen:
             note(["findings", i, "id"], "duplicate_review_issue", "An issue is edited twice.", "Combine the updates.")
         seen.add(identity)
-        bound = binding(row.target, row.source_refs, index.available, row.focus)
+        bound = binding(row.target, row.source_refs, index.available, row.focus, index=index)
         if previous and previous.status == row.status == "resolved" and previous.binding == bound:
             retained_resolutions += 1
         else:
@@ -166,7 +174,7 @@ def accept_report(case, feedback):
     index = record_index(case)
     for row in feedback["findings"]:
         finding = ReviewFinding.model_validate({k: v for k, v in row.items() if k in ReviewFinding.model_fields})
-        if row["binding"] != binding(row["target"], row["source_refs"], index.available, finding.focus):
+        if row["binding"] != binding(row["target"], row["source_refs"], index.available, finding.focus, index=index):
             raise RuntimeError("Review finding belongs to a stale target/source version")
         previous = current.issues.get(row["id"])
         history = list(previous.history) if previous else []
@@ -238,6 +246,7 @@ def validate_routes(case, update, catalog):
 def comparison_options(case, catalog, *, include_closed=False, registry=None, amesp_enabled=False):
     from mechcal.runtime.command_followup import state as followup_state, question_rows
     from mechcal.runtime.command_route_status import route_status
+    from mechcal.runtime.execution_inventory import route_history
     current = followup_state(case)
     if current is None:
         return []
@@ -259,6 +268,7 @@ def comparison_options(case, catalog, *, include_closed=False, registry=None, am
                         "route_status": route_status(case, route, tool, registry=registry,
                             amesp_enabled=amesp_enabled, index=index),
                         "trial_summary": trial_summary(record.trials, results),
+                        "capability_history": route_history(case, route.capability_id, index=index) if route else None,
                         "route_attempts_for_question": sum(t.get("capability_id") == route.capability_id
                                                            for t in record.trials) if route else 0,
                         "trials": [{"result_id": t.get("result_id"), "question_revision": t["revision"],
@@ -280,13 +290,16 @@ def trial_summary(trials, results):
     return {"linked_results": len(ids), "result_statuses": statuses, "pending_dispatches": len(pending)}
 
 
-def investigation_frontier(options, *, allowance=5000, limit=8):
+def investigation_frontier(options, *, allowance=5000, limit=8, focus_ids=()):
     """Keep a diverse navigation view at delivery; never score or schedule tests."""
-    remaining, rows, seen = list(options), [], set()
+    focused = set(focus_ids)
+    remaining = [q for q in options if q["id"] in focused] + [q for q in options if q["id"] not in focused]
+    rows, seen = [], set()
     while remaining and len(rows) < limit:
         # Display one question per previously unseen label before more questions
         # for the same labels. This is display coverage, not scientific priority.
-        position = next((i for i, q in enumerate(remaining) if set(q["labels"]) - seen), 0)
+        position = (0 if remaining[0]["id"] in focused else
+                    next((i for i, q in enumerate(remaining) if set(q["labels"]) - seen), 0))
         q = remaining.pop(position)
         seen.update(q["labels"])
         row = {k: q[k] for k in ("id", "labels", "status", "assessment", "scope", "parent_id",
@@ -301,6 +314,9 @@ def investigation_frontier(options, *, allowance=5000, limit=8):
         if route.get("preparation_options"):
             row["preparation_options"] = route["preparation_options"][:2]
         row["capability_id"] = (q.get("route") or {}).get("capability_id")
+        history = q.get("capability_history")
+        if history:
+            row["capability_history"] = {k: history[k] for k in ("scope", "attempts", "statuses")}
         row["read"] = {"ref": "followup:state", "paths": [pointer_child("/questions", q["id"])]}
         details, deferred = {}, []
         for key in ("question", "next_test", "outcomes", "disposition_reason"):

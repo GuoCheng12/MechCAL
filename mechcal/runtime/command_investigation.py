@@ -3,7 +3,7 @@
 from copy import deepcopy
 
 from mechcal.runtime.command_memory import digest
-from mechcal.runtime.command_operations import check_owner, protocol, put, reject
+from mechcal.runtime.command_operations import check_owner, protocol, put, reject, record_index
 
 STATE_REF = "investigation:state"
 
@@ -22,16 +22,17 @@ def enable(case, *, offer_experiments=False):
                                           **({"offer_experiments": True} if offer_experiments else {})})
 
 
-def basis(case):
+def basis(case, *, index=None):
     p = protocol(case)
     followup = p.get("evidence_followup") or {}
     # Reads, wording edits and review prose do not invalidate an experiment choice.
     # New observations, changed beliefs/questions or impact responses do.
-    return digest({"case_id": case.case_id, "results": p.get("results", {}),
+    build = lambda: digest({"case_id": case.case_id, "results": p.get("results", {}),
         "artifacts": case.artifact_manifest.model_dump(mode="json"),
         "assessments": (p.get("exploration") or {}).get("entries", {}),
         "questions": {qid: row["value"] for qid, row in followup.get("questions", {}).items()},
         "impacts": followup.get("impacts", {})})
+    return record_index(case, index).memo("investigation_basis", build) if index is not None else build()
 
 
 def current(case):
@@ -109,7 +110,7 @@ def guard(case, command):
                "No particular experiment, score change or conclusion is required.")
 
 
-def view(case, options):
+def view(case, options, *, index=None):
     """Bounded navigation; existing question storage is the only experiment table."""
     row = current(case)
     followup = protocol(case).get("evidence_followup") or {}
@@ -117,7 +118,7 @@ def view(case, options):
                for iid, item in followup.get("impacts", {}).items()
                if item["disposition"] in {"pending", "deferred"}]
     return {"state_ref": STATE_REF, "current_choice": row["choice"] if row else None,
-        "choice_id": row["id"] if row else None, "choice_current": bool(row and row["basis"] == basis(case)),
+        "choice_id": row["id"] if row else None, "choice_current": bool(row and row["basis"] == basis(case, index=index)),
         "experiment_options_field": "comparison_options", "experiment_option_count": len(options),
         "pending_impacts": pending[:12], "pending_impact_count": len(pending),
         "policy": "Beliefs are in exploration_state; experiment options are saved questions, not confidence ranks. "
@@ -127,12 +128,12 @@ def view(case, options):
                   "The code checks identity/freshness, not which experiment is scientifically best."}
 
 
-def review_context(case):
+def review_context(case, *, index=None):
     """Reused by the existing Reviewer, not another review round or endorsement."""
     row = current(case)
     choices = protocol(case)["investigation_policy"]["choices"]
     return {"current_choice": {k: row[k] for k in ("id", "round", "choice")} if row else None,
-        "choice_current": bool(row and row["basis"] == basis(case)), "recent_choices": [
+        "choice_current": bool(row and row["basis"] == basis(case, index=index)), "recent_choices": [
         {k: item[k] for k in ("id", "round", "choice")} for item in choices[-3:]],
         "read_ref": STATE_REF,
         "policy": "Check the decision to stop against remaining feasible comparisons, including candidates outside Top-3. "

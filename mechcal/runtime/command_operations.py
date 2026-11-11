@@ -2,12 +2,12 @@
 
 import hashlib
 import json
-from copy import deepcopy
+from copy import copy, deepcopy
 
 from pydantic import ValidationError
 
 from mechcal.mechanism_pool import MECHANISM_POOL
-from mechcal.runtime.command_memory import READ_BYTES, json_bytes, pointer_child, record_layout, result_report, selection_coverage
+from mechcal.runtime.command_memory import READ_BYTES, digest, json_bytes, pointer_child, record_layout, result_report, selection_coverage
 from mechcal.runtime.command_views import workflow_records
 from mechcal.schemas import DispatchRequest, FinalAnswer, MechanismPrediction
 from mechcal.schemas.commands import ReadEvidence, internal_arguments
@@ -150,6 +150,9 @@ class RecordIndex:
         self.case = case
         self.observations = observation_records(case)
         self.available = _all_records(case, self.observations)
+        self._versions = {}
+        self._memo = {}
+        self.contexts = {}
         self.artifact_producers = {}
         for rid, result in protocol(case).get("results", {}).items():
             if not isinstance(result, dict):
@@ -163,6 +166,35 @@ class RecordIndex:
         if self.case is not case:
             raise RuntimeError("Record index belongs to a different case snapshot")
         return self
+
+    def with_contexts(self, contexts):
+        """Extend only this task's read index, never its scientific sources."""
+        from mechcal.runtime.command_context_memory import context_identity
+        view = copy(self)
+        view.available = dict(self.available)
+        view.contexts = dict(self.contexts)
+        view._versions = dict(self._versions)
+        view._memo = {}
+        for record in contexts:
+            if record.get("case_id") != self.case.case_id or record.get("ref") != context_identity(record):
+                raise RuntimeError("Task context identity or case ownership mismatch")
+            ref = record["ref"]
+            if ref in view.available and view.available[ref] != record:
+                raise RuntimeError("Task context shadows another record")
+            view.contexts[ref] = record
+            view.available[ref] = record
+        return view
+
+    def version(self, ref):
+        """Hash each source once within this immutable snapshot, never across updates."""
+        if ref not in self._versions:
+            self._versions[ref] = digest(self.available[ref])
+        return self._versions[ref]
+
+    def memo(self, key, build):
+        if key not in self._memo:
+            self._memo[key] = build()
+        return self._memo[key]
 
 
 def record_index(case, index=None):
@@ -203,6 +235,7 @@ def record_identity(case, ref, *, index=None):
                  for r in (row, parent))
     return {"ref": ref, "record_kind": "operation" if operation else "observation" if observation else "interpretation",
             "workspace_read": (ref in workflow_records(case) or ref in p.get("arguments", {})
+                               or ref in index.contexts
                                or ref == "context:planner"
                                or ref == (p.get("review_context") or {}).get("ref")
                                or ref == "draft:" + (p.get("judgment_draft") or {}).get("draft_id", "")

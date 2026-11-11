@@ -8,6 +8,7 @@ from collections import Counter
 from copy import deepcopy
 
 from mechcal.runtime.command_compact import expand_text
+from mechcal.runtime.command_context import share_text
 from mechcal.runtime.command_memory import digest, json_bytes, pointer_child
 
 
@@ -64,6 +65,52 @@ def share_values(material, *, minimum_bytes=512):
     result = {"shared_value_policy": POLICY, "review_values": shared, **packed}
     # Small packets must not pay more for indirection than their original data.
     return result if json_bytes(result) < json_bytes(material) else deepcopy(material)
+
+
+def operation_wire(material, exchange, outcome):
+    """Deduplicate the current request, never edit persisted provider history.
+
+    Facts shared by a tool receipt and the current working view live once in
+    the user message. Every original tool call still receives its own receipt.
+    """
+    value = expand_text(material)
+    if value.get("shared_value_policy") == POLICY and isinstance(value.get("review_values"), dict):
+        # Expanded occurrences now contain the values. The old wire dictionary
+        # is transport metadata, not a second scientific copy to keep sending.
+        value.pop("shared_value_policy")
+        value.pop("review_values")
+
+    def pack(data):
+        return share_text(share_values(data))
+
+    if not exchange or outcome is None or "operation_result" in value:
+        return pack(value), outcome
+    if json_bytes(value) + json_bytes(outcome) < 4096:
+        return pack(value), outcome
+    original = deepcopy(outcome)
+    if original.get("status") == "committed" and "changed" in original:
+        original["changed"] = [{k: row[k] for k in ("kind", "id", "label") if k in row}
+                               for row in original["changed"]]
+    value["operation_result"] = original
+    calls = exchange.get("calls", [])
+    per_call = original.get("call_results")
+    if per_call is not None and set(per_call) != {c["id"] for c in calls}:
+        raise RuntimeError("Operation receipts do not match the original tool calls")
+
+    def receipt(row, path):
+        return {"status": row.get("status", "returned"), "result_in_current_user_at": path}
+
+    wire = ({"call_results": {cid: receipt(row, pointer_child("/operation_result/call_results", cid))
+                              for cid, row in per_call.items()}}
+            if per_call is not None else receipt(original, "/operation_result"))
+    value["operation_result_policy"] = (
+        "Tool receipts point to their complete operation_result in this same message. "
+        "It is delivered once, not omitted or approved. Shared values preserve every source ID and condition.")
+    packed = pack(value)
+    # Do not introduce a wrapper when it saves no transmission.
+    if json_bytes(packed) + json_bytes(wire) >= json_bytes(material) + json_bytes(outcome):
+        return pack(expand_text(material)), outcome
+    return packed, wire
 
 
 def task_binding(case_id, payload, state, role, *, sources=None):

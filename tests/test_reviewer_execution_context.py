@@ -46,8 +46,7 @@ def capture_review(tmp_path, c, *, role="reviewer", refs=None, limitations=None)
     before = c.model_dump(mode="json")
     o, s = orchestrator(tmp_path, reviews=True), store(tmp_path, c)
     client = ScriptClient(["The requested S1 calculation failed; this is not positive evidence."])
-    o.deps.photophysics_arbiter.llm_client = client
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     reviewed = _comment(o, c, s)
     for key in ("results", "actions", "arguments", "ranking", "revision", "rounds"):
         assert protocol(reviewed).get(key) == before["runtime"]["command_protocol"].get(key)

@@ -22,7 +22,9 @@ class DelegateComputation(TaskModel):
     kind: Literal["delegate_computation"] = "delegate_computation"
     owner: Literal["macro", "microscopic"]
     objective: str = Field(min_length=1)
-    input_refs: list[str] = Field(min_length=1, max_length=16)
+    input_refs: list[str] = Field(min_length=1, max_length=16,
+        description="Exact records the Worker may read. Include existing starting artifacts from artifact_index; "
+                    "SMILES alone does not grant access to a saved structure. Task-produced artifacts are added automatically.")
     allowed_capability_ids: list[str] = Field(min_length=1, max_length=12)
     fixed_parameters: list[FixedParameter] = Field(default_factory=list)
     question_id: str | None = None
@@ -61,4 +63,5 @@ class WorkerTaskState(TaskModel):
     progress_note: dict | None = None
     exchange: dict | None = None
     outcome: dict | None = None
+    input_error: dict | None = None
     pending_command: dict | None = None

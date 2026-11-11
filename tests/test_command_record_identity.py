@@ -144,8 +144,7 @@ def test_reviewer_can_cite_nested_status_and_planner_receives_feedback(tmp_path,
     o, s = orchestrator(tmp_path, reviews=True), store(tmp_path, c)
     text = f"{UNIT} is missing evidence, not negative evidence."
     client = ScriptClient([text])
-    o.deps.photophysics_arbiter.llm_client = client
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     reviewed = _comment(o, c, s)
     shown = client.calls[0]["payload"]["observations"][RESULT]["evidence_units"][0]
     assert shown["evidence_id"] == UNIT

@@ -1,6 +1,5 @@
 """One bounded association review per completed computation group."""
 
-from mechcal.agents.command_worker import scoped_commentary_turn
 from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime import command_followup as followup
 from mechcal.runtime import command_query_state as query_state
@@ -95,7 +94,7 @@ def run_turn(o, case, store, *, catalog=None):
         raise RuntimeError("Impact review sources changed within a read session")
     session["context_key"] = context_key
     store.activity("Evidence impact review", case.current_round_id)
-    feedback, pending = scoped_commentary_turn(o.deps.photophysics_arbiter.llm_client, case, payload, store,
+    feedback, pending = o.deps.scientific_reviewer.review(case, payload, store,
         scope=scope, state=session, role="impact_reviewer", prompt_name="command_impact_reviewer.md", index=index,
         completion=("report_evidence_impacts", ReportEvidenceImpactsWithExperiments if options.enabled(case) else ReportEvidenceImpacts,
                     lambda command: validate_suggestions(case, ids, command, catalog=catalog, source_ids=set(scope))),

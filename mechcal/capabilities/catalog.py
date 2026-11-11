@@ -617,5 +617,5 @@ def _microscopic_tool_arg_hints(name: str) -> dict[str, str]:
     if name == "analyze_hole_electron_from_bundle":
         hints.update(state_root="1-based singlet state present in the selected calculation, default 1",
                      spatial_grid="medium or high, default high; fixed cross-term threshold 0.001",
-                     max_wall_seconds="10-300 seconds for all conversion and analysis steps; default 300")
+                     max_wall_seconds="10-1800 seconds for all conversion and analysis steps; default 300. MECHCAL_SPATIAL_MAX_WALL_SECONDS and remaining Worker time may impose a lower limit; failures report the effective bound.")
     return hints

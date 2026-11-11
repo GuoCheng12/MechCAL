@@ -6,6 +6,7 @@ import numpy as np
 
 from mechcal.tools import pyscf_states_worker
 from mechcal.tools.qc_process import QCError
+from mechcal.tools.qc_logs import log_excerpt
 
 
 def evaluate(job, atoms, args, charge):
@@ -31,7 +32,17 @@ def evaluate(job, atoms, args, charge):
         raise QCError("parse_failed", "State result does not match the request/converged reference.")
     rows = raw.get("states", [])
     if not rows:
-        raise error or QCError("not_converged", str(raw.get("spin_manifold_failures")))
+        completed = ["ground_state_scf"] if raw.get("scf_converged") else []
+        raise QCError(error.code if error else "not_converged",
+            "No spin-state result completed after the ground-state calculation.", details={
+                "stage": "excited_states", "completed_stages": completed,
+                "scf_converged": raw.get("scf_converged"), "scf_seconds": raw.get("scf_seconds"),
+                "completed_state_count": 0, "stability_check_status": raw.get("stability_check_status"),
+                "max_wall_seconds": job.max_wall_seconds,
+                "elapsed_seconds": job.timing()["total_wall_seconds"],
+                "raw_result": str(output), "calculation_log": str(output.with_suffix('.log')),
+                "calculation_diagnostic": log_excerpt(output.with_suffix('.log'), job.workdir),
+                "scientific_evidence": False}) from error
     for row in rows:
         if not np.isfinite(row["excitation_ev"]) or row["excitation_ev"] <= 0 or not 0 <= row["td_residual_norm"] <= 2e-5:
             raise QCError("parse_failed", "Nonfinite energy or invalid response residual.")

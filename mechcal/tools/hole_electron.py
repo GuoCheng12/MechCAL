@@ -206,11 +206,22 @@ def fragment_contributions(atoms, symbols, fragments):
 
 
 def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds=300, fragments=None):
+    try:
+        configured_limit = int(os.environ.get("MECHCAL_SPATIAL_MAX_WALL_SECONDS", "1800"))
+        if not 10 <= configured_limit <= 1800:
+            raise ValueError("outside 10-1800")
+    except ValueError as exc:
+        raise SpatialAnalysisError("capability_unsupported", "Invalid MECHCAL_SPATIAL_MAX_WALL_SECONDS configuration.") from exc
+    if not 10 <= max_wall_seconds <= configured_limit:
+        raise SpatialAnalysisError("invalid_args", "Requested postprocessing time exceeds the permitted range.",
+            details={"stage": "preflight", "requested_wall_seconds": max_wall_seconds,
+                     "effective_max_wall_seconds": configured_limit})
     multiwfn, m2m = backend_paths()
     paths, output, symbols, xyz, coeff, norm, energy, dipole = source_data(bundle, state_root)
     fragment_contributions([], symbols, fragments)
     out.mkdir(parents=True, exist_ok=False)
     started = time.monotonic()
+    completed_stages = []
     hashes = {k: fingerprint(p) for k, p in paths.items()}
     for key, path in paths.items():
         shutil.copy2(path, out / f"input.{key}")
@@ -228,6 +239,7 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
         if remaining <= 0:
             raise SpatialAnalysisError("timeout", "Spatial analysis wall limit exhausted.",
                 details={"stage": name, "max_wall_seconds": max_wall_seconds,
+                         "completed_stages": list(completed_stages),
                          "elapsed_seconds": time.monotonic() - started})
         try:
             with (out / f"{name}.log").open("w") as log:
@@ -236,6 +248,7 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
         except subprocess.TimeoutExpired as exc:
             raise SpatialAnalysisError("timeout", f"{name} timed out; raw logs retained in {out}.",
                 details={"stage": name, "max_wall_seconds": max_wall_seconds,
+                         "completed_stages": list(completed_stages),
                          "elapsed_seconds": time.monotonic() - started}) from exc
         except OSError as exc:
             raise SpatialAnalysisError("process_failed", f"{name} could not start: {exc}; logs: {out}",
@@ -243,6 +256,7 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
         if result.returncode != 0:
             raise SpatialAnalysisError("process_failed", f"{name} exited {result.returncode}; logs: {out}",
                 details={"stage": name, "returncode": result.returncode})
+        completed_stages.append(name)
         return (out / f"{name}.log").read_text()
 
     call(m2m, [], "input.mo\n", "m2m")
@@ -258,6 +272,7 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
         result = parse_spatial(log, dipole)
     except SpatialAnalysisError as exc:
         exc.details.update(stage="spatial_validation", spatial_grid=spatial_grid, state_root=state_root,
+                           completed_stages=list(completed_stages), scientific_evidence=False,
                            elapsed_seconds=time.monotonic() - started, max_wall_seconds=max_wall_seconds)
         raise
     atomic = call(multiwfn, ["input.molden"], "18\n1\ntransitions.txt\n3\n1\n0\n0\n0\nq\n", "atomic")

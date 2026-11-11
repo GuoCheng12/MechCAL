@@ -1,8 +1,7 @@
-"""Independent memory, event-driven exploration in the existing Reviewer module."""
+"""Event-driven exploration with a dedicated agent and private case memory."""
 
 from pydantic import Field
 
-from mechcal.agents.command_worker import scoped_commentary_turn
 from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime import command_exploration_memory as facts, command_followup as followup
 from mechcal.runtime import command_experiment_options as options, command_query_state as query_state
@@ -111,7 +110,7 @@ def run_turn(o, case, store, *, catalog, describe_tools):
     session = memory.session if memory else None
     if session is None or session.get("case_id") != case.case_id or session.get("mode") != "exploration":
         raise RuntimeError("Exploration retrieval session identity mismatch")
-    projected = facts.project(case, memory.model_dump(mode="json"))
+    projected = o.deps.exploration_agent.fact_view(case, memory.model_dump(mode="json"))
     index = record_index(projected)
     if digest(facts.versions(projected)) != session["source_basis"]:
         raise RuntimeError("Calculation sources changed during the exploration episode")
@@ -123,10 +122,9 @@ def run_turn(o, case, store, *, catalog, describe_tools):
         experiments = options.validate_rows(projected, command.experiments, catalog, source_ids)
         return {"status": "available", "text": command.text, "experiments": experiments}
 
-    store.activity("Reviewer exploration (isolated memory)", case.current_round_id)
-    feedback, pending = scoped_commentary_turn(o.deps.photophysics_arbiter.llm_client,
-        projected, payload, store, scope=scope, state=session, role="exploration_reviewer",
-        prompt_name="reviewer_exploration.md", index=index, compact_context=True,
+    store.activity("Exploration Agent (isolated memory)", case.current_round_id)
+    feedback, pending = o.deps.exploration_agent.review(
+        projected, payload, store, scope=scope, state=session, index=index, compact_context=True,
         completion=("report_exploration", ReportExploration, accept), describe_tools=describe_tools)
     if pending is not None:
         retained = query_state.remember_session(projected, pending, role="exploration_reviewer", index=index)
@@ -159,6 +157,6 @@ def run_turn(o, case, store, *, catalog, describe_tools):
     store.append_jsonl("history/exploration_reviews.jsonl", {"case_id": case.case_id,
         "reason": session["reason"], "source_basis": session["source_basis"],
         "read_scope_ids": sorted(scope), "proposal_ids": accepted, **feedback})
-    # The private note never goes to Planner or audit mode. Public proposals use
+    # The private note never goes to Planner or Scientific Reviewer. Public proposals use
     # the normal question store. Advisory failure is recorded, not a run failure.
     return save_state(case, memory, phase="choose")

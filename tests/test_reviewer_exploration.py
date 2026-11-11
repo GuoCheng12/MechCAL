@@ -88,7 +88,7 @@ def test_input_invariant_to_other_agents_judgment_changes(tmp_path):
     c = poison(c)
     s = store(tmp_path, c)
     client = NativeFake([finish_reply(), finish_reply()])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     turn(er.start(c, "first_observations"), o, s)
     changed = put(c, note="OTHER_OPINION", ranking={}, arguments={}, explanations={},
                   review_memory={}, query_receipts={}, numeric_checks={}, read_handoffs={}, latest_exchange={})
@@ -114,7 +114,7 @@ def test_private_reads_and_notes_survive_resume_without_touching_global_caches(t
     c = poison(c)
     client = NativeFake([reply("read_evidence", {"records": [{"ref": "result:new", "paths": ["/structured_results/test"]}]}),
                         finish_reply(experiments=[suggestion()])])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     s = store(tmp_path, c)
     c = er.start(c, "first_observations")
     before = deepcopy(protocol(c))
@@ -137,7 +137,7 @@ def test_private_reads_and_notes_survive_resume_without_touching_global_caches(t
 
 def test_planner_sees_proposals_but_not_private_note(tmp_path):
     c, o = prepared(tmp_path)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     c = turn(er.start(c, "first_observations"), o, store(tmp_path, c))
     material = json.dumps(planner_payload(o, c, native=True))
     assert "PRIVATE_NOTE" not in material and "Can a controlled change" in material
@@ -148,7 +148,7 @@ def test_private_note_cannot_be_cited_as_experiment_source(tmp_path):
     c, o = prepared(tmp_path)
     client = NativeFake([finish_reply(experiments=[suggestion(source_refs=[facts.MEMORY_REF])], call_id="bad"),
                         finish_reply(experiments=[suggestion()], call_id="repair")])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     s = store(tmp_path, c)
     c = turn(er.start(c, "first_observations"), o, s)
     assert er.state(c).session["corrections"] == 1 and not er.state(c).proposals
@@ -158,7 +158,7 @@ def test_private_note_cannot_be_cited_as_experiment_source(tmp_path):
 
 def test_proposals_and_private_memory_are_not_overwritten_by_planner_edits(tmp_path):
     c, o = prepared(tmp_path)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     c = turn(er.start(c, "first_observations"), o, store(tmp_path, c))
     qid = next(iter(er.state(c).proposals))
     original = er.state(c).proposals[qid]
@@ -206,7 +206,7 @@ def test_boundary_does_not_require_a_successful_computation(tmp_path):
 def test_unchanged_basis_failure_is_recorded_once_not_a_clearance(tmp_path):
     c, o = prepared(tmp_path)
     client = NativeFake([finish_reply(experiments=[suggestion(source_refs=["bad"])], call_id=str(i)) for i in range(3)])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     s = store(tmp_path, c)
     c = er.start(c, "first_observations")
     for _ in range(3):
@@ -236,7 +236,7 @@ def test_session_case_and_fact_versions_checked(tmp_path):
 def test_native_exploration_has_no_execution_authority_and_valid_schema(tmp_path):
     c, o = prepared(tmp_path)
     client = NativeFake([finish_reply()])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     turn(er.start(c, "first_observations"), o, store(tmp_path, c))
     request = client.requests[0]
     assert request["exchange"] is None and request["outcome"] is None
@@ -280,7 +280,7 @@ def test_combined_choice_and_compute_resumes_with_complete_receipts(tmp_path):
     c = save(_hypothesis_followup(o, c, s), s)
     assert protocol(c)["phase"] == "exploration_review" and not protocol(c).get("ticket")
     c = CaseRun.model_validate_json((s.root / "command_checkpoint.json").read_text())
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply()])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply()])
     c = save(turn(c, o, s), s)
     assert protocol(c)["outcome"]["status"] == "hypothesis_step_completed"
     assert set(protocol(c)["outcome"]["call_results"]) == {"u", "c"}
@@ -295,7 +295,7 @@ def test_new_options_require_planner_reconsideration_not_automatic_execution(tmp
         kind="compute", capability_id=TOOL, arguments={}, purpose="Test.", question_id=None)
     s = store(tmp_path, c)
     c = _apply(o, c, compute, s)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     c = turn(c, o, s)
     assert protocol(c)["phase"] == "choose" and not protocol(c).get("ticket")
     with pytest.raises(OperationRejected, match="No current investigate"):
@@ -313,7 +313,7 @@ def test_queries_and_corrections_share_a_bounded_private_episode(tmp_path):
         finish_reply(experiments=[suggestion(source_refs=["bad"])], call_id="bad"),
         finish_reply(),
     ])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     s = store(tmp_path, c)
     before = deepcopy(protocol(c))
     c = er.start(c, "first_observations")
@@ -327,7 +327,7 @@ def test_queries_and_corrections_share_a_bounded_private_episode(tmp_path):
 
 def test_audit_scope_cannot_access_exploration_private_memory(tmp_path):
     c, o = prepared(tmp_path)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     c = turn(er.start(c, "first_observations"), o, store(tmp_path, c))
     index = record_index(c)
     assert "PRIVATE_NOTE" not in json.dumps(index.available)
@@ -362,7 +362,7 @@ def test_complete_loop_schedules_exploration_before_planner_and_preserves_resume
 
     client = Client()
     o.deps.planner.llm_client = client
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.exploration_agent.llm_client = client
     c = put(c, fingerprint=configuration_fingerprint(o, c))
     save(c, s)
     out = run_command_loop(o, c, s, resume=True)
@@ -386,7 +386,7 @@ def test_calculation_failure_remains_failure_and_never_becomes_evidence(tmp_path
 
 def test_original_proposals_receive_only_execution_receipts(tmp_path):
     c, o = prepared(tmp_path)
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     c = turn(er.start(c, "first_observations"), o, store(tmp_path, c))
     qid = next(iter(er.state(c).proposals))
     c = f.record_trial(c, f.question_snapshot(c, qid), capability_id=TOOL,

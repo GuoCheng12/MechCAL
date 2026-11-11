@@ -22,7 +22,7 @@ def reviewed_case(tmp_path):
     c, o, s = fixture(tmp_path)
     o.config = replace(o.config, command_compact_context=True, command_task_context=True)
     fake = NativeFake([reply("record_review", report().model_dump(exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     c = _comment(o, c, s)
     assert protocol(c)["final_review"]["status"] == "available"
     return c, o, s
@@ -36,7 +36,7 @@ def amend(c, o, s):
 
 def complete_review(c, o, s):
     fake = NativeFake([reply("record_review", {"text": "Fixture review, not a scientific result.", "findings": []})])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     after = _comment(o, c, s)
     return after, expand_text(fake.requests[0]["payload"]), fake.requests[0]
 
@@ -85,7 +85,7 @@ def test_scientific_changes_restore_full_review(tmp_path, mutation):
             next(iter(changed["entries"].values()))["confidence"] = .12
         c = put(c, **{mutation: changed})
     fake = NativeFake([reply("record_review", report().model_dump(exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     _comment(o, c, s)
     payload = expand_text(fake.requests[0]["payload"])
     assert "delivery_task" not in payload["sections"]
@@ -134,7 +134,7 @@ def test_unavailable_review_does_not_enable_proofreading(tmp_path):
     c = put(c, review_memory={"final_reviewer": old},
             review_receipts={**protocol(c)["review_receipts"], old["ref"]: old})
     fake = NativeFake([reply("record_review", report().model_dump(exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     _comment(o, amend(c, o, s), s)
     assert "delivery_task" not in expand_text(fake.requests[0]["payload"])["sections"]
 
@@ -210,7 +210,7 @@ def test_proofread_tools_schema_and_failure_query_allowance(tmp_path):
     bad = comparison(left={"ref": "foreign-case", "path": "/value"}).model_dump(exclude={"kind"})
     fake = NativeFake([reply("compare_evidence", bad, call_id=str(i)) for i in range(2)] + [
         reply("record_review", {"text": "No usable comparison; limitation retained.", "findings": []})])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     for i in range(2):
         c = _comment(o, c, s)
         assert protocol(c)["reviewer_session"]["queries"] == i + 1

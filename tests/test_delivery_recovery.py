@@ -117,7 +117,7 @@ def test_review_local_fault_then_completion_keeps_scope_and_science(tmp_path, fa
         broken["calls"][0]["arguments"] = '{"text":'
     completed = reply("record_review", {"text": "Offline protocol fixture; scientific limits remain.", "findings": []}, call_id="record")
     fake = NativeFake([first, second, broken, completed])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     for _ in range(3):
         c = _comment(o, c, s)
         assert protocol(c)["phase"] == "review"
@@ -137,7 +137,7 @@ def test_review_local_fault_then_completion_keeps_scope_and_science(tmp_path, fa
 def test_exhausted_review_retains_read_session_for_explicit_retry(tmp_path):
     c, o, s = ready(tmp_path)
     fake = NativeFake([reply(call_id=f"attempt{i}") for i in range(5)])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     for _ in range(5):
         c = _comment(o, c, s)
     assert protocol(c)["phase"] == "choose"
@@ -237,7 +237,7 @@ def test_production_loop_pauses_and_retains_state_at_delivery_limit(tmp_path):
     c, o, s = ready(tmp_path)
     original = science(c)
     fake = NativeFake([reply(call_id=f"read{i}") for i in range(10)])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     c = put(c, fingerprint=configuration_fingerprint(o, c), delivery_recovery={
         **protocol(c)["delivery_recovery"], "max_model_turns": 2})
     save(c, s)
@@ -253,7 +253,7 @@ def test_review_retry_after_failed_corrections_can_complete_without_refilling_re
     c, o, s = ready(tmp_path)
     completed = reply("record_review", {"text": "Protocol fixture; remaining limits are explicit.", "findings": []}, call_id="ok")
     fake = NativeFake([reply(call_id=f"r{i}") for i in range(5)] + [completed])
-    o.deps.mechanism_agenda.llm_client = fake
+    o.deps.scientific_reviewer.llm_client = fake
     for _ in range(5):
         c = _comment(o, c, s)
     draft = protocol(c)["final_draft"]

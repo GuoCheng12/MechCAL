@@ -48,7 +48,7 @@ def remember(case, outcome, *, role, index=None):
         if any(i["code"] == "out_of_scope" for i in issues):
             continue
         selection = ReadRecord(ref=ref, **row.get("requested_selection", row["selection"]))
-        receipt = QueryReceipt(case_id=case.case_id, source_version=digest(index.available[ref]),
+        receipt = QueryReceipt(case_id=case.case_id, source_version=index.version(ref),
             selection=selection, accepted_selection=ReadRecord(ref=ref, **row["selection"]) if "data" in row else None,
             status=row.get("status", "read"), role=role, issues=issues,
             draft_id=edit_draft_id(case, ref))
@@ -87,7 +87,7 @@ def view(case, *, allowed_refs=None, latest_outcome=None, index=None):
         if ref not in index.available or (allowed_refs is not None and ref not in allowed_refs):
             continue
         if ref not in versions:
-            versions[ref] = digest(index.available[ref])
+            versions[ref] = index.version(ref)
         if versions[ref] != receipt.source_version:
             continue
         if not receipt.issues:

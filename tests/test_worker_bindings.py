@@ -28,6 +28,13 @@ def binding(name, value, cid=None):
     return FixedParameter(name=name, value=value, capability_id=cid)
 
 
+def with_inputs(c, contract, *pairs):
+    records = [ArtifactRecord(artifact_id=ref, kind=kind, created_by_round="R001",
+                             created_by_agent="microscopic") for ref, kind in pairs]
+    contract.input_refs.extend(a.artifact_id for a in records)
+    return c.touch(artifact_manifest=c.artifact_manifest.with_records(records))
+
+
 @pytest.mark.parametrize("bindings,code", [
     ([binding("source_artifact_id", "structure:initial")], "ambiguous_binding"),
     ([binding("max_wall_seconds", 120)], "ambiguous_binding"),
@@ -56,6 +63,7 @@ def test_invalid_contract_returns_local_issue_before_worker_calls(tmp_path, bind
 
 def test_distinct_tools_can_bind_same_parameter_to_distinct_inputs(tmp_path):
     o, c, s, contract = setup(tmp_path, owner="microscopic", caps=[OPT, BASE, HOLE])
+    c = with_inputs(c, contract, ("initial", "initial_structure"), ("prepared", "prepared_structure"))
     contract.fixed_parameters = [binding("source_artifact_id", "initial", OPT),
                                  binding("source_artifact_id", "prepared", BASE), binding("state_root", 1)]
     c = tasks.begin(o, c, contract)
@@ -64,6 +72,7 @@ def test_distinct_tools_can_bind_same_parameter_to_distinct_inputs(tmp_path):
 
 def test_single_tool_old_contract_remains_readable(tmp_path):
     o, c, s, contract = setup(tmp_path, owner="microscopic", caps=[HOLE])
+    c = with_inputs(c, contract, ("bundle", "amesp_baseline_bundle"))
     contract.fixed_parameters = [binding("source_artifact_id", "bundle"), binding("state_root", 1)]
     c = tasks.begin(o, c, contract)
     raw = tasks.state(c).model_dump()
@@ -77,6 +86,7 @@ def test_single_tool_old_contract_remains_readable(tmp_path):
 def test_global_scientific_condition_still_applies_to_every_exposed_tool(tmp_path, monkeypatch):
     caps = [HOLE, "microscopic.run_excited_state_relaxation"]
     o, c, s, contract = setup(tmp_path, owner="microscopic", caps=caps)
+    c = with_inputs(c, contract, ("bundle", "amesp_baseline_bundle"))
     contract.fixed_parameters = [binding("state_root", 1)]
     c = tasks.begin(o, c, contract)
     calls = []
@@ -97,6 +107,7 @@ def test_global_scientific_condition_still_applies_to_every_exposed_tool(tmp_pat
 ])
 def test_upstream_binding_does_not_leak_into_downstream_call(tmp_path, monkeypatch, caps, locks, steps):
     o, c, s, contract = setup(tmp_path, owner="microscopic", caps=caps)
+    c = with_inputs(c, contract, (steps[0][1], "initial_structure" if caps[0] == OPT else "torsion_snapshot_bundle"))
     contract.fixed_parameters = locks
     c = start(o, c, s, contract)
     # Persist/restore the contract across an execution checkpoint boundary.
@@ -122,7 +133,8 @@ def test_upstream_binding_does_not_leak_into_downstream_call(tmp_path, monkeypat
 
 
 def test_new_artifact_access_requires_task_provenance(tmp_path):
-    o, c, s, contract = setup(tmp_path, owner="microscopic", caps=[BASE])
+    o, c, s, contract = setup(tmp_path, owner="microscopic", caps=[OPT, BASE])
+    c = with_inputs(c, contract, ("initial", "initial_structure"))
     o.config = replace(o.config, enable_amesp=True)
     generated = ArtifactRecord(artifact_id="geometry:new", kind="prepared_structure", created_by_round="R001",
                                created_by_agent="microscopic")

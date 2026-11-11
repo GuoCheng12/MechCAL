@@ -182,7 +182,7 @@ def test_commentary_unknown_refs_remains_advisory(tmp_path):
     c = put(c, phase="review", review_role="reviewer",
             review_changes=[c.model_dump(mode="json") for c in judgment().changes])
     before = c.portfolio.model_dump()
-    o.deps.photophysics_arbiter.llm_client = ScriptClient(["A comment mentioning unverified foreign:E1."])
+    o.deps.scientific_reviewer.llm_client = ScriptClient(["A comment mentioning unverified foreign:E1."])
     reviewed = _comment(o, c, s)
     assert protocol(reviewed)["review"]["status"] == "available"
     assert "foreign:E1" not in protocol(reviewed)["review"]["reviewed_record_ids"]

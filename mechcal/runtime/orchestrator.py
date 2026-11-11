@@ -19,6 +19,7 @@ from mechcal.agents import (
 from mechcal.agents.mechanism_agenda import program_from_coverage
 from mechcal.agents.evidence_context import calculation_record
 from mechcal.agents.photophysics_arbiter import DisabledPhotophysicsWebSearch
+from mechcal.agents.reviewers import ExplorationAgent, ScientificReviewerAgent
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
 from mechcal.public_ids import normalize_public_case_id
 from mechcal.runtime.ablations import (
@@ -260,6 +261,8 @@ class OrchestratorDeps:
     workers: dict[str, WorkerAgent]
     gate: DeterministicGate
     capability_registry: CapabilityRegistry
+    scientific_reviewer: ScientificReviewerAgent | None = None
+    exploration_agent: ExplorationAgent | None = None
 
 
 def _agent_llm_client(
@@ -340,6 +343,8 @@ def default_deps(config: OrchestratorConfig) -> OrchestratorDeps:
         conclusion_ledger=ConclusionLedgerAgent(llm_client=reviewer_llm_client),
         output_assembler=OutputAssembler(),
         structure=LocalStructureTool(),
+        scientific_reviewer=ScientificReviewerAgent(_agent_llm_client(reviewer_llm_client)),
+        exploration_agent=ExplorationAgent(_agent_llm_client(reviewer_llm_client)),
         workers=workers,
         gate=DeterministicGate(
             GatePolicy(
@@ -411,6 +416,8 @@ def mcp_deps(config: OrchestratorConfig, transport: McpTransport) -> Orchestrato
         conclusion_ledger=ConclusionLedgerAgent(llm_client=reviewer_llm_client),
         output_assembler=OutputAssembler(),
         structure=McpStructureTool(transport, specs.structure),
+        scientific_reviewer=ScientificReviewerAgent(_agent_llm_client(reviewer_llm_client)),
+        exploration_agent=ExplorationAgent(_agent_llm_client(reviewer_llm_client)),
         workers=workers,
         gate=DeterministicGate(
             GatePolicy(
@@ -1671,7 +1678,7 @@ class MechCALOrchestrator:
         if not path.is_file():
             return None
         try:
-            return CaseRun.model_validate_json(path.read_text(encoding="utf-8"))
+            return store.read_case_run()
         except Exception:  # noqa: BLE001
             return None
 

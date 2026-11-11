@@ -13,7 +13,8 @@ def correction_context(case, *, index=None):
     from mechcal.runtime.command_review_workflow import issue_view
     index = record_index(case, index)
     targets, deferred, seen = [], [], set()
-    for issue in issue_view(case, index=index):
+    issues = issue_view(case, index=index)
+    for issue in issues:
         ref = issue["target"]
         if ref == ANSWER_REF or ref not in index.available:
             continue  # Final prose has its own version-bound edit_context.
@@ -40,9 +41,32 @@ def correction_context(case, *, index=None):
             else:
                 deferred.append({"ref": ref, "path": path, "bytes": json_bytes(value),
                                  "visibility": "stored_not_shown"})
-    return {"targets": targets, "deferred": deferred,
+    result = {"targets": targets, "deferred": deferred,
             "policy": "Current issue targets, not evidence. Use the existing typed edit operations. "
                       "Unrelated history is not a new correction task."}
+    # Expose actual argument-to-delivery links, not number matching across prose.
+    # Predictions are regenerated from arguments, while final prose is editable.
+    p = protocol(case)
+    related = []
+    for issue in issues:
+        target = issue["target"]
+        if issue["category"] != "fact" or target not in p.get("arguments", {}):
+            continue
+        labels = sorted(label for label, row in p.get("ranking", {}).items()
+                        if target in row.get("argument_ids", []))
+        row = {"issue_id": issue["id"], "argument_id": target, "linked_ranking_labels": labels}
+        if labels and p.get("final_draft") and ANSWER_REF in index.available:
+            row["prose_to_check"] = {"ref": ANSWER_REF, "paths": ["/answer", "/limitations"],
+                                     "draft_id": p["final_draft"]["draft_id"]}
+        related.append(row)
+    if related:
+        result["related_locations"] = related
+        result["related_policy"] = (
+            "These are stored dependency links, not additional findings or automatic edits. "
+            "Corrected arguments regenerate their linked prediction evidence. Check whether final prose "
+            "repeats the same claim before amending it; a shared number alone is not identity. "
+            "Keep the current review and atomic argument/ranking submission rules.")
+    return result
 
 
 def editable_fields(ref, path, value, draft_id):
@@ -115,7 +139,7 @@ def edit_context(case, *, index=None, native_replay=False):
         query = receipt.accepted_selection
         if (receipt.role != "planner" or receipt.draft_id != draft_id or query is None
                 or query.view != "data" or query.ref not in {ANSWER_REF, draft_id}
-                or receipt.source_version != digest(index.available[query.ref])):
+                or receipt.source_version != index.version(query.ref)):
             continue
         page = query.page.model_dump() if query.page else None
         for path in query.paths or [""]:

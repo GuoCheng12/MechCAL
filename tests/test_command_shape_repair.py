@@ -99,6 +99,7 @@ def test_old_missing_noop_rejection_resumes_without_model_call(tmp_path):
     cmd, returned = ask_tools(fake, REGISTRY, [], planner_payload(o, c, native=True), s,
                               exchange=exchange, outcome=outcome)
     assert not fake.requests and returned["no_change_normalized"]
+    assert returned["current_payload_delivered"] is False
     assert cmd.rankings == []
     assert protocol(_apply(o, c, cmd, s))["revision"] == protocol(c)["revision"] + 1
     assert (s.root / "history/command_normalizations.jsonl").exists()
@@ -121,6 +122,7 @@ def test_local_repair_only_sends_one_command_and_schema(tmp_path):
     assert sent["exchange"] is None and sent["outcome"] is None
     assert [t["name"] for t in sent["tools"]] == ["amend_judgment", "defer_command_repair"]
     assert returned["command_repair_attempted"] and cmd.rankings == []
+    assert returned["current_payload_delivered"] is False
     assert protocol(c)["arguments"]["A1"]["text"] != cmd.edits[0].text
 
 

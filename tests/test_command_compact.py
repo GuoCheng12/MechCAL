@@ -71,7 +71,7 @@ def test_compact_final_review_uses_same_submission_validator(tmp_path):
         findings=[{"id": None, "target": "A1", "category": "science", "status": "open",
                    "text": "An unresolved interpretation", "source_refs": ["input:smiles"]}], next_computations=[])
     client = NativeFake([reply("record_review", command.model_dump(mode="json", exclude={"kind"}))])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     after = _comment(o, c, s)
     assert protocol(after)["review"]["status"] == "available"
     sent = expand_text(client.requests[0]["payload"])

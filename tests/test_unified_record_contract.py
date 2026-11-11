@@ -108,7 +108,7 @@ def test_reviewer_reads_full_deferred_data_then_prose_across_checkpoint(tmp_path
     o.config = replace(o.config, command_native_tools=True)
     client = NativeFake([reply(arguments={"records": [{"ref": "result:large",
         "paths": ["/structured_results/table/999/value"]}]}), prose("The saved last-row value is 999 eV.")])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     updated = save(_comment(o, c, s), s)
     assert protocol(updated)["phase"] == "review"
@@ -181,6 +181,6 @@ def test_reviewer_transport_without_reads_keeps_legacy_data(tmp_path):
     from test_command_protocol import ScriptClient
     c, o = review_case(), orchestrator(tmp_path, reviews=True)
     client = ScriptClient(["Review the complete record supplied by the legacy text transport."])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     _comment(o, c, store(tmp_path, c))
     assert len(client.calls[0]["payload"]["observations"]["result:large"]["structured_results"]["table"]) == 1000

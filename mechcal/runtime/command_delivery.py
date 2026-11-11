@@ -34,12 +34,12 @@ def reviewed(case, draft):
     return review.get("draft_id") == draft["draft_id"] and review.get("status") == "available"
 
 
-def delivery_status(case):
+def delivery_status(case, *, index=None):
     """Report transaction state, never convert advisory feedback into approval."""
     from mechcal.runtime.command_review_workflow import issue_view
     p = protocol(case)
     draft = p.get("final_draft")
-    issues = issue_view(case) if enabled(case) else []
+    issues = issue_view(case, index=index) if enabled(case) else []
     return {"draft_id": draft["draft_id"] if draft else None,
             "exact_draft_reviewed": bool(draft and reviewed(case, draft)),
             "open_fact_issues": [i["id"] for i in issues if i["category"] == "fact"],

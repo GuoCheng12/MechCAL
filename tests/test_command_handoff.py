@@ -115,7 +115,7 @@ def draft_and_review(tmp_path, text="Final interpretation.", reply_text="Check l
     c, o = revise(case(), judgment()), orchestrator(tmp_path, reviews=True)
     s = store(tmp_path, c)
     c = _apply(o, c, Finalize(kind="finalize", answer=text), s)
-    o.deps.mechanism_agenda.llm_client = ScriptClient([reply_text])
+    o.deps.scientific_reviewer.llm_client = ScriptClient([reply_text])
     return o, _comment(o, c, s), s
 
 
@@ -157,7 +157,7 @@ def test_unavailable_review_is_not_completed_review(tmp_path):
 
 def test_final_review_sees_exact_assembled_answer_and_no_full_tool_catalog(tmp_path):
     o, c, _ = draft_and_review(tmp_path)
-    payload = o.deps.mechanism_agenda.llm_client.calls[0]["payload"]
+    payload = o.deps.scientific_reviewer.llm_client.calls[0]["payload"]
     assert payload["assembled_answer"] == protocol(c)["final_draft"]["content"]
     assert "tool_catalog" not in payload
     assert "run_limits" in payload
@@ -170,7 +170,7 @@ def test_incremental_review_has_previous_and_changed_arguments(tmp_path):
     update.changes[0].text = "Revised assessment, still a structural hypothesis."
     c = _apply(o, c, update, s)
     client = ScriptClient(["The revised wording is bounded."])
-    o.deps.photophysics_arbiter.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     _comment(o, c, s)
     payload = client.calls[0]["payload"]
     assert payload["previous_arguments"][0]["text"] == judgment().changes[0].text

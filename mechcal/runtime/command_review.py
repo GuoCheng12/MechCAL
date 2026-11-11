@@ -28,8 +28,8 @@ def candidate_overview(case: CaseRun) -> list[dict]:
 def review_basis(case: CaseRun, *, index=None) -> str:
     """The available observations/requests, not judgments or review prose."""
     index = record_index(case, index)
-    return digest({"case_id": case.case_id, "observations": index.observations,
-                   "actions": protocol(case).get("actions", {})})
+    return index.memo("review_basis", lambda: digest({"case_id": case.case_id, "observations": index.observations,
+                       "actions": protocol(case).get("actions", {})}))
 
 
 def claim_labels(case: CaseRun) -> set[str]:
@@ -238,6 +238,9 @@ def review_sections(payload, *, granular=False):
     for key, value in payload.items():
         if key == "observations":
             sections.update({f"observations:{ref}": row for ref, row in value.items()})
+        elif key == "execution_inventory":
+            sections.update({f"execution_inventory:{cid}": row for cid, row in value["by_capability"].items()})
+            sections["execution_inventory_policy"] = value["policy"]
         elif key in {"arguments", "execution_context", "citations"}:
             for i, row in enumerate(value):
                 identity = (row["id"] if key == "arguments" else row["result_id"] if key == "execution_context"

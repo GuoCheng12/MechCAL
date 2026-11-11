@@ -47,6 +47,36 @@ def test_single_canonical_location_and_direct_read_paths(tmp_path):
     assert science(current) == before
 
 
+def test_fact_correction_exposes_dependency_locations_without_automatic_edits(tmp_path):
+    from mechcal.runtime.command_edit_context import correction_context
+    from test_command_review_workflow import setup, report, accept
+    from mechcal.runtime.command_delivery import final_draft
+    from mechcal.schemas.commands import Finalize
+    c, _, _ = setup(tmp_path)
+    c, draft = final_draft(c, Finalize(kind="finalize", answer="A separately written final explanation."))
+    c = put(c, final_draft=draft)
+    c = accept(c, report(c))
+    before = c.model_dump(mode="json")
+    value = correction_context(c)
+    link = value["related_locations"][0]
+    assert link["argument_id"] == "A1"
+    assert link["linked_ranking_labels"] == ["RIM_RIR_RIV"]
+    assert link["prose_to_check"] == {"ref": "delivery:answer", "paths": ["/answer", "/limitations"],
+                                     "draft_id": protocol(c)["final_draft"]["draft_id"]}
+    assert c.model_dump(mode="json") == before
+    c = put(c, ranking={})
+    link = correction_context(c)["related_locations"][0]
+    assert link["linked_ranking_labels"] == [] and "prose_to_check" not in link
+
+
+def test_unrelated_nonfact_issue_does_not_create_fact_repair_links(tmp_path):
+    from mechcal.runtime.command_edit_context import correction_context
+    from test_command_review_workflow import setup, report, accept
+    c, _, _ = setup(tmp_path)
+    c = accept(c, report(c, category="wording"))
+    assert "related_locations" not in correction_context(c)
+
+
 @pytest.mark.parametrize("alias", ["delivery:answer", "snapshot_command", "snapshot_content", "snapshot_root"])
 def test_alias_reads_pin_the_same_editable_text(tmp_path, alias):
     c, o, s = ready(tmp_path)
@@ -278,7 +308,7 @@ def test_review_correction_preserves_edit_text_and_can_submit(tmp_path):
     c = _apply(o, c, ReviewFinal(kind="review_final", draft_id=draft["draft_id"]), s)
     broken = reply("record_review", {"text": "Incomplete protocol fixture.", "findings": []})
     broken["complete"] = False
-    o.deps.mechanism_agenda.llm_client = NativeFake([
+    o.deps.scientific_reviewer.llm_client = NativeFake([
         broken, reply("record_review", {"text": "Protocol fixture; scientific limits unchanged.", "findings": []})])
     c = _comment(o, c, s)
     assert protocol(c)["phase"] == "review"

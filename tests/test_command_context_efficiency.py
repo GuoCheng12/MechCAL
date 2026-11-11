@@ -167,7 +167,7 @@ def test_native_final_review_resume_retains_receipts_and_science(tmp_path):
     o, c = orchestrator(tmp_path, reviews=True), ops.revise(case(), judgment())
     o.config = replace(o.config, command_native_tools=True)
     client = NativeFake([prose("A limitation remains unresolved."), prose("The limitation still remains.")])
-    o.deps.mechanism_agenda.llm_client = client
+    o.deps.scientific_reviewer.llm_client = client
     s = store(tmp_path, c)
     c = _apply(o, c, Finalize(kind="finalize", answer="A bounded answer. " * 100), s)
     first = _comment(o, c, s)

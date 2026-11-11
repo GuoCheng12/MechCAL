@@ -12,9 +12,10 @@ from mechcal.tools.qc_logs import log_excerpt
 
 
 class QCError(RuntimeError):
-    def __init__(self, code, message):
+    def __init__(self, code, message, *, details=None):
         super().__init__(message)
         self.code = code
+        self.details = details or {}
 
 
 class QCConfig(BaseModel):
@@ -64,6 +65,7 @@ class QCJob:
     def __init__(self, workdir: Path, config: QCConfig, seconds: int):
         self.workdir, self.config = workdir, config
         self.started = time.monotonic()
+        self.max_wall_seconds = seconds
         self.deadline = self.started + seconds
         self.records = []
         workdir.mkdir(parents=True, exist_ok=False)

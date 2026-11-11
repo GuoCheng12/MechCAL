@@ -35,7 +35,7 @@ def reviewed_case(tmp_path):
 
 
 def offered(c, o, s):
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply(experiments=[suggestion()])])
     return turn(er.start(c, "before_conclusion"), o, s)
 
 
@@ -48,10 +48,10 @@ def test_new_proposals_restore_full_interface_not_old_revision(tmp_path):
     c, view = prepare_planner(c, payload)
     view = expand_text(view)
     assert view["context_task"] == "exploration_decision"
-    assert view["planner_interface"] == "full" and not view["deferred_context"]
+    assert view["planner_interface"] == "full" and view["deferred_context"]
     assert view["exploration_state"]["new_result_ids"] == []
     assert view["proposal_decision"]["question_ids"] == inv.pending_proposals(c)["question_ids"]
-    option = comparison_rows(view)[0]
+    option = protocol(c)["planner_context"]["fields"]["comparison_options"][0]
     assert option["next_test"] == suggestion()["next_test"]
     assert option["outcomes"] == suggestion()["outcomes"]
     assert view["review_feedback"]["status"] == "historical"
@@ -121,7 +121,7 @@ def test_duplicate_or_empty_advice_does_not_reopen_consumed_decision(tmp_path):
     before = deepcopy(inv.current(c))
     c = offered(c, o, s)
     assert inv.pending_proposals(c) is None and inv.current(c) == before
-    o.deps.photophysics_arbiter.llm_client = NativeFake([finish_reply()])
+    o.deps.exploration_agent.llm_client = NativeFake([finish_reply()])
     c = turn(er.start(c, "before_conclusion"), o, s)
     assert inv.pending_proposals(c) is None
 

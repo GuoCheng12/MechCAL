@@ -25,6 +25,14 @@ def setup(tmp_path, *, refs=None, caps=None, owner="macro", **config):
     c = case().touch(status="running")
     o = orchestrator(tmp_path)
     o.config = replace(o.config, command_native_tools=True, command_worker_tasks=True, **config)
+    if owner == "microscopic":
+        # Metadata/contract fixtures only: no Amesp or Multiwfn process is executed here.
+        from mechcal.capabilities.registry import CapabilityRegistry
+        o.config = replace(o.config, enable_amesp=config.get("enable_amesp", True))
+        o.deps.capability_registry = CapabilityRegistry([
+            spec.model_copy(update={"disabled_reason": None})
+            if spec.route == "analyze_hole_electron_from_bundle" else spec
+            for spec in REGISTRY.snapshot().capabilities])
     s = store(tmp_path, c)
     contract = DelegateComputation(owner=owner, objective="Obtain a checked structural observation.",
         input_refs=refs or ["input:smiles"], allowed_capability_ids=caps or [TOOL])
@@ -63,6 +71,24 @@ def test_opt_in_schemas_and_planner_contract(tmp_path):
     assert not {"revise_judgment", "finalize", "update_hypotheses", "delegate_computation"} & models.keys()
 
 
+
+
+def test_worker_rejects_calculation_larger_than_its_remaining_time(tmp_path):
+    from types import SimpleNamespace
+    from pydantic import BaseModel
+
+    class TimedArgs(BaseModel):
+        max_wall_seconds: int = 900
+
+    o, c, s, contract = setup(tmp_path)
+    c = start(o, c, s, contract)
+    task = tasks.state(c).model_copy(update={"deadline":time.time()+60})
+    request = SimpleNamespace(capability_id=TOOL, arguments=TimedArgs())
+    with pytest.raises(OperationRejected) as exc:
+        tasks.validate_computation(o, c, task, request)
+    assert exc.value.issues[0]["code"] == "task_time_remaining"
+    assert request.arguments.max_wall_seconds == 900
+    assert task.tool_attempts == 0 and not task.result_ids
 
 
 def test_worker_real_local_compute_and_atomic_parent_delivery(tmp_path):
@@ -151,6 +177,10 @@ def test_invalid_operations_stay_local_and_do_not_reset_allowance(tmp_path, faul
 def test_changed_physical_state_rejected_and_foreign_source_rejected(tmp_path):
     tool = "microscopic.analyze_hole_electron_from_bundle"
     o, c, s, contract = setup(tmp_path, owner="microscopic", caps=[tool])
+    bundle = ArtifactRecord(artifact_id="bundle:visible", kind="amesp_baseline_bundle",
+                            created_by_round="R001", created_by_agent="microscopic")
+    c = c.touch(artifact_manifest=c.artifact_manifest.with_records([bundle]))
+    contract.input_refs.append(bundle.artifact_id)
     contract.fixed_parameters = [FixedParameter(name="state_root", value=1)]
     c = load(o, start(o, c, s, contract), s, [tool])
     model = envelope_model(REGISTRY, [tool])

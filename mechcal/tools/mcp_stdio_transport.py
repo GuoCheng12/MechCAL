@@ -64,15 +64,15 @@ class StdioMcpTransport:
         return self._result_payload(result)
 
     def _call_timeout(self, tool_name: str, arguments: dict[str, Any]) -> float:
-        """Wait for a validated external calculation deadline plus result delivery."""
+        """Honor any registered argument model's validated whole-operation deadline."""
         if tool_name != "run_microscopic" or not self.config.honor_tool_deadlines:
             return self.config.timeout_seconds
         from mechcal.schemas import AgentExecutionPlan, DispatchRequest
-        from mechcal.schemas.external_qc import EXTERNAL_ARGUMENTS
-        from mechcal.schemas.tool_arguments import merge_tool_args
+        from mechcal.schemas.tool_arguments import argument_model, merge_tool_args
         try:
             request = DispatchRequest.model_validate(arguments["dispatch_request"])
-            if (request.route not in EXTERNAL_ARGUMENTS or request.agent_name != "microscopic"
+            if ("max_wall_seconds" not in argument_model(request.route, request.agent_name).model_fields
+                    or request.agent_name != "microscopic"
                     or request.capability_id != f"microscopic.{request.route}"):
                 return self.config.timeout_seconds
             raw_plan = arguments.get("execution_plan")
