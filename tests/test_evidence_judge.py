@@ -1,12 +1,12 @@
-"""Rubric v4 and the Layer B judge validator, with scripted judge responses (no API)."""
+"""Evidence rubric and the Layer B judge validator, with scripted judge responses (no API)."""
 
 import json
 
 import pytest
 
-from mechcal.eval import judge_v4 as jv
-from mechcal.eval.evidence_v4 import (
-    ArtifactRecordV4, ArtifactStore, EvidenceClaim, PredictionV4, Quantity, QuantitySource,
+from mechcal.eval import evidence_judge as ej
+from mechcal.eval.submission import (
+    EvaluatorArtifact, ArtifactStore, EvidenceClaim, Prediction, Quantity, QuantitySource,
     StructuralAssertion,
 )
 from mechcal.eval.grounding import check_prediction
@@ -16,20 +16,20 @@ SMILES = "CN(C)c1ccc(cc1)C#N"
 
 @pytest.fixture(scope="module")
 def rubric():
-    return jv.load_rubric()
+    return ej.load_rubric()
 
 
 @pytest.fixture
 def store():
     s = ArtifactStore(case_id="CASE")
-    s.add(ArtifactRecordV4(artifact_id="HE1", case_id="CASE", tool="microscopic.analyze_hole_electron_from_bundle",
+    s.add(EvaluatorArtifact(artifact_id="HE1", case_id="CASE", tool="microscopic.analyze_hole_electron_from_bundle",
                            status="success", molecule_smiles=SMILES,
                            outputs={"states": [{"root": 1, "d_index_angstrom": 3.12, "f": 0.42}]}))
     return s
 
 
 def ict_prediction(*extra):
-    return PredictionV4(label="ICT_TICT_CT", rank=1, limitations=["vertical only"], evidence=[
+    return Prediction(label="ICT_TICT_CT", rank=1, limitations=["vertical only"], evidence=[
         EvidenceClaim(statement="S1 moves charge 3.12 Å from the NMe2 donor to the nitrile.", kind="computed",
                       quantities=[Quantity(name="D_index", value=3.12, unit="Å",
                                            source=QuantitySource(artifact_id="HE1", pointer="/states/0/d_index_angstrom"))]),
@@ -51,8 +51,8 @@ def response(score, kind, route, conditions, verifications):
 
 def validate(raw, pred, store, rubric):
     check = check_prediction(pred, store, SMILES)
-    judgement, used = jv.validate_judgement(raw, pred, check, rubric)
-    return jv.final_score(judgement, check, used), used
+    judgement, used = ej.validate_judgement(raw, pred, check, rubric)
+    return ej.final_score(judgement, check, used), used
 
 
 ALL_OK = [("C1", "consistent"), ("C2", "consistent"), ("C3", "consistent")]
@@ -94,7 +94,7 @@ def test_fabricated_claim_cannot_carry_a_route(rubric, store):
 
 
 def test_family_without_structural_route_rejects_structure_only(rubric, store):
-    pred = PredictionV4(label="RADIATIVE_RATE_STATE_BALANCE", rank=1, evidence=[
+    pred = Prediction(label="RADIATIVE_RATE_STATE_BALANCE", rank=1, evidence=[
         EvidenceClaim(statement="The planar push-pull core should be bright.", kind="structural", atom_ids=[4])])
     raw = response(0.5, "partial_support", "specific_state_or_rate_proxy", [["C1"], ["C1"]], [("C1", "consistent")])
     with pytest.raises(ValueError, match="needs an eligible"):
@@ -115,7 +115,7 @@ def test_zero_and_route_shape(rubric, store):
 def test_rubric_annotations_and_ceilings(rubric):
     from mechcal.mechanism_pool import MECHANISM_POOL
 
-    assert rubric["mechanism_evidence_rubric_version"] == "v4" and set(rubric["labels"]) == set(MECHANISM_POOL)
+    assert rubric["release"] == "0.3.0" and set(rubric["labels"]) == set(MECHANISM_POOL)
     kinds = set(rubric["evidence_kinds"]) - {"prior"}
     for label, lab in rubric["labels"].items():
         for kind in ("strong_support", "partial_support"):
@@ -129,7 +129,7 @@ def test_rubric_annotations_and_ceilings(rubric):
 
 def test_judge_never_sees_tool_names_or_ceilings(rubric, store):
     pred = ict_prediction()
-    payload = jv.judge_payload(pred, check_prediction(pred, store, SMILES), store, SMILES, rubric)
+    payload = ej.judge_payload(pred, check_prediction(pred, store, SMILES), store, SMILES, rubric)
     text = json.dumps(payload)
     assert "microscopic." not in text and "ceilings" not in text and "evaluator_coverage_notes" not in text
     cited = payload["claims"][0]["cited_values"][0]
@@ -138,7 +138,7 @@ def test_judge_never_sees_tool_names_or_ceilings(rubric, store):
 
 
 def test_response_schema_has_one_variant_per_route_plus_zero(rubric):
-    schema = jv.response_schema("ICT_TICT_CT", rubric)
+    schema = ej.response_schema("ICT_TICT_CT", rubric)
     lab = rubric["labels"]["ICT_TICT_CT"]
     n_routes = sum(len(lab[k]["any_of"]) for k in ("strong_support", "partial_support"))
     assert len(schema["properties"]["judgement"]["anyOf"]) == n_routes + 1
@@ -157,21 +157,21 @@ def test_judge_repairs_once_then_scores(store):
     bad = response(1.0, "strong_support", "excited_state_charge_transfer", [["C2"], ["C2"]], ALL_OK)
     good = response(1.0, "strong_support", "excited_state_charge_transfer", [["C1"], ["C1"]], ALL_OK)
     client = ScriptedClient(bad, good)
-    out = jv.JudgeV4(client).judge(ict_prediction(), store, SMILES)
+    out = ej.EvidenceJudge(client).judge(ict_prediction(), store, SMILES)
     assert out["status"] == "scored" and out["score"] == 1.0 and out["attempts"] == 2
     assert "needs an eligible" in client.calls[1]["schema_feedback"]
 
 
 def test_judge_reports_invalid_after_repairs_and_skips_empty(store):
     bad = response(1.0, "strong_support", "excited_state_charge_transfer", [["C2"], ["C2"]], ALL_OK)
-    out = jv.JudgeV4(ScriptedClient(bad, bad)).judge(ict_prediction(), store, SMILES)
+    out = ej.EvidenceJudge(ScriptedClient(bad, bad)).judge(ict_prediction(), store, SMILES)
     assert out["status"] == "invalid_judgement" and out["score"] is None
-    empty = PredictionV4(label="PET_ET", rank=1, evidence=[])
-    assert jv.JudgeV4(ScriptedClient()).judge(empty, store, SMILES)["score"] == 0.0
+    empty = Prediction(label="PET_ET", rank=1, evidence=[])
+    assert ej.EvidenceJudge(ScriptedClient()).judge(empty, store, SMILES)["score"] == 0.0
 
 
 def test_freeze_manifest_matches_committed_files():
-    frozen = json.loads(jv.FREEZE_PATH.read_text())
-    current = jv.freeze_manifest()
+    frozen = json.loads(ej.FREEZE_PATH.read_text())
+    current = ej.freeze_manifest()
     assert {k: frozen[k] for k in current} == current, (
-        "Rubric v4, prompt, schema or grounding changed without updating the freeze manifest")
+        "Evidence rubric, prompt, schema or grounding changed without updating the freeze manifest")

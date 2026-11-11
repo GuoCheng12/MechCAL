@@ -1,7 +1,7 @@
-# MechCAL v2 Architecture Plan
+# Agent Architecture Plan (release 0.3.0)
 
 Status: proposal, 2026-11-11. To be implemented on a new branch in a new package
-(`mechcal/v2/`); the current `command_v1` workflow stays untouched for reference runs.
+(`mechcal/agent/`); the 0.2.0 `command_v1` workflow stays untouched for reference runs.
 
 ## 1. Why a rewrite rather than more patches
 
@@ -16,8 +16,8 @@ Observed on the current system (code survey, handoff records, one tracked case):
 | Known tool traps leak into agent decisions | e.g. `td_tout=1` silently blocks later hole-electron analysis |
 
 The story stays: evidence should help *discover and compare* mechanisms, not only
-explain a prediction. v2 keeps the scientific tools and adapters, the gateway and
-the v4 evidence contract, and replaces the orchestration.
+explain a prediction. The redesign keeps the scientific tools and adapters, the gateway and
+the grounded evidence contract, and replaces the orchestration.
 
 ## 2. Design principles
 
@@ -25,7 +25,7 @@ the v4 evidence contract, and replaces the orchestration.
    for all 11 families. Each model call sees the board plus what changed, never the
    full history.
 2. **Every claim is born typed and cited.** Interpretation of a tool result produces
-   v4 claims (structural / computed with artifact pointers / prior) at the moment the
+   grounded claims (structural / computed with artifact pointers / prior) at the moment the
    result arrives. The final submission is a projection of the board, not a rewrite.
 3. **Tools through the recorded gateway only.** Same gateway as the ReAct baseline, so
    costs and artifacts are comparable by construction.
@@ -57,7 +57,7 @@ the v4 evidence contract, and replaces the orchestration.
           │  (1 LLM)    │ consistency (Layer A results as input), advice only
           └──────┬──────┘
                  ▼
-          Submission v4 = top-3 of board, claims filtered by Layer A
+          Grounded submission = top-3 of board, claims filtered by Layer A
 ```
 
 - **Planner** (single role, one call per step). Input: board, latest observation
@@ -73,7 +73,7 @@ the v4 evidence contract, and replaces the orchestration.
   accept or decline; acceptance is logged. Critic never edits the board.
 - **Gateway** (`mechcal/eval/tool_gateway.py`): executes tools and recipes, persists
   artifacts, returns pointer-indexed values.
-- **Recipes** (`mechcal/v2/recipes.py`): named chains with fixed, validated parameters,
+- **Recipes** (`mechcal/agent/recipes.py`): named chains with fixed, validated parameters,
   e.g.
   - `excited_states`: ground-state optimisation → baseline bundle (td_tout ≥ 10)
   - `charge_transfer_character`: `excited_states` → hole-electron analysis
@@ -94,8 +94,8 @@ the v4 evidence contract, and replaces the orchestration.
 
 ## 5. Experiments this design enables
 
-- **Budget-matched comparison**: Direct v4, ReAct v4 and MechCAL v2 share the gateway
-  and the v4 contract; ReAct gets the same computation and model-call budgets.
+- **Budget-matched comparison**: Direct, ReAct and the redesigned MechCAL share the gateway
+  and the grounded submission contract; ReAct gets the same computation and model-call budgets.
   Also best-of-n Direct at equal tokens.
 - **Component ablations** (R1 W4/W5, R2 Q2): no Critic; no recipes (single tools only);
   no iteration (plan once, run all, submit); no tools (= Direct); no Layer A self-check.
@@ -108,9 +108,9 @@ the v4 evidence contract, and replaces the orchestration.
 
 | Window | Deliverable |
 | --- | --- |
-| 11/12–11/16 | `mechcal/v2/` board + planner loop + recipes over the gateway; offline tests with scripted models |
-| 11/17–11/20 | Critic; budgets and stop reasons; v4 projection; cost ledger |
+| 11/12–11/16 | `mechcal/agent/` board + planner loop + recipes over the gateway; offline tests with scripted models |
+| 11/17–11/20 | Critic; budgets and stop reasons; submission projection; cost ledger |
 | 11/21–11/24 | Pilot on ~10 dev cases (needs API key): cost, failure modes, fixes |
-| 11/25–12/08 | Iterate on pilot findings; freeze v2 config before main runs |
+| 11/25–12/08 | Iterate on pilot findings; freeze the 0.3.0 configuration before main runs |
 
-Old-system reference runs (command_v1) are kept only as a cost/behaviour baseline.
+0.2.0 reference runs (`command_v1` profile) are kept only as a cost/behaviour baseline.

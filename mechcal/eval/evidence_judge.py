@@ -1,4 +1,4 @@
-"""Layer B: rubric-v4 sufficiency judge over Layer-A-checked claims (evaluation v2).
+"""Layer B: evidence-rubric sufficiency judge over Layer-A-checked claims (release 0.3.0 evaluation).
 
 The judge receives the input graph, each claim with its evaluator grounding outcome and,
 for computed claims, the cited artifact values. Its answer is validated in code:
@@ -16,14 +16,14 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from mechcal.eval.evidence_v4 import ArtifactStore, PredictionV4, resolve_pointer
+from mechcal.eval.submission import ArtifactStore, Prediction, resolve_pointer
 from mechcal.eval.grounding import ELIGIBLE, PredictionCheck, check_prediction, gate_support
 from mechcal.eval.prompts import load_eval_prompt
 from mechcal.eval.zero_shot_v3 import structure_facts
 
-RUBRIC_PATH = Path(__file__).parent / "rubrics/mechanism_evidence_rubric_v4.json"
-FREEZE_PATH = Path(__file__).parent / "rubrics/mechanism_evidence_rubric_v4.freeze.json"
-PROMPT_NAME = "mechanism_evidence_support_judge_v4.md"
+RUBRIC_PATH = Path(__file__).parent / "rubrics/mechanism_evidence_rubric.json"
+FREEZE_PATH = Path(__file__).parent / "rubrics/mechanism_evidence_rubric.freeze.json"
+PROMPT_NAME = "mechanism_evidence_grounded_judge.md"
 PROMPT_PATH = Path(__file__).parent / "prompts" / PROMPT_NAME
 MAX_CONTEXT_CHARS = 1500
 WARRANT = "warrant"
@@ -61,7 +61,7 @@ def _context(outputs: Any, pointer: str) -> Any:
     return value if len(text) <= MAX_CONTEXT_CHARS else text[:MAX_CONTEXT_CHARS] + " …[truncated]"
 
 
-def claim_payload(prediction: PredictionV4, check: PredictionCheck, store: ArtifactStore) -> list[dict]:
+def claim_payload(prediction: Prediction, check: PredictionCheck, store: ArtifactStore) -> list[dict]:
     claims = []
     for i, (claim, result) in enumerate(zip(prediction.evidence, check.claims)):
         entry = {"claim_id": claim_id(i), "kind": claim.kind, "statement": claim.statement,
@@ -83,7 +83,7 @@ def claim_payload(prediction: PredictionV4, check: PredictionCheck, store: Artif
     return claims
 
 
-def judge_payload(prediction: PredictionV4, check: PredictionCheck, store: ArtifactStore,
+def judge_payload(prediction: Prediction, check: PredictionCheck, store: ArtifactStore,
                   smiles: str, rubric: dict) -> dict:
     return {
         **judge_rubric_view(rubric, prediction.label),
@@ -103,31 +103,31 @@ class ClaimVerification(_M):
     explanation: str = Field(min_length=1)
 
 
-class ConditionV4(_M):
+class Condition(_M):
     condition_index: int = Field(ge=1)
     satisfied: bool
     claim_ids: list[str]
     explanation: str = Field(min_length=1)
 
 
-class JudgementV4(_M):
+class Judgement(_M):
     evidence_support_score: Literal[0.0, 0.5, 1.0]
     verifications: list[ClaimVerification]
     selected_route_kind: Literal["strong_support", "partial_support", "none"]
     selected_route_id: str | None
-    conditions: list[ConditionV4]
+    conditions: list[Condition]
     overstatement: str
     rationale: str = Field(min_length=1)
 
 
-class JudgeResponseV4(_M):
-    judgement: JudgementV4
+class JudgeResponse(_M):
+    judgement: Judgement
 
 
 def response_schema(label: str, rubric: dict) -> dict:
     """One schema alternative per route plus zero, so route/score/conditions agree structurally."""
-    schema = JudgeResponseV4.model_json_schema()
-    template = schema["$defs"].pop("JudgementV4")
+    schema = JudgeResponse.model_json_schema()
+    template = schema["$defs"].pop("Judgement")
     variants = []
     for kind, score in (("strong_support", 1.0), ("partial_support", 0.5)):
         for route in rubric["labels"][label][kind]["any_of"]:
@@ -148,9 +148,9 @@ def response_schema(label: str, rubric: dict) -> dict:
     return schema
 
 
-def validate_judgement(raw: dict, prediction: PredictionV4, check: PredictionCheck, rubric: dict) -> tuple[JudgementV4, list[int]]:
+def validate_judgement(raw: dict, prediction: Prediction, check: PredictionCheck, rubric: dict) -> tuple[Judgement, list[int]]:
     """Validate the judge's answer against the rubric and Layer A. Returns (judgement, used claim indices)."""
-    j = JudgeResponseV4.model_validate(raw).judgement
+    j = JudgeResponse.model_validate(raw).judgement
     ids = {claim_id(i): i for i in range(len(prediction.evidence))}
     verdict = {}
     for v in j.verifications:
@@ -193,12 +193,12 @@ def validate_judgement(raw: dict, prediction: PredictionV4, check: PredictionChe
     return j, sorted(used)
 
 
-def final_score(judgement: JudgementV4, check: PredictionCheck, used: list[int]) -> float:
+def final_score(judgement: Judgement, check: PredictionCheck, used: list[int]) -> float:
     return gate_support(float(judgement.evidence_support_score), check, used_claims=used)
 
 
 def freeze_manifest() -> dict:
-    """Content hashes of everything that defines the v4 score; recorded before system runs."""
+    """Content hashes of everything that defines the evidence score; recorded before system runs."""
     schema_sample = {label: response_schema(label, load_rubric()) for label in sorted(load_rubric()["labels"])}
 
     def sha(data: bytes) -> str:
@@ -212,7 +212,7 @@ def freeze_manifest() -> dict:
     }
 
 
-class JudgeV4:
+class EvidenceJudge:
     """Callable judge: (prediction, store, smiles) -> scored record. ``client`` must expose
     ``complete_json(system, user_payload, schema) -> dict`` (an adapter over the runtime client)."""
 
@@ -222,7 +222,7 @@ class JudgeV4:
         self.prompt = load_eval_prompt(PROMPT_NAME)
         self.max_repairs = max_repairs
 
-    def judge(self, prediction: PredictionV4, store: ArtifactStore, smiles: str) -> dict:
+    def judge(self, prediction: Prediction, store: ArtifactStore, smiles: str) -> dict:
         check = check_prediction(prediction, store, smiles)
         if not prediction.evidence:
             return {"score": 0.0, "status": "empty_evidence", "grounding": check.model_dump()}

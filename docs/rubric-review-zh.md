@@ -1,7 +1,7 @@
-# Rubric v4 審核表（化學內容）
+# 證據 Rubric 審核表（化學內容，0.3.0）
 
-由 `mechanism_evidence_rubric_v4.json` 自動生成。路線與條件原文沿用 v3（英文保留，避免翻譯改變含義）；
-v4 新增的是每個條件「接受哪類證據」、由此推導的分數上限，以及評估方內部的工具覆蓋註記（不給 judge 看）。
+由 `mechanism_evidence_rubric.json` 自動生成。路線與條件原文沿用 0.2.0 版 rubric（英文保留，避免翻譯改變含義）；
+0.3.0 新增的是每個條件「接受哪類證據」、由此推導的分數上限，以及評估方內部的工具覆蓋註記（不給 judge 看）。
 
 證據類型：**結構**＝輸入分子圖上可驗證的事實；**計算**＝有產物記錄、數值已被程式核對的計算結果；
 **實驗觀測**＝評測協議提供的實驗數據（SMILES-only 設定下沒有，這類條件目前無法滿足）；
@@ -20,8 +20,8 @@ v4 新增的是每個條件「接受哪類證據」、由此推導的分數上�
 4. **RADIATIVE 強支持**（`rate_decomposition` 條件 1）接受「計算」：例如由振子強度和激發能估算的輻射速率。
    若你認為計算估算的 kr 不能算「速率結果」，就改成只接受實驗觀測；但 `computed_state_balance` 仍可讓 RADIATIVE 在閉卷下拿到 1.0。
 5. **ESIPT 強支持**（`proton_transfer_pathway` 條件 2）接受「計算」：包括我們的 CIS/6-31G 質子座標掃描。方法很粗糙，你是否接受它作為「激發態路徑/勢壘」證據？
-6. **只靠結構的上限**：9 個家族是 0.5，RADIATIVE 和 SOKR 是 0（v3 的路線本來就沒有純結構路線）。這意味著純文字的 Direct LLM 最多拿部分支持，這是我認為公平的設計。
-7. **RACI 部分支持**（`coordinate_linked_crossing_proxy` 條件 2）接受「計算或解釋」：沿用 v3 原文「或一個明確的、針對該分子的解釋」，因此只靠結構也能拿 0.5。是否要收緊為必須有計算？
+6. **只靠結構的上限**：9 個家族是 0.5，RADIATIVE 和 SOKR 是 0（0.2.0 版 rubric 的路線本來就沒有純結構路線）。這意味著純文字的 Direct LLM 最多拿部分支持，這是我認為公平的設計。
+7. **RACI 部分支持**（`coordinate_linked_crossing_proxy` 條件 2）接受「計算或解釋」：沿用 0.2.0 版原文「或一個明確的、針對該分子的解釋」，因此只靠結構也能拿 0.5。是否要收緊為必須有計算？
 8. **只接受實驗觀測的條件**（HOST_GUEST `binding_and_emission`、PACKING `environment_switching`、ESIPT `proton_transfer_specific_observations`、PET `electron_transfer_species_or_control`、AGGREGATE `aggregate_species_observations`、SOKR `higher_state_emission_assignment`）：在 SMILES-only 設定下全部無法滿足，保留給未來提供實驗條件的子集。
 9. **工具缺口**（只影響評估方的覆蓋說明，不影響打分）：HOST_GUEST 沒有主客體計算工具；RACI 沒有 CI 搜索；SOKR 沒有高激發態速率工具。這三個家族在我們的系統裡實際上拿不到強支持，論文裡應該如實寫出。
 

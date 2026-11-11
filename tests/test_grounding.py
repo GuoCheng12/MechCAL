@@ -3,9 +3,9 @@
 import pytest
 
 from mechcal.eval import perturb
-from mechcal.eval.evidence_v4 import (
-    ArtifactRecordV4, ArtifactStore, EvidenceClaim, PredictionV4, Quantity, QuantitySource,
-    StructuralAssertion, SubmissionV4, resolve_pointer,
+from mechcal.eval.submission import (
+    EvaluatorArtifact, ArtifactStore, EvidenceClaim, Prediction, Quantity, QuantitySource,
+    StructuralAssertion, Submission, resolve_pointer,
 )
 from mechcal.eval.grounding import (
     ELIGIBLE, FABRICATION, check_assertion, check_submission, convert, gate_support, statement_numbers,
@@ -17,7 +17,7 @@ OTHER = "O=Cc1ccccc1"
 
 
 def art(aid, smiles=SMILES, status="success", **outputs):
-    return ArtifactRecordV4(artifact_id=aid, case_id="CASE", tool="microscopic.run_baseline_bundle",
+    return EvaluatorArtifact(artifact_id=aid, case_id="CASE", tool="microscopic.run_baseline_bundle",
                             status=status, molecule_smiles=smiles,
                             outputs=outputs or {"states": [{"f": 0.4213, "e_ev": 4.312}], "dipole_d": 7.9})
 
@@ -29,9 +29,9 @@ def computed(statement, value, pointer, aid="A1", unit="", source_unit=None):
 
 
 def submission(*claims, label="ICT_TICT_CT"):
-    return SubmissionV4(case_id="CASE", mechanism_predictions=[
-        PredictionV4(label=label, rank=1, evidence=list(claims), limitations=["vertical only"]),
-        PredictionV4(label="RIM_RIR_RIV", rank=2, evidence=[], limitations=["none"]),
+    return Submission(case_id="CASE", mechanism_predictions=[
+        Prediction(label=label, rank=1, evidence=list(claims), limitations=["vertical only"]),
+        Prediction(label="RIM_RIR_RIV", rank=2, evidence=[], limitations=["none"]),
     ])
 
 
@@ -156,7 +156,7 @@ def real_like(store):
                       atom_ids=[2, 10], assertions=[StructuralAssertion(type="conjugated_path", atoms=[2, 10])]),
     )
     donor = ArtifactStore(case_id="DONOR")
-    donor.add(ArtifactRecordV4(artifact_id="B7", case_id="DONOR", tool="microscopic.run_baseline_bundle",
+    donor.add(EvaluatorArtifact(artifact_id="B7", case_id="DONOR", tool="microscopic.run_baseline_bundle",
                                status="success", molecule_smiles=OTHER,
                                outputs={"states": [{"f": 0.0123, "e_ev": 3.9}]}))
     return sub, store, donor
@@ -202,7 +202,7 @@ def test_text_only_scoring_is_fooled(real_like):
 def test_store_from_mechcal_run_registers_results_and_evidence_aliases(tmp_path):
     from test_tool_sources import execution, save_execution
 
-    from mechcal.eval.evidence_v4 import store_from_mechcal_run
+    from mechcal.eval.submission import store_from_mechcal_run
 
     save_execution(tmp_path, execution("R001", "scan"))
     save_execution(tmp_path, execution("R002", "scan", status="partial"))

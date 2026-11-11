@@ -1,27 +1,27 @@
-# Evaluation v2 Design (ACL/ARR 2027 revision)
+# Evaluation Design (release 0.3.0, ACL/ARR 2027 revision)
 
-Status: design, 2026-11-11. Branch `eval-v2`. Supersedes nothing yet; v2/v3 judges stay
+Status: design, 2026-11-11. Branch `evidence-evaluation`. Supersedes nothing yet; the 0.2.0 judges stay
 available for historical comparison.
 
 ## 1. Why
 
 The AAAI-26 reviews (R1) identified that the evidence score measured *rubric-conforming
-prose*, not a verified evidence chain. Evaluation v2 keeps the task (SMILES only, fixed
+prose*, not a verified evidence chain. The 0.3.0 evaluation keeps the task (SMILES only, fixed
 11-family pool, top-3 with evidence) and the story ("evidence should help discover and
 compare mechanisms, not only explain them"), and changes what is scored and how its
 validity is demonstrated.
 
-| R1 concern | v2 response |
+| R1 concern | 0.3.0 response |
 | --- | --- |
 | Judge sees evidence text, not artifacts; fabricated numbers get credit | Layer A deterministic grounding against recorded artifacts; Layer B judge sees verified artifact excerpts |
-| Evidence "fits the rubric" | Rubric v4 frozen before new system runs; perturbation suite proves the score reacts to falsified evidence and not to paraphrase |
+| Evidence "fits the rubric" | Evidence rubric frozen before new system runs; perturbation suite proves the score reacts to falsified evidence and not to paraphrase |
 | Support@Top1 thresholds partial = sufficient | Report Sufficient@1 (e=1) and Partial+@1 (e>=0.5) separately |
 | Same model judges and is evaluated | Judge from a different model family than every evaluated backbone; second judge for agreement; human subset |
 | No CIs, label imbalance | Paper-clustered paired bootstrap; per-family and macro metrics; SMILES-blind floors in every table |
 | Not compute-matched | Uniform cost accounting per method; equal-budget baselines (see experiments plan) |
 | SMILES-only vs condition-specific labels; contamination | Dataset analyses: series/near-duplicate and label-conflict tables, leave-one-paper-out structural kNN floor, memorization probes |
 
-## 2. Submission contract v4
+## 2. Grounded submission contract
 
 Every method (MechCAL, ReAct, Codex, Direct LLM) submits the same object. Evidence items
 become typed claims so that grounding can be checked by code rather than inferred from prose.
@@ -69,18 +69,18 @@ Tolerance: relative 2% or the printed precision of the artifact, whichever is la
 units normalized for eV/nm/Debye/Hartree. Layer A outputs per-prediction counts and a
 `fabrication_rate` = (value_mismatch + wrong_molecule + missing_artifact) / computed claims.
 
-## 4. Layer B — rubric v4 sufficiency judge
+## 4. Layer B — evidence-rubric sufficiency judge
 
-- Starts from rubric v3 (route `any_of` → condition `all_of`, cited findings, validator).
+- Starts from the 0.2.0 route rubric (`mechanism_evidence_rubric_v3.json`) (route `any_of` → condition `all_of`, cited findings, validator).
 - Only `grounded` computed claims and `structural_ok` claims may satisfy a route condition.
-  The validator enforces this in code, as v3 already enforces quote provenance.
+  The validator enforces this in code, as the 0.2.0 judge already enforces quote provenance.
 - The judge sees: SMILES graph facts, the claims with Layer A outcomes, and bounded excerpts
-  of the cited artifacts (v3 `ToolSourcePacket`). It never sees rank, method identity,
+  of the cited artifacts (the 0.2.0 `ToolSourcePacket`). It never sees rank, method identity,
   internal confidence/claim status, hidden reference or source paper.
 - Rubric refinement: each family states explicitly (a) what a structure-only argument can
   reach (ceiling), (b) which computed observables qualify for partial vs strong, and
   (c) known proxy overreach. Rubric, prompt and schema hashes are frozen and recorded
-  before any MechCAL v2 run; later edits create v5, never a silent change.
+  before any redesigned-MechCAL run; later edits ship in a new release, never as a silent change.
 - Final e_j ∈ {0, 0.5, 1}. A prediction with any `value_mismatch`/`wrong_molecule` claim used
   in its selected route is capped at 0 (fabrication is not partial support).
 
@@ -98,9 +98,9 @@ Applied to real submissions from several methods; each operator edits one predic
 | `paraphrase` (control) | meaning-preserving rewrite | no change |
 | `reorder` (control) | reorder evidence items | no change |
 
-Reported per judge configuration (v2 text-only, v3, v4): detection rate (score decreases),
+Reported per judge configuration (0.2.0 text-only, 0.2.0 route judge, 0.3.0 grounded judge): detection rate (score decreases),
 mean Δe, false-alarm rate on controls. The headline is the contrast: text-only judging is
-fooled by tampering; v4 is not, and both are stable on controls.
+fooled by tampering; the grounded judge is not, and both are stable on controls.
 
 ## 6. Statistics and reporting
 
@@ -128,16 +128,16 @@ and dollar cost under a fixed price table. Comparisons are reported at matched b
 
 1. Done — offline statistics + dataset analyses (`mechcal/eval/stats.py`,
    `mechcal/eval/dataset_analysis.py`, `examples/dataset_report.py`).
-2. Done — submission contract v4 and artifact records (`mechcal/eval/evidence_v4.py`,
+2. Done — grounded submission contract and artifact records (`mechcal/eval/submission.py`,
    including `store_from_mechcal_run` for persisted `ToolExecutionResult` files) and the
    Layer A checker (`mechcal/eval/grounding.py`).
 3. Done — perturbation operators and suite runner (`mechcal/eval/perturb.py`). The scorer is
-   a plain callable, so text-only, v3 and v4 judges are compared on identical perturbations.
-4. Drafted, pending author review — rubric v4 (`mechcal/eval/rubrics/mechanism_evidence_rubric_v4.json`:
-   v3 route text plus per-condition `accepts`, derived ceilings and evaluator-only coverage notes),
-   Layer B judge (`mechcal/eval/judge_v4.py`, prompt `mechanism_evidence_support_judge_v4.md`)
-   and the freeze manifest (`mechanism_evidence_rubric_v4.freeze.json`, enforced by tests).
-   Chemistry review sheet: [rubric-v4-review-zh.md](rubric-v4-review-zh.md).
+   a plain callable, so text-only, 0.2.0 route and 0.3.0 grounded judges are compared on identical perturbations.
+4. Drafted, pending author review — evidence rubric (`mechcal/eval/rubrics/mechanism_evidence_rubric.json`:
+   0.2.0 route text plus per-condition `accepts`, derived ceilings and evaluator-only coverage notes),
+   Layer B judge (`mechcal/eval/evidence_judge.py`, prompt `mechanism_evidence_grounded_judge.md`)
+   and the freeze manifest (`mechanism_evidence_rubric.freeze.json`, enforced by tests).
+   Chemistry review sheet: [rubric-review-zh.md](rubric-review-zh.md).
 5. API-dependent: judge runs, probes, human-subset export.
 
 ### Layer A notes
@@ -146,7 +146,7 @@ and dollar cost under a fixed price table. Comparisons are reported at matched b
   ("0.40" asserts two decimals; JSON would drop the trailing zero).
 - Numbers that are parts of identifiers (S1, T2, C10, 6-31G, def2-SVP, B3LYP) are ignored;
   any other number in a computed claim must match a declared quantity, otherwise the claim is
-  `statement_mismatch`. Undeclared extra numbers are listed but not penalised in v1.
+  `statement_mismatch`. Undeclared extra numbers are listed but not penalised in 0.3.0.
 - `flip_conclusion` is intentionally invisible to Layer A (numbers and sources unchanged);
   detecting it is the job of Layer B, which sees the artifact values next to the prose.
 - The perturbation donor for `swap_molecule` must come from a different case with the same

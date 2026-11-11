@@ -1,4 +1,4 @@
-"""Evaluation-v2 subjects that emit submission v4 natively: Direct LLM and ReAct over the gateway.
+"""Evaluation subjects that emit the grounded submission format natively: Direct LLM and ReAct over the gateway.
 
 No heuristic fallback answers: if a subject never produces a valid submission within its
 budget, that outcome is recorded as such and scores as an empty answer.
@@ -14,31 +14,31 @@ from typing import Any, Callable
 
 from pydantic import ValidationError
 
-from mechcal.eval.evidence_v4 import ArtifactStore, SubmissionV4
+from mechcal.eval.submission import ArtifactStore, Submission
 from mechcal.eval.prompts import load_eval_prompt
 from mechcal.eval.tool_gateway import ToolGateway
 from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 
-INSTRUCTIONS = "submission_v4_instructions.md"
-SUBMISSION_PROTOCOL_VERSION = "submission-v4-2026-11-11"
+INSTRUCTIONS = "submission_instructions.md"
+SUBMISSION_PROTOCOL_VERSION = "0.3.0"
 
 
 def model_submission_schema() -> dict:
     """JSON schema of what the model writes; the harness adds case_id."""
-    schema = SubmissionV4.model_json_schema()
+    schema = Submission.model_json_schema()
     schema["properties"].pop("case_id")
     schema["required"] = ["mechanism_predictions"]
     defs = schema["$defs"]
-    defs["PredictionV4"]["properties"]["label"]["enum"] = list(MECHANISM_POOL)
+    defs["Prediction"]["properties"]["label"]["enum"] = list(MECHANISM_POOL)
     schema["properties"]["mechanism_predictions"].update(minItems=3, maxItems=3)
     return schema
 
 
-def parse_model_submission(data: Any, case_id: str) -> SubmissionV4:
+def parse_model_submission(data: Any, case_id: str) -> Submission:
     if not isinstance(data, dict) or "mechanism_predictions" not in data:
         raise ValueError("Return an object with a mechanism_predictions list")
     try:
-        submission = SubmissionV4.model_validate({"case_id": case_id, "mechanism_predictions": data["mechanism_predictions"]})
+        submission = Submission.model_validate({"case_id": case_id, "mechanism_predictions": data["mechanism_predictions"]})
     except ValidationError as exc:
         raise ValueError(_compact_errors(exc)) from exc
     if len(submission.mechanism_predictions) != 3:
@@ -81,7 +81,7 @@ class SubjectResult:
     case_id: str
     subject: str
     status: str
-    submission: SubmissionV4 | None
+    submission: Submission | None
     store: ArtifactStore
     usage: dict
     tool_cost: dict
@@ -95,10 +95,10 @@ class SubjectResult:
                 "usage": self.usage, "tool_cost": self.tool_cost, "transcript": self.transcript}
 
 
-class DirectV4Subject:
+class DirectSubject:
     """Single-response closed-book baseline; one repair if the format is invalid."""
 
-    name = "direct_v4"
+    name = "direct"
 
     def __init__(self, client, *, max_repairs: int = 1) -> None:
         self.client, self.max_repairs = client, max_repairs
@@ -133,10 +133,10 @@ source_artifact_id. Tool results list numeric values by JSON pointer: cite those
 When must_submit_now is true, submit immediately."""
 
 
-class ReactV4Subject:
+class ReactSubject:
     """Transcript-only ReAct agent over the recorded gateway. Budgets are explicit and reported."""
 
-    name = "react_v4"
+    name = "react"
 
     def __init__(self, client, gateway_factory: Callable[[str, str], ToolGateway], *,
                  max_model_calls: int = 20, max_tool_calls: int = 8) -> None:
@@ -186,7 +186,7 @@ class ReactV4Subject:
 def save_result(result: SubjectResult, out_dir: Path) -> Path:
     out_dir = Path(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
-    (out_dir / "artifacts_v4.json").write_text(result.store.model_dump_json(), encoding="utf-8")
+    (out_dir / "artifacts.json").write_text(result.store.model_dump_json(), encoding="utf-8")
     path = out_dir / "subject_result.json"
     path.write_text(json.dumps(result.to_json(), ensure_ascii=False, default=str, indent=1), encoding="utf-8")
     return path

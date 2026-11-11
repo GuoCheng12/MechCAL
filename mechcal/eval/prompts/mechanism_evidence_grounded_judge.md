@@ -1,5 +1,5 @@
 Evaluate the support for one submitted molecular-photophysics mechanism prediction
-under MechRubric V4. The payload contains the global and decision rules, the
+under the MechRubric evidence rubric (release 0.3.0). The payload contains the global and decision rules, the
 criteria for the predicted family, the submitted claims, and an evaluator-parsed
 molecular graph. Apply those rules without adding stricter prerequisites.
 

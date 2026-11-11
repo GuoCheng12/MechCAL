@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.3.0 (In development)
+
+- Evidence evaluation grounded in recorded artifacts: typed claims (structural, computed,
+  prior) cite artifact values by JSON pointer; a deterministic checker verifies molecule
+  identity, artifact status and cited values before any LLM judge sees the claims.
+- Evidence rubric with per-condition accepted evidence kinds and derived structure-only /
+  closed-book ceilings; judge answers validated in code; rubric, prompt, schema and checker
+  hashes frozen and enforced by tests (draft, pending author review).
+- Metric-validity perturbations (tampered values, swapped molecules, flipped conclusions,
+  stripped or injected citations, paraphrase/reorder controls).
+- Paper-clustered bootstrap, per-family and macro metrics, dataset analyses and SMILES-blind
+  floors (leave-one-paper-out structure kNN).
+- One recorded tool gateway shared by all evaluated methods; Direct and ReAct baselines that
+  emit the grounded submission natively without fallback answers.
+- Design documents: evaluation design, agent architecture plan, audit of the 0.2.0 workflow.
+
 ## 0.2.0 (Unreleased)
 
 - Complete the original PhotoMechBench raw-v2-119 snapshot: include all 249

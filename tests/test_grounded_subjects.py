@@ -1,12 +1,12 @@
-"""Gateway and v4-native subjects, offline: scripted model replies, real RDKit tools."""
+"""Gateway and grounded-format subjects, offline: scripted model replies, real RDKit tools."""
 
 from dataclasses import dataclass, field
 
 import pytest
 
 from mechcal.eval.grounding import check_submission
-from mechcal.eval.subjects_v4 import (
-    DirectV4Subject, ReactV4Subject, model_submission_schema, parse_model_submission, save_result,
+from mechcal.eval.grounded_subjects import (
+    DirectSubject, ReactSubject, model_submission_schema, parse_model_submission, save_result,
 )
 from mechcal.eval.tool_gateway import ToolGateway, numeric_leaves
 
@@ -51,7 +51,7 @@ def test_numeric_leaves_escape_pointer_tokens():
 def test_schema_and_parser():
     schema = model_submission_schema()
     assert "case_id" not in schema["properties"]
-    assert schema["$defs"]["PredictionV4"]["properties"]["label"]["enum"][0] == "RIM_RIR_RIV"
+    assert schema["$defs"]["Prediction"]["properties"]["label"]["enum"][0] == "RIM_RIR_RIV"
     sub = parse_model_submission(preds(STRUCTURAL), "CASE")
     assert sub.case_id == "CASE" and len(sub.mechanism_predictions) == 3
     with pytest.raises(ValueError, match="kind"):
@@ -66,14 +66,14 @@ def test_direct_repairs_once_then_submits():
     bad = preds(STRUCTURAL)
     bad["mechanism_predictions"][1]["label"] = "ICT_TICT_CT"
     client = Scripted(bad, preds(STRUCTURAL))
-    result = DirectV4Subject(client).run("CASE", SMILES)
+    result = DirectSubject(client).run("CASE", SMILES)
     assert result.status == "submitted" and result.usage["model_calls"] == 2
     assert "distinct" in client.payloads[1]["feedback"]
     assert result.usage["by_role"]["direct"]["total_tokens"] == 240
 
 
 def test_direct_records_failure_without_fallback_answer():
-    result = DirectV4Subject(Scripted({"oops": 1}, {"oops": 2})).run("CASE", SMILES)
+    result = DirectSubject(Scripted({"oops": 1}, {"oops": 2})).run("CASE", SMILES)
     assert result.status == "no_valid_submission" and result.submission is None
 
 
@@ -111,18 +111,18 @@ def test_react_end_to_end_citation_is_grounded(gateway_factory, tmp_path):
     client = Scripted({"action": "describe_tools", "tools": [DA_TOOL]},
                       {"action": "call_tool", "tool": DA_TOOL, "args": {}},
                       submit_with_citation)
-    result = ReactV4Subject(client, gateway_factory, max_model_calls=5, max_tool_calls=3).run("CASE", SMILES)
+    result = ReactSubject(client, gateway_factory, max_model_calls=5, max_tool_calls=3).run("CASE", SMILES)
     assert result.status == "submitted" and result.tool_cost["tool_calls"] == 1
     check = check_submission(result.submission, result.store, SMILES)
     assert check.predictions[0].claims[0].outcome == "grounded" and check.fabrication_rate == 0.0
     assert client.payloads[0]["payload"]["tool_catalog"] and not client.payloads[0]["payload"]["must_submit_now"]
     path = save_result(result, tmp_path / "out")
-    assert path.exists() and (tmp_path / "out/artifacts_v4.json").exists()
+    assert path.exists() and (tmp_path / "out/artifacts.json").exists()
 
 
 def test_react_forces_submission_and_reports_exhaustion(gateway_factory):
     client = Scripted(*[{"action": "call_tool", "tool": DA_TOOL, "args": {}}] * 3)
-    result = ReactV4Subject(client, gateway_factory, max_model_calls=3, max_tool_calls=1).run("CASE", SMILES)
+    result = ReactSubject(client, gateway_factory, max_model_calls=3, max_tool_calls=1).run("CASE", SMILES)
     assert result.status == "no_valid_submission" and result.submission is None
     assert client.payloads[1]["payload"]["must_submit_now"] is True   # tool budget used up
     assert result.transcript[1]["observation"]["status"] == "rejected"

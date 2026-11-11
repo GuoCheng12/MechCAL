@@ -16,12 +16,12 @@ from typing import Iterable
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from mechcal.eval.evidence_v4 import (
-    ArtifactStore, EvidenceClaim, PredictionV4, Quantity, StructuralAssertion, SubmissionV4,
+from mechcal.eval.submission import (
+    ArtifactStore, EvidenceClaim, Prediction, Quantity, StructuralAssertion, Submission,
     resolve_pointer,
 )
 
-GROUNDING_VERSION = "layer-a-v1"
+GROUNDING_VERSION = "0.3.0"
 REL_TOL = 0.02
 
 FABRICATION = frozenset({"missing_artifact", "wrong_molecule", "unresolved_pointer",
@@ -246,7 +246,7 @@ def check_claim(index: int, claim: EvidenceClaim, store: ArtifactStore, case_smi
                       problems=sorted(set(problems)), undeclared_numbers=undeclared)
 
 
-def check_prediction(prediction: PredictionV4, store: ArtifactStore, case_smiles: str) -> PredictionCheck:
+def check_prediction(prediction: Prediction, store: ArtifactStore, case_smiles: str) -> PredictionCheck:
     claims = [check_claim(i, c, store, case_smiles) for i, c in enumerate(prediction.evidence)]
     counts = Counter(c.outcome for c in claims)
     return PredictionCheck(
@@ -257,7 +257,7 @@ def check_prediction(prediction: PredictionV4, store: ArtifactStore, case_smiles
     )
 
 
-def check_submission(submission: SubmissionV4, store: ArtifactStore, case_smiles: str) -> SubmissionCheck:
+def check_submission(submission: Submission, store: ArtifactStore, case_smiles: str) -> SubmissionCheck:
     if store.case_id != submission.case_id:
         raise ValueError("Artifact store and submission belong to different cases")
     preds = [check_prediction(p, store, case_smiles) for p in submission.mechanism_predictions]

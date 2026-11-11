@@ -1,4 +1,4 @@
-"""Submission contract v4 and evaluator-side artifact records (evaluation v2).
+"""Submission contract and evaluator-side artifact records (release 0.3.0 evaluation).
 
 Every evaluated method submits typed evidence claims. Computed claims cite artifact
 records by ID and JSON pointer so that grounding can be checked by code. Artifact
@@ -53,7 +53,7 @@ class EvidenceClaim(_Model):
     assertions: list[StructuralAssertion] = Field(default_factory=list)
 
 
-class PredictionV4(_Model):
+class Prediction(_Model):
     label: str
     rank: int = Field(ge=1, le=3)
     evidence: list[EvidenceClaim] = Field(default_factory=list)
@@ -66,9 +66,9 @@ class PredictionV4(_Model):
         return self
 
 
-class SubmissionV4(_Model):
+class Submission(_Model):
     case_id: str
-    mechanism_predictions: list[PredictionV4] = Field(min_length=1, max_length=3)
+    mechanism_predictions: list[Prediction] = Field(min_length=1, max_length=3)
 
     @model_validator(mode="after")
     def _ranking(self):
@@ -80,7 +80,7 @@ class SubmissionV4(_Model):
         return self
 
 
-class ArtifactRecordV4(_Model):
+class EvaluatorArtifact(_Model):
     artifact_id: str
     case_id: str
     tool: str
@@ -92,9 +92,9 @@ class ArtifactRecordV4(_Model):
 
 class ArtifactStore(_Model):
     case_id: str
-    artifacts: dict[str, ArtifactRecordV4] = Field(default_factory=dict)
+    artifacts: dict[str, EvaluatorArtifact] = Field(default_factory=dict)
 
-    def add(self, record: ArtifactRecordV4) -> None:
+    def add(self, record: EvaluatorArtifact) -> None:
         if record.artifact_id in self.artifacts and self.artifacts[record.artifact_id] != record:
             raise ValueError(f"Conflicting artifact record: {record.artifact_id}")
         self.artifacts[record.artifact_id] = record
@@ -145,13 +145,13 @@ def store_from_mechcal_run(run_dir: Path, case_id: str, smiles: str) -> Artifact
                     outputs=outputs,
                     provenance={"source_file": str(path.relative_to(root)), "round_id": record.round_id,
                                 "dispatch_id": record.dispatch_id, "selected_route": record.selected_route})
-        store.add(ArtifactRecordV4(artifact_id=record.tool_result_id, **base))
+        store.add(EvaluatorArtifact(artifact_id=record.tool_result_id, **base))
         for unit in record.evidence_units:
-            store.add(ArtifactRecordV4(artifact_id=unit.evidence_id, **{
+            store.add(EvaluatorArtifact(artifact_id=unit.evidence_id, **{
                 **base, "outputs": {"metrics": unit.metrics, **outputs},
                 "provenance": {**base["provenance"], "alias_of": record.tool_result_id}}))
     return store
 
 
-def load_submission(path: Path) -> SubmissionV4:
-    return SubmissionV4.model_validate(json.loads(Path(path).read_text(encoding="utf-8")))
+def load_submission(path: Path) -> Submission:
+    return Submission.model_validate(json.loads(Path(path).read_text(encoding="utf-8")))

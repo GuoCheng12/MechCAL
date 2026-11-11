@@ -1,9 +1,9 @@
 {
- "mechanism_evidence_rubric_version": "v4",
+ "mechanism_evidence_rubric_version": "0.3.0",
  "status": "draft_pending_author_review",
- "based_on": "v3",
+ "based_on": "0.2.0 rubric (mechanism_evidence_rubric_v3.json)",
  "revision_date": "2026-11-11",
- "revision_scope": "Keep v3 route and condition text. Add per-condition evidence requirements (which claim kinds may satisfy each condition), derived structure-only and closed-book ceilings, and the Layer A grounding gate. Experimental observations are not available in the SMILES-only protocol; observation-only conditions are retained for a future condition-aware subset.",
+ "revision_scope": "Keep the 0.2.0 route and condition text. Add per-condition evidence requirements (which claim kinds may satisfy each condition), derived structure-only and closed-book ceilings, and the Layer A grounding gate. Experimental observations are not available in the SMILES-only protocol; observation-only conditions are retained for a future condition-aware subset.",
  "mechanism_pool": [
   "RIM_RIR_RIV",
   "PACKING_HOST_MATRIX_CONFINEMENT",
@@ -74,7 +74,7 @@
   "evidence_combination": "Several eligible findings may jointly satisfy one route if they concern compatible objects, states and conditions. Do not combine incompatible calculations or observations into a fictitious single experiment."
  },
  "verification_policy": {
-  "implementation_status": "Implemented for v4: Layer A (code) checks artifacts, molecule identity and cited values; the judge verifies interpretation against the shown artifact values and structural claims against the graph.",
+  "implementation_status": "Implemented in 0.3.0: Layer A (code) checks artifacts, molecule identity and cited values; the judge verifies interpretation against the shown artifact values and structural claims against the graph.",
   "structural_findings": {
    "source": "The verified input SMILES and evaluator-derived structure checks.",
    "checks": [
@@ -1112,6 +1112,7 @@
    }
   }
  },
+ "release": "0.3.0",
  "evidence_kinds": {
   "structural": "A fact about the verified input graph (atoms, bonds, rings, conjugation, motifs). Checked by the evaluator.",
   "computed": "A result of a calculation recorded as an artifact for this molecule. Values are checked by the evaluator (Layer A) before the judge sees them.",

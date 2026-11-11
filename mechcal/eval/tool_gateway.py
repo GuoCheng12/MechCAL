@@ -1,6 +1,6 @@
-"""One recorded tool gateway shared by every evaluated method (evaluation v2).
+"""One recorded tool gateway shared by every evaluated method (release 0.3.0 evaluation).
 
-Agents (ReAct baseline, MechCAL v2, external agents via an adapter) call tools only
+Agents (ReAct baseline, the redesigned MechCAL, external agents via an adapter) call tools only
 through this gateway. Each call is executed by the existing MechCAL tool adapters,
 persisted in the MechCAL run layout (``rounds/Rnnn/execution_*_tool_result.json``) and
 registered as an evaluator artifact, so all methods are graded on identical records.
@@ -16,7 +16,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
-from mechcal.eval.evidence_v4 import ArtifactRecordV4, ArtifactStore, resolve_pointer
+from mechcal.eval.submission import EvaluatorArtifact, ArtifactStore, resolve_pointer
 
 MAX_OBSERVATION_VALUES = 80
 MAX_STRING_CHARS = 300
@@ -159,7 +159,7 @@ class ToolGateway:
                       "tool_result_id": result.tool_result_id}
         alias = f"T{index:03d}"
         for artifact_id in (result.tool_result_id, alias):
-            self.store.add(ArtifactRecordV4(
+            self.store.add(EvaluatorArtifact(
                 artifact_id=artifact_id, case_id=self.case_id, tool=result.capability_id,
                 status=status, molecule_smiles=self.smiles, outputs=outputs, provenance=provenance))
         return alias

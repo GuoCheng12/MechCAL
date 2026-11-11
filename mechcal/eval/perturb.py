@@ -1,7 +1,7 @@
-"""Metric-validity perturbations for evidence scoring (evaluation v2, section 5).
+"""Metric-validity perturbations for evidence scoring (release 0.3.0 evaluation).
 
 Each operator edits one prediction of a real submission and states the expected effect
-on that prediction's evidence score. Running a scorer (text-only judge, v3, v4 ...) over
+on that prediction's evidence score. Running a scorer (text-only judge, the 0.2.0 route judge, the grounded judge ...) over
 the original and perturbed submissions measures whether the score reacts to falsified
 evidence (detection) and stays put under meaning-preserving edits (false alarms).
 """
@@ -13,13 +13,13 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from typing import Callable, Literal, Sequence
 
-from mechcal.eval.evidence_v4 import (
-    ArtifactStore, EvidenceClaim, Quantity, QuantitySource, SubmissionV4, resolve_pointer,
+from mechcal.eval.submission import (
+    ArtifactStore, EvidenceClaim, Quantity, QuantitySource, Submission, resolve_pointer,
 )
 from mechcal.eval.grounding import close, statement_numbers
 
 Expected = Literal["decrease", "no_increase", "no_change"]
-Scorer = Callable[[SubmissionV4, ArtifactStore, str], Sequence[float]]
+Scorer = Callable[[Submission, ArtifactStore, str], Sequence[float]]
 
 _FLIPS = [
     ("bright", "dark"), ("increases", "decreases"), ("increase", "decrease"), ("higher", "lower"),
@@ -35,7 +35,7 @@ class Perturbation:
     operator: str
     rank: int
     expected: Expected
-    submission: SubmissionV4
+    submission: Submission
     store: ArtifactStore
     note: str = ""
 
@@ -68,11 +68,11 @@ class PerturbationResult:
         return self.delta == 0
 
 
-def _copy(submission: SubmissionV4, store: ArtifactStore):
+def _copy(submission: Submission, store: ArtifactStore):
     return submission.model_copy(deep=True), store.model_copy(deep=True)
 
 
-def _prediction(submission: SubmissionV4, rank: int):
+def _prediction(submission: Submission, rank: int):
     return next(p for p in submission.mechanism_predictions if p.rank == rank)
 
 
@@ -88,7 +88,7 @@ def _replace_number(statement: str, old_value: float, new_value: float) -> str |
     return None
 
 
-def _sourced(submission: SubmissionV4, rank: int):
+def _sourced(submission: Submission, rank: int):
     pred = _prediction(submission, rank)
     for ci, claim in enumerate(pred.evidence):
         for qi, q in enumerate(claim.quantities):
@@ -226,7 +226,7 @@ def default_operators(donor: ArtifactStore | None = None):
 
 
 def run_suite(
-    items: Sequence[tuple[SubmissionV4, ArtifactStore, str, ArtifactStore | None]],
+    items: Sequence[tuple[Submission, ArtifactStore, str, ArtifactStore | None]],
     scorer: Scorer, *, ranks: Sequence[int] = (1,),
 ) -> list[PerturbationResult]:
     """``items``: (submission, store, case SMILES, donor store from another case or None)."""
