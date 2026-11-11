@@ -77,3 +77,9 @@ Supply the same explicit case set to each method. No benchmark selection
 policy or private case exclusion is applied by the public commands. Check
 case counts and evaluation failure fields before interpreting a summary.
 Model and judge outputs are generated locally and excluded from distribution.
+
+## Evaluation v2 (in progress)
+
+The revision plan for artifact-grounded evidence scoring, metric-validity perturbations,
+clustered statistics and dataset analyses is in [evaluation-v2.md](evaluation-v2.md).
+`examples/dataset_report.py` produces the offline dataset report without API calls.
