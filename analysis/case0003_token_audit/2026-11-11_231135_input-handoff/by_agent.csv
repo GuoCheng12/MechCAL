@@ -1,0 +1,7 @@
+agent,calls,input_tokens,output_tokens,total_tokens,cached_input_tokens,reasoning_output_tokens,summed_request_elapsed_seconds
+coverage_reviewer,2,28492,3099,31591,17664,1802,24.34337886609137
+exploration_reviewer,3,39528,8704,48232,9600,3500,54.51497180014849
+impact_reviewer,3,31910,3997,35907,8064,1746,25.794906890019774
+microscopic_worker_task,1,5939,92,6031,0,0,1.1845272593200207
+planner,4,104320,10914,115234,40960,6480,69.04764014109969
+worker,2,14150,2040,16190,4864,1375,15.140938026830554

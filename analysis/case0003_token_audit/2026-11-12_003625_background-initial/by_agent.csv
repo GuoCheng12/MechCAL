@@ -1,0 +1,6 @@
+agent,calls,input_tokens,output_tokens,total_tokens,cached_input_tokens,reasoning_output_tokens,summed_request_elapsed_seconds
+coverage_reviewer,1,13764,3163,16927,13568,1649,22.67159252613783
+exploration_reviewer,2,21924,2047,23971,2944,1637,13.595148088410497
+impact_reviewer,2,20066,3212,23278,5376,1685,19.4036064427346
+planner,6,121248,11736,132984,44800,4576,66.13378318026662
+worker,2,13158,1730,14888,4864,770,10.756816500797868

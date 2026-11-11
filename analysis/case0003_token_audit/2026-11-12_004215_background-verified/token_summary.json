@@ -1,0 +1,65 @@
+{
+  "source_run_name": "mechcal_background_verified_0003_20261112",
+  "case_id": "AIE_DDX_MECH_V4_0003",
+  "started_at_shanghai": "2026-11-12T00:42:15.970940+08:00",
+  "status": "paused",
+  "phase": "worker_task",
+  "finalized": false,
+  "judge_called": false,
+  "rounds": 2,
+  "scientific_computations": 2,
+  "wall_elapsed_seconds": 383.958,
+  "totals": {
+    "calls": 14,
+    "calls_with_usage": 14,
+    "input_tokens": 188374,
+    "output_tokens": 21253,
+    "total_tokens": 209627,
+    "cached_input_tokens": 78592,
+    "reasoning_output_tokens": 14968,
+    "summed_request_elapsed_seconds": 138.55311325751245
+  },
+  "by_role": {
+    "coverage_reviewer": {
+      "calls": 2,
+      "calls_with_usage": 2,
+      "input_tokens": 27599,
+      "output_tokens": 5492,
+      "total_tokens": 33091,
+      "cached_input_tokens": 17664,
+      "reasoning_output_tokens": 3617,
+      "summed_request_elapsed_seconds": 37.59060058183968
+    },
+    "microscopic_worker_task": {
+      "calls": 8,
+      "calls_with_usage": 8,
+      "input_tokens": 88950,
+      "output_tokens": 3773,
+      "total_tokens": 92723,
+      "cached_input_tokens": 31104,
+      "reasoning_output_tokens": 2546,
+      "summed_request_elapsed_seconds": 24.86819157190621
+    },
+    "planner": {
+      "calls": 4,
+      "calls_with_usage": 4,
+      "input_tokens": 71825,
+      "output_tokens": 11988,
+      "total_tokens": 83813,
+      "cached_input_tokens": 29824,
+      "reasoning_output_tokens": 8805,
+      "summed_request_elapsed_seconds": 76.09432110376656
+    }
+  },
+  "original_api_telemetry_present": false,
+  "telemetry_source": "case/history/command_requests.jsonl",
+  "resumable_archive": false,
+  "archive_note": "Analysis archive. Source paths are anonymized; binary wavefunctions and locks are excluded.",
+  "accounting_note": "Cached input is part of input. Reasoning output is part of output. Neither is additive.",
+  "bytes_note": "Component bytes/fingerprints describe original messages, before path redaction. They are not token estimates.",
+  "source_files": 1012,
+  "included_files": 823,
+  "excluded_files": 189,
+  "archive_bytes": 4366799,
+  "archive_sha256": "24581257da6e950f8cd5bab9529e86e449236b7e1bb0969b91d949c7f3658b0b"
+}

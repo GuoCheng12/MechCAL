@@ -1,0 +1,85 @@
+{
+  "source_run_name": "mechcal_background_0003_20261112",
+  "case_id": "AIE_DDX_MECH_V4_0003",
+  "started_at_shanghai": "2026-11-12T00:36:25.458677+08:00",
+  "status": "paused",
+  "phase": "exploration_review",
+  "finalized": false,
+  "judge_called": false,
+  "rounds": 1,
+  "scientific_computations": 1,
+  "wall_elapsed_seconds": 319.857,
+  "totals": {
+    "calls": 13,
+    "calls_with_usage": 13,
+    "input_tokens": 190160,
+    "output_tokens": 21888,
+    "total_tokens": 212048,
+    "cached_input_tokens": 71552,
+    "reasoning_output_tokens": 10317,
+    "summed_request_elapsed_seconds": 132.5609467383474
+  },
+  "by_role": {
+    "coverage_reviewer": {
+      "calls": 1,
+      "calls_with_usage": 1,
+      "input_tokens": 13764,
+      "output_tokens": 3163,
+      "total_tokens": 16927,
+      "cached_input_tokens": 13568,
+      "reasoning_output_tokens": 1649,
+      "summed_request_elapsed_seconds": 22.67159252613783
+    },
+    "exploration_reviewer": {
+      "calls": 2,
+      "calls_with_usage": 2,
+      "input_tokens": 21924,
+      "output_tokens": 2047,
+      "total_tokens": 23971,
+      "cached_input_tokens": 2944,
+      "reasoning_output_tokens": 1637,
+      "summed_request_elapsed_seconds": 13.595148088410497
+    },
+    "impact_reviewer": {
+      "calls": 2,
+      "calls_with_usage": 2,
+      "input_tokens": 20066,
+      "output_tokens": 3212,
+      "total_tokens": 23278,
+      "cached_input_tokens": 5376,
+      "reasoning_output_tokens": 1685,
+      "summed_request_elapsed_seconds": 19.4036064427346
+    },
+    "planner": {
+      "calls": 6,
+      "calls_with_usage": 6,
+      "input_tokens": 121248,
+      "output_tokens": 11736,
+      "total_tokens": 132984,
+      "cached_input_tokens": 44800,
+      "reasoning_output_tokens": 4576,
+      "summed_request_elapsed_seconds": 66.13378318026662
+    },
+    "worker": {
+      "calls": 2,
+      "calls_with_usage": 2,
+      "input_tokens": 13158,
+      "output_tokens": 1730,
+      "total_tokens": 14888,
+      "cached_input_tokens": 4864,
+      "reasoning_output_tokens": 770,
+      "summed_request_elapsed_seconds": 10.756816500797868
+    }
+  },
+  "original_api_telemetry_present": false,
+  "telemetry_source": "case/history/command_requests.jsonl",
+  "resumable_archive": false,
+  "archive_note": "Analysis archive. Source paths are anonymized; binary wavefunctions and locks are excluded.",
+  "accounting_note": "Cached input is part of input. Reasoning output is part of output. Neither is additive.",
+  "bytes_note": "Component bytes/fingerprints describe original messages, before path redaction. They are not token estimates.",
+  "source_files": 1006,
+  "included_files": 819,
+  "excluded_files": 187,
+  "archive_bytes": 2314147,
+  "archive_sha256": "a02e88b6c9cb55e776463196a89ef1a1961fe0bc04826ff1e9a474960cd623c7"
+}

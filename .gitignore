@@ -36,3 +36,7 @@ third_party/
 *.pth
 *.zip
 *.tar.gz
+# Explicitly approved historical Case 0003 audit exports only.
+!/analysis/case0003_token_audit/2026-11-*/api_telemetry.jsonl
+!/analysis/case0003_token_audit/2026-11-*/case/history/command_requests.jsonl
+!/analysis/case0003_token_audit/2026-11-*/records.tar.gz
