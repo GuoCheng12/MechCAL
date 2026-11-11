@@ -67,10 +67,49 @@ the grounded evidence contract, and replaces the orchestration.
   The plausibility edit and its justification are recorded per step; this is the data
   for the "does evidence change rankings in the right direction" analysis.
 - **Critic** (merges the current Scientific Reviewer and Exploration Agent). Called
-  after every k=3 computations and once before submission. It sees the board and the
-  Layer A report of current claims; it returns at most three proposals (an
-  under-weighted family plus a discriminating test, or a claim to correct). Planner may
-  accept or decline; acceptance is logged. Critic never edits the board.
+  after every k=3 computations and once before submission. It works in two steps:
+  first it ranks the 11 families from a *facts-only view* (structural facts and artifact
+  values, without the Planner's plausibilities, reasons or ranking), then it compares its
+  ranking with the board. Disagreements, untested families and claims whose wording goes
+  beyond the cited values become at most three proposals, each with a discriminating
+  test. Planner must answer each proposal (accept / adapt / decline with a reason); the
+  answer is logged. Critic never edits the board. This keeps the useful part of the
+  0.2.0 Exploration Agent (an isolated fact view) without its per-result cost.
+
+## 3a. Who does what (mapping from 0.2.0)
+
+| 0.2.0 role | Responsibility | Where it goes |
+| --- | --- | --- |
+| Worker: choose parameters, chain steps | operational | Recipes (fixed, validated parameters); Planner supplies only scientific choices (state, coordinate, conformer) |
+| Worker: explain a result | interpretation | Planner, in the same call that receives the observation, writing cited claims |
+| Coverage Reviewer (cold start) | list possibilities | Deterministic structural facts + all 11 families on the board from step 0 |
+| Impact Reviewer (after every result) | which beliefs should move | Planner board update on each observation; factual consistency by Layer A self-check |
+| Exploration Agent | independent alternatives | Critic (facts-only view, periodic) |
+| Final Reviewer / delivery repair | text vs records consistency | Not needed: submission is a projection of cited board claims, checked by Layer A |
+
+Fallback kept open: if the pilot shows the Planner mis-cites or mis-reads observations,
+interpretation moves into a small dedicated call (an "interpreter") that sees only the new
+observation and returns cited claims. That is a scoped worker, added only on evidence.
+
+## 3b. Against anchoring on the first three mechanisms
+
+The 0.2.0 runs showed the Planner repeatedly confirming its initial top labels with easy
+evidence. The redesign does not rely on a reviewer prompt alone:
+
+1. **Comparison, not confirmation.** Every computation request names at least two
+   families it is meant to separate and the outcome expected under each. A result then
+   updates both, and a request that only "supports X" is rejected by the schema.
+2. **All 11 families stay visible.** The board lists every family with a status
+   (untested / tested-supported / tested-weakened / not testable with available tools)
+   and the cheapest test that would change it.
+3. **Blind Critic.** The facts-only ranking step above is independent of the Planner's
+   beliefs; when its top-3 differs, the Planner must address the difference.
+4. **Submission check.** Before submit, a family ranked 4–6 whose discriminating test is
+   untried and affordable within budget triggers a Critic proposal that must be answered.
+   This is a prompt-for-decision, not a forced computation or a forced rank change.
+5. **Measured, not assumed.** Logged per case: share of computations targeting the
+   initial top-3, families tested, rank changes after evidence and whether they moved
+   toward the reference. These numbers go into the paper either way.
 - **Gateway** (`mechcal/eval/tool_gateway.py`): executes tools and recipes, persists
   artifacts, returns pointer-indexed values.
 - **Recipes** (`mechcal/agent/recipes.py`): named chains with fixed, validated parameters,
