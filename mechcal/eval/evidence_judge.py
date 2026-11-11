@@ -240,3 +240,29 @@ class EvidenceJudge:
                     "used_claims": used, "status": "scored", "attempts": attempt + 1,
                     "judgement": judgement.model_dump(), "grounding": check.model_dump()}
         return {"score": None, "status": "invalid_judgement", "error": feedback, "grounding": check.model_dump()}
+
+
+class JudgeClientAdapter:
+    """Adapts the runtime JSON client to the judge's ``complete_json(system, payload, schema)``.
+
+    Tries the structured json_schema format first; if the provider rejects the schema, falls back to
+    json_object mode with the schema embedded in the payload. Usage is accumulated in ``usage``.
+    """
+
+    def __init__(self, client) -> None:
+        self.client, self.usage, self.schema_mode = client, [], "json_schema"
+
+    def complete_json(self, system: str, payload: dict, schema: dict) -> dict:
+        if self.schema_mode == "json_schema":
+            try:
+                result = self.client.complete_json_result(
+                    system_prompt=system, payload=payload,
+                    response_format={"type": "json_schema", "json_schema": {"name": "judgement", "schema": schema, "strict": False}})
+                self.usage.append(result.usage)
+                return result.data
+            except Exception:  # noqa: BLE001 - provider schema limitation; record and fall back
+                self.schema_mode = "json_object"
+        result = self.client.complete_json_result(system_prompt=system, payload={**payload, "output_schema": schema},
+                                                  response_format={"type": "json_object"})
+        self.usage.append(result.usage)
+        return result.data

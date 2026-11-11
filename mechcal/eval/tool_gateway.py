@@ -18,10 +18,61 @@ from typing import Any
 
 from mechcal.eval.submission import EvaluatorArtifact, ArtifactStore, resolve_pointer
 
-MAX_OBSERVATION_VALUES = 80
+MAX_OBSERVATION_VALUES = 120
 MAX_STRING_CHARS = 300
 # Bookkeeping leaves that are not scientific observations.
 NOISE_SEGMENTS = ("/timing/", "/tool_args/", "/runtime/", "/provenance/")
+
+
+SKIP_KEYS = {"mulliken_charges", "excited_to_excited_transition_dipoles", "transition_conventions",
+             "section_presence", "requested_parameters", "effective_parameters", "method_provenance",
+             "tool_args", "timing", "runtime", "provenance", "file_paths", "coordinates", "xyz",
+             "positions", "geometry_xyz", "atom_map", "step_records", "raw_text", "stdout", "stderr"}
+MAX_ROWS = 12
+MAX_INNER = 3
+
+
+def _token(key) -> str:
+    return str(key).replace("~", "~0").replace("/", "~1")
+
+
+def observable_fields(document: Any, prefix: str = "", omitted: dict | None = None,
+                      depth: int = 0) -> tuple[list[tuple[str, float]], list[tuple[str, str]], dict]:
+    """Scientific leaves for an agent observation: numbers and short labels with exact pointers.
+
+    Bulky or bookkeeping branches are skipped and reported in ``omitted`` (pointer -> size) so
+    the agent can fetch them with an exact read. Long lists keep their first rows; nested
+    lists inside rows keep their first few items. Pointers always resolve in the artifact.
+    """
+    omitted = {} if omitted is None else omitted
+    numbers: list[tuple[str, float]] = []
+    labels: list[tuple[str, str]] = []
+    if isinstance(document, dict):
+        for key, value in document.items():
+            pointer = f"{prefix}/{_token(key)}"
+            if key in SKIP_KEYS or str(key).endswith(("_path", "_paths", "_sha256")):
+                if isinstance(value, (list, dict)) and value:
+                    omitted[pointer] = len(value)
+                continue
+            n, lab, _ = observable_fields(value, pointer, omitted, depth + 1)
+            numbers += n
+            labels += lab
+    elif isinstance(document, list):
+        limit = MAX_ROWS if depth <= 4 and all(isinstance(x, dict) for x in document) else MAX_INNER
+        for i, value in enumerate(document[:limit]):
+            n, lab, _ = observable_fields(value, f"{prefix}/{i}", omitted, depth + 1)
+            numbers += n
+            labels += lab
+        if len(document) > limit:
+            omitted[prefix] = len(document)
+    elif isinstance(document, bool):
+        labels.append((prefix, str(document).lower()))
+    elif isinstance(document, (int, float)):
+        if document == document and abs(document) != float("inf"):
+            numbers.append((prefix, float(document)))
+    elif isinstance(document, str) and 0 < len(document) <= 80 and "/" not in document[:1]:
+        labels.append((prefix, document))
+    return numbers, labels, omitted
 
 
 def numeric_leaves(document: Any, prefix: str = "") -> list[tuple[str, float]]:
@@ -166,14 +217,18 @@ class ToolGateway:
 
     def observation(self, result, alias: str) -> dict:
         artifact = self.store.artifacts[alias]
-        values = [(p, v) for p, v in numeric_leaves(artifact.outputs)
-                  if not any(seg in p + "/" for seg in NOISE_SEGMENTS)]
+        root = artifact.outputs.get("structured_results", {})
+        focus = "/structured_results/parsed_observables" if isinstance(root.get("parsed_observables"), dict) else "/structured_results"
+        numbers, labels, omitted = observable_fields(resolve_pointer(artifact.outputs, focus), focus)
+        numbers = [(p, v) for p, v in numbers if not any(seg in p + "/" for seg in NOISE_SEGMENTS)]
         return {
             "artifact_id": alias, "tool": result.capability_id, "status": result.status,
             "summary": result.summary[:MAX_STRING_CHARS],
             "failure": None if result.status == "success" else result.failure.message[:MAX_STRING_CHARS],
-            "values": {p: v for p, v in values[:MAX_OBSERVATION_VALUES]},
-            "values_truncated": max(0, len(values) - MAX_OBSERVATION_VALUES),
+            "values": {p: v for p, v in numbers[:MAX_OBSERVATION_VALUES]},
+            "labels": {p: v for p, v in labels[:MAX_OBSERVATION_VALUES]},
+            "values_truncated": max(0, len(numbers) - MAX_OBSERVATION_VALUES),
+            "omitted_for_read": dict(list(omitted.items())[:20]),
             "reusable_artifacts": [a.artifact_id for a in result.artifact_updates],
             "limitations": list(result.structured_results.get("limitations", []))[:5]
             if isinstance(result.structured_results.get("limitations"), list) else [],
