@@ -29,8 +29,8 @@ the grounded evidence contract, and replaces the orchestration.
    result arrives. The final submission is a projection of the board, not a rewrite.
 3. **Tools through the recorded gateway only.** Same gateway as the ReAct baseline, so
    costs and artifacts are comparable by construction.
-4. **Recipes instead of worker LLMs for known chains.** Deterministic multi-step tool
-   chains for frequent observables remove Worker calls and parameter traps.
+4. **Recipes for known chains, a scoped Worker for adaptive ones.** Deterministic multi-step tool
+   chains remove parameter traps for frequent observables; open-ended tasks are delegated.
 5. **Explicit budgets, reported.** Max computations, max model calls, max tokens; the
    stop reason is part of the output.
 6. **No hidden-reference, rubric or judge access.** The internal self-check is the
@@ -80,16 +80,39 @@ the grounded evidence contract, and replaces the orchestration.
 
 | 0.2.0 role | Responsibility | Where it goes |
 | --- | --- | --- |
-| Worker: choose parameters, chain steps | operational | Recipes (fixed, validated parameters); Planner supplies only scientific choices (state, coordinate, conformer) |
+| Worker: choose parameters, chain steps | operational | Recipes for standard chains; the scoped Worker (below) for adaptive tasks |
 | Worker: explain a result | interpretation | Planner, in the same call that receives the observation, writing cited claims |
 | Coverage Reviewer (cold start) | list possibilities | Deterministic structural facts + all 11 families on the board from step 0 |
 | Impact Reviewer (after every result) | which beliefs should move | Planner board update on each observation; factual consistency by Layer A self-check |
 | Exploration Agent | independent alternatives | Critic (facts-only view, periodic) |
 | Final Reviewer / delivery repair | text vs records consistency | Not needed: submission is a projection of cited board claims, checked by Layer A |
 
-Fallback kept open: if the pilot shows the Planner mis-cites or mis-reads observations,
-interpretation moves into a small dedicated call (an "interpreter") that sees only the new
-observation and returns cited claims. That is a scoped worker, added only on evidence.
+### Worker (retained, scoped) — revised 2026-11-12 after author review
+
+Recipes are a fast path, not the only path. Real cases need adaptive experimentation that
+fixed chains cannot anticipate; the full 0.2.0 Case 0003 run already needed it (a
+medium-grid hole-electron analysis failed its numerical checks and was redone at high
+grid; a PBE0 spin-state route timed out after SCF and a lighter PBE route returned
+partial states; contact scans needed coordinate redefinition). So the Planner has three
+ways to obtain evidence:
+
+| Action | Use when | LLM calls |
+| --- | --- | --- |
+| `recipe` | a standard observable with validated defaults | 0 |
+| `tool` | one calculation with Planner-chosen scientific arguments | 0 |
+| `delegate` | an adaptive task: choose states/conformers/poses from results, troubleshoot a failed or numerically rejected calculation, vary a coordinate range, compare settings | Worker, bounded |
+
+The Worker receives a task (goal, the families it should separate, allowed tools/recipes,
+budget) and works through the same gateway, so it sees pointer-indexed values and never
+navigates record directories. It may retry with different parameters; any change of
+scientific method (functional, basis, state, geometry source, grid) is recorded as a
+separate artifact and stated in its claims, never substituted silently. It returns cited
+claims, a short account of what it tried and why, and unresolved failures. There is no
+separate explanation or impact-review call after it returns.
+
+Whether delegation pays for itself is an experiment, not an assumption: pilots run
+Planner+recipes+tools with and without `delegate` at equal budget, and the paper reports
+the Worker as an ablation either way.
 
 ## 3b. Against anchoring on the first three mechanisms
 
