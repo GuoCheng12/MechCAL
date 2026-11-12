@@ -390,3 +390,12 @@ def test_wrong_source_kind_is_refused_before_running_and_cards_name_input_kinds(
     measurements = cards["microscopic.extract_geometry_descriptors_from_bundle"]["args"]["measurements"]
     assert "measurement_id" in measurements["item_required"]
     assert "Mutually exclusive" in cards[TORSION]["args"]["dihedral_atoms"]["description"]
+
+
+def test_read_works_on_input_structures(tmp_path):
+    from mechcal.eval.tool_gateway import ToolGateway
+    g = ToolGateway(case_id="CASE", smiles=SMILES, run_dir=tmp_path)
+    out = g.read("structure:prepared")
+    assert out["status"] == "ok" and out["value"]["kind"] == "prepared_structure" and out["value"]["xyz_angstrom"]
+    assert g.read("structure:prepared", "/kind")["value"] == "prepared_structure"
+    assert "known ids" in g.read("nope")["error"]

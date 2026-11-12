@@ -299,7 +299,12 @@ class ToolGateway:
         """Exact lookup into a recorded artifact (no computation, no new evidence)."""
         artifact = self.store.artifacts.get(artifact_id)
         if artifact is None:
-            return {"status": "rejected", "error": f"Unknown artifact {artifact_id}"}
+            record = next((r for r in self.case_run.artifact_manifest.artifacts if r.artifact_id == artifact_id), None)
+            if record is None:
+                known = [r.artifact_id for r in self.case_run.artifact_manifest.artifacts] + sorted(
+                    a for a in self.store.artifacts if a.startswith("T"))
+                return {"status": "rejected", "error": f"Unknown artifact {artifact_id}; known ids: {known[:30]}"}
+            return self._read_record(record, pointer)
         try:
             value = resolve_pointer(artifact.outputs, pointer)
         except KeyError:
@@ -357,6 +362,22 @@ class ToolGateway:
     def derived_from(self, artifact_id: str, root: str) -> bool:
         artifact_id, root = self.resolve(artifact_id), self.resolve(root)
         return artifact_id == root or root in self.ancestors(artifact_id)
+
+    def _read_record(self, record, pointer: str) -> dict:
+        """Read an input artifact (structure, geometry, bundle record): kind, metadata and its XYZ."""
+        xyz_path = (record.file_paths or {}).get("xyz")
+        xyz = Path(xyz_path).read_text(encoding="utf-8") if xyz_path and Path(xyz_path).is_file() else None
+        view = {"artifact_id": record.artifact_id, "kind": record.kind, "status": record.status,
+                "metadata": {k: v for k, v in (record.metadata or {}).items()
+                             if not k.endswith("_path") and k not in {"computed_observables"}},
+                "xyz_angstrom": xyz, "atom_index_base_in_xyz": 0}
+        try:
+            value = resolve_pointer(view, pointer) if pointer else view
+        except KeyError:
+            return {"status": "rejected", "error": f"Pointer {pointer!r} not found; readable keys: {sorted(view)}"}
+        text = json.dumps(value, ensure_ascii=False, default=str)
+        return {"status": "ok", "artifact_id": record.artifact_id, "pointer": pointer,
+                "value": value if len(text) <= 6000 else text[:6000] + " …[truncated]"}
 
     def executed_calls(self) -> int:
         return sum(c.status != "rejected" for c in self.calls)
