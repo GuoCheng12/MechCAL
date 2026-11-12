@@ -398,17 +398,29 @@ class AgentRun:
         for d in self.gateway.describe(ids):
             props = (d.get("tool_arg_schema") or {}).get("properties") or {}
             args = {}
+            defs = (d.get("tool_arg_schema") or {}).get("$defs") or {}
             for k, v in props.items():
                 spec = {key: v[key] for key in ("type", "default", "minimum", "maximum", "enum", "minItems", "maxItems")
                         if key in v and v[key] is not None}
+                if v.get("description"):
+                    spec["description"] = v["description"][:220]
                 items = v.get("items") or next((x.get("items") for x in v.get("anyOf", []) if x.get("items")), None)
+                if isinstance(items, dict) and items.get("$ref"):
+                    items = defs.get(items["$ref"].rsplit("/", 1)[-1], items)
                 if isinstance(items, dict) and items.get("enum"):
                     spec["items_enum"] = items["enum"]
+                if isinstance(items, dict) and items.get("properties"):   # list of objects: name the fields
+                    spec["item_fields"] = {f: fv.get("type") or "|".join(str(x.get("type")) for x in fv.get("anyOf", []))
+                                           for f, fv in items["properties"].items()}
+                    spec["item_required"] = items.get("required", [])
+                if isinstance(items, dict) and items.get("type") == "array":
+                    spec["items"] = "array (list of lists)"
                 if not spec.get("type") and v.get("anyOf"):
                     spec["type"] = "|".join(str(x.get("type")) for x in v["anyOf"] if x.get("type"))
                 args[k] = spec
+            kinds = list(dict.fromkeys([*(d.get("required_artifact_kinds") or []), *(d.get("source_artifact_kinds") or [])]))
             cards.append({"tool": d["capability_id"], "status": d.get("status"),
-                          "description": (d.get("description") or "")[:240], "args": args})
+                          "description": (d.get("description") or "")[:240], "input_kinds": kinds, "args": args})
         return cards
 
     def _artifacts(self) -> list[dict]:
@@ -763,7 +775,8 @@ class AgentRun:
             outcome, info, warnings = result.get("status", "error"), result, result.get("warnings", [])
             ids = [result["artifact_id"]] if result.get("artifact_id") else []
             if outcome in {"error", "rejected"}:
-                info = {"failure_class": "system", "failure_code": outcome, "failure": result.get("error")}
+                info = {"failure_class": result.get("failure_class", "system"),
+                        "failure_code": result.get("failure_code", outcome), "failure": result.get("error")}
         return sv.Attempt(n=len(task.attempts) + 1, kind=kind, name=name, args=args, outcome=outcome, artifact_ids=ids,
                           failure_class=info.get("failure_class"), failure_code=info.get("failure_code"),
                           failure=(info.get("failure") or info.get("error") or None) if outcome != "success" else None,

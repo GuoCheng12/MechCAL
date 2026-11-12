@@ -208,6 +208,14 @@ class ToolGateway:
                 tool_args["max_wall_seconds"] = int(left)
                 note = f"max_wall_seconds lowered from {requested} to {int(left)} (remaining tool wall-time budget)."
         cap = self.registry.require(capability_id)
+        kinds = {x.artifact_id: x.kind for x in self.case_run.artifact_manifest.artifacts}
+        source = tool_args.get("source_artifact_id")
+        if source and cap.input_artifact_kinds and kinds.get(source) not in cap.input_artifact_kinds:
+            fitting = [aid for aid, k in kinds.items() if k in cap.input_artifact_kinds]
+            self.calls.append(CallRecord(index, capability_id, tool_args, "rejected", None, 0.0, "wrong source kind"))
+            return {"status": "rejected", "failure_class": "system", "failure_code": "wrong_source_kind", "retryable": True,
+                    "error": (f"{capability_id} needs a source of kind {cap.input_artifact_kinds}; {source} is "
+                              f"{kinds.get(source, 'unknown')}. Artifacts of the right kind: {fitting or 'none yet'}.")}
         round_id, dispatch_id = f"R{index:03d}", f"gw:{index:03d}:{capability_id}"
         request = DispatchRequest(
             dispatch_id=dispatch_id, round_id=round_id, agent_name=cap.owner_agent,

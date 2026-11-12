@@ -49,11 +49,11 @@ def test_system_error_two_retries_then_blocked_technical(tmp_path):
     run, result, client = run_agent(tmp_path, planner, worker)
     report = latest_reports(client)[0]
     assert report["status"] == "blocked_technical" and report["system_corrections"]
-    assert [a["outcome"] for a in report["attempts"]] == ["precondition_missing"] * 3
+    assert [a["outcome"] for a in report["attempts"]] == ["rejected"] * 3     # refused by the source-kind check
     assert report["attempts"][1]["changed"] == {"source_artifact_id": {"from": "nope-1", "to": "nope-2"}}
     assert report["attempts"][1]["reason"] == "other id"
     assert {"code": "retry_limit", "name": DIH} in report["interceptions"]
-    assert result["tool_cost"]["tool_calls"] == 3                      # the intercepted call was not executed
+    assert result["tool_cost"]["tool_calls"] == 0                      # refused calls are never executed or charged
     assert result["protocol"]["system_failure_episodes"] == 1 and result["protocol"]["self_repaired"] == 0
 
 
@@ -376,3 +376,17 @@ def test_fixed_args_are_type_checked_at_delegation():
     assert sv.validate_fixed_args({"nstates": 8}, tools=[], recipe="excited_states", recipe_args=RECIPE_ARGS) == []
     assert "ignored" in sv.validate_fixed_args({"functional": "pbe"}, tools=[], recipe="excited_states",
                                                recipe_args=RECIPE_ARGS)[0]
+
+
+def test_wrong_source_kind_is_refused_before_running_and_cards_name_input_kinds(tmp_path):
+    from mechcal.eval.tool_gateway import ToolGateway
+    g = ToolGateway(case_id="CASE", smiles=SMILES, run_dir=tmp_path / "g")
+    out = g.call("microscopic.analyze_hole_electron_from_bundle", {"source_artifact_id": "structure:prepared"})
+    assert out["status"] == "rejected" and out["failure_code"] == "wrong_source_kind"
+    assert "amesp_baseline_bundle" in out["error"] and g.executed_calls() == 0
+    run = AgentRun(ByRole([]), case_id="CASE", smiles=SMILES, run_dir=tmp_path / "r", enable_amesp=False)
+    cards = {c["tool"]: c for c in run.tool_cards}
+    assert cards["microscopic.run_solvation_polarity_proxy"]["input_kinds"] == ["prepared_structure"]
+    measurements = cards["microscopic.extract_geometry_descriptors_from_bundle"]["args"]["measurements"]
+    assert "measurement_id" in measurements["item_required"]
+    assert "Mutually exclusive" in cards[TORSION]["args"]["dihedral_atoms"]["description"]
