@@ -47,6 +47,8 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--smiles")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=ROOT / "mechcal.local.toml")
+    parser.add_argument("--allow-test-case", action="store_true",
+                        help="run a held-out test case (only after the system is frozen)")
     for name, default in asdict(AgentConfig()).items():
         flag = "--" + name.replace("_", "-")
         if isinstance(default, bool):
@@ -54,6 +56,9 @@ def main(argv: list[str] | None = None) -> dict:
         else:
             parser.add_argument(flag, type=type(default), default=default)
     args = parser.parse_args(argv)
+    from mechcal.eval.splits import HELD_OUT, split_of
+    if split_of(args.case_id) == "test" and not args.allow_test_case:
+        raise SystemExit(HELD_OUT.format(case=args.case_id, flag="--allow-test-case"))
     if args.out.exists() and any(args.out.iterdir()):
         raise SystemExit(f"{args.out} is not empty; use a new output directory")
     smiles = args.smiles or public_smiles(args.case_id)

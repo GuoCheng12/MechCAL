@@ -68,9 +68,16 @@ def main(argv: list[str] | None = None) -> list[dict]:
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--parallel", type=int, default=6)
     parser.add_argument("--grade", action="store_true", help="grade each finished run (calls the judge model)")
+    parser.add_argument("--allow-test", action="store_true", help="allow held-out test cases (only after freezing)")
     args = parser.parse_args(argv)
     if not (args.cases or args.cases_file):
         parser.error("give --cases or --cases-file")
+    from mechcal.eval.splits import HELD_OUT, split_of
+    held = [c for c in case_ids(args) if split_of(c) == "test"]
+    if held and not args.allow_test:
+        raise SystemExit(HELD_OUT.format(case=", ".join(held), flag="--allow-test"))
+    if args.allow_test:
+        extra = [*extra, "--allow-test-case"]
     if not os.environ.get("MECHCAL_OPENAI_API_KEY") and not os.environ.get("DEEPSEEK_API_KEY"):
         raise SystemExit("No API key in the environment; source ~/.config/mechcal/secrets.env and env/deepseek.env.sh")
     args.out.mkdir(parents=True, exist_ok=True)

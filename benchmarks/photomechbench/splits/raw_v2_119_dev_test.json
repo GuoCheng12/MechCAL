@@ -1,0 +1,437 @@
+{
+ "name": "photomechbench_raw_v2_119_dev_test",
+ "created": "2026-11-12",
+ "method": "Split by paper cluster (shared DOI). Development = cases already used to build the agent plus cases added for coverage of primary families, charge, size and elements; all other cases are test. Test cases must not be run by the agent before the system (tools, cards, prompts, rubric) is frozen.",
+ "counts": {
+  "dev_cases": 17,
+  "test_cases": 102,
+  "dev_papers": 16,
+  "test_papers": 56
+ },
+ "dev": [
+  {
+   "case_id": "AIE_DDX_MECH_V4_0003",
+   "role": "used_in_development",
+   "reason": "smoke runs 1-7 of the agent",
+   "primary_labels": [
+    "PACKING_HOST_MATRIX_CONFINEMENT",
+    "TRIPLET_METAL_ENERGY_TRANSFER"
+   ],
+   "atoms_with_h": 56,
+   "charge": 0,
+   "elements": [
+    "Au",
+    "C",
+    "F",
+    "N",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0009",
+   "role": "added_for_coverage",
+   "reason": "AGGREGATE + PACKING primary",
+   "primary_labels": [
+    "AGGREGATE_EXCITON_EXCIMER",
+    "PACKING_HOST_MATRIX_CONFINEMENT"
+   ],
+   "atoms_with_h": 50,
+   "charge": 0,
+   "elements": [
+    "C",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0019",
+   "role": "added_for_coverage",
+   "reason": "ESIPT + RACI primary (second ESIPT case)",
+   "primary_labels": [
+    "ESIPT_PT",
+    "RACI_CI_ACCESS"
+   ],
+   "atoms_with_h": 26,
+   "charge": 0,
+   "elements": [
+    "C",
+    "N",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0020",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "AGGREGATE_EXCITON_EXCIMER",
+    "ESIPT_PT"
+   ],
+   "atoms_with_h": 38,
+   "charge": 0,
+   "elements": [
+    "C",
+    "F",
+    "N",
+    "O",
+    "S"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0030",
+   "role": "added_for_coverage",
+   "reason": "HOST_GUEST + RIM primary; charged (+2), boron, 88 atoms",
+   "primary_labels": [
+    "HOST_GUEST_INTERACTION",
+    "RIM_RIR_RIV"
+   ],
+   "atoms_with_h": 88,
+   "charge": 2,
+   "elements": [
+    "B",
+    "C",
+    "N",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0047",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "ICT_TICT_CT"
+   ],
+   "atoms_with_h": 33,
+   "charge": 0,
+   "elements": [
+    "C",
+    "N",
+    "O",
+    "S"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0056",
+   "role": "added_for_coverage",
+   "reason": "RACI primary (none in the used set)",
+   "primary_labels": [
+    "RACI_CI_ACCESS"
+   ],
+   "atoms_with_h": 44,
+   "charge": 0,
+   "elements": [
+    "C"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0068",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "PET_ET"
+   ],
+   "atoms_with_h": 40,
+   "charge": 0,
+   "elements": [
+    "C",
+    "N",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0083",
+   "role": "added_for_coverage",
+   "reason": "PET primary (second PET case); chlorine",
+   "primary_labels": [
+    "PET_ET"
+   ],
+   "atoms_with_h": 37,
+   "charge": 0,
+   "elements": [
+    "C",
+    "Cl",
+    "N",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0084",
+   "role": "added_for_coverage",
+   "reason": "RACI + RIM primary",
+   "primary_labels": [
+    "RACI_CI_ACCESS",
+    "RIM_RIR_RIV"
+   ],
+   "atoms_with_h": 51,
+   "charge": 0,
+   "elements": [
+    "C"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0101",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "RIM_RIR_RIV"
+   ],
+   "atoms_with_h": 39,
+   "charge": 0,
+   "elements": [
+    "C",
+    "N",
+    "O",
+    "S"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0104",
+   "role": "added_for_coverage",
+   "reason": "RIM primary (most frequent primary family); 72 atoms",
+   "primary_labels": [
+    "RIM_RIR_RIV"
+   ],
+   "atoms_with_h": 72,
+   "charge": 0,
+   "elements": [
+    "C"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0140",
+   "role": "added_for_coverage",
+   "reason": "HOST_GUEST primary (none in the used set); smallest such case",
+   "primary_labels": [
+    "HOST_GUEST_INTERACTION",
+    "SOKR_ANTI_KASHA"
+   ],
+   "atoms_with_h": 24,
+   "charge": 0,
+   "elements": [
+    "C",
+    "O"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0141",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "ICT_TICT_CT",
+    "SOKR_ANTI_KASHA"
+   ],
+   "atoms_with_h": 34,
+   "charge": 0,
+   "elements": [
+    "C",
+    "Fe"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0152",
+   "role": "added_for_coverage",
+   "reason": "RADIATIVE + SOKR primary: a second true RADIATIVE case, to see whether reducing the RADIATIVE over-prediction hurts real ones (its paper also brings 0153)",
+   "primary_labels": [
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "SOKR_ANTI_KASHA"
+   ],
+   "atoms_with_h": 33,
+   "charge": 0,
+   "elements": [
+    "C"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0153",
+   "role": "same_paper_as_a_development_case",
+   "reason": "same paper as a development case",
+   "primary_labels": [
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "SOKR_ANTI_KASHA"
+   ],
+   "atoms_with_h": 36,
+   "charge": 0,
+   "elements": [
+    "C"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0154",
+   "role": "used_in_development",
+   "reason": "dev1/dev2 runs",
+   "primary_labels": [
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_METAL_ENERGY_TRANSFER"
+   ],
+   "atoms_with_h": 36,
+   "charge": 0,
+   "elements": [
+    "C",
+    "F",
+    "O"
+   ]
+  }
+ ],
+ "test": [
+  "AIE_DDX_MECH_V4_0001",
+  "AIE_DDX_MECH_V4_0002",
+  "AIE_DDX_MECH_V4_0004",
+  "AIE_DDX_MECH_V4_0005",
+  "AIE_DDX_MECH_V4_0006",
+  "AIE_DDX_MECH_V4_0007",
+  "AIE_DDX_MECH_V4_0008",
+  "AIE_DDX_MECH_V4_0010",
+  "AIE_DDX_MECH_V4_0011",
+  "AIE_DDX_MECH_V4_0012",
+  "AIE_DDX_MECH_V4_0013",
+  "AIE_DDX_MECH_V4_0014",
+  "AIE_DDX_MECH_V4_0015",
+  "AIE_DDX_MECH_V4_0016",
+  "AIE_DDX_MECH_V4_0017",
+  "AIE_DDX_MECH_V4_0018",
+  "AIE_DDX_MECH_V4_0021",
+  "AIE_DDX_MECH_V4_0022",
+  "AIE_DDX_MECH_V4_0023",
+  "AIE_DDX_MECH_V4_0024",
+  "AIE_DDX_MECH_V4_0025",
+  "AIE_DDX_MECH_V4_0026",
+  "AIE_DDX_MECH_V4_0027",
+  "AIE_DDX_MECH_V4_0028",
+  "AIE_DDX_MECH_V4_0029",
+  "AIE_DDX_MECH_V4_0031",
+  "AIE_DDX_MECH_V4_0032",
+  "AIE_DDX_MECH_V4_0033",
+  "AIE_DDX_MECH_V4_0034",
+  "AIE_DDX_MECH_V4_0035",
+  "AIE_DDX_MECH_V4_0036",
+  "AIE_DDX_MECH_V4_0037",
+  "AIE_DDX_MECH_V4_0038",
+  "AIE_DDX_MECH_V4_0039",
+  "AIE_DDX_MECH_V4_0040",
+  "AIE_DDX_MECH_V4_0041",
+  "AIE_DDX_MECH_V4_0042",
+  "AIE_DDX_MECH_V4_0044",
+  "AIE_DDX_MECH_V4_0048",
+  "AIE_DDX_MECH_V4_0049",
+  "AIE_DDX_MECH_V4_0051",
+  "AIE_DDX_MECH_V4_0055",
+  "AIE_DDX_MECH_V4_0059",
+  "AIE_DDX_MECH_V4_0060",
+  "AIE_DDX_MECH_V4_0062",
+  "AIE_DDX_MECH_V4_0063",
+  "AIE_DDX_MECH_V4_0064",
+  "AIE_DDX_MECH_V4_0066",
+  "AIE_DDX_MECH_V4_0069",
+  "AIE_DDX_MECH_V4_0071",
+  "AIE_DDX_MECH_V4_0072",
+  "AIE_DDX_MECH_V4_0073",
+  "AIE_DDX_MECH_V4_0074",
+  "AIE_DDX_MECH_V4_0075",
+  "AIE_DDX_MECH_V4_0076",
+  "AIE_DDX_MECH_V4_0077",
+  "AIE_DDX_MECH_V4_0078",
+  "AIE_DDX_MECH_V4_0079",
+  "AIE_DDX_MECH_V4_0080",
+  "AIE_DDX_MECH_V4_0081",
+  "AIE_DDX_MECH_V4_0082",
+  "AIE_DDX_MECH_V4_0085",
+  "AIE_DDX_MECH_V4_0086",
+  "AIE_DDX_MECH_V4_0087",
+  "AIE_DDX_MECH_V4_0088",
+  "AIE_DDX_MECH_V4_0089",
+  "AIE_DDX_MECH_V4_0090",
+  "AIE_DDX_MECH_V4_0091",
+  "AIE_DDX_MECH_V4_0092",
+  "AIE_DDX_MECH_V4_0094",
+  "AIE_DDX_MECH_V4_0095",
+  "AIE_DDX_MECH_V4_0096",
+  "AIE_DDX_MECH_V4_0097",
+  "AIE_DDX_MECH_V4_0098",
+  "AIE_DDX_MECH_V4_0099",
+  "AIE_DDX_MECH_V4_0100",
+  "AIE_DDX_MECH_V4_0102",
+  "AIE_DDX_MECH_V4_0125",
+  "AIE_DDX_MECH_V4_0139",
+  "AIE_DDX_MECH_V4_0142",
+  "AIE_DDX_MECH_V4_0143",
+  "AIE_DDX_MECH_V4_0144",
+  "AIE_DDX_MECH_V4_0145",
+  "AIE_DDX_MECH_V4_0146",
+  "AIE_DDX_MECH_V4_0147",
+  "AIE_DDX_MECH_V4_0148",
+  "AIE_DDX_MECH_V4_0149",
+  "AIE_DDX_MECH_V4_0150",
+  "AIE_DDX_MECH_V4_0151",
+  "AIE_DDX_MECH_V4_0155",
+  "AIE_DDX_MECH_V4_0156",
+  "AIE_DDX_MECH_V4_0157",
+  "AIE_DDX_MECH_V4_0158",
+  "AIE_DDX_MECH_V4_0159",
+  "AIE_DDX_MECH_V4_0160",
+  "AIE_DDX_MECH_V4_0161",
+  "AIE_DDX_MECH_V4_0162",
+  "AIE_DDX_MECH_V4_0163",
+  "AIE_DDX_MECH_V4_0164",
+  "AIE_DDX_MECH_V4_0165",
+  "AIE_DDX_MECH_V4_0166",
+  "AIE_DDX_MECH_V4_0167"
+ ],
+ "coverage": {
+  "dev": {
+   "primary": {
+    "AGGREGATE_EXCITON_EXCIMER": 2,
+    "ESIPT_PT": 2,
+    "HOST_GUEST_INTERACTION": 2,
+    "ICT_TICT_CT": 2,
+    "PACKING_HOST_MATRIX_CONFINEMENT": 2,
+    "PET_ET": 2,
+    "RACI_CI_ACCESS": 3,
+    "RADIATIVE_RATE_STATE_BALANCE": 3,
+    "RIM_RIR_RIV": 4,
+    "SOKR_ANTI_KASHA": 4,
+    "TRIPLET_METAL_ENERGY_TRANSFER": 2
+   },
+   "any": {
+    "AGGREGATE_EXCITON_EXCIMER": 3,
+    "ESIPT_PT": 3,
+    "HOST_GUEST_INTERACTION": 2,
+    "ICT_TICT_CT": 5,
+    "PACKING_HOST_MATRIX_CONFINEMENT": 12,
+    "PET_ET": 2,
+    "RACI_CI_ACCESS": 3,
+    "RADIATIVE_RATE_STATE_BALANCE": 9,
+    "RIM_RIR_RIV": 7,
+    "SOKR_ANTI_KASHA": 5,
+    "TRIPLET_METAL_ENERGY_TRANSFER": 2
+   }
+  },
+  "test": {
+   "primary": {
+    "AGGREGATE_EXCITON_EXCIMER": 8,
+    "ESIPT_PT": 8,
+    "HOST_GUEST_INTERACTION": 15,
+    "ICT_TICT_CT": 13,
+    "PACKING_HOST_MATRIX_CONFINEMENT": 16,
+    "PET_ET": 13,
+    "RACI_CI_ACCESS": 6,
+    "RADIATIVE_RATE_STATE_BALANCE": 14,
+    "RIM_RIR_RIV": 29,
+    "SOKR_ANTI_KASHA": 11,
+    "TRIPLET_METAL_ENERGY_TRANSFER": 17
+   },
+   "any": {
+    "AGGREGATE_EXCITON_EXCIMER": 23,
+    "ESIPT_PT": 13,
+    "HOST_GUEST_INTERACTION": 21,
+    "ICT_TICT_CT": 54,
+    "PACKING_HOST_MATRIX_CONFINEMENT": 63,
+    "PET_ET": 19,
+    "RACI_CI_ACCESS": 8,
+    "RADIATIVE_RATE_STATE_BALANCE": 52,
+    "RIM_RIR_RIV": 56,
+    "SOKR_ANTI_KASHA": 11,
+    "TRIPLET_METAL_ENERGY_TRANSFER": 28
+   }
+  }
+ },
+ "sha256": "db4f3021599257cdbf38efdeb89316a0658380b7817ea7192d8e7a3e44b9f101"
+}

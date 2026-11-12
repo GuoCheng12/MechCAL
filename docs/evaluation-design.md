@@ -124,6 +124,28 @@ fooled by tampering; the grounded judge is not, and both are stable on controls.
 Each run records LLM calls, input/output/cached tokens per role, tool calls, tool wall time
 and dollar cost under a fixed price table. Comparisons are reported at matched budgets.
 
+## 9. Development and test split; protocol
+
+`benchmarks/photomechbench/splits/raw_v2_119_dev_test.json` (outside the frozen `raw_v2_119/` snapshot; built and checked by
+`examples/make_dev_test_split.py`; `tests/test_dev_test_split.py` keeps it reproducible).
+
+- Split by paper cluster: every case of a paper is on one side, so near-duplicates (all
+  within-paper) cannot leak across.
+- Development: 17 cases / 16 papers = the 7 cases already used to build the agent
+  (0003, 0047, 0020, 0068, 0101, 0154, 0141) plus cases added so that every family is a
+  primary label of at least two development cases, with charge (+2), size (up to 88 atoms)
+  and elements (Au, Fe, B, Cl, F, S) covered. Each development case records why it is there.
+- Test: the other 102 cases / 56 papers. The agent CLI and batch runner refuse test cases
+  unless `--allow-test-case` / `--allow-test` is given.
+
+Protocol:
+1. Develop on the development cases only (repeat runs: single runs vary too much to compare
+   changes). Record which design decisions were informed by development results.
+2. Freeze tools, capability cards, prompts, rubric and judge (hashes recorded).
+3. Run the agent and the baselines (Direct, ReAct with the same tool cards) on the test
+   cases; report test metrics with paper-clustered bootstrap, per family, and the floors
+   recomputed on the test cases. Report negative results as well.
+
 ## Implementation order
 
 1. Done — offline statistics + dataset analyses (`mechcal/eval/stats.py`,
