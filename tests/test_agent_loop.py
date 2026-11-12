@@ -99,7 +99,7 @@ def test_full_loop_offline(tmp_path):
                      "quantities": [{"name": "first_atom", "value": value, "artifact_id": latest["artifact_id"], "pointer": pointer}]},
                     {"label": "ICT_TICT_CT", "kind": "computed", "statement": "S1 oscillator strength is 0.91.",
                      "quantities": [{"name": "f", "value": 0.91, "artifact_id": "T999", "pointer": "/x"}]}],
-                "action": contrast(type="delegate", task="List dihedrals again and report.")}
+                "action": contrast(type="delegate", task="List dihedrals again and report.", tools=[DIH_TOOL])}
 
     planner = [
         {"oops": True},                                   # invalid -> repaired
@@ -108,7 +108,8 @@ def test_full_loop_offline(tmp_path):
                     {"label": "RIM_RIR_RIV", "kind": "structural", "statement": "Rotor next to the ring.", "fact_ids": [rotor]}],
          "action": contrast(type="tool", name=DIH_TOOL, args={"source_artifact_id": "structure:prepared"})},
         step2,
-        lambda p: {"proposal_responses": [{"proposal_id": x["proposal_id"], "decision": "decline", "reason": "test"}
+        lambda p: {"adopt": [f["finding_id"] for f in p["latest"]["claims"]],      # professor adopts the finding
+                   "proposal_responses": [{"proposal_id": x["proposal_id"], "decision": "decline", "reason": "test"}
                                           for x in p["proposals"]], "action": {"type": "submit"}},
         lambda p: {"proposal_responses": [{"proposal_id": x["proposal_id"], "decision": "decline", "reason": "test"}
                                           for x in p["proposals"]], "action": {"type": "submit"}},
@@ -117,7 +118,7 @@ def test_full_loop_offline(tmp_path):
                            {"label": "ICT_TICT_CT", "plausibility": 0.8}, {"label": "RIM_RIR_RIV", "plausibility": 0.5}],
                "tests": [{"label": "PET_ET", "separates": ["PET_ET", "ICT_TICT_CT"], "recipe_or_tool": "redox_levels"}]}] * 3
     worker = [{"thought": "run", "action": {"type": "tool", "name": DIH_TOOL, "args": {"source_artifact_id": "structure:prepared"}}},
-              lambda p: {"thought": "done", "action": {"type": "finish", "report": "listed", "claims": [
+              lambda p: {"thought": "done", "action": {"type": "report", "status": "done", "summary": "listed", "claims": [
                   {"label": "RIM_RIR_RIV", "kind": "prior", "statement": "Rotors can dissipate energy."}]}}]
     client = ByRole(planner, critic, worker)
     cfg = AgentConfig(max_planner_calls=8, max_computations=5, critic_every=2, worker_max_calls=3)

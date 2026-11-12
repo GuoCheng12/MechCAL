@@ -27,6 +27,7 @@ PYSCF_SPIN_WALL = 1200
 class RecipeContext:
     gateway: ToolGateway
     cache: dict = field(default_factory=dict)   # reusable artifact ids (geometry, bundle, dihedrals)
+    source: str | None = None                   # explicit input geometry for the current recipe call
 
 
 @dataclass
@@ -35,9 +36,11 @@ class RecipeResult:
     status: str                                 # success | failed | rejected
     observations: list[dict]
     note: str = ""
+    geometry: str | None = None                 # input geometry the recipe used
 
     def to_json(self) -> dict:
-        return {"recipe": self.recipe, "status": self.status, "note": self.note, "observations": self.observations}
+        return {"recipe": self.recipe, "status": self.status, "note": self.note, "geometry": self.geometry,
+                "observations": self.observations}
 
 
 def _step(ctx: RecipeContext, steps: list, tool: str, args: dict) -> dict | None:
@@ -54,9 +57,35 @@ def _latest(ctx: RecipeContext, kind: str, prefix: str = "") -> str | None:
 
 
 def geometry(ctx: RecipeContext, steps: list) -> str | None:
+    geom = _geometry(ctx, steps)
+    if geom:
+        ctx.cache["last_geometry"] = geom
+    return geom
+
+
+def _geometry(ctx: RecipeContext, steps: list) -> str | None:
+    gw = ctx.gateway
+    if ctx.source:                                  # explicit geometry (e.g. fixed by the Planner)
+        kind = next((a.kind for a in gw.case_run.artifact_manifest.artifacts if a.artifact_id == ctx.source), None)
+        if kind == "prepared_structure":
+            ctx.cache["geometry_source"] = "given"
+            return ctx.source
+        if kind != "initial_structure":
+            return None
+        derived = [a.artifact_id for a in gw.case_run.artifact_manifest.artifacts
+                   if a.kind == "prepared_structure" and a.artifact_id.startswith("geometry:")
+                   and gw.derived_from(a.artifact_id, ctx.source)]
+        if derived:
+            ctx.cache["geometry_source"] = "atb1_optimized"
+            return derived[-1]
+        obs = _step(ctx, steps, "microscopic.optimize_ground_state_geometry",
+                    {"source_artifact_id": ctx.source, "max_opt_cycles": 2000, "max_wall_seconds": 300})
+        if not obs or not obs["reusable_artifacts"]:
+            return None
+        ctx.cache["geometry_source"] = "atb1_optimized"
+        return obs["reusable_artifacts"][0]
     if "geometry" in ctx.cache:
         return ctx.cache["geometry"]
-    gw = ctx.gateway
     optimized = _latest(ctx, "prepared_structure", "geometry:")
     if optimized:
         ctx.cache.update(geometry=optimized, geometry_source="atb1_optimized")
@@ -76,22 +105,20 @@ def geometry(ctx: RecipeContext, steps: list) -> str | None:
 
 
 def _bundle(ctx: RecipeContext, steps: list, nstates: int) -> str | None:
-    key = f"bundle:{nstates}"
-    if key in ctx.cache:
-        return ctx.cache[key]
-    existing = _latest(ctx, "amesp_baseline_bundle")
-    if existing:
-        ctx.cache[key] = ctx.cache["bundle"] = existing
-        return existing
     geom = geometry(ctx, steps)
     if geom is None:
         return None
+    gw = ctx.gateway
+    existing = [a.artifact_id for a in gw.case_run.artifact_manifest.artifacts      # same geometry only
+                if a.kind == "amesp_baseline_bundle" and a.status in {"available", "partial"}
+                and gw.derived_from(a.artifact_id, geom)]
+    if existing:
+        return existing[-1]
     obs = _step(ctx, steps, "microscopic.run_baseline_bundle",
                 {"source_artifact_id": geom, "s1_nstates": nstates, "td_tout": TD_TOUT})
     if not obs or not obs["reusable_artifacts"]:
         return None
-    ctx.cache[key] = ctx.cache["bundle"] = obs["reusable_artifacts"][0]
-    return ctx.cache[key]
+    return obs["reusable_artifacts"][0]
 
 
 def excited_states(ctx, steps, *, nstates: int = DEFAULT_NSTATES, **_):
@@ -233,9 +260,14 @@ def run_recipe(ctx: RecipeContext, name: str, args: dict | None = None) -> Recip
     if name not in RECIPES:
         return RecipeResult(name, "rejected", [], f"Unknown recipe; choose one of {sorted(RECIPES)}")
     steps: list[dict] = []
+    args = dict(args or {})
+    ctx.source = args.pop("source_artifact_id", None)
+    ctx.cache.pop("last_geometry", None)
     try:
-        ok = RECIPES[name][0](ctx, steps, **(args or {}))
+        ok = RECIPES[name][0](ctx, steps, **args)
     except (TypeError, ValueError) as exc:
         return RecipeResult(name, "rejected", steps, f"Invalid recipe arguments: {exc}")
+    finally:
+        ctx.source = None
     note = f"geometry source: {ctx.cache.get('geometry_source', 'none')}"
-    return RecipeResult(name, "success" if ok else "failed", steps, note)
+    return RecipeResult(name, "success" if ok else "failed", steps, note, ctx.cache.get("last_geometry"))

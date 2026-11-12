@@ -18,6 +18,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 from mechcal.agent.board import Board, ClaimIn, Status
 from mechcal.agent.facts import structural_facts
 from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
+from mechcal.agent import supervision as sv
 from mechcal.eval.grounding import ELIGIBLE, check_submission
 from mechcal.eval.grounded_subjects import UsageLedger
 from mechcal.eval.tool_gateway import ToolGateway
@@ -41,9 +42,9 @@ class AgentConfig:
     max_tool_wall_seconds: float = 3600.0    # total tool wall time per run; long requests are clamped to what is left
     critic: bool = True
     critic_every: int = 3
-    worker: bool = True
-    worker_max_calls: int = 6
-    worker_max_computations: int = 4
+    worker: bool = True                      # professor-student mode: Planner delegates, Worker executes
+    worker_max_calls: int = 6                # Worker model calls per delegate/revise session
+    worker_max_computations: int = 4         # computations per delegate/revise session
     self_check: bool = True
     iterate: bool = True                     # False: plan once, run, submit (ablation)
     recipes: bool = True                     # False: single tools only (ablation)
@@ -62,7 +63,7 @@ def _label(value: str) -> str:
 
 
 KINDS = {"structural", "computed", "prior"}
-ACTIONS = {"recipe", "tool", "delegate", "read", "submit"}
+ACTIONS = {"recipe", "tool", "delegate", "revise", "read", "submit"}
 
 
 def _norm_family_item(item):
@@ -129,6 +130,10 @@ def _norm_action(action, allowed=ACTIONS):
         a["name"] = a.pop(kind)
     if kind == "delegate" and not a.get("task") and isinstance(a.get("delegate"), str):
         a["task"] = a.pop("delegate")
+    if kind == "delegate" and not a.get("recipe") and a.get("name") in RECIPES:
+        a["recipe"] = a.pop("name")
+    if kind == "delegate" and isinstance(a.get("tools"), str):
+        a["tools"] = [a["tools"]]
     if "arguments" in a and "args" not in a:
         a["args"] = a.pop("arguments")
     return a
@@ -142,6 +147,7 @@ def normalize_planner(data):
     d["claims"] = [_norm_claim(c) for c in d.get("claims") or []]
     d["limitations"] = _norm_limitations(d.get("limitations"))
     d["action"] = _norm_action(d.get("action") or {})
+    d["adopt"] = [{"finding_id": x} if isinstance(x, str) else x for x in d.get("adopt") or []]
     return d
 
 
@@ -173,7 +179,7 @@ class ProposalResponse(_M):
 
 
 class Action(_M):
-    type: Literal["recipe", "tool", "delegate", "read", "submit"]
+    type: Literal["recipe", "tool", "delegate", "revise", "read", "submit"]
     name: str | None = None
     args: dict = Field(default_factory=dict)
     separates: list[str] = Field(default_factory=list)
@@ -181,6 +187,15 @@ class Action(_M):
     task: str = ""
     artifact_id: str | None = None
     pointer: str | None = None
+    # delegate (professor-student): what to run and the scientific settings the student must keep
+    recipe: str | None = None
+    tools: list[str] = Field(default_factory=list)
+    fixed_args: dict = Field(default_factory=dict)
+    # revise: continue an existing task with its attempt record
+    task_id: str | None = None
+    instruction: str = ""
+    args_hint: dict = Field(default_factory=dict)
+    approve: bool = False
 
     @model_validator(mode="after")
     def _contrast(self):
@@ -196,9 +211,24 @@ class Action(_M):
             raise ValueError("action.name is required for recipe and tool actions")
         if self.type == "delegate" and not self.task.strip():
             raise ValueError("action.task is required for delegate")
+        if self.type == "delegate" and not (self.recipe or self.tools):
+            raise ValueError("delegate must name the recipe or the tools the Worker may use")
+        if self.type == "delegate" and self.recipe and self.recipe not in RECIPES:
+            raise ValueError(f"Unknown recipe {self.recipe!r}; choose one of {sorted(RECIPES)}")
+        if self.type == "revise" and not (self.task_id and self.instruction.strip()):
+            raise ValueError("revise needs task_id and instruction")
         if self.type == "read" and not self.artifact_id:
             raise ValueError("action.artifact_id is required for read")
         return self
+
+
+class Adoption(_M):
+    finding_id: str
+    label: str | None = None            # family the claim is attached to (defaults to the finding's label)
+    @field_validator("label")
+    @classmethod
+    def _known(cls, v):
+        return None if v is None else _label(v)
 
 
 class PlannerStep(_M):
@@ -208,6 +238,7 @@ class PlannerStep(_M):
         return normalize_planner(data)
 
     reading: str = ""
+    adopt: list[Adoption] = Field(default_factory=list)
     updates: list[FamilyUpdate] = Field(default_factory=list)
     claims: list[ClaimIn] = Field(default_factory=list)
     drop_claims: list[str] = Field(default_factory=list)
@@ -223,15 +254,37 @@ class PlannerStep(_M):
         return v
 
 
+class Finding(_M):
+    """A claim drafted by the Worker; the Planner decides whether it becomes board evidence."""
+    label: str | None = None
+    statement: str
+    kind: Literal["structural", "computed", "prior"]
+    atom_ids: list[int] = Field(default_factory=list)
+    fact_ids: list[str] = Field(default_factory=list)
+    quantities: list[dict] = Field(default_factory=list)
+
+
+class ProposedChange(_M):
+    kind: Literal["recipe", "tool"] = "tool"
+    name: str = ""
+    args: dict = Field(default_factory=dict)
+    reason: str = ""
+
+
 class WorkerAction(_M):
-    type: Literal["recipe", "tool", "read", "finish"]
+    type: Literal["recipe", "tool", "read", "report"]
     name: str | None = None
     args: dict = Field(default_factory=dict)
+    reason: str = ""                       # why this attempt / what was changed and why
     artifact_id: str | None = None
     pointer: str | None = None
-    report: str = ""
-    claims: list[ClaimIn] = Field(default_factory=list)
-    unresolved: list[str] = Field(default_factory=list)
+    # report
+    status: str | None = None
+    summary: str = ""
+    claims: list[Finding] = Field(default_factory=list)
+    warnings: list[str] = Field(default_factory=list)      # the student's own concerns, beyond system warnings
+    question_for_planner: str = ""
+    proposed_change: ProposedChange | None = None
 
 
 class WorkerStep(_M):
@@ -240,9 +293,15 @@ class WorkerStep(_M):
     def _normalize(cls, data):
         if isinstance(data, dict):
             data = dict(data)
-            a = _norm_action(data.get("action") or {}, allowed={"recipe", "tool", "read", "finish"})
+            raw = dict(data.get("action") or {})
+            if raw.get("type") == "finish" or raw.get("action") == "finish":
+                raw["type"] = "report"
+            a = _norm_action(raw, allowed={"recipe", "tool", "read", "report"})
             if isinstance(a, dict):
+                if "findings" in a and "claims" not in a:
+                    a["claims"] = a.pop("findings")
                 a["claims"] = [_norm_claim(c) for c in a.get("claims") or []]
+                a["warnings"] = [w if isinstance(w, str) else json.dumps(w) for w in a.get("warnings") or []]
             data["action"] = a
         return data
 
@@ -314,9 +373,14 @@ class AgentRun:
         self.critic_runs = 0
         self.last_critic_at = 0
         self.stop_reason = ""
+        self.tasks: dict[str, sv.Task] = {}
+        self.findings: dict[str, dict] = {}
+        self.protocol = {"planner_rejected": 0, "approvals": 0, "status_corrections": 0}
         self.tool_cards = self._tool_cards()
+        self.card_by_tool = {c["tool"]: c for c in self.tool_cards}
         self.gateway.allowed = tuple(card["tool"] for card in self.tool_cards)
-        self.planner_prompt = load_prompt("agent_planner.md")
+        # professor prompt when the Worker is on; the single-agent Planner prompt otherwise
+        self.planner_prompt = load_prompt("agent_professor.md" if self.cfg.worker else "agent_planner.md")
         self.worker_prompt = load_prompt("agent_worker.md")
         self.critic_prompt = load_prompt("agent_critic.md")
 
@@ -412,14 +476,38 @@ class AgentRun:
             "latest": self.latest, "history": self.history[-12:],
             "proposals": self.proposals, "reusable_artifacts": self._artifacts(),
             "tool_log": self.gateway.call_log(),
-            "recipes": self._recipe_cards(), "tools": self.tool_cards,
+            "recipes": self._recipe_cards(),
+            "tools": self._professor_catalog() if self.cfg.worker else self.tool_cards,
+            **({"tasks": [t.summary() for t in self.tasks.values()],
+                "planner_direct_tools": sorted(sv.PLANNER_DIRECT_TOOLS)} if self.cfg.worker else {}),
             "budget": {"planner_calls_left": self.cfg.max_planner_calls - self.usage.by_role["planner"]["calls"],
                        "computations_used": self._computations(), "computations_max": self.cfg.max_computations,
                        "tool_wall_seconds_left": self._wall_left(),
                        "worker_available": self.cfg.worker, "must_submit_now": must_submit},
         }
 
+    def _professor_catalog(self) -> list[dict]:
+        """Compact tool list for the Planner: what each tool does and which settings are scientific."""
+        out = []
+        for c in self.tool_cards:
+            sci = {k: v for k, v in c["args"].items() if sv.ARG_CLASS.get(k) in {"scientific", "source"}}
+            out.append({"tool": c["tool"], "description": c["description"][:160], "scientific_args": sci})
+        return out
+
     def _apply(self, step: PlannerStep, n: int) -> None:
+        for a in step.adopt:                         # Worker findings the Planner accepts as board evidence
+            f = self.findings.get(a.finding_id)
+            label = a.label or (f or {}).get("label")
+            if f is None or label not in MECHANISM_POOL:
+                self.history.append(f"step {n}: adopt {a.finding_id} rejected (unknown finding or no family label)")
+                continue
+            try:
+                claim = ClaimIn(**{**{k: f[k] for k in ("statement", "kind", "atom_ids", "fact_ids", "quantities")},
+                                   "label": label}).to_claim(self.facts)
+                cid = self.board.add_claim(label, claim, step=n, origin="worker")
+                f["adopted_as"] = cid
+            except (ValueError, TypeError, KeyError) as exc:
+                self.history.append(f"step {n}: adopt {a.finding_id} rejected ({exc})")
         for u in step.updates:
             fam = self.board.families[u.label]
             for key in ("plausibility", "status", "reason", "next_test"):
@@ -443,6 +531,21 @@ class AgentRun:
         self.proposals = [p for p in self.proposals if p["proposal_id"] not in answered]
 
     def _execute(self, action: Action, n: int) -> str:
+        if self.cfg.worker and (action.type == "recipe"
+                                or (action.type == "tool" and action.name not in sv.PLANNER_DIRECT_TOOLS)):
+            self.protocol["planner_rejected"] += 1
+            self.latest = {"status": "rejected", "error": (
+                "With the Worker on, the Planner runs only single-step, parameter-free tools "
+                f"({sorted(sv.PLANNER_DIRECT_TOOLS)}) and read. Delegate experiments that need settings or several "
+                "steps: give the recipe or tools and the scientific settings in fixed_args.")}
+            return f"{action.type} {action.name} rejected (delegate it)"
+        if action.type == "revise":
+            if not self.cfg.worker:
+                self.latest = {"status": "rejected", "error": "Worker is disabled in this configuration."}
+                return "revise rejected (disabled)"
+            report = self._revise(action, n)
+            self.latest = report
+            return f"revise {action.task_id} -> {report['status']}"
         if action.type == "recipe":
             if not self.cfg.recipes:
                 self.latest = {"status": "rejected", "error": "Recipes are disabled in this configuration; use tools."}
@@ -461,54 +564,229 @@ class AgentRun:
             if not self.cfg.worker:
                 self.latest = {"status": "rejected", "error": "Worker is disabled in this configuration."}
                 return "delegate rejected (disabled)"
-            report = self._worker(action, n)
+            report = self._delegate(action, n)
             self.latest = report
-            return f"delegate -> {report['status']} ({len(report.get('claims_added', []))} claims)"
+            return f"delegate {report.get('task_id', '')} -> {report['status']} ({len(report.get('claims', []))} findings)"
         return "submit"
 
-    # -- worker
-    def _worker(self, action: Action, n: int) -> dict:
-        observations: list = []
-        start_comp = self._computations()
+    # -- professor-student
+    def _delegate(self, action: Action, n: int) -> dict:
+        tid = f"W{len(self.tasks) + 1}"
+        unknown = [t for t in action.tools if t not in self.card_by_tool]
+        if unknown:
+            return {"task_id": tid, "status": "rejected", "error": f"Unknown tools {unknown}; use ids from tools."}
+        task = sv.Task(task_id=tid, objective=action.task, recipe=action.recipe, tools=list(action.tools),
+                       fixed_args=self.gateway.resolve_args(action.fixed_args), separates=list(action.separates),
+                       expectation=action.expectation, created_step=n)
+        source = task.fixed_args.get("source_artifact_id")
+        if source:
+            if source not in {a.artifact_id for a in self.gateway.case_run.artifact_manifest.artifacts}:
+                return {"task_id": tid, "status": "rejected", "error": f"fixed source_artifact_id {source} does not exist."}
+            task.geometry = self._geometry_of(source)
+        task.pinned.update({k: v for k, v in task.fixed_args.items() if sv.ARG_CLASS.get(k) == "scientific"})
+        self.tasks[tid] = task
+        self.log.write({"role": "task_created", "task_id": tid, "objective": action.task, "recipe": action.recipe,
+                        "tools": action.tools, "fixed_args": action.fixed_args})
+        return self._student(task, n)
+
+    def _revise(self, action: Action, n: int) -> dict:
+        task = self.tasks.get(action.task_id or "")
+        if task is None:
+            return {"task_id": action.task_id, "status": "rejected", "error": f"Unknown task {action.task_id}."}
+        if len(task.instructions) >= sv.MAX_REVISIONS:
+            return {"task_id": task.task_id, "status": "rejected",
+                    "error": f"{task.task_id} already had {sv.MAX_REVISIONS} revisions; delegate a new task instead."}
+        approved = None
+        if action.approve and task.pending:
+            approved = dict(task.pending)
+            self._approve(task, approved)
+        for key, value in self.gateway.resolve_args(action.args_hint).items():   # professor sets settings directly
+            if sv.ARG_CLASS.get(key) == "scientific":
+                task.fixed_args[key] = value
+                task.pinned[key] = value
+            elif key == "source_artifact_id":
+                task.fixed_args[key] = value
+                task.geometry = self._geometry_of(value)
+        task.instructions.append({"step": n, "instruction": action.instruction, "args_hint": action.args_hint,
+                                  "approved_change": approved, "at_attempt": len(task.attempts)})
+        task.pending = None
+        task.retry_base = len(task.attempts)                 # a revision opens a fresh retry allowance
+        self.log.write({"role": "task_revised", "task_id": task.task_id, "instruction": action.instruction,
+                        "args_hint": action.args_hint, "approved": approved})
+        return self._student(task, n)
+
+    def _approve(self, task: sv.Task, change: dict) -> None:
+        self.protocol["approvals"] += 1
+        name, kind = change.get("name") or "", change.get("kind") or "tool"
+        if name and not task.route_allowed(kind, name):
+            task.approved.append({kind: name})
+        view = sv.recipe_tool_args(name, change.get("args") or {}, RECIPE_ARGS) if kind == "recipe" else change.get("args") or {}
+        for key, value in view.items():
+            if sv.ARG_CLASS.get(key) == "scientific":
+                task.pinned[key] = value
+                if key in task.fixed_args:
+                    task.fixed_args[key] = value
+        source = self.gateway.resolve((change.get("args") or {}).get("source_artifact_id"))
+        if source:
+            task.geometry = self._geometry_of(source)
+
+    def _geometry_of(self, artifact_id: str) -> str | None:
+        kinds = {a.artifact_id: a.kind for a in self.gateway.case_run.artifact_manifest.artifacts}
+        for aid in [artifact_id, *self.gateway.ancestors(artifact_id)]:
+            if kinds.get(aid) in sv.GEOMETRY_KINDS:
+                return aid
+        return None
+
+    def _student_cards(self, task: sv.Task) -> dict:
+        def mark(card):
+            return {**card, "args": {k: {**v, "class": sv.ARG_CLASS.get(k, "technical")} for k, v in card["args"].items()}}
+        tools = [mark(self.card_by_tool[t]) for t in sorted(set(task.tools) | sv.PREREQUISITE_TOOLS
+                                                              | sv.RECIPE_TOOLS.get(task.recipe or "", set())
+                                                              | {a["tool"] for a in task.approved if a.get("tool")})
+                 if t in self.card_by_tool]
+        recipes = [r for r in self._recipe_cards() if r["recipe"] == task.recipe
+                   or any(a.get("recipe") == r["recipe"] for a in task.approved)]
+        return {"recipes": recipes, "tools": tools}
+
+    def _student_payload(self, task: sv.Task, recent: list, comps_left: int, call: int) -> dict:
+        retries = {}
+        for a in task.attempts[task.retry_base:]:
+            key = f"{a.kind} {a.name}"
+            fails = [x for x in task.route_attempts(a.kind, a.name)
+                     if x.outcome != "success" or any(w["student_fixable"] for w in x.warnings)]
+            retries[key] = max(0, sv.MAX_RETRIES + 1 - len(fails)) if fails else sv.MAX_RETRIES + 1
+        artifacts = [{**r, "from_task_geometry": bool(task.geometry) and self.gateway.derived_from(r["artifact_id"], task.geometry)}
+                     for r in self._artifacts()]
+        must = call == self.cfg.worker_max_calls or comps_left <= 0 or self._wall_left() < 60
+        return {
+            "assignment": {"task_id": task.task_id, "objective": task.objective, "recipe": task.recipe, "tools": task.tools,
+                           "fixed_args": task.fixed_args, "separates": task.separates, "expectation": task.expectation,
+                           "planner_instructions": task.instructions},
+            "settings_in_force": {"scientific": task.pinned, "geometry": task.geometry},
+            "attempts": [a.to_json() for a in task.attempts],
+            "interceptions": task.interceptions[-3:],
+            "recent_results": recent[-3:],
+            **self._student_cards(task),
+            "reusable_artifacts": artifacts,
+            "structural_facts": self.facts, "family_labels": list(MECHANISM_POOL),
+            "budget": {"computations_left": comps_left, "tool_wall_seconds_left": self._wall_left(),
+                       "attempts_left_per_route": retries, "model_calls_left": self.cfg.worker_max_calls - call,
+                       "must_report_now": must},
+        }
+
+    def _attempt_from(self, task: sv.Task, kind: str, name: str, args: dict, result: dict, reason: str,
+                      seconds: float) -> sv.Attempt:
+        if kind == "recipe":
+            steps = result.get("observations") or []
+            failing = next((o for o in steps if o.get("status") not in {"success", "partial"}), None)
+            outcome = "success" if result.get("status") == "success" else (failing or {}).get("status", result.get("status"))
+            info = failing or {}
+            warnings = [w for o in steps for w in o.get("warnings", [])]
+            ids = [o["artifact_id"] for o in steps if o.get("artifact_id")]
+            if result.get("status") == "rejected":
+                info = {"failure_class": "system", "failure_code": "invalid_args", "failure": result.get("note")}
+                outcome = "rejected"
+        else:
+            outcome, info, warnings = result.get("status", "error"), result, result.get("warnings", [])
+            ids = [result["artifact_id"]] if result.get("artifact_id") else []
+            if outcome in {"error", "rejected"}:
+                info = {"failure_class": "system", "failure_code": outcome, "failure": result.get("error")}
+        return sv.Attempt(n=len(task.attempts) + 1, kind=kind, name=name, args=args, outcome=outcome, artifact_ids=ids,
+                          failure_class=info.get("failure_class"), failure_code=info.get("failure_code"),
+                          failure=(info.get("failure") or info.get("error") or None) if outcome != "success" else None,
+                          warnings=warnings, changed=sv.changed_from_previous(task, kind, name, args), reason=reason,
+                          wall_seconds=round(seconds, 1))
+
+    def _student(self, task: sv.Task, n: int) -> dict:
+        recent: list = []
+        start = self._computations()
         for call in range(1, self.cfg.worker_max_calls + 1):
-            budget_left = min(self.cfg.worker_max_computations - (self._computations() - start_comp),
-                              self.cfg.max_computations - self._computations())
-            payload = {"task": action.task, "separates": action.separates, "verified_smiles": self.smiles,
-                       "structural_facts": self.facts, "recipes": self._recipe_cards(), "tools": self.tool_cards,
-                       "family_labels": list(MECHANISM_POOL),
-                       "reusable_artifacts": self._artifacts(), "tool_log": self.gateway.call_log(),
-                       "results_so_far": observations[-4:],
-                       "computations_left": budget_left, "tool_wall_seconds_left": self._wall_left(),
-                       "must_finish_now": call == self.cfg.worker_max_calls or budget_left <= 0 or self._wall_left() < 60}
-            step = self._ask(self.worker_client, "worker", self.worker_prompt, payload, WorkerStep)
+            comps_left = min(self.cfg.worker_max_computations - (self._computations() - start),
+                             self.cfg.max_computations - self._computations())
+            step = self._ask(self.worker_client, "worker", self.worker_prompt,
+                             self._student_payload(task, recent, comps_left, call), WorkerStep)
             if step is None:
-                return {"status": "invalid_worker_output", "observations": observations[-4:]}
+                return self._report(task, {"status": "blocked_technical", "summary": "Worker output was invalid twice."}, n)
             a = step.action
-            if a.type == "finish":
-                added, findings = [], []
-                for c in a.claims:
-                    if c.label not in MECHANISM_POOL:
-                        findings.append({"label_given": c.label, "statement": c.statement, "kind": c.kind,
-                                         "quantities": c.quantities})
-                        continue
-                    try:
-                        added.append(self.board.add_claim(c.label, c.to_claim(self.facts), step=n, origin="worker"))
-                    except (ValueError, TypeError, KeyError) as exc:
-                        a.unresolved.append(f"claim not recorded: {exc}")
-                return {"status": "finished", "report": a.report, "unresolved": a.unresolved,
-                        "claims_added": added, "findings_without_family": findings, "observations": observations[-3:]}
-            if (budget_left <= 0 or self._wall_left() < 60) and a.type in {"recipe", "tool"}:
-                observations.append({"status": "rejected", "error": "Worker computation budget exhausted; finish now."})
+            if a.type == "report":
+                return self._report(task, a.model_dump(), n)
+            if a.type == "read":
+                recent.append(self.gateway.read(a.artifact_id or "", a.pointer or ""))
                 continue
-            if a.type == "recipe" and self.cfg.recipes:
-                observations.append(run_recipe(self.recipe_ctx, a.name or "", a.args).to_json())
-            elif a.type == "tool":
-                observations.append(self.gateway.call(a.name or "", a.args))
-            elif a.type == "read":
-                observations.append(self.gateway.read(a.artifact_id or "", a.pointer or ""))
+            if comps_left <= 0 or self._wall_left() < 60:
+                recent.append({"status": "rejected", "error": "Computation budget for this session is used; report now."})
+                continue
+            kind, name = a.type, a.name or ""
+            card = self.card_by_tool.get(name, {"args": {}})
+            if kind == "recipe":
+                accepted = set(RECIPE_ARGS.get(name, {})) | {"source_artifact_id"}
+                defaults = {}
             else:
-                observations.append({"status": "rejected", "error": "Unknown or disabled action."})
-        return {"status": "budget_exhausted", "observations": observations[-3:]}
+                accepted = set(card["args"])
+                defaults = {k: v["default"] for k, v in card["args"].items() if "default" in v}
+            block, args = sv.check_call(task, kind, name, self.gateway.resolve_args(a.args), gateway=self.gateway, defaults=defaults,
+                                        accepted=accepted, recipe_args=RECIPE_ARGS)
+            if block:
+                entry = {"kind": kind, "name": name, "args": a.args, **block}
+                task.interceptions.append(entry)
+                if block.get("needs_approval"):
+                    task.pending = {"kind": kind, "name": name, "args": a.args, "reason": a.reason}
+                self.log.write({"role": "interception", "task_id": task.task_id, **entry})
+                recent.append({"status": "intercepted", **block})
+                continue
+            started = time.monotonic()
+            if kind == "recipe":
+                res = run_recipe(self.recipe_ctx, name, args)
+                result, used = res.to_json(), res.geometry
+            else:
+                result = self.gateway.call(name, args)
+                used = self._geometry_of(args["source_artifact_id"]) if args.get("source_artifact_id") else None
+            attempt = self._attempt_from(task, kind, name, args, result, a.reason, time.monotonic() - started)
+            task.attempts.append(attempt)
+            if attempt.outcome in {"success", "partial"}:
+                sv.pin_after(task, kind, name, args, defaults=defaults, recipe_args=RECIPE_ARGS, geometry_used=used)
+            self.log.write({"role": "attempt", "task_id": task.task_id, **attempt.to_json()})
+            recent.append(result if kind == "tool" else {"recipe": name, "status": result["status"],
+                                                          "observations": result["observations"][-2:]})
+        final = self._ask(self.worker_client, "worker", self.worker_prompt,      # one report-only turn
+                          {**self._student_payload(task, recent, 0, self.cfg.worker_max_calls),
+                           "note": "Model-call limit reached: return a report action now; any other action is ignored."},
+                          WorkerStep)
+        if final is not None and final.action.type == "report":
+            return self._report(task, final.action.model_dump(), n)
+        ran = any(a.outcome in {"success", "partial"} for a in task.attempts[task.retry_base:])
+        return self._report(task, {"status": "done_with_warnings" if ran else "blocked_technical",
+                                   "summary": "The Worker did not write a report; status set from the recorded attempts.",
+                                   "warnings": ["No report from the Worker: results are listed in attempts, no findings drafted."]}, n)
+
+    def _report(self, task: sv.Task, raw: dict, n: int) -> dict:
+        findings = []
+        for i, c in enumerate(raw.get("claims") or [], start=1):
+            fid = f"{task.task_id}.f{len(task.reports) + 1}.{i}"
+            f = {"finding_id": fid, **{k: c.get(k) for k in ("label", "statement", "kind", "atom_ids", "fact_ids", "quantities")}}
+            f["label"] = f["label"] if f["label"] in MECHANISM_POOL else None
+            self.findings[fid] = f
+            findings.append(f)
+        report = {"task_id": task.task_id, "status": raw.get("status"), "summary": raw.get("summary", ""),
+                  "claims": findings, "warnings": [{"code": "student_concern", "message": w} for w in raw.get("warnings") or []],
+                  "question_for_planner": raw.get("question_for_planner", ""),
+                  "proposed_change": raw.get("proposed_change") or task.pending}
+        report, corrections = sv.validate_report(task, report)
+        if report["status"] == "needs_approval":
+            task.pending = report["proposed_change"] or task.pending
+        report["attempts"] = [{"n": a.n, "route": f"{a.kind} {a.name}", "args": a.args, "outcome": a.outcome,
+                               "artifact_ids": a.artifact_ids, "changed": a.changed, "reason": a.reason,
+                               **({"failure": (a.failure or "")[:200], "failure_class": a.failure_class} if a.outcome != "success" else {}),
+                               **({"warnings": [w["code"] for w in a.warnings]} if a.warnings else {})}
+                              for a in task.attempts]
+        report["artifacts"] = [aid for a in task.attempts for aid in a.artifact_ids]
+        report["interceptions"] = [{"code": i["code"], "name": i["name"]} for i in task.interceptions]
+        if corrections:
+            report["system_corrections"] = corrections
+            self.protocol["status_corrections"] += len(corrections)
+        task.reports.append(report)
+        self.log.write({"role": "worker_report", "step": n, **{k: v for k, v in report.items() if k != "attempts"}})
+        return report
 
     # -- critic
     def _evidence_digest(self) -> list[dict]:
@@ -516,10 +794,11 @@ class AgentRun:
         for aid, art in self.gateway.store.artifacts.items():
             if not aid.startswith("T"):
                 continue
-            from mechcal.eval.tool_gateway import observable_fields
+            from mechcal.eval.tool_gateway import by_depth, observable_fields
             root = art.outputs.get("structured_results", {})
             focus = root.get("parsed_observables") if isinstance(root.get("parsed_observables"), dict) else root
             numbers, labels, _ = observable_fields(focus, "")
+            numbers = by_depth(numbers)
             digest.append({"artifact_id": aid, "tool": art.tool, "status": art.status,
                            "values": dict(numbers[:30]), "labels": dict(labels[:10])})
         return digest
@@ -595,7 +874,7 @@ class AgentRun:
                 self.stop_reason = "planner_submitted" if action.type == "submit" else "budget"
                 self.history.append(f"step {n}: submit")
                 break
-            if self._out_of_tools() and action.type in {"recipe", "tool", "delegate"}:
+            if self._out_of_tools() and action.type in {"recipe", "tool", "delegate", "revise"}:
                 self.latest = {"status": "rejected", "error": "Computation budget exhausted; submit now."}
                 self.history.append(f"step {n}: {action.type} rejected (budget)")
                 continue
@@ -608,6 +887,31 @@ class AgentRun:
                     and self._computations() - self.last_critic_at >= self.cfg.critic_every):
                 self._critic(n, before_submit=False)
         return self._finish(submitted, time.monotonic() - started)
+
+    def _protocol_metrics(self) -> dict:
+        tasks = list(self.tasks.values())
+        repaired = hit = 0
+        for t in tasks:          # self-repair: a route's system failure later fixed with no revision in between
+            bounds = [0, *[i["at_attempt"] for i in t.instructions], len(t.attempts)]
+            for lo, hi in zip(bounds, bounds[1:]):
+                segment = t.attempts[lo:hi]
+                for route in {(a.kind, a.name) for a in segment}:
+                    runs = [a for a in segment if (a.kind, a.name) == route]
+                    first = next((i for i, a in enumerate(runs) if a.outcome != "success" and a.failure_class == "system"), None)
+                    if first is None:
+                        continue
+                    hit += 1
+                    repaired += any(a.outcome == "success" for a in runs[first + 1:])
+        codes: dict[str, int] = {}
+        for t in tasks:
+            for i in t.interceptions:
+                codes[i["code"]] = codes.get(i["code"], 0) + 1
+        return {"delegations": len(tasks), "revisions": sum(len(t.instructions) for t in tasks),
+                "attempts": sum(len(t.attempts) for t in tasks), "interceptions": codes,
+                "system_failure_episodes": hit, "self_repaired": repaired,
+                "report_statuses": [r["status"] for t in tasks for r in t.reports],
+                "findings": len(self.findings), "findings_adopted": sum(1 for f in self.findings.values() if f.get("adopted_as")),
+                **self.protocol}
 
     def _finish(self, submitted: bool, seconds: float) -> dict:
         raw = self.board.to_submission()
@@ -627,6 +931,7 @@ class AgentRun:
             "usage": self.usage.as_dict(), "tool_cost": self.gateway.cost(), "critic_runs": self.critic_runs,
             "self_check_removed": [c.claim_id for c in self.board.claims if eligible is not None and c.claim_id not in eligible
                                    and c.label in self.board.ranking()[:3]],
+            "protocol": self._protocol_metrics(),
             "submission": submission.model_dump(), "board": self.board.model_dump(),
             "raw_grounding": check.model_dump(),
         }

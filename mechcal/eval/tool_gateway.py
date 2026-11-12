@@ -17,8 +17,9 @@ from pathlib import Path
 from typing import Any
 
 from mechcal.eval.submission import EvaluatorArtifact, ArtifactStore, resolve_pointer
+from mechcal.eval.tool_checks import classify_failure, result_warnings
 
-MAX_OBSERVATION_VALUES = 120
+MAX_OBSERVATION_VALUES = 200
 MAX_STRING_CHARS = 300
 # Bookkeeping leaves that are not scientific observations.
 NOISE_SEGMENTS = ("/timing/", "/tool_args/", "/runtime/", "/provenance/")
@@ -82,6 +83,12 @@ def observable_fields(document: Any, prefix: str = "", omitted: dict | None = No
     return numbers, labels, omitted
 
 
+def by_depth(items: list[tuple[str, Any]]) -> list[tuple[str, Any]]:
+    """Shallow values first (per-state energies before nested transition details), stable otherwise,
+    so a value cap drops the deepest detail rather than whole states."""
+    return [x for _, x in sorted(enumerate(items), key=lambda e: (e[1][0].count("/"), e[0]))]
+
+
 def numeric_leaves(document: Any, prefix: str = "") -> list[tuple[str, float]]:
     """All finite numeric leaves as (JSON pointer, value), in document order."""
     out: list[tuple[str, float]] = []
@@ -120,6 +127,8 @@ class ToolGateway:
     max_wall_seconds: float | None = None     # total tool wall time for the run; long calls are clamped to it
     calls: list[CallRecord] = field(default_factory=list)
     _observations: dict = field(default_factory=dict, repr=False)
+    parents: dict = field(default_factory=dict)   # produced artifact id -> source_artifact_id it was computed from
+    produced: dict = field(default_factory=dict)  # T### alias -> reusable artifact ids that call produced
 
     def __post_init__(self) -> None:
         from mechcal.capabilities import default_capability_registry
@@ -170,7 +179,7 @@ class ToolGateway:
         from mechcal.schemas import DispatchRequest
         from mechcal.schemas.execution import AgentExecutionPlan
 
-        tool_args = dict(tool_args or {})
+        tool_args = self.resolve_args(tool_args)
         index = len(self.calls) + 1
         executed = sum(c.status != "rejected" for c in self.calls)
         if self.max_calls is not None and executed >= self.max_calls:
@@ -221,11 +230,18 @@ class ToolGateway:
             return {"status": "error", "error": f"{type(exc).__name__}: {exc}"[:MAX_STRING_CHARS]}
         elapsed = time.monotonic() - started
         alias = self._persist(result, index)
+        source = tool_args.get("source_artifact_id")
+        for record in result.artifact_updates:
+            self.parents.setdefault(record.artifact_id, source)
+        self.produced[alias] = [record.artifact_id for record in result.artifact_updates]
         if result.artifact_updates:
             self.case_run = self.case_run.touch(
                 artifact_manifest=self.case_run.artifact_manifest.with_records(list(result.artifact_updates)))
         self.calls.append(CallRecord(index, capability_id, tool_args, result.status, alias, elapsed))
         obs = self.observation(result, alias)
+        limit = tool_args.get("max_wall_seconds")
+        if obs.get("failure_class") == "system" and isinstance(limit, (int, float)) and elapsed >= 0.97 * limit:
+            obs["failure_code"] = "timeout"            # the call used its whole time limit, whatever the message says
         self._observations[alias] = dict(obs)
         if note:
             obs["note"] = note
@@ -252,7 +268,10 @@ class ToolGateway:
         root = artifact.outputs.get("structured_results", {})
         focus = "/structured_results/parsed_observables" if isinstance(root.get("parsed_observables"), dict) else "/structured_results"
         numbers, labels, omitted = observable_fields(resolve_pointer(artifact.outputs, focus), focus)
-        numbers = [(p, v) for p, v in numbers if not any(seg in p + "/" for seg in NOISE_SEGMENTS)]
+        numbers = by_depth([(p, v) for p, v in numbers if not any(seg in p + "/" for seg in NOISE_SEGMENTS)])
+        failure = None if result.status == "success" else result.failure
+        verdict = classify_failure(result.status, getattr(failure, "kind", None), getattr(failure, "message", None))
+        parsed = root.get("parsed_observables") if isinstance(root.get("parsed_observables"), dict) else None
         return {
             "artifact_id": alias, "tool": result.capability_id, "status": result.status,
             "summary": result.summary[:MAX_STRING_CHARS],
@@ -264,6 +283,8 @@ class ToolGateway:
             "reusable_artifacts": [a.artifact_id for a in result.artifact_updates],
             "limitations": list(result.structured_results.get("limitations", []))[:5]
             if isinstance(result.structured_results.get("limitations"), list) else [],
+            **(verdict or {}),
+            "warnings": result_warnings(result.capability_id, result.status, parsed),
         }
 
     def read(self, artifact_id: str, pointer: str = "") -> dict:
@@ -299,8 +320,35 @@ class ToolGateway:
             rows.append({"artifact_id": c.artifact_id, "tool": c.capability_id, "status": c.status,
                          "wall_seconds": round(c.wall_seconds), "args": {k: v for k, v in c.tool_args.items()
                                                                         if not isinstance(v, (list, dict)) or len(str(v)) < 80},
-                         **({"failure_code": failure} if failure else {})})
+                         **({"failure_code": failure} if failure else {}),
+                         **({"warnings": [w["code"] for w in obs.get("warnings", [])]} if (obs := self._observations.get(c.artifact_id, {})).get("warnings") else {})})
         return rows
+
+    def resolve(self, artifact_id):
+        """A T### alias names a recorded call; as a tool input it means the artifact that call produced."""
+        if isinstance(artifact_id, str) and self.produced.get(artifact_id):
+            return self.produced[artifact_id][0]
+        return artifact_id
+
+    def resolve_args(self, tool_args: dict | None) -> dict:
+        args = dict(tool_args or {})
+        for key in ("source_artifact_id", "partner_artifact_id"):
+            if key in args:
+                args[key] = self.resolve(args[key])
+        return args
+
+    def ancestors(self, artifact_id: str) -> list[str]:
+        """Artifact ids this one was computed from, nearest first (recorded calls only)."""
+        chain, seen = [], {artifact_id}
+        while (parent := self.parents.get(artifact_id)) and parent not in seen:
+            chain.append(parent)
+            seen.add(parent)
+            artifact_id = parent
+        return chain
+
+    def derived_from(self, artifact_id: str, root: str) -> bool:
+        artifact_id, root = self.resolve(artifact_id), self.resolve(root)
+        return artifact_id == root or root in self.ancestors(artifact_id)
 
     def executed_calls(self) -> int:
         return sum(c.status != "rejected" for c in self.calls)
