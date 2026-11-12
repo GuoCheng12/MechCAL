@@ -8,7 +8,9 @@ deterministic grounding check when ``self_check`` is on.
 from __future__ import annotations
 
 import json
+import re
 import time
+import traceback
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Literal
@@ -48,6 +50,9 @@ class AgentConfig:
     worker_max_computations: int = 4         # computations per delegate/revise session
     cost_check_fraction: float = 0.5         # delegation returns a cost check if it may use more of the time left
     cost_log_path: str = ""                  # cross-run cost log (JSON lines); empty: seed table + this run only
+    api_retries: int = 3                     # extra attempts after a failed model call (network, timeout, server)
+    api_backoff_seconds: float = 5.0         # wait before retry k: backoff * 3**k (5, 15, 45 s)
+    max_internal_errors: int = 3             # unexpected exceptions tolerated per run before stopping with a result
     self_check: bool = True
     iterate: bool = True                     # False: plan once, run, submit (ablation)
     recipes: bool = True                     # False: single tools only (ablation)
@@ -140,6 +145,14 @@ def _norm_action(action, allowed=ACTIONS):
     if "arguments" in a and "args" not in a:
         a["args"] = a.pop("arguments")
     return a
+
+
+def _tolerant(fn, data):
+    """Alias normalisation must never raise: on odd input, validation reports the problem instead."""
+    try:
+        return fn(data)
+    except Exception:  # noqa: BLE001
+        return data
 
 
 def normalize_planner(data):
@@ -240,7 +253,7 @@ class PlannerStep(_M):
     @model_validator(mode="before")
     @classmethod
     def _normalize(cls, data):
-        return normalize_planner(data)
+        return _tolerant(normalize_planner, data)
 
     reading: str = ""
     adopt: list[Adoption] = Field(default_factory=list)
@@ -296,6 +309,10 @@ class WorkerStep(_M):
     @model_validator(mode="before")
     @classmethod
     def _normalize(cls, data):
+        return _tolerant(cls._norm, data)
+
+    @staticmethod
+    def _norm(data):
         if isinstance(data, dict):
             data = dict(data)
             raw = dict(data.get("action") or {})
@@ -335,10 +352,12 @@ class CriticOutput(_M):
     @model_validator(mode="before")
     @classmethod
     def _normalize(cls, data):
-        if isinstance(data, dict):
-            data = {**data, "ranking": [_norm_family_item(r) for r in data.get("ranking") or []],
-                    "tests": [_norm_family_item(t) for t in data.get("tests") or []]}
-        return data
+        def norm(d):
+            if isinstance(d, dict):
+                d = {**d, "ranking": [_norm_family_item(r) for r in d.get("ranking") or []],
+                     "tests": [_norm_family_item(t) for t in d.get("tests") or []]}
+            return d
+        return _tolerant(norm, data)
 
     ranking: list[CriticRank]
     tests: list[CriticTest] = Field(default_factory=list)
@@ -453,16 +472,10 @@ class AgentRun:
             body = json.dumps(payload, ensure_ascii=False, default=str)
             started = time.monotonic()
             kwargs = dict(system_prompt=system, payload=payload, schema_feedback=feedback, preserve_invalid_response=True)
-            try:
-                result = client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
-            except ValueError:
-                raise
-            except Exception as exc:  # noqa: BLE001 - provider rejected the schema format; fall back once
-                if self.response_mode != "json_schema":
-                    raise
-                self.log.write({"role": role, "event": "json_schema_rejected", "error": str(exc)[:300]})
-                self.response_mode = "json_object"
-                result = client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
+            result = self._call_model(client, role, kwargs, model_cls)
+            if result is None:                               # the API failed after retries: an invalid answer
+                self.usage.add(role, {})
+                continue
             self.usage.add(role, result.usage)
             if getattr(result, "parse_error", None):        # malformed JSON: an invalid answer, repaired like any other
                 self.protocol["malformed_json"] = self.protocol.get("malformed_json", 0) + 1
@@ -483,6 +496,25 @@ class AgentRun:
                             + "; ".join(f"{'/'.join(map(str, e['loc']))}: {e['msg']}" for e in exc.errors()[:8])
                             + ". Return the complete object again with exactly the field names of the example.")
                 self.log.write({**event, "valid": False, "error": feedback})
+        return None
+
+    def _call_model(self, client, role: str, kwargs: dict, model_cls):
+        """One model call with bounded retries; None if the provider keeps failing (never raises)."""
+        for k in range(self.cfg.api_retries + 1):
+            try:
+                return client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
+            except Exception as exc:  # noqa: BLE001 - network, timeout, server or format rejection
+                text = f"{type(exc).__name__}: {exc}"
+                if self.response_mode == "json_schema" and re.search(r"response_format|json_schema", text, re.I):
+                    self.log.write({"role": role, "event": "json_schema_rejected", "error": text[:300]})
+                    self.response_mode = "json_object"       # provider does not take the schema format; fall back
+                    continue
+                self.protocol["api_errors"] = self.protocol.get("api_errors", 0) + 1
+                self.log.write({"role": role, "event": "api_error", "try": k + 1, "error": text[:300]})
+                if k < self.cfg.api_retries:
+                    time.sleep(self.cfg.api_backoff_seconds * 3 ** k)
+        self.protocol["api_failures"] = self.protocol.get("api_failures", 0) + 1
+        self.log.write({"role": role, "event": "api_failure", "error": "model call failed after retries"})
         return None
 
     # -- planner
@@ -796,10 +828,22 @@ class AgentRun:
             cap = self.gateway.wall_seconds_used() + task.wall_budget - used
             self.gateway.max_wall_seconds = cap if saved is None else min(saved, cap)
             try:
-                return self._student_session(task, n)
+                return self._safe_session(task, n)
             finally:
                 self.gateway.max_wall_seconds = saved
-        return self._student_session(task, n)
+        return self._safe_session(task, n)
+
+    def _safe_session(self, task: sv.Task, n: int) -> dict:
+        try:
+            return self._student_session(task, n)
+        except Exception as exc:  # noqa: BLE001 - report the task as blocked instead of losing the run
+            self._internal_error(exc, f"worker session {task.task_id}")
+            try:
+                return self._report(task, {"status": "blocked_technical",
+                                           "summary": f"Internal error in the Worker session ({type(exc).__name__}); "
+                                                      "the attempts recorded so far are listed."}, n)
+            except Exception:  # noqa: BLE001
+                return {"task_id": task.task_id, "status": "blocked_technical", "summary": "Internal error."}
 
     def _student_session(self, task: sv.Task, n: int) -> dict:
         recent: list = []
@@ -915,6 +959,12 @@ class AgentRun:
         return digest
 
     def _critic(self, n: int, *, before_submit: bool) -> None:
+        try:
+            self._critic_inner(n, before_submit=before_submit)
+        except Exception as exc:  # noqa: BLE001 - a failed review is skipped, not fatal
+            self._internal_error(exc, "critic")
+
+    def _critic_inner(self, n: int, *, before_submit: bool) -> None:
         payload = {"verified_smiles": self.smiles, "mechanism_pool": mechanism_definitions(),
                    "structural_facts": self.facts, "calculations": self._evidence_digest(),
                    "available_recipes": [r["recipe"] for r in self._recipe_cards()]}
@@ -958,46 +1008,69 @@ class AgentRun:
         n = 0
         while True:
             n += 1
-            calls_used = self.usage.by_role["planner"]["calls"]
-            must_submit = (calls_used >= self.cfg.max_planner_calls - 1 or self._out_of_tools()
-                           or (not self.cfg.iterate and n >= 2))
-            if calls_used >= self.cfg.max_planner_calls + 2:
-                self.stop_reason = "planner_call_budget_exhausted"
-                break
-            step = self._ask(self.client, "planner", self.planner_prompt, self._planner_payload(must_submit), PlannerStep)
-            if step is None:
-                self.history.append(f"step {n}: invalid planner output after repair")
-                continue
-            missing = {p["proposal_id"] for p in self.proposals} - {r.proposal_id for r in step.proposal_responses}
-            self._apply(step, n)
-            if missing:
-                self.history.append(f"step {n}: proposals {sorted(missing)} were not answered; answer them")
-            action = step.action
-            if action.type == "submit" or must_submit:
-                if self.cfg.critic and not pre_submit_critic_done and not must_submit:
-                    pre_submit_critic_done = True
-                    self._critic(n, before_submit=True)
-                    if self.proposals:
-                        self.history.append(f"step {n}: submit requested; Critic raised proposals to answer first")
-                        self.latest = {"note": "Pre-submission Critic check. Answer the proposals, then submit or test."}
-                        continue
-                submitted = True
-                self.stop_reason = "planner_submitted" if action.type == "submit" else "budget"
-                self.history.append(f"step {n}: submit")
-                break
-            if self._out_of_tools() and action.type in {"recipe", "tool", "delegate", "revise"}:
-                self.latest = {"status": "rejected", "error": "Computation budget exhausted; submit now."}
-                self.history.append(f"step {n}: {action.type} rejected (budget)")
-                continue
-            summary = self._execute(action, n)
-            sep = ",".join(action.separates)
-            self.history.append(f"step {n}: {summary}" + (f" [separates {sep}]" if sep else ""))
-            self.log.write({"role": "action", "step": n, "action": action.model_dump(), "summary": summary,
-                            "board_top3": self.board.ranking()[:3]})
-            if (self.cfg.critic and self.cfg.iterate
-                    and self._computations() - self.last_critic_at >= self.cfg.critic_every):
-                self._critic(n, before_submit=False)
-        return self._finish(submitted, time.monotonic() - started)
+            try:
+                calls_used = self.usage.by_role["planner"]["calls"]
+                must_submit = (calls_used >= self.cfg.max_planner_calls - 1 or self._out_of_tools()
+                               or (not self.cfg.iterate and n >= 2))
+                if calls_used >= self.cfg.max_planner_calls + 2:
+                    self.stop_reason = "planner_call_budget_exhausted"
+                    break
+                step = self._ask(self.client, "planner", self.planner_prompt, self._planner_payload(must_submit), PlannerStep)
+                if step is None:
+                    self.history.append(f"step {n}: invalid planner output after repair")
+                    continue
+                missing = {p["proposal_id"] for p in self.proposals} - {r.proposal_id for r in step.proposal_responses}
+                self._apply(step, n)
+                if missing:
+                    self.history.append(f"step {n}: proposals {sorted(missing)} were not answered; answer them")
+                action = step.action
+                if action.type == "submit" or must_submit:
+                    if self.cfg.critic and not pre_submit_critic_done and not must_submit:
+                        pre_submit_critic_done = True
+                        self._critic(n, before_submit=True)
+                        if self.proposals:
+                            self.history.append(f"step {n}: submit requested; Critic raised proposals to answer first")
+                            self.latest = {"note": "Pre-submission Critic check. Answer the proposals, then submit or test."}
+                            continue
+                    submitted = True
+                    self.stop_reason = "planner_submitted" if action.type == "submit" else "budget"
+                    self.history.append(f"step {n}: submit")
+                    break
+                if self._out_of_tools() and action.type in {"recipe", "tool", "delegate", "revise"}:
+                    self.latest = {"status": "rejected", "error": "Computation budget exhausted; submit now."}
+                    self.history.append(f"step {n}: {action.type} rejected (budget)")
+                    continue
+                summary = self._execute(action, n)
+                sep = ",".join(action.separates)
+                self.history.append(f"step {n}: {summary}" + (f" [separates {sep}]" if sep else ""))
+                self.log.write({"role": "action", "step": n, "action": action.model_dump(), "summary": summary,
+                                "board_top3": self.board.ranking()[:3]})
+                if (self.cfg.critic and self.cfg.iterate
+                        and self._computations() - self.last_critic_at >= self.cfg.critic_every):
+                    self._critic(n, before_submit=False)
+            except Exception as exc:  # noqa: BLE001 - a bug must not lose the run
+                if self._internal_error(exc, f"planner step {n}"):
+                    self.stop_reason = "internal_error"
+                    break
+
+        try:
+            return self._finish(submitted, time.monotonic() - started)
+        except Exception as exc:  # noqa: BLE001 - still leave a record of the run
+            self._internal_error(exc, "finish")
+            minimal = {"case_id": self.case_id, "release": AGENT_RELEASE, "status": "stopped", "stop_reason": "finish_failed",
+                       "error": f"{type(exc).__name__}: {exc}", "usage": self.usage.as_dict(), "tool_cost": self.gateway.cost(),
+                       "board": self.board.model_dump()}
+            (self.run_dir / "result.json").write_text(json.dumps(minimal, ensure_ascii=False, indent=1, default=str))
+            return minimal
+
+    def _internal_error(self, exc: Exception, where: str) -> bool:
+        """Record an unexpected exception; True when the run should stop."""
+        self.protocol["internal_errors"] = self.protocol.get("internal_errors", 0) + 1
+        self.log.write({"role": "internal_error", "where": where, "error": f"{type(exc).__name__}: {exc}"[:500],
+                        "traceback": traceback.format_exc()[-3000:]})
+        self.history.append(f"{where}: internal error ({type(exc).__name__}); the step was skipped")
+        self.latest = {"status": "error", "error": "An internal error interrupted the last step; it was skipped."}
+        return self.protocol["internal_errors"] >= self.cfg.max_internal_errors
 
     def _protocol_metrics(self) -> dict:
         tasks = list(self.tasks.values())
