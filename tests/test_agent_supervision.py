@@ -399,3 +399,18 @@ def test_read_works_on_input_structures(tmp_path):
     assert out["status"] == "ok" and out["value"]["kind"] == "prepared_structure" and out["value"]["xyz_angstrom"]
     assert g.read("structure:prepared", "/kind")["value"] == "prepared_structure"
     assert "known ids" in g.read("nope")["error"]
+
+
+def test_approval_replaces_a_fixed_technical_setting_and_repeats_end_the_session(tmp_path):
+    def revise(p):
+        return {"action": {"type": "revise", "task_id": "W1", "instruction": "Approved: 3 states.", "approve": True}}
+
+    planner = [{"action": contrast(type="delegate", task="Scan.", tools=[TORSION], fixed_args={"s1_nstates": 2})}, revise, submit]
+    call3 = worker_tool(TORSION, {"source_artifact_id": "structure:prepared", "s1_nstates": 3}, "need 3")
+    worker = [call3, call3,                                   # second identical refused call ends the session
+              call3, worker_report("done")]                   # after approval it runs
+    run, result, client = run_agent(tmp_path, planner, worker)
+    first, second = latest_reports(client)
+    assert first["status"] == "needs_approval" and "repeated a refused call" in first["summary"]
+    assert run.tasks["W1"].fixed_args["s1_nstates"] == 3
+    assert second["attempts"][-1]["args"]["s1_nstates"] == 3

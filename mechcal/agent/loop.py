@@ -683,12 +683,14 @@ class AgentRun:
             approved = dict(task.pending)
             self._approve(task, approved)
         for key, value in self.gateway.resolve_args(action.args_hint).items():   # professor sets settings directly
-            if sv.ARG_CLASS.get(key) == "scientific":
-                task.fixed_args[key] = value
-                task.pinned[key] = value
-            elif key == "source_artifact_id":
+            if key == "source_artifact_id":
                 task.fixed_args[key] = value
                 task.geometry = self._geometry_of(value)
+                continue
+            if sv.ARG_CLASS.get(key) == "scientific" or key in task.fixed_args:
+                task.fixed_args[key] = value
+            if sv.ARG_CLASS.get(key) == "scientific":
+                task.pinned[key] = value
         task.instructions.append({"step": n, "instruction": action.instruction, "args_hint": action.args_hint,
                                   "approved_change": approved, "at_attempt": len(task.attempts)})
         task.pending = None
@@ -702,12 +704,13 @@ class AgentRun:
         name, kind = change.get("name") or "", change.get("kind") or "tool"
         if name and not task.route_allowed(kind, name):
             task.approved.append({kind: name})
-        view = sv.recipe_tool_args(name, change.get("args") or {}, RECIPE_ARGS) if kind == "recipe" else change.get("args") or {}
-        for key, value in view.items():
+        args = change.get("args") or {}
+        view = sv.recipe_tool_args(name, args, RECIPE_ARGS) if kind == "recipe" else args
+        for key, value in {**args, **view}.items():
+            if key in task.fixed_args:                   # an approved value replaces a fixed one, technical or not
+                task.fixed_args[key] = value
             if sv.ARG_CLASS.get(key) == "scientific":
                 task.pinned[key] = value
-                if key in task.fixed_args:
-                    task.fixed_args[key] = value
         source = self.gateway.resolve((change.get("args") or {}).get("source_artifact_id"))
         if source:
             task.geometry = self._geometry_of(source)
@@ -800,6 +803,7 @@ class AgentRun:
 
     def _student_session(self, task: sv.Task, n: int) -> dict:
         recent: list = []
+        session_intercepts: dict = {}
         start = self._computations()
         for call in range(1, self.cfg.worker_max_calls + 1):
             comps_left = min(self.cfg.worker_max_computations - (self._computations() - start),
@@ -833,6 +837,12 @@ class AgentRun:
                 if block.get("needs_approval"):
                     task.pending = {"kind": kind, "name": name, "args": a.args, "reason": a.reason}
                 self.log.write({"role": "interception", "task_id": task.task_id, **entry})
+                if session_intercepts.get((kind, name, json.dumps(a.args, sort_keys=True, default=str))):
+                    # the same refused call again: end the session and hand the question to the Planner
+                    return self._report(task, {"status": "needs_approval" if block.get("needs_approval") else "blocked_technical",
+                                               "summary": f"The Worker repeated a refused call ({block['code']}): {block['message']}",
+                                               "proposed_change": task.pending if block.get("needs_approval") else None}, n)
+                session_intercepts[(kind, name, json.dumps(a.args, sort_keys=True, default=str))] = True
                 recent.append({"status": "intercepted", **block})
                 continue
             started = time.monotonic()
