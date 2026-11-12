@@ -33,7 +33,12 @@ def case_ids(args) -> list[str]:
     return [c if c.startswith(PREFIX) else PREFIX + c.zfill(4) for c in (x.strip() for x in raw) if c]
 
 
-def run_case(case_id: str, out: Path, extra: list[str], grade: bool) -> dict:
+COMMANDS = {"agent": ["-m", "mechcal.agent.cli"],
+            "direct": ["-m", "mechcal.eval.baseline_cli", "--subject", "direct"],
+            "react": ["-m", "mechcal.eval.baseline_cli", "--subject", "react"]}
+
+
+def run_case(case_id: str, out: Path, extra: list[str], grade: bool, subject: str = "agent") -> dict:
     short = case_id.removeprefix(PREFIX)
     run_dir = out / short
     if (run_dir / "result.json").is_file():
@@ -43,7 +48,7 @@ def run_case(case_id: str, out: Path, extra: list[str], grade: bool) -> dict:
     env = dict(os.environ, KMP_STACKSIZE=os.environ.get("KMP_STACKSIZE", "4G"))
     started = time.monotonic()
     with (out / f"{short}.log").open("a", encoding="utf-8") as log:
-        code = subprocess.run([sys.executable, "-m", "mechcal.agent.cli", "--case-id", case_id, "--out", str(run_dir), *extra],
+        code = subprocess.run([sys.executable, *COMMANDS[subject], "--case-id", case_id, "--out", str(run_dir), *extra],
                               cwd=ROOT, env=env, stdout=log, stderr=subprocess.STDOUT, preexec_fn=_unlimited_stack).returncode
     state = "finished" if (run_dir / "result.json").is_file() else f"failed (exit {code})"
     row = {"case": short, "state": state, "minutes": round((time.monotonic() - started) / 60, 1)}
@@ -69,6 +74,7 @@ def main(argv: list[str] | None = None) -> list[dict]:
     parser.add_argument("--parallel", type=int, default=6)
     parser.add_argument("--grade", action="store_true", help="grade each finished run (calls the judge model)")
     parser.add_argument("--allow-test", action="store_true", help="allow held-out test cases (only after freezing)")
+    parser.add_argument("--subject", choices=sorted(COMMANDS), default="agent", help="MechCAL agent or a baseline")
     args = parser.parse_args(argv)
     if not (args.cases or args.cases_file):
         parser.error("give --cases or --cases-file")
@@ -83,7 +89,7 @@ def main(argv: list[str] | None = None) -> list[dict]:
     args.out.mkdir(parents=True, exist_ok=True)
     cases = case_ids(args)
     with ThreadPoolExecutor(max_workers=max(1, args.parallel)) as pool:
-        rows = list(pool.map(lambda c: run_case(c, args.out, extra, args.grade), cases))
+        rows = list(pool.map(lambda c: run_case(c, args.out, extra, args.grade, args.subject), cases))
     print(f"{sum(r['state'] == 'finished' for r in rows)} finished, "
           f"{sum(r['state'].startswith('skipped') for r in rows)} skipped, "
           f"{sum(r['state'].startswith('failed') for r in rows)} failed")

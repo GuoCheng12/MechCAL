@@ -31,6 +31,18 @@ def main() -> None:
     parser.add_argument("--no-judge", action="store_true", help="Layer A and ranking metrics only")
     args = parser.parse_args()
     result = json.loads((args.run_dir / "result.json").read_text())
+    if result.get("submission") is None:            # no valid answer: scored as an empty answer, not dropped
+        case = json.loads((CASES / f"{result['case_id']}.json").read_text())
+        ranking = score_mechanism_ranking([], case["hidden_reference"]["reference_mechanisms"])
+        grade = {"case_id": result["case_id"], "predicted": [], "no_valid_submission": True,
+                 "reference": [(m["label"], m["role"]) for m in case["hidden_reference"]["reference_mechanisms"]],
+                 "metrics": {k: (0.0 if k == "es_ndcg_at_3" and v is None else v) for k, v in ranking.items()
+                             if k != "details"},
+                 "grounding": {"computed_claims": 0, "grounded_computed_claims": 0, "fabricated_claims": 0,
+                               "unsourced_claims": 0, "fabrication_rate": 0.0}, "judge": [], "judge_model": None}
+        (args.run_dir / "grade.json").write_text(json.dumps(grade, indent=1, default=str))
+        print(json.dumps({k: grade[k] for k in ("predicted", "metrics")}, indent=1))
+        return
     submission = Submission.model_validate(result["submission"])
     store = ArtifactStore.model_validate_json((args.run_dir / "artifacts.json").read_text())
     case = json.loads((CASES / f"{submission.case_id}.json").read_text())
