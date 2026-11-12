@@ -261,6 +261,8 @@ def test_failure_classes_and_result_warnings():
                             "Central bond must be a discovered non-ring rotatable bond.")["failure_class"] == "system"
     assert classify_failure("failed", "runtime_failed", "Whole-route wall time exceeded")["failure_code"] == "timeout"
     assert classify_failure("unsupported", "unsupported", "Amesp is disabled by the run environment.")["retryable"] is False
+    assert classify_failure("precondition_missing", "precondition_missing",
+                            "DFTB trial parameter coverage is restricted to CHNO.")["failure_class"] == "not_applicable"
     codes = lambda tool, po: {w["code"]: w["student_fixable"] for w in result_warnings(tool, "success", po)}
     assert codes("b", {"requested_parameters": {"s1_nstates": 6}, "state_count": 4}) == {"fewer_states_than_requested": True}
     assert codes("v", {"imaginary_mode_indices_below_minus20": [0]}) == {"imaginary_modes": False}

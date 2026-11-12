@@ -18,7 +18,8 @@ from typing import Any
 # Messages (regex, case-insensitive) that mean the route cannot apply to this molecule/system.
 NOT_APPLICABLE = (
     ("no_force_field", r"Neither MMFF94 nor UFF parameters"),
-    ("unsupported_elements", r"Supported element scope|Unsupported element|neutral CHNO|element or atom count"),
+    ("unsupported_elements", r"Supported element scope|Unsupported element|neutral CHNO|element or atom count"
+                             r"|restricted to CHNO|parameter coverage"),
     ("electron_count", r"even electron count|closed-shell"),
     ("route_disabled", r"disabled|validated with CREST|executable is unavailable|parameter directory is unavailable"),
 )
