@@ -33,6 +33,9 @@ class QCConfig(BaseModel):
     parameter_name: str = "mio-1-1"
     parameter_revision: str = ""
     threads: int = Field(default=4, ge=1, le=8)
+    # PySCF singlet/triplet route only (large DF matrices; scales well with threads and memory).
+    pyscf_states_threads: int = Field(default=4, ge=1, le=64)
+    pyscf_states_max_memory_mb: int = Field(default=2000, ge=500, le=200000)
     allow_excited_scan: bool = False
 
     @classmethod
@@ -70,13 +73,14 @@ class QCJob:
         self.records = []
         workdir.mkdir(parents=True, exist_ok=False)
 
-    def execute(self, argv: list[str], directory: Path, *, environment=None):
+    def execute(self, argv: list[str], directory: Path, *, environment=None, threads: int | None = None):
         directory.mkdir(parents=True, exist_ok=True)
         remaining = self.deadline - time.monotonic()
         if remaining <= 0:
             raise QCError("timeout", "Whole-route wall time exhausted.")
-        env = dict(os.environ, OMP_NUM_THREADS=str(self.config.threads),
-                   MKL_NUM_THREADS=str(self.config.threads), OPENBLAS_NUM_THREADS="1",
+        threads = threads or self.config.threads
+        env = dict(os.environ, OMP_NUM_THREADS=str(threads),
+                   MKL_NUM_THREADS=str(threads), OPENBLAS_NUM_THREADS="1",
                    OMP_STACKSIZE="256M")
         if environment:
             env.update(environment)
@@ -84,7 +88,7 @@ class QCJob:
         command = ["/usr/bin/time", "-f", '{"peak_rss_kb":%M,"user_seconds":%U,"system_seconds":%S}',
                    "-o", str(resources), *argv]
         start = time.monotonic()
-        record = {"argv": argv, "directory": str(directory), "threads": self.config.threads}
+        record = {"argv": argv, "directory": str(directory), "threads": threads}
         try:
             with log.open("w") as output:
                 process = subprocess.Popen(command, cwd=directory, env=env, stdout=output,
@@ -127,5 +131,5 @@ class QCJob:
                 "compute_wall_seconds": sum(r["wall_seconds"] for r in self.records),
                 "peak_process_rss_kb": max(measured) if measured else None,
                 "rss_measured_process_count": len(measured),
-                "cpu_threads": self.config.threads, "gpu_used": False,
+                "cpu_threads": max((r.get("threads", self.config.threads) for r in self.records), default=self.config.threads), "gpu_used": False,
                 "process_count": len(self.records), "cache_hit": False}

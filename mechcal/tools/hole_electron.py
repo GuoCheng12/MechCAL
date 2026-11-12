@@ -216,6 +216,12 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
         raise SpatialAnalysisError("invalid_args", "Requested postprocessing time exceeds the permitted range.",
             details={"stage": "preflight", "requested_wall_seconds": max_wall_seconds,
                      "effective_max_wall_seconds": configured_limit})
+    try:
+        threads = int(os.environ.get("MECHCAL_MULTIWFN_THREADS", "1"))
+        if not 1 <= threads <= 64:
+            raise ValueError("outside 1-64")
+    except ValueError as exc:
+        raise SpatialAnalysisError("capability_unsupported", "Invalid MECHCAL_MULTIWFN_THREADS configuration.") from exc
     multiwfn, m2m = backend_paths()
     paths, output, symbols, xyz, coeff, norm, energy, dipole = source_data(bundle, state_root)
     fragment_contributions([], symbols, fragments)
@@ -226,12 +232,12 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
     for key, path in paths.items():
         shutil.copy2(path, out / f"input.{key}")
     settings = (multiwfn.parent / "settings.ini").read_text()
-    for key, value in (("nthreads", "1"), ("cfgcrossthres", "0.001")):
+    for key, value in (("nthreads", str(threads)), ("cfgcrossthres", "0.001")):
         settings, count = re.subn(rf"(?m)^(\s*{key}=\s*)\S+", rf"\g<1>{value}", settings)
         if count != 1:
             raise SpatialAnalysisError("capability_unsupported", f"Unsupported Multiwfn settings: {key}")
     (out / "settings.ini").write_text(settings)
-    env = dict(os.environ, OMP_STACKSIZE="512M", OMP_NUM_THREADS="1", Multiwfnpath=str(multiwfn.parent))
+    env = dict(os.environ, OMP_STACKSIZE="512M", OMP_NUM_THREADS=str(threads), Multiwfnpath=str(multiwfn.parent))
 
     def call(executable, args, commands, name):
         (out / f"{name}.stdin").write_text(commands)
@@ -293,6 +299,6 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
             "heavy_atom_contributions": atoms, "partition": "Mulliken", "hydrogens_omitted_from_contribution_table": True,
             "fragment_contributions": fragment_contributions(atoms, symbols, fragments),
             "coefficient_squared_sum": norm, "coefficient_count": len(coeff), "source_sha256": hashes,
-            "grid": spatial_grid, "cross_term_threshold": .001, "elapsed_seconds": time.monotonic() - started,
+            "grid": spatial_grid, "cross_term_threshold": .001, "postprocessor_threads": threads, "elapsed_seconds": time.monotonic() - started,
             "postprocessor_banner": log.splitlines()[:12], "new_quantum_calculations": 0,
             "limitations": [BOUNDARY]}

@@ -189,7 +189,7 @@ MACRO_CAPABILITY_CARDS = [
 MICROSCOPIC_CAPABILITY_CARDS = [
     {
         "name": "optimize_ground_state_geometry", "family": "geometry_precondition",
-        "description": "Recover an unoptimized initial_structure using Cartesian ASE BFGS and Amesp aTB1 ground-state forces. Default limits: 240 steps and 240 seconds. Publishes prepared_structure only when max atomic force is at most 0.02 eV/angstrom and basic geometry checks pass. No excited-state or mechanistic evidence; not a frequency-verified minimum.",
+        "description": "Recover an unoptimized initial_structure by aTB1 ground-state optimization: Amesp native optimizer (redundant internals, Cartesian after a linear-angle stop), falling back to ASE BFGS on Amesp forces. Default limits: 2000 cycles and 240 seconds. Publishes prepared_structure only when the optimizer's convergence criterion (recorded) and basic geometry checks pass. No excited-state or mechanistic evidence; not a frequency-verified minimum.",
         "required": ["initial_structure"], "outputs": ["prepared_structure"], "cost": "medium",
     },
     {

@@ -15,14 +15,17 @@ from test_external_qc import config, case, dispatch
 def test_spin_timeout_returns_actual_stage_and_not_computed_triplet(tmp_path):
     class Job:
         workdir = tmp_path
-        config = SimpleNamespace(threads=2, pyscf_python="python")
+        config = SimpleNamespace(threads=2, pyscf_python="python", pyscf_states_threads=32,
+                                 pyscf_states_max_memory_mb=16000)
         max_wall_seconds = 420
 
         def timing(self):
             return {"total_wall_seconds": 420.1}
 
-        def execute(self, argv, directory):
+        def execute(self, argv, directory, threads=None):
+            assert threads == 32                        # route-specific threads, not [qc] threads
             request = json.loads((directory / "request.json").read_text())
+            assert request["threads"] == 32 and request["max_memory_mb"] == 16000
             (directory / "result.json").write_text(json.dumps({
                 "schema_version": "pyscf_spin_states_v1", "request": request, "states": [],
                 "scf_converged": True, "scf_seconds": 247.1, "stability_check_status": "not_completed"}))

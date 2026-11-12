@@ -64,6 +64,24 @@ must be configured together for hole-electron analysis.
 `allow_excited_scan` and `allow_amesp_soc` default to false. Do not enable an
 unvalidated route merely to make a dependency check green.
 
+## Threads and Memory
+
+Each setting applies to one backend, because multithreading helps some routes and
+hurts others (measured on Case 0003, a 56-atom Au complex):
+
+| Setting | Recommended | Why |
+|---|---|---|
+| `[tools] amesp_threads` | 1 | Multithreaded aTB1 changes numerical results and lengthens optimizations (native S0 opt: 18 s/42 steps at 1 thread, 243 s/1526 steps at 16); not reproducible. |
+| `[tools] multiwfn_threads` | 16 | Hole-electron postprocessing: 76 s at 1 thread, 5 s at 16, identical D index (6.044 Å). |
+| `[qc] pyscf_states_threads` | 32 | PySCF singlet/triplet route only: whole route 923 s at 32 threads vs ~1300 s at 8. |
+| `[qc] pyscf_states_max_memory_mb` | 16000 | PySCF `max_memory` for that route (was fixed at 2000). |
+| `[qc] threads` | unchanged | xTB, CREST, DFTB+ and other QC routes; small molecules gain nothing from more threads. |
+
+The S0 geometry recovery (`optimize_ground_state_geometry`) uses Amesp's native
+optimizer: redundant internal coordinates first, Cartesian after a "Linear angle"
+stop, ASE BFGS on Amesp forces only if both fail. The artifact records the
+optimizer, its convergence criterion and every attempt.
+
 ## Result Isolation
 
 Use a new output directory for every run. Case IDs must be filename-safe, not

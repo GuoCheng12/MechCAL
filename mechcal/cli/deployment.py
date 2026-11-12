@@ -58,6 +58,7 @@ class ToolsConfig(BaseModel):
     amesp_timeout: float = Field(default=180, gt=0)
     amesp_threads: int = Field(default=1, ge=1)
     amesp_maxcore_mb: int = Field(default=1000, ge=1)
+    multiwfn_threads: int = Field(default=1, ge=1, le=64)   # hole-electron postprocessing; results thread-independent
 
 
 class Deployment(BaseModel):
@@ -116,6 +117,7 @@ def environment(config: Deployment, runtime: OrchestratorConfig, qc_path: Path) 
         "MECHCAL_AMESP_TIMEOUT": str(config.tools.amesp_timeout),
         "MECHCAL_AMESP_NPARA": str(config.tools.amesp_threads),
         "MECHCAL_AMESP_MAXCORE_MB": str(config.tools.amesp_maxcore_mb),
+        "MECHCAL_MULTIWFN_THREADS": str(config.tools.multiwfn_threads),
         "MECHCAL_QC_CONFIG": str(qc_path),
     }
 

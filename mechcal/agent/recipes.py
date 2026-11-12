@@ -17,9 +17,10 @@ from mechcal.eval.tool_gateway import ToolGateway
 
 DEFAULT_NSTATES = 10
 TD_TOUT = 10  # >= 4 is required for later hole-electron analysis; 10 keeps transitions complete
-# PySCF DF-PBE/TDA singlets+triplets with the reference stability check: ~1200 s for a 56-atom Au
-# complex at 8 threads (SCF 93 s, internal stability ~520 s, external ~270 s), so 900 s left it partial.
-PYSCF_SPIN_WALL = 1500
+# PySCF DF-PBE/TDA singlets+triplets with the reference stability check, 56-atom Au complex (0003),
+# measured at 32 threads / 16 GB: SCF 55 s, TDA S 180 s + T 142 s, internal stability 307 s,
+# external 239 s = 923 s (8 threads: ~1300 s). 1200 s keeps ~30% margin.
+PYSCF_SPIN_WALL = 1200
 
 
 @dataclass
@@ -66,7 +67,7 @@ def geometry(ctx: RecipeContext, steps: list) -> str | None:
         ctx.cache["geometry_source"] = "rdkit_forcefield"
         return gw.prepared_artifact_id
     obs = _step(ctx, steps, "microscopic.optimize_ground_state_geometry",
-                {"source_artifact_id": gw.prepared_artifact_id, "max_opt_cycles": 300, "max_wall_seconds": 300})
+                {"source_artifact_id": gw.prepared_artifact_id, "max_opt_cycles": 2000, "max_wall_seconds": 300})
     if not obs or not obs["reusable_artifacts"]:
         return None
     ctx.cache["geometry"] = obs["reusable_artifacts"][0]
@@ -199,7 +200,7 @@ RECIPES: dict[str, tuple[Callable, str]] = {
     "charge_transfer": (charge_transfer, "Excited states + hole-electron analysis of one state: centroid distance, overlap, t-index, optional fragment contributions. Args: state_root, nstates, fragments {name: [0-based atom indices]}."),
     "bright_dark_states": (bright_dark_states, "Bright/dark state ordering scan at the ground-state geometry. Args: nstates."),
     "torsion_response": (torsion_response, "Rigid torsion scan of one rotatable dihedral with excited-state brightness at each angle. Args: dihedral_id (from list_rotatable_dihedrals; default first), angles, nstates."),
-    "spin_states": (spin_states, "Singlet/triplet vertical states (TD-DFTB + PySOC SOC for neutral CHNO; PySCF DF-PBE/TDA otherwise, slow: ~20 min for a metal complex). Args: nstates_per_spin."),
+    "spin_states": (spin_states, "Singlet/triplet vertical states (TD-DFTB + PySOC SOC for neutral CHNO; PySCF DF-PBE/TDA otherwise, slow: ~15 min for a metal complex). Args: nstates_per_spin."),
     "redox_levels": (redox_levels, "Vertical ionization potential and electron affinity (IPEA-xTB). No args."),
     "vibrations": (vibrations, "Ground-state optimisation and vibrational modes with atom-resolved motions (xTB). No args."),
     "dimer_contacts": (dimer_contacts, "Modeled homodimer poses (xTB aISS): contacts and interaction energies. Modeled, not a crystal. Args: max_candidates."),

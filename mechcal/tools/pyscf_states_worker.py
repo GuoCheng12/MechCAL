@@ -34,7 +34,7 @@ def calculate(request, output):
     ecp = {s: "def2-svp" for s in set(symbols) if s == "Au"}
     mol = gto.M(atom=list(zip(symbols, request["coordinates_angstrom"])), unit="Angstrom",
         basis=request["basis"], ecp=ecp, charge=request["charge"], spin=0,
-        max_memory=2000, verbose=4, output=str(output.with_suffix(".log")))
+        max_memory=request["max_memory_mb"], verbose=4, output=str(output.with_suffix(".log")))
     mf = dft.RKS(mol).density_fit()
     mf.xc = request["functional"]
     mf.grids.level = request["grid_level"]
@@ -48,6 +48,7 @@ def calculate(request, output):
     if not mf.converged:
         raise ValueError("SCF did not converge; no state energies accepted.")
     scf_seconds = time.monotonic()-started
+    stage_seconds = {"scf": scf_seconds}
     # Keep the same DF reference for response and stability, including Newton SCF.
     if hasattr(mf, "undo_soscf"):
         mf = mf.undo_soscf()
@@ -55,7 +56,7 @@ def calculate(request, output):
         method=f"DF-{request['functional'].upper()}/TDA/{request['basis']}, grid {request['grid_level']}, gas phase",
         scf_converged=True, scf_internal_stable=None, scf_external_stable=None,
         stability_check_status="not_completed", validation_failures=[],
-        ground_energy_hartree=float(mf.e_tot), nao=mol.nao_nr(), scf_seconds=scf_seconds,
+        ground_energy_hartree=float(mf.e_tot), nao=mol.nao_nr(), scf_seconds=scf_seconds, stage_seconds=stage_seconds,
         ecp_core_electrons_by_atom=[int(mol.atom_nelec_core(i)) for i in range(mol.natm)],
         scalar_ecp=ecp, states=[], spin_manifold_failures=[],
         limitations=["Spin-free TDA; scalar ECP does not compute SOC, ISC, triplet yield or lifetime.",
@@ -67,6 +68,7 @@ def calculate(request, output):
     overlap = mf.get_ovlp()
     for singlet in (True, False):
         label = "S" if singlet else "T"
+        stage_started = time.monotonic()
         try:
             td = tdscf.TDA(mf)
             td.singlet = singlet
@@ -108,13 +110,21 @@ def calculate(request, output):
             report["states"].extend(manifold)
         except (ValueError, RuntimeError, np.linalg.LinAlgError) as exc:
             report["spin_manifold_failures"].append(dict(manifold=label, reason=str(exc), failure_code="not_converged"))
+        stage_seconds["tda_singlet" if singlet else "tda_triplet"] = time.monotonic()-stage_started
         output.write_text(json.dumps(report, indent=2, allow_nan=False))
     # Preserve completed states if this potentially expensive validation times out.
     stability_started = time.monotonic()
     try:
-        _, _, internal_stable, external_stable = mf.stability(internal=True, external=True, return_status=True)
-        report.update(scf_internal_stable=bool(internal_stable), scf_external_stable=bool(external_stable),
-            stability_check_status="completed")
+        # Internal and external checks run separately (same checks as one combined call) so each is timed
+        # and a completed internal result is kept if the external check is cut off.
+        _, _, internal_stable, _ = mf.stability(internal=True, external=False, return_status=True)
+        stage_seconds["stability_internal"] = time.monotonic()-stability_started
+        report.update(scf_internal_stable=bool(internal_stable))
+        output.write_text(json.dumps(report, indent=2, allow_nan=False))
+        external_started = time.monotonic()
+        _, _, _, external_stable = mf.stability(internal=False, external=True, return_status=True)
+        stage_seconds["stability_external"] = time.monotonic()-external_started
+        report.update(scf_external_stable=bool(external_stable), stability_check_status="completed")
     except (ValueError, RuntimeError, np.linalg.LinAlgError) as exc:
         report["validation_failures"].append(dict(reason=f"Reference stability check failed: {exc}",failure_code="numerical_validation_failed"))
         report["stability_check_status"]="failed"

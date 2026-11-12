@@ -280,3 +280,50 @@ def test_output_does_not_resurrect_older_stronger_arguments_after_final_audit():
     assert prediction.evidence_details[0].finding == "Revised fixture assertion."
     assert "Old fixture assertion" not in str(prediction.evidence)
     assert prediction.differential_priority == 0.8
+
+
+class NativeFixture(GeometryFixture):
+    """Native Amesp optimization outcomes per coordinate system; force calls fall through to the parent."""
+
+    def __init__(self, outcomes):
+        super().__init__()
+        self.outcomes, self.coords = outcomes, []
+
+    def _run_step(self, **kwargs):
+        if "opt" not in kwargs["keywords"]:
+            return super()._run_step(**kwargs)
+        coord = next(l.split()[1] for _, lines in kwargs["block_lines"] for l in lines if l.startswith("optcoord"))
+        self.coords.append(coord)
+        directory = kwargs["workdir"]
+        aip, aop = directory / f"native_{coord}.aip", directory / f"native_{coord}.aop"
+        aip.write_text("fixture")
+        outcome = self.outcomes[coord]
+        if outcome != "converged":
+            raise AmespBaselineError("runtime_failed", outcome, file_paths={"aop": str(aop)})
+        table = [f"    {k}   0.0000100   {t}   YES" for k, t in
+                 (("RMS Force", "0.0003000"), ("Max Force", "0.0004500"), ("RMS Step", "0.0012000"), ("Max Step", "0.0018000"))]
+        atoms = [f"{s} {x} {y} {z}" for s, (x, y, z) in zip(kwargs["symbols"], kwargs["coordinates"])]
+        aop.write_text("\n".join(table + ["Geometry Optimization Converged after 42 Steps.", "Final Geometry(angstroms):",
+                                          str(len(atoms)), "", *atoms, "Final Energy:   -1.500000"]))
+        return AmespStepResult("native", aip, aop, directory / "stdout", directory / "stderr", 0, True, 0)
+
+
+@pytest.mark.parametrize("outcomes, optimizer, coords", [
+    ({"red": "converged"}, "amesp_native_redundant_internal", ["red"]),
+    ({"red": "Amesp backend stopped: Linear angle in Tors !", "car": "converged"}, "amesp_native_cartesian", ["red", "car"]),
+    ({"red": "Amesp backend stopped: Linear angle in Tors !", "car": "Fail to convergence on Geom Opt!"}, "ASE_BFGS", ["red", "car"]),
+    ({"red": "Fail to convergence on Geom Opt!"}, "ASE_BFGS", ["red"]),        # Cartesian only after a linear-angle stop
+])
+def test_native_optimizer_order_and_record(tmp_path, outcomes, optimizer, coords):
+    runner = NativeFixture(outcomes)
+    result = optimize_ground_geometry(request("optimize_ground_state_geometry", {}), seed_case(tmp_path), {}, runner)
+    obs = result.artifact_updates[0].metadata["computed_observables"]
+    assert runner.coords == coords and obs["optimizer"] == optimizer
+    assert [a["optimizer"] for a in obs["optimizer_attempts"]][-1] == optimizer
+    assert obs["optimizer_attempts"][-1]["outcome"] == "converged"
+    assert all(a["outcome"] == "failed" and a["reason"] for a in obs["optimizer_attempts"][:-1])
+    if optimizer.startswith("amesp_native"):
+        assert obs["convergence_criterion"].startswith("Amesp geomtol normal") and obs["final_energy_hartree"] == -1.5
+        assert obs["final_convergence_table"]["Max Force"]["converged"] and obs["optimization_steps"] == 42
+    else:
+        assert obs["convergence_criterion"] == "maximum_atomic_force_at_most_0.02_eV_per_angstrom"

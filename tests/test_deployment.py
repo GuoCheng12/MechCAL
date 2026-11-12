@@ -136,3 +136,17 @@ def test_invalid_config_does_not_echo_inline_secret(tmp_path, monkeypatch, capsy
     monkeypatch.setattr("sys.argv", ["mechcal", "--config", str(config), "doctor"])
     assert launch.main() == 1
     assert "must-not-be-printed" not in capsys.readouterr().err
+
+
+def test_postprocessing_and_spin_route_threads_are_separate_settings(tmp_path, monkeypatch):
+    from mechcal.cli.deployment import environment
+    from mechcal.tools.hole_electron import SpatialAnalysisError, run_spatial
+    config = minimal_config()
+    config.tools.multiwfn_threads = 16
+    config.qc.pyscf_states_threads, config.qc.pyscf_states_max_memory_mb = 32, 16000
+    env = environment(config, config.orchestrator_config(tmp_path), tmp_path / "qc.json")
+    assert env["MECHCAL_MULTIWFN_THREADS"] == "16" and config.qc.threads == 4   # [qc] threads untouched
+    monkeypatch.setenv("MECHCAL_MULTIWFN_THREADS", "0")
+    with pytest.raises(SpatialAnalysisError) as exc:
+        run_spatial(None, tmp_path / "out")
+    assert exc.value.code == "capability_unsupported"

@@ -14,7 +14,7 @@ def evaluate(job, atoms, args, charge):
     if partition and sorted(partition) != list(range(len(atoms))):
         raise QCError("invalid_args", "Fragment groups must partition every source atom exactly once.")
     request = dict(symbols=atoms.get_chemical_symbols(), coordinates_angstrom=atoms.positions.tolist(),
-        charge=charge, threads=job.config.threads,
+        charge=charge, threads=job.config.pyscf_states_threads, max_memory_mb=job.config.pyscf_states_max_memory_mb,
         **args.model_dump(exclude={"source_artifact_id", "max_wall_seconds"}))
     directory = job.workdir / "spin_states"
     directory.mkdir()
@@ -22,7 +22,8 @@ def evaluate(job, atoms, args, charge):
     source.write_text(json.dumps(request, indent=2, allow_nan=False))
     error = None
     try:
-        job.execute([job.config.pyscf_python, str(Path(pyscf_states_worker.__file__).resolve()), str(source), str(output)], directory)
+        job.execute([job.config.pyscf_python, str(Path(pyscf_states_worker.__file__).resolve()), str(source), str(output)], directory,
+                    threads=job.config.pyscf_states_threads)
     except QCError as exc:
         error = exc
     if not output.exists():

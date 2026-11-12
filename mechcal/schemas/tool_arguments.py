@@ -74,7 +74,8 @@ class HoleElectronArgs(SourceArgs):
 
 
 class GroundGeometryArgs(SourceArgs):
-    max_opt_cycles: int = Field(default=240, ge=1, le=300)
+    # Native Amesp cycles cost ~0.2 s each (0003: 385 Cartesian steps in 84 s); wall time is the real bound.
+    max_opt_cycles: int = Field(default=2000, ge=1, le=2000)
     max_wall_seconds: float = Field(default=240.0, ge=10.0, le=300.0)
 
 

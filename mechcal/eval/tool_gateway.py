@@ -26,7 +26,7 @@ NOISE_SEGMENTS = ("/timing/", "/tool_args/", "/runtime/", "/provenance/")
 
 SKIP_KEYS = {"mulliken_charges", "excited_to_excited_transition_dipoles", "transition_conventions",
              "section_presence", "requested_parameters", "effective_parameters", "method_provenance",
-             "tool_args", "timing", "runtime", "provenance", "file_paths", "coordinates", "xyz",
+             "tool_args", "timing", "stage_seconds", "runtime", "provenance", "file_paths", "coordinates", "xyz",
              "positions", "geometry_xyz", "atom_map", "step_records", "raw_text", "stdout", "stderr"}
 MAX_ROWS = 12
 MAX_INNER = 3

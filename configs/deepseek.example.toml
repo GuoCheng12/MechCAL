@@ -23,6 +23,7 @@ m2m_binary = "m2m"
 amesp_timeout = 180
 amesp_threads = 1
 amesp_maxcore_mb = 1000
+multiwfn_threads = 16   # hole-electron postprocessing; results are thread-independent (0003: 76 s -> 5 s, same D index)
 
 [qc]
 # Optional additional backends. Empty paths keep the corresponding backend unavailable.
@@ -37,5 +38,7 @@ parameter_dir = ""
 parameter_name = "mio-1-1"
 parameter_revision = ""
 threads = 2
+pyscf_states_threads = 32          # PySCF singlet/triplet route only (SCF 417 s at 2 threads -> ~105 s at 32)
+pyscf_states_max_memory_mb = 16000
 allow_amesp_soc = false
 allow_excited_scan = false
