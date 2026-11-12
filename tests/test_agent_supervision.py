@@ -422,3 +422,31 @@ def test_technical_settings_become_suggestions_and_repeated_refusals_end_the_ses
     assert [i["code"] for i in first["interceptions"]] == ["fixed_setting_changed"] * 2
     assert task.fixed_args["dihedral_id"] == "dih:002"                                   # approved
     assert second["attempts"][-1]["args"]["s1_nstates"] == 3                             # the Worker's own value
+
+def test_priors_and_generic_evidence_are_recorded_and_checked(tmp_path):
+    from test_agent_loop import ByRole as _ByRole
+    dih = "microscopic.list_rotatable_dihedrals"
+
+    def step2(p):
+        pointer = next(k for k in p["latest"]["values"] if k.endswith("candidate_count"))
+        return {"updates": [{"label": "RIM_RIR_RIV", "plausibility": 0.7}],
+                "claims": [{"label": "RIM_RIR_RIV", "kind": "computed", "statement": f"There are {p['latest']['values'][pointer]:g} rotors.",
+                            "discriminates": "no", "discriminates_why": "most molecules have rotors",
+                            "quantities": [{"name": "n", "value": p["latest"]["values"][pointer],
+                                            "artifact_id": p["latest"]["artifact_id"], "pointer": pointer}]}],
+                "action": {"type": "submit"}}
+
+    planner = [{"updates": [{"label": f, "prior": 0.2, "prior_basis": "x"} for f in ["RIM_RIR_RIV", "ICT_TICT_CT"]],
+                "action": contrast(type="tool", name=dih, args={"source_artifact_id": "structure:prepared"})},
+               step2, submit, submit]
+    critic = [{"ranking": [{"label": "RIM_RIR_RIV", "plausibility": 0.7}, {"label": "ICT_TICT_CT", "plausibility": 0.6},
+                           {"label": "PET_ET", "plausibility": 0.5}]}] * 2
+    client = _ByRole(planner, critic=critic)
+    run = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False,
+                   config=AgentConfig(max_planner_calls=8))
+    run.run()
+    assert run.board.families["RIM_RIR_RIV"].prior == 0.2
+    assert run.board.claims[0].discriminates == "no"
+    kinds = [p["kind"] for e in (json.loads(l) for l in (tmp_path / "events.jsonl").read_text().splitlines())
+             if e.get("role") == "critic_summary" for p in e["proposals"]]
+    assert "generic_evidence_only" in kinds and "missing_prior" in kinds

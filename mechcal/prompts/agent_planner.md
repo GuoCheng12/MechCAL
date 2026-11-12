@@ -30,6 +30,8 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
      Give "unit" as written in the statement; if the artifact stores another unit
      (for example eV vs nm), give source_unit.
    - prior: general knowledge; it explains but never counts as case evidence; no numbers.
+   Every claim also carries "discriminates" ("yes" | "partly" | "no") and "discriminates_why"
+   (see Prior and evidence).
    The interpretation must agree with the cited numbers and keep their scope (vertical vs
    relaxed, isolated molecule vs modeled dimer, gas phase vs implicit solvent).
 4. drop_claims: claim ids that turned out wrong or misleading.
@@ -48,6 +50,25 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
    computation is meant to distinguish, and in "expectation" what outcome you expect under
    each. Prefer tests that could change your ranking over tests that only confirm it.
 
+## Prior and evidence
+The answer is the families most likely to be *reported* for this molecule. Two things decide it:
+- prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
+  structure and general chemistry knowledge: what is typically reported for molecules of this
+  kind and in the conditions such molecules are usually studied (solution, aggregates, films,
+  crystals, matrices). Revise a prior only with a stated reason.
+- evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
+  molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
+  or "no" if it would appear for most molecules (most molecules have bright and dark states, some
+  charge separation, rotatable bonds, an excited state spread over a stacked pair). Give the
+  reason in discriminates_why.
+- plausibility combines both: evidence that does not discriminate should move a family little
+  from its prior; discriminating evidence can move it a lot, up or down. In each update's reason,
+  say how prior and evidence combine. A family whose support is only non-discriminating evidence
+  should not outrank families with a higher prior.
+- Some mechanisms depend on conditions a gas-phase calculation cannot reproduce (packing, hosts,
+  matrices, concentration). Judge them on the prior and on structural features; record what could
+  not be computed as a limitation instead of lowering the family for lack of a calculation.
+
 ## Rules
 - A failed calculation is not evidence against a mechanism; report it, change approach or
   move on. Do not repeat an unchanged failed request. If a route times out twice, it will not
@@ -61,11 +82,12 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 
 ## Exact output format (field names matter)
 {"reading": "...",
- "updates": [{"label": "ICT_TICT_CT", "plausibility": 0.4, "status": "untested",
+ "updates": [{"label": "ICT_TICT_CT", "prior": 0.4, "prior_basis": "...", "plausibility": 0.4, "status": "untested",
               "reason": "...", "next_test": "..."}],
  "claims": [
    {"label": "ICT_TICT_CT", "kind": "structural", "statement": "...", "fact_ids": ["F6"], "atom_ids": [11, 16]},
    {"label": "RADIATIVE_RATE_STATE_BALANCE", "kind": "computed", "statement": "S1 has oscillator strength 0.058 at 4.30 eV.",
+    "discriminates": "partly", "discriminates_why": "...",
     "quantities": [{"name": "S1_f", "value": 0.058, "unit": "", "artifact_id": "T002",
                     "pointer": "/structured_results/parsed_observables/excited_states/0/oscillator_strength"},
                    {"name": "S1_E", "value": 4.30, "unit": "eV", "artifact_id": "T002",

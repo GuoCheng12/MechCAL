@@ -168,6 +168,8 @@ class FamilyUpdate(_M):
     status: Status | None = None
     reason: str | None = None
     next_test: str | None = None
+    prior: float | None = Field(default=None, ge=0, le=1)
+    prior_basis: str | None = None
     @field_validator("label")
     @classmethod
     def _known(cls, v):
@@ -239,6 +241,8 @@ class Action(_M):
 class Adoption(_M):
     finding_id: str
     label: str | None = None            # family the claim is attached to (defaults to the finding's label)
+    discriminates: Literal["yes", "partly", "no"] | None = None
+    discriminates_why: str = ""
     @field_validator("label")
     @classmethod
     def _known(cls, v):
@@ -565,18 +569,20 @@ class AgentRun:
             try:
                 claim = ClaimIn(**{**{k: f[k] for k in ("statement", "kind", "atom_ids", "fact_ids", "quantities")},
                                    "label": label}).to_claim(self.facts)
-                cid = self.board.add_claim(label, claim, step=n, origin="worker")
+                cid = self.board.add_claim(label, claim, step=n, origin="worker", discriminates=a.discriminates,
+                                           discriminates_why=a.discriminates_why)
                 f["adopted_as"] = cid
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: adopt {a.finding_id} rejected ({exc})")
         for u in step.updates:
             fam = self.board.families[u.label]
-            for key in ("plausibility", "status", "reason", "next_test"):
+            for key in ("plausibility", "status", "reason", "next_test", "prior", "prior_basis"):
                 if getattr(u, key) is not None:
                     setattr(fam, key, getattr(u, key))
         for c in step.claims:
             try:
-                self.board.add_claim(c.label, c.to_claim(self.facts), step=n)
+                self.board.add_claim(c.label, c.to_claim(self.facts), step=n, discriminates=c.discriminates,
+                                     discriminates_why=c.discriminates_why)
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: claim rejected ({exc})")
         self.board.drop_claims(step.drop_claims)
@@ -963,6 +969,16 @@ class AgentRun:
                 if label in critic_rank[5:]:
                     proposals.append({"label": label, "kind": "possibly_over_weighted",
                                       "text": f"Independent view ranks {label} low: {basis.get(label, '')}"})
+        for label in self.board.ranking()[:3]:          # top families resting only on evidence the Planner called generic
+            if self.board.generic_only(label):
+                proposals.append({"label": label, "kind": "generic_evidence_only",
+                                  "text": (f"{label} is in the top 3, but you marked every computed claim for it as not "
+                                           "discriminating (it would appear for most molecules). Reconsider its rank against "
+                                           "its prior, or find evidence that sets this molecule apart.")})
+        missing_prior = [l for l, f in self.board.families.items() if f.prior is None]
+        if missing_prior and self.usage.by_role["planner"]["calls"] >= 1:
+            proposals.append({"label": None, "kind": "missing_prior",
+                              "text": f"Give a prior (and its basis) for: {missing_prior}."})
         check = check_submission(self.board.to_submission(), self.gateway.store, self.smiles)
         for pred in check.predictions:
             for c in pred.claims:

@@ -41,10 +41,11 @@ A failed or blocked calculation is not evidence for or against a mechanism.
 
 ## Each turn, return one JSON object
 1. reading: two or three sentences on what the latest result shows and does not show.
-2. adopt: draft findings from student reports to put on the board, as {"finding_id", "label"}
-   (label: the family it bears on). Adopt only findings whose numbers and interpretation you
+2. adopt: draft findings from student reports to put on the board, as {"finding_id", "label",
+   "discriminates", "discriminates_why"} (label: the family it bears on; see Prior and evidence). Adopt only findings whose numbers and interpretation you
    accept; you may instead write your own claim citing the same artifact pointers.
-3. updates, claims, drop_claims, limitations, proposal_responses: as for the board (claims:
+3. updates (with prior and prior_basis), claims (each with discriminates and discriminates_why),
+   drop_claims, limitations, proposal_responses: as for the board (claims:
    structural cite fact_ids; computed cite every number with artifact_id and exact pointer;
    prior is background knowledge and never case evidence). Limitations of a family are restated
    in full when they change.
@@ -68,6 +69,25 @@ A failed or blocked calculation is not evidence for or against a mechanism.
    Every experiment (excited states, charge transfer, scans, solvents, spin states, dimers,
    vibrations, conformers) goes through delegate.
 
+## Prior and evidence
+The answer is the families most likely to be *reported* for this molecule. Two things decide it:
+- prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
+  structure and general chemistry knowledge: what is typically reported for molecules of this
+  kind and in the conditions such molecules are usually studied (solution, aggregates, films,
+  crystals, matrices). Revise a prior only with a stated reason.
+- evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
+  molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
+  or "no" if it would appear for most molecules (most molecules have bright and dark states, some
+  charge separation, rotatable bonds, an excited state spread over a stacked pair). Give the
+  reason in discriminates_why.
+- plausibility combines both: evidence that does not discriminate should move a family little
+  from its prior; discriminating evidence can move it a lot, up or down. In each update's reason,
+  say how prior and evidence combine. A family whose support is only non-discriminating evidence
+  should not outrank families with a higher prior.
+- Some mechanisms depend on conditions a gas-phase calculation cannot reproduce (packing, hosts,
+  matrices, concentration). Judge them on the prior and on structural features; record what could
+  not be computed as a limitation instead of lowering the family for lack of a calculation.
+
 ## Rules
 - Prefer experiments that could change your ranking over ones that only confirm it.
 - Choose methods with their cost in mind: an expensive method is worth it only if its answer
@@ -80,8 +100,10 @@ A failed or blocked calculation is not evidence for or against a mechanism.
 
 ## Exact output format
 {"reading": "...",
- "adopt": [{"finding_id": "W1.f1.1", "label": "ICT_TICT_CT"}],
- "updates": [{"label": "ICT_TICT_CT", "plausibility": 0.6, "status": "supported", "reason": "...", "next_test": "..."}],
+ "adopt": [{"finding_id": "W1.f1.1", "label": "ICT_TICT_CT", "discriminates": "yes",
+            "discriminates_why": "hole and electron on different groups, unlike a local excitation"}],
+ "updates": [{"label": "ICT_TICT_CT", "prior": 0.4, "prior_basis": "amine donor conjugated to nitrile acceptor",
+              "plausibility": 0.6, "status": "supported", "reason": "prior 0.4; discriminating CT evidence raises it", "next_test": "..."}],
  "claims": [{"label": "TRIPLET_METAL_ENERGY_TRANSFER", "kind": "structural", "statement": "...", "fact_ids": ["F3"]}],
  "drop_claims": [],
  "limitations": [{"label": "ICT_TICT_CT", "text": "..."}],
