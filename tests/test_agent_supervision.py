@@ -272,6 +272,7 @@ def test_failure_classes_and_result_warnings():
     assert codes("t", {"route_records": [{"final_energy_hartree": -1.0}, {"final_energy_hartree": -0.9}]}) \
         == {"scan_energy_jump": True}
     assert codes("ok", {"requested_parameters": {"s1_nstates": 6}, "state_count": 6, "optimization_converged": True}) == {}
+    assert codes("fe", {"states": [{"state": "S1", "excitation_ev": 0.074}]})["near_degenerate_reference"] is False
 
 
 def test_call_aliases_resolve_to_the_artifact_the_call_produced(tmp_path):

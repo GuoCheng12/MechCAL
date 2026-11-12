@@ -26,6 +26,7 @@ NOT_APPLICABLE = (
 NOT_APPLICABLE_KINDS = {"capability_unsupported", "unsupported"}
 SCAN_JUMP_HARTREE = 0.05        # adjacent rigid-scan points differing by > ~31 kcal/mol
 SINGLET_SPIN_SQUARE_MAX = 0.1   # closed-shell TDA singlets should have <S^2> = 0
+LOW_EXCITATION_EV = 0.3          # a vertical excitation this low points to a near-degenerate (unsuitable) reference
 
 
 def classify_failure(status: str, kind: str | None, message: str | None) -> dict | None:
@@ -109,6 +110,12 @@ def result_warnings(tool: str, status: str, po: Any) -> list[dict]:
             out.append(_warn("stability_not_checked", "Reference stability check did not complete; states are provisional.", True))
     if po.get("spin_manifold_failures"):
         out.append(_warn("states_not_converged", f"{len(po['spin_manifold_failures'])} spin manifold(s)/state(s) failed.", True))
+    lows = [s.get("excitation_energy_ev", s.get("excitation_ev")) for s in (po.get("excited_states") or po.get("states") or [])
+            if isinstance(s, dict)]
+    lows = [e for e in lows if isinstance(e, (int, float)) and 0 < e < LOW_EXCITATION_EV]
+    if lows:
+        out.append(_warn("near_degenerate_reference", f"Excitation energy {min(lows):.3f} eV is below {LOW_EXCITATION_EV} eV: "
+                         "the closed-shell ground-state reference may not describe this molecule.", False))
     states = [s for s in po.get("states") or [] if isinstance(s, dict) and isinstance(s.get("excitation_ev"), (int, float))]
     singlets = [s["excitation_ev"] for s in states if str(s.get("state", "")).startswith("S")]
     triplets = [s["excitation_ev"] for s in states if str(s.get("state", "")).startswith("T")]
