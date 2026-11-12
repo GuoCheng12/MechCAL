@@ -440,17 +440,25 @@ class AgentRun:
         for attempt in range(repairs + 1):
             body = json.dumps(payload, ensure_ascii=False, default=str)
             started = time.monotonic()
+            kwargs = dict(system_prompt=system, payload=payload, schema_feedback=feedback, preserve_invalid_response=True)
             try:
-                result = client.complete_json_result(system_prompt=system, payload=payload, schema_feedback=feedback,
-                                                     response_format=self._format(role, model_cls))
+                result = client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
+            except ValueError:
+                raise
             except Exception as exc:  # noqa: BLE001 - provider rejected the schema format; fall back once
                 if self.response_mode != "json_schema":
                     raise
                 self.log.write({"role": role, "event": "json_schema_rejected", "error": str(exc)[:300]})
                 self.response_mode = "json_object"
-                result = client.complete_json_result(system_prompt=system, payload=payload, schema_feedback=feedback,
-                                                     response_format=self._format(role, model_cls))
+                result = client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
             self.usage.add(role, result.usage)
+            if getattr(result, "parse_error", None):        # malformed JSON: an invalid answer, repaired like any other
+                self.protocol["malformed_json"] = self.protocol.get("malformed_json", 0) + 1
+                feedback = (f"Your reply was not one valid JSON object ({str(result.parse_error)[:300]}). "
+                            "Return the complete object again as plain JSON, nothing before or after it.")
+                self.log.write({"role": role, "attempt": attempt + 1, "payload_bytes": len(body), "usage": result.usage,
+                                "valid": False, "error": feedback})
+                continue
             event = {"role": role, "attempt": attempt + 1, "payload_bytes": len(body), "usage": result.usage,
                      "seconds": round(time.monotonic() - started, 2), "response": result.data,
                      "parse_error": result.parse_error}

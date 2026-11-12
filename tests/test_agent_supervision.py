@@ -345,3 +345,22 @@ def test_task_wall_budget_caps_the_gateway_during_the_session(tmp_path):
     assert seen["cap"] == pytest.approx(120, abs=1) and run.gateway.max_wall_seconds == 3600
     assert latest_reports(client)[1]["status"] == "blocked_technical"      # 30 s budget: no Worker call at all
     assert len(client.payloads["worker"]) == 1
+
+
+def test_malformed_json_is_repaired_not_fatal(tmp_path):
+    class Malformed(ByRole):
+        def complete_json_result(self, *, system_prompt, payload, schema_feedback=None, **kw):
+            if "You are the Worker" not in system_prompt and not self.payloads["planner"]:
+                self.payloads["planner"].append({"payload": payload, "feedback": schema_feedback})
+                r = __import__("test_agent_loop").Reply({})
+                r.parse_error = "ValueError: Extra data at line 31"
+                return r
+            return super().complete_json_result(system_prompt=system_prompt, payload=payload,
+                                                schema_feedback=schema_feedback, **kw)
+
+    client = Malformed([submit])
+    run = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False,
+                   config=AgentConfig(critic=False, max_planner_calls=4))
+    result = run.run()
+    assert result["status"] == "submitted" and result["protocol"]["malformed_json"] == 1
+    assert "not one valid JSON object" in client.payloads["planner"][1]["feedback"]
