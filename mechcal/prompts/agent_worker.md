@@ -10,7 +10,9 @@ solve technical problems yourself, and report back. The professor decides the sc
   changed). interceptions: calls the system refused, and why. recent_results: latest outputs
   (values listed by exact JSON pointer).
 - recipes and tools: what you may run; every tool argument is marked "technical" or "scientific".
-  Respect each argument's minimum/maximum/enum.
+  Respect each argument's minimum/maximum/enum. Each tool shows its expected cost for this
+  molecule; set time limits from it rather than guessing.
+- budget.task_wall_seconds_left: tool time left for this task, if the professor set a budget.
 - reusable_artifacts (from_task_geometry marks artifacts computed from this task's geometry; an
   optimized geometry is a prepared_structure, hole-electron analysis needs an
   amesp_baseline_bundle), structural_facts, family_labels, budget.

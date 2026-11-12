@@ -19,6 +19,7 @@ from mechcal.agent.board import Board, ClaimIn, Status
 from mechcal.agent.facts import structural_facts
 from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
 from mechcal.agent import supervision as sv
+from mechcal.agent.costs import CostModel, expected_seconds
 from mechcal.eval.grounding import ELIGIBLE, check_submission
 from mechcal.eval.grounded_subjects import UsageLedger
 from mechcal.eval.tool_gateway import ToolGateway
@@ -45,6 +46,8 @@ class AgentConfig:
     worker: bool = True                      # professor-student mode: Planner delegates, Worker executes
     worker_max_calls: int = 6                # Worker model calls per delegate/revise session
     worker_max_computations: int = 4         # computations per delegate/revise session
+    cost_check_fraction: float = 0.5         # delegation returns a cost check if it may use more of the time left
+    cost_log_path: str = ""                  # cross-run cost log (JSON lines); empty: seed table + this run only
     self_check: bool = True
     iterate: bool = True                     # False: plan once, run, submit (ablation)
     recipes: bool = True                     # False: single tools only (ablation)
@@ -191,6 +194,8 @@ class Action(_M):
     recipe: str | None = None
     tools: list[str] = Field(default_factory=list)
     fixed_args: dict = Field(default_factory=dict)
+    confirm_cost: bool = False                # delegate: go ahead after a cost check
+    wall_budget_seconds: float | None = None  # delegate: tool time this task may use (student works within it)
     # revise: continue an existing task with its attempt record
     task_id: str | None = None
     instruction: str = ""
@@ -378,6 +383,8 @@ class AgentRun:
         self.protocol = {"planner_rejected": 0, "approvals": 0, "status_corrections": 0}
         self.tool_cards = self._tool_cards()
         self.card_by_tool = {c["tool"]: c for c in self.tool_cards}
+        self.costs = CostModel(int(self.facts["summary"]["atoms_with_h"]), self.cfg.cost_log_path or None)
+        self._cost_seen = 0
         self.gateway.allowed = tuple(card["tool"] for card in self.tool_cards)
         # professor prompt when the Worker is on; the single-agent Planner prompt otherwise
         self.planner_prompt = load_prompt("agent_professor.md" if self.cfg.worker else "agent_planner.md")
@@ -416,7 +423,8 @@ class AgentRun:
         cards = []
         for name, (_, desc) in RECIPES.items():
             args = {arg: specs.get(tool, {}).get(targ, {}) for arg, (tool, targ) in RECIPE_ARGS.get(name, {}).items()}
-            cards.append({"recipe": name, "description": desc, **({"args": args} if args else {})})
+            cards.append({"recipe": name, "description": desc, **({"args": args} if args else {}),
+                          "cost": self._recipe_cost(name)})
         return cards
 
     # -- model calls
@@ -486,12 +494,43 @@ class AgentRun:
                        "worker_available": self.cfg.worker, "must_submit_now": must_submit},
         }
 
+    def _sync_costs(self) -> None:
+        """Feed this run's executed calls into the cost model."""
+        for c in self.gateway.calls[self._cost_seen:]:
+            if c.artifact_id:
+                self.costs.add(c.capability_id, c.tool_args, c.wall_seconds, c.status)
+        self._cost_seen = len(self.gateway.calls)
+
+    def _defaults(self, tool: str) -> dict:
+        return {k: v["default"] for k, v in self.card_by_tool.get(tool, {"args": {}})["args"].items() if "default" in v}
+
+    def _tool_cost(self, tool: str, args: dict | None = None) -> dict:
+        self._sync_costs()
+        return self.costs.estimate(tool, {**self._defaults(tool), **(args or {})})
+
+    def _needs(self) -> tuple[bool, bool]:
+        kinds = {a.artifact_id: a.kind for a in self.gateway.case_run.artifact_manifest.artifacts}
+        has_geometry = kinds.get(self.gateway.prepared_artifact_id) == "prepared_structure" or any(
+            k == "prepared_structure" and a.startswith("geometry:") for a, k in kinds.items())
+        return not has_geometry, "amesp_baseline_bundle" not in kinds.values()
+
+    def _recipe_cost(self, recipe: str, args: dict | None = None) -> dict:
+        self._sync_costs()
+        need_geometry, need_bundle = self._needs()
+        return self.costs.recipe_estimate(recipe, args, need_geometry=need_geometry, need_bundle=need_bundle)
+
     def _professor_catalog(self) -> list[dict]:
-        """Compact tool list for the Planner: what each tool does and which settings are scientific."""
+        """Compact tool list for the Planner: what each tool does, which settings are scientific, what it costs."""
         out = []
         for c in self.tool_cards:
             sci = {k: v for k, v in c["args"].items() if sv.ARG_CLASS.get(k) in {"scientific", "source"}}
-            out.append({"tool": c["tool"], "description": c["description"][:160], "scientific_args": sci})
+            entry = {"tool": c["tool"], "description": c["description"][:160], "scientific_args": sci,
+                     "cost": self._tool_cost(c["tool"])}
+            methods = sorted({r.key for r in self.costs.records if r.tool == c["tool"] and r.key})
+            if methods:
+                entry["cost_by_method"] = {m: self.costs.estimate(c["tool"], dict(zip(("functional", "grid_level"),
+                                           (m.split("/")[0], int(m.split("grid")[1]))))) for m in methods}
+            out.append(entry)
         return out
 
     def _apply(self, step: PlannerStep, n: int) -> None:
@@ -584,6 +623,25 @@ class AgentRun:
                 return {"task_id": tid, "status": "rejected", "error": f"fixed source_artifact_id {source} does not exist."}
             task.geometry = self._geometry_of(source)
         task.pinned.update({k: v for k, v in task.fixed_args.items() if sv.ARG_CLASS.get(k) == "scientific"})
+        task.wall_budget = action.wall_budget_seconds
+        estimate = (self._recipe_cost(task.recipe, task.fixed_args) if task.recipe
+                    else self.costs.combine([self._tool_cost(t, task.fixed_args) for t in task.tools]))
+        expected, left = expected_seconds(estimate), self.gateway.wall_seconds_left()
+        limit = min(left, task.wall_budget or float("inf"))
+        if expected is not None and not action.confirm_cost and (
+                expected > self.cfg.cost_check_fraction * left or expected > limit):
+            self.protocol["cost_checks"] = self.protocol.get("cost_checks", 0) + 1
+            check = {"status": "cost_check", "task_id": None, "estimate": estimate,
+                     "tool_wall_seconds_left": round(left), "task_wall_budget": task.wall_budget,
+                     "message": (f"This experiment is expected to take {'at least ' if estimate['status'] == 'lower_bound' else ''}"
+                                 f"~{expected:.0f} s of the {left:.0f} s tool time left"
+                                 + (f" (task budget {task.wall_budget:.0f} s)" if task.wall_budget else "")
+                                 + ". Delegate again with confirm_cost=true to run it, or choose cheaper settings.")}
+            self.log.write({"role": "cost_check", "objective": action.task, "estimate": estimate, "left": round(left)})
+            return check
+        if action.confirm_cost:
+            self.protocol["cost_confirmed"] = self.protocol.get("cost_confirmed", 0) + 1
+        task.estimate = estimate
         self.tasks[tid] = task
         self.log.write({"role": "task_created", "task_id": tid, "objective": action.task, "recipe": action.recipe,
                         "tools": action.tools, "fixed_args": action.fixed_args})
@@ -639,7 +697,8 @@ class AgentRun:
 
     def _student_cards(self, task: sv.Task) -> dict:
         def mark(card):
-            return {**card, "args": {k: {**v, "class": sv.ARG_CLASS.get(k, "technical")} for k, v in card["args"].items()}}
+            return {**card, "args": {k: {**v, "class": sv.ARG_CLASS.get(k, "technical")} for k, v in card["args"].items()},
+                    "cost": self._tool_cost(card["tool"], task.fixed_args)}
         tools = [mark(self.card_by_tool[t]) for t in sorted(set(task.tools) | sv.PREREQUISITE_TOOLS
                                                               | sv.RECIPE_TOOLS.get(task.recipe or "", set())
                                                               | {a["tool"] for a in task.approved if a.get("tool")})
@@ -670,6 +729,8 @@ class AgentRun:
             "reusable_artifacts": artifacts,
             "structural_facts": self.facts, "family_labels": list(MECHANISM_POOL),
             "budget": {"computations_left": comps_left, "tool_wall_seconds_left": self._wall_left(),
+                       **({"task_wall_seconds_left": round(task.wall_budget - sum(a.wall_seconds for a in task.attempts))}
+                          if task.wall_budget else {}),
                        "attempts_left_per_route": retries, "model_calls_left": self.cfg.worker_max_calls - call,
                        "must_report_now": must},
         }
@@ -698,6 +759,21 @@ class AgentRun:
                           wall_seconds=round(seconds, 1))
 
     def _student(self, task: sv.Task, n: int) -> dict:
+        if task.wall_budget:
+            used = sum(a.wall_seconds for a in task.attempts)
+            if task.wall_budget - used < 60:
+                return self._report(task, {"status": "blocked_technical",
+                                           "summary": f"The task's tool-time budget ({task.wall_budget:.0f} s) is used."}, n)
+            saved = self.gateway.max_wall_seconds
+            cap = self.gateway.wall_seconds_used() + task.wall_budget - used
+            self.gateway.max_wall_seconds = cap if saved is None else min(saved, cap)
+            try:
+                return self._student_session(task, n)
+            finally:
+                self.gateway.max_wall_seconds = saved
+        return self._student_session(task, n)
+
+    def _student_session(self, task: sv.Task, n: int) -> dict:
         recent: list = []
         start = self._computations()
         for call in range(1, self.cfg.worker_max_calls + 1):
@@ -914,6 +990,8 @@ class AgentRun:
                 **self.protocol}
 
     def _finish(self, submitted: bool, seconds: float) -> dict:
+        self._sync_costs()
+        self.costs.append_log([r for r in self.costs.records if r.note == "this run"])
         raw = self.board.to_submission()
         check = check_submission(raw, self.gateway.store, self.smiles)
         eligible = None

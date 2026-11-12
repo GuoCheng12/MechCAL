@@ -57,6 +57,10 @@ def main(argv: list[str] | None = None) -> dict:
     if args.out.exists() and any(args.out.iterdir()):
         raise SystemExit(f"{args.out} is not empty; use a new output directory")
     smiles = args.smiles or public_smiles(args.case_id)
+    if args.cost_log_path in {"", None}:          # default: shared cost log of agent runs ("off" disables)
+        args.cost_log_path = str(ROOT / "outputs" / "agent" / "cost_log.jsonl")
+    elif args.cost_log_path == "off":
+        args.cost_log_path = ""
     config = AgentConfig(**{k: getattr(args, k) for k in asdict(AgentConfig())})
     settings = backbone_settings()
     if not settings.api_key:

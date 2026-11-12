@@ -102,6 +102,8 @@ class Task:
     interceptions: list[dict] = field(default_factory=list)
     reports: list[dict] = field(default_factory=list)
     retry_base: int = 0                                         # attempts before the last revision do not count
+    wall_budget: float | None = None                            # tool seconds this task may use (set by the Planner)
+    estimate: dict | None = None                                # cost estimate at delegation
 
     def route_allowed(self, kind: str, name: str) -> bool:
         if kind == "recipe":

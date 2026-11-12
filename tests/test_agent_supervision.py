@@ -294,3 +294,54 @@ def test_observation_keeps_shallow_values_when_capped():
     from mechcal.eval.tool_gateway import by_depth
     items = [("/a/deep/x/y/z", 1), ("/a/0/e", 2), ("/a/deep/x/y/w", 3), ("/a/1/e", 4)]
     assert by_depth(items)[:2] == [("/a/0/e", 2), ("/a/1/e", 4)]
+
+
+# ---- cost visibility ----------------------------------------------------------------------------
+
+def test_cost_estimates_scale_and_mark_lower_bounds(tmp_path):
+    from mechcal.agent.costs import CostModel
+    m = CostModel(56)
+    pbe = m.estimate("microscopic.compare_spin_states_pyscf", {"functional": "pbe", "grid_level": 1})
+    assert pbe["status"] == "estimate" and pbe["seconds"] == 923 and "56 atoms" in pbe["basis"]
+    pbe0 = m.estimate("microscopic.compare_spin_states_pyscf", {"functional": "pbe0", "grid_level": 1})
+    assert pbe0["status"] == "lower_bound" and pbe0["at_least_seconds"] == 1800
+    assert CostModel(28).estimate("microscopic.compare_spin_states_pyscf", {"functional": "pbe"})["seconds"] == round(923 / 8)
+    assert m.estimate("microscopic.run_charge_population_panel")["status"] == "unknown"
+    log = tmp_path / "cost.jsonl"
+    m2 = CostModel(30, log)
+    m2.append_log([m2.add("microscopic.run_charge_population_panel", {}, 12.0, "success")])
+    assert CostModel(30, log).estimate("microscopic.run_charge_population_panel")["seconds"] == 12
+
+
+def test_expensive_delegation_returns_a_cost_check_first(tmp_path):
+    def confirm(p):
+        assert p["latest"]["status"] == "cost_check" and p["latest"]["estimate"]["status"] == "estimate"
+        return {"action": contrast(type="delegate", task="Excited states.", recipe="excited_states", confirm_cost=True)}
+
+    planner = [{"action": contrast(type="delegate", task="Excited states.", recipe="excited_states")}, confirm, submit]
+    worker = [worker_report("blocked_technical")]
+    run, result, client = run_agent(tmp_path, planner, worker, cost_check_fraction=0.0001)
+    assert result["protocol"]["cost_checks"] == 1 and result["protocol"]["cost_confirmed"] == 1
+    assert result["protocol"]["delegations"] == 1
+    cards = {c["recipe"]: c for c in client.payloads["planner"][0]["payload"]["recipes"]}
+    assert cards["spin_states"]["cost"]["status"] in {"estimate", "lower_bound", "unknown"}
+
+
+def test_task_wall_budget_caps_the_gateway_during_the_session(tmp_path):
+    seen = {}
+    holder = {}
+
+    def look(payload):
+        seen["cap"] = holder["run"].gateway.max_wall_seconds
+        return worker_report("blocked_technical")
+
+    planner = [{"action": contrast(type="delegate", task="List.", tools=[DIH], wall_budget_seconds=120)},
+               {"action": contrast(type="delegate", task="List.", tools=[DIH], wall_budget_seconds=30)}, submit]
+    client = ByRole(planner, worker=[look])
+    run = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False,
+                   config=AgentConfig(critic=False, max_planner_calls=6))
+    holder["run"] = run
+    result = run.run()
+    assert seen["cap"] == pytest.approx(120, abs=1) and run.gateway.max_wall_seconds == 3600
+    assert latest_reports(client)[1]["status"] == "blocked_technical"      # 30 s budget: no Worker call at all
+    assert len(client.payloads["worker"]) == 1
