@@ -9,6 +9,9 @@ Rules:
   different calculation: say so explicitly in your claims; never present it as the original.
 - A failed or numerically rejected calculation is not evidence for or against a mechanism.
 - Stay within the task and budget; stop when the task is answered or cannot be answered.
+- tool_log lists every calculation already run in this case, with arguments and outcome. Do not
+  re-submit an identical request (it is not re-run); a route that timed out needs a lighter
+  setting or must be reported as not feasible within tool_wall_seconds_left.
 
 Each turn return one JSON object with "thought" (one sentence) and "action", one of:
 - {"type": "recipe", "name": ..., "args": {...}}

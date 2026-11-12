@@ -32,6 +32,13 @@ MAX_ROWS = 12
 MAX_INNER = 3
 
 
+MIN_CALL_SECONDS = 60
+
+
+def _canonical(args: dict) -> str:
+    return json.dumps(args, sort_keys=True, default=str)
+
+
 def _token(key) -> str:
     return str(key).replace("~", "~0").replace("/", "~1")
 
@@ -110,7 +117,9 @@ class ToolGateway:
     enable_amesp: bool = False
     allowed: tuple[str, ...] | None = None
     max_calls: int | None = None
+    max_wall_seconds: float | None = None     # total tool wall time for the run; long calls are clamped to it
     calls: list[CallRecord] = field(default_factory=list)
+    _observations: dict = field(default_factory=dict, repr=False)
 
     def __post_init__(self) -> None:
         from mechcal.capabilities import default_capability_registry
@@ -170,6 +179,25 @@ class ToolGateway:
         if capability_id not in self.tool_ids():
             self.calls.append(CallRecord(index, capability_id, tool_args, "rejected", None, 0.0, "unknown tool"))
             return {"status": "rejected", "error": f"Unknown or disallowed tool: {capability_id}"}
+        same = next((c for c in self.calls if c.artifact_id and c.capability_id == capability_id
+                     and _canonical(c.tool_args) == _canonical(tool_args)), None)
+        if same is not None:
+            self.calls.append(CallRecord(index, capability_id, tool_args, "rejected", None, 0.0, f"duplicate of {same.artifact_id}"))
+            previous = dict(self._observations.get(same.artifact_id, {}))
+            previous.update(duplicate_of=same.artifact_id,
+                            note=(f"Identical request already executed as {same.artifact_id} (status {same.status}); "
+                                  "not re-run. Its result is shown again. Change the method or arguments for a new result."))
+            return previous
+        note = ""
+        if self.max_wall_seconds is not None:
+            left = self.wall_seconds_left()
+            if left < MIN_CALL_SECONDS:
+                self.calls.append(CallRecord(index, capability_id, tool_args, "rejected", None, 0.0, "wall budget exhausted"))
+                return {"status": "rejected", "error": f"Tool wall-time budget of {self.max_wall_seconds:.0f} s is exhausted."}
+            requested = tool_args.get("max_wall_seconds")
+            if isinstance(requested, (int, float)) and requested > left:
+                tool_args["max_wall_seconds"] = int(left)
+                note = f"max_wall_seconds lowered from {requested} to {int(left)} (remaining tool wall-time budget)."
         cap = self.registry.require(capability_id)
         round_id, dispatch_id = f"R{index:03d}", f"gw:{index:03d}:{capability_id}"
         request = DispatchRequest(
@@ -197,7 +225,11 @@ class ToolGateway:
             self.case_run = self.case_run.touch(
                 artifact_manifest=self.case_run.artifact_manifest.with_records(list(result.artifact_updates)))
         self.calls.append(CallRecord(index, capability_id, tool_args, result.status, alias, elapsed))
-        return self.observation(result, alias)
+        obs = self.observation(result, alias)
+        self._observations[alias] = dict(obs)
+        if note:
+            obs["note"] = note
+        return obs
 
     def _persist(self, result, index: int) -> str:
         path = self.run_dir / "rounds" / result.round_id / f"execution_{result.dispatch_id.replace(':', '_')}_tool_result.json"
@@ -246,6 +278,29 @@ class ToolGateway:
         text = json.dumps(value, ensure_ascii=False, default=str)
         return {"status": "ok", "artifact_id": artifact_id, "pointer": pointer,
                 "value": value if len(text) <= 4000 else text[:4000] + " …[truncated]"}
+
+    def wall_seconds_used(self) -> float:
+        return sum(c.wall_seconds for c in self.calls)
+
+    def wall_seconds_left(self) -> float:
+        return float("inf") if self.max_wall_seconds is None else max(0.0, self.max_wall_seconds - self.wall_seconds_used())
+
+    def call_log(self) -> list[dict]:
+        """One line per executed call, so every role sees what was already run and how it ended."""
+        rows = []
+        for c in self.calls:
+            if c.artifact_id is None:
+                continue
+            art = self.store.artifacts.get(c.artifact_id)
+            failure = ""
+            if c.status != "success" and art is not None:
+                failure = str(resolve_pointer(art.outputs, "/structured_results").get("failure_code", "")) if isinstance(
+                    art.outputs.get("structured_results"), dict) else ""
+            rows.append({"artifact_id": c.artifact_id, "tool": c.capability_id, "status": c.status,
+                         "wall_seconds": round(c.wall_seconds), "args": {k: v for k, v in c.tool_args.items()
+                                                                        if not isinstance(v, (list, dict)) or len(str(v)) < 80},
+                         **({"failure_code": failure} if failure else {})})
+        return rows
 
     def executed_calls(self) -> int:
         return sum(c.status != "rejected" for c in self.calls)

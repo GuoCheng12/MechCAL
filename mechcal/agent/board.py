@@ -40,6 +40,7 @@ class Board(_M):
     families: dict[str, FamilyState]
     claims: list[BoardClaim] = Field(default_factory=list)
     limitations: dict[str, list[str]] = Field(default_factory=dict)
+    issued_claims: int = 0          # monotonic: ids are never reused after a claim is dropped
 
     @classmethod
     def initial(cls, case_id: str, smiles: str) -> "Board":
@@ -50,7 +51,8 @@ class Board(_M):
         return sorted(self.families, key=lambda f: (-self.families[f].plausibility, MECHANISM_POOL.index(f)))
 
     def add_claim(self, label: str, claim: EvidenceClaim, *, step: int, origin: str = "planner") -> str:
-        cid = f"K{len(self.claims) + 1}"
+        self.issued_claims += 1
+        cid = f"K{self.issued_claims}"
         self.claims.append(BoardClaim(claim_id=cid, label=label, claim=claim, origin=origin, step=step))
         return cid
 

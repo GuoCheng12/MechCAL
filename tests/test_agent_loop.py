@@ -54,6 +54,16 @@ def test_facts_and_claim_conversion():
                             SMILES).predictions
 
 
+def test_claim_ids_are_not_reused_after_drop():
+    board = Board.initial("C", SMILES)
+    claim = ClaimIn(label="PET_ET", statement="x", kind="prior").to_claim({"facts": []})
+    first = board.add_claim("PET_ET", claim, step=1)
+    second = board.add_claim("PET_ET", claim, step=1)
+    board.drop_claims([first])
+    third = board.add_claim("PET_ET", claim, step=2)
+    assert len({first, second, third}) == 3 and [c.claim_id for c in board.claims] == [second, third]
+
+
 def test_action_requires_contrast():
     with pytest.raises(Exception):
         PlannerStep.model_validate({"action": {"type": "tool", "name": DIH_TOOL, "separates": ["RIM_RIR_RIV"], "expectation": "x"}})
@@ -101,7 +111,8 @@ def test_full_loop_offline(tmp_path):
     result = run.run()
 
     assert result["status"] == "submitted" and result["stop_reason"] == "planner_submitted"
-    assert result["tool_cost"]["tool_calls"] == 2                       # planner tool + worker tool
+    assert result["tool_cost"]["tool_calls"] == 1                       # worker repeat is not re-run
+    assert result["tool_cost"]["rejected_calls"] == 1
     assert client.payloads["planner"][1]["feedback"]                    # repair feedback after invalid output
     assert client.payloads["critic"] and "board" not in client.payloads["critic"][0]["payload"]  # blind critic
     labels = [p["label"] for p in result["submission"]["mechanism_predictions"]]
@@ -120,7 +131,8 @@ def test_full_loop_offline(tmp_path):
 
 
 def test_budget_forces_submission(tmp_path):
-    always_tool = lambda p: {"action": contrast(type="tool", name=DIH_TOOL, args={"source_artifact_id": "structure:prepared"})}
+    args = iter([{}, {"source_artifact_id": "structure:prepared"}] * 5)   # distinct requests (not duplicates)
+    always_tool = lambda p: {"action": contrast(type="tool", name=DIH_TOOL, args=next(args))}
     client = ByRole([always_tool] * 10)
     cfg = AgentConfig(max_planner_calls=10, max_computations=2, critic=False, worker=False)
     result = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path, config=cfg, enable_amesp=False).run()

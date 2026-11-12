@@ -9,7 +9,9 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 - board: all 11 families with your current plausibility (0-1), status and claims.
 - latest: the observations produced by your last action (tool values listed by exact JSON
   pointer under "values", short strings under "labels", bulky parts under "omitted_for_read").
-- history: one line per earlier step. budget: what remains.
+- history: one line per earlier step. budget: what remains, including tool wall time.
+- tool_log: every calculation already run (by you, a recipe or the Worker), with its
+  arguments, status and wall time. An identical request is not re-run; its old result returns.
 - proposals: Critic suggestions you must answer (accept, adapt or decline, with a reason).
 - reusable_artifacts: geometries and bundles already computed; reuse their ids as
   source_artifact_id instead of recomputing. Tool arguments list their allowed ranges.
@@ -29,7 +31,8 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
    The interpretation must agree with the cited numbers and keep their scope (vertical vs
    relaxed, isolated molecule vs modeled dimer, gas phase vs implicit solvent).
 4. drop_claims: claim ids that turned out wrong or misleading.
-5. limitations: short limitations per family for the final answer.
+5. limitations: the current limitations of a family, restated in full when they change
+   (they replace that family's earlier limitations; keep them consistent with the claims).
 6. proposal_responses: one per pending proposal.
 7. action: the next step, exactly one of
    - recipe: a named chain (see recipes) with optional args. Fast path for standard observables.
@@ -45,7 +48,10 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 
 ## Rules
 - A failed calculation is not evidence against a mechanism; report it, change approach or
-  move on. Do not repeat an unchanged failed request.
+  move on. Do not repeat an unchanged failed request. If a route times out twice, it will not
+  fit the wall-time budget: choose a lighter route or another test.
+- Respect each result's own interpretation and limitations: a partial or provisional value
+  can be cited only together with its caveat, and never as a validated observable.
 - Several families can be correct together; ranking reflects relative plausibility.
 - Spend the budget on the most informative contrasts; submit when further tests are not
   expected to change the top three, or when the budget is nearly used.

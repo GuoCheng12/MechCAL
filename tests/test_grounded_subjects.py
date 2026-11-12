@@ -89,12 +89,23 @@ def test_gateway_records_calls_aliases_and_budget(tmp_path):
     assert obs["values"] and not any("/timing/" in p for p in obs["values"])
     assert g.store.artifacts["T001"].provenance["tool_result_id"] in g.store.artifacts
     assert g.call("nope")["status"] == "rejected"      # unknown tool: rejected, not charged
-    assert g.call(DA_TOOL)["status"] == "success"
-    assert g.call(DA_TOOL)["status"] == "rejected"     # budget of 2 executed calls reached
-    assert g.cost()["tool_calls"] == 2 and g.cost()["rejected_calls"] == 2
+    again = g.call(DA_TOOL)                            # identical request: old result, not re-run
+    assert again["duplicate_of"] == "T001" and again["values"] == obs["values"]
+    assert g.call("microscopic.list_rotatable_dihedrals", {})["status"] == "success"
+    assert g.call("microscopic.list_available_conformers", {})["status"] == "rejected"  # budget of 2 reached
+    assert g.cost()["tool_calls"] == 2 and g.cost()["rejected_calls"] == 3
+    assert [r["artifact_id"] for r in g.call_log()] == ["T001", "T004"]
     pointer, value = next(iter(obs["values"].items()))
     assert g.read("T001", pointer)["value"] == value
     assert (tmp_path / "rounds/R001").is_dir()
+
+
+def test_gateway_wall_budget_clamps_and_stops(tmp_path):
+    g = ToolGateway(case_id="CASE", smiles=SMILES, run_dir=tmp_path, max_wall_seconds=100)
+    g.calls.append(__import__("mechcal.eval.tool_gateway", fromlist=["CallRecord"]).CallRecord(
+        0, "x", {}, "success", None, 70.0))
+    assert g.wall_seconds_left() == 30
+    assert g.call(DA_TOOL)["status"] == "rejected"     # less than a minute left
 
 
 def test_react_end_to_end_citation_is_grounded(gateway_factory, tmp_path):

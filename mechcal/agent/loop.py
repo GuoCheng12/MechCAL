@@ -38,6 +38,7 @@ EXCLUDED_TOOLS = {
 class AgentConfig:
     max_planner_calls: int = 16
     max_computations: int = 12
+    max_tool_wall_seconds: float = 3600.0    # total tool wall time per run; long requests are clamped to what is left
     critic: bool = True
     critic_every: int = 3
     worker: bool = True
@@ -300,7 +301,8 @@ class AgentRun:
         self.run_dir = Path(run_dir)
         self.run_dir.mkdir(parents=True, exist_ok=True)
         self.case_id, self.smiles = case_id, smiles
-        self.gateway = ToolGateway(case_id=case_id, smiles=smiles, run_dir=self.run_dir / "tools", enable_amesp=enable_amesp)
+        self.gateway = ToolGateway(case_id=case_id, smiles=smiles, run_dir=self.run_dir / "tools", enable_amesp=enable_amesp,
+                                   max_wall_seconds=self.cfg.max_tool_wall_seconds)
         self.recipe_ctx = RecipeContext(self.gateway)
         self.facts = structural_facts(smiles)
         self.board = Board.initial(case_id, smiles)
@@ -385,6 +387,12 @@ class AgentRun:
     def _computations(self) -> int:
         return self.gateway.executed_calls()
 
+    def _wall_left(self) -> int:
+        return int(self.gateway.wall_seconds_left())
+
+    def _out_of_tools(self) -> bool:
+        return self._computations() >= self.cfg.max_computations or self._wall_left() < 60
+
     def _planner_payload(self, must_submit: bool) -> dict:
         flagged = {p["label"] for p in self.proposals if p.get("label")}
         return {
@@ -393,9 +401,11 @@ class AgentRun:
             "structural_facts": self.facts, "board": self.board.view(detailed=flagged),
             "latest": self.latest, "history": self.history[-12:],
             "proposals": self.proposals, "reusable_artifacts": self._artifacts(),
+            "tool_log": self.gateway.call_log(),
             "recipes": self._recipe_cards(), "tools": self.tool_cards,
             "budget": {"planner_calls_left": self.cfg.max_planner_calls - self.usage.by_role["planner"]["calls"],
                        "computations_used": self._computations(), "computations_max": self.cfg.max_computations,
+                       "tool_wall_seconds_left": self._wall_left(),
                        "worker_available": self.cfg.worker, "must_submit_now": must_submit},
         }
 
@@ -411,8 +421,10 @@ class AgentRun:
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: claim rejected ({exc})")
         self.board.drop_claims(step.drop_claims)
-        for lim in step.limitations:
-            self.board.limitations.setdefault(lim.label, []).append(lim.text)
+        fresh: dict[str, list[str]] = {}
+        for lim in step.limitations:                 # a family's limitations are restated, not accumulated
+            fresh.setdefault(lim.label, []).append(lim.text)
+        self.board.limitations.update(fresh)
         answered = {r.proposal_id: r for r in step.proposal_responses}
         for p in self.proposals:
             if p["proposal_id"] in answered:
@@ -449,12 +461,15 @@ class AgentRun:
         observations: list = []
         start_comp = self._computations()
         for call in range(1, self.cfg.worker_max_calls + 1):
-            budget_left = self.cfg.worker_max_computations - (self._computations() - start_comp)
+            budget_left = min(self.cfg.worker_max_computations - (self._computations() - start_comp),
+                              self.cfg.max_computations - self._computations())
             payload = {"task": action.task, "separates": action.separates, "verified_smiles": self.smiles,
                        "structural_facts": self.facts, "recipes": self._recipe_cards(), "tools": self.tool_cards,
                        "family_labels": list(MECHANISM_POOL),
-                       "reusable_artifacts": self._artifacts(), "results_so_far": observations[-4:],
-                       "computations_left": budget_left, "must_finish_now": call == self.cfg.worker_max_calls or budget_left <= 0}
+                       "reusable_artifacts": self._artifacts(), "tool_log": self.gateway.call_log(),
+                       "results_so_far": observations[-4:],
+                       "computations_left": budget_left, "tool_wall_seconds_left": self._wall_left(),
+                       "must_finish_now": call == self.cfg.worker_max_calls or budget_left <= 0 or self._wall_left() < 60}
             step = self._ask(self.worker_client, "worker", self.worker_prompt, payload, WorkerStep)
             if step is None:
                 return {"status": "invalid_worker_output", "observations": observations[-4:]}
@@ -472,7 +487,7 @@ class AgentRun:
                         a.unresolved.append(f"claim not recorded: {exc}")
                 return {"status": "finished", "report": a.report, "unresolved": a.unresolved,
                         "claims_added": added, "findings_without_family": findings, "observations": observations[-3:]}
-            if budget_left <= 0 and a.type in {"recipe", "tool"}:
+            if (budget_left <= 0 or self._wall_left() < 60) and a.type in {"recipe", "tool"}:
                 observations.append({"status": "rejected", "error": "Worker computation budget exhausted; finish now."})
                 continue
             if a.type == "recipe" and self.cfg.recipes:
@@ -544,7 +559,7 @@ class AgentRun:
         while True:
             n += 1
             calls_used = self.usage.by_role["planner"]["calls"]
-            must_submit = (calls_used >= self.cfg.max_planner_calls - 1 or self._computations() >= self.cfg.max_computations
+            must_submit = (calls_used >= self.cfg.max_planner_calls - 1 or self._out_of_tools()
                            or (not self.cfg.iterate and n >= 2))
             if calls_used >= self.cfg.max_planner_calls + 2:
                 self.stop_reason = "planner_call_budget_exhausted"
@@ -570,7 +585,7 @@ class AgentRun:
                 self.stop_reason = "planner_submitted" if action.type == "submit" else "budget"
                 self.history.append(f"step {n}: submit")
                 break
-            if self._computations() >= self.cfg.max_computations and action.type in {"recipe", "tool", "delegate"}:
+            if self._out_of_tools() and action.type in {"recipe", "tool", "delegate"}:
                 self.latest = {"status": "rejected", "error": "Computation budget exhausted; submit now."}
                 self.history.append(f"step {n}: {action.type} rejected (budget)")
                 continue
