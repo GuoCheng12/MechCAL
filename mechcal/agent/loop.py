@@ -1091,7 +1091,7 @@ class AgentRun:
 
     def _finish(self, submitted: bool, seconds: float) -> dict:
         self._sync_costs()
-        self.costs.append_log([r for r in self.costs.records if r.note == "this run"])
+        self.costs.append_log()                       # this run's records only
         raw = self.board.to_submission()
         check = check_submission(raw, self.gateway.store, self.smiles)
         eligible = None

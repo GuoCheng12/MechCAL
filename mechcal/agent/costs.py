@@ -85,37 +85,46 @@ class Record:
     metal: bool | None = None        # molecule contains a transition metal (None: not recorded)
 
 
+THIS_RUN, LOGGED = "this run", "logged run"
+
+
 class CostModel:
     def __init__(self, natoms: int, log_path: str | Path | None = None, smiles: str | None = None):
         self.natoms = natoms
         self.size = basis_functions(smiles) if smiles else None
         self.metals = sorted({a for a in TRANSITION_METALS if smiles and f"[{a}" in smiles})
         self.records = [Record(*r, metal=("Au" in r[5] or "Fe" in r[5])) for r in SEED]
+        self.run_records: list[Record] = []          # recorded in this run only: the part appended to the log
         self.log_path = Path(log_path) if log_path else None
         if self.log_path and self.log_path.is_file():
-            for line in self.log_path.read_text(encoding="utf-8").splitlines():
-                try:
-                    d = json.loads(line)
-                    self.records.append(Record(d["tool"], d.get("key", ""), int(d["atoms"]), float(d["seconds"]),
-                                               bool(d["finished"]), d.get("note", "logged run"), d.get("size"),
-                                               d.get("metal")))
-                except (ValueError, KeyError, TypeError):
-                    continue
+            with self.log_path.open(encoding="utf-8") as fh:
+                for line in fh:
+                    try:
+                        d = json.loads(line)
+                        note = d.get("note") or LOGGED
+                        self.records.append(Record(d["tool"], d.get("key", ""), int(d["atoms"]), float(d["seconds"]),
+                                                   bool(d["finished"]), LOGGED if note == THIS_RUN else note,
+                                                   d.get("size"), d.get("metal")))
+                    except (ValueError, KeyError, TypeError):
+                        continue
 
-    def add(self, tool: str, args: dict, seconds: float, status: str, note: str = "this run") -> Record:
+    def add(self, tool: str, args: dict, seconds: float, status: str, note: str = THIS_RUN) -> Record:
         rec = Record(tool, method_key(tool, args), self.natoms, round(seconds, 1),
                      status in {"success"}, note, self.size if tool in SIZE_BY_BASIS else None, bool(self.metals))
         if status in {"success", "partial", "failed"} and seconds > 0:
             self.records.append(rec)
+            self.run_records.append(rec)
         return rec
 
-    def append_log(self, records: list[Record]) -> None:
+    def append_log(self, records: list[Record] | None = None) -> None:
+        """Append records (default: this run's) to the cross-run log; loaded records are never written back."""
+        records = self.run_records if records is None else records
         if not self.log_path or not records:
             return
         self.log_path.parent.mkdir(parents=True, exist_ok=True)
         with self.log_path.open("a", encoding="utf-8") as fh:
             for r in records:
-                fh.write(json.dumps(r.__dict__) + "\n")
+                fh.write(json.dumps(r.__dict__ | {"note": LOGGED if r.note == THIS_RUN else r.note}) + "\n")
 
     def estimate(self, tool: str, args: dict | None = None) -> dict:
         key = method_key(tool, args)

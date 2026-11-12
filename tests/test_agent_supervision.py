@@ -316,6 +316,24 @@ def test_cost_estimates_scale_and_mark_lower_bounds(tmp_path):
     assert CostModel(30, log).estimate("microscopic.run_charge_population_panel")["seconds"] == 12
 
 
+def test_cost_log_gets_only_each_runs_own_records(tmp_path):
+    """Regression: records loaded from the log were written back by every later run (the log doubled)."""
+    from mechcal.agent.costs import CostModel
+    log = tmp_path / "cost.jsonl"
+    for seconds in (10.0, 20.0, 30.0):
+        m = CostModel(30, log)
+        m.add("microscopic.run_charge_population_panel", {}, seconds, "success")
+        m.append_log()
+    lines = [json.loads(l) for l in log.read_text().splitlines()]
+    assert [l["seconds"] for l in lines] == [10.0, 20.0, 30.0]
+    assert {l["note"] for l in lines} == {"logged run"}
+    m = CostModel(30, log)
+    assert m.run_records == [] and "logged run" in m.estimate("microscopic.run_charge_population_panel")["basis"]
+    old_format = tmp_path / "old.jsonl"           # logs written before the fix said "this run"
+    old_format.write_text(json.dumps({"tool": "t", "atoms": 3, "seconds": 1.0, "finished": True, "note": "this run"}) + "\n")
+    assert CostModel(3, old_format).records[-1].note == "logged run"
+
+
 def test_expensive_delegation_returns_a_cost_check_first(tmp_path):
     def confirm(p):
         assert p["latest"]["status"] == "cost_check" and p["latest"]["estimate"]["status"] == "estimate"
