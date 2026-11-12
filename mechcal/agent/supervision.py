@@ -122,6 +122,33 @@ class Task:
                 "findings": [f["finding_id"] for f in last.get("findings", [])]}
 
 
+def validate_fixed_args(fixed: dict, *, tools: list[str], recipe: str | None, recipe_args: dict) -> list[str]:
+    """Format errors in the Planner's fixed settings, checked against each tool's argument types."""
+    from pydantic import TypeAdapter, ValidationError
+    from mechcal.schemas.tool_arguments import argument_model
+
+    targets = set(tools) | RECIPE_TOOLS.get(recipe or "", set())
+    errors = []
+    for key, value in fixed.items():
+        if key == "source_artifact_id":
+            continue
+        checked = False
+        for tool in sorted(targets):
+            fields = argument_model(tool.split(".", 1)[-1]).model_fields
+            name = key if key in fields else next((t for r, (tl, t) in recipe_args.get(recipe or "", {}).items()
+                                                   if r == key and tl == tool), None)
+            if name not in fields:
+                continue
+            checked = True
+            try:
+                TypeAdapter(fields[name].annotation).validate_python(value)
+            except ValidationError as exc:
+                errors.append(f"{key}={value!r} is not valid for {tool}: {exc.errors()[0]['msg']}")
+        if not checked:
+            errors.append(f"{key} is not a setting of the assigned recipe/tools; it would be ignored.")
+    return errors
+
+
 def recipe_tool_args(recipe: str, args: dict, recipe_args: dict) -> dict:
     """Recipe arguments translated to the tool argument names they feed (for classification)."""
     out = {}

@@ -622,6 +622,10 @@ class AgentRun:
         unknown = [t for t in action.tools if t not in self.card_by_tool]
         if unknown:
             return {"task_id": tid, "status": "rejected", "error": f"Unknown tools {unknown}; use ids from tools."}
+        problems = sv.validate_fixed_args(action.fixed_args, tools=list(action.tools), recipe=action.recipe,
+                                          recipe_args=RECIPE_ARGS)
+        if problems:
+            return {"task_id": tid, "status": "rejected", "error": "fixed_args: " + "; ".join(problems)}
         task = sv.Task(task_id=tid, objective=action.task, recipe=action.recipe, tools=list(action.tools),
                        fixed_args=self.gateway.resolve_args(action.fixed_args), separates=list(action.separates),
                        expectation=action.expectation, created_step=n)

@@ -364,3 +364,15 @@ def test_malformed_json_is_repaired_not_fatal(tmp_path):
     result = run.run()
     assert result["status"] == "submitted" and result["protocol"]["malformed_json"] == 1
     assert "not one valid JSON object" in client.payloads["planner"][1]["feedback"]
+
+
+def test_fixed_args_are_type_checked_at_delegation():
+    from mechcal.agent.recipes import RECIPE_ARGS
+    bad = sv.validate_fixed_args({"fragment_atom_indices": [6, 7, 8]}, tools=["microscopic.compare_spin_states_pyscf"],
+                                 recipe=None, recipe_args=RECIPE_ARGS)
+    assert bad and "fragment_atom_indices" in bad[0]
+    assert sv.validate_fixed_args({"fragment_atom_indices": [[0, 1], [2]], "functional": "pbe0"},
+                                  tools=["microscopic.compare_spin_states_pyscf"], recipe=None, recipe_args=RECIPE_ARGS) == []
+    assert sv.validate_fixed_args({"nstates": 8}, tools=[], recipe="excited_states", recipe_args=RECIPE_ARGS) == []
+    assert "ignored" in sv.validate_fixed_args({"functional": "pbe"}, tools=[], recipe="excited_states",
+                                               recipe_args=RECIPE_ARGS)[0]
