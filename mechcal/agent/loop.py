@@ -20,6 +20,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 from mechcal.agent.board import Board, ClaimIn, Status
 from mechcal.agent.facts import structural_facts
 from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
+from mechcal.agent import cards as cardlib
 from mechcal.agent import supervision as sv
 from mechcal.agent.costs import CostModel, expected_seconds
 from mechcal.eval.grounding import ELIGIBLE, check_submission
@@ -29,13 +30,7 @@ from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime.prompts import load_prompt
 
 AGENT_RELEASE = "0.3.0"
-EXCLUDED_TOOLS = {
-    "microscopic.list_artifact_bundles", "microscopic.list_artifact_bundle_members",
-    "microscopic.inspect_raw_artifact_bundle", "microscopic.parse_snapshot_outputs",
-    "microscopic.extract_torsion_candidates_from_bundle", "microscopic.unsupported_excited_state_relaxation",
-    "microscopic.run_excited_state_relaxation", "microscopic.scan_excited_state_coordinate",
-    "microscopic.estimate_soc_amesp", "microscopic.list_available_conformers",
-}
+# The tools an agent may see are exactly those with a capability card (mechcal/agent/cards/tool_cards.json).
 
 
 @dataclass
@@ -207,6 +202,7 @@ class Action(_M):
     recipe: str | None = None
     tools: list[str] = Field(default_factory=list)
     fixed_args: dict = Field(default_factory=dict)
+    suggested_args: dict = Field(default_factory=dict)   # delegate: technical starting values the Worker may change
     confirm_cost: bool = False                # delegate: go ahead after a cost check
     wall_budget_seconds: float | None = None  # delegate: tool time this task may use (student works within it)
     # revise: continue an existing task with its attempt record
@@ -402,7 +398,11 @@ class AgentRun:
         self.protocol = {"planner_rejected": 0, "approvals": 0, "status_corrections": 0}
         self.tool_cards = self._tool_cards()
         self.card_by_tool = {c["tool"]: c for c in self.tool_cards}
-        self.costs = CostModel(int(self.facts["summary"]["atoms_with_h"]), self.cfg.cost_log_path or None)
+        prepared_kind = next(a.kind for a in self.gateway.case_run.artifact_manifest.artifacts
+                             if a.artifact_id == self.gateway.prepared_artifact_id)
+        self.profile = cardlib.molecule_profile(self.facts, prepared_kind)
+        self.costs = CostModel(int(self.facts["summary"]["atoms_with_h"]), self.cfg.cost_log_path or None, smiles=smiles)
+        self.recipe_ctx.estimate = lambda tool, args: expected_seconds(self._tool_cost(tool, args))
         self._cost_seen = 0
         self.gateway.allowed = tuple(card["tool"] for card in self.tool_cards)
         # professor prompt when the Worker is on; the single-agent Planner prompt otherwise
@@ -412,35 +412,7 @@ class AgentRun:
 
     # -- catalog
     def _tool_cards(self) -> list[dict]:
-        ids = [i for i in self.gateway.tool_ids() if i.startswith("microscopic.") and i not in EXCLUDED_TOOLS]
-        cards = []
-        for d in self.gateway.describe(ids):
-            props = (d.get("tool_arg_schema") or {}).get("properties") or {}
-            args = {}
-            defs = (d.get("tool_arg_schema") or {}).get("$defs") or {}
-            for k, v in props.items():
-                spec = {key: v[key] for key in ("type", "default", "minimum", "maximum", "enum", "minItems", "maxItems")
-                        if key in v and v[key] is not None}
-                if v.get("description"):
-                    spec["description"] = v["description"][:220]
-                items = v.get("items") or next((x.get("items") for x in v.get("anyOf", []) if x.get("items")), None)
-                if isinstance(items, dict) and items.get("$ref"):
-                    items = defs.get(items["$ref"].rsplit("/", 1)[-1], items)
-                if isinstance(items, dict) and items.get("enum"):
-                    spec["items_enum"] = items["enum"]
-                if isinstance(items, dict) and items.get("properties"):   # list of objects: name the fields
-                    spec["item_fields"] = {f: fv.get("type") or "|".join(str(x.get("type")) for x in fv.get("anyOf", []))
-                                           for f, fv in items["properties"].items()}
-                    spec["item_required"] = items.get("required", [])
-                if isinstance(items, dict) and items.get("type") == "array":
-                    spec["items"] = "array (list of lists)"
-                if not spec.get("type") and v.get("anyOf"):
-                    spec["type"] = "|".join(str(x.get("type")) for x in v["anyOf"] if x.get("type"))
-                args[k] = spec
-            kinds = list(dict.fromkeys([*(d.get("required_artifact_kinds") or []), *(d.get("source_artifact_kinds") or [])]))
-            cards.append({"tool": d["capability_id"], "status": d.get("status"),
-                          "description": (d.get("description") or "")[:240], "input_kinds": kinds, "args": args})
-        return cards
+        return cardlib.tool_entries(self.gateway)
 
     def _artifacts(self) -> list[dict]:
         """Reusable inputs produced so far (geometries, bundles), for exact source_artifact_id choice."""
@@ -451,12 +423,11 @@ class AgentRun:
         if not self.cfg.recipes:
             return []
         specs = {c["tool"]: c["args"] for c in self.tool_cards}
-        cards = []
+        out = []
         for name, (_, desc) in RECIPES.items():
             args = {arg: specs.get(tool, {}).get(targ, {}) for arg, (tool, targ) in RECIPE_ARGS.get(name, {}).items()}
-            cards.append({"recipe": name, "description": desc, **({"args": args} if args else {}),
-                          "cost": self._recipe_cost(name)})
-        return cards
+            out.append({**cardlib.recipe_view(name, desc, args, self.profile), "cost": self._recipe_cost(name)})
+        return out
 
     # -- model calls
     response_mode = "json_schema"
@@ -572,18 +543,17 @@ class AgentRun:
         return self.costs.recipe_estimate(recipe, args, need_geometry=need_geometry, need_bundle=need_bundle)
 
     def _professor_catalog(self) -> list[dict]:
-        """Compact tool list for the Planner: what each tool does, which settings are scientific, what it costs."""
-        out = []
-        for c in self.tool_cards:
-            sci = {k: v for k, v in c["args"].items() if sv.ARG_CLASS.get(k) in {"scientific", "source"}}
-            entry = {"tool": c["tool"], "description": c["description"][:160], "scientific_args": sci,
-                     "cost": self._tool_cost(c["tool"])}
-            methods = sorted({r.key for r in self.costs.records if r.tool == c["tool"] and r.key})
-            if methods:
-                entry["cost_by_method"] = {m: self.costs.estimate(c["tool"], dict(zip(("functional", "grid_level"),
-                                           (m.split("/")[0], int(m.split("grid")[1]))))) for m in methods}
-            out.append(entry)
-        return out
+        """Capability cards for the Planner (the same list the baselines see), with expected cost."""
+        kinds_present = {a.kind for a in self.gateway.case_run.artifact_manifest.artifacts}
+        return cardlib.catalog(self.tool_cards, self.profile, sv.ARG_CLASS, kinds_present, cost=self._cost_fields)
+
+    def _cost_fields(self, tool: str) -> dict:
+        fields = {"cost": self._tool_cost(tool)}
+        methods = sorted({r.key for r in self.costs.records if r.tool == tool and r.key})
+        if methods:
+            fields["cost_by_method"] = {m: self.costs.estimate(tool, dict(zip(("functional", "grid_level"),
+                                        (m.split("/")[0], int(m.split("grid")[1]))))) for m in methods}
+        return fields
 
     def _apply(self, step: PlannerStep, n: int) -> None:
         for a in step.adopt:                         # Worker findings the Planner accepts as board evidence
@@ -666,12 +636,13 @@ class AgentRun:
         unknown = [t for t in action.tools if t not in self.card_by_tool]
         if unknown:
             return {"task_id": tid, "status": "rejected", "error": f"Unknown tools {unknown}; use ids from tools."}
-        problems = sv.validate_fixed_args(action.fixed_args, tools=list(action.tools), recipe=action.recipe,
+        fixed, suggested, notes = sv.split_settings(self.gateway.resolve_args(action.fixed_args), action.suggested_args)
+        problems = sv.validate_fixed_args({**suggested, **fixed}, tools=list(action.tools), recipe=action.recipe,
                                           recipe_args=RECIPE_ARGS)
         if problems:
             return {"task_id": tid, "status": "rejected", "error": "fixed_args: " + "; ".join(problems)}
         task = sv.Task(task_id=tid, objective=action.task, recipe=action.recipe, tools=list(action.tools),
-                       fixed_args=self.gateway.resolve_args(action.fixed_args), separates=list(action.separates),
+                       fixed_args=fixed, separates=list(action.separates),
                        expectation=action.expectation, created_step=n)
         source = task.fixed_args.get("source_artifact_id")
         if source:
@@ -680,6 +651,7 @@ class AgentRun:
             task.geometry = self._geometry_of(source)
         task.pinned.update({k: v for k, v in task.fixed_args.items() if sv.ARG_CLASS.get(k) == "scientific"})
         task.wall_budget = action.wall_budget_seconds
+        task.suggested, task.notes = suggested, notes
         estimate = (self._recipe_cost(task.recipe, task.fixed_args) if task.recipe
                     else self.costs.combine([self._tool_cost(t, task.fixed_args) for t in task.tools]))
         expected, left = expected_seconds(estimate), self.gateway.wall_seconds_left()
@@ -757,6 +729,7 @@ class AgentRun:
     def _student_cards(self, task: sv.Task) -> dict:
         def mark(card):
             return {**card, "args": {k: {**v, "class": sv.ARG_CLASS.get(k, "technical")} for k, v in card["args"].items()},
+                    "applies_to_this_molecule": cardlib.applicability(card["tool"], self.profile),
                     "cost": self._tool_cost(card["tool"], task.fixed_args)}
         tools = [mark(self.card_by_tool[t]) for t in sorted(set(task.tools) | sv.PREREQUISITE_TOOLS
                                                               | sv.RECIPE_TOOLS.get(task.recipe or "", set())
@@ -780,7 +753,8 @@ class AgentRun:
             "assignment": {"task_id": task.task_id, "objective": task.objective, "recipe": task.recipe, "tools": task.tools,
                            "fixed_args": task.fixed_args, "separates": task.separates, "expectation": task.expectation,
                            "planner_instructions": task.instructions},
-            "settings_in_force": {"scientific": task.pinned, "geometry": task.geometry},
+            "settings_in_force": {"locked": task.fixed_args, "scientific_in_force": task.pinned,
+                                  "suggested_technical": task.suggested, "geometry": task.geometry},
             "attempts": [a.to_json() for a in task.attempts],
             "interceptions": task.interceptions[-3:],
             "recent_results": recent[-3:],
@@ -936,6 +910,8 @@ class AgentRun:
                               for a in task.attempts]
         report["artifacts"] = [aid for a in task.attempts for aid in a.artifact_ids]
         report["interceptions"] = [{"code": i["code"], "name": i["name"]} for i in task.interceptions]
+        if task.notes:
+            report["system_notes"] = list(task.notes)
         if corrections:
             report["system_corrections"] = corrections
             self.protocol["status_corrections"] += len(corrections)

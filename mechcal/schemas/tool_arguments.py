@@ -26,6 +26,23 @@ class GeometryMeasurement(BaseModel):
     atom_indices: list[Atom] = Field(min_length=2, max_length=4,
         description="Zero-based indices in the selected source XYZ, not SMILES atom order.")
 
+    @model_validator(mode="before")
+    @classmethod
+    def shorthand(cls, data):
+        """Accept a bare list of 2/3/4 atom indices; kind and id follow from the count."""
+        kinds = {2: "distance", 3: "angle", 4: "dihedral"}
+        if isinstance(data, (list, tuple)) and len(data) in kinds and all(type(i) is int for i in data):
+            data = {"atom_indices": list(data)}
+        if isinstance(data, dict):
+            data = dict(data)
+            if "atom_indices" not in data and isinstance(data.get("atoms"), list):
+                data["atom_indices"] = data.pop("atoms")
+            atoms = data.get("atom_indices")
+            if isinstance(atoms, list) and len(atoms) in kinds:
+                data.setdefault("kind", kinds[len(atoms)])
+                data.setdefault("measurement_id", f"{data['kind']}_" + "_".join(str(i) for i in atoms))
+        return data
+
     @model_validator(mode="after")
     def index_count(self):
         count = {"distance": 2, "angle": 3, "dihedral": 4}[self.kind]
@@ -87,10 +104,26 @@ class TorsionArgs(StateArgs):
     angles: list[Angle] | None = Field(default=None, min_length=2, max_length=6,
         description="Distinct angles modulo 360; -180 and 180 are the same point. If max_members is set, it must equal the angle count.")
 
+    @model_validator(mode="before")
+    @classmethod
+    def normalize(cls, data):
+        """Equivalent spellings only: angles modulo 360 into [-180, 180) (same geometry); '1' or 1 means dih:001."""
+        if not isinstance(data, dict):
+            return data
+        data = dict(data)
+        if isinstance(data.get("angles"), list):
+            data["angles"] = [((float(a) + 180.0) % 360.0) - 180.0 if isinstance(a, (int, float)) and not isinstance(a, bool)
+                              else a for a in data["angles"]]
+        did = data.get("dihedral_id")
+        if isinstance(did, int) and not isinstance(did, bool) or (isinstance(did, str) and did.isdigit()):
+            data["dihedral_id"] = f"dih:{int(did):03d}"
+        return data
+
     @model_validator(mode="after")
     def coherent_selection(self):
         if self.dihedral_id is not None and self.dihedral_atoms is not None:
-            raise ValueError("Select a dihedral_id OR zero-based dihedral_atoms, not both.")
+            raise ValueError("Select a dihedral_id OR zero-based dihedral_atoms, not both "
+                             "(they may name different bonds); give only dihedral_id when both mean the same one.")
         if self.dihedral_atoms is not None and len(set(self.dihedral_atoms)) != 4:
             raise ValueError("Four distinct atom indices are required.")
         if self.angles is not None:

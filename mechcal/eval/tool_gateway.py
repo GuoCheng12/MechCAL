@@ -129,6 +129,7 @@ class ToolGateway:
     _observations: dict = field(default_factory=dict, repr=False)
     parents: dict = field(default_factory=dict)   # produced artifact id -> source_artifact_id it was computed from
     produced: dict = field(default_factory=dict)  # T### alias -> reusable artifact ids that call produced
+    _profile: dict | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         from mechcal.capabilities import default_capability_registry
@@ -208,6 +209,11 @@ class ToolGateway:
                 tool_args["max_wall_seconds"] = int(left)
                 note = f"max_wall_seconds lowered from {requested} to {int(left)} (remaining tool wall-time budget)."
         cap = self.registry.require(capability_id)
+        scope = self.applicability(capability_id)
+        if scope is not None and not scope["ok"]:
+            self.calls.append(CallRecord(index, capability_id, tool_args, "rejected", None, 0.0, "not applicable"))
+            return {"status": "rejected", "failure_class": "not_applicable", "failure_code": "outside_scope",
+                    "retryable": False, "error": f"{capability_id} does not apply to this molecule: {scope['why']}."}
         kinds = {x.artifact_id: x.kind for x in self.case_run.artifact_manifest.artifacts}
         source = tool_args.get("source_artifact_id")
         if source and cap.input_artifact_kinds and kinds.get(source) not in cap.input_artifact_kinds:
@@ -336,6 +342,17 @@ class ToolGateway:
                          **({"failure_code": failure} if failure else {}),
                          **({"warnings": [w["code"] for w in obs.get("warnings", [])]} if (obs := self._observations.get(c.artifact_id, {})).get("warnings") else {})})
         return rows
+
+    def applicability(self, capability_id: str) -> dict | None:
+        """Declared scope of a carded tool against this molecule (SMILES-derived); None for uncarded tools."""
+        from mechcal.agent import cards as cardlib
+        if capability_id not in cardlib.load_cards()["tools"]:
+            return None
+        if self._profile is None:
+            from mechcal.agent.facts import structural_facts
+            kind = next(a.kind for a in self.case_run.artifact_manifest.artifacts if a.artifact_id == self.prepared_artifact_id)
+            self._profile = cardlib.molecule_profile(structural_facts(self.smiles), kind)
+        return cardlib.applicability(capability_id, self._profile)
 
     def resolve(self, artifact_id):
         """A T### alias names a recorded call; as a tool input it means the artifact that call produced."""

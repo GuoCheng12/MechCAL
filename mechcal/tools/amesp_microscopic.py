@@ -7,6 +7,7 @@ from pathlib import Path
 from uuid import uuid4
 from typing import Any, Literal
 
+from mechcal.tools.derived_descriptors import STATE_DESCRIPTOR_METHOD, state_descriptors, torsion_profile
 from mechcal.chem.solvent_comparisons import solvent_comparisons
 from mechcal.chem.validated_scopes import (
     SCAN_ATOMIC_NUMBERS, SCAN_LEGACY_ELEMENTS, SCAN_MAX_ATOMS, SCAN_SCOPE,
@@ -1090,7 +1091,7 @@ class AmespMicroscopicRunner:
                 "requested_descriptors": profile.requested_descriptors,
                 "available_descriptors": available_descriptors,
                 "missing_descriptors": missing_descriptors,
-                "route_records": route_records,
+                "route_records": torsion_profile(route_records),
                 "member_artifacts": member_artifacts,
                 "route_summary": _member_series_summary(route_records, member_failures),
                 "member_failure_count": len(member_failures),
@@ -2017,6 +2018,8 @@ def _parsed_observables(
         "state_count": len(excited_states),
         "excited_states": excited_states,
         "bright_state": _bright_state(excited_states),
+        "state_descriptors": state_descriptors(excited_states),
+        "state_descriptor_method": STATE_DESCRIPTOR_METHOD,
         **parse_transitions(s1_text),
         "section_presence": {
             "ground_to_excited_transition_dipoles": _GROUND_TO_EXCITED_DIPOLE

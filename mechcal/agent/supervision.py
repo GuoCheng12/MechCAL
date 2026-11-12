@@ -27,7 +27,7 @@ ARG_CLASS: dict[str, str] = {
     # technical: the student may change these to make a calculation work
     "max_wall_seconds": "technical", "max_opt_cycles": "technical", "fmax_ev_per_angstrom": "technical",
     "s1_nstates": "technical", "nstates": "technical", "nstates_per_spin": "technical", "td_tout": "technical",
-    "grid_level": "technical", "scf_solver": "technical", "spatial_grid": "technical",
+    "grid_level": "technical", "scf_solver": "technical", "spatial_grid": "technical", "level_shift": "technical",
     "angles": "technical", "angles_degrees": "technical", "distances_angstrom": "technical", "values": "technical",
     "max_members": "technical", "max_candidates": "technical", "md_length_ps": "technical",
     "energy_window_kcal_mol": "technical", "search_level": "technical",
@@ -45,7 +45,6 @@ ARG_CLASS: dict[str, str] = {
 RECIPE_TOOLS: dict[str, set[str]] = {
     "excited_states": {M + "run_baseline_bundle"},
     "charge_transfer": {M + "run_baseline_bundle", M + "analyze_hole_electron_from_bundle"},
-    "bright_dark_states": {M + "run_bright_dark_state_ordering"},
     "torsion_response": {M + "list_rotatable_dihedrals", M + "run_torsion_brightness_coupling_scan"},
     "spin_states": {M + "compare_singlet_triplet_states", M + "evaluate_spin_orbit_couplings", M + "compare_spin_states_pyscf"},
     "redox_levels": {M + "estimate_vertical_ip_ea"},
@@ -53,6 +52,7 @@ RECIPE_TOOLS: dict[str, set[str]] = {
     "dimer_contacts": {M + "search_dimer_contacts"},
     "solvent_polarity": {M + "run_solvation_polarity_proxy"},
     "conformers": {M + "sample_conformers_crest"},
+    "dimer_excited_states": {M + "search_dimer_contacts", M + "run_baseline_bundle", M + "analyze_hole_electron_from_bundle"},
 }
 # Preparation steps any task may use (they produce inputs, not evidence).
 PREREQUISITE_TOOLS = {M + "optimize_ground_state_geometry", M + "list_rotatable_dihedrals", M + "run_baseline_bundle"}
@@ -89,7 +89,7 @@ class Task:
     objective: str
     recipe: str | None
     tools: list[str]
-    fixed_args: dict
+    fixed_args: dict                                            # scientific settings, locked
     separates: list[str]
     expectation: Any
     created_step: int
@@ -103,6 +103,8 @@ class Task:
     reports: list[dict] = field(default_factory=list)
     retry_base: int = 0                                         # attempts before the last revision do not count
     wall_budget: float | None = None                            # tool seconds this task may use (set by the Planner)
+    suggested: dict = field(default_factory=dict)               # technical starting values; the student may change them
+    notes: list[str] = field(default_factory=list)              # system notes for the Planner
     estimate: dict | None = None                                # cost estimate at delegation
 
     def route_allowed(self, kind: str, name: str) -> bool:
@@ -120,6 +122,18 @@ class Task:
         return {"task_id": self.task_id, "objective": self.objective[:160], "status": last.get("status", "open"),
                 "attempts": len(self.attempts), "revisions": len(self.instructions),
                 "findings": [f["finding_id"] for f in last.get("findings", [])]}
+
+
+def split_settings(fixed: dict, suggested: dict) -> tuple[dict, dict, list[str]]:
+    """Scientific settings stay fixed; technical ones written as fixed become suggestions (with a note)."""
+    locked, hints, notes = {}, dict(suggested), []
+    for key, value in fixed.items():
+        if ARG_CLASS.get(key, "technical") == "technical":
+            hints.setdefault(key, value)
+            notes.append(f"{key} is a technical setting: kept as a suggestion the Worker may change")
+        else:
+            locked[key] = value
+    return locked, hints, notes
 
 
 def validate_fixed_args(fixed: dict, *, tools: list[str], recipe: str | None, recipe_args: dict) -> list[str]:
@@ -190,6 +204,10 @@ def check_call(task: Task, kind: str, name: str, args: dict, *, gateway, default
             return {"code": "fixed_setting_changed", "needs_approval": True,
                     "message": f"{key} is fixed by the Planner to {value!r}; you used {args[target]!r}. Ask for approval."}, args
         args.setdefault(target, value)
+    for key, value in task.suggested.items():           # technical starting values: used when the student sets none
+        target = key if key in accepted else reverse.get(key)
+        if target is not None:
+            args.setdefault(target, value)
     tool_view = recipe_tool_args(name, args, recipe_args) if kind == "recipe" else dict(args)
     # scientific settings already in force in this task (first use pins them)
     for key, value in tool_view.items():

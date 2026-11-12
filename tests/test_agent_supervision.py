@@ -403,16 +403,21 @@ def test_read_works_on_input_structures(tmp_path):
     assert "known ids" in g.read("nope")["error"]
 
 
-def test_approval_replaces_a_fixed_technical_setting_and_repeats_end_the_session(tmp_path):
+def test_technical_settings_become_suggestions_and_repeated_refusals_end_the_session(tmp_path):
     def revise(p):
-        return {"action": {"type": "revise", "task_id": "W1", "instruction": "Approved: 3 states.", "approve": True}}
+        return {"action": {"type": "revise", "task_id": "W1", "instruction": "Approved: dih:002.", "approve": True}}
 
-    planner = [{"action": contrast(type="delegate", task="Scan.", tools=[TORSION], fixed_args={"s1_nstates": 2})}, revise, submit]
-    call3 = worker_tool(TORSION, {"source_artifact_id": "structure:prepared", "s1_nstates": 3}, "need 3")
-    worker = [call3, call3,                                   # second identical refused call ends the session
-              call3, worker_report("done")]                   # after approval it runs
+    planner = [{"action": contrast(type="delegate", task="Scan.", tools=[TORSION],
+                                   fixed_args={"dihedral_id": "dih:001", "s1_nstates": 2})}, revise, submit]
+    call = worker_tool(TORSION, {"source_artifact_id": "structure:prepared", "dihedral_id": "dih:002", "s1_nstates": 3})
+    worker = [call, call,                       # changed scientific setting refused twice: the session ends
+              call, worker_report("blocked_technical")]
     run, result, client = run_agent(tmp_path, planner, worker)
     first, second = latest_reports(client)
+    task = run.tasks["W1"]
+    assert task.suggested == {"s1_nstates": 2} and "s1_nstates" not in task.fixed_args   # technical: a suggestion
+    assert any("technical setting" in n for n in first["system_notes"])
     assert first["status"] == "needs_approval" and "repeated a refused call" in first["summary"]
-    assert run.tasks["W1"].fixed_args["s1_nstates"] == 3
-    assert second["attempts"][-1]["args"]["s1_nstates"] == 3
+    assert [i["code"] for i in first["interceptions"]] == ["fixed_setting_changed"] * 2
+    assert task.fixed_args["dihedral_id"] == "dih:002"                                   # approved
+    assert second["attempts"][-1]["args"]["s1_nstates"] == 3                             # the Worker's own value

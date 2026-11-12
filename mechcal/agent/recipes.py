@@ -17,10 +17,14 @@ from mechcal.eval.tool_gateway import ToolGateway
 
 DEFAULT_NSTATES = 10
 TD_TOUT = 10  # >= 4 is required for later hole-electron analysis; 10 keeps transitions complete
-# PySCF DF-PBE/TDA singlets+triplets with the reference stability check, 56-atom Au complex (0003),
-# measured at 32 threads / 16 GB: SCF 55 s, TDA S 180 s + T 142 s, internal stability 307 s,
-# external 239 s = 923 s (8 threads: ~1300 s). 1200 s keeps ~30% margin.
+# Fallback time limit for the PySCF singlet/triplet route when no cost estimate exists (0003: 923 s).
+# With a cost model the limit is 1.5x the estimate, within 600-1800 s.
 PYSCF_SPIN_WALL = 1200
+
+
+def _spin_wall(ctx, args: dict) -> int:
+    expected = ctx.estimate("microscopic.compare_spin_states_pyscf", args) if ctx.estimate else None
+    return int(min(1800, max(600, 1.5 * expected))) if expected else PYSCF_SPIN_WALL
 
 
 @dataclass
@@ -28,6 +32,7 @@ class RecipeContext:
     gateway: ToolGateway
     cache: dict = field(default_factory=dict)   # reusable artifact ids (geometry, bundle, dihedrals)
     source: str | None = None                   # explicit input geometry for the current recipe call
+    estimate: Callable | None = None            # (tool, args) -> expected seconds, from the cost model
 
 
 @dataclass
@@ -135,12 +140,6 @@ def charge_transfer(ctx, steps, *, state_root: int = 1, nstates: int = DEFAULT_N
     return _step(ctx, steps, "microscopic.analyze_hole_electron_from_bundle", args) is not None
 
 
-def bright_dark_states(ctx, steps, *, nstates: int = DEFAULT_NSTATES, **_):
-    geom = geometry(ctx, steps)
-    return geom is not None and _step(ctx, steps, "microscopic.run_bright_dark_state_ordering",
-                                      {"source_artifact_id": geom, "s1_nstates": int(nstates), "td_tout": TD_TOUT}) is not None
-
-
 def torsion_response(ctx, steps, *, dihedral_id: str | None = None, angles: list | None = None, nstates: int = 6, **_):
     geom = geometry(ctx, steps)
     if geom is None:
@@ -169,9 +168,8 @@ def spin_states(ctx, steps, *, nstates_per_spin: int = 3, **_):
                    {"source_artifact_id": geom, "nstates_per_spin": int(nstates_per_spin)}) is not None
         _step(ctx, steps, "microscopic.evaluate_spin_orbit_couplings", {"source_artifact_id": geom})
         return ok
-    return _step(ctx, steps, "microscopic.compare_spin_states_pyscf",
-                 {"source_artifact_id": geom, "nstates_per_spin": int(nstates_per_spin), "functional": "pbe",
-                  "basis": "def2-svp", "max_wall_seconds": PYSCF_SPIN_WALL}) is not None
+    args = {"source_artifact_id": geom, "nstates_per_spin": int(nstates_per_spin), "functional": "pbe", "basis": "def2-svp"}
+    return _step(ctx, steps, "microscopic.compare_spin_states_pyscf", {**args, "max_wall_seconds": _spin_wall(ctx, args)}) is not None
 
 
 def redox_levels(ctx, steps, **_):
@@ -191,6 +189,35 @@ def dimer_contacts(ctx, steps, *, max_candidates: int = 2, **_):
     return geom is not None and _step(ctx, steps, "microscopic.search_dimer_contacts",
                                       {"source_artifact_id": geom, "partner_artifact_id": geom,
                                        "max_candidates": int(max_candidates), "max_wall_seconds": 600}) is not None
+
+
+def dimer_excited_states(ctx, steps, *, nstates: int = DEFAULT_NSTATES, state_root: int = 1, **_):
+    """Excited states of a modeled dimer and how the chosen state is shared between the two molecules."""
+    gw = ctx.gateway
+    records = {a.artifact_id: a for a in gw.case_run.artifact_manifest.artifacts}
+    dimer = ctx.source if ctx.source and (records.get(ctx.source) and (records[ctx.source].metadata or {}).get("modeled_dimer")) else None
+    if dimer is None:
+        geom = geometry(ctx, steps)
+        if geom is None:
+            return False
+        search = _step(ctx, steps, "microscopic.search_dimer_contacts",
+                       {"source_artifact_id": geom, "partner_artifact_id": geom, "max_candidates": 1, "max_wall_seconds": 600})
+        poses = [a for a in (search or {}).get("reusable_artifacts", []) if ":dimer_" in a]
+        if not poses:
+            return False
+        dimer = poses[0]
+        records = {a.artifact_id: a for a in gw.case_run.artifact_manifest.artifacts}
+    fragments = (records[dimer].metadata or {}).get("fragment_atom_indices")
+    if not (isinstance(fragments, list) and len(fragments) == 2):
+        return False
+    ctx.cache["last_geometry"] = dimer
+    bundle = _step(ctx, steps, "microscopic.run_baseline_bundle",
+                   {"source_artifact_id": dimer, "s1_nstates": int(nstates), "td_tout": TD_TOUT})
+    if not bundle or not bundle["reusable_artifacts"]:
+        return False
+    return _step(ctx, steps, "microscopic.analyze_hole_electron_from_bundle",
+                 {"source_artifact_id": bundle["reusable_artifacts"][0], "state_root": int(state_root), "spatial_grid": "high",
+                  "max_wall_seconds": 900, "fragments": {"molecule_1": fragments[0], "molecule_2": fragments[1]}}) is not None
 
 
 def solvent_polarity(ctx, steps, *, nstates: int = 6, solvents: list | None = None, **_):
@@ -225,7 +252,6 @@ def _neutral(ctx) -> bool:
 RECIPES: dict[str, tuple[Callable, str]] = {
     "excited_states": (excited_states, "Vertical singlet excited states (TDA-aTB1): energies, oscillator strengths, dominant transitions. Args: nstates."),
     "charge_transfer": (charge_transfer, "Excited states + hole-electron analysis of one state: centroid distance, overlap, t-index, optional fragment contributions. Args: state_root, nstates, fragments {name: [0-based atom indices]}."),
-    "bright_dark_states": (bright_dark_states, "Bright/dark state ordering scan at the ground-state geometry. Args: nstates."),
     "torsion_response": (torsion_response, "Rigid torsion scan of one rotatable dihedral with excited-state brightness at each angle. Args: dihedral_id (from list_rotatable_dihedrals; default first), angles, nstates."),
     "spin_states": (spin_states, "Singlet/triplet vertical states (TD-DFTB + PySOC SOC for neutral CHNO; PySCF DF-PBE/TDA otherwise, slow: ~15 min for a metal complex). Args: nstates_per_spin."),
     "redox_levels": (redox_levels, "Vertical ionization potential and electron affinity (IPEA-xTB). No args."),
@@ -233,6 +259,7 @@ RECIPES: dict[str, tuple[Callable, str]] = {
     "dimer_contacts": (dimer_contacts, "Modeled homodimer poses (xTB aISS): contacts and interaction energies. Modeled, not a crystal. Args: max_candidates."),
     "solvent_polarity": (solvent_polarity, "Implicit-solvent excited states in several solvents (polarity response). Args: nstates, solvents."),
     "conformers": (conformers, "CREST conformer sampling; returns atom-mapped conformers. Args: max_members."),
+    "dimer_excited_states": (dimer_excited_states, "Excited states of a modeled dimer (given as source_artifact_id, or found by a dimer search) and a hole-electron analysis with the two molecules as fragments: how much of the hole and electron of one state lies on each molecule and the inter-molecule transfer share. Args: source_artifact_id (a modeled dimer), nstates, state_root."),
 }
 
 
@@ -244,7 +271,6 @@ RECIPE_ARGS: dict[str, dict[str, tuple[str, str]]] = {
     "charge_transfer": {"state_root": (M + "analyze_hole_electron_from_bundle", "state_root"),
                         "nstates": (M + "run_baseline_bundle", "s1_nstates"),
                         "fragments": (M + "analyze_hole_electron_from_bundle", "fragments")},
-    "bright_dark_states": {"nstates": (M + "run_bright_dark_state_ordering", "s1_nstates")},
     "torsion_response": {"dihedral_id": (M + "run_torsion_brightness_coupling_scan", "dihedral_id"),
                          "angles": (M + "run_torsion_brightness_coupling_scan", "angles"),
                          "nstates": (M + "run_torsion_brightness_coupling_scan", "s1_nstates")},
@@ -253,6 +279,8 @@ RECIPE_ARGS: dict[str, dict[str, tuple[str, str]]] = {
     "solvent_polarity": {"nstates": (M + "run_solvation_polarity_proxy", "s1_nstates"),
                          "solvents": (M + "run_solvation_polarity_proxy", "solvents")},
     "conformers": {"max_members": (M + "sample_conformers_crest", "max_members")},
+    "dimer_excited_states": {"nstates": (M + "run_baseline_bundle", "s1_nstates"),
+                             "state_root": (M + "analyze_hole_electron_from_bundle", "state_root")},
 }
 
 

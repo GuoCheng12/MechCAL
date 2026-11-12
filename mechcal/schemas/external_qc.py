@@ -122,6 +122,8 @@ class BroadSpinArgs(QCArgs):
     basis: Literal["def2-svp", "def2-tzvp"] = "def2-svp"
     grid_level: int = Field(default=1, ge=1, le=3)
     scf_solver: Literal["diis", "newton"] = "diis"
+    level_shift: float = Field(default=0.0, ge=0.0, le=1.0,
+        description="SCF level shift in Hartree (0 = off); a convergence aid that does not change the converged result.")
     fragment_atom_indices: list[list[Annotated[int, Field(strict=True, ge=0)]]] = Field(default_factory=list,
         description="Optional disjoint partition of all atoms for Lowdin hole/electron populations. Empty returns per-atom populations.")
 

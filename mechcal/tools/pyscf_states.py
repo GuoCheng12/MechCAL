@@ -27,6 +27,10 @@ def evaluate(job, atoms, args, charge):
     except QCError as exc:
         error = exc
     if not output.exists():
+        log = directory / "process.log"
+        if log.exists() and "SCF did not converge" in log.read_text(errors="replace"):
+            raise QCError("not_converged", "SCF did not converge; no states were computed. Technical options: "
+                          "scf_solver='newton' or a level_shift (e.g. 0.2-0.5 Hartree).") from error
         raise error or QCError("parse_failed", "No state result was produced.")
     raw = json.loads(output.read_text())
     if raw.get("schema_version") != "pyscf_spin_states_v1" or raw.get("request") != request or raw.get("scf_converged") is not True:
@@ -56,6 +60,10 @@ def evaluate(job, atoms, args, charge):
     if raw.get("stability_check_status") != "completed":
         failures.append({"reason":"Reference stability check was not completed; state energies/populations are provisional.","failure_code":"not_converged"})
         raw["interpretation"]=f"Retained {len(rows)} converged spin-free states, but reference stability is not established. Do not treat this as validated triplet behavior."
+    per_spin = {p: sum(r["state"].startswith(p) for r in rows) for p in ("S", "T")}
+    states_complete = all(n >= request["nstates_per_spin"] for n in per_spin.values())
+    raw["completion"] = ("complete" if states_complete and raw.get("stability_check_status") == "completed"
+                         else "states_complete_stability_unverified" if states_complete else "incomplete_states")
     raw["points"] = [dict(status="success", member_id=r["state"]) for r in rows] + [dict(status="failed", **f) for f in failures]
     raw.setdefault("interpretation", f"Retained {len(rows)} converged spin-free states; another calculation did not complete.")
     raw["atom_index_base"] = 0

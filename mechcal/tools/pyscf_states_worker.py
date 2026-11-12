@@ -42,6 +42,8 @@ def calculate(request, output):
     mf.conv_tol_grad = 1e-5
     mf.max_cycle = 80
     mf.chkfile = str(output.with_suffix(".chk"))
+    if request.get("level_shift"):
+        mf.level_shift = float(request["level_shift"])   # convergence aid only; removed from the final orbitals by PySCF
     if request["scf_solver"] == "newton":
         mf = mf.newton()
     mf.kernel()

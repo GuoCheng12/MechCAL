@@ -1,0 +1,579 @@
+{
+ "card_set": "mechcal_agent_tool_cards",
+ "status": "draft_pending_author_review",
+ "drafted": "2026-11-12",
+ "rules": "Cards describe what a tool computes and what can be varied. They never name a mechanism family and never recommend a tool for a purpose.",
+ "tools": {
+  "microscopic.optimize_ground_state_geometry": {
+   "computes": "Ground-state (S0) geometry optimization with the aTB1 tight-binding method (Amesp native optimizer; ASE BFGS fallback).",
+   "you_can_vary": {
+    "max_opt_cycles": "optimizer cycle limit",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "An optimized S0 geometry (prepared_structure), final energy, optimizer used, convergence criterion and every optimizer attempt.",
+   "feeds_into": [
+    "any tool taking a prepared_structure"
+   ],
+   "scope": {
+    "input": "initial_structure (used when the force-field preparation failed)",
+    "closed_shell": true
+   },
+   "does_not_tell": "Not a frequency-verified minimum; one conformer only; gas phase."
+  },
+  "microscopic.list_rotatable_dihedrals": {
+   "computes": "Inventory of rotatable single-bond dihedrals of a structure (graph analysis, no calculation).",
+   "you_can_vary": {},
+   "returns": "Dihedral ids with their four 0-based atom indices, element symbols and central bond.",
+   "feeds_into": [
+    "microscopic.run_torsion_brightness_coupling_scan",
+    "microscopic.compare_contact_torsion_response",
+    "microscopic.run_relaxed_coordinate_scan"
+   ],
+   "scope": {},
+   "does_not_tell": "Nothing about energetics or which rotation matters."
+  },
+  "microscopic.run_baseline_bundle": {
+   "computes": "S0 optimization and vertical singlet excited states with aTB1/TDA (Amesp), gas phase.",
+   "you_can_vary": {
+    "s1_nstates": "number of excited states",
+    "td_tout": "transition output depth (>= 4 needed for hole-electron analysis)"
+   },
+   "returns": "Excitation energies, oscillator strengths and <S^2> of each state, the brightest state, dominant orbital transitions, ground- and excited-state transition dipoles, Mulliken charges; derived per state: radiative rate estimate (Strickler-Berg, gas phase) and gaps to neighbouring states.",
+   "feeds_into": [
+    "microscopic.analyze_hole_electron_from_bundle",
+    "microscopic.extract_geometry_descriptors_from_bundle"
+   ],
+   "scope": {
+    "closed_shell": true
+   },
+   "does_not_tell": "Vertical states at one S0 geometry: no relaxed excited-state geometry, no triplets, no nonradiative rates; the radiative rate is an estimate from one oscillator strength."
+  },
+  "microscopic.run_frontier_orbital_partition": {
+   "computes": "Frontier orbital (HOMO/LUMO and neighbours) energies and their localization on two atom groups you define (aTB1).",
+   "you_can_vary": {
+    "donor_atoms": "0-based atom indices of the first group",
+    "acceptor_atoms": "0-based atom indices of the second group"
+   },
+   "returns": "Orbital energies and the fraction of each frontier orbital on each group.",
+   "feeds_into": [],
+   "scope": {
+    "closed_shell": true
+   },
+   "does_not_tell": "Ground-state orbitals only; not excited-state charge transfer, not a transfer rate or free energy."
+  },
+  "microscopic.run_charge_population_panel": {
+   "computes": "Ground-state atomic charges with up to four population schemes.",
+   "you_can_vary": {
+    "charge_schemes": "subset of Mulliken, Lowdin, Hirshfeld, CM5"
+   },
+   "returns": "Per-atom charges for each scheme.",
+   "feeds_into": [],
+   "scope": {
+    "closed_shell": true
+   },
+   "does_not_tell": "Ground state only; charges are scheme-dependent partitions, not observables."
+  },
+  "microscopic.run_solvation_polarity_proxy": {
+   "computes": "Vertical singlet excited states in several implicit solvents at the same geometry (aTB1/TDA).",
+   "you_can_vary": {
+    "solvents": "2-4 of water, toluene, acetonitrile, methanol, ethanol, benzene, acetone, chloroform",
+    "s1_nstates": "number of excited states",
+    "td_tout": "transition output depth"
+   },
+   "returns": "Per solvent: excitation energies and oscillator strengths; shifts of the first state and of the brightest state between solvents.",
+   "feeds_into": [],
+   "scope": {
+    "closed_shell": true
+   },
+   "does_not_tell": "Fixed geometry (no solvent relaxation), implicit solvent (no specific interactions), no emission spectrum."
+  },
+  "microscopic.run_conformer_bundle": {
+   "computes": "Force-field conformers of the molecule and vertical excited states of each (aTB1/TDA).",
+   "you_can_vary": {
+    "max_members": "number of conformers",
+    "conformer_ids": "specific registered conformers",
+    "s1_nstates": "number of excited states",
+    "td_tout": "transition output depth"
+   },
+   "returns": "Per conformer: geometry, relative energy, excitation energies and oscillator strengths.",
+   "feeds_into": [
+    "microscopic.select_computed_geometry"
+   ],
+   "scope": {
+    "needs_force_field": true,
+    "single_molecule": true
+   },
+   "does_not_tell": "Force-field conformers, not a converged ensemble or populations."
+  },
+  "microscopic.run_torsion_brightness_coupling_scan": {
+   "computes": "Rigid rotation of one dihedral to 2-6 angles; vertical excited states (aTB1/TDA) at each angle.",
+   "you_can_vary": {
+    "dihedral_id": "a dihedral id from list_rotatable_dihedrals",
+    "dihedral_atoms": "or the dihedral as four 0-based atom indices",
+    "angles": "2-6 target angles in degrees",
+    "s1_nstates": "number of excited states",
+    "td_tout": "transition output depth",
+    "max_members": "number of angles"
+   },
+   "returns": "Per angle: S0 relative energy, first excitation energy (vertical S1-S0 gap) and its oscillator strength, S1 energy relative to the S0 minimum of the scan; reusable rotated geometries.",
+   "feeds_into": [
+    "microscopic.select_computed_geometry"
+   ],
+   "scope": {
+    "closed_shell": true
+   },
+   "does_not_tell": "Rigid snapshots: no relaxation of other coordinates, not an excited-state path, no barriers or rates."
+  },
+  "microscopic.run_relaxed_coordinate_scan": {
+   "computes": "Constrained S0 scan of one bond length or dihedral with all other coordinates relaxed (aTB1 forces); vertical states at each point.",
+   "you_can_vary": {
+    "coordinate": "bond or dihedral",
+    "atom_indices": "2 or 4 atom indices",
+    "values": "2-6 target values",
+    "state_root": "0 (ground state; excited-state relaxation is not available)",
+    "s1_nstates": "number of excited states",
+    "td_tout": "transition output depth",
+    "max_opt_cycles": "cycles per point",
+    "fmax_ev_per_angstrom": "force threshold",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Per point: converged geometry, actual coordinate value, S0 energy, vertical excitation energies; reusable geometries.",
+   "feeds_into": [
+    "microscopic.select_computed_geometry"
+   ],
+   "scope": {
+    "elements": [
+     "H",
+     "B",
+     "C",
+     "N",
+     "O",
+     "F",
+     "Si",
+     "S",
+     "Cl",
+     "Br"
+    ],
+    "max_atoms": 80,
+    "closed_shell": true,
+    "charge": "neutral unless the molecule is pure CHNO"
+   },
+   "does_not_tell": "Ground-state relaxation only; not an excited-state path, barrier or rate."
+  },
+  "microscopic.select_computed_geometry": {
+   "computes": "Picks one member (angle, conformer, scan point) from an earlier result as a new input geometry (no calculation).",
+   "you_can_vary": {
+    "member_id": "the member to select"
+   },
+   "returns": "A prepared_structure with the same atom map.",
+   "feeds_into": [
+    "any tool taking a prepared_structure"
+   ],
+   "scope": {},
+   "does_not_tell": "Rigid members are not optimized geometries."
+  },
+  "microscopic.analyze_hole_electron_from_bundle": {
+   "computes": "Hole and electron densities of one excited state from an existing aTB1/TDA result (Multiwfn), without a new quantum calculation.",
+   "you_can_vary": {
+    "state_root": "which excited state",
+    "fragments": "named groups of 0-based atom indices for hole/electron sums",
+    "spatial_grid": "integration grid",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Hole-electron centroid distance, overlap, t-index, per-heavy-atom hole and electron contributions, per-fragment sums.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "H",
+     "B",
+     "C",
+     "N",
+     "O",
+     "F",
+     "Si",
+     "S",
+     "Cl",
+     "Br",
+     "Au"
+    ],
+    "max_atoms": 150,
+    "closed_shell": true,
+    "input": "amesp_baseline_bundle (run_baseline_bundle) with td_tout >= 4"
+   },
+   "does_not_tell": "Unrelaxed vertical densities at one geometry; Mulliken partition; not a transfer rate."
+  },
+  "microscopic.extract_geometry_descriptors_from_bundle": {
+   "computes": "Distances, angles and dihedrals on the geometry of an existing result (no calculation).",
+   "you_can_vary": {
+    "measurements": "lists of 2, 3 or 4 atom indices (distance, angle, dihedral)"
+   },
+   "returns": "The requested measurements, the atom map with coordinates, overall size descriptors.",
+   "feeds_into": [],
+   "scope": {
+    "input": "amesp_baseline_bundle"
+   },
+   "does_not_tell": "Geometry only."
+  },
+  "microscopic.scan_cis_excitation_coordinate": {
+   "computes": "Excited singlet states (RHF/6-31G/CIS, PySCF) at 2-4 fixed values of a bond length (e.g. a proton position) or a dihedral, with state tracking by transition density.",
+   "you_can_vary": {
+    "coordinate": "bond or dihedral",
+    "atom_indices": "2 or 4 atom indices",
+    "values": "2-4 fixed values",
+    "state_root": "which of the three lowest singlets to follow",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Per point: S0 energy, singlet excitation energies and strengths, which state is followed, ambiguity flags.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "C",
+     "H",
+     "N",
+     "O"
+    ],
+    "max_atoms": 40,
+    "charge": "neutral",
+    "closed_shell": true,
+    "single_molecule": true
+   },
+   "does_not_tell": "Fixed (not relaxed) points at a low level of theory; not barriers, conical intersections or rates."
+  },
+  "microscopic.evaluate_cis_s1_gradient": {
+   "computes": "S0 and S1 forces at the same geometry (RHF/6-31G/CIS, PySCF) and their difference.",
+   "you_can_vary": {
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Per-atom S0 and S1 forces and the change on excitation (which atoms are pushed where in S1).",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "C",
+     "H",
+     "N",
+     "O"
+    ],
+    "max_atoms": 40,
+    "charge": "neutral",
+    "closed_shell": true,
+    "single_molecule": true
+   },
+   "does_not_tell": "Local forces at one geometry; not a relaxed S1 geometry, path or rate."
+  },
+  "microscopic.evaluate_excited_state_gradient": {
+   "computes": "Energy and Cartesian forces of one excited singlet with TD-DFTB.",
+   "you_can_vary": {
+    "state_root": "which singlet",
+    "nstates": "number of states solved",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Excited-state energy and per-atom forces.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "C",
+     "H",
+     "N",
+     "O"
+    ],
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "One geometry; no relaxation or path."
+  },
+  "microscopic.compare_singlet_triplet_states": {
+   "computes": "Vertical singlet and triplet states at one geometry with TD-DFTB (mio-1-1).",
+   "you_can_vary": {
+    "nstates_per_spin": "states per spin manifold (>= 3)",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Singlet and triplet energies, singlet oscillator strengths, all singlet-triplet gaps.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "C",
+     "H",
+     "N",
+     "O"
+    ],
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "No spin-orbit coupling, intersystem crossing rate or triplet yield."
+  },
+  "microscopic.evaluate_spin_orbit_couplings": {
+   "computes": "Spin-orbit coupling magnitudes between S0-S3 and T1-T3 at one geometry (TD-DFTB + PySOC).",
+   "you_can_vary": {
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Coupling magnitudes (cm-1) for each singlet-triplet pair with the state energies.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "C",
+     "H",
+     "N",
+     "O"
+    ],
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "Not rates or yields; light elements only."
+  },
+  "microscopic.compare_spin_states_pyscf": {
+   "computes": "Vertical singlet and triplet states at one geometry with DFT (PBE or PBE0) / TDA (PySCF), def2 basis, scalar relativistic ECP for heavy atoms, with a reference-stability check.",
+   "you_can_vary": {
+    "functional": "pbe or pbe0",
+    "basis": "def2-svp or def2-tzvp",
+    "nstates_per_spin": "states per spin manifold",
+    "fragment_atom_indices": "partition of all atoms for hole/electron populations",
+    "grid_level": "integration grid",
+    "scf_solver": "diis or newton",
+    "level_shift": "SCF level shift (Hartree)",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Singlet and triplet energies, singlet oscillator strengths, singlet-triplet gaps, hole/electron populations per atom or fragment, SCF and stability status.",
+   "feeds_into": [],
+   "scope": {
+    "elements": [
+     "H",
+     "B",
+     "C",
+     "N",
+     "O",
+     "F",
+     "Si",
+     "S",
+     "Cl",
+     "Br",
+     "Fe",
+     "Au"
+    ],
+    "max_atoms": 150,
+    "charge": [
+     -2,
+     2
+    ],
+    "closed_shell": true
+   },
+   "does_not_tell": "No spin-orbit coupling, intersystem crossing rate or triplet yield; one geometry; expensive for heavy atoms."
+  },
+  "microscopic.estimate_vertical_ip_ea": {
+   "computes": "Vertical ionization potential and electron affinity (IPEA-xTB) on an xTB-optimized geometry.",
+   "you_can_vary": {
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Vertical IP and EA in eV.",
+   "feeds_into": [],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "Whole-molecule values; not fragment levels, transfer free energies or rates."
+  },
+  "microscopic.analyze_ground_state_vibrations": {
+   "computes": "Ground-state optimization and harmonic vibrational modes (GFN2-xTB).",
+   "you_can_vary": {
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Frequencies, atom-resolved displacements of each mode, low-frequency and imaginary modes.",
+   "feeds_into": [],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "Ground-state modes only; not excited-state displacements, couplings or nonradiative rates."
+  },
+  "microscopic.sample_conformers_crest": {
+   "computes": "Conformer search with CREST/GFN2-xTB metadynamics.",
+   "you_can_vary": {
+    "max_members": "conformers returned",
+    "energy_window_kcal_mol": "energy window",
+    "search_level": "quick or squick",
+    "md_length_ps": "metadynamics length",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Atom-mapped conformer geometries with relative energies.",
+   "feeds_into": [
+    "any tool taking a prepared_structure"
+   ],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true,
+    "single_molecule": true
+   },
+   "does_not_tell": "Non-exhaustive search; gas phase."
+  },
+  "microscopic.search_dimer_contacts": {
+   "computes": "Search for optimized two-molecule arrangements (aISS docking + GFN2-xTB).",
+   "you_can_vary": {
+    "partner_artifact_id": "the second molecule (same id for a homodimer)",
+    "max_candidates": "number of poses (1-4)",
+    "max_opt_cycles": "optimization cycles per pose",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Per pose: interaction energy, closest intermolecular contacts, and a registered dimer geometry.",
+   "feeds_into": [
+    "microscopic.run_baseline_bundle",
+    "microscopic.compare_contact_torsion_response",
+    "microscopic.scan_intermolecular_distance"
+   ],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true
+   },
+   "does_not_tell": "Modeled gas-phase dimers, not observed crystal packing or a bulk environment."
+  },
+  "microscopic.compare_contact_torsion_response": {
+   "computes": "The same rigid rotation of one bond (or fragment) inside a modeled dimer and in the isolated molecule (GFN2-xTB), separating the monomer's own strain from the change in contact interaction.",
+   "you_can_vary": {
+    "coordinate_mode": "bonded_dihedral or fragment_azimuth",
+    "atom_indices": "4 atom indices in the first molecule",
+    "angles_degrees": "2-6 angles",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Energy versus angle in the dimer and isolated, the contact-interaction change, closest contacts; reusable rotated dimer geometries.",
+   "feeds_into": [
+    "microscopic.run_baseline_bundle"
+   ],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true,
+    "input": "a modeled dimer from search_dimer_contacts"
+   },
+   "does_not_tell": "Rigid responses in one modeled pose; not a relaxed barrier, an observed packing or a rate."
+  },
+  "microscopic.scan_intermolecular_distance": {
+   "computes": "Rigid translation of one molecule of a modeled dimer along an atom-pair separation (GFN2-xTB).",
+   "you_can_vary": {
+    "atom_indices": "one atom in each molecule",
+    "distances_angstrom": "2-6 separations",
+    "max_wall_seconds": "time limit"
+   },
+   "returns": "Energy and contacts at each separation; reusable dimer geometries.",
+   "feeds_into": [
+    "microscopic.run_baseline_bundle"
+   ],
+   "scope": {
+    "charge": "neutral",
+    "closed_shell": true,
+    "input": "a modeled dimer from search_dimer_contacts"
+   },
+   "does_not_tell": "Not a relaxed path or a crystal; no excited states by itself."
+  }
+ },
+ "recipes": {
+  "excited_states": {
+   "combines": [
+    "microscopic.optimize_ground_state_geometry (if needed)",
+    "microscopic.run_baseline_bundle"
+   ],
+   "requires_any": [
+    [
+     "microscopic.run_baseline_bundle"
+    ]
+   ]
+  },
+  "charge_transfer": {
+   "combines": [
+    "microscopic.run_baseline_bundle",
+    "microscopic.analyze_hole_electron_from_bundle"
+   ],
+   "requires_any": [
+    [
+     "microscopic.run_baseline_bundle",
+     "microscopic.analyze_hole_electron_from_bundle"
+    ]
+   ]
+  },
+  "torsion_response": {
+   "combines": [
+    "microscopic.list_rotatable_dihedrals",
+    "microscopic.run_torsion_brightness_coupling_scan"
+   ],
+   "requires_any": [
+    [
+     "microscopic.run_torsion_brightness_coupling_scan"
+    ]
+   ]
+  },
+  "spin_states": {
+   "combines": [
+    "microscopic.compare_singlet_triplet_states + microscopic.evaluate_spin_orbit_couplings (neutral CHNO)",
+    "or microscopic.compare_spin_states_pyscf (other molecules)"
+   ],
+   "requires_any": [
+    [
+     "microscopic.compare_singlet_triplet_states",
+     "microscopic.evaluate_spin_orbit_couplings"
+    ],
+    [
+     "microscopic.compare_spin_states_pyscf"
+    ]
+   ]
+  },
+  "redox_levels": {
+   "combines": [
+    "microscopic.estimate_vertical_ip_ea"
+   ],
+   "requires_any": [
+    [
+     "microscopic.estimate_vertical_ip_ea"
+    ]
+   ]
+  },
+  "vibrations": {
+   "combines": [
+    "microscopic.analyze_ground_state_vibrations"
+   ],
+   "requires_any": [
+    [
+     "microscopic.analyze_ground_state_vibrations"
+    ]
+   ]
+  },
+  "dimer_contacts": {
+   "combines": [
+    "microscopic.search_dimer_contacts"
+   ],
+   "requires_any": [
+    [
+     "microscopic.search_dimer_contacts"
+    ]
+   ]
+  },
+  "solvent_polarity": {
+   "combines": [
+    "microscopic.run_solvation_polarity_proxy"
+   ],
+   "requires_any": [
+    [
+     "microscopic.run_solvation_polarity_proxy"
+    ]
+   ]
+  },
+  "conformers": {
+   "combines": [
+    "microscopic.sample_conformers_crest"
+   ],
+   "requires_any": [
+    [
+     "microscopic.sample_conformers_crest"
+    ]
+   ]
+  },
+  "dimer_excited_states": {
+   "combines": [
+    "microscopic.run_baseline_bundle on a modeled dimer",
+    "microscopic.analyze_hole_electron_from_bundle with the two molecules as fragments"
+   ],
+   "requires_any": [
+    [
+     "microscopic.search_dimer_contacts",
+     "microscopic.run_baseline_bundle",
+     "microscopic.analyze_hole_electron_from_bundle"
+    ]
+   ]
+  }
+ }
+}

@@ -104,6 +104,22 @@ class DirectSubject:
         self.client, self.max_repairs = client, max_repairs
         self.system = load_eval_prompt(INSTRUCTIONS) + "\n\nNo tools are available in this setting; use structural and prior claims only."
 
+    def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
+        """The same capability cards as the MechCAL agent (same tools, text, applicability and cost)."""
+        from mechcal.agent import cards as cardlib
+        from mechcal.agent.costs import CostModel
+        from mechcal.agent.facts import structural_facts
+        from mechcal.agent.supervision import ARG_CLASS
+        entries = cardlib.tool_entries(gateway)
+        self._entries = {e["tool"]: e for e in entries}
+        facts = structural_facts(smiles)
+        kind = next(a.kind for a in gateway.case_run.artifact_manifest.artifacts if a.artifact_id == gateway.prepared_artifact_id)
+        costs = CostModel(int(facts["summary"]["atoms_with_h"]), smiles=smiles)
+        cost = lambda tool: {"cost": costs.estimate(tool, {k: v["default"] for k, v in self._entries[tool]["args"].items()
+                                                           if "default" in v})}
+        return cardlib.catalog(entries, cardlib.molecule_profile(facts, kind), ARG_CLASS,
+                               {a.kind for a in gateway.case_run.artifact_manifest.artifacts}, cost=cost)
+
     def run(self, case_id: str, smiles: str) -> SubjectResult:
         usage, transcript, feedback = UsageLedger(), [], None
         for _ in range(self.max_repairs + 1):
@@ -124,7 +140,7 @@ class DirectSubject:
 REACT_PROTOCOL = """
 
 You may use tools before submitting. Reply with exactly one JSON action per turn:
-- {"action": "describe_tools", "tools": ["<tool id>", ...]}  -> full argument schemas
+- {"action": "describe_tools", "tools": ["<tool id>", ...]}  -> full argument specifications
 - {"action": "call_tool", "tool": "<tool id>", "args": {...}}  -> runs a calculation
 - {"action": "read_artifact", "artifact_id": "T001", "pointer": "/..."}  -> exact value lookup
 - {"action": "submit", "mechanism_predictions": [...]}  -> final answer, ends the episode
@@ -144,12 +160,28 @@ class ReactSubject:
         self.max_model_calls, self.max_tool_calls = max_model_calls, max_tool_calls
         self.system = load_eval_prompt(INSTRUCTIONS) + REACT_PROTOCOL
 
+    def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
+        """The same capability cards as the MechCAL agent (same tools, text, applicability and cost)."""
+        from mechcal.agent import cards as cardlib
+        from mechcal.agent.costs import CostModel
+        from mechcal.agent.facts import structural_facts
+        from mechcal.agent.supervision import ARG_CLASS
+        entries = cardlib.tool_entries(gateway)
+        self._entries = {e["tool"]: e for e in entries}
+        facts = structural_facts(smiles)
+        kind = next(a.kind for a in gateway.case_run.artifact_manifest.artifacts if a.artifact_id == gateway.prepared_artifact_id)
+        costs = CostModel(int(facts["summary"]["atoms_with_h"]), smiles=smiles)
+        cost = lambda tool: {"cost": costs.estimate(tool, {k: v["default"] for k, v in self._entries[tool]["args"].items()
+                                                           if "default" in v})}
+        return cardlib.catalog(entries, cardlib.molecule_profile(facts, kind), ARG_CLASS,
+                               {a.kind for a in gateway.case_run.artifact_manifest.artifacts}, cost=cost)
+
     def run(self, case_id: str, smiles: str) -> SubjectResult:
         gateway = self.gateway_factory(case_id, smiles)
         gateway.max_calls = self.max_tool_calls
         usage, history, error = UsageLedger(), [], None
         base = {**_task_payload(smiles), "prepared_structure_artifact_id": gateway.prepared_artifact_id,
-                "tool_catalog": gateway.catalog(), "tool_call_budget": self.max_tool_calls}
+                "tool_catalog": self._catalog(gateway, smiles), "tool_call_budget": self.max_tool_calls}
         for step in range(1, self.max_model_calls + 1):
             payload = {**base, "history": history,
                        "tool_calls_used": gateway.executed_calls(),
@@ -170,10 +202,10 @@ class ReactSubject:
             if kind == "call_tool":
                 observation = gateway.call(str(action.get("tool", "")), action.get("args") or {})
             elif kind == "describe_tools":
-                try:
-                    observation = {"status": "ok", "tools": gateway.describe(list(action.get("tools") or []))}
-                except KeyError as exc:
-                    observation = {"status": "rejected", "error": str(exc)}
+                wanted = [str(t) for t in action.get("tools") or []]
+                unknown = [t for t in wanted if t not in self._entries]
+                observation = ({"status": "rejected", "error": f"Unknown or unavailable tools: {unknown}"} if unknown else
+                               {"status": "ok", "tools": {t: self._entries[t]["args"] for t in wanted}})
             elif kind == "read_artifact":
                 observation = gateway.read(str(action.get("artifact_id", "")), str(action.get("pointer", "")))
             else:

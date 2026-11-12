@@ -12,6 +12,7 @@ from mechcal.eval.tool_gateway import ToolGateway, numeric_leaves
 
 SMILES = "CN(C)c1ccc(cc1)C#N"
 DA_TOOL = "macro.screen_donor_acceptor_layout"
+DIH = "microscopic.list_rotatable_dihedrals"
 
 
 @dataclass
@@ -111,28 +112,32 @@ def test_gateway_wall_budget_clamps_and_stops(tmp_path):
 def test_react_end_to_end_citation_is_grounded(gateway_factory, tmp_path):
     def submit_with_citation(payload):
         obs = payload["history"][-1]["observation"]
-        pointer = "/structured_results/metrics/donor_acceptor_proxy"
+        pointer = "/structured_results/parsed_observables/candidate_count"
         assert pointer in obs["values"]
         value = obs["values"][pointer]
-        claim = {"statement": f"The donor-acceptor proxy is {value:g}.", "kind": "computed",
-                 "quantities": [{"name": "da_proxy", "value": value, "unit": "",
+        claim = {"statement": f"The structure has {value:g} rotatable dihedral candidates.", "kind": "computed",
+                 "quantities": [{"name": "dihedrals", "value": value, "unit": "",
                                  "source": {"artifact_id": obs["artifact_id"], "pointer": pointer}}]}
         return Reply({"action": "submit", **preds([claim, *STRUCTURAL])})
 
-    client = Scripted({"action": "describe_tools", "tools": [DA_TOOL]},
-                      {"action": "call_tool", "tool": DA_TOOL, "args": {}},
+    client = Scripted({"action": "describe_tools", "tools": [DIH]},
+                      {"action": "call_tool", "tool": DIH, "args": {}},
                       submit_with_citation)
     result = ReactSubject(client, gateway_factory, max_model_calls=5, max_tool_calls=3).run("CASE", SMILES)
     assert result.status == "submitted" and result.tool_cost["tool_calls"] == 1
     check = check_submission(result.submission, result.store, SMILES)
     assert check.predictions[0].claims[0].outcome == "grounded" and check.fabrication_rate == 0.0
-    assert client.payloads[0]["payload"]["tool_catalog"] and not client.payloads[0]["payload"]["must_submit_now"]
+    catalog = {c["tool"]: c for c in client.payloads[0]["payload"]["tool_catalog"]}
+    assert DIH in catalog and "computes" in catalog[DIH] and not client.payloads[0]["payload"]["must_submit_now"]
+    assert not any(t.startswith("macro.") for t in catalog)          # same carded tools as the MechCAL agent
     path = save_result(result, tmp_path / "out")
     assert path.exists() and (tmp_path / "out/artifacts.json").exists()
 
 
 def test_react_forces_submission_and_reports_exhaustion(gateway_factory):
-    client = Scripted(*[{"action": "call_tool", "tool": DA_TOOL, "args": {}}] * 3)
+    client = Scripted({"action": "call_tool", "tool": DIH, "args": {}},
+                      {"action": "call_tool", "tool": DIH, "args": {"source_artifact_id": "structure:prepared"}},
+                      {"action": "call_tool", "tool": DIH, "args": {}})
     result = ReactSubject(client, gateway_factory, max_model_calls=3, max_tool_calls=1).run("CASE", SMILES)
     assert result.status == "no_valid_submission" and result.submission is None
     assert client.payloads[1]["payload"]["must_submit_now"] is True   # tool budget used up

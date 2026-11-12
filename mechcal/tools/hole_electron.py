@@ -15,6 +15,7 @@ import shutil
 import subprocess
 import time
 
+from mechcal.tools.derived_descriptors import fragment_pair
 from mechcal.tools.amesp_baseline import _parse_final_geometry
 from mechcal.tools.amesp_transitions import NUMBER, parse_transitions
 from mechcal.chem.validated_scopes import SPATIAL_ELEMENTS, SPATIAL_MAX_ATOMS, SPATIAL_SCOPE
@@ -297,7 +298,8 @@ def run_spatial(bundle, out, state_root=1, spatial_grid="high", max_wall_seconds
             "atom_index_base": 0, "atom_mapping_scope": "selected calculation geometry, not canonical SMILES order",
             "geometry": [{"atom_index": i, "element": s, "xyz_angstrom": c} for i, (s, c) in enumerate(zip(symbols, xyz))],
             "heavy_atom_contributions": atoms, "partition": "Mulliken", "hydrogens_omitted_from_contribution_table": True,
-            "fragment_contributions": fragment_contributions(atoms, symbols, fragments),
+            "fragment_contributions": (groups := fragment_contributions(atoms, symbols, fragments)),
+            **({"fragment_pair": pair} if (pair := fragment_pair(groups)) else {}),
             "coefficient_squared_sum": norm, "coefficient_count": len(coeff), "source_sha256": hashes,
             "grid": spatial_grid, "cross_term_threshold": .001, "postprocessor_threads": threads, "elapsed_seconds": time.monotonic() - started,
             "postprocessor_banner": log.splitlines()[:12], "new_quantum_calculations": 0,
