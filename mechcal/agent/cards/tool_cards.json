@@ -180,7 +180,7 @@
     "spatial_grid": "integration grid",
     "max_wall_seconds": "time limit"
    },
-   "returns": "Hole-electron centroid distance, overlap, t-index, per-heavy-atom hole and electron contributions, per-fragment sums.",
+   "returns": "Hole-electron centroid distance, overlap, t-index, per-heavy-atom hole and electron contributions, per-fragment sums; for two fragments: the net charge moved between them and the share of hole-electron pairs on different fragments (an even spread over two identical fragments gives about 50 % of the latter with no net charge moved).",
    "feeds_into": [],
    "scope": {
     "elements": [
@@ -564,8 +564,8 @@
   },
   "dimer_excited_states": {
    "combines": [
-    "microscopic.run_baseline_bundle on a modeled dimer",
-    "microscopic.analyze_hole_electron_from_bundle with the two molecules as fragments"
+    "microscopic.run_baseline_bundle on a modeled dimer (re-optimized with aTB1 inside the bundle)",
+    "microscopic.analyze_hole_electron_from_bundle with the two molecules as fragments (net charge moved between molecules, and how the state is shared)"
    ],
    "requires_any": [
     [

@@ -52,10 +52,12 @@ def torsion_profile(route_records: list[dict]) -> list[dict]:
 
 
 def fragment_pair(fragments: list[dict]) -> dict | None:
-    """For exactly two fragments: where the hole and the electron are, and the inter-fragment transfer share.
+    """For exactly two fragments: where the hole and the electron are, and how much charge moves.
 
-    transfer_percent = (h1 e2 + h2 e1) / 100 with h, e the fragment hole/electron percentages: the
-    share of hole-electron pairs with hole and electron on different fragments (heavy atoms only).
+    IFCT approximation (as in Multiwfn): hole and electron are treated as independent, so the share of
+    pairs on different fragments is (h1 e2 + h2 e1) / 100. An excitation spread evenly over two identical
+    molecules gives ~50 % with no charge moving; the net transfer (h1 e2 - h2 e1) / 100 measures charge
+    actually moved from the first to the second fragment (0 for an even spread, ~100 for full transfer).
     """
     if len(fragments) != 2:
         return None
@@ -65,4 +67,8 @@ def fragment_pair(fragments: list[dict]) -> dict | None:
             "hole_percent": {a["name"]: h1, b["name"]: h2}, "electron_percent": {a["name"]: e1, b["name"]: e2},
             "transfer_first_to_second_percent": h1 * e2 / 100.0, "transfer_second_to_first_percent": h2 * e1 / 100.0,
             "inter_fragment_transfer_percent": (h1 * e2 + h2 * e1) / 100.0,
-            "definition": "share of hole-electron pairs with hole and electron on different fragments (heavy atoms)"}
+            "net_transfer_first_to_second_percent": (h1 * e2 - h2 * e1) / 100.0,
+            "same_fragment_percent": (h1 * e1 + h2 * e2) / 100.0,
+            "definition": ("IFCT approximation (hole and electron independent, heavy atoms): inter_fragment_transfer_percent "
+                           "is ~50 for an excitation spread evenly over two identical fragments even though no charge "
+                           "moves; net_transfer_first_to_second_percent is the charge actually moved (0 = even spread).")}
