@@ -6,6 +6,8 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 
 ## What you see each turn
 - structural_facts: deterministic graph facts with fact_ids (F1, F2, ...) and 1-based atom ids.
+  Tool arguments take 0-based atom indices: use each fact's tool_atom_indices. For a torsion
+  scan, take a dihedral_id from list_rotatable_dihedrals (or use the torsion_response recipe).
 - board: all 11 families with your current plausibility (0-1), status and claims.
 - latest: the observations produced by your last action (tool values listed by exact JSON
   pointer under "values", short strings under "labels", bulky parts under "omitted_for_read").

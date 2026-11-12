@@ -208,6 +208,26 @@ RECIPES: dict[str, tuple[Callable, str]] = {
 }
 
 
+M = "microscopic."
+# Recipe argument -> (tool, tool argument) it is passed to; recipe cards show that argument's
+# allowed type/range/enum from the tool schema, so models do not guess (e.g. unsupported solvents).
+RECIPE_ARGS: dict[str, dict[str, tuple[str, str]]] = {
+    "excited_states": {"nstates": (M + "run_baseline_bundle", "s1_nstates")},
+    "charge_transfer": {"state_root": (M + "analyze_hole_electron_from_bundle", "state_root"),
+                        "nstates": (M + "run_baseline_bundle", "s1_nstates"),
+                        "fragments": (M + "analyze_hole_electron_from_bundle", "fragments")},
+    "bright_dark_states": {"nstates": (M + "run_bright_dark_state_ordering", "s1_nstates")},
+    "torsion_response": {"dihedral_id": (M + "run_torsion_brightness_coupling_scan", "dihedral_id"),
+                         "angles": (M + "run_torsion_brightness_coupling_scan", "angles"),
+                         "nstates": (M + "run_torsion_brightness_coupling_scan", "s1_nstates")},
+    "spin_states": {"nstates_per_spin": (M + "compare_spin_states_pyscf", "nstates_per_spin")},
+    "dimer_contacts": {"max_candidates": (M + "search_dimer_contacts", "max_candidates")},
+    "solvent_polarity": {"nstates": (M + "run_solvation_polarity_proxy", "s1_nstates"),
+                         "solvents": (M + "run_solvation_polarity_proxy", "solvents")},
+    "conformers": {"max_members": (M + "sample_conformers_crest", "max_members")},
+}
+
+
 def run_recipe(ctx: RecipeContext, name: str, args: dict | None = None) -> RecipeResult:
     if name not in RECIPES:
         return RecipeResult(name, "rejected", [], f"Unknown recipe; choose one of {sorted(RECIPES)}")

@@ -81,6 +81,7 @@ def structural_facts(smiles: str) -> dict:
 
     def add(kind: str, text: str, atoms: list[int], assertion: dict | None = None):
         facts.append({"fact_id": f"F{len(facts) + 1}", "kind": kind, "text": text, "atom_ids": atoms,
+                      "tool_atom_indices": [i - 1 for i in atoms],
                       **({"assertion": assertion} if assertion else {})})
 
     symbols = sorted({a.GetSymbol() for a in mol.GetAtoms()})
@@ -190,7 +191,9 @@ def structural_facts(smiles: str) -> dict:
         break
     return {"source": "rdkit_deterministic", "rdkit_version": Chem.rdBase.rdkitVersion, "smiles": smiles,
             "mapped_smiles": _mapped(mol), "summary": summary, "facts": facts,
-            "scope": "Graph facts only: no geometry, excited states, packing or measurements."}
+            "scope": "Graph facts only: no geometry, excited states, packing or measurements.",
+            "atom_numbering": ("atom_ids are 1-based (as in mapped_smiles and in claims); tool arguments that take "
+                               "atom indices (fragments, dihedral_atoms, ...) are 0-based: use tool_atom_indices.")}
 
 
 def _mapped(mol) -> str:

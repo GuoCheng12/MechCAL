@@ -23,6 +23,7 @@ Each claim's "label" must be one of the 11 family labels in family_labels (usual
 families the task separates); attach a finding to the family it bears on. Use source_artifact_id
 values from reusable_artifacts (an optimized geometry is a prepared_structure; hole-electron
 analysis needs an amesp_baseline_bundle); do not re-run a calculation whose result already exists.
+Tool arguments take 0-based atom indices (each fact's tool_atom_indices); claims use 1-based atom_ids.
 Respect each tool argument's minimum/maximum/enum. Claims use the Planner's format: {"label", "statement", "kind": "computed"|"structural"|"prior",
 "fact_ids", "atom_ids", "quantities": [{"name", "value", "unit", "artifact_id", "pointer",
 "source_unit"}]}. Every number in a computed statement must be in quantities with the exact

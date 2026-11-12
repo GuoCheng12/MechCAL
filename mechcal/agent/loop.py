@@ -17,7 +17,7 @@ from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_valida
 
 from mechcal.agent.board import Board, ClaimIn, Status
 from mechcal.agent.facts import structural_facts
-from mechcal.agent.recipes import RECIPES, RecipeContext, run_recipe
+from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
 from mechcal.eval.grounding import ELIGIBLE, check_submission
 from mechcal.eval.grounded_subjects import UsageLedger
 from mechcal.eval.tool_gateway import ToolGateway
@@ -330,6 +330,9 @@ class AgentRun:
             for k, v in props.items():
                 spec = {key: v[key] for key in ("type", "default", "minimum", "maximum", "enum", "minItems", "maxItems")
                         if key in v and v[key] is not None}
+                items = v.get("items") or next((x.get("items") for x in v.get("anyOf", []) if x.get("items")), None)
+                if isinstance(items, dict) and items.get("enum"):
+                    spec["items_enum"] = items["enum"]
                 if not spec.get("type") and v.get("anyOf"):
                     spec["type"] = "|".join(str(x.get("type")) for x in v["anyOf"] if x.get("type"))
                 args[k] = spec
@@ -343,7 +346,14 @@ class AgentRun:
                 for a in self.gateway.case_run.artifact_manifest.artifacts]
 
     def _recipe_cards(self) -> list[dict]:
-        return [{"recipe": n, "description": d} for n, (_, d) in RECIPES.items()] if self.cfg.recipes else []
+        if not self.cfg.recipes:
+            return []
+        specs = {c["tool"]: c["args"] for c in self.tool_cards}
+        cards = []
+        for name, (_, desc) in RECIPES.items():
+            args = {arg: specs.get(tool, {}).get(targ, {}) for arg, (tool, targ) in RECIPE_ARGS.get(name, {}).items()}
+            cards.append({"recipe": name, "description": desc, **({"args": args} if args else {})})
+        return cards
 
     # -- model calls
     response_mode = "json_schema"

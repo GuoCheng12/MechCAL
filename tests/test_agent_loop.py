@@ -64,6 +64,20 @@ def test_claim_ids_are_not_reused_after_drop():
     assert len({first, second, third}) == 3 and [c.claim_id for c in board.claims] == [second, third]
 
 
+def test_recipe_cards_carry_tool_argument_limits(tmp_path):
+    from mechcal.agent.recipes import RECIPE_ARGS, RECIPES
+    run = AgentRun(ByRole([]), case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False)
+    tools = {c["tool"]: c["args"] for c in run.tool_cards}
+    for recipe, mapping in RECIPE_ARGS.items():
+        assert recipe in RECIPES
+        for tool, arg in mapping.values():
+            if tool in tools:                       # external-QC tools register only with MECHCAL_QC_CONFIG
+                assert arg in tools[tool], (recipe, tool, arg)
+    cards = {c["recipe"]: c for c in run._recipe_cards()}
+    assert "acetonitrile" in cards["solvent_polarity"]["args"]["solvents"]["items_enum"]
+    assert "maximum" in cards["excited_states"]["args"]["nstates"]
+
+
 def test_action_requires_contrast():
     with pytest.raises(Exception):
         PlannerStep.model_validate({"action": {"type": "tool", "name": DIH_TOOL, "separates": ["RIM_RIR_RIV"], "expectation": "x"}})
