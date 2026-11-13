@@ -6,7 +6,10 @@ For each graded run with a submission, the rank-1 prediction is perturbed by eve
 mechcal.eval.perturb (tamper a cited value, tamper the written number, swap in another molecule's
 artifacts, flip the conclusion, strip artifacts, inject fake citations, plus paraphrase and reorder
 controls) and re-scored by Layer A + the evidence judge. A reliable score drops for the damaging
-operators and stays for the controls. Writes per-run results and a summary per input directory.
+operators and stays for the controls. Because a family usually rests on several claims, damaging
+one claim need not change the family's score; the summary therefore also reports, per operator,
+the share of changed claims that grounding or the judge flagged (claim_detection_rate). Writes
+per-run results and a summary per input directory.
 """
 
 from __future__ import annotations
@@ -48,8 +51,10 @@ def main() -> None:
     judge = EvidenceJudge(JudgeClientAdapter(OpenAIJsonClient(judge_settings())))
 
     def scorer(submission, store, smiles):          # judge the rank-1 prediction only (cost)
-        first = judge.judge(submission.mechanism_predictions[0], store, smiles)["score"] or 0.0
-        return [first] + [0.0] * (len(submission.mechanism_predictions) - 1)
+        out = judge.judge(submission.mechanism_predictions[0], store, smiles)
+        verdicts = {int(v["claim_id"][1:]) - 1: v.get("outcome") for v in (out.get("judgement") or {}).get("verifications", [])
+                    if str(v.get("claim_id", "")).startswith("C") and str(v["claim_id"][1:]).isdigit()}
+        return [(out["score"] or 0.0, verdicts)] + [0.0] * (len(submission.mechanism_predictions) - 1)
 
     args.out.mkdir(parents=True, exist_ok=True)
     summary = {"judge": describe(judge_settings())}

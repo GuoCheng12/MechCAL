@@ -16,10 +16,12 @@ from typing import Callable, Literal, Sequence
 from mechcal.eval.submission import (
     ArtifactStore, EvidenceClaim, Quantity, QuantitySource, Submission, resolve_pointer,
 )
-from mechcal.eval.grounding import close, statement_numbers
+from mechcal.eval.grounding import ELIGIBLE, check_submission, close, statement_numbers
 
 Expected = Literal["decrease", "no_increase", "no_change"]
-Scorer = Callable[[Submission, ArtifactStore, str], Sequence[float]]
+# A scorer returns one value per prediction: a score, or (score, {claim index: judge verdict}).
+Scorer = Callable[[Submission, ArtifactStore, str], Sequence[float | tuple[float, dict[int, str]]]]
+FLAGGED_VERDICTS = {"contradicted", "beyond_source"}
 
 _FLIPS = [
     ("bright", "dark"), ("increases", "decreases"), ("increase", "decrease"), ("higher", "lower"),
@@ -38,6 +40,7 @@ class Perturbation:
     submission: Submission
     store: ArtifactStore
     note: str = ""
+    targets: list[int] = field(default_factory=list)   # indices of the claims this operator changed or added
 
 
 @dataclass
@@ -49,6 +52,8 @@ class PerturbationResult:
     base: float
     perturbed: float
     note: str = ""
+    targets: list[int] = field(default_factory=list)
+    detected: list[int] = field(default_factory=list)  # targets flagged by grounding (Layer A) or by the judge
     delta: float = field(init=False)
 
     def __post_init__(self):
@@ -82,10 +87,13 @@ def _format_like(value: float, written: str) -> str:
 
 
 def _replace_number(statement: str, old_value: float, new_value: float) -> str | None:
-    for written in statement_numbers(statement):
-        if close(old_value, float(written), written):
-            return statement.replace(written, _format_like(new_value, written), 1)
-    return None
+    """Rewrite the written number that is this value (the closest match, as a whole token)."""
+    matches = [w for w in statement_numbers(statement) if close(old_value, float(w), w)]
+    if not matches:
+        return None
+    written = min(matches, key=lambda w: (abs(float(w) - old_value), -len(w)))   # "3.3313" before "3"
+    pattern = re.compile(rf"(?<![\d.]){re.escape(written)}(?![\d])")
+    return pattern.sub(_format_like(new_value, written), statement, count=1)
 
 
 def _sourced(submission: Submission, rank: int):
@@ -108,14 +116,14 @@ def tamper_value(submission, store, rank, *, factor: float = 10.0, statement_onl
             q.value = new
         mode = "statement_only" if statement_only else "consistent"
         return Perturbation("tamper_value" + ("_text" if statement_only else ""), rank, "decrease", sub, st,
-                            f"claim {ci} quantity {q.name} x{factor} ({mode})")
+                            f"claim {ci} quantity {q.name} x{factor} ({mode})", targets=[ci])
     return None
 
 
 def swap_molecule(submission, store, rank, donor: ArtifactStore):
     """Cite another molecule's artifacts from the same tool, with text matching the donor values."""
     sub, st = _copy(submission, store)
-    swapped = 0
+    swapped, targets = 0, set()
     for ci, qi, claim, q in _sourced(sub, rank):
         own = store.artifacts.get(q.source.artifact_id)
         if own is None:
@@ -135,27 +143,31 @@ def swap_molecule(submission, store, rank, donor: ArtifactStore):
             claim.statement, q.value = text, value
             q.source = QuantitySource(artifact_id=new_id, pointer=q.source.pointer, unit=q.source.unit)
             swapped += 1
+            targets.add(ci)
             break
     if not swapped:
         return None
-    return Perturbation("swap_molecule", rank, "decrease", sub, st, f"{swapped} quantities from {donor.case_id}")
+    return Perturbation("swap_molecule", rank, "decrease", sub, st, f"{swapped} quantities from {donor.case_id}",
+                        targets=sorted(targets))
 
 
 def flip_conclusion(submission, store, rank):
     sub, st = _copy(submission, store)
-    flipped = 0
-    for claim in _prediction(sub, rank).evidence:
+    flipped, targets = 0, []
+    for ci, claim in enumerate(_prediction(sub, rank).evidence):
         text = claim.statement
         for a, b in _FLIPS:
             pattern = re.compile(rf"\b({re.escape(a)}|{re.escape(b)})\b", re.IGNORECASE)
             new, n = pattern.subn(lambda m: _swap_case(m.group(0), a, b), text)
             if n:
                 text, flipped = new, flipped + n
+                targets.append(ci)
                 break
         claim.statement = text
     if not flipped:
         return None
-    return Perturbation("flip_conclusion", rank, "decrease", sub, st, f"{flipped} direction words inverted")
+    return Perturbation("flip_conclusion", rank, "decrease", sub, st, f"{flipped} direction words inverted",
+                        targets=targets)
 
 
 def _swap_case(word: str, a: str, b: str) -> str:
@@ -165,13 +177,15 @@ def _swap_case(word: str, a: str, b: str) -> str:
 
 def strip_artifacts(submission, store, rank):
     sub, st = _copy(submission, store)
-    stripped = 0
-    for _, _, _, q in list(_sourced(sub, rank)):
+    stripped, targets = 0, []
+    for ci, _, _, q in list(_sourced(sub, rank)):
         q.source = None
         stripped += 1
+        targets.append(ci)
     if not stripped:
         return None
-    return Perturbation("strip_artifacts", rank, "decrease", sub, st, f"{stripped} sources removed")
+    return Perturbation("strip_artifacts", rank, "decrease", sub, st, f"{stripped} sources removed",
+                        targets=sorted(set(targets)))
 
 
 def inject_fabrication(submission, store, rank, *, fake_citation: bool = True):
@@ -184,7 +198,8 @@ def inject_fabrication(submission, store, rank, *, fake_citation: bool = True):
         quantities=[Quantity(name="oscillator_strength", value=0.85, unit="", source=source)],
     ))
     name = "inject_fake_citation" if fake_citation else "inject_unsourced"
-    return Perturbation(name, rank, "no_increase", sub, st, "plausible fabricated claim appended")
+    return Perturbation(name, rank, "no_increase", sub, st, "plausible fabricated claim appended",
+                        targets=[len(_prediction(sub, rank).evidence) - 1])
 
 
 def _default_paraphrase(statement: str) -> str:
@@ -232,7 +247,7 @@ def run_suite(
     """``items``: (submission, store, case SMILES, donor store from another case or None)."""
     results = []
     for submission, store, smiles, donor in items:
-        base = list(scorer(submission, store, smiles))
+        base = [_score(x) for x in scorer(submission, store, smiles)]
         for rank in ranks:
             if rank > len(submission.mechanism_predictions):
                 continue
@@ -241,9 +256,24 @@ def run_suite(
                 if p is None:
                     continue
                 after = list(scorer(p.submission, p.store, smiles))
+                detected = _detected(p, smiles, after[rank - 1]) if p.targets else []
                 results.append(PerturbationResult(submission.case_id, p.operator, rank, p.expected,
-                                                  base[rank - 1], after[rank - 1], p.note))
+                                                  base[rank - 1], _score(after[rank - 1]), p.note,
+                                                  targets=list(p.targets), detected=detected))
     return results
+
+
+def _score(value) -> float:
+    return float(value[0] if isinstance(value, tuple) else value)
+
+
+def _detected(p: Perturbation, smiles: str, scored) -> list[int]:
+    """Changed claims that grounding (Layer A) rejects or the judge does not verify as consistent."""
+    pred_index = next(i for i, x in enumerate(p.submission.mechanism_predictions) if x.rank == p.rank)
+    layer_a = {c.claim_index: c.outcome for c in check_submission(p.submission, p.store, smiles).predictions[pred_index].claims}
+    verdicts = scored[1] if isinstance(scored, tuple) else {}
+    return [t for t in p.targets
+            if layer_a.get(t) not in ELIGIBLE | {"prior"} or verdicts.get(t) in FLAGGED_VERDICTS]
 
 
 def summarize_suite(results: Sequence[PerturbationResult]) -> dict:
@@ -253,9 +283,13 @@ def summarize_suite(results: Sequence[PerturbationResult]) -> dict:
     out = {}
     for op, rows in sorted(groups.items()):
         applicable = [r for r in rows if r.applicable]
+        targeted = sum(len(r.targets) for r in rows)
         out[op] = {
             "expected": rows[0].expected, "n": len(rows), "n_applicable": len(applicable),
             "pass_rate": sum(r.passed for r in applicable) / len(applicable) if applicable else None,
             "mean_delta": sum(r.delta for r in applicable) / len(applicable) if applicable else None,
+            # claim level: share of changed or added claims that grounding or the judge flagged
+            "claims_targeted": targeted,
+            "claim_detection_rate": sum(len(r.detected) for r in rows) / targeted if targeted else None,
         }
     return out
