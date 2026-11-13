@@ -41,6 +41,10 @@ def _commit() -> str:
         return "unknown"
 
 
+# Settings in which runs differ from the library defaults (AgentConfig keeps 0 for offline tests).
+RUN_DEFAULTS = {"prior_samples": 3}
+
+
 def main(argv: list[str] | None = None) -> dict:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--case-id", required=True)
@@ -55,6 +59,7 @@ def main(argv: list[str] | None = None) -> dict:
             parser.add_argument(flag, action=argparse.BooleanOptionalAction, default=default)
         else:
             parser.add_argument(flag, type=type(default), default=default)
+    parser.set_defaults(**RUN_DEFAULTS)
     args = parser.parse_args(argv)
     from mechcal.eval.splits import HELD_OUT, split_of
     if split_of(args.case_id) == "test" and not args.allow_test_case:

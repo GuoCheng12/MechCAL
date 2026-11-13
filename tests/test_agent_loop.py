@@ -24,12 +24,13 @@ class Reply:
 class ByRole:
     """Scripted client: picks the next reply for the role inferred from the system prompt."""
 
-    def __init__(self, planner, critic=(), worker=()):
-        self.queues = {"planner": list(planner), "critic": list(critic), "worker": list(worker)}
-        self.payloads = {"planner": [], "critic": [], "worker": []}
+    def __init__(self, planner, critic=(), worker=(), prior=()):
+        self.queues = {"planner": list(planner), "critic": list(critic), "worker": list(worker), "prior": list(prior)}
+        self.payloads = {"planner": [], "critic": [], "worker": [], "prior": []}
 
     def complete_json_result(self, *, system_prompt, payload, schema_feedback=None, **_):
-        role = "critic" if "You are the Critic" in system_prompt else "worker" if "You are the Worker" in system_prompt else "planner"
+        role = ("critic" if "You are the Critic" in system_prompt else "worker" if "You are the Worker" in system_prompt
+                else "prior" if "You are the prior elicitor" in system_prompt else "planner")
         self.payloads[role].append({"payload": payload, "feedback": schema_feedback})
         item = self.queues[role].pop(0)
         return Reply(item(payload) if callable(item) else item)

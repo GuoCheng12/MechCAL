@@ -76,11 +76,13 @@ A failed or blocked calculation is not evidence for or against a mechanism.
 
 ## Prior and evidence
 The answer is the families most likely to be *reported* for this molecule. Two things decide it:
-- prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
-  structure and general chemistry knowledge: what is typically reported for molecules of this
-  kind and in the conditions such molecules are usually studied (solution, aggregates, films,
-  crystals, matrices). Priors are fixed once the first result exists (the system keeps them);
-  from then on, what the evidence changes is expressed through plausibility.
+- prior: each family's prior (0-1) and prior_basis come from the structure and general
+  chemistry knowledge only: what is typically reported for molecules of this kind and in the
+  conditions such molecules are usually studied (solution, aggregates, films, crystals,
+  matrices). Normally they are set before you start, by separate model calls that see only the
+  structure (several samples averaged), and shown on the board; you cannot change them. If a
+  family has no prior (null), set it and its basis in your first step. Priors are fixed once
+  the first result exists; what the evidence changes is expressed through plausibility.
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some
