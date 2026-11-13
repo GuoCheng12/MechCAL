@@ -254,8 +254,12 @@
   "label_record_sha256": "c7b592019985bc80d23e6a50b4295f4d78e63e6f0ec3aeaf02dc14d467f5667d"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
-  "runnable": true
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "SI (Chem. Sci. ESI, s001): THP 1 = diethyl 1,2,3,6-tetrahydro-1,2,3-triphenylpyrimidine-4,5-dicarboxylate (R1 = Et, R2 = H); OPSIN parse of that name has the same InChIKey as the case SMILES"
+  ],
+  "runnable": true,
+  "si_checked": "2026-11-13"
  }
 }

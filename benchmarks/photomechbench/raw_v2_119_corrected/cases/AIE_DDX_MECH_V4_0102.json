@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3ccc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)cc32)cc1"
+    "value": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3cc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)ccc32)cc1"
    }
   }
  },
@@ -291,8 +291,17 @@
   "label_record_sha256": "38c44034fe3768ca3383cf5372d471b912b1a7e375ff7918fcb9cc6ee8b096b5"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
-  "runnable": true
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3ccc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)cc32)cc1",
+  "problem": "carbazole carries the 4-(carbazol-9-yl)phenyl at C2; the paper has it at C3",
+  "old_formula": "C54H35N3O3S",
+  "new_formula": "C54H35N3O3S",
+  "basis": "SI synthesis: pPhDCzDPSPXZ = N-arylation of 3-(4-(9H-carbazol-9-yl)phenyl)-9H-carbazole, which is made from (9H-carbazol-3-yl)boronic acid; OPSIN parse of the 3-substituted name = proposed; MS/EA C54H35N3O3S (same formula as case, so mass cannot separate the isomers)",
+  "evidence": [
+   "SI synthesis: pPhDCzDPSPXZ = N-arylation of 3-(4-(9H-carbazol-9-yl)phenyl)-9H-carbazole, which is made from (9H-carbazol-3-yl)boronic acid; OPSIN parse of the 3-substituted name = proposed; MS/EA C54H35N3O3S (same formula as case, so mass cannot separate the isomers)"
+  ],
+  "runnable": true,
+  "si_checked": "2026-11-13"
  }
 }

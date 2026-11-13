@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CC(C)c1cc2c(s1)N=c1[nH]c(-c3ccccc3O)nc1=C(c1ccccc1Cl)C2"
+    "value": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccccc4O)[nH]c3nc2s1"
    }
   }
  },
@@ -283,8 +283,16 @@
   "label_record_sha256": "e7629b4a7c89e9daf661f734c471ad8d957dd01a6c48e1fad6e1a9a9eb5fe092"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC(C)c1cc2c(s1)N=c1[nH]c(-c3ccccc3O)nc1=C(c1ccccc1Cl)C2",
+  "problem": "seven-membered ring with extra CH2 instead of pyridine",
+  "old_formula": "C24H20ClN3OS",
+  "new_formula": "C23H18ClN3OS",
+  "basis": "systematic name (ITP1); MolScribe reading = proposed; sister ITP4 case is correct",
+  "evidence": [
+   "systematic name (ITP1); MolScribe reading = proposed; sister ITP4 case is correct"
+  ],
   "runnable": true
  }
 }

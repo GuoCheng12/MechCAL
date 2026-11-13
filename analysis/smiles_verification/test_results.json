@@ -1,0 +1,862 @@
+{
+ "name": "smiles_verification_test",
+ "date": "2026-11-13",
+ "scope": "102 test cases; only public SMILES, compound designation and source documents read (no reference mechanisms)",
+ "cases": [
+  {
+   "case_id": "AIE_DDX_MECH_V4_0001",
+   "target": "PLQ",
+   "case_smiles": "CCCCC(CC)COC(=O)CCCc1ccc2c(ccc3c4ccccc4ccc23)c1",
+   "auto_match": "not_found",
+   "status": "error_wrong_skeleton",
+   "problem": "pyrene ester written as chrysene",
+   "evidence": "abstract: 1-pyrenebutyric acid 2-ethylhexyl ester (PLQ); MolScribe reading of the figure = proposed",
+   "proposed_smiles": "CCCCC(CC)COC(=O)CCCc1ccc2ccc3cccc4ccc1c2c34"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0002",
+   "target": "PYNC",
+   "case_smiles": "CN(C)c1ccc(C=CC=NN=Cc2cc3ccc4cccc5ccc(c2)c3c45)cc1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "pyren-2-yl instead of pyren-1-yl",
+   "evidence": "synthesis from 1-pyrenecarboxaldehyde (figure); MolScribe reading of the figure = proposed (connectivity)",
+   "proposed_smiles": "CN(C)c1ccc(C=CC=NN=Cc2ccc3ccc4cccc5ccc2c3c45)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0004",
+   "target": "THP 1",
+   "case_smiles": "CCOC(=O)C1=C(C(=O)OCC)N(c2ccccc2)C(c2ccccc2)N(c2ccccc2)C1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "SI (Chem. Sci. ESI, s001): THP 1 = diethyl 1,2,3,6-tetrahydro-1,2,3-triphenylpyrimidine-4,5-dicarboxylate (R1 = Et, R2 = H); OPSIN parse of that name has the same InChIKey as the case SMILES",
+   "si_checked": "2026-11-13"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0005",
+   "target": "THP 2",
+   "case_smiles": "COC(=O)C1=C(C(=O)OC)N(c2ccccc2)C(c2ccccc2)N(c2ccccc2)C1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0006",
+   "target": "THP 3",
+   "case_smiles": "COC(=O)C1=C(C(=O)OC)N(c2ccc(Br)cc2)C(c2ccccc2)N(c2ccc(Br)cc2)C1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0007",
+   "target": "D5",
+   "case_smiles": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "pyren-2-ylmethyl instead of pyren-1-ylmethyl",
+   "evidence": "building block 6 is 1-pyrenemethanol (figure)",
+   "proposed_smiles": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0008",
+   "target": "PCTrPE",
+   "case_smiles": "c1ccc(C(=C(c2ccccc2)n2c3ccccc3c3c4ccccc4c4ccccc4c32)c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_wrong_core",
+   "problem": "phenanthrocarbazole unit wrong (2 H too many)",
+   "evidence": "HRMS [M]+ calcd C40H25N 519.1987; PC unit taken from MolScribe reading of sister PCTPE (HRMS C46H29N matches)",
+   "proposed_smiles": "c1ccc(C(=C(c2ccccc2)n2c3ccc4cccc5c6cccc7ccc2c(c76)c3c45)c2ccccc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0010",
+   "target": "9-anthraldehyde",
+   "case_smiles": "O=Cc1c2ccccc2cc2ccccc12",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0011",
+   "target": "3a",
+   "case_smiles": "c1cc2ccc3cc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6cc7ccc8cccc9ccc(c6)c7c89)cc5)cc4)cc4ccc(c1)c2c34",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "pyren-2-yl instead of pyren-1-yl",
+   "evidence": "synthesis heading 2,3-bis(4-(pyren-1-yl)phenyl)quinoxaline (3a); OPSIN = proposed",
+   "proposed_smiles": "c1cc2ccc3ccc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6ccc7ccc8cccc9ccc6c7c89)cc5)cc4)c4ccc(c1)c2c34"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0012",
+   "target": "ITP1",
+   "case_smiles": "CC(C)c1cc2c(s1)N=c1[nH]c(-c3ccccc3O)nc1=C(c1ccccc1Cl)C2",
+   "auto_match": "not_found",
+   "status": "error_wrong_ring",
+   "problem": "seven-membered ring with extra CH2 instead of pyridine",
+   "evidence": "systematic name (ITP1); MolScribe reading = proposed; sister ITP4 case is correct",
+   "proposed_smiles": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccccc4O)[nH]c3nc2s1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0013",
+   "target": "ITP4",
+   "case_smiles": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccc(C(F)(F)F)cc4O)[nH]c3nc2s1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "OPSIN name (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0014",
+   "target": "6a",
+   "case_smiles": "Oc1ccc(-c2ccc(B(c3c(C)cc(C)cc3C)c3c(C)cc(C)cc3C)cc2)cc1-c1ncc(-c2ccc(-c3ccc(N(c4ccccc4)c4ccccc4)cc3)cc2)o1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "text (6a substituent placement) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0015",
+   "target": "6b",
+   "case_smiles": "Cc1cc(C)c(B(c2ccc(-c3ccc(-c4cnc(-c5cc(-c6ccc(N(c7ccccc7)c7ccccc7)cc6)ccc5O)o4)cc3)cc2)c2c(C)cc(C)cc2C)c(C)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "text (6b) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0016",
+   "target": "6c",
+   "case_smiles": "Oc1ccc(-c2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1-c1ncc(-c2ccc(-c3ccc(N(c4ccccc4)c4ccccc4)cc3)cc2)o1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "text (6c) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0017",
+   "target": "6d",
+   "case_smiles": "Oc1ccc(-c2ccc(B(c3c(C)cc(C)cc3C)c3c(C)cc(C)cc3C)cc2)cc1-c1ncc(-c2ccc(-c3ccc(B(c4c(C)cc(C)cc4C)c4c(C)cc(C)cc4C)cc3)cc2)o1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "text (6d) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0018",
+   "target": "compound 1",
+   "case_smiles": "CCN(CC)c1ccc(/C=N/N=C/C(C#N)=C(/N)C#N)c(O)c1",
+   "auto_match": "label_disagrees",
+   "status": "error_extra_atoms",
+   "problem": "azine with an extra N=C instead of the Schiff base",
+   "evidence": "synthesis (aldehyde + diaminomaleonitrile 1:1), MS C15H17N5NaO [M+Na]+; MolScribe reading of the labelled structure = proposed",
+   "proposed_smiles": "CCN(CC)c1ccc(/C=N/C(C#N)=C(/N)C#N)c(O)c1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0021",
+   "target": "compound 1",
+   "case_smiles": "CCN(CC)c1ccc(O)c(C=Nc2ccc(N(C)C)cc2)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "text (4-diethylaminosalicylaldehyde + 4-dimethylaminoaniline) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0022",
+   "target": "compound 3",
+   "case_smiles": "CCN(CC)c1ccc(C=Nc2ccc([N+](=O)[O-])cc2)c(O)c1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0023",
+   "target": "TPESB",
+   "case_smiles": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=Nc1ccccc1N=Cc1cc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)ccc1O",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0024",
+   "target": "G",
+   "case_smiles": "COc1ccc(C(=C(c2ccc(C#Cc3cc[n+](CCCCCC[n+]4ccccc4)cc3)cc2)c2ccc(OC)cc2)c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure + text (hexyl linker) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0025",
+   "target": "TPE-2EP",
+   "case_smiles": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccccc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccccc3)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry_and_alkyl",
+   "problem": "arms on different alkene carbons; N-ethyl instead of N-methyl",
+   "evidence": "figure: both pyridinium arms on one alkene carbon; N+ carries one methyl (iodide salt)",
+   "proposed_smiles": "C[n+]1ccc(/C=C/c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccc(/C=C/c4cc[n+](C)cc4)cc3)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0026",
+   "target": "TPE-3EP",
+   "case_smiles": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccccc3)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_alkyl",
+   "problem": "N-ethyl instead of N-methyl",
+   "evidence": "figure: N+ carries one methyl (iodide salt)",
+   "proposed_smiles": "C[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccccc3)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0027",
+   "target": "TPE-4EP",
+   "case_smiles": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_alkyl",
+   "problem": "N-ethyl instead of N-methyl",
+   "evidence": "figure: N+ carries one methyl (iodide salt)",
+   "proposed_smiles": "C[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccc(C=Cc4cc[n+](C)cc4)cc3)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0028",
+   "target": "TPE–DBA",
+   "case_smiles": "c1ccc(CNCc2ccc(C(=C(c3ccccc3)c3ccc(CNCc4ccccc4)cc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0029",
+   "target": "TPE–DDBC",
+   "case_smiles": "c1ccc(C(=C(c2ccccc2)c2ccc(-c3ccc4c(c3)OCCOCCOCCOc3ccccc3OCCOCCOCCO4)cc2)c2ccc(-c3ccc4c(c3)OCCOCCOCCOc3ccccc3OCCOCCOCCO4)cc2)cc1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0031",
+   "target": "DMN-Bu",
+   "case_smiles": "CCCCN1C(=O)c2cc3ccc(N(C)C)cc3cc2C1=O",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0032",
+   "target": "TPE-(Br)4",
+   "case_smiles": "BrCCCCOc1ccc(C(=C(c2ccc(OCCCCBr)cc2)c2ccc(OCCCCBr)cc2)c2ccc(OCCCCBr)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0033",
+   "target": "ALITPE",
+   "case_smiles": "C=CC[n+]1ccn(-c2ccc(C(=C(c3ccc(-n4cc[n+](CC=C)c4)cc3)c3ccc(-n4cc[n+](CC=C)c4)cc3)c3ccc(-n4cc[n+](CC=C)c4)cc3)cc2)c1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0034",
+   "target": "TPA1p",
+   "case_smiles": "CN(C)CCCNCCCNCc1ccc(N(c2ccccc2)c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0035",
+   "target": "TPA2p",
+   "case_smiles": "CN(C)CCCNCCCNCc1ccc(N(c2ccccc2)c2ccc(CNCCCNCCCN(C)C)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0036",
+   "target": "TPA3p",
+   "case_smiles": "CN(C)CCCNCCCNCc1ccc(N(c2ccc(CNCCCNCCCN(C)C)cc2)c2ccc(CNCCCNCCCN(C)C)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0037",
+   "target": "BODIPY 2",
+   "case_smiles": "CN(C)C1=C2C=CC=[N+]2[B-](F)(F)n2cccc21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "3D model (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0038",
+   "target": "BODIPY 5",
+   "case_smiles": "CCN(CC)C1=C2C=CC=[N+]2[B-](F)(F)n2cccc21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "SI 3.2.5: 5 made from B-MS (8-methylthio-BODIPY) + diethylamine; 1H NMR shows only 6 pyrrole H and NEt2 (4.16 q 4H, 1.49 t 6H); SI Table S7 crystal formula C13H16BF2N3 = case formula",
+   "si_checked": "2026-11-13"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0039",
+   "target": "AZE-Ph-BDP",
+   "case_smiles": "CC1=C(C)N2C1=C(c1ccc(N3CCC3)cc1)C(C)=C(C)[N+](=C(C)C)[B-]2(F)F",
+   "auto_match": "not_found",
+   "status": "error_wrong_core",
+   "problem": "garbled BODIPY (azete and open chain instead of two pyrroles)",
+   "evidence": "figure: 1,3,5,7-tetramethyl-8-(4-azetidin-1-ylphenyl)-BODIPY",
+   "proposed_smiles": "Cc1cc(C)n2c1C(c1ccc(N3CCC3)cc1)=c1c(C)cc(C)[n+]1[B-]2(F)F"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0040",
+   "target": "P2",
+   "case_smiles": "CC(=O)c1ccc2cc(N(C)C)ccc2c1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0041",
+   "target": "P4",
+   "case_smiles": "CC(=O)c1ccc2cc(N3CCC3)ccc2c1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0042",
+   "target": "HTI Z-1",
+   "case_smiles": "Cc1cc(N(C)C)cc(C)c1/C=C1\\Sc2ccccc2C1=O",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0044",
+   "target": "3OTB",
+   "case_smiles": "CC(C)(C)c1ccc(C(=O)Nc2cccc(-c3nc4ccccc4o3)c2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0048",
+   "target": "DBTBT-4C8",
+   "case_smiles": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3cc4nsnc4cc3-c3ccc(-c4cc(OCCCCCCCC)cc(OCCCCCCCC)c4)s3)s2)c1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "arms at benzothiadiazole 5,6 instead of 4,7",
+   "evidence": "figure: 4,7-bis(thienyl) benzothiadiazole",
+   "proposed_smiles": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3ccc(-c4ccc(-c5cc(OCCCCCCCC)cc(OCCCCCCCC)c5)s4)c4nsnc34)s2)c1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0049",
+   "target": "TPR",
+   "case_smiles": "COc1ccc(C(=C(c2ccc(C=C3SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "methoxyphenyls on different alkene carbons",
+   "evidence": "figure: both 4-methoxyphenyls on the same alkene carbon; MolScribe reading = proposed",
+   "proposed_smiles": "COc1ccc(C(=C(c2ccccc2)c2ccc(/C=C3\\SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0051",
+   "target": "TAA-4PTPA",
+   "case_smiles": "C1=Cc2nc(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)c(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)nc2C=c2nc(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)c(-c3ccc(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)cc3)nc2=C1",
+   "auto_match": "not_found",
+   "status": "error_wrong_core",
+   "problem": "eight-membered central ring instead of pyrazino[2,3-g]quinoxaline (TAA)",
+   "evidence": "Chart 1: TAA core with four aryls at 2,3,7,8",
+   "proposed_smiles": "c1ccc(N(c2ccccc2)c2ccc(-c3ccc(-c4nc5cc6nc(-c7ccc(-c8ccc(N(c9ccccc9)c9ccccc9)cc8)cc7)c(-c7ccc(-c8ccc(N(c9ccccc9)c9ccccc9)cc8)cc7)nc6cc5nc4-c4ccc(-c5ccc(N(c6ccccc6)c6ccccc6)cc5)cc4)cc3)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0055",
+   "target": "mPhDCzDPSPXZ",
+   "case_smiles": "O=S(=O)(c1ccc(-n2c3ccccc3c3cc(-c4cccc(-n5c6ccccc6c6ccccc65)c4)ccc32)cc1)c1ccc(N2c3ccccc3Oc3ccccc32)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0059",
+   "target": "CzS-CN",
+   "case_smiles": "N#Cc1ccc(N2c3ccccc3Sc3ccccc32)cc1",
+   "auto_match": "no_structures",
+   "status": "consistent",
+   "evidence": "text (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0060",
+   "target": "L1",
+   "case_smiles": "CC(C)(C)c1ccc(O)c(N=Cc2ccccc2O)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "name in abstract (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0062",
+   "target": "TPEB",
+   "case_smiles": "Brc1ccc(C2CC(c3ccc(C(=C(c4ccccc4)c4ccccc4)c4ccccc4)cc3)=NN2c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (R) + designation (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0063",
+   "target": "TPECN",
+   "case_smiles": "N#Cc1ccc(C2CC(c3ccc(C(=C(c4ccccc4)c4ccccc4)c4ccccc4)cc3)=NN2c2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (R) + designation (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0064",
+   "target": "compound 1",
+   "case_smiles": "N#CC(N)=C(C#N)N=Cc1ccc(N(c2ccccc2)c2ccccc2)cc1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0066",
+   "target": "compound 1 (benzophenone azine)",
+   "case_smiles": "COc1ccc(C(=NN=C(c2ccccc2)c2ccc(OC)cc2O)c2ccccc2)c(O)c1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0069",
+   "target": "Flufenamic acid (FFA)",
+   "case_smiles": "O=C(O)c1ccccc1Nc1cccc(C(F)(F)F)c1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0071",
+   "target": "Tolfenamic acid (TFA)",
+   "case_smiles": "Cc1c(Cl)cccc1Nc1ccccc1C(=O)O",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0072",
+   "target": "Si2s-2C",
+   "case_smiles": "C[Si](C)(c1ccc(C=C(C#N)C#N)cc1)[Si](C)(C)c1ccc(C=C(C#N)C#N)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0073",
+   "target": "Si2s-2E",
+   "case_smiles": "COC(=O)C(=Cc1ccc([Si](C)(C)[Si](C)(C)c2ccc(C=C(C(=O)OC)C(=O)OC)cc2)cc1)C(=O)OC",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure + text (diester) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0074",
+   "target": "Si4s-2C",
+   "case_smiles": "C[Si](C)(c1ccc(C=C(C#N)C#N)cc1)[Si](C)(C)[Si](C)(C)[Si](C)(C)c1ccc(C=C(C#N)C#N)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0075",
+   "target": "AG / acid green 25",
+   "case_smiles": "Cc1cc(S(=O)(=O)[O-])ccc1Nc1ccc(Nc2ccc(S(=O)(=O)[O-])cc2C)c2c1C(=O)c1ccccc1C2=O",
+   "auto_match": "label_disagrees",
+   "status": "error_regiochemistry",
+   "problem": "sulfonate and methyl swapped on the anilino rings",
+   "evidence": "PubChem acid green 25; MolScribe reading of the labelled structure has the same pattern",
+   "proposed_smiles": "Cc1ccc(Nc2ccc(Nc3ccc(C)cc3S(=O)(=O)[O-])c3c2C(=O)c2ccccc2C3=O)c(S(=O)(=O)[O-])c1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0076",
+   "target": "AV / acid violet 43",
+   "case_smiles": "Cc1ccc(Nc2ccc(O)c3c2C(=O)c2ccccc2C3=O)c(S(=O)(=O)[O-])c1",
+   "auto_match": "label_disagrees",
+   "status": "consistent",
+   "evidence": "PubChem parent (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0077",
+   "target": "ICG / indocyanine green",
+   "case_smiles": "CC1(C)C(=CC=CC=CC=CC2=[N+](CCCCS(=O)(=O)[O-])c3ccc4ccccc4c3C2(C)C)N(CCCCS(=O)(=O)[O-])c2ccc3ccccc3c21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "PubChem parent (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0078",
+   "target": "NI-C11-PTZ",
+   "case_smiles": "O=C1c2cccc3cccc(c23)C(=O)N1CCCCCCCCCCCN1c2ccccc2Sc2ccccc21",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0079",
+   "target": "NI-O-PTZ",
+   "case_smiles": "O=C1c2cccc3cccc(c23)C(=O)N1CCOCCOCCOCCN1c2ccccc2Sc2ccccc21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0080",
+   "target": "L2",
+   "case_smiles": "Cc1ccc(O)c(C=Nc2cc(C(C)(C)C)ccc2O)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "name in abstract (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0081",
+   "target": "probe L",
+   "case_smiles": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=NNc1nc2ccccc2s1",
+   "auto_match": "found_connectivity",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0082",
+   "target": "ODNI",
+   "case_smiles": "CCCCCCCCCCCCCCCCCCN1C(=O)c2cccc3cccc(c23)C1=O",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0085",
+   "target": "α-DCS",
+   "case_smiles": "N#CC(=Cc1ccccc1)c1ccc(C(C#N)=Cc2ccccc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (unsubstituted member of the DCS series) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0086",
+   "target": "HBT",
+   "case_smiles": "Oc1ccccc1-c1nc2ccccc2s1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0087",
+   "target": "Compound 1",
+   "case_smiles": "CN(C)c1ccc(/C=C/C(=O)c2ccccc2O)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0088",
+   "target": "Compound 2",
+   "case_smiles": "COc1ccc(C(=O)/C=C/c2ccc(N(C)C)cc2)c(O)c1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "problem": "methoxy para to C=O instead of para to OH",
+   "evidence": "figure: compound 2 = 2-hydroxy-5-methoxy",
+   "proposed_smiles": "COc1ccc(O)c(C(=O)/C=C/c2ccc(N(C)C)cc2)c1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0089",
+   "target": "TPA-T-DCV-Ph-F",
+   "case_smiles": "N#CC(C#N)=C(c1ccc(F)cc1)c1ccc(-c2ccc(N(c3ccccc3)c3ccccc3)cc2)s1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0090",
+   "target": "(E)-TPE-UPy",
+   "case_smiles": "CCCCC(CC)c1cc(=O)[nH]c(NC(=O)Nc2ccc(/C(=C(/c3ccccc3)c3ccc(NC(=O)Nc4nc(C(CC)CCCC)cc(=O)[nH]4)cc3)c3ccccc3)cc2)n1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0091",
+   "target": "4CzIPN",
+   "case_smiles": "N#Cc1c(-n2c3ccccc3c3ccccc32)c(C#N)c(-n2c3ccccc3c3ccccc32)c(-n2c3ccccc3c3ccccc32)c1-n1c2ccccc2c2ccccc21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0092",
+   "target": "PTZ-DBTO2",
+   "case_smiles": "O=S1(=O)c2ccccc2-c2cc(N3c4ccccc4Sc4ccccc43)ccc21",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0094",
+   "target": "2",
+   "case_smiles": "CCCCCCCCCCCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)cc3)nn2)cc1OCCCCCCCCCCCC",
+   "auto_match": "no_structures",
+   "status": "consistent",
+   "evidence": "R-group table (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0095",
+   "target": "3",
+   "case_smiles": "COCCOCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)cc3)nn2)cc1OCCOCCOC",
+   "auto_match": "no_structures",
+   "status": "consistent",
+   "evidence": "R-group table (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0096",
+   "target": "PXZ-TPB-CN",
+   "case_smiles": "N#Cc1ccc(-c2cc(-c3ccccc3)c(-c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc2-c2ccccc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0097",
+   "target": "TPETPAFN",
+   "case_smiles": "N#CC(=C(C#N)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0098",
+   "target": "BAz-Cl",
+   "case_smiles": "F[B-]12Oc3cc(Cl)ccc3N=[N+]1c1ccc(Cl)cc1O2",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0099",
+   "target": "BAz-F",
+   "case_smiles": "Fc1ccc2c(c1)O[B-]1(F)Oc3cc(F)ccc3[N+]1=N2",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0100",
+   "target": "BAz-H",
+   "case_smiles": "F[B-]12Oc3ccccc3N=[N+]1c1ccccc1O2",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (series) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0102",
+   "target": "pPhDCzDPSPXZ",
+   "case_smiles": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3ccc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)cc32)cc1",
+   "auto_match": "not_found",
+   "status": "error_regiochemistry",
+   "evidence": "SI synthesis: pPhDCzDPSPXZ = N-arylation of 3-(4-(9H-carbazol-9-yl)phenyl)-9H-carbazole, which is made from (9H-carbazol-3-yl)boronic acid; OPSIN parse of the 3-substituted name = proposed; MS/EA C54H35N3O3S (same formula as case, so mass cannot separate the isomers)",
+   "problem": "carbazole carries the 4-(carbazol-9-yl)phenyl at C2; the paper has it at C3",
+   "proposed_smiles": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3cc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)ccc32)cc1",
+   "si_checked": "2026-11-13"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0125",
+   "target": "TPE-TTMN-OMe",
+   "case_smiles": "COc1ccc(N(c2ccc(/C=C/c3csc(C=C(C#N)C#N)c3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "no_structures",
+   "status": "error_extra_atoms",
+   "problem": "extra vinylene and 2,4-thiophene instead of direct 2,5-thiophene",
+   "evidence": "Scheme 1A drawing; synthesis uses (5-formylthiophen-2-yl)boronic acid",
+   "proposed_smiles": "COc1ccc(N(c2ccc(-c3ccc(C=C(C#N)C#N)s3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0139",
+   "target": "DMF-BP-PXZ",
+   "case_smiles": "CC1(C)c2ccccc2-c2ccc(C(=O)c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc21",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0142",
+   "target": "azulene | 1a | Az",
+   "case_smiles": "c1ccc2cccc-2cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0143",
+   "target": "1b",
+   "case_smiles": "Cc1ccc(C(C)C)cc2c(C)ccc1-2",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0144",
+   "target": "1c",
+   "case_smiles": "Clc1cc(Cl)c2cccccc1-2",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0145",
+   "target": "1d",
+   "case_smiles": "Brc1cc(Br)c2cccccc1-2",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0146",
+   "target": "PDTDA",
+   "case_smiles": "c1ccc2c(c1)cc(C1=NSS[N]1)c1ccccc12",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0147",
+   "target": "A",
+   "case_smiles": "CC(=O)c1cccc(C(C)=O)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (A, R = CH3, meta) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0148",
+   "target": "B",
+   "case_smiles": "O=Cc1cccc(C=O)c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (B, R = H, meta) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0149",
+   "target": "Az-Cl",
+   "case_smiles": "Clc1cc2cccccc-2c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0150",
+   "target": "Az-NMe2",
+   "case_smiles": "CN(C)c1cc2cccccc-2c1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0151",
+   "target": "Az-OH",
+   "case_smiles": "Oc1cc2cccccc-2c1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0155",
+   "target": "TPA1",
+   "case_smiles": "N#Cc1ccc(Oc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0156",
+   "target": "TPA2",
+   "case_smiles": "N#Cc1ccc(Cc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0157",
+   "target": "TPA3",
+   "case_smiles": "O=C(c1ccccc1)c1ccc(Oc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0158",
+   "target": "TPA4",
+   "case_smiles": "O=C(c1ccccc1)c1ccc(Cc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0159",
+   "target": "TPA5",
+   "case_smiles": "CC(=O)c1ccc(Oc2ccc(N(c3ccccc3)c3ccccc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0160",
+   "target": "TPA6",
+   "case_smiles": "c1ccc(N(c2ccccc2)c2ccc(Oc3ccncc3)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0161",
+   "target": "PPDC",
+   "case_smiles": "COc1ccc(C(=C(c2ccccc2)c2ccc(-c3ccc(C(C)=C(C#N)C#N)cc3)cc2)c2ccc(OC)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0162",
+   "target": "TPDC",
+   "case_smiles": "COc1ccc(C(=C(c2ccccc2)c2ccc(C(C)=C(C#N)C#N)cc2)c2ccc(OC)cc2)cc1",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0163",
+   "target": "TPPDC",
+   "case_smiles": "COc1ccc(C(=C(c2ccccc2)c2ccc(C(=C(C#N)C#N)c3ccccc3)cc2)c2ccc(OC)cc2)cc1",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0164",
+   "target": "5-Cz-Sac",
+   "case_smiles": "CC(C)(C)N1C(=O)c2cc(-n3c4ccccc4c4ccccc43)ccc2S1(=O)=O",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure + designation (5-position) (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0165",
+   "target": "6-Cz-Sac",
+   "case_smiles": "CC(C)(C)N1C(=O)c2ccc(-n3c4ccccc4c4ccccc43)cc2S1(=O)=O",
+   "auto_match": "found_exact",
+   "status": "consistent",
+   "evidence": "MolScribe reading of the source figure identical"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0166",
+   "target": "DiCz-Sac",
+   "case_smiles": "CC(C)(C)N1C(=O)c2cc(-n3c4ccccc4c4ccccc43)c(-n3c4ccccc4c4ccccc43)cc2S1(=O)=O",
+   "auto_match": "not_found",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0167",
+   "target": "ODFRPTZ",
+   "case_smiles": "O=C(c1ccc(-c2cccc3c2oc2ccccc23)cc1)c1ccc(N2c3ccccc3Sc3ccccc32)cc1",
+   "auto_match": "no_structures",
+   "status": "consistent",
+   "evidence": "figure (reviewed by Claude)"
+  }
+ ]
+}

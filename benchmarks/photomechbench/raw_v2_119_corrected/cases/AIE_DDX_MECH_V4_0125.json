@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "COc1ccc(N(c2ccc(/C=C/c3csc(C=C(C#N)C#N)c3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1"
+    "value": "COc1ccc(N(c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)c2ccc(-c3ccc(C=C(C#N)C#N)s3)cc2)cc1"
    }
   }
  },
@@ -246,8 +246,16 @@
   "label_record_sha256": "d68ea4b5f557ef40c8f2495f4cb38e8f6fd43711abb1a7fb1a805e73cf215c7e"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "COc1ccc(N(c2ccc(/C=C/c3csc(C=C(C#N)C#N)c3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1",
+  "problem": "extra vinylene and 2,4-thiophene instead of direct 2,5-thiophene",
+  "old_formula": "C49H35N3OS",
+  "new_formula": "C47H33N3OS",
+  "basis": "Scheme 1A drawing; synthesis uses (5-formylthiophen-2-yl)boronic acid",
+  "evidence": [
+   "Scheme 1A drawing; synthesis uses (5-formylthiophen-2-yl)boronic acid"
+  ],
   "runnable": true
  }
 }

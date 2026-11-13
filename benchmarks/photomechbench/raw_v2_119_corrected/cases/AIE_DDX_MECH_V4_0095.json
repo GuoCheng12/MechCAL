@@ -255,8 +255,11 @@
   "label_record_sha256": "3993856d5b4708de49a15bc2fec0f5de98867a3403bfde9c13c65966e6ed2177"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "R-group table (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3cc4nsnc4cc3-c3ccc(-c4cc(OCCCCCCCC)cc(OCCCCCCCC)c4)s3)s2)c1"
+    "value": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3ccc(-c4ccc(-c5cc(OCCCCCCCC)cc(OCCCCCCCC)c5)s4)c4nsnc34)s2)c1"
    }
   }
  },
@@ -271,8 +271,16 @@
   "label_record_sha256": "79417b949f04a8780fc54dc980aa46695f007f426981bf9b216cea9bf4c155b1"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3cc4nsnc4cc3-c3ccc(-c4cc(OCCCCCCCC)cc(OCCCCCCCC)c4)s3)s2)c1",
+  "problem": "arms at benzothiadiazole 5,6 instead of 4,7",
+  "old_formula": "C58H80N2O4S3",
+  "new_formula": "C58H80N2O4S3",
+  "basis": "figure: 4,7-bis(thienyl) benzothiadiazole",
+  "evidence": [
+   "figure: 4,7-bis(thienyl) benzothiadiazole"
+  ],
   "runnable": true
  }
 }

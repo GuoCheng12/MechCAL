@@ -263,8 +263,11 @@
   "label_record_sha256": "518ef5afab102caa0d297e2583a12d0a174a580b4332fd0e885d3cb54dd86f9b"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "R-group table (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

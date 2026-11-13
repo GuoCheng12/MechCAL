@@ -242,8 +242,12 @@
   "label_record_sha256": "eb9c8bffeb8271748c2e6b9311dc251afc52a69dd612d7d1e14417375dd4f60e"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
-  "runnable": true
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "SI 3.2.5: 5 made from B-MS (8-methylthio-BODIPY) + diethylamine; 1H NMR shows only 6 pyrrole H and NEt2 (4.16 q 4H, 1.49 t 6H); SI Table S7 crystal formula C13H16BF2N3 = case formula"
+  ],
+  "runnable": true,
+  "si_checked": "2026-11-13"
  }
 }

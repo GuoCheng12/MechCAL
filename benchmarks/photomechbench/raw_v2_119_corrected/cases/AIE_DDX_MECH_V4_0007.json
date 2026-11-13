@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1"
+    "value": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3ccc4ccc5cccc6ccc3c4c56)cc2)cc1"
    }
   }
  },
@@ -231,8 +231,16 @@
   "label_record_sha256": "e7c21c669f3de5d9b527c417aac73e52f3b157ba6f7b76beec2230d6ee151355"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1",
+  "problem": "pyren-2-ylmethyl instead of pyren-1-ylmethyl",
+  "old_formula": "C137H100O20S4",
+  "new_formula": "C137H100O20S4",
+  "basis": "building block 6 is 1-pyrenemethanol (figure)",
+  "evidence": [
+   "building block 6 is 1-pyrenemethanol (figure)"
+  ],
   "runnable": true
  }
 }

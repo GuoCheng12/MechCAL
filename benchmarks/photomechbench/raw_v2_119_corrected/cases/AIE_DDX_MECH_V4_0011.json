@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "c1cc2ccc3cc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6cc7ccc8cccc9ccc(c6)c7c89)cc5)cc4)cc4ccc(c1)c2c34"
+    "value": "c1cc2ccc3ccc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6ccc7ccc8cccc9ccc6c7c89)cc5)cc4)c4ccc(c1)c2c34"
    }
   }
  },
@@ -287,8 +287,16 @@
   "label_record_sha256": "d774add6a4e66bc97f48afab17ebf71c63b3eb90f88efc9eb281b5ef95692872"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "c1cc2ccc3cc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6cc7ccc8cccc9ccc(c6)c7c89)cc5)cc4)cc4ccc(c1)c2c34",
+  "problem": "pyren-2-yl instead of pyren-1-yl",
+  "old_formula": "C52H30N2",
+  "new_formula": "C52H30N2",
+  "basis": "synthesis heading 2,3-bis(4-(pyren-1-yl)phenyl)quinoxaline (3a); OPSIN = proposed",
+  "evidence": [
+   "synthesis heading 2,3-bis(4-(pyren-1-yl)phenyl)quinoxaline (3a); OPSIN = proposed"
+  ],
   "runnable": true
  }
 }

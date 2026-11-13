@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CN(C)c1ccc(C=CC=NN=Cc2cc3ccc4cccc5ccc(c2)c3c45)cc1"
+    "value": "CN(C)c1ccc(C=CC=NN=Cc2ccc3ccc4cccc5ccc2c3c45)cc1"
    }
   }
  },
@@ -258,8 +258,16 @@
   "label_record_sha256": "dc244071d97ebb1c8eb43af32710026f0d9d80001e39f6545956a11dee164760"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CN(C)c1ccc(C=CC=NN=Cc2cc3ccc4cccc5ccc(c2)c3c45)cc1",
+  "problem": "pyren-2-yl instead of pyren-1-yl",
+  "old_formula": "C28H23N3",
+  "new_formula": "C28H23N3",
+  "basis": "synthesis from 1-pyrenecarboxaldehyde (figure); MolScribe reading of the figure = proposed (connectivity)",
+  "evidence": [
+   "synthesis from 1-pyrenecarboxaldehyde (figure); MolScribe reading of the figure = proposed (connectivity)"
+  ],
   "runnable": true
  }
 }

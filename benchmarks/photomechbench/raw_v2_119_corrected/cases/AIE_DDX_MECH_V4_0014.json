@@ -200,8 +200,11 @@
   "label_record_sha256": "4cc4eca97cb95c59284f34811e522feb66d5a60f9b8eab6ba1cd98931eb99d3f"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "text (6a substituent placement) (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

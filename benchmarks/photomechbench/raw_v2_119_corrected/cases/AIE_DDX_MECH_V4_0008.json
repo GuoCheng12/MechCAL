@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "c1ccc(C(=C(c2ccccc2)n2c3ccccc3c3c4ccccc4c4ccccc4c32)c2ccccc2)cc1"
+    "value": "c1ccc(C(=C(c2ccccc2)n2c3ccc4cccc5c6cccc7ccc2c(c76)c3c45)c2ccccc2)cc1"
    }
   }
  },
@@ -230,8 +230,16 @@
   "label_record_sha256": "d94891a8eab6cc294a74d25fe8d6fa7e7e207d5722cb2bb7476c81e92a0cb061"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "c1ccc(C(=C(c2ccccc2)n2c3ccccc3c3c4ccccc4c4ccccc4c32)c2ccccc2)cc1",
+  "problem": "phenanthrocarbazole unit wrong (2 H too many)",
+  "old_formula": "C40H27N",
+  "new_formula": "C40H25N",
+  "basis": "HRMS [M]+ calcd C40H25N 519.1987; PC unit taken from MolScribe reading of sister PCTPE (HRMS C46H29N matches)",
+  "evidence": [
+   "HRMS [M]+ calcd C40H25N 519.1987; PC unit taken from MolScribe reading of sister PCTPE (HRMS C46H29N matches)"
+  ],
   "runnable": true
  }
 }

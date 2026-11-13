@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccccc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccccc3)cc2)cc1"
+    "value": "C[n+]1ccc(/C=C/c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccc(/C=C/c4cc[n+](C)cc4)cc3)cc2)cc1"
    }
   }
  },
@@ -270,8 +270,16 @@
   "label_record_sha256": "7d6ab4e3f387bf6ffd72ec4f6ffad72723583d43d5591fe5d736ef368af8ddaf"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccccc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccccc3)cc2)cc1",
+  "problem": "arms on different alkene carbons; N-ethyl instead of N-methyl",
+  "old_formula": "C44H40N2+2",
+  "new_formula": "C42H36N2+2",
+  "basis": "figure: both pyridinium arms on one alkene carbon; N+ carries one methyl (iodide salt)",
+  "evidence": [
+   "figure: both pyridinium arms on one alkene carbon; N+ carries one methyl (iodide salt)"
+  ],
   "runnable": true
  }
 }

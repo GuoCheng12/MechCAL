@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CCN(CC)c1ccc(/C=N/N=C/C(C#N)=C(/N)C#N)c(O)c1"
+    "value": "CCN(CC)c1ccc(/C=N/C(C#N)=C(/N)C#N)c(O)c1"
    }
   }
  },
@@ -263,8 +263,16 @@
   "label_record_sha256": "8a4c40b46018e9896213743d4f4e5d7a7f87ce640e69086377a6c3046b62f5ac"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCN(CC)c1ccc(/C=N/N=C/C(C#N)=C(/N)C#N)c(O)c1",
+  "problem": "azine with an extra N=C instead of the Schiff base",
+  "old_formula": "C16H18N6O",
+  "new_formula": "C15H17N5O",
+  "basis": "synthesis (aldehyde + diaminomaleonitrile 1:1), MS C15H17N5NaO [M+Na]+; MolScribe reading of the labelled structure = proposed",
+  "evidence": [
+   "synthesis (aldehyde + diaminomaleonitrile 1:1), MS C15H17N5NaO [M+Na]+; MolScribe reading of the labelled structure = proposed"
+  ],
   "runnable": true
  }
 }

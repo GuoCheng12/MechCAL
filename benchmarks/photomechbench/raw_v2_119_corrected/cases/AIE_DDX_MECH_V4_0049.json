@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "COc1ccc(C(=C(c2ccc(C=C3SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)c2ccccc2)cc1"
+    "value": "COc1ccc(C(=C(c2ccccc2)c2ccc(/C=C3\\SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)cc1"
    }
   }
  },
@@ -262,8 +262,16 @@
   "label_record_sha256": "901a9bb1637fefb1b0a8fc13bc87a484e8a49377a565da621b4a4c8a82d4d401"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "COc1ccc(C(=C(c2ccc(C=C3SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)c2ccccc2)cc1",
+  "problem": "methoxyphenyls on different alkene carbons",
+  "old_formula": "C34H27NO5S2",
+  "new_formula": "C34H27NO5S2",
+  "basis": "figure: both 4-methoxyphenyls on the same alkene carbon; MolScribe reading = proposed",
+  "evidence": [
+   "figure: both 4-methoxyphenyls on the same alkene carbon; MolScribe reading = proposed"
+  ],
   "runnable": true
  }
 }

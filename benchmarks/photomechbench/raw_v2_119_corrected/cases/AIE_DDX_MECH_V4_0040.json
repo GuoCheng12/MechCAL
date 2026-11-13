@@ -252,8 +252,11 @@
   "label_record_sha256": "56655799706afd9179d358369c497e31878da1cdff4be4f5caff70c68450960c"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
   "runnable": true
  }
 }

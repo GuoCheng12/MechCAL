@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "Cc1cc(S(=O)(=O)[O-])ccc1Nc1ccc(Nc2ccc(S(=O)(=O)[O-])cc2C)c2c1C(=O)c1ccccc1C2=O"
+    "value": "Cc1ccc(Nc2ccc(Nc3ccc(C)cc3S(=O)(=O)[O-])c3c2C(=O)c2ccccc2C3=O)c(S(=O)(=O)[O-])c1"
    }
   }
  },
@@ -219,8 +219,16 @@
   "label_record_sha256": "c58ff3d8733323d31e722bd6fb9b4a46ab9a648b646cbcf51a5e3fc236eda821"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "Cc1cc(S(=O)(=O)[O-])ccc1Nc1ccc(Nc2ccc(S(=O)(=O)[O-])cc2C)c2c1C(=O)c1ccccc1C2=O",
+  "problem": "sulfonate and methyl swapped on the anilino rings",
+  "old_formula": "C28H20N2O8S2-2",
+  "new_formula": "C28H20N2O8S2-2",
+  "basis": "PubChem acid green 25; MolScribe reading of the labelled structure has the same pattern",
+  "evidence": [
+   "PubChem acid green 25; MolScribe reading of the labelled structure has the same pattern"
+  ],
   "runnable": true
  }
 }

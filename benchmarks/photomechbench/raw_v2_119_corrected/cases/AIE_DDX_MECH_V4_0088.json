@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "COc1ccc(C(=O)/C=C/c2ccc(N(C)C)cc2)c(O)c1"
+    "value": "COc1ccc(O)c(C(=O)/C=C/c2ccc(N(C)C)cc2)c1"
    }
   }
  },
@@ -289,8 +289,16 @@
   "label_record_sha256": "a3c20b1c881d063d9ebbcc8f7b50b71283cc26cc8ac0c354843eb5290392a52c"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "COc1ccc(C(=O)/C=C/c2ccc(N(C)C)cc2)c(O)c1",
+  "problem": "methoxy para to C=O instead of para to OH",
+  "old_formula": "C18H19NO3",
+  "new_formula": "C18H19NO3",
+  "basis": "figure: compound 2 = 2-hydroxy-5-methoxy",
+  "evidence": [
+   "figure: compound 2 = 2-hydroxy-5-methoxy"
+  ],
   "runnable": true
  }
 }

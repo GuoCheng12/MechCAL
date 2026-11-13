@@ -233,8 +233,11 @@
   "label_record_sha256": "6f2c60d7884cb017c2b0be43101193b14967d33465b5f2e2ff38a4634f7f45c3"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "PubChem parent (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

@@ -255,8 +255,11 @@
   "label_record_sha256": "bcd2a507fa9cced00324ee731f4dd9a766dd4952a27e5940b83df7363ae39726"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (unsubstituted member of the DCS series) (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

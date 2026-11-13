@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)cc2)cc1"
+    "value": "C[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccc(C=Cc4cc[n+](C)cc4)cc3)c3ccc(C=Cc4cc[n+](C)cc4)cc3)cc2)cc1"
    }
   }
  },
@@ -270,8 +270,16 @@
   "label_record_sha256": "cca65370a9b730e741ad8b9273cbfdbec82a83829a54eb73a70a2faf3711ca6f"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)cc2)cc1",
+  "problem": "N-ethyl instead of N-methyl",
+  "old_formula": "C62H60N4+4",
+  "new_formula": "C58H52N4+4",
+  "basis": "figure: N+ carries one methyl (iodide salt)",
+  "evidence": [
+   "figure: N+ carries one methyl (iodide salt)"
+  ],
   "runnable": true
  }
 }

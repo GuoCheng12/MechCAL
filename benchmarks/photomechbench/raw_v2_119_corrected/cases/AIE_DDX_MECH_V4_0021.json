@@ -240,8 +240,11 @@
   "label_record_sha256": "a1be16f4fba99438363193fd392c6cb76262ceaff1e82242ade8d50122be3518"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "text (4-diethylaminosalicylaldehyde + 4-dimethylaminoaniline) (reviewed by Claude)"
+  ],
   "runnable": true
  }
 }

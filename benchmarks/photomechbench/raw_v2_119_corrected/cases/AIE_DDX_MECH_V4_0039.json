@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CC1=C(C)N2C1=C(c1ccc(N3CCC3)cc1)C(C)=C(C)[N+](=C(C)C)[B-]2(F)F"
+    "value": "CC1=CC(C)=[N+]2C1=C(c1ccc(N3CCC3)cc1)c1c(C)cc(C)n1[B-]2(F)F"
    }
   }
  },
@@ -281,8 +281,16 @@
   "label_record_sha256": "f675e13329fe2a227b3f3a564195687e05a138c685adf51f078b45fa0e1a1101"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC1=C(C)N2C1=C(c1ccc(N3CCC3)cc1)C(C)=C(C)[N+](=C(C)C)[B-]2(F)F",
+  "problem": "garbled BODIPY (azete and open chain instead of two pyrroles)",
+  "old_formula": "C22H28BF2N3",
+  "new_formula": "C22H24BF2N3",
+  "basis": "figure: 1,3,5,7-tetramethyl-8-(4-azetidin-1-ylphenyl)-BODIPY",
+  "evidence": [
+   "figure: 1,3,5,7-tetramethyl-8-(4-azetidin-1-ylphenyl)-BODIPY"
+  ],
   "runnable": true
  }
 }

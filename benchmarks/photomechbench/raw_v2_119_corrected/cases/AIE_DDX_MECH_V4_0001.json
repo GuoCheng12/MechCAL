@@ -5,7 +5,7 @@
   "molecule": {
    "structure": {
     "format": "smiles",
-    "value": "CCCCC(CC)COC(=O)CCCc1ccc2c(ccc3c4ccccc4ccc23)c1"
+    "value": "CCCCC(CC)COC(=O)CCCc1ccc2ccc3cccc4ccc1c2c34"
    }
   }
  },
@@ -259,8 +259,16 @@
   "label_record_sha256": "5a39e7d8814cd356b323b4fdfc433cff812e3d91d33d3910f4f10a0f6970bc98"
  },
  "structure_verification": {
-  "status": "unverified",
-  "note": "legacy SMILES, not yet checked against the source paper",
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCCCC(CC)COC(=O)CCCc1ccc2c(ccc3c4ccccc4ccc23)c1",
+  "problem": "pyrene ester written as chrysene",
+  "old_formula": "C30H34O2",
+  "new_formula": "C28H32O2",
+  "basis": "abstract: 1-pyrenebutyric acid 2-ethylhexyl ester (PLQ); MolScribe reading of the figure = proposed",
+  "evidence": [
+   "abstract: 1-pyrenebutyric acid 2-ethylhexyl ester (PLQ); MolScribe reading of the figure = proposed"
+  ],
   "runnable": true
  }
 }
