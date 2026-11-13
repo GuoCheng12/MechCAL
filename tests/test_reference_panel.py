@@ -89,4 +89,4 @@ def test_every_role_gets_the_same_neutral_panel_description():
             "default settings. The panel has no mechanism labels.")
     for name, text in flat.items():
         assert core in text, name
-        assert not re.search(r"is typical|means typical|use it", text), name
+        assert not re.search(r"interquartile range is typical|[Nn]ear the median|percentile exists, use it", text), name
