@@ -22,7 +22,7 @@ from pathlib import Path
 
 from mechcal.agent.schedule import wait_for_off_peak
 from mechcal.eval.evidence_judge import EvidenceJudge, JudgeClientAdapter
-from mechcal.eval.llm_settings import describe, judge_settings
+from mechcal.eval.llm_settings import describe, judge_settings, record_judge_usage
 from mechcal.eval.perturb import run_suite, summarize_suite
 from mechcal.eval.submission import ArtifactStore, Submission
 from mechcal.runtime.llm import OpenAIJsonClient
@@ -65,6 +65,7 @@ def main() -> None:
     gate = threading.Lock()
     summary = {"judge": describe(judge_settings())}
     for root in args.roots:
+        record_judge_usage(args.out / f"{root.name}.judge_telemetry.jsonl")
         runs = load(root)
         donors = [r[2] for r in runs[1:] + runs[:1]]       # another case's artifacts for swap_molecule
         items = [(sub, store, smiles, donor) for (_, sub, store, smiles), donor in zip(runs, donors)]

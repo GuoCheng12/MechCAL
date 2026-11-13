@@ -170,3 +170,13 @@ def test_baselines_survive_invalid_replies_and_provider_errors(gateway_factory, 
     assert result.transcript[1]["observation"]["status"] == "error"          # four provider errors: one failed step
     direct = Flaky([RuntimeError("x")] * 4 + [Reply(preds(STRUCTURAL))])
     assert DirectSubject(direct).run("CASE", SMILES).status == "submitted"
+
+
+def test_baselines_see_the_same_structural_facts_as_the_agent(gateway_factory):
+    from mechcal.agent.facts import structural_facts
+    direct = Scripted(preds(STRUCTURAL))
+    DirectSubject(direct).run("CASE", SMILES)
+    react = Scripted({"action": "submit", **preds(STRUCTURAL)})
+    ReactSubject(react, gateway_factory, max_model_calls=2, max_tool_calls=1).run("CASE", SMILES)
+    for client in (direct, react):
+        assert client.payloads[0]["payload"]["structural_facts"] == structural_facts(SMILES)

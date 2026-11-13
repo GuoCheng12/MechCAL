@@ -35,3 +35,24 @@ def test_wait_blocks_until_an_off_peak_start():
     waited = sc.wait_for_off_peak(45, log=lines.append, now=lambda: clock["t"], sleep=sleep)
     assert clock["t"] >= FRI(10) and waited == 3600 and len(lines) == 1 and "18:00 Beijing" in lines[0]
     assert sc.wait_for_off_peak(45, log=lines.append, now=lambda: FRI(12), sleep=sleep) == 0
+
+
+def test_judge_usage_goes_to_its_own_telemetry_file(tmp_path, monkeypatch):
+    import os
+    from mechcal.eval.llm_settings import record_judge_usage
+    from mechcal.runtime.llm import TELEMETRY_ENV
+    monkeypatch.delenv(TELEMETRY_ENV, raising=False)
+    record_judge_usage(tmp_path / "judge_telemetry.jsonl")
+    assert os.environ[TELEMETRY_ENV] == str(tmp_path / "judge_telemetry.jsonl")
+    monkeypatch.delenv(TELEMETRY_ENV)
+
+
+def test_token_usage_prices_peak_and_off_peak(tmp_path):
+    import importlib.util, json
+    spec = importlib.util.spec_from_file_location("tu", __import__("pathlib").Path(__file__).parents[1] / "examples/token_usage.py")
+    tu = importlib.util.module_from_spec(spec); spec.loader.exec_module(tu)
+    row = lambda ts: json.dumps({"timestamp_utc": ts, "usage": {"prompt_tokens": 1_000_000, "cached_tokens": 0,
+                                                                "completion_tokens": 0, "total_tokens": 1_000_000}})
+    (tmp_path / "t.jsonl").write_text(row("2026-11-13T02:00:00Z") + "\n" + row("2026-11-13T12:00:00Z") + "\n")
+    c = tu.tally([tmp_path / "t.jsonl"])
+    assert c["calls"] == 2 and abs(c["usd"] - (0.30 + 0.15)) < 1e-9 and c["peak_tokens"] == 1_000_000

@@ -74,7 +74,15 @@ class UsageLedger:
 
 
 def _task_payload(smiles: str) -> dict:
-    return {"verified_smiles": smiles, "mechanism_pool": mechanism_definitions()}
+    """What every subject is told about the case: the SMILES, the family definitions and the same
+    deterministic structural facts the MechCAL agent starts from."""
+    from mechcal.agent.facts import structural_facts
+    return {"verified_smiles": smiles, "mechanism_pool": mechanism_definitions(),
+            "structural_facts": structural_facts(smiles)}
+
+
+FACTS_NOTE = ("\n\nstructural_facts: deterministic graph facts about the molecule (F1, F2, ...; 1-based atom ids; "
+              "tool_atom_indices are 0-based, as tools expect).")
 
 
 @dataclass
@@ -103,7 +111,8 @@ class DirectSubject:
 
     def __init__(self, client, *, max_repairs: int = 1) -> None:
         self.client, self.max_repairs = client, max_repairs
-        self.system = load_eval_prompt(INSTRUCTIONS) + "\n\nNo tools are available in this setting; use structural and prior claims only."
+        self.system = (load_eval_prompt(INSTRUCTIONS) + FACTS_NOTE
+                       + "\n\nNo tools are available in this setting; use structural and prior claims only.")
 
     def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
         """The same capability cards as the MechCAL agent (same tools, text, applicability and cost)."""
@@ -182,7 +191,7 @@ class ReactSubject:
         self.client, self.gateway_factory = client, gateway_factory
         self.max_model_calls, self.max_tool_calls = max_model_calls, max_tool_calls
         self.cost_log_path = cost_log_path          # same recorded timings as the agent (read only)
-        self.system = load_eval_prompt(INSTRUCTIONS) + REACT_PROTOCOL
+        self.system = load_eval_prompt(INSTRUCTIONS) + FACTS_NOTE + REACT_PROTOCOL
 
     def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
         """The same capability cards as the MechCAL agent (same tools, text, applicability and cost)."""

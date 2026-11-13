@@ -16,7 +16,7 @@ from pathlib import Path
 
 from mechcal.eval.evidence_judge import EvidenceJudge, JudgeClientAdapter
 from mechcal.eval.grounding import check_submission
-from mechcal.eval.llm_settings import describe, judge_settings
+from mechcal.eval.llm_settings import describe, judge_settings, record_judge_usage
 from mechcal.eval.mechanism_ranking import score_mechanism_ranking
 from mechcal.eval.submission import ArtifactStore, Submission
 from mechcal.runtime.llm import OpenAIJsonClient
@@ -30,6 +30,7 @@ def main() -> None:
     parser.add_argument("run_dir", type=Path)
     parser.add_argument("--no-judge", action="store_true", help="Layer A and ranking metrics only")
     args = parser.parse_args()
+    record_judge_usage(args.run_dir / "judge_telemetry.jsonl")      # judge tokens, apart from the run's own
     result = json.loads((args.run_dir / "result.json").read_text())
     if result.get("submission") is None:            # no valid answer: scored as an empty answer, not dropped
         case = json.loads((CASES / f"{result['case_id']}.json").read_text())

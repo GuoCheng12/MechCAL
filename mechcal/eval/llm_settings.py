@@ -17,6 +17,13 @@ def backbone_settings() -> OpenAICompatibleSettings:
     return OpenAICompatibleSettings.from_env()
 
 
+def record_judge_usage(path) -> None:
+    """Write the judge's per-call API telemetry (tokens, latency) to ``path`` (JSON lines), so that
+    grading and perturbation costs are counted like the evaluated systems' own calls."""
+    from mechcal.runtime.llm import TELEMETRY_ENV
+    os.environ[TELEMETRY_ENV] = str(path)
+
+
 def judge_settings() -> OpenAICompatibleSettings:
     base = backbone_settings()
     env = os.environ.get
