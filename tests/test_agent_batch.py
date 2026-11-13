@@ -21,7 +21,8 @@ def test_batch_skips_finished_and_reruns_incomplete(tmp_path, monkeypatch):
     (tmp_path / "0047").mkdir()
     (tmp_path / "0047" / "result.json").write_text("{}")          # finished before
     (tmp_path / "0020").mkdir()                                     # interrupted: no result.json
-    rows = batch.main(["--cases", "0047,0020,68", "--out", str(tmp_path), "--parallel", "2", "--", "--max-computations", "5"])
+    rows = batch.main(["--cases", "0047,0020,68", "--out", str(tmp_path), "--parallel", "2", "--schedule", "any",
+                       "--", "--max-computations", "5"])
     states = {r["case"]: r["state"] for r in rows}
     assert states == {"0047": "skipped (already finished)", "0020": "finished", "0068": "finished"}
     assert len(calls) == 2 and all(c[-2:] == ["--max-computations", "5"] for c in calls)

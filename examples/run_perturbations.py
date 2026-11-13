@@ -13,9 +13,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import threading
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
+from mechcal.agent.schedule import wait_for_off_peak
 from mechcal.eval.evidence_judge import EvidenceJudge, JudgeClientAdapter
 from mechcal.eval.llm_settings import describe, judge_settings
 from mechcal.eval.perturb import run_suite, summarize_suite
@@ -44,6 +46,9 @@ def main() -> None:
     ap.add_argument("roots", nargs="+", type=Path)
     ap.add_argument("--out", type=Path, required=True)
     ap.add_argument("--parallel", type=int, default=6)
+    ap.add_argument("--schedule", choices=["off-peak", "any"], default="off-peak",
+                    help="off-peak (default): judge each run only in DeepSeek off-peak hours; any: immediately")
+    ap.add_argument("--peak-margin-minutes", type=float, default=15.0)
     args = ap.parse_args()
     judge = EvidenceJudge(JudgeClientAdapter(OpenAIJsonClient(judge_settings())))
 
@@ -52,13 +57,20 @@ def main() -> None:
         return [first] + [0.0] * (len(submission.mechanism_predictions) - 1)
 
     args.out.mkdir(parents=True, exist_ok=True)
+    gate = threading.Lock()
     summary = {"judge": describe(judge_settings())}
     for root in args.roots:
         runs = load(root)
         donors = [r[2] for r in runs[1:] + runs[:1]]       # another case's artifacts for swap_molecule
         items = [(sub, store, smiles, donor) for (_, sub, store, smiles), donor in zip(runs, donors)]
+        def one(item):
+            if args.schedule == "off-peak":
+                with gate:
+                    wait_for_off_peak(args.peak_margin_minutes, log=lambda m: print(m, flush=True))
+            return run_suite([item], scorer, ranks=(1,))
+
         with ThreadPoolExecutor(max_workers=args.parallel) as pool:
-            parts = list(pool.map(lambda it: run_suite([it], scorer, ranks=(1,)), items))
+            parts = list(pool.map(one, items))
         results = [r for part in parts for r in part]
         rows = [r.__dict__ | {"applicable": r.applicable, "passed": r.passed} for r in results]
         (args.out / f"{root.name}.json").write_text(json.dumps(rows, indent=1, default=str))

@@ -3,6 +3,7 @@
     python -m mechcal.agent.batch --cases 0047,0020,0068 --out outputs/agent/dev3 --parallel 6 --grade
     python -m mechcal.agent.batch --cases-file dev_cases.txt --out ... -- --max-computations 10
 
+Cases start only in DeepSeek off-peak hours unless --schedule any (mechcal.agent.schedule).
 A case whose directory already holds result.json is skipped. A directory without result.json (killed
 or crashed run) is moved aside as <case>-incomplete-<time> and the case runs again. Arguments after
 "--" go to every ``mechcal.agent.cli`` call. Each case logs to <out>/<case>.log.
@@ -16,9 +17,11 @@ import os
 import resource
 import subprocess
 import sys
+import threading
 import time
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
+from typing import Callable
 
 ROOT = Path(__file__).resolve().parents[2]
 PREFIX = "AIE_DDX_MECH_V4_"
@@ -38,11 +41,24 @@ COMMANDS = {"agent": ["-m", "mechcal.agent.cli"],
             "react": ["-m", "mechcal.eval.baseline_cli", "--subject", "react"]}
 
 
-def run_case(case_id: str, out: Path, extra: list[str], grade: bool, subject: str = "agent") -> dict:
+_GATE = threading.Lock()
+
+
+def _wait_off_peak(margin_minutes: float) -> None:
+    """One thread at a time waits for an off-peak start; the others queue behind it."""
+    from mechcal.agent.schedule import wait_for_off_peak
+    with _GATE:
+        wait_for_off_peak(margin_minutes, log=lambda m: print(m, flush=True))
+
+
+def run_case(case_id: str, out: Path, extra: list[str], grade: bool, subject: str = "agent",
+             wait: Callable[[], None] | None = None) -> dict:
     short = case_id.removeprefix(PREFIX)
     run_dir = out / short
     if (run_dir / "result.json").is_file():
         return {"case": short, "state": "skipped (already finished)"}
+    if wait is not None:
+        wait()
     if run_dir.exists():
         run_dir.rename(out / f"{short}-incomplete-{time.strftime('%Y%m%d-%H%M%S')}")
     env = dict(os.environ, KMP_STACKSIZE=os.environ.get("KMP_STACKSIZE", "4G"))
@@ -77,6 +93,10 @@ def main(argv: list[str] | None = None) -> list[dict]:
     parser.add_argument("--allow-not-runnable", action="store_true",
                         help="allow cases whose structure is marked as not yet preparable")
     parser.add_argument("--subject", choices=sorted(COMMANDS), default="agent", help="MechCAL agent or a baseline")
+    parser.add_argument("--schedule", choices=["off-peak", "any"], default="off-peak",
+                        help="off-peak (default): start each case only in DeepSeek off-peak hours, not within "
+                             "--peak-margin-minutes of a peak window; any: start immediately")
+    parser.add_argument("--peak-margin-minutes", type=float, default=45.0)
     args = parser.parse_args(argv)
     if not (args.cases or args.cases_file):
         parser.error("give --cases or --cases-file")
@@ -97,8 +117,11 @@ def main(argv: list[str] | None = None) -> list[dict]:
         raise SystemExit("No API key in the environment; source ~/.config/mechcal/secrets.env and env/deepseek.env.sh")
     args.out.mkdir(parents=True, exist_ok=True)
     cases = case_ids(args)
+    wait = (lambda: _wait_off_peak(args.peak_margin_minutes)) if args.schedule == "off-peak" else None
+    print(f"schedule: {args.schedule}" + (f" (no case starts within {args.peak_margin_minutes:g} min of peak)"
+                                          if wait else ""), flush=True)
     with ThreadPoolExecutor(max_workers=max(1, args.parallel)) as pool:
-        rows = list(pool.map(lambda c: run_case(c, args.out, extra, args.grade, args.subject), cases))
+        rows = list(pool.map(lambda c: run_case(c, args.out, extra, args.grade, args.subject, wait), cases))
     print(f"{sum(r['state'] == 'finished' for r in rows)} finished, "
           f"{sum(r['state'].startswith('skipped') for r in rows)} skipped, "
           f"{sum(r['state'].startswith('failed') for r in rows)} failed")
