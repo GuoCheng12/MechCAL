@@ -1,7 +1,8 @@
 {
  "card_set": "mechcal_agent_tool_cards",
- "status": "draft_pending_author_review",
+ "status": "approved_by_author",
  "drafted": "2026-11-12",
+ "approved": "2026-11-13",
  "rules": "Cards describe what a tool computes and what can be varied. They never name a mechanism family and never recommend a tool for a purpose.",
  "tools": {
   "microscopic.optimize_ground_state_geometry": {
