@@ -33,7 +33,7 @@ from mechcal.baselines.chemgraph_mas.subject import (
     _compact_aggregation_state,
 )
 from mechcal.baselines.chemgraph_mas.tools import ChemGraphToolHarness
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.llm import OpenAICompatibleSettings
 from mechcal.cli.evaluate_chemgraph import _cache_within_budget
 

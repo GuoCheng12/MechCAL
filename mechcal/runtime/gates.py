@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
 from mechcal.capabilities.discovery import LoadedToolState, discovery_dispatch_violations
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.schemas import CaseRun, DecisionGateResult, DispatchRequest, PlannerDecision
 
 

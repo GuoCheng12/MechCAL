@@ -2,7 +2,7 @@
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.command_operations import OperationRejected, check_owner, protocol, put, reference_issues, reject
 from mechcal.schemas.commands import ExplorationChange, UpdateHypotheses
 from mechcal.runtime import command_followup as followup

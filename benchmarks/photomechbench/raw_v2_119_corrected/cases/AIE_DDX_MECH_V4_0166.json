@@ -154,16 +154,6 @@
     "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E05",
-     "E06"
-    ],
-    "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -174,7 +164,7 @@
     "rationale": "Keep the source's ICT solvatochromism and dark-TICT quenching interpretation with the solvent/aggregation confound stated."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -195,27 +185,7 @@
      "E07",
      "E08"
     ],
-    "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E05",
-     "E06"
-    ],
-    "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E03",
-     "E04"
-    ],
-    "rationale": "Trace-isomer dependence is acknowledged, but no direct host binding, inclusion or identified host-guest photophysical pathway is established in the inspected main text."
+    "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation. No target-specific conical-intersection-mediated decay or restriction of access is established."
    },
    {
     "label": "ICT_TICT_CT",
@@ -256,7 +226,7 @@
     "rationale": "The selected evidence does not isolate a distinct radiative-rate or bright/dark-state balance explanation beyond the other explicitly assigned pathways."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -266,22 +236,175 @@
      "E10"
     ],
     "rationale": "RTP is supported in crystals and TADF is supported in film/solution, with phase-specific lifetimes and impurity dependence distinguished."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E09"
+     ],
+     "rationale": "Keep the source's ICT solvatochromism and dark-TICT quenching interpretation with the solvent/aggregation confound stated."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E10"
+     ],
+     "rationale": "RTP is supported in crystals and TADF is supported in film/solution, with phase-specific lifetimes and impurity dependence distinguished."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The explicit proposed AIEE mechanism is aggregation restricting internal motion, including carbazole rotation, and reducing nonradiative loss. Spectral recovery is observed; the microscopic attribution remains an author interpretation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "Crystal interactions are explicitly proposed to stabilize triplets and constrain loss. The independent purity control prevents attributing ultralong lifetimes solely to packing."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "Trace-isomer dependence is acknowledged, but no direct host binding, inclusion or identified host-guest photophysical pathway is established in the inspected main text."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E09"
+     ],
+     "rationale": "Keep the source's ICT solvatochromism and dark-TICT quenching interpretation with the solvent/aggregation confound stated."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "The selected evidence does not isolate a distinct radiative-rate or bright/dark-state balance explanation beyond the other explicitly assigned pathways."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E10"
+     ],
+     "rationale": "RTP is supported in crystals and TADF is supported in film/solution, with phase-specific lifetimes and impurity dependence distinguished."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

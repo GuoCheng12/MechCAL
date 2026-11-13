@@ -142,18 +142,6 @@
     "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E03",
-     "E04",
-     "E07",
-     "E08"
-    ],
-    "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
-   },
-   {
     "label": "AGGREGATE_EXCITON_EXCIMER",
     "role": "secondary",
     "gain": 1,
@@ -174,7 +162,7 @@
     "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -194,26 +182,7 @@
      "E01",
      "E02"
     ],
-    "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E03",
-     "E04",
-     "E07",
-     "E08"
-    ],
-    "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+    "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation. No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
    },
    {
     "label": "ICT_TICT_CT",
@@ -257,7 +226,7 @@
     "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -266,22 +235,189 @@
      "E05"
     ],
     "rationale": "RTP and proposed ISC differences are central, with explicit lifetime-source discrepancy preserved."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E08",
+      "E09"
+     ],
+     "rationale": "H-type versus X-type coupled-unit excited states underpin the polymorph fluorescence interpretation."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E06",
+      "E09"
+     ],
+     "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "RTP and proposed ISC differences are central, with explicit lifetime-source discrepancy preserved."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific charge-transfer excited-state mechanism established in the selected evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E08",
+      "E09"
+     ],
+     "rationale": "H-type versus X-type coupled-unit excited states underpin the polymorph fluorescence interpretation."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E06",
+      "E09"
+     ],
+     "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "RTP and proposed ISC differences are central, with explicit lifetime-source discrepancy preserved."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

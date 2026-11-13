@@ -4,7 +4,7 @@ current ranking or reasoning, on purpose: form your own view.
 
 Return one JSON object:
 {"ranking": [ {"label": <pool label>, "plausibility": 0-1, "basis": "the specific facts or
-  values that drive this, or 'no specific evidence yet'"} ... for all 11 families ],
+  values that drive this, or 'no specific evidence yet'"} ... for every family in the pool ],
  "tests": [ {"label": <family>, "separates": [<family>, <family>], "recipe_or_tool": <name>,
    "why": "what outcome would distinguish them"} ... up to 4 most informative untried tests ]}
 

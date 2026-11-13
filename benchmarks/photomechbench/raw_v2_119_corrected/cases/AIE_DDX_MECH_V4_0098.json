@@ -141,17 +141,6 @@
     "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E06"
-    ],
-    "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
-   },
-   {
     "label": "RADIATIVE_RATE_STATE_BALANCE",
     "role": "primary",
     "gain": 2,
@@ -164,7 +153,7 @@
     "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "secondary",
     "gain": 1,
     "evidence_ids": [
@@ -183,27 +172,7 @@
     "evidence_ids": [
      "E03"
     ],
-    "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E06"
-    ],
-    "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E05"
-    ],
-    "rationale": "Solvent-dependent rates raise a coordination possibility but do not establish a target binding mechanism."
+    "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism. No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
    },
    {
     "label": "ICT_TICT_CT",
@@ -248,7 +217,7 @@
     "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "secondary",
     "evidence_ids": [
@@ -257,22 +226,179 @@
      "E09"
     ],
     "rationale": "Preserve the explicitly proposed external heavy-atom ISC loss pathway with its tentative status and lack of detected phosphorescence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E04",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Preserve the explicitly proposed external heavy-atom ISC loss pathway with its tentative status and lack of detected phosphorescence."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E05"
+     ],
+     "rationale": "Solvent-dependent rates raise a coordination possibility but do not establish a target binding mechanism."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is established."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E06"
+     ],
+     "rationale": "H-like dimers have weak calculated coupling and are not identified as the main cause of the BAz-Cl kr increase; no positive J/excimer assignment."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E04",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Preserve the explicitly proposed external heavy-atom ISC loss pathway with its tentative status and lack of detected phosphorescence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

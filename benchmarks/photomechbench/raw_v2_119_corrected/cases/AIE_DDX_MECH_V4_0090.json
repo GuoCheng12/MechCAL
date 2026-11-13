@@ -125,30 +125,11 @@
     "gain": 2,
     "evidence_ids": [
      "E03",
-     "E04"
-    ],
-    "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E06"
-    ],
-    "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
+     "E04",
      "E05",
      "E06"
     ],
-    "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
+    "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on. The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
    }
   ],
   "mechanism_decisions": [
@@ -158,30 +139,11 @@
     "role": "primary",
     "evidence_ids": [
      "E03",
-     "E04"
-    ],
-    "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01",
-     "E03",
+     "E04",
+     "E05",
      "E06"
     ],
-    "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E01",
-     "E03"
-    ],
-    "rationale": "UPy self-complementary hydrogen-bonded polymerization is not demonstrated host-cavity/guest binding; acid disruption is a control."
+    "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on. The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
    },
    {
     "label": "ICT_TICT_CT",
@@ -221,30 +183,168 @@
     "rationale": "No additional radiative-rate or state-balance explanation is isolated by the selected evidence."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E05",
-     "E06"
-    ],
-    "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The source explicitly links longer E supramolecular polymers to restricted motion and PL turn-on."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "Hydrogen-bonded polymerization and insoluble aggregates constrain E and inhibit the reverse isomerization."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01",
+      "E03"
+     ],
+     "rationale": "UPy self-complementary hydrogen-bonded polymerization is not demonstrated host-cavity/guest binding; acid disruption is a control."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Hydrogen bonding and acid addition do not establish excited-state proton transfer."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific aggregate exciton or excimer mechanism is established; aggregation alone is insufficient."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No additional radiative-rate or state-balance explanation is isolated by the selected evidence."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "The source proposes a torsion-accessed CI; restricted photoisomerization is consistent with blocking that route. Finite-gap monomer scans and absent aggregate CI calculations limit this secondary assignment."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

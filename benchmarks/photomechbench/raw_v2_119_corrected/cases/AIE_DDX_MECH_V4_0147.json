@@ -144,17 +144,6 @@
   ],
   "reference_mechanisms": [
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E03",
-     "E06",
-     "E10"
-    ],
-    "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -181,16 +170,6 @@
      "E08"
     ],
     "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E07",
-     "E08"
-    ],
-    "rationale": "The proposed D4-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
    }
   ],
   "mechanism_decisions": [
@@ -199,25 +178,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "The source invokes protection and restriction of radical movement in PMMA, but does not resolve a specific internal rotational/vibrational suppression mechanism; do not infer RIM from polymer enhancement."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E03",
-     "E06",
-     "E10"
-    ],
-    "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    "rationale": "The source invokes protection and restriction of radical movement in PMMA, but does not resolve a specific internal rotational/vibrational suppression mechanism; do not infer RIM from polymer enhancement. No target-specific conical-intersection-mediated decay or restriction of access is established."
    },
    {
     "label": "ICT_TICT_CT",
@@ -262,30 +223,196 @@
     "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "primary",
-    "evidence_ids": [
-     "E07",
-     "E08"
-    ],
-    "rationale": "The proposed D4-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03",
+      "E06",
+      "E10"
+     ],
+     "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The proposed D4-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
+    }
+   ],
+   "primary_lost": true,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03",
+      "E06",
+      "E10"
+     ],
+     "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "Retain the authors' solvatochromic charge-transfer interpretation for photoactivated A without assuming TICT or transferring it to B."
+    },
+    {
+     "label": "PET_ET",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Preserve the proposed excited dopant-to-PMMA SET route as an enabling radical-generation mechanism, explicitly distinct from proof of emission-state origin."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The proposed D4-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "The source invokes protection and restriction of radical movement in PMMA, but does not resolve a specific internal rotational/vibrational suppression mechanism; do not infer RIM from polymer enhancement."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E03",
+      "E06",
+      "E10"
+     ],
+     "rationale": "PMMA is proposed to stabilize the photoinduced radicals and reduce quenching; neat-powder and polymer comparisons constrain this environment-specific effect."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "Retain the authors' solvatochromic charge-transfer interpretation for photoactivated A without assuming TICT or transferring it to B."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Preserve the proposed excited dopant-to-PMMA SET route as an enabling radical-generation mechanism, explicitly distinct from proof of emission-state origin."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The source invokes a high-doublet energy gap slowing IC to lower doublets, allowing radiative competition; no measured rate is asserted."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "The proposed D4-to-D0 emission belongs to the photogenerated radical cation, not the neutral legacy precursor. This is theory-supported source interpretation."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

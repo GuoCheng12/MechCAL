@@ -5,7 +5,7 @@ from dataclasses import replace
 
 import pytest
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime import MechCALOrchestrator, OrchestratorConfig
 from mechcal.runtime.boundary_decisions import required_pairs, validate_continuation, validate_ranking
 from mechcal.runtime.field_repair import correction_contract

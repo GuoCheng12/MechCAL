@@ -4,7 +4,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.schemas.decisions import PlannerAssessment
 from mechcal.schemas.evidence import EvidenceBasis, HypothesisStatus
 from mechcal.schemas.evidence_comparison import RankingUpdate

@@ -1,19 +1,27 @@
 {
  "release": "0.3.0",
- "status": "approved_by_author",
+ "status": "draft_pending_author",
  "created": "2026-11-11",
  "note": "Update only together with a deliberate rubric/prompt/schema/grounding revision; a mismatch fails tests.",
- "rubric_sha256": "02aadb8c05973d086807f6538653de3bafebbf2032e8ed461c1600e5cfae5fb4",
+ "rubric_sha256": "f20ef514de7c3e797a692c8930e06e361ac44bbad1dc8e156f14dbbc79093f04",
  "prompt_sha256": "9bd1ffd64607f592f26ab2ab76acfb8b7d37ea05919c5a8a0435dfebb0bbe2f1",
- "schema_sha256": "dbfcc3363b67887f983f629de5e4f1411876c8d9e4c466db2a47243ed88d1f64",
+ "schema_sha256": "5f1b7dafa7588d99528f5174723da48ddb8ea256105239de8fa9bbbc6388b5c3",
  "grounding_module_sha256": "91d052eae4f1c8b02e2ce761f03bd8ef0b5d277740b8ff46c3e3b1f9608676ac",
- "approved": "2026-11-13",
+ "approved": null,
  "history": [
   {
    "date": "2026-11-13",
    "change": "rubric status set to approved_by_author after the author's review; no route, condition or score changed",
    "fields": [
     "rubric_sha256"
+   ]
+  },
+  {
+   "date": "2026-11-13",
+   "change": "pool reduced from 11 to 7 families (author decision); RACI routes and the environment-restriction proxy merged into RIM, AGGREGATE definition widened, TRIPLET renamed TRIPLET_ISC_RTP_TADF without the metal-sensitization route, HOST_GUEST/SOKR/PACKING removed; awaiting the author's review (docs/family-reduction-review-zh.md)",
+   "fields": [
+    "rubric_sha256",
+    "schema_sha256"
    ]
   }
  ]

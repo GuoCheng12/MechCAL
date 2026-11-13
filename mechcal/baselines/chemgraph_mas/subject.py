@@ -24,7 +24,7 @@ from mechcal.baselines.chemgraph_mas.model import (
 )
 from mechcal.baselines.chemgraph_mas.schemas import PhotoMechOutput
 from mechcal.baselines.chemgraph_mas.tools import ChemGraphToolHarness
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.llm import OpenAICompatibleSettings, _parse_json_object
 
 PROMPT_VERSION = "2026-07-24"

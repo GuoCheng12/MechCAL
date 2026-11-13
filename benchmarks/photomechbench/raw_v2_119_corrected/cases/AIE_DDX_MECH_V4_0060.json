@@ -155,28 +155,6 @@
     "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01",
-     "E02",
-     "E04"
-    ],
-    "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E05",
-     "E06",
-     "E07"
-    ],
-    "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
-   },
-   {
     "label": "PET_ET",
     "role": "co_primary",
     "gain": 2,
@@ -208,29 +186,7 @@
      "E02",
      "E03"
     ],
-    "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01",
-     "E02",
-     "E04"
-    ],
-    "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E05",
-     "E06",
-     "E07"
-    ],
-    "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+    "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics. No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
    },
    {
     "label": "ICT_TICT_CT",
@@ -277,29 +233,213 @@
     "rationale": "Measured lifetimes/yields and derived kr/knr show changed apparent decay balance under Fe3+ binding."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [
      "E09"
     ],
     "rationale": "Fe3+ coordination/LMCT in this source is an electron-transfer quenching proposal, not evidence for emissive metal states, triplet transfer or lanthanide antenna behavior."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E04"
+     ],
+     "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03"
+     ],
+     "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E04"
+     ],
+     "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+    },
+    {
+     "label": "PET_ET",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E05",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Preserve explicit PET/LMCT assignment for Fe3+-induced turn-off, but the source alternates between PET and PET inhibition and does not uniquely establish transfer dynamics."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "Measured lifetimes/yields and derived kr/knr show changed apparent decay balance under Fe3+ binding."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03"
+     ],
+     "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E04"
+     ],
+     "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "The explicitly proposed process is ligand-to-metal electron-transfer quenching, recorded under PET_ET; no separate intramolecular TICT mechanism is established."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E05",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Preserve explicit PET/LMCT assignment for Fe3+-induced turn-off, but the source alternates between PET and PET inhibition and does not uniquely establish transfer dynamics."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "Measured lifetimes/yields and derived kr/knr show changed apparent decay balance under Fe3+ binding."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Fe3+ coordination/LMCT in this source is an electron-transfer quenching proposal, not evidence for emissive metal states, triplet transfer or lanthanide antenna behavior."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

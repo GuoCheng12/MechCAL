@@ -155,15 +155,6 @@
     "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01"
-    ],
-    "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -185,7 +176,7 @@
     "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -195,18 +186,6 @@
      "E10"
     ],
     "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E05",
-     "E06",
-     "E07",
-     "E09"
-    ],
-    "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
    }
   ],
   "mechanism_decisions": [
@@ -219,23 +198,7 @@
      "E03",
      "E10"
     ],
-    "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01"
-    ],
-    "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission. No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
    },
    {
     "label": "ICT_TICT_CT",
@@ -280,7 +243,7 @@
     "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -290,27 +253,216 @@
      "E10"
     ],
     "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E05",
-     "E06",
-     "E07",
-     "E09"
-    ],
-    "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07",
+      "E09"
+     ],
+     "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E10"
+     ],
+     "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E08"
+     ],
+     "rationale": "S2 CT character is calculated by NTO analysis."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03",
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07",
+      "E09"
+     ],
+     "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E10"
+     ],
+     "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E08"
+     ],
+     "rationale": "S2 CT character is calculated by NTO analysis."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E03",
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07",
+      "E09"
+     ],
+     "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

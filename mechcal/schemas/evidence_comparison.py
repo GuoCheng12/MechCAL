@@ -4,7 +4,7 @@ from typing import Literal
 
 from pydantic import Field
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.schemas.base import MechCALModel
 from mechcal.schemas.boundary_decisions import BoundaryComparison, CandidateBasis
 from mechcal.schemas.hypothesis_tests import HypothesisTest, LeadingComparison

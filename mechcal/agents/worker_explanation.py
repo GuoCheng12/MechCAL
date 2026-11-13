@@ -5,7 +5,7 @@ from pydantic import ValidationError
 
 from mechcal.agents.observation_view import observation_view
 from mechcal.capabilities.schemas import CapabilitySpec
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.llm import OpenAIJsonClient
 from mechcal.runtime.prompts import load_prompt
 from mechcal.runtime.question_changes import public_questions

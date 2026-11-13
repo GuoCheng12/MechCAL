@@ -1,6 +1,7 @@
 """One bounded association review per completed computation group."""
 
-from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
+from mechcal.mechanism_pool import eleven_family_definitions as mechanism_definitions
 from mechcal.runtime import command_followup as followup
 from mechcal.runtime import command_query_state as query_state
 from mechcal.runtime import command_numeric as numeric

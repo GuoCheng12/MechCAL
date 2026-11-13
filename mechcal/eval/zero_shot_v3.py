@@ -10,7 +10,7 @@ from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from mechcal.eval.prompts import load_eval_prompt
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.llm import OpenAIJsonClient
 
 PROMPT_NAME = "mechanism_evidence_support_judge_v3_zero_shot.md"

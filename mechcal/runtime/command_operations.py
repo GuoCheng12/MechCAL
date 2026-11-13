@@ -6,7 +6,7 @@ from copy import copy, deepcopy
 
 from pydantic import ValidationError
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.command_memory import READ_BYTES, digest, json_bytes, pointer_child, record_layout, result_report, selection_coverage
 from mechcal.runtime.command_views import workflow_records
 from mechcal.schemas import DispatchRequest, FinalAnswer, MechanismPrediction

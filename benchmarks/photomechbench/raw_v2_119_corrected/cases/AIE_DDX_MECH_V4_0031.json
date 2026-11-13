@@ -132,28 +132,6 @@
   ],
   "reference_mechanisms": [
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E04"
-    ],
-    "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E07",
-     "E08",
-     "E09"
-    ],
-    "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -181,29 +159,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "No target-specific restriction of internal motion is established in the selected evidence. Whole-molecule reorientation or aggregation alone is insufficient."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E04"
-    ],
-    "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E07",
-     "E08",
-     "E09"
-    ],
-    "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+    "rationale": "No target-specific restriction of internal motion is established in the selected evidence. Whole-molecule reorientation or aggregation alone is insufficient. No target-specific conical-intersection calculation or assignment is established in the selected evidence."
    },
    {
     "label": "ICT_TICT_CT",
@@ -248,27 +204,192 @@
     "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04"
+     ],
+     "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04"
+     ],
+     "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05"
+     ],
+     "rationale": "Preserve the source's ICT interpretation of environment-dependent monomer photophysics, without promoting it to verified TICT."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E06",
+      "E08"
+     ],
+     "rationale": "The central source explanation is reversible conversion of H-aggregates and monomers. The H assignment is spectroscopic."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific restriction of internal motion is established in the selected evidence. Whole-molecule reorientation or aggregation alone is insufficient."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04"
+     ],
+     "rationale": "Micellar environments change dye aggregation and rotational mobility. This enabling environmental effect overlaps with the aggregate mechanism and is not independent proof of internal RIM."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "The source proposes alpha-cyclodextrin binding SDS, indirectly restoring dye aggregates. This system-level label is provisional under the existing broad family definition; it does not denote direct DMN-Bu inclusion."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05"
+     ],
+     "rationale": "Preserve the source's ICT interpretation of environment-dependent monomer photophysics, without promoting it to verified TICT."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer mechanism is established. Changing solution pH or ground-state protonation alone does not establish ESIPT."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer pathway is established by the selected source evidence."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E06",
+      "E08"
+     ],
+     "rationale": "The central source explanation is reversible conversion of H-aggregates and monomers. The H assignment is spectroscopic."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

@@ -17,7 +17,7 @@ from mechcal.capabilities.discovery import DiscoveryEventSink, ToolDiscoverySess
 from mechcal.capabilities.evidence_guide import (
     compact_ability_evidence_guide,
 )
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.public_ids import public_case_id_from_metadata
 from mechcal.runtime.agent_runtime import BaseAgentRuntime
 from mechcal.runtime.context import PlannerContextView

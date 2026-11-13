@@ -6,7 +6,7 @@ import pytest
 from jsonschema import Draft202012Validator
 
 from mechcal.agents.command_tools import parse_tool_turn, tool_contracts
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime import command_followup as f, command_hypotheses as h
 from mechcal.runtime.command_comparison import question_evidence_view, question_source_refs
 from mechcal.runtime.command_impact_review import review_material, validate_suggestions

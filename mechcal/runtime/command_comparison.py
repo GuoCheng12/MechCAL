@@ -1,6 +1,6 @@
 """Shared-source comparison views, derived from saved records without ranking science."""
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.command_memory import digest, json_bytes
 from mechcal.runtime.command_operations import protocol, record_index
 from mechcal.runtime.command_review import review_execution_context

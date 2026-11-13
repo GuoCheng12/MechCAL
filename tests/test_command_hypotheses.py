@@ -8,7 +8,7 @@ import pytest
 from pydantic import ValidationError
 
 from mechcal.agents.command_tools import ask_tools, parse_tool_turn, replay_exchange, tool_contracts
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime import command_hypotheses as h
 from mechcal.runtime.command_experiments import finish_member, next_member
 from mechcal.runtime.command_loop import _apply, _comment, _execute, _hypothesis_followup, _local_error, planner_payload, save

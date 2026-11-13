@@ -5,7 +5,7 @@ import time
 
 from mechcal.agents.planner_references import PlannerReferences
 from mechcal.agents.ranking_explanations import explain_ranking
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.judgment_commands import materialize_judgment, snapshot_feedback
 from mechcal.agents.command_repair import CommandRepairProducer
 from mechcal.runtime.question_changes import CREATE_FIELDS

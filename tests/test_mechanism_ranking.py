@@ -19,6 +19,7 @@ from mechcal.eval.mechanism_baselines import (
     prediction_payload_from_structure_llm_mechanism_json,
 )
 from mechcal.eval.mechanism_ranking import (
+    ELEVEN_FAMILY_POOL,
     MECHANISM_POOL,
     LLMMechanismEvidenceSupportJudge,
     _support_judge_settings,
@@ -226,8 +227,8 @@ def test_mechanism_evidence_rubric_matches_pool() -> None:
     rubric = load_mechanism_evidence_rubric()
 
     assert rubric["mechanism_evidence_rubric_version"] == "v2"
-    assert tuple(rubric["mechanism_pool"]) == MECHANISM_POOL
-    assert set(rubric["labels"]) == set(MECHANISM_POOL)
+    assert tuple(rubric["mechanism_pool"]) == ELEVEN_FAMILY_POOL  # the 0.2.0 rubric stays on the 11-family pool
+    assert set(rubric["labels"]) == set(ELEVEN_FAMILY_POOL)
 
 
 def test_sharded_mas_runner_preserves_global_public_case_ids(tmp_path) -> None:
@@ -282,7 +283,7 @@ def test_structure_llm_mechanism_payload_is_public_only() -> None:
     encoded = json.dumps(payload, ensure_ascii=False)
 
     assert payload["case_id"] == "CASE_001"
-    assert payload["mechanism_pool"] == list(MECHANISM_POOL)
+    assert payload["mechanism_pool"] == list(ELEVEN_FAMILY_POOL)  # 0.2.0 structure-LLM baseline
     assert "AIE_DDX_SECRET_001" not in encoded
     assert "SECRET_REFERENCE_TOKEN" not in encoded
     assert "reference_mechanisms" not in encoded
@@ -398,7 +399,7 @@ def test_structure_llm_uses_bounded_grammar_for_retry_output() -> None:
     assert guided_grammar.count("prediction1") == 2
     assert guided_grammar.count("prediction2") == 2
     assert guided_grammar.count("prediction3") == 2
-    assert all(label in guided_grammar for label in MECHANISM_POOL)
+    assert all(label in guided_grammar for label in ELEVEN_FAMILY_POOL)
 
 
 def test_chem_r_native_mode_preserves_tags_and_raw_completion() -> None:
@@ -497,14 +498,14 @@ def test_native_thinking_json_adapter_only_normalizes_equivalent_fields() -> Non
 def test_chem_r_tagged_regex_requires_three_ranked_predictions() -> None:
     regex = _mechanism_prediction_tagged_regex()
 
-    assert all(label in regex for label in MECHANISM_POOL)
+    assert all(label in regex for label in ELEVEN_FAMILY_POOL)  # 0.2.0 baseline
     assert "Finding: " in regex
     assert " Warrant: " in regex
     assert " Boundary: " in regex
-    assert re.fullmatch(regex, _tagged_chem_r_response(MECHANISM_POOL[:3]))
+    assert re.fullmatch(regex, _tagged_chem_r_response(ELEVEN_FAMILY_POOL[:3]))
     assert not re.fullmatch(
         regex,
-        _tagged_chem_r_response([MECHANISM_POOL[0]] * 3),
+        _tagged_chem_r_response([ELEVEN_FAMILY_POOL[0]] * 3),
     )
 
 
@@ -976,7 +977,7 @@ def test_common_prior_is_validation_bound_comparator() -> None:
 
     assert [item["label"] for item in predictions] == [
         "RIM_RIR_RIV",
-        "PACKING_HOST_MATRIX_CONFINEMENT",
+        "RADIATIVE_RATE_STATE_BALANCE",
         "ICT_TICT_CT",
     ]
     assert all(item["claim_status"] == "candidate_requires_validation" for item in predictions)

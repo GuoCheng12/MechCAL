@@ -130,17 +130,6 @@
     "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E02",
-     "E04",
-     "E06"
-    ],
-    "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -161,7 +150,7 @@
     "rationale": "Temperature changes the relative emissive-state contributions in the source account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "primary",
     "gain": 2,
     "evidence_ids": [
@@ -181,25 +170,7 @@
      "E02",
      "E03"
     ],
-    "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E02",
-     "E04",
-     "E06"
-    ],
-    "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded. Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -246,7 +217,7 @@
     "rationale": "Temperature changes the relative emissive-state contributions in the source account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "primary",
     "evidence_ids": [
@@ -255,25 +226,192 @@
      "E06"
     ],
     "rationale": "Long-lived and temperature-dependent spectra support the source's RTP/dual-phosphorescence assignment."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E06",
-     "E08"
-    ],
-    "rationale": "Two phosphorescence bands do not establish emission from T2; the source's final interpretation uses T1 conformational minima."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Retain the calculated dark singlet CT channel, not CT phosphorescence inferred solely from donor/acceptor motifs."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Temperature changes the relative emissive-state contributions in the source account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Long-lived and temperature-dependent spectra support the source's RTP/dual-phosphorescence assignment."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "The authors use motion restriction to explain AIE across TPA1-5, with solvent effects explicitly bounded."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "Aggregate and rigid PMMA environments alter emission and state communication; no TPA2 single crystal is claimed."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "Retain the calculated dark singlet CT channel, not CT phosphorescence inferred solely from donor/acceptor motifs."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03",
+      "E06"
+     ],
+     "rationale": "The two-band behavior also appears in PMMA and is assigned mainly to conformational triplet states, not a demonstrated excimer."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Temperature changes the relative emissive-state contributions in the source account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E02",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Long-lived and temperature-dependent spectra support the source's RTP/dual-phosphorescence assignment."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E06",
+      "E08"
+     ],
+     "rationale": "Two phosphorescence bands do not establish emission from T2; the source's final interpretation uses T1 conformational minima."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

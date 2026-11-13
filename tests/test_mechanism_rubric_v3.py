@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from mechcal.eval import mechanism_ranking
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # the 0.2.0 rubric files stay on the 11-family pool
 
 
 RUBRICS = Path(mechanism_ranking.__file__).parent / "rubrics"

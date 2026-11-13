@@ -33,7 +33,7 @@ from mechcal.capabilities.evidence_guide import (
     compact_ability_evidence_guide,
 )
 from mechcal.compat import load_case_run, write_legacy_report
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime import (
     MechCALOrchestrator,
     BaseAgentRuntime,

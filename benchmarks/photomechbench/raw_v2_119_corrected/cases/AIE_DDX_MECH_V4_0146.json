@@ -133,23 +133,15 @@
   "reference_mechanisms": [
    {
     "label": "RIM_RIR_RIV",
-    "role": "secondary",
-    "gain": 1,
+    "role": "co_primary",
+    "gain": 2,
     "evidence_ids": [
      "E02",
      "E03",
+     "E05",
      "E09"
     ],
-    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E03"
-    ],
-    "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE. Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
    },
    {
     "label": "PET_ET",
@@ -170,55 +162,20 @@
      "E08"
     ],
     "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E02",
-     "E05"
-    ],
-    "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E06",
-     "E07"
-    ],
-    "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
    }
   ],
   "mechanism_decisions": [
    {
     "label": "RIM_RIR_RIV",
     "status": "supported",
-    "role": "secondary",
+    "role": "co_primary",
     "evidence_ids": [
      "E02",
      "E03",
+     "E05",
      "E09"
     ],
-    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E03"
-    ],
-    "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE. Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
    },
    {
     "label": "ICT_TICT_CT",
@@ -262,33 +219,209 @@
     "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E02",
-     "E05"
-    ],
-    "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "primary",
-    "evidence_ids": [
-     "E06",
-     "E07"
-    ],
-    "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E06",
+      "E07"
+     ],
+     "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E09"
+     ],
+     "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+    },
+    {
+     "label": "PET_ET",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E08"
+     ],
+     "rationale": "Interfragment electron exchange is explicitly proposed in the computed relaxation mechanism. This family is used in its broad electron-transfer sense, not as experimentally verified PET."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E04",
+      "E06",
+      "E08"
+     ],
+     "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E05"
+     ],
+     "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E06",
+      "E07"
+     ],
+     "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E09"
+     ],
+     "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E08"
+     ],
+     "rationale": "Interfragment electron exchange is explicitly proposed in the computed relaxation mechanism. This family is used in its broad electron-transfer sense, not as experimentally verified PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E04",
+      "E06",
+      "E08"
+     ],
+     "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E05"
+     ],
+     "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E06",
+      "E07"
+     ],
+     "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

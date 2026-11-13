@@ -1,6 +1,6 @@
 """Attach scoped execution facts to reviewed sources, not inferred conditions."""
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.agents.observation_view import observation_view
 from mechcal.runtime.command_context import source_card
 from mechcal.runtime.command_memory import digest, json_bytes, pointer_child, result_report, source_provenance

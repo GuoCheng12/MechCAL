@@ -4,7 +4,7 @@ import hashlib
 import json
 from copy import deepcopy
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.boundary_decisions import required_pairs, validate_ranking
 from mechcal.runtime.evidence_comparison import argument_content
 from mechcal.runtime.hypothesis_tests import validate_leading

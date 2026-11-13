@@ -5,7 +5,7 @@ from copy import deepcopy
 import pytest
 
 from mechcal.agents.worker_explanation import explain_result
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.case_memory import CaseMemoryStore
 from mechcal.runtime.evidence_impact import impact_context, validate_impact_responses
 from mechcal.runtime.judgment_commands import materialize_judgment

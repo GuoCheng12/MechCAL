@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+# The three most frequent reference families on the 7-family pool (119 cases after the family
+# mapping: RIM 68, RADIATIVE 61, ICT 59).
 COMMON_PRIOR_AT3_LABELS = (
     "RIM_RIR_RIV",
-    "PACKING_HOST_MATRIX_CONFINEMENT",
+    "RADIATIVE_RATE_STATE_BALANCE",
     "ICT_TICT_CT",
 )
 

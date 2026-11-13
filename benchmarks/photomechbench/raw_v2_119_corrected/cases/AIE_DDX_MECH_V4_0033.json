@@ -154,32 +154,6 @@
      "E07"
     ],
     "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E06",
-     "E09"
-    ],
-    "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E01",
-     "E04",
-     "E05",
-     "E08",
-     "E09",
-     "E10"
-    ],
-    "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
    }
   ],
   "mechanism_decisions": [
@@ -193,33 +167,7 @@
      "E06",
      "E07"
     ],
-    "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E06",
-     "E09"
-    ],
-    "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E01",
-     "E04",
-     "E05",
-     "E08",
-     "E09",
-     "E10"
-    ],
-    "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+    "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect. No target-specific conical-intersection calculation or assignment is established in the selected evidence."
    },
    {
     "label": "ICT_TICT_CT",
@@ -257,27 +205,193 @@
     "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06",
+      "E09"
+     ],
+     "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
+    }
+   ],
+   "out_of_pool_labels": [
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E04",
+      "E05",
+      "E08",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E06",
+      "E07"
+     ],
+     "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06",
+      "E09"
+     ],
+     "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E04",
+      "E05",
+      "E08",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E06",
+      "E07"
+     ],
+     "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06",
+      "E09"
+     ],
+     "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E04",
+      "E05",
+      "E08",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific charge-transfer assignment or diagnostic comparison is established in the selected evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer mechanism is established. Changing solution pH or ground-state protonation alone does not establish ESIPT."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer pathway is established by the selected source evidence."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Particle formation and AIE alone do not establish H/J excitonic or excimer emission; no such target assignment is established here."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

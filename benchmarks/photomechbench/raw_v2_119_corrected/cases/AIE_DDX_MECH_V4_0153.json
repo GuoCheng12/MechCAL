@@ -144,18 +144,6 @@
      "E08"
     ],
     "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E04",
-     "E05"
-    ],
-    "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
    }
   ],
   "mechanism_decisions": [
@@ -163,22 +151,10 @@
     "label": "RIM_RIR_RIV",
     "status": "not_established",
     "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific suppression of internal rotations or vibrations is established by the selected evidence; rigidity or emission enhancement alone is insufficient."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "The selected source does not establish a target packing, host or matrix confinement mechanism."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "No target-specific suppression of internal rotations or vibrations is established by the selected evidence; rigidity or emission enhancement alone is insufficient. Diabatic MECP-based mode selection and coupled-state dynamics do not independently establish a CI-mediated emission/quenching mechanism; ADC(2) CI topology is explicitly limited."
    },
    {
     "label": "ICT_TICT_CT",
@@ -223,34 +199,163 @@
     "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E09"
-    ],
-    "rationale": "Diabatic MECP-based mode selection and coupled-state dynamics do not independently establish a CI-mediated emission/quenching mechanism; ADC(2) CI topology is explicitly limited."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E04",
-     "E05"
-    ],
-    "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific suppression of internal rotations or vibrations is established by the selected evidence; rigidity or emission enhancement alone is insufficient."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "The selected source does not establish a target packing, host or matrix confinement mechanism."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Diabatic MECP-based mode selection and coupled-state dynamics do not independently establish a CI-mediated emission/quenching mechanism; ADC(2) CI topology is explicitly limited."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "The source assigns S2-to-S0 anti-Kasha emission maintained by S1/S2 exchange; the present work simulates early-time populations rather than measuring or propagating radiative emission."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

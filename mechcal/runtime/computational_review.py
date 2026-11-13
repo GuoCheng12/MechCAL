@@ -4,7 +4,7 @@ from mechcal.runtime.command_memory import digest
 from mechcal.runtime.command_operations import check_owner, protocol, reject
 from mechcal.runtime.command_review_workflow import comparison_options
 from mechcal.runtime.command_views import ordered_ranking
-from mechcal.mechanism_pool import mechanism_definitions
+from mechcal.mechanism_pool import eleven_family_definitions as mechanism_definitions  # 0.2.0 workflow
 from mechcal.runtime.command_comparison import comparison_view, question_evidence_view
 from mechcal.runtime import command_investigation as investigation
 from mechcal.runtime import execution_inventory

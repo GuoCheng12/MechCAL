@@ -142,17 +142,6 @@
     "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
-   },
-   {
     "label": "RADIATIVE_RATE_STATE_BALANCE",
     "role": "co_primary",
     "gain": 2,
@@ -163,7 +152,7 @@
     "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -185,25 +174,7 @@
      "E02",
      "E03"
     ],
-    "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone. No target-specific conical-intersection-mediated decay or restriction of access is established."
    },
    {
     "label": "ICT_TICT_CT",
@@ -244,7 +215,7 @@
     "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -255,22 +226,177 @@
      "E08"
     ],
     "rationale": "Persistent pure-organic phosphorescence is supported for compound 2 (201 ms, 17.7%). The family is RTP/ISC, not metal emission or TADF."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E04",
+      "E09"
+     ],
+     "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Persistent pure-organic phosphorescence is supported for compound 2 (201 ms, 17.7%). The family is RTP/ISC, not metal emission or TADF."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "Preserve the explicit series-level proposal of vibration suppression in crystals; this is not inferred from AIE terminology alone."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Crystallization is the source's enabling rigidification and protection condition for ambient RTP; low-temperature noncrystalline emission bounds the claim."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E04",
+      "E09"
+     ],
+     "rationale": "The main mechanistic design argument is orbital-character control of the phosphorescence radiative rate while preserving ISC efficiency; mFDBP is explicitly included in the calculated subgroup."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Persistent pure-organic phosphorescence is supported for compound 2 (201 ms, 17.7%). The family is RTP/ISC, not metal emission or TADF."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated decay or restriction of access is established."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state or anti-Kasha emission assignment is established for this target in the selected evidence."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

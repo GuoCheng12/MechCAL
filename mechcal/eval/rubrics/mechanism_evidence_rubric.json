@@ -1,22 +1,18 @@
 {
  "mechanism_evidence_rubric_version": "0.3.0",
- "status": "approved_by_author",
- "approved": "2026-11-13",
+ "status": "draft_pending_author",
+ "approved": null,
  "based_on": "0.2.0 rubric (mechanism_evidence_rubric_v3.json)",
  "revision_date": "2026-11-11",
  "revision_scope": "Keep the 0.2.0 route and condition text. Add per-condition evidence requirements (which claim kinds may satisfy each condition), derived structure-only and closed-book ceilings, and the Layer A grounding gate. Experimental observations are not available in the SMILES-only protocol; observation-only conditions are retained for a future condition-aware subset.",
  "mechanism_pool": [
   "RIM_RIR_RIV",
-  "PACKING_HOST_MATRIX_CONFINEMENT",
-  "HOST_GUEST_INTERACTION",
   "ICT_TICT_CT",
   "ESIPT_PT",
   "PET_ET",
   "AGGREGATE_EXCITON_EXCIMER",
   "RADIATIVE_RATE_STATE_BALANCE",
-  "TRIPLET_METAL_ENERGY_TRANSFER",
-  "RACI_CI_ACCESS",
-  "SOKR_ANTI_KASHA"
+  "TRIPLET_ISC_RTP_TADF"
  ],
  "support_score_scale": {
   "strong": 1,
@@ -110,14 +106,14 @@
  },
  "labels": {
   "RIM_RIR_RIV": {
-   "mechanism_meaning": "Restriction of intramolecular motion, rotation, or vibration that suppresses nonradiative channels.",
+   "mechanism_meaning": "Restriction of intramolecular motion, rotation, or vibration that suppresses nonradiative channels, whether the restriction comes from the molecule itself or from its packing, host, or matrix; includes restricted access to a conical intersection along that motion.",
    "strong_support": {
     "any_of": [
      {
       "id": "motion_restriction_and_consequence",
       "all_of": [
        {
-        "text": "A case-specific structural, computational, or observational finding shows restriction of an identified intramolecular motion under specified conditions.",
+        "text": "A case-specific structural, computational, or observational finding shows restriction of an identified intramolecular motion under specified conditions (intramolecular crowding, or a specified contact, packing, host, or matrix environment).",
         "accepts": [
          "computed",
          "observation"
@@ -142,6 +138,40 @@
        },
        {
         "text": "Explain how restricting that coordinate could limit the identified pathway. A full unrestricted-versus-restricted dynamics comparison is not mandatory.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "crossing_access_and_restriction",
+      "all_of": [
+       {
+        "text": "An appropriate calculation identifies a conical intersection or relevant excited/ground-state crossing connected to a specific molecular relaxation coordinate.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain how that coordinate supports crossing-mediated relaxation. If reduced access is claimed, provide a relevant constraint or coordinate-access finding, without requiring a full solution-versus-aggregate comparison.",
+        "accepts": [
+         "warrant"
+        ]
+       }
+      ]
+     },
+     {
+      "id": "nonadiabatic_pathway",
+      "all_of": [
+       {
+        "text": "Nonadiabatic dynamics or comparable excited-state analysis supports a crossing-mediated relaxation route for the molecule.",
+        "accepts": [
+         "computed"
+        ]
+       },
+       {
+        "text": "Explain the relevant motion or access mechanism. Evidence for a restriction claim must concern restricted access, but a complete emission-yield calculation or a second environmental simulation is not mandatory.",
         "accepts": [
          "warrant"
         ]
@@ -187,68 +217,9 @@
         ]
        }
       ]
-     }
-    ]
-   },
-   "zero_support_examples": [
-    "Only an AIE label, aromatic rings, phenyl groups, or a rotor count is supplied without a case-specific motion-to-relaxation argument.",
-    "Only fluorescence enhancement or a proposed viscosity experiment is supplied, without a finding connected to a particular intramolecular motion."
-   ],
-   "confounder_boundaries": [
-    "Packing or host confinement can also be supported by the same evidence. RIM requires its own link to a specific intramolecular motion.",
-    "Restricted motion does not by itself establish a conical intersection. RACI requires a separate coordinate-to-crossing argument."
-   ],
-   "ceilings": {
-    "structure_only": 0.5,
-    "closed_book_with_computation": 1.0,
-    "with_observations": 1.0
-   }
-  },
-  "PACKING_HOST_MATRIX_CONFINEMENT": {
-   "mechanism_meaning": "External packing, host, matrix, framework, pressure, or morphology constrains structure or nonradiative channels.",
-   "strong_support": {
-    "any_of": [
-     {
-      "id": "environment_structure_and_emission",
-      "all_of": [
-       {
-        "text": "A case-specific structural or computational finding identifies an external packing, host, matrix, framework, pressure, or morphology constraint and what it constrains.",
-        "accepts": [
-         "computed",
-         "observation"
-        ]
-       },
-       {
-        "text": "Explain how that constraint can affect a relevant molecular motion or emission channel. An additional measured emission change or matched environmental control is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
      },
      {
-      "id": "environment_switching",
-      "all_of": [
-       {
-        "text": "A comparison of specified polymorphs, matrices, pressures, or other external conditions documents a structural or morphological change alongside an emission response.",
-        "accepts": [
-         "observation"
-        ]
-       },
-       {
-        "text": "Explain the connection between the environmental change and the response. Full decomposition of the emission mechanism is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "partial_support": {
-    "any_of": [
-     {
-      "id": "specific_confinement_proxy",
+      "id": "environment_constraint_proxy",
       "all_of": [
        {
         "text": "Identify a concrete contact, steric constraint, free-volume feature, or environment-dependent structural finding for this molecule.",
@@ -258,7 +229,7 @@
         ]
        },
        {
-        "text": "Explain what the proposed external environment could constrain and why that constraint is relevant to emission, without claiming an unobserved packing arrangement.",
+        "text": "Explain which intramolecular motion that environment could restrict and why the restriction is relevant to nonradiative decay, without claiming an unobserved packing arrangement.",
         "accepts": [
          "warrant"
         ]
@@ -266,110 +237,19 @@
       ]
      },
      {
-      "id": "specific_structure_based_hypothesis",
+      "id": "coordinate_linked_crossing_proxy",
       "all_of": [
        {
-        "text": "Identify particular structural sites or geometry that could enable an external contact or confinement effect.",
+        "text": "Identify a specific torsional, flapping, puckering, ring-opening, or other coordinate in this molecule.",
         "accepts": [
-         "structural"
-        ]
-       },
-       {
-        "text": "Explain the proposed contact and the molecular freedom or emission channel it could affect; aromaticity, planarity, or aggregate propensity alone is insufficient.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "zero_support_examples": [
-    "Only the existence of a crystal, solid, MOF, host, or aggregate is supplied, with no specific environmental constraint argument.",
-    "Only intramolecular flexibility or fluorescence enhancement is supplied without a connection to an external constraint."
-   ],
-   "confounder_boundaries": [
-    "A host-induced restriction may support both this family and RIM if each link is established.",
-    "Host presence does not establish guest binding. Packing contacts do not by themselves establish a new aggregate excited state."
-   ],
-   "ceilings": {
-    "structure_only": 0.5,
-    "closed_book_with_computation": 1.0,
-    "with_observations": 1.0
-   }
-  },
-  "HOST_GUEST_INTERACTION": {
-   "mechanism_meaning": "Guest molecules, gases, solvents, ions, or analytes enter or bind a host, pore, or cavity and alter emission.",
-   "strong_support": {
-    "any_of": [
-     {
-      "id": "binding_and_emission",
-      "all_of": [
-       {
-        "text": "Binding, inclusion, occupancy, adsorption, or interaction evidence identifies the relevant host/receptor and guest pair.",
-        "accepts": [
-         "observation"
-        ]
-       },
-       {
-        "text": "Explain how the specific interaction can affect the emissive unit. Direct measurement of the entire binding-to-emission chain is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "computed_interaction_and_consequence",
-      "all_of": [
-       {
-        "text": "A calculation supports a relevant interaction for a specified host-guest pair through contact geometry together with an interaction or binding analysis, rather than just a proposed pose.",
-        "accepts": [
+         "structural",
          "computed"
         ]
        },
        {
-        "text": "Explain how that interaction can affect a chromophore, motion, or electronic property relevant to emission. An additional before/after emission calculation is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "partial_support": {
-    "any_of": [
-     {
-      "id": "specific_binding_hypothesis",
-      "all_of": [
-       {
-        "text": "Identify a concrete receptor, cavity, or binding site in the molecule and a specified or explicitly hypothetical guest interaction.",
-        "accepts": [
-         "structural"
-        ]
-       },
-       {
-        "text": "Explain how that interaction could affect the emissive unit, without presenting hypothetical binding as an observed event.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "guest_response_proxy",
-      "all_of": [
-       {
-        "text": "Provide a case-specific guest-dependent response or contact finding.",
+        "text": "Provide a coordinate-dependent state-gap/electronic finding, or an explicit case-specific explanation linking that coordinate to approach toward a crossing.",
         "accepts": [
          "computed",
-         "observation"
-        ]
-       },
-       {
-        "text": "Explain its connection to binding or inclusion while direct binding evidence or the emission consequence remains incomplete.",
-        "accepts": [
          "warrant"
         ]
        }
@@ -378,12 +258,15 @@
     ]
    },
    "zero_support_examples": [
-    "Only sensing activity, a cavity, a MOF label, or an unspecified ion-binding motif is supplied without a concrete interaction-to-emission argument.",
-    "The claimed contact is contradicted by supplied accessibility or binding results, and no other eligible interaction evidence remains."
+    "Only an AIE label, aromatic rings, phenyl groups, or a rotor count is supplied without a case-specific motion-to-relaxation argument.",
+    "Only fluorescence enhancement or a proposed viscosity experiment is supplied, without a finding connected to a particular intramolecular motion.",
+    "Only the existence of a crystal, solid, host, or aggregate is supplied, with no identified motion that it restricts.",
+    "A brightness change or an isolated energy gap is called a conical intersection without a relevant coordinate or crossing-access argument."
    ],
    "confounder_boundaries": [
-    "Polarity, pressure, viscosity, and matrix changes can accompany guest exposure. Guest response alone does not establish binding.",
-    "A binding event can also alter PET, CT, or RIM. Support for this family does not exclude those downstream mechanisms."
+    "Restriction may come from the molecule itself or from a specified contact, packing, host, or matrix; either counts when the restricted motion is identified. A contact that changes intermolecular electronic coupling rather than a motion is evidence for AGGREGATE_EXCITON_EXCIMER, not for this family.",
+    "Restricted motion does not by itself establish a conical intersection. A claim about crossing access needs the coordinate-to-crossing link of the crossing routes; without it, keep the claim to motion restriction.",
+    "Absence of explicit crossing/pathway evidence prevents strong support through the crossing routes but does not erase a valid coordinate-linked proxy. The judge must keep a proxy distinct from a located conical intersection."
    ],
    "ceilings": {
     "structure_only": 0.5,
@@ -677,7 +560,7 @@
    }
   },
   "AGGREGATE_EXCITON_EXCIMER": {
-   "mechanism_meaning": "Aggregate exciton, H/J aggregation, excimer, exciplex, or new intermolecular excited-state emission.",
+   "mechanism_meaning": "Intermolecular electronic interaction in aggregates, crystals, or other condensed phases: aggregate excitons, H/J coupling, excimers, exciplexes, or new intermolecular excited-state emission, including packing-dependent changes of that coupling.",
    "strong_support": {
     "any_of": [
      {
@@ -758,11 +641,12 @@
    },
    "zero_support_examples": [
     "Only aggregate formation, DLS particle size, aromaticity, or brighter aggregate emission is supplied without a specific intermolecular excited-state argument.",
-    "Generic pi-stacking or contact language is presented as proof of an excimer without case-specific interacting features or electronic evidence."
+    "Generic pi-stacking or contact language is presented as proof of an excimer without case-specific interacting features or electronic evidence.",
+    "Only the existence of a crystal, solid, host, or aggregate is supplied, with no specific intermolecular excited-state argument."
    ],
    "confounder_boundaries": [
     "Packing contacts can support a partial aggregate-state argument but are not independently sufficient for strong support.",
-    "The same aggregate may involve confinement, RIM, and excitonic effects. Score the evidence for each link separately."
+    "The same aggregate may involve restricted motion (RIM_RIR_RIV) and excitonic effects. Score the evidence for each link separately."
    ],
    "ceilings": {
     "structure_only": 0.5,
@@ -847,8 +731,8 @@
     "with_observations": 1.0
    }
   },
-  "TRIPLET_METAL_ENERGY_TRANSFER": {
-   "mechanism_meaning": "Triplet photophysics, RTP, TADF, heavy atom effect, lanthanide antenna effect, ligand-to-metal transfer, or metal-centered emission.",
+  "TRIPLET_ISC_RTP_TADF": {
+   "mechanism_meaning": "Triplet-state photophysics: intersystem crossing, room-temperature phosphorescence, thermally activated delayed fluorescence, or heavy-atom effects. Ligand-to-metal energy transfer and metal-centred emission are outside this family.",
    "strong_support": {
     "any_of": [
      {
@@ -863,24 +747,6 @@
        },
        {
         "text": "Explain the particular triplet interpretation supported by that finding. Multiple independent validation modalities or complete ISC/rISC kinetics are not mandatory; a heavy atom or long lifetime alone is insufficient.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "metal_sensitization",
-      "all_of": [
-       {
-        "text": "A case-specific state-energy, sensitization, excitation/emission, or transfer analysis supports a particular ligand-to-metal energy-transfer route.",
-        "accepts": [
-         "computed",
-         "observation"
-        ]
-       },
-       {
-        "text": "Identify the ligand and metal states and explain the transfer interpretation. Complete transfer-efficiency or kinetic measurements are not mandatory; metal presence alone is insufficient.",
         "accepts": [
          "warrant"
         ]
@@ -910,17 +776,17 @@
       ]
      },
      {
-      "id": "triplet_or_transfer_proxy",
+      "id": "triplet_proxy",
       "all_of": [
        {
-        "text": "Provide a case-specific gap, orbital, oxygen/temperature response, delayed signal, or metal-emission finding.",
+        "text": "Provide a case-specific singlet-triplet gap, spin-orbit coupling, orbital, oxygen/temperature response, or delayed-signal finding.",
         "accepts": [
          "computed",
          "observation"
         ]
        },
        {
-        "text": "Connect it to an identified triplet or transfer hypothesis, while a decisive state assignment or pathway link remains absent.",
+        "text": "Connect it to an identified triplet hypothesis, while a decisive state assignment or pathway link remains absent.",
         "accepts": [
          "warrant"
         ]
@@ -930,184 +796,14 @@
     ]
    },
    "zero_support_examples": [
-    "Only a heavy atom, metal, carbonyl, low-gap label, or photosensitizer application is supplied without a specific state/pathway argument.",
-    "A nonspecific emission color or long lifetime is treated as sufficient identification of a triplet or metal-transfer mechanism."
+    "Only a heavy atom, carbonyl, low-gap label, or photosensitizer application is supplied without a specific state/pathway argument.",
+    "A nonspecific emission color or long lifetime is treated as sufficient identification of a triplet mechanism."
    ],
    "confounder_boundaries": [
-    "Organic triplet routes do not require metal emission. Missing lanthanide evidence must not invalidate a supported organic triplet explanation.",
-    "Evidence for one subtype does not establish all subtypes. A secondary role or lower ranking is not itself a reason to reduce evidence support."
+    "Evidence for one subtype (ISC, RTP, TADF, heavy-atom effect) does not establish all subtypes. A secondary role or lower ranking is not itself a reason to reduce evidence support."
    ],
    "ceilings": {
     "structure_only": 0.5,
-    "closed_book_with_computation": 1.0,
-    "with_observations": 1.0
-   }
-  },
-  "RACI_CI_ACCESS": {
-   "mechanism_meaning": "Restricted access to conical intersections or conical-intersection-mediated nonradiative decay.",
-   "strong_support": {
-    "any_of": [
-     {
-      "id": "crossing_access_and_restriction",
-      "all_of": [
-       {
-        "text": "An appropriate calculation identifies a conical intersection or relevant excited/ground-state crossing connected to a specific molecular relaxation coordinate.",
-        "accepts": [
-         "computed"
-        ]
-       },
-       {
-        "text": "Explain how that coordinate supports crossing-mediated relaxation. If reduced access is claimed, provide a relevant constraint or coordinate-access finding, without requiring a full solution-versus-aggregate comparison.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "nonadiabatic_pathway",
-      "all_of": [
-       {
-        "text": "Nonadiabatic dynamics or comparable excited-state analysis supports a crossing-mediated relaxation route for the molecule.",
-        "accepts": [
-         "computed"
-        ]
-       },
-       {
-        "text": "Explain the relevant motion or access mechanism. Evidence for a restriction claim must concern restricted access, but a complete emission-yield calculation or a second environmental simulation is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "partial_support": {
-    "any_of": [
-     {
-      "id": "coordinate_linked_crossing_proxy",
-      "all_of": [
-       {
-        "text": "Identify a specific torsional, flapping, puckering, ring-opening, or other coordinate in this molecule.",
-        "accepts": [
-         "structural",
-         "computed"
-        ]
-       },
-       {
-        "text": "Provide a coordinate-dependent state-gap/electronic finding, or an explicit case-specific explanation linking that coordinate to approach toward a crossing.",
-        "accepts": [
-         "computed",
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "zero_support_examples": [
-    "Only general flexibility, rigidification, a rotor count, or nonradiative decay is supplied without a coordinate-to-crossing argument.",
-    "A brightness change or an isolated energy gap is called a conical intersection without a relevant coordinate or crossing-access argument."
-   ],
-   "confounder_boundaries": [
-    "Absence of explicit crossing/pathway evidence prevents strong support but does not erase a valid coordinate-linked proxy. Do not require the answer to contain a stock disclaimer; the judge must keep a proxy distinct from a located CI.",
-    "RIM and RACI may coexist. RACI requires the additional crossing-access link; RIM evidence alone cannot establish that link."
-   ],
-   "ceilings": {
-    "structure_only": 0.5,
-    "closed_book_with_computation": 1.0,
-    "with_observations": 1.0
-   }
-  },
-  "SOKR_ANTI_KASHA": {
-   "mechanism_meaning": "Suppression of Kasha's rule, anti-Kasha emission, or higher-state emission.",
-   "strong_support": {
-    "any_of": [
-     {
-      "id": "higher_state_emission_assignment",
-      "all_of": [
-       {
-        "text": "Identify the relevant state ordering and provide state-resolved emission, kinetic, or comparable evidence assigning emission above the lowest excited state of the relevant multiplicity.",
-        "accepts": [
-         "observation"
-        ]
-       },
-       {
-        "text": "Explain the higher-state-emission interpretation. Full population kinetics or a quantified competition with every lower-state relaxation channel is not mandatory.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "computed_higher_state_emission",
-      "all_of": [
-       {
-        "text": "State ordering and transition properties identify a candidate higher emissive state for this molecule.",
-        "accepts": [
-         "computed"
-        ]
-       },
-       {
-        "text": "A relevant pathway, rate, dynamics, or comparable mechanism-specific result supports higher-state emission before relaxation to lower states. A complete population model or experimental confirmation is not mandatory; higher-state brightness alone remains partial support.",
-        "accepts": [
-         "computed"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "partial_support": {
-    "any_of": [
-     {
-      "id": "ordered_state_proxy",
-      "all_of": [
-       {
-        "text": "Provide case-specific state ordering together with transition or oscillator-strength information identifying a candidate higher emissive state and its relation to the lower state.",
-        "accepts": [
-         "computed"
-        ]
-       },
-       {
-        "text": "Explain the higher-state-emission hypothesis, while population dynamics or competition with internal conversion remains unestablished.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     },
-     {
-      "id": "state_linked_emission_proxy",
-      "all_of": [
-       {
-        "text": "Provide a case-specific excitation-dependent, time-resolved, or other state-related observation.",
-        "accepts": [
-         "observation"
-        ]
-       },
-       {
-        "text": "Connect it to an identified higher-state assignment, while that assignment or its kinetic support remains incomplete.",
-        "accepts": [
-         "warrant"
-        ]
-       }
-      ]
-     }
-    ]
-   },
-   "zero_support_examples": [
-    "Only a single oscillator strength, radiative-rate change, AIE response, delayed fluorescence, or RTP is supplied without an ordered-state argument.",
-    "Radical formation, EPR, strong emission, or a nanosecond lifetime is presented as proof of higher-state emission without identifying the emitting state."
-   ],
-   "confounder_boundaries": [
-    "A dark lower state and bright higher state constitute a relevant proxy, not sufficient evidence that emission actually occurs before internal conversion.",
-    "Use singlet or doublet state ordering as appropriate to the claimed species; do not force radical cases into S1/Sn notation. Triplet participation alone does not establish anti-Kasha emission."
-   ],
-   "ceilings": {
-    "structure_only": 0.0,
     "closed_book_with_computation": 1.0,
     "with_observations": 1.0
    }
@@ -1130,14 +826,12 @@
     "microscopic.run_relaxed_coordinate_scan",
     "microscopic.analyze_ground_state_vibrations",
     "microscopic.compare_contact_torsion_response",
-    "microscopic.evaluate_cis_s1_gradient"
-   ],
-   "PACKING_HOST_MATRIX_CONFINEMENT": [
+    "microscopic.evaluate_cis_s1_gradient",
+    "microscopic.evaluate_cis_s1_gradient (proxy only)",
+    "microscopic.scan_cis_excitation_coordinate (proxy only)",
     "microscopic.search_dimer_contacts",
-    "microscopic.scan_intermolecular_distance",
-    "microscopic.compare_contact_torsion_response"
+    "microscopic.scan_intermolecular_distance"
    ],
-   "HOST_GUEST_INTERACTION": [],
    "ICT_TICT_CT": [
     "microscopic.analyze_hole_electron_from_bundle",
     "microscopic.extract_ct_descriptors_from_bundle",
@@ -1164,24 +858,34 @@
     "microscopic.run_conformer_state_probe",
     "microscopic.run_targeted_transition_dipole_analysis"
    ],
-   "TRIPLET_METAL_ENERGY_TRANSFER": [
+   "TRIPLET_ISC_RTP_TADF": [
     "microscopic.compare_singlet_triplet_states",
     "microscopic.compare_spin_states_pyscf",
     "microscopic.evaluate_spin_orbit_couplings"
-   ],
-   "RACI_CI_ACCESS": [
-    "microscopic.evaluate_cis_s1_gradient (proxy only)",
-    "microscopic.scan_cis_excitation_coordinate (proxy only)"
-   ],
-   "SOKR_ANTI_KASHA": [
-    "microscopic.run_bright_dark_state_ordering (ordering proxy only)"
    ]
   },
   "known_gaps": {
-   "HOST_GUEST_INTERACTION": "No host-guest or guest-binding calculation is available; only structural hypotheses are reachable.",
-   "RACI_CI_ACCESS": "No conical-intersection search or nonadiabatic dynamics; strong routes are unreachable with the current tools.",
-   "SOKR_ANTI_KASHA": "No pathway/rate calculation for higher-state emission; strong computed route needs a second computed finding the tools do not provide.",
+   "RIM_RIR_RIV": "The conical-intersection routes (taken over from the former RACI family) are unreachable: no conical-intersection search or nonadiabatic dynamics. The motion-restriction routes are reachable.",
    "AGGREGATE_EXCITON_EXCIMER": "Dimer excited states require running state calculations on a modeled dimer geometry; modeled dimers are not observed aggregates."
+  }
+ },
+ "previously_approved": {
+  "date": "2026-11-13",
+  "scope": "the 11-family 0.3.0 rubric (git history before this change)"
+ },
+ "family_reduction": {
+  "date": "2026-11-13",
+  "decision": "Author: keep only families for which the computational tools can give discriminating evidence.",
+  "removed": {
+   "HOST_GUEST_INTERACTION": "no host-guest calculation; a single SMILES gives no host",
+   "SOKR_ANTI_KASHA": "no higher-state emission rate calculation; rare in the literature"
+  },
+  "merged": {
+   "RACI_CI_ACCESS": "into RIM_RIR_RIV (crossing routes kept as RIM routes)",
+   "PACKING_HOST_MATRIX_CONFINEMENT": "motion restriction by the environment into RIM_RIR_RIV; packing-dependent electronic coupling into AGGREGATE_EXCITON_EXCIMER; the environment itself is a recorded condition, not a family"
+  },
+  "renamed": {
+   "TRIPLET_METAL_ENERGY_TRANSFER": "TRIPLET_ISC_RTP_TADF (metal energy transfer and metal-centred emission removed)"
   }
  }
 }

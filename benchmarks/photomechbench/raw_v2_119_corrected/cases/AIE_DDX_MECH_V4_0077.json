@@ -132,18 +132,6 @@
   ],
   "reference_mechanisms": [
    {
-    "label": "HOST_GUEST_INTERACTION",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E01",
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
-   },
-   {
     "label": "PET_ET",
     "role": "co_primary",
     "gain": 2,
@@ -165,26 +153,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E01",
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible. Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -238,27 +207,171 @@
     "rationale": "Cage-ICG does have a measured quantum yield and cage-band lifetime (E08/E09). Those observations support the photophysical response but do not independently establish a separate rate-balance explanation beyond the proposed PET pathway. Keep this label unestablished in this extraction rather than claiming target-specific lifetime data are absent."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+    },
+    {
+     "label": "PET_ET",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Guest-to-cage PET is a central source-supported interpretation, not uniquely demonstrated for ICG. The cage-ICG lifetime and quantum yield in E08 are available; only the ICG-specific fsTA is missing. The modest cage-band lifetime change relative to E09 does not establish an ultrafast PET rate."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Cage binding is directly investigated and necessary to the studied response; it is not a mechanism established for isolated ICG."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E04",
+      "E05"
+     ],
+     "rationale": "The CT discussed here belongs to the proposed intermolecular PET pathway; no separate intramolecular CT label is added."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Guest-to-cage PET is a central source-supported interpretation, not uniquely demonstrated for ICG. The cage-ICG lifetime and quantum yield in E08 are available; only the ICG-specific fsTA is missing. The modest cage-band lifetime change relative to E09 does not establish an ultrafast PET rate."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03",
+      "E06",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Cage-ICG does have a measured quantum yield and cage-band lifetime (E08/E09). Those observations support the photophysical response but do not independently establish a separate rate-balance explanation beyond the proposed PET pathway. Keep this label unestablished in this extraction rather than claiming target-specific lifetime data are absent."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

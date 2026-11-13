@@ -163,7 +163,7 @@
     "rationale": "Preserve the explicit tentative NI/toluene exciplex assignment. It is a solvent exciplex, not an aggregate excimer or target AIE."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "secondary",
     "gain": 1,
     "evidence_ids": [
@@ -180,21 +180,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No packing, host or matrix constraint on target photophysics is established in the selected evidence."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+    "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient. No target-specific conical-intersection access mechanism is established."
    },
    {
     "label": "ICT_TICT_CT",
@@ -242,7 +228,7 @@
     "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "secondary",
     "evidence_ids": [
@@ -251,22 +237,161 @@
      "E07"
     ],
     "rationale": "Triplet NI participates in PET in acetonitrile but not toluene according to the source. This does not imply RTP or triplet emission."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection access mechanism is established."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state emission or suppression of Kasha's rule is established."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E06",
+      "E07"
+     ],
+     "rationale": "Intramolecular charge-separated-state description of the same PET pathway; not TICT or a separate radiative ICT band."
+    },
+    {
+     "label": "PET_ET",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Radical-ion transient spectra and fluorescence quenching support donor-to-NI PET; rates remain target/solvent specific."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Preserve the explicit tentative NI/toluene exciplex assignment. It is a solvent exciplex, not an aggregate excimer or target AIE."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Triplet NI participates in PET in acetonitrile but not toluene according to the source. This does not imply RTP or triplet emission."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No packing, host or matrix constraint on target photophysics is established in the selected evidence."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E06",
+      "E07"
+     ],
+     "rationale": "Intramolecular charge-separated-state description of the same PET pathway; not TICT or a separate radiative ICT band."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Radical-ion transient spectra and fluorescence quenching support donor-to-NI PET; rates remain target/solvent specific."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E09"
+     ],
+     "rationale": "Preserve the explicit tentative NI/toluene exciplex assignment. It is a solvent exciplex, not an aggregate excimer or target AIE."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Triplet NI participates in PET in acetonitrile but not toluene according to the source. This does not imply RTP or triplet emission."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection access mechanism is established."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

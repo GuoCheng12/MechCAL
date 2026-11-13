@@ -35,8 +35,12 @@ class ReferenceCase:
         return {m["label"] for m in self.reference_mechanisms if m.get("role") in PRIMARY_ROLES}
 
 
-def load_reference_cases(cases_dir: Path) -> list[ReferenceCase]:
-    """Load full raw-v2 case records (hidden references). Evaluation-side only."""
+def load_reference_cases(cases_dir: Path, *, original_labels: bool = False) -> list[ReferenceCase]:
+    """Load full raw-v2 case records (hidden references). Evaluation-side only.
+
+    ``original_labels`` reads the labels as recorded before the 11-to-7 family mapping
+    (``hidden_reference.family_reduction``), for reproducing artefacts built on them.
+    """
     cases = []
     for path in sorted(Path(cases_dir).glob("*.json")):
         raw = json.loads(path.read_text(encoding="utf-8"))
@@ -44,7 +48,9 @@ def load_reference_cases(cases_dir: Path) -> list[ReferenceCase]:
         cases.append(ReferenceCase(
             case_id=raw["case_id"],
             smiles=raw["public_input"]["molecule"]["structure"]["value"],
-            reference_mechanisms=tuple(hidden["reference_mechanisms"]),
+            reference_mechanisms=tuple(hidden["family_reduction"]["original_reference_mechanisms"]
+                                       if original_labels and "family_reduction" in hidden
+                                       else hidden["reference_mechanisms"]),
             dois=tuple(sorted({s["doi"].lower() for s in hidden["source_documents"] if s.get("doi")})),
         ))
     if not cases:

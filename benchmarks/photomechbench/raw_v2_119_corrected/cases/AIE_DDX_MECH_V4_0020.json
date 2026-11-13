@@ -132,18 +132,6 @@
   ],
   "reference_mechanisms": [
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E02",
-     "E07",
-     "E08",
-     "E09"
-    ],
-    "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
-   },
-   {
     "label": "ESIPT_PT",
     "role": "co_primary",
     "gain": 2,
@@ -185,26 +173,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "No target-specific restriction of internal motion is established here; AIE or aggregation alone is insufficient."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E02",
-     "E07",
-     "E08",
-     "E09"
-    ],
-    "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No host or analyte binding mechanism changing target emission is established in this extraction."
+    "rationale": "No target-specific restriction of internal motion is established here; AIE or aggregation alone is insufficient. No target-specific conical-intersection pathway is established in this extraction."
    },
    {
     "label": "ICT_TICT_CT",
@@ -256,27 +225,189 @@
     "rationale": "Explicit coupled N*/T*/E* populations provide a state-balance interpretation. This overlaps with ESIPT/excimer kinetics and does not imply independently measured radiative rates."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection pathway is established in this extraction."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
+    },
+    {
+     "label": "ESIPT_PT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Matched normal decay/tautomer rise and reversible kinetic modeling support ESIPT coupled to later excimer population."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E06"
+     ],
+     "rationale": "Broad red-band morphology dependence and delayed formation support the authors' excimer interpretation, not just generic aggregation."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Explicit coupled N*/T*/E* populations provide a state-balance interpretation. This overlaps with ESIPT/excimer kinetics and does not imply independently measured radiative rates."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific restriction of internal motion is established here; AIE or aggregation alone is insufficient."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E07",
+      "E08",
+      "E09"
+     ],
+     "rationale": "Packing and surface-to-interior morphology control intermolecular excited-state formation and spectral balance."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No host or analyte binding mechanism changing target emission is established in this extraction."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific CT excited-state mechanism is established here; donor-acceptor structure alone is insufficient."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Matched normal decay/tautomer rise and reversible kinetic modeling support ESIPT coupled to later excimer population."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E04",
+      "E06"
+     ],
+     "rationale": "Broad red-band morphology dependence and delayed formation support the authors' excimer interpretation, not just generic aggregation."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Explicit coupled N*/T*/E* populations provide a state-balance interpretation. This overlaps with ESIPT/excimer kinetics and does not imply independently measured radiative rates."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

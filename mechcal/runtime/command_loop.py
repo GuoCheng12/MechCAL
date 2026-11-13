@@ -10,7 +10,8 @@ from mechcal.agents.command_client import ask, ask_worker_text
 from mechcal.agents.command_tools import ask_tools, parse_tool_turn, tool_contracts
 from mechcal.agents.command_worker import worker_turn
 from mechcal.agents.observation_view import observation_view
-from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
+from mechcal.mechanism_pool import eleven_family_definitions as mechanism_definitions
 from mechcal.runtime.command_operations import (
     OperationRejected, cached_computation, check_owner, check_refs, prepare_computation,
     protocol, put, record_identity, record_index, records, reject, revise,

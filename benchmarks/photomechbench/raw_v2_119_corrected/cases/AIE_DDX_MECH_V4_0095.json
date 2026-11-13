@@ -130,17 +130,6 @@
     "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E01",
-     "E05",
-     "E07"
-    ],
-    "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
-   },
-   {
     "label": "RADIATIVE_RATE_STATE_BALANCE",
     "role": "co_primary",
     "gain": 2,
@@ -162,25 +151,7 @@
      "E03",
      "E08"
     ],
-    "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E01",
-     "E05",
-     "E07"
-    ],
-    "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+    "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield. No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
    },
    {
     "label": "ICT_TICT_CT",
@@ -226,27 +197,170 @@
     "rationale": "Increased knr and changing emissive-site populations explain lower bulk efficiency; these overlap with the defect/packing interpretation."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E07"
+     ],
+     "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E03",
+      "E08"
+     ],
+     "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E07"
+     ],
+     "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Increased knr and changing emissive-site populations explain lower bulk efficiency; these overlap with the defect/packing interpretation."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E03",
+      "E08"
+     ],
+     "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E05",
+      "E07"
+     ],
+     "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific excited-state proton-transfer pathway is established."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E05",
+      "E07"
+     ],
+     "rationale": "J-type coupling is assigned to 1 and 2, not 3. Defect-state loss and a red-edge redistribution are not independently an excimer/exciton assignment."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Increased knr and changing emissive-site populations explain lower bulk efficiency; these overlap with the defect/packing interpretation."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

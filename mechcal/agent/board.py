@@ -1,4 +1,4 @@
-"""Hypothesis board: the single source of what the agent currently believes about 11 families."""
+"""Hypothesis board: the single source of what the agent currently believes about each family in the pool."""
 
 from __future__ import annotations
 
@@ -76,7 +76,7 @@ class Board(_M):
         return [c for c in self.claims if c.label == label]
 
     def view(self, *, detailed: set[str] | None = None, top: int = 5) -> dict:
-        """Compact view: all 11 families in one line each; claims only for top/flagged families."""
+        """Compact view: every family in one line each; claims only for top/flagged families."""
         ranking = self.ranking()
         show = set(ranking[:top]) | (detailed or set())
         rows = []

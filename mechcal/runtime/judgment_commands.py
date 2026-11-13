@@ -5,7 +5,7 @@ from typing import TypeVar
 
 from pydantic import BaseModel
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.boundary_decisions import require
 from mechcal.runtime.questions import state
 from mechcal.runtime.question_changes import apply_question_changes

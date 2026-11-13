@@ -11,7 +11,7 @@ from pathlib import Path
 import pytest
 from jsonschema import Draft202012Validator
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # the frozen raw_v2_119 snapshot uses the 11-family pool
 
 
 DATASET = Path(__file__).resolve().parents[1] / "benchmarks" / "photomechbench"

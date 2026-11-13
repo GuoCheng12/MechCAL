@@ -8,7 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator
 from pydantic import ValidationError
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.case_memory import CaseMemoryStore, pointer, serialized
 from mechcal.runtime.persistence import RunStore
 from mechcal.runtime.ranking_explanations import RankingExplanationDraft

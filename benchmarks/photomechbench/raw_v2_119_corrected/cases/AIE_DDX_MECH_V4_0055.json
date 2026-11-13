@@ -151,7 +151,7 @@
     "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -171,24 +171,7 @@
      "E03",
      "E04"
     ],
-    "rationale": "Motion restriction is central to the proposed AIE mechanism."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E02",
-     "E08"
-    ],
-    "rationale": "Covalent self-host groups are not evidence of a host-guest binding event."
+    "rationale": "Motion restriction is central to the proposed AIE mechanism. Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -233,7 +216,7 @@
     "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -242,22 +225,164 @@
      "E07"
     ],
     "rationale": "Target-specific delayed, temperature- and oxygen-dependent emission supports the source TADF account."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "Motion restriction is central to the proposed AIE mechanism."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "The core CT state is supported, with peripheral groups explicitly excluded."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Target-specific delayed, temperature- and oxygen-dependent emission supports the source TADF account."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "Motion restriction is central to the proposed AIE mechanism."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E02",
+      "E08"
+     ],
+     "rationale": "Covalent self-host groups are not evidence of a host-guest binding event."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "The core CT state is supported, with peripheral groups explicitly excluded."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Prompt/delayed contributions and derived rISC support state-utilization analysis, overlapping the TADF account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Target-specific delayed, temperature- and oxygen-dependent emission supports the source TADF account."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

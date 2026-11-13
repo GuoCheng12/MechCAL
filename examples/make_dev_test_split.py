@@ -44,7 +44,7 @@ ADDED = {  # chosen for coverage; single-paper clusters so no test case loses a 
 
 
 def build() -> dict:
-    cases = load_reference_cases(BENCH / "cases")
+    cases = load_reference_cases(BENCH / "cases", original_labels=True)  # the split was built on the 11-family labels
     by_id = {c.case_id: c for c in cases}
     cluster = paper_clusters(cases)
     dev_ids = sorted(P + k for k in {**USED, **ADDED})

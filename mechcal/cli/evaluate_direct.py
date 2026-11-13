@@ -21,7 +21,7 @@ from mechcal.eval.mechanism_ranking import (
     judge_mechanism_prediction_support,
     score_mechanism_ranking,
 )
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.public_ids import anonymized_case_id
 from mechcal.runtime.llm import OpenAICompatibleSettings
 from mechcal.runtime.progress import ExperimentProgress

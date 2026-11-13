@@ -144,16 +144,6 @@
   ],
   "reference_mechanisms": [
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E01",
-     "E09"
-    ],
-    "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "co_primary",
     "gain": 2,
@@ -192,24 +182,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E01",
-     "E09"
-    ],
-    "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility. Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
    },
    {
     "label": "ICT_TICT_CT",
@@ -258,27 +231,177 @@
     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E09"
+     ],
+     "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E09"
+     ],
+     "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E10"
+     ],
+     "rationale": "Solvatochromism and moisture-dependent quenching support source-assigned ICT/TICT, with TICT remaining indirect."
+    },
+    {
+     "label": "PET_ET",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "Retain the authors' tentative PET interpretation only for the acid-protonated form."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Water-fraction, concentration and decay observations underpin the source's excimer interpretation."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E09"
+     ],
+     "rationale": "Crystal contacts and reversible acid-dependent crystallinity provide conditional packing context."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E10"
+     ],
+     "rationale": "Solvatochromism and moisture-dependent quenching support source-assigned ICT/TICT, with TICT remaining indirect."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "PET_ET",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E07",
+      "E08"
+     ],
+     "rationale": "Retain the authors' tentative PET interpretation only for the acid-protonated form."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Water-fraction, concentration and decay observations underpin the source's excimer interpretation."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

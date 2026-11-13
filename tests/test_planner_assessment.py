@@ -13,7 +13,7 @@ from mechcal.agents.photophysics_arbiter import (
 )
 from mechcal.agents.planner import PlannerAgent, _compact_planner_payload
 from mechcal.capabilities import default_capability_registry
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime import MechCALOrchestrator, OrchestratorConfig
 from mechcal.runtime.orchestrator import _stateless_planner_case_view
 from mechcal.schemas import (

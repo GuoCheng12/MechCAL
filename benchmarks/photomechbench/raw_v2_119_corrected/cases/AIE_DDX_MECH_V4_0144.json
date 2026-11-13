@@ -140,17 +140,6 @@
      "E06"
     ],
     "rationale": "Individual radiative/IC rates and reorganization-energy dependence support state/rate competition with numerical uncertainty."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Source predicts dominant S2 anti-Kasha emission and compares to external fluorescence data."
    }
   ],
   "mechanism_decisions": [
@@ -161,21 +150,7 @@
     "evidence_ids": [
      "E06"
     ],
-    "rationale": "Selective accepting-mode blocking is reported but does not establish restriction-driven overall enhancement or aggregation RIM."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    "rationale": "Selective accepting-mode blocking is reported but does not establish restriction-driven overall enhancement or aggregation RIM. No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
    },
    {
     "label": "ICT_TICT_CT",
@@ -221,33 +196,173 @@
     "rationale": "Individual radiative/IC rates and reorganization-energy dependence support state/rate competition with numerical uncertainty."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [
      "E07"
     ],
     "rationale": "Heavy atoms are present but ISC is neglected in this source's model; no positive triplet pathway established."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "primary",
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E08"
-    ],
-    "rationale": "Source predicts dominant S2 anti-Kasha emission and compares to external fluorescence data."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Source predicts dominant S2 anti-Kasha emission and compares to external fluorescence data."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E04"
+     ],
+     "rationale": "Retain explicitly calculated, limited halogen-to-framework CT character as a secondary interpretation, not a dominant pure CT mechanism."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Individual radiative/IC rates and reorganization-energy dependence support state/rate competition with numerical uncertainty."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Source predicts dominant S2 anti-Kasha emission and compares to external fluorescence data."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E06"
+     ],
+     "rationale": "Selective accepting-mode blocking is reported but does not establish restriction-driven overall enhancement or aggregation RIM."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E04"
+     ],
+     "rationale": "Retain explicitly calculated, limited halogen-to-framework CT character as a secondary interpretation, not a dominant pure CT mechanism."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E05",
+      "E06"
+     ],
+     "rationale": "Individual radiative/IC rates and reorganization-energy dependence support state/rate competition with numerical uncertainty."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E07"
+     ],
+     "rationale": "Heavy atoms are present but ISC is neglected in this source's model; no positive triplet pathway established."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E08"
+     ],
+     "rationale": "Source predicts dominant S2 anti-Kasha emission and compares to external fluorescence data."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

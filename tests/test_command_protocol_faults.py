@@ -38,7 +38,7 @@ def test_known_schema_errors_point_to_command_field(tmp_path):
 
 
 def test_native_schema_exposes_same_mechanism_pool_as_runtime():
-    from mechcal.mechanism_pool import MECHANISM_POOL
+    from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
     fmt = native_format(envelope_model(REGISTRY, []))
     definitions = fmt["json_schema"]["schema"]["$defs"]
     for name in ("ArgumentChange", "RankingChange"):

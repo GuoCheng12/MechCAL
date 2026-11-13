@@ -6,7 +6,7 @@ from pydantic import Field, model_validator
 
 from mechcal.schemas.base import MechCALModel
 from mechcal.schemas.contracts import NONBLANK, object_variants
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 
 
 class MechanismImplication(MechCALModel):

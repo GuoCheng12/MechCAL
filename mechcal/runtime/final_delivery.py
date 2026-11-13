@@ -3,7 +3,7 @@
 import hashlib
 import json
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.public_ids import public_case_id_from_metadata
 from mechcal.runtime.final_evidence import validate_final_evidence
 from mechcal.runtime.questions import decision_from_action, replace_state, state, validate_action

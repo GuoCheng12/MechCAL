@@ -127,21 +127,7 @@
      "E04",
      "E05"
     ],
-    "rationale": "Target rotation is established computationally, but the restriction-induced brightening and ultrafast validation are for analogue 5. Keep this as a review question instead of transferring experimental support."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    "rationale": "Target rotation is established computationally, but the restriction-induced brightening and ultrafast validation are for analogue 5. Keep this as a review question instead of transferring experimental support. Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -189,27 +175,145 @@
     "rationale": "The dark-state oscillator strength explains low emission, as part of the same CT pathway rather than an independent primary mechanism."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "ICT_TICT_CT",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03"
+     ],
+     "rationale": "The target-specific calculations support a torsion-driven CT/shuttle mechanism. Preserve the source term TICS within the broad CT family."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "The dark-state oscillator strength explains low emission, as part of the same CT pathway rather than an independent primary mechanism."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01",
+      "E04",
+      "E05"
+     ],
+     "rationale": "Target rotation is established computationally, but the restriction-induced brightening and ultrafast validation are for analogue 5. Keep this as a review question instead of transferring experimental support."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03"
+     ],
+     "rationale": "The target-specific calculations support a torsion-driven CT/shuttle mechanism. Preserve the source term TICS within the broad CT family."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01",
+      "E03"
+     ],
+     "rationale": "Do not automatically count the same intramolecular charge-shuttle pathway twice as CT and PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "The dark-state oscillator strength explains low emission, as part of the same CT pathway rather than an independent primary mechanism."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

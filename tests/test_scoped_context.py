@@ -8,7 +8,7 @@ import pytest
 from mechcal.agents.planner import PlannerAgent
 from mechcal.agents.planner_references import PlannerReferences
 from mechcal.capabilities.discovery import ToolDiscoverySession, case_catalog
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.case_memory import CaseMemoryStore, serialized
 from mechcal.runtime.planner_context import build_context
 from mechcal.runtime.planner_memory import PlannerMemorySession

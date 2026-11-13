@@ -157,17 +157,6 @@
     "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E07",
-     "E08",
-     "E10"
-    ],
-    "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
-   },
-   {
     "label": "ESIPT_PT",
     "role": "secondary",
     "gain": 1,
@@ -202,25 +191,7 @@
      "E07",
      "E08"
     ],
-    "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E07",
-     "E08",
-     "E10"
-    ],
-    "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+    "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation. Restricted rotation and photoproduct suppression are demonstrated, but this paper does not locate or specifically assign a target CI."
    },
    {
     "label": "ICT_TICT_CT",
@@ -270,34 +241,199 @@
     "rationale": "Source explicitly separates keto-state formation yield and fluorescence survival; the factor-two ESIPT-yield estimate is conditional on unchanged radiative rate."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [
      "E06"
     ],
     "rationale": "The observed long-lived species is assigned to trans-keto rather than triplet; no operative triplet mechanism established."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E05",
-     "E07"
-    ],
-    "rationale": "Restricted rotation and photoproduct suppression are demonstrated, but this paper does not locate or specifically assign a target CI."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E01"
-    ],
-    "rationale": "The source states high excited levels relax to the same lowest excited state; no higher-state emission is established."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E10"
+     ],
+     "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E10"
+     ],
+     "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
+    },
+    {
+     "label": "ESIPT_PT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Keto emission follows ESIPT, whose yield is not assumed to be 100%; a proposed decrease opposes the net enhancement."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E09"
+     ],
+     "rationale": "Source explicitly separates keto-state formation yield and fluorescence survival; the factor-two ESIPT-yield estimate is conditional on unchanged radiative rate."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Viscosity, a low-frequency rotational mode and suppressed trans-keto photoproduct support the authors' main rotational-restriction explanation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E07",
+      "E08",
+      "E10"
+     ],
+     "rationale": "Aggregate/matrix physical constraints suppress rotation, while intermolecular interactions may introduce a competing loss pathway."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03"
+     ],
+     "rationale": "The authors argue that cis-keto emission lacks ICT character from its weak solvent dependence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E09",
+      "E10"
+     ],
+     "rationale": "Keto emission follows ESIPT, whose yield is not assumed to be 100%; a proposed decrease opposes the net enhancement."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E10"
+     ],
+     "rationale": "The negative intermolecular effect is an unspecified competing route, not a demonstrated exciton/J-aggregate/excimer mechanism."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E09"
+     ],
+     "rationale": "Source explicitly separates keto-state formation yield and fluorescence survival; the factor-two ESIPT-yield estimate is conditional on unchanged radiative rate."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E06"
+     ],
+     "rationale": "The observed long-lived species is assigned to trans-keto rather than triplet; no operative triplet mechanism established."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E05",
+      "E07"
+     ],
+     "rationale": "Restricted rotation and photoproduct suppression are demonstrated, but this paper does not locate or specifically assign a target CI."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01"
+     ],
+     "rationale": "The source states high excited levels relax to the same lowest excited state; no higher-state emission is established."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

@@ -174,7 +174,7 @@
     "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "co_primary",
     "gain": 2,
     "evidence_ids": [
@@ -194,27 +194,7 @@
      "E03",
      "E04"
     ],
-    "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E03",
-     "E04",
-     "E08"
-    ],
-    "rationale": "Covalent self-host wording is not sufficient to establish a separate external packing/matrix mechanism. The source's aggregation-dependent motion account is already retained under RIM."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E08"
-    ],
-    "rationale": "Covalently attached host substituents are not evidence of a supramolecular host-guest binding event."
+    "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response. Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -258,7 +238,7 @@
     "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "co_primary",
     "evidence_ids": [
@@ -267,22 +247,165 @@
      "E07"
     ],
     "rationale": "Thermally activated delayed fluorescence and rISC are central to the studied emitter behavior and are within the existing organic-triplet family."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "The core has CT character; the peripheral host design should not be misread as an additional primary CT channel."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Thermally activated delayed fluorescence and rISC are central to the studied emitter behavior and are within the existing organic-triplet family."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E08"
+     ],
+     "rationale": "Covalent self-host wording is not sufficient to establish a separate external packing/matrix mechanism. The source's aggregation-dependent motion account is already retained under RIM."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E08"
+     ],
+     "rationale": "Covalently attached host substituents are not evidence of a supramolecular host-guest binding event."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02"
+     ],
+     "rationale": "The core has CT character; the peripheral host design should not be misread as an additional primary CT channel."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "Thermally activated delayed fluorescence and rISC are central to the studied emitter behavior and are within the existing organic-triplet family."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

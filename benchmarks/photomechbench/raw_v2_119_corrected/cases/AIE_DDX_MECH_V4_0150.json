@@ -133,17 +133,6 @@
      "E08"
     ],
     "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E03",
-     "E04",
-     "E08"
-    ],
-    "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
    }
   ],
   "mechanism_decisions": [
@@ -152,24 +141,11 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [
+     "E04",
      "E05",
      "E06"
     ],
-    "rationale": "Virtual mode ablation demonstrates vibrational contributions but not actual motion restriction causing target aggregation enhancement. No positive RIM label."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    "rationale": "Virtual mode ablation demonstrates vibrational contributions but not actual motion restriction causing target aggregation enhancement. No positive RIM label. Source discusses S1/S2 crossing points in model diabatic cuts, but does not establish target-specific conical-intersection-mediated nonradiative decay or restricted CI access. Do not import parent Az's literature S1/S0 CI claim."
    },
    {
     "label": "ICT_TICT_CT",
@@ -215,33 +191,165 @@
     "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E04"
-    ],
-    "rationale": "Source discusses S1/S2 crossing points in model diabatic cuts, but does not establish target-specific conical-intersection-mediated nonradiative decay or restricted CI access. Do not import parent Az's literature S1/S0 CI claim."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "primary",
-    "evidence_ids": [
-     "E03",
-     "E04",
-     "E08"
-    ],
-    "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E08"
+     ],
+     "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E08"
+     ],
+     "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "Virtual mode ablation demonstrates vibrational contributions but not actual motion restriction causing target aggregation enhancement. No positive RIM label."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific charge-transfer excited-state mechanism established in the extracted evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E07",
+      "E08"
+     ],
+     "rationale": "Source quantitatively models competing excited-state population loss and links it to emission efficiency; preserve limited time window and non-equivalence of population and PLQY."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E04"
+     ],
+     "rationale": "Source discusses S1/S2 crossing points in model diabatic cuts, but does not establish target-specific conical-intersection-mediated nonradiative decay or restricted CI access. Do not import parent Az's literature S1/S0 CI claim."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E08"
+     ],
+     "rationale": "Retain source's explicit anti-Kasha S2-emission interpretation for this very weak or weak emitter; no minimum yield threshold is imposed."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

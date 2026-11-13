@@ -8,7 +8,7 @@ from mechcal.schemas.decisions import PlannerDecision, StopReview
 from mechcal.capabilities import CapabilityRegistry, default_capability_registry
 from mechcal.capabilities.discovery import case_catalog
 from mechcal.capabilities.evidence_guide import compact_ability_evidence_guide
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.public_ids import public_case_id_from_metadata
 from mechcal.runtime.llm import OpenAIJsonClient
 from mechcal.runtime.prompts import load_prompt

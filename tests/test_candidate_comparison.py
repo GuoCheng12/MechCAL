@@ -8,7 +8,8 @@ import pytest
 from jsonschema import Draft202012Validator
 
 from mechcal.agents.command_tools import tool_contracts, parse_tool_turn
-from mechcal.mechanism_pool import MECHANISM_POOL, MECHANISM_DEFINITIONS, mechanism_definitions
+from mechcal.mechanism_pool import (ELEVEN_FAMILY_POOL as MECHANISM_POOL, ELEVEN_FAMILY_DEFINITIONS as MECHANISM_DEFINITIONS,
+                                    eleven_family_definitions as mechanism_definitions)  # 0.2.0 workflow
 from mechcal.runtime import command_hypotheses as h, computational_review as cr
 from mechcal.runtime.command_comparison import comparison_view, comparison_refs
 from mechcal.runtime.command_compact import expand_text

@@ -5,7 +5,7 @@ from copy import deepcopy
 import pytest
 from jsonschema import Draft202012Validator
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.boundary_decisions import validate_ranking
 from mechcal.runtime.judgment_commands import materialize_judgment, snapshot_feedback
 from mechcal.runtime.judgment_draft import JudgmentDraft

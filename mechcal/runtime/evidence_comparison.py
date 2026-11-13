@@ -2,7 +2,7 @@
 
 from copy import deepcopy
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.result_contract import operational_evidence_refs
 from mechcal.runtime.retry import RequestValidationError
 from mechcal.schemas.evidence_comparison import ArgumentChange

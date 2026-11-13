@@ -9,6 +9,8 @@ from rdkit import Chem
 from rdkit.Chem.rdMolDescriptors import CalcMolFormula
 
 from mechcal.eval import dataset
+from mechcal.eval.family_reduction import reduce_hidden_reference
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL, MECHANISM_POOL
 from mechcal.eval.splits import dev_cases, load_split
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -30,7 +32,7 @@ def test_committed_copy_equals_a_fresh_build():
     assert on_disk == set(files)
 
 
-def test_only_listed_smiles_change_and_references_are_identical():
+def test_only_listed_smiles_change_and_references_are_mapped_not_edited():
     corrections = json.loads(dataset.CORRECTIONS.read_text())
     fixed = {c["case_id"]: c for c in corrections["corrections"]}
     dev = {P + c for c in ("0020", "0141", "0152", "0153")}
@@ -41,7 +43,14 @@ def test_only_listed_smiles_change_and_references_are_identical():
     for raw_path in sorted((dataset.RAW / "cases").glob("*.json")):
         raw = json.loads(raw_path.read_text())
         new = json.loads((dataset.CASES_DIR / raw_path.name).read_text())
-        assert new["hidden_reference"] == raw["hidden_reference"] and new["provenance"] == raw["provenance"]
+        assert new["provenance"] == raw["provenance"]
+        assert new["hidden_reference"] == reduce_hidden_reference(raw["hidden_reference"])
+        kept = {k: v for k, v in new["hidden_reference"].items()
+                if k not in ("reference_mechanisms", "mechanism_decisions", "family_reduction")}
+        assert kept == {k: v for k, v in raw["hidden_reference"].items()
+                        if k not in ("reference_mechanisms", "mechanism_decisions")}
+        assert new["hidden_reference"]["family_reduction"]["original_reference_mechanisms"] == \
+            raw["hidden_reference"]["reference_mechanisms"]
         smiles_raw = raw["public_input"]["molecule"]["structure"]["value"]
         smiles_new = new["public_input"]["molecule"]["structure"]["value"]
         if raw["case_id"] in fixed:
@@ -102,3 +111,37 @@ def test_original_records_are_flagged_exactly_where_they_were_corrected():
     fixed = {c["case_id"] for c in json.loads(dataset.CORRECTIONS.read_text())["corrections"]}
     assert flagged == {P + c for c in ("0001", "0002", "0007", "0011", "0152", "0153")} and flagged <= fixed
     assert not any(structure_warnings(dataset.public_smiles(c)) for c in raw)                # none left
+
+
+def test_family_mapping_rules():
+    def mech(label, role, gain, ev):
+        return {"label": label, "role": role, "gain": gain, "evidence_ids": ev, "rationale": label}
+
+    def dec(label, status, role=None):
+        return {"label": label, "status": status, "role": role, "evidence_ids": [], "rationale": label}
+
+    hidden = {"reference_mechanisms": [mech("RIM_RIR_RIV", "secondary", 1, ["E1"]),
+                                       mech("RACI_CI_ACCESS", "primary", 2, ["E2"]),
+                                       mech("PACKING_HOST_MATRIX_CONFINEMENT", "co_primary", 2, ["E3"]),
+                                       mech("TRIPLET_METAL_ENERGY_TRANSFER", "secondary", 1, ["E4"]),
+                                       mech("SOKR_ANTI_KASHA", "secondary", 1, ["E5"])],
+              "mechanism_decisions": [dec("RIM_RIR_RIV", "not_established"), dec("RACI_CI_ACCESS", "supported", "primary"),
+                                      dec("PACKING_HOST_MATRIX_CONFINEMENT", "supported", "co_primary"),
+                                      dec("HOST_GUEST_INTERACTION", "not_established")]}
+    out = reduce_hidden_reference(hidden)
+    assert [(m["label"], m["role"], m["gain"], m["evidence_ids"]) for m in out["reference_mechanisms"]] == [
+        ("RIM_RIR_RIV", "primary", 2, ["E1", "E2"]), ("TRIPLET_ISC_RTP_TADF", "secondary", 1, ["E4"])]
+    assert [(d["label"], d["status"], d["role"]) for d in out["mechanism_decisions"]] == [
+        ("RIM_RIR_RIV", "supported", "primary")]
+    r = out["family_reduction"]
+    assert [m["label"] for m in r["environment_context"]] == ["PACKING_HOST_MATRIX_CONFINEMENT"]
+    assert [m["label"] for m in r["out_of_pool_labels"]] == ["SOKR_ANTI_KASHA"]
+    assert r["original_reference_mechanisms"] == hidden["reference_mechanisms"] and not r["primary_lost"]
+
+
+def test_every_mapped_label_is_in_the_seven_family_pool():
+    assert len(MECHANISM_POOL) == 7 and len(ELEVEN_FAMILY_POOL) == 11
+    for path in sorted(dataset.CASES_DIR.glob("*.json")):
+        hidden = json.loads(path.read_text())["hidden_reference"]
+        assert {m["label"] for m in hidden["reference_mechanisms"]} <= set(MECHANISM_POOL)
+        assert {d["label"] for d in hidden["mechanism_decisions"]} <= set(MECHANISM_POOL)

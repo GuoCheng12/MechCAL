@@ -153,21 +153,7 @@
      "E04",
      "E06"
     ],
-    "rationale": "AIE enhancement, a static twist, and a background RIR statement do not establish target-specific motion restriction."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "The Zn-binding application is discussed for compound 2, not target compound 1; do not transfer that label."
+    "rationale": "AIE enhancement, a static twist, and a background RIR statement do not establish target-specific motion restriction. Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -211,27 +197,131 @@
     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "ESIPT_PT",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The source's target-specific mechanism discussion assigns enol/keto emission and links conformation to ESIPT."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "AIE enhancement, a static twist, and a background RIR statement do not establish target-specific motion restriction."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "The Zn-binding application is discussed for compound 2, not target compound 1; do not transfer that label."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E04",
+      "E05"
+     ],
+     "rationale": "Donor groups and substituent effects do not by themselves establish a separate CT mechanism. Orbital redistribution elsewhere in the paper needs a specific excited-state CT interpretation before inclusion."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E03",
+      "E04"
+     ],
+     "rationale": "The source's target-specific mechanism discussion assigns enol/keto emission and links conformation to ESIPT."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

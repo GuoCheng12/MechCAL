@@ -3,7 +3,7 @@
 import hashlib
 import json
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.schemas import CaseRun, PlannerDecision
 from mechcal.schemas.question_loop import QuestionAction, QuestionAssimilation, ResultReview
 from mechcal.schemas.tool_arguments import argument_model, planner_argument_model

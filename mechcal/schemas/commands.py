@@ -5,7 +5,7 @@ from typing import Annotated, Literal, Union
 
 from pydantic import BaseModel, ConfigDict, Field, create_model, model_validator
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.schemas.tool_arguments import Atom, HoleElectronArgs, argument_model, planner_argument_model
 
 MechanismLabel = Literal[tuple(MECHANISM_POOL)]

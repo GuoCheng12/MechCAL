@@ -118,17 +118,6 @@
     "rationale": "Motion restriction is the source's central nonradiative explanation."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "co_primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E07"
-    ],
-    "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -159,25 +148,7 @@
      "E02",
      "E04"
     ],
-    "rationale": "Motion restriction is the source's central nonradiative explanation."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "co_primary",
-    "evidence_ids": [
-     "E02",
-     "E03",
-     "E07"
-    ],
-    "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    "rationale": "Motion restriction is the source's central nonradiative explanation. Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -225,27 +196,181 @@
     "rationale": "The source quantitatively separates radiative and nonradiative rates; this overlaps the RIM/packing explanation rather than being an independent cause."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E07"
+     ],
+     "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E04"
+     ],
+     "rationale": "Motion restriction is the source's central nonradiative explanation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E07"
+     ],
+     "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "LE/ICT mixing contributes to the electronic account, with target-specific and series-level calculations distinguished."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "The source quantitatively separates radiative and nonradiative rates; this overlaps the RIM/packing explanation rather than being an independent cause."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E04"
+     ],
+     "rationale": "Motion restriction is the source's central nonradiative explanation."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E02",
+      "E03",
+      "E07"
+     ],
+     "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E05",
+      "E06"
+     ],
+     "rationale": "LE/ICT mixing contributes to the electronic account, with target-specific and series-level calculations distinguished."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E03",
+      "E07"
+     ],
+     "rationale": "Ring interactions and electronic coupling are reported, but a specific aggregate excited-state emission channel is not established under the frozen family definition."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E04",
+      "E06"
+     ],
+     "rationale": "The source quantitatively separates radiative and nonradiative rates; this overlaps the RIM/packing explanation rather than being an independent cause."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

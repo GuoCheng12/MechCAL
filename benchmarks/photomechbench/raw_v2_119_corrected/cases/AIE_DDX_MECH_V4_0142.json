@@ -158,6 +158,15 @@
   ],
   "reference_mechanisms": [
    {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
+   },
+   {
     "label": "RADIATIVE_RATE_STATE_BALANCE",
     "role": "co_primary",
     "gain": 2,
@@ -169,49 +178,17 @@
      "E08"
     ],
     "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E10"
-    ],
-    "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "role": "primary",
-    "gain": 2,
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E06"
-    ],
-    "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
    }
   ],
   "mechanism_decisions": [
    {
     "label": "RIM_RIR_RIV",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No source-grounded restriction of intramolecular motion established for this target under the extracted conditions; emission or vibrations alone do not establish RIM."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "No source-grounded restriction of intramolecular motion established for this target under the extracted conditions; emission or vibrations alone do not establish RIM. Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
    },
    {
     "label": "ICT_TICT_CT",
@@ -255,33 +232,167 @@
     "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E10"
-    ],
-    "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "supported",
-    "role": "primary",
-    "evidence_ids": [
-     "E01",
-     "E03",
-     "E06"
-    ],
-    "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
+    }
+   ],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "co_primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E08"
+     ],
+     "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E10"
+     ],
+     "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No source-grounded restriction of intramolecular motion established for this target under the extracted conditions; emission or vibrations alone do not establish RIM."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific charge-transfer excited-state mechanism established in the extracted evidence."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "co_primary",
+     "evidence_ids": [
+      "E03",
+      "E04",
+      "E05",
+      "E06",
+      "E08"
+     ],
+     "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E10"
+     ],
+     "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E06"
+     ],
+     "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

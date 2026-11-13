@@ -1,6 +1,6 @@
 """Mechanical reuse and change tracking; scientific decisions remain model-authored."""
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.boundary_decisions import require
 from mechcal.runtime.retry import RequestValidationError
 from mechcal.schemas.boundary_decisions import CandidateBasis

@@ -10,6 +10,6 @@ together, so the priors are independent probabilities between 0 and 1; they need
 Use the whole range: near 0 when the structure gives no reason to expect a family, high when
 molecules of this kind are commonly described that way.
 
-Return one JSON object with all 11 families, nothing else:
+Return one JSON object with every family in the pool, nothing else:
 {"priors": [{"label": "<pool label>", "prior": 0.0-1.0,
              "basis": "one sentence: the structural features or class of molecule behind this value"}, ...]}

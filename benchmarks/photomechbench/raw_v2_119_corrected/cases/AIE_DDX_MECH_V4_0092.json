@@ -117,7 +117,7 @@
     "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "role": "secondary",
     "gain": 1,
     "evidence_ids": [
@@ -135,21 +135,7 @@
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible. Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    },
    {
     "label": "ICT_TICT_CT",
@@ -194,7 +180,7 @@
     "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "supported",
     "role": "secondary",
     "evidence_ids": [
@@ -204,22 +190,150 @@
      "E04"
     ],
     "rationale": "The existing family explicitly includes organic TADF and triplet photophysics. Absence of a metal cannot exclude the target's rISC pathway."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "Sampled NTOs explicitly establish variable CT versus localized character in the relevant triplet states."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E04"
+     ],
+     "rationale": "The existing family explicitly includes organic TADF and triplet photophysics. Absence of a metal cannot exclude the target's rISC pathway."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "Sampled NTOs explicitly establish variable CT versus localized character in the relevant triplet states."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04",
+      "E05"
+     ],
+     "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E02",
+      "E03",
+      "E04"
+     ],
+     "rationale": "The existing family explicitly includes organic TADF and triplet photophysics. Absence of a metal cannot exclude the target's rISC pathway."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

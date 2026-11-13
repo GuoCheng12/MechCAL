@@ -141,16 +141,6 @@
     "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
    },
    {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "role": "secondary",
-    "gain": 1,
-    "evidence_ids": [
-     "E02",
-     "E03"
-    ],
-    "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
-   },
-   {
     "label": "ICT_TICT_CT",
     "role": "secondary",
     "gain": 1,
@@ -170,28 +160,7 @@
     "evidence_ids": [
      "E02"
     ],
-    "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
-   },
-   {
-    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
-    "status": "supported",
-    "role": "secondary",
-    "evidence_ids": [
-     "E02",
-     "E03"
-    ],
-    "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
-   },
-   {
-    "label": "HOST_GUEST_INTERACTION",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [
-     "E05",
-     "E06",
-     "E07"
-    ],
-    "rationale": "The demonstrated host-guest pair is alpha-CD/PEG in a covalently modified TPR formulation. It does not establish host-guest binding or host-induced emission of the free TPR target. Retain the derivative findings as comparator context."
+    "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates. No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
    },
    {
     "label": "ICT_TICT_CT",
@@ -233,27 +202,164 @@
     "rationale": "No distinct radiative-rate or bright/dark-state mechanism established beyond generic changes in fluorescence intensity."
    },
    {
-    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "label": "TRIPLET_ISC_RTP_TADF",
     "status": "not_established",
     "role": null,
     "evidence_ids": [],
     "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
-   },
-   {
-    "label": "RACI_CI_ACCESS",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
-   },
-   {
-    "label": "SOKR_ANTI_KASHA",
-    "status": "not_established",
-    "role": null,
-    "evidence_ids": [],
-    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
    }
-  ]
+  ],
+  "family_reduction": {
+   "pool": [
+    "RIM_RIR_RIV",
+    "ICT_TICT_CT",
+    "ESIPT_PT",
+    "PET_ET",
+    "AGGREGATE_EXCITON_EXCIMER",
+    "RADIATIVE_RATE_STATE_BALANCE",
+    "TRIPLET_ISC_RTP_TADF"
+   ],
+   "rules": "mechcal/eval/family_reduction.py",
+   "environment_context": [
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
+    }
+   ],
+   "out_of_pool_labels": [],
+   "primary_lost": false,
+   "no_labels_left": false,
+   "original_reference_mechanisms": [
+    {
+     "label": "RIM_RIR_RIV",
+     "role": "primary",
+     "gain": 2,
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "role": "secondary",
+     "gain": 1,
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04"
+     ],
+     "rationale": "Source assigns solution quenching and spectral shifts to TICT, with aggregate hydrophobicity reducing it."
+    }
+   ],
+   "original_mechanism_decisions": [
+    {
+     "label": "RIM_RIR_RIV",
+     "status": "supported",
+     "role": "primary",
+     "evidence_ids": [
+      "E02"
+     ],
+     "rationale": "The explicit source AIE explanation is restricted intramolecular motion in TPR aggregates."
+    },
+    {
+     "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E02",
+      "E03"
+     ],
+     "rationale": "Bare TPR aggregates provide the source-proposed restrictive, hydrophobic environment; derivative nanoparticle inclusion is not required for this target-level proposal."
+    },
+    {
+     "label": "HOST_GUEST_INTERACTION",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [
+      "E05",
+      "E06",
+      "E07"
+     ],
+     "rationale": "The demonstrated host-guest pair is alpha-CD/PEG in a covalently modified TPR formulation. It does not establish host-guest binding or host-induced emission of the free TPR target. Retain the derivative findings as comparator context."
+    },
+    {
+     "label": "ICT_TICT_CT",
+     "status": "supported",
+     "role": "secondary",
+     "evidence_ids": [
+      "E01",
+      "E03",
+      "E04"
+     ],
+     "rationale": "Source assigns solution quenching and spectral shifts to TICT, with aggregate hydrophobicity reducing it."
+    },
+    {
+     "label": "ESIPT_PT",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+    },
+    {
+     "label": "PET_ET",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+    },
+    {
+     "label": "AGGREGATE_EXCITON_EXCIMER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+    },
+    {
+     "label": "RADIATIVE_RATE_STATE_BALANCE",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No distinct radiative-rate or bright/dark-state mechanism established beyond generic changes in fluorescence intensity."
+    },
+    {
+     "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+    },
+    {
+     "label": "RACI_CI_ACCESS",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+    },
+    {
+     "label": "SOKR_ANTI_KASHA",
+     "status": "not_established",
+     "role": null,
+     "evidence_ids": [],
+     "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+    }
+   ]
+  }
  },
  "provenance": {
   "annotation_method": "assistant_source_reconstruction",

@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 
 from mechcal.eval.prompts import load_eval_prompt
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL, MECHANISM_POOL
 from mechcal.runtime.llm import OpenAICompatibleSettings, OpenAIJsonClient
 
 MECHANISM_EVIDENCE_RUBRIC_PATH = (
@@ -202,8 +202,10 @@ def load_mechanism_evidence_rubric(path: Path | None = None) -> dict[str, object
     rubric_path = path or MECHANISM_EVIDENCE_RUBRIC_PATH
     rubric = json.loads(rubric_path.read_text(encoding="utf-8"))
     labels = _rubric_labels(rubric)
-    missing = sorted(set(MECHANISM_POOL) - set(labels))
-    extra = sorted(set(labels) - set(MECHANISM_POOL))
+    # The 0.2.0 rubric files stay frozen on the earlier 11-family pool; the current pool has 7 families.
+    pool = ELEVEN_FAMILY_POOL if set(labels) == set(ELEVEN_FAMILY_POOL) else MECHANISM_POOL
+    missing = sorted(set(pool) - set(labels))
+    extra = sorted(set(labels) - set(pool))
     if missing or extra:
         raise ValueError(
             "Mechanism evidence rubric labels do not match the mechanism pool: "

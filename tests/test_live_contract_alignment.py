@@ -8,7 +8,7 @@ import pytest
 from jsonschema import Draft202012Validator
 from pydantic import ValidationError
 
-from mechcal.mechanism_pool import MECHANISM_POOL
+from mechcal.mechanism_pool import ELEVEN_FAMILY_POOL as MECHANISM_POOL  # 0.2.0 workflow: 11-family pool
 from mechcal.runtime.decision_economy import validate_material_outcomes
 from mechcal.runtime.schema_diagnostics import schema_issues
 from mechcal.runtime.scoped_contracts import final_delivery_schema, result_review_schema, stop_review_schema, worker_schema
