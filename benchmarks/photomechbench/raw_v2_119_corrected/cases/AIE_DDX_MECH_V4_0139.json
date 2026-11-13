@@ -1,0 +1,326 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0139",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1(C)c2ccccc2-c2ccc(C(=O)c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMF-BP-PXZ",
+  "source_documents": [
+   {
+    "source_id": "F048",
+    "title": "Mechanical Insights into Aggregation-Induced Delayed Fluorescence Materials with Anti-Kasha Behavior",
+    "doi": "10.1002/advs.201801629",
+    "pdf_sha256": "11335f7b0b9908d4bf7ffe5ded5df63e120ba66115a67a4c1be6f2f7d1d2f154",
+    "page_count": 9
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F048",
+    "pdf_page": 3,
+    "quote": "The coopera- tive effect of these weak hydrogen bonds can rigidify molecular conformation and restrict intramolecular motion",
+    "subject": "DMF-BP-PXZ crystal",
+    "scope": "target",
+    "conditions": "Single crystal grown from THF/ethanol; Figure 1; PXZ-phenylene torsion about 86 degrees.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign weak C-H...pi/C-H...O contacts to rigidification and motion restriction; no obvious pi stacking is found.",
+    "limitations": "Packing-to-RIM attribution is interpretive, not independently isolated by a contact-specific intervention."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F048",
+    "pdf_page": 3,
+    "quote": "DMF-BP-PXZ 406, 320 595 2.6 2.3 548 45.4 30.2 1.4 534 73.4 31.0 2.1",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Table 1 visually inspected; THF 10^-5 M versus deposited neat/doped films; room temperature under nitrogen.",
+    "kind": "observation",
+    "statement": "Solution: 595 nm, 2.6% PLQY, 2.3 ns. Neat film: 548 nm, 45.4%, prompt 30.2 ns/delayed 1.4 microseconds. Doped film: 534 nm, 73.4%, prompt 31.0 ns/delayed 2.1 microseconds.",
+    "limitations": "Distinct environments; not comparator rows. These values do not independently establish which singlet state emits."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F048",
+    "pdf_page": 4,
+    "quote": "these molecules have close kF values in solutions and in neat films",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Experiment-derived rate model, Table 2 visually inspected, solution versus neat film.",
+    "kind": "computation",
+    "statement": "Target kF is 11.1 versus 10.6 x10^6 s^-1, while kIC falls from 41.7 to 1.3 x10^7 s^-1. Film kISC is 9.7 x10^6 and kRISC 1.0 x10^6 s^-1.",
+    "limitations": "Derived rates, not direct independent rate measurements. SI equations not inspected; near-constant kF argues against radiative-rate enhancement as the principal cause."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F048",
+    "pdf_page": 4,
+    "quote": "a broad excited-state absorption (ESA) band in the range of 800–1000 nm can be observed in neat film",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Nanosecond transient absorption, deaerated THF versus vacuum-deposited film, 410 nm excitation; monitor 940 nm.",
+    "kind": "observation",
+    "statement": "Film ESA lifetime is 1413.3 ns, near the 1.4 microsecond delayed PL lifetime. THF has no corresponding triplet-indicating signal.",
+    "limitations": "Triplet assignment is the authors' interpretation of ESA; absence of detectable signal is not proof of exactly zero ISC."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F048",
+    "pdf_page": 4,
+    "quote": "the oscillator strength of S1 is almost zero (f = 0.0006)",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "DFT/TDDFT; crystal-based QM/MM two-layer ONIOM with rigid surroundings, BMK/6-31G(d) initial calculation.",
+    "kind": "computation",
+    "statement": "Computed S1 is nearly dark; other functionals also gave nearly zero S1 oscillator strength according to the main text.",
+    "limitations": "Approximate model; SI functional comparisons not directly inspected."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F048",
+    "pdf_page": 5,
+    "quote": "the emission wavelength of DMF-BP-PXZ in solid calculated with the PBE0 functional is 525 nm with a relatively large f value of 0.0523",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Optimized S2 in solid-state model; comparison to crystal emission at 525 nm.",
+    "kind": "computation",
+    "statement": "A brighter S2 transition matches the cited crystal peak, supporting the authors' anti-Kasha assignment.",
+    "limitations": "Crystal peak is distinct from 548 nm neat-film peak. Calculation-based state assignment, not direct experimental state-resolved proof."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F048",
+    "pdf_page": 5,
+    "quote": "Since it is difficult for us to obtain the exact value of kIC of S2 → S1 by calculation",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Model nonradiative pathway in solution and solid.",
+    "kind": "computation",
+    "statement": "Authors substitute S1-to-S0 kIC for the full S2-to-S1-to-S0 process; resulting values are 3.1 x10^10 s^-1 in solution and 8.8 x10^6 s^-1 in solid.",
+    "limitations": "The uncalculated S2-to-S1 step is an explicit model limitation, especially for a claim of competing S2 fluorescence."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F048",
+    "pdf_page": 6,
+    "quote": "As for S2, it is a typical CT state",
+    "subject": "DMF-BP-PXZ S2 and T3",
+    "scope": "target",
+    "conditions": "NTO analysis in THF and solid.",
+    "kind": "computation",
+    "statement": "S2 is assigned CT from dimethylfluorene to benzoyl; T3 has significant locally excited character.",
+    "limitations": "Not a demonstrated TICT or separate PET reaction."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F048",
+    "pdf_page": 6,
+    "quote": "the energy gap between S2 and T3 is so small (0.22 eV) in solid",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "Calculated singlet/triplet pathway in solid.",
+    "kind": "computation",
+    "statement": "Authors identify S2-to-T3 as dominant ISC and T3-to-S2 as RISC; calculated kRISC is 7.2 x10^4 s^-1.",
+    "limitations": "This differs from experiment-derived 1.0 x10^6 s^-1 in Table 2; do not present the two rates as quantitatively identical."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F048",
+    "pdf_page": 4,
+    "quote": "the intramolecular motions are restricted greatly, and thus the nonradiative IC channels are blocked",
+    "subject": "Three AIDF emitters including DMF-BP-PXZ",
+    "scope": "series_including_target",
+    "conditions": "Solution-to-aggregate/neat-film comparison.",
+    "kind": "author_interpretation",
+    "statement": "Restricted motions suppress competing IC, allowing ISC/RISC and delayed fluorescence to become prominent.",
+    "limitations": "A bounded source mechanistic account. This does not establish conical intersections or aggregate-exciton emission."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E10"
+    ],
+    "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "S2 CT character is calculated by NTO analysis."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E10"
+    ],
+    "rationale": "Source explicitly links motion restriction to reduced IC and emergence of delayed emission."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Crystal contacts and solid physical constraints enable the RIM pathway; overlapping, not an independent cause."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "S2 CT character is calculated by NTO analysis."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Dark S1/bright S2 and experimentally derived IC/ISC competition support state/rate balance; radiative rate itself scarcely increases and S2 IC is approximated."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Delayed PL, triplet-assigned ESA and ISC/RISC model support triplet-mediated delayed fluorescence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Retain authors' computed S2 emission assignment with explicit limitations on uncomputed S2-to-S1 IC and approximate QM/MM."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "aa7bdb42577e8b88fe199b1f0341542411fdd6ad6718813c24c07743bacf80f5",
+  "label_record_sha256": "2c71a4ecf3fa6054337c0f65e29194ae95a295d3e97faf9790089f9062270c30"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

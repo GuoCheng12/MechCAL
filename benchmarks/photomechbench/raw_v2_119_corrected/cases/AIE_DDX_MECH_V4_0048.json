@@ -1,0 +1,278 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0048",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3cc4nsnc4cc3-c3ccc(-c4cc(OCCCCCCCC)cc(OCCCCCCCC)c4)s3)s2)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DBTBT-4C8",
+  "source_documents": [
+   {
+    "source_id": "F021",
+    "title": "Deep-Red Fluorescent Organic Nanoparticles with High Brightness and Photo-Stability for Super-Resolution In Vitro and In Vivo Imaging Using STED Nanoscopy",
+    "doi": "10.1021/acsami.9b18336",
+    "pdf_sha256": "d26a98c6f757a1a8a9e45434fd01073215e48c825e4e58e64cd6b21120e4f460",
+    "page_count": 41
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F021",
+    "pdf_page": 10,
+    "quote": "when the solvent polarity was increased, large emission red- shift from 580 to 700 nm was observed",
+    "subject": "DBTBT-0C8, -2C8 and -4C8",
+    "scope": "series_including_target",
+    "conditions": "Solvent series; main text referring to SI S16-S18.",
+    "kind": "observation",
+    "statement": "The series shows polarity-dependent red shifts assigned to TICT.",
+    "limitations": "Range describes the series, not independently digitized target endpoints; SI not inspected."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F021",
+    "pdf_page": 11,
+    "quote": "its PL intensity was clearly strengthened when much more water was added (fw> 60%)",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "THF/water series after initial polarity quenching.",
+    "kind": "observation",
+    "statement": "Target emission recovers at high water fraction, whereas -0C8 and -2C8 continue to quench.",
+    "limitations": "Recovery is not proof that absolute yield exceeds pure THF."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F021",
+    "pdf_page": 11,
+    "quote": "when fw is 90%, it should be mentioned that DBTBT- 4C8 can easily precipitate",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "90% water in THF/water.",
+    "kind": "observation",
+    "statement": "Precipitation is reported to reduce brightness at 90% water.",
+    "limitations": "Loss of emissive material in solution should not be mislabeled intrinsic ACQ."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F021",
+    "pdf_page": 12,
+    "quote": "DBTBT- 4C8 496 2.27 159 0.63, 0.36 25/25 3.85 6.45 19.52",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "Table 1 visually inspected; THF and solid measurements.",
+    "kind": "observation",
+    "statement": "THF/solid PLQYs are 25%/25%; solid lifetime 3.85 ns.",
+    "limitations": "Only the PLQY and lifetime are observations; derived rates separated below."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F021",
+    "pdf_page": 13,
+    "quote": "DBTBT-2C8 and DBTBT-4C8, whose backbones contain alkyl chains, had larger kr values compared with DBTBT-0C8.",
+    "subject": "DBTBT-0C8, -2C8 and -4C8",
+    "scope": "series_including_target",
+    "conditions": "Rates derived from solid PLQY/lifetime, Table 1.",
+    "kind": "computation",
+    "statement": "For -4C8, kr=6.45e7 and knr=19.52e7 s-1; knr is lower than -2C8 (30.29e7), but not -0C8 (19.33e7).",
+    "limitations": "The text's broad claim of decreased knr needs this comparator qualification; these are derived rates, not directly measured constants."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F021",
+    "pdf_page": 13,
+    "quote": "the motions of flexible chains are proposed can be well restricted by its lamellar packing.",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "Thin-film GISAXS described in main text; SI S22.",
+    "kind": "author_interpretation",
+    "statement": "Lamellar packing is proposed to restrict flexible-chain motion and improve emission.",
+    "limitations": "GISAXS supports order/orientation, not direct dynamic immobilization; SI pattern not inspected."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F021",
+    "pdf_page": 13,
+    "quote": "twisted molecular backbones were observed in DBTBT-2C8 and DBTBT-4C8",
+    "subject": "DBTBT-2C8 and -4C8",
+    "scope": "series_including_target",
+    "conditions": "Gas-phase B3LYP geometry optimization, Figure 2G.",
+    "kind": "computation",
+    "statement": "The authors predict twisted backbones and suggest reduced quenching pi-stacking.",
+    "limitations": "Not an aggregate exciton calculation or direct structure of nanoparticle packing."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F021",
+    "pdf_page": 15,
+    "quote": "well-defined and mono-dispersed spherical nanoparticles with size (50+/-5 nm)",
+    "subject": "DBTBT-4C8 in DSPE-PEG2000 FONPs",
+    "scope": "target",
+    "conditions": "Nanoprecipitation; main methods p.27 use 1 mg dye and 1 mg polymer in 1 mL THF into 5 mL water.",
+    "kind": "observation",
+    "statement": "Target/polymer nanoparticles are approximately 50+/-5 nm by TEM and PDI 0.11 by DLS.",
+    "limitations": "Nanoparticle morphology is not molecular host-cavity binding."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F021",
+    "pdf_page": 19,
+    "quote": "the detailed depletion mechanism here by using our prepared FONPs should be further figured out in the future work.",
+    "subject": "DBTBT-4C8 FONPs",
+    "scope": "target",
+    "conditions": "STED depletion experiments.",
+    "kind": "author_interpretation",
+    "statement": "The source explicitly leaves detailed depletion photophysics unresolved.",
+    "limitations": "Do not infer higher-state emission, triplets or a new switching mechanism from STED performance."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Explicit flexible-chain restriction by lamellar packing is the source's explanation of enhanced aggregate performance, with dynamic evidence limited."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Packing and polymer compatibility enable restricted/less-quenching aggregated environments; no direct cavity inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The authors use TICT to explain initial solvent-polarity quenching, retained as a source assignment."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Measured yields/lifetimes and derived rates support a bounded balance comparison; lower knr only versus -2C8, not versus -0C8."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Explicit flexible-chain restriction by lamellar packing is the source's explanation of enhanced aggregate performance, with dynamic evidence limited."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Packing and polymer compatibility enable restricted/less-quenching aggregated environments; no direct cavity inclusion."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The authors use TICT to explain initial solvent-polarity quenching, retained as a source assignment."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Measured yields/lifetimes and derived rates support a bounded balance comparison; lower knr only versus -2C8, not versus -0C8."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "7e20bc9e06caa7ff9696f4b39f1e8ba79d0bed1937c252833d2ec05c6b25b4b1",
+  "label_record_sha256": "79417b949f04a8780fc54dc980aa46695f007f426981bf9b216cea9bf4c155b1"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

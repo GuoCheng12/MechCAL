@@ -1,0 +1,287 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0030",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "OB(O)c1ccc(C[n+]2ccc(-c3ccc(N(c4ccccc4)c4ccc(-c5cc[n+](Cc6ccc(B(O)O)cc6)cc5)cc4)cc3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPA-PPA-2",
+  "source_documents": [
+   {
+    "source_id": "F016",
+    "title": "Aggregation-Induced Emission (AIE)-Active Fluorescent Probes with Multi-Binding Sites toward ATP Sensing and the Live Cell Imaging",
+    "doi": "10.1039/c7tb02399e",
+    "pdf_sha256": "bbe8da1665d66ac802ccfdec4e9d7488c246c0768a47ca7e9fb7fa2631f83774",
+    "page_count": 9
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F016",
+    "pdf_page": 8,
+    "quote": "TPA-PPA-2 was an orange solid",
+    "subject": "TPA-PPA-2",
+    "scope": "target",
+    "conditions": "Named synthesis section; Scheme 1 p.4.",
+    "kind": "observation",
+    "statement": "The source explicitly distinguishes TPA-PPA-2 from the one- and three-arm congeners and reports its isolation and NMR characterization.",
+    "limitations": "Identity is followed by name/designation only; no chemical graph or legacy SMILES confirmation."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F016",
+    "pdf_page": 4,
+    "quote": "The HOMO orbital is mostly dominated in the TPA cores",
+    "subject": "TPA-PP/TPA-PPA series including TPA-PPA-2",
+    "scope": "series_including_target",
+    "conditions": "Gaussian09 OPT/FREQ/B3LYP/6-31G*; Fig. 2.",
+    "kind": "computation",
+    "statement": "Authors report HOMO density on TPA and LUMO on pyridinium acceptors, interpreted as ICT tendency for all four probes.",
+    "limitations": "The printed very small gaps labeled eV are questionable in magnitude/unit convention; no numerical gap is adopted or silently corrected."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F016",
+    "pdf_page": 4,
+    "quote": "the fluorescence property is greatly affected by the solvent polarity",
+    "subject": "TPA-PPA-2 within four-probe series",
+    "scope": "series_including_target",
+    "conditions": "Solvent study, 20 micromolar, Fig. 3; target excitation 437 nm.",
+    "kind": "author_interpretation",
+    "statement": "Authors interpret solvent-dependent emission as probably ICT-related; the target is included in the measured series.",
+    "limitations": "Solvent polarity changes can also change hydrogen bonding and aggregation. No TICT geometry or time-resolved CT formation is established."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F016",
+    "pdf_page": 5,
+    "quote": "their fluorescence lifetimes were lengthened to 4.9, 2.9, 4.3 and 4.9 nanoseconds, respectively.",
+    "subject": "TPA-PPA-2",
+    "scope": "target",
+    "conditions": "Fig. 4, target third in TPA-PP/PPA-1/PPA-2/PPA-3 sequence.",
+    "kind": "observation",
+    "statement": "TPA-PPA-2 has a reported fluorescence lifetime of 4.3 ns.",
+    "limitations": "Inspected caption does not specify the solvent/ATP condition or a before-after pair; do not call 4.3 ns an ATP-induced lifetime increase."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F016",
+    "pdf_page": 5,
+    "quote": "Plots of maximum emission intensity (I/I0) of TPA-PP, TPA- PPA-1, TPA-PPA-2, TPA-PPA-3 with the addition of ATP.",
+    "subject": "TPA-PPA-2",
+    "scope": "target",
+    "conditions": "20 micromolar probe, aqueous 2 vol% DMSO, pH 7.0; ATP 10-300 micromolar, Fig. 5 visually inspected.",
+    "kind": "observation",
+    "statement": "The target-specific blue-triangle curve increases with added ATP, intermediate between PPA-1 and PPA-3 over the plotted range.",
+    "limitations": "No comparator detection limit, quantum-yield enhancement or selectivity is assigned to PPA-2; plotted intensity response alone does not prove a binding geometry."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F016",
+    "pdf_page": 5,
+    "quote": "possibly due to the synergistic effect of electrostaticat traction and covalent bonds formation",
+    "subject": "TPA-PPA series including TPA-PPA-2",
+    "scope": "series_including_target",
+    "conditions": "ATP-dependent absorption/emission; PP/PPA-1 comparison and multi-binding-site rationale.",
+    "kind": "author_interpretation",
+    "statement": "Authors propose combined pyridinium-phosphate electrostatics and boronic-acid/cis-diol bonding for ATP recognition; extra binding sites are proposed to improve response.",
+    "limitations": "Detailed comparator comparison is PP versus PPA-1 and strongest claims concern PPA-3. The PPA-2 binding mode is a bounded series interpretation, not independently resolved stoichiometry."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F016",
+    "pdf_page": 6,
+    "quote": "Plots of maximum emission intensity of TPA-PP, TPA-PPA-1, TPA-PPA-2, TPA-PPA-3",
+    "subject": "TPA-PPA-2",
+    "scope": "target",
+    "conditions": "Fig. 6 visually inspected; 20 micromolar in glycerol/methanol mixtures, glycerol fraction up to 0.95.",
+    "kind": "observation",
+    "statement": "The separately labeled PPA-2 blue-triangle curve rises substantially at high glycerol fraction, so viscosity response is observed for this target and not only PPA-3.",
+    "limitations": "Changing glycerol content also changes solvent properties. The photograph inset and quoted approximately fivefold result in the prose concern PPA-3, not PPA-2."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F016",
+    "pdf_page": 5,
+    "quote": "restriction of intramolecular rotations (RIR), blocking the non-radiative pathway",
+    "subject": "TPA probe series including TPA-PPA-2; detailed ATP model illustrated by PPA-3",
+    "scope": "series_including_target",
+    "conditions": "Interpretation motivating the four-probe glycerol test, followed by PPA-3-specific ATP model.",
+    "kind": "author_interpretation",
+    "statement": "Authors invoke RIR to explain viscosity-enhanced emission, and propose that multi-site ATP association also restricts motion.",
+    "limitations": "PPA-2 has its own viscosity curve, but the proposed ATP-induced viscosity increase is not independently measured for PPA-2; do not equate bulk viscosity with confirmed molecular binding geometry."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F016",
+    "pdf_page": 6,
+    "quote": "we can hard to say that these new developed sensors are exactly ATP-specific in the mammalian cells.",
+    "subject": "TPA probe series including TPA-PPA-2",
+    "scope": "series_including_target",
+    "conditions": "HepG-2 imaging and DAPI comparisons; Figs. 8-9.",
+    "kind": "author_interpretation",
+    "statement": "Authors explicitly stop short of assigning cellular staining specifically to ATP, noting charge-mediated uptake and interactions with other bioanalytes.",
+    "limitations": "Cell imaging does not validate in-cell ATP specificity. Prose gives 30 min while Fig. 8 and methods indicate 60 min/1 h."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F016",
+    "pdf_page": 6,
+    "quote": "the emission spectrum of TPA- PPA-3 changed negligibly upon the addition of ADP, AMP, and other anions",
+    "subject": "TPA-PPA-3",
+    "scope": "comparator",
+    "conditions": "20 micromolar PPA-3, 100 micromolar analytes; Fig. 7.",
+    "kind": "observation",
+    "statement": "Detailed ATP-versus-ADP/AMP selectivity testing is presented for PPA-3.",
+    "limitations": "This is not a target-specific PPA-2 selectivity demonstration. Likewise, the 0.3 ppm detection limit and approximately 26-fold quantum-yield change in p.5 belong to PPA-3."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Target-specific viscosity response plus the source's explicit RIR interpretation supports bounded RIR; ATP-induced restriction is more tentative than the solvent test."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Under the frozen analyte-binding definition, ATP recognition is proposed to alter emission via multi-site association. This is a probe/analyte interaction, not macrocycle inclusion; PPA-2 geometry remains unverified."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Preserve the source's calculated donor-acceptor separation and probable ICT interpretation of solvent dependence, without adopting suspect gap units or asserting TICT."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Target-specific viscosity response plus the source's explicit RIR interpretation supports bounded RIR; ATP-induced restriction is more tentative than the solvent test."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "No target-resolved aggregate size/packing or independent ATP-induced matrix confinement is demonstrated. Do not convert the proposed association/viscosity model into a proved aggregate structure."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Under the frozen analyte-binding definition, ATP recognition is proposed to alter emission via multi-site association. This is a probe/analyte interaction, not macrocycle inclusion; PPA-2 geometry remains unverified."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Preserve the source's calculated donor-acceptor separation and probable ICT interpretation of solvent dependence, without adopting suspect gap units or asserting TICT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway is established here; ground-state protonation alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific exciton, excimer or new intermolecular emissive state is established; aggregation alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "A single ambiguously conditioned lifetime does not establish an ATP-dependent rate balance."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "9023e4468f226197472818b0e1cef2943223173f7b977e39d6572c63fd565373",
+  "label_record_sha256": "2d9bb4cadab3295521ab2a3867d8dc97e6c5bea8955d2717e2a27478911385d4"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure: Scheme 1, two para-B(OH)2 benzyl pyridinium arms",
+   "reagent: 4-bromomethylphenylboronic acid"
+  ],
+  "runnable": true
+ }
+}

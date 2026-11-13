@@ -1,0 +1,235 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0092",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=S1(=O)c2ccccc2-c2cc(N3c4ccccc4Sc4ccccc43)ccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PTZ-DBTO2",
+  "source_documents": [
+   {
+    "source_id": "S0092",
+    "title": "Unified Framework for Photophysical Rate Calculations in TADF Molecules",
+    "doi": "10.1021/acs.jctc.1c00476",
+    "pdf_sha256": "ed90ff635c17e0cbd5a5fcf8f76d8d7f8f8ba8b71f979d936d5c69bb65201a20",
+    "page_count": 9
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0092",
+    "pdf_page": 4,
+    "quote": "In the particular case of PTZ-DBTO2, the predicted ISC rate is roughly 1 order of magnitude greater than its experimental counterpart, while the calculated rISC rate underestimates the experimental value by a factor of 3.",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Nuclear-ensemble ISC/rISC calculations compared with previously reported experiments.",
+    "kind": "computation",
+    "statement": "The model estimates spin-conversion rates but has nontrivial quantitative error.",
+    "limitations": "Experimental reference values are cited by the source, not independently recovered in this smoke."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0092",
+    "pdf_page": 4,
+    "quote": "the sampling procedure produces conformations that display T1 states with various different mixtures of charge transfer and localized characters.",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Sampled conformations and T1 natural transition orbitals.",
+    "kind": "computation",
+    "statement": "Triplet-state electronic character varies across conformations.",
+    "limitations": "This does not show a single fixed CT fraction or prove ordinary TICT."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0092",
+    "pdf_page": 6,
+    "quote": "the contribution from prompt fluorescence can be seen by the small vertical line in the initial times, followed by the delayed fluorescence that results from rISC.",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Kinetic simulation of time-resolved emission.",
+    "kind": "computation",
+    "statement": "Reverse intersystem crossing generates a delayed fluorescence component.",
+    "limitations": "This is the computed decay, not a new time-resolved experiment."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0092",
+    "pdf_page": 6,
+    "quote": "the calculations predict that 79% of the emission stems from fluorescence, with the remaining 21% being due to phosphorescence.",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Modeled branching of radiative emission.",
+    "kind": "computation",
+    "statement": "The model predicts mixed fluorescence and phosphorescence contributions.",
+    "limitations": "The percentages are predictions and must not be presented as directly measured fractions."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0092",
+    "pdf_page": 6,
+    "quote": "an estimated lifetime of 67 μs for the delayed component.",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Biexponential fit to the simulated fluorescence curve.",
+    "kind": "computation",
+    "statement": "The predicted delayed component has a 67 microsecond lifetime.",
+    "limitations": "The source reports an approximately order-of-magnitude overestimate relative to experiment."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0092",
+    "pdf_page": 6,
+    "quote": "PTZ-DBTO2 4.0 × 106 3.1 × 103 6.0 × 107 44 and 45",
+    "subject": "PTZ-DBTO2",
+    "scope": "target",
+    "conditions": "Table 3, calculated fluorescence and phosphorescence rates alongside cited experimental fluorescence rates.",
+    "kind": "computation",
+    "statement": "The calculated kF is 4.0 x 10^6 s^-1 and kP is 3.1 x 10^3 s^-1. The table cites an experimental kF of 6.0 x 10^7 s^-1, 15 times the calculated kF.",
+    "limitations": "The factor 15 is arithmetic from this table, not a new experiment. The experimental sources (references 44 and 45) have not been recovered independently. A mechanism-level interpretation does not imply quantitative rate agreement."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Sampled NTOs explicitly establish variable CT versus localized character in the relevant triplet states."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The existing family explicitly includes organic TADF and triplet photophysics. Absence of a metal cannot exclude the target's rISC pathway."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Sampled NTOs explicitly establish variable CT versus localized character in the relevant triplet states."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The paper's central analysis combines emission and spin-conversion rates to predict state populations and emission contributions."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The existing family explicitly includes organic TADF and triplet photophysics. Absence of a metal cannot exclude the target's rISC pathway."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "86529578033aa5eb80317e242829091ff7e917b50b79ab223091a4b2f8e3165c",
+  "label_record_sha256": "ccc96a07e1c90d2f53b77a7d56793e87c1564db637755051cd6c587fd7919346"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

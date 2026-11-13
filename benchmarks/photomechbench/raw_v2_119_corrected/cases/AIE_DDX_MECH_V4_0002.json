@@ -1,0 +1,265 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0002",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(C=CC=NN=Cc2cc3ccc4cccc5ccc(c2)c3c45)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PYNC",
+  "source_documents": [
+   {
+    "source_id": "S0002",
+    "title": "Photophysical Properties of an Azine-Linked Pyrene− Cinnamaldehyde Hybrid: Evidence of Solvent-Dependent Charge-Transfer-Coupled Excimer Emission",
+    "doi": "10.1021/acsomega.8b02717",
+    "pdf_sha256": "98a7b680f3021339a6710562aa7393c2378c61096500c6536d413280d9fa029e",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "the addition of water diminished the CT band, and the high-energy band experienced increment in intensity.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Methanol/water and acetonitrile/water mixtures with increasing water fraction.",
+    "kind": "observation",
+    "statement": "Increasing water changes the two emission bands in opposite directions.",
+    "limitations": "Solvent polarity and aggregation change together; the titration alone does not distinguish them."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "the increasing concentration of probe in solvents other than water contributes to increment of the high-energy emission band",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Concentration series in methanol, water and acetonitrile.",
+    "kind": "observation",
+    "statement": "The high-energy emission grows with concentration outside water.",
+    "limitations": "The statement concerns concentration dependence, not a directly measured excited dimer structure."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "the high-energy band diminishes gradually with an increment of a band at ∼590 nm.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Increasing PEG400 fraction in water, used as a viscosity perturbation.",
+    "kind": "observation",
+    "statement": "The two bands respond oppositely as PEG400 is added.",
+    "limitations": "PEG400 changes dielectric properties as well as viscosity."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "increment of viscosity freezes the single-bond rotational motions in PYNC",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Water/PEG400 mixtures.",
+    "kind": "author_interpretation",
+    "statement": "The authors invoke restricted rotation to explain enhancement of the CT emission component.",
+    "limitations": "This is a source interpretation of a mixed solvent perturbation, not a measured torsional trajectory."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "PYNC was found to be totally nonfluorescent in the solid state.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Solid-state emission compared with emission in water.",
+    "kind": "observation",
+    "statement": "Solid PYNC is nonfluorescent under the reported comparison.",
+    "limitations": "This limits a generic AIE assignment but does not rule out every aggregate-related excited state."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0002",
+    "pdf_page": 6,
+    "quote": "the high-energy band was due to the pyrene excimer and the polarity-sensitive band was due to excited-state intramolecular charge transfer in PYNC.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "Reported solvent, concentration, viscosity and solid-state comparisons.",
+    "kind": "author_interpretation",
+    "statement": "The source assigns separate bands to excimer emission and intramolecular CT.",
+    "limitations": "These are the paper's assignments, not an independent confirmation by this pipeline."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0002",
+    "pdf_page": 7,
+    "quote": "a biexponential nature of decay was observed in all solvents except water, where monoexponential decay having a considerably long lifetime was obtained",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "375 nm excitation, detection at the assigned excimer band.",
+    "kind": "observation",
+    "statement": "The decay at the assigned excimer band depends on solvent.",
+    "limitations": "The source discusses solvent complexes; lifetime components should not be treated as uniquely identified species."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0002",
+    "pdf_page": 7,
+    "quote": "Upon deconvoluting the decay profiles, lifetime components were obtained that fall below the instrumental response function.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "CT-band fluorescence decay following 375 nm excitation.",
+    "kind": "observation",
+    "statement": "The source reports fitted CT lifetime components below the instrumental response function.",
+    "limitations": "Do not present these components as independently resolved CT formation or transfer times. The source instead discusses average lifetimes."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Motion restriction is an enabling explanation of viscosity-enhanced CT emission, not a general claim that PYNC is AIE-active."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06"
+    ],
+    "rationale": "The separate polarity-sensitive CT emission is the other central source interpretation."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The excimer interpretation is central to the paper and supported by several target-specific perturbations."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Motion restriction is an enabling explanation of viscosity-enhanced CT emission, not a general claim that PYNC is AIE-active."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06"
+    ],
+    "rationale": "The separate polarity-sensitive CT emission is the other central source interpretation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The excimer interpretation is central to the paper and supported by several target-specific perturbations."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "Different measured lifetimes alone do not establish a separate rate-balance explanation in this extraction."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "50592b3bb38bec1f271032df28df4b1e99421996a399c1c1fec3fdf2cad0ad24",
+  "label_record_sha256": "dc244071d97ebb1c8eb43af32710026f0d9d80001e39f6545956a11dee164760"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

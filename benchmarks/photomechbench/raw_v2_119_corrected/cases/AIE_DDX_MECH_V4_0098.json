@@ -1,0 +1,288 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0098",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "F[B-]12Oc3cc(Cl)ccc3N=[N+]1c1ccc(Cl)cc1O2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BAz-Cl",
+  "source_documents": [
+   {
+    "source_id": "F044",
+    "title": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "doi": "10.1039/d4dt02458c",
+    "pdf_sha256": "f918167781b05d4e87c19a92fa3c6156b9eb43cec25df447639247ef0f965970",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "moderate isolated yields (34% for BAz-F and 38% for BAz-Cl)",
+    "subject": "BAz-Cl",
+    "scope": "target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "observation",
+    "statement": "BAz-Cl is explicitly the chlorinated boron-fused azobenzene derivative synthesized in Scheme 1.",
+    "limitations": "Synthetic isolated yield is not emission quantum yield; graph confirmation deferred."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F044",
+    "pdf_page": 4,
+    "quote": "Comparison of (c) absolute FL quantum yield, (d) radiative rate constant, and (e) nonradiative rate constant between 1 wt% PMMA ﬁlms and crystals",
+    "subject": "BAz-Cl",
+    "scope": "target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "observation",
+    "statement": "Figure 2 labels BAz-Cl room-temperature quantum yields 1.5%/12%, kr 0.20/1.3 x10^8 s^-1 and knr 13/10 x10^8 s^-1 for PMMA/crystal.",
+    "limitations": "Figure 2 visually inspected; these are plotted values, not text-inferred values from BAz-F or BAz-Br."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "restriction of structural relaxation in the excited state",
+    "subject": "BAz-Cl",
+    "scope": "series_including_target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "author_interpretation",
+    "statement": "The series' crystal contacts are proposed to restrict structural relaxation and aid fluorescence.",
+    "limitations": "Shared interpretation across the series; no individual contact energy or motion amplitude quantified here."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "Comparison of (b) absolute FL quantum yield, (c) radiative rate constant, and (d) nonradiative rate constant",
+    "subject": "BAz-Cl",
+    "scope": "target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "observation",
+    "statement": "Figure 3 labels BAz-Cl 77 K quantum yields 55%, 59%, 34%, kr 1.1, 1.0, 1.7 and knr 0.92, 0.73, 3.2 x10^8 s^-1 for 2MeTHF, Tol/2MP, crystal respectively.",
+    "limitations": "Figure 3 visually inspected. Crystal kr increases but total yield falls because knr increases; do not transfer BAz-F's 77 K yield enhancement."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F044",
+    "pdf_page": 4,
+    "quote": "kr values of BAz-Cl and BAz-Br showed the opposite tendency.",
+    "subject": "BAz-Cl",
+    "scope": "target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "observation",
+    "statement": "Changing glass solvent from 2MeTHF to Tol/2MP lowers BAz-Cl kr, unlike BAz-H/F.",
+    "limitations": "The source suggests possible solvent interaction with boron, but does not establish a binding/coordination equilibrium."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "the observed increase in kr for haloge- nated BAz derivatives should mainly originate from the higher polarizability in the crystal surrounding",
+    "subject": "BAz-Cl",
+    "scope": "series_including_target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "author_interpretation",
+    "statement": "For halogenated targets the authors favor crystal polarizability over J-coupling or planarization as the main reason for radiative acceleration.",
+    "limitations": "Series interpretation tested with approximate refractive-index and dimer models."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "2.03 for BAz-F, 2.19 for BAz-Cl, and 2.30 for BAz-Br",
+    "subject": "BAz-Cl",
+    "scope": "target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "computation",
+    "statement": "The Lorentz-Lorenz estimate gives BAz-Cl crystal refractive index 2.19, versus calculated glass 1.53; Strickler-Berg analysis connects n^2 to kr.",
+    "limitations": "Calculated, not directly measured refractive indices; model details are in uninspected SI."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "ISC should be induced by the external heavy atom eﬀect associated with the multiple molecules in crystal.",
+    "subject": "BAz-Cl",
+    "scope": "series_including_target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose external heavy-atom-induced ISC as the extra crystal nonradiative channel in BAz-Cl/Br; nearly unchanged computed SOC argues against an internal heavy-atom cause.",
+    "limitations": "Tentative external-heavy-atom attribution, not measured ISC kinetics; approximately 10 cm^-1 SOC is a source calculation."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "phosphorescence was not detected at 77 K",
+    "subject": "BAz-Cl",
+    "scope": "series_including_target",
+    "conditions": "Crystal versus 1 wt% PMMA at room temperature; crystals versus 10^-5 M vitrified 2MeTHF and toluene/2-methylpentane 1:9 at 77 K.",
+    "kind": "observation",
+    "statement": "No phosphorescence was detected at 77 K; proposed triplet population is therefore assigned a nonradiative fate.",
+    "limitations": "Absence of detectable phosphorescence is not proof of absent triplets or proof of the proposed ISC route."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Preserve the explicitly proposed external heavy-atom ISC loss pathway with its tentative status and lack of detected phosphorescence."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Retain the source's explicit contact-mediated structural-relaxation restriction as a room-temperature contribution, not as the sole low-temperature mechanism."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "Crystal contacts constrain relaxation and the surrounding medium changes polarizability; these are distinct from a cavity host-guest mechanism."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Solvent-dependent rates raise a coordination possibility but do not establish a target binding mechanism."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "H-like dimers have weak calculated coupling and are not identified as the main cause of the BAz-Cl kr increase; no positive J/excimer assignment."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Radiative acceleration associated with crystal polarizability is central, while a larger knr offsets it at 77 K."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Preserve the explicitly proposed external heavy-atom ISC loss pathway with its tentative status and lack of detected phosphorescence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "f45eba1af228fc6fa712bfd4be7c0ae0b5dd2b39d4abb51b1bc5a4f05bf656d1",
+  "label_record_sha256": "b7ff1075c8c7ca9ee423577c55a700282208c5f7fa0ad74e9098f2c478836cba"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

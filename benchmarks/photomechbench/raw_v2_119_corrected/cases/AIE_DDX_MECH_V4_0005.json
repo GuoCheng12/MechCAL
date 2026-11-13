@@ -1,0 +1,261 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0005",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COC(=O)C1=C(C(=O)OC)N(c2ccccc2)C(c2ccccc2)N(c2ccccc2)C1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "THP 2",
+  "source_documents": [
+   {
+    "source_id": "S0004",
+    "title": "Insight into the strong aggregation-induced emission of low-conjugated racemic C6-unsubstituted tetrahydropyrimidines through crystal-structure-property relationship of polymorphs",
+    "doi": "10.1039/c5sc01226k",
+    "pdf_sha256": "e7f366a024738b815c39a8ce0139fa9800d7c13f2bc81c3eb5de98da1226e304",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0004",
+    "pdf_page": 2,
+    "quote": "THPs 1–3 in different organic solvents (cyclohexane, ethanol and acetonitrile etc.) are practically non-emissive",
+    "subject": "THPs 1-3",
+    "scope": "series_including_target",
+    "conditions": "Solutions in the named solvents compared with crystalline polymorphs.",
+    "kind": "observation",
+    "statement": "The series is nearly nonemissive in solution but emissive in crystals.",
+    "limitations": "Qualitative solution comparison; do not infer measured solution rate constants from negligible emission."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0004",
+    "pdf_page": 3,
+    "quote": "72 93 48 28 30 20 52",
+    "subject": "THP 2",
+    "scope": "target",
+    "conditions": "2c and 2c-prime; Table 1, integrating-sphere yields at 380 nm and lifetimes at 360 nm.",
+    "kind": "observation",
+    "statement": "Emission peaks 469/484 nm, yields 48/28%, lifetimes 11/6.8 ns; derived kr 0.44/0.41 and knr 0.47/1.06 in units of 10^8 s^-1.",
+    "limitations": "Full table columns were read with their headers, not as an unassigned numerical sequence. Rates are derived from yield/lifetime, not direct transition measurements."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0004",
+    "pdf_page": 3,
+    "quote": "all polymorphs with longer lem values, 1c, 2c0, 3b and 3c, show an unpaired packing mode",
+    "subject": "THPs 1-3",
+    "scope": "series_including_target",
+    "conditions": "Single-crystal structures, paired RS versus unpaired RR/SS packing.",
+    "kind": "observation",
+    "statement": "Packing arrangements differ between polymorphs without changing molecular connectivity.",
+    "limitations": "A correlation with emission is not unique proof of one excited-state process. The extracted prime is represented as 0."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0004",
+    "pdf_page": 6,
+    "quote": "restriction of intramolecular motion (RIM) by intra- and inter- molecular interactions",
+    "subject": "THPs 1-3",
+    "scope": "series_including_target",
+    "conditions": "Source explanation of the solution-to-aggregate change.",
+    "kind": "author_interpretation",
+    "statement": "The authors assign reduced nonradiative loss to motion restriction.",
+    "limitations": "Retain as an interpretation supported by crystal/rate comparisons, not a directly measured molecular trajectory."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0004",
+    "pdf_page": 6,
+    "quote": "both a local excitation state (LE) and an intramolecular charge transfer excitation state (ICT) exist",
+    "subject": "THP 1 polymorphs; analogous orbitals reported for THPs 2 and 3",
+    "scope": "series_including_target",
+    "conditions": "HOMO/LUMO calculations based on crystal conformations; main Figure 6 is 1b/1c, other polymorphs cited in Figure S5.",
+    "kind": "author_interpretation",
+    "statement": "The authors interpret the orbital distributions as LE/ICT contributions.",
+    "limitations": "For THPs 2 and 3, the analogous orbital figures are reported in missing SI; they are not independently inspected here."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0004",
+    "pdf_page": 6,
+    "quote": "improved electronic coupling via through-bond and through-space pathways",
+    "subject": "THPs 1-3",
+    "scope": "series_including_target",
+    "conditions": "Computed orbitals combined with Table 1 rates.",
+    "kind": "author_interpretation",
+    "statement": "The authors associate increased radiative rates with electronic coupling and favorable LE/ICT processes.",
+    "limitations": "No measured solution kr is available in the selected evidence; the enhancement relative to solution is interpreted."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0004",
+    "pdf_page": 7,
+    "quote": "they can form emissive poly- morphs by through-bond and through-space electron coupling in aggregates",
+    "subject": "THPs 1-3",
+    "scope": "series_including_target",
+    "conditions": "Source conclusion integrating polymorph structures, spectra and calculations.",
+    "kind": "author_interpretation",
+    "statement": "Intermolecular packing and electronic coupling are central to the authors' aggregate-emission account.",
+    "limitations": "Generic coupling is not by itself a resolved H/J exciton, excimer or exciplex; preserve that taxonomy boundary."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "Motion restriction is the source's central nonradiative explanation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "LE/ICT mixing contributes to the electronic account, with target-specific and series-level calculations distinguished."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06"
+    ],
+    "rationale": "The source quantitatively separates radiative and nonradiative rates; this overlaps the RIM/packing explanation rather than being an independent cause."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "Motion restriction is the source's central nonradiative explanation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "The paper explicitly compares packing arrangements and their optical consequences for identical molecular connectivity."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "LE/ICT mixing contributes to the electronic account, with target-specific and series-level calculations distinguished."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E03",
+     "E07"
+    ],
+    "rationale": "Ring interactions and electronic coupling are reported, but a specific aggregate excited-state emission channel is not established under the frozen family definition."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06"
+    ],
+    "rationale": "The source quantitatively separates radiative and nonradiative rates; this overlaps the RIM/packing explanation rather than being an independent cause."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "9afc66151757aa141532d84e28e24cd106712b2f743954c9a58440898412c794",
+  "label_record_sha256": "94671e0e34fa7d274677620ba2d41fc60b950ab53cacdaaec4bafdfe4c906bd2"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

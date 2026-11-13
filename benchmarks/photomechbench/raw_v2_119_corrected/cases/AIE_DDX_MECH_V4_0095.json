@@ -1,0 +1,262 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0095",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COCCOCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)cc3)nn2)cc1OCCOCCOC"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3",
+  "source_documents": [
+   {
+    "source_id": "F041",
+    "title": "Advantages of Mobile Liquid-Crystal Phase of AIE Luminogens for Effective Solid-State Emission",
+    "doi": "10.1021/acs.jpcc.6b10026",
+    "pdf_sha256": "0c149cf7a99733779f5389ce4a5c0fd8c1f0d5cb857c183aca721d840b37f97a",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F041",
+    "pdf_page": 4,
+    "quote": "bulk 3 is crystalline at room temperature, which can be confirmed by multiple fine peaks in XRD data",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "observation",
+    "statement": "Compound 3 is crystalline at room temperature, unlike LC compounds 1 and 2.",
+    "limitations": "Figure 2 visually inspected; the source later interprets it as heterogeneous/polycrystalline, not one uniform single crystal."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F041",
+    "pdf_page": 4,
+    "quote": "0.074 (bulk) vs. 0.22 (amorphous aggregate in THF/water solvent mixtures).",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "observation",
+    "statement": "Bulk 3 emits less efficiently than its aqueous-solvent aggregate counterpart: yield 0.074 versus 0.22.",
+    "limitations": "Do not transfer the enhancement trend or 0.33 yield of compound 2 to this target."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F041",
+    "pdf_page": 3,
+    "quote": "the blue-shifted emission of bulk 3 seems to reveal more tightly bound luminogens in aggre- gates",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "author_interpretation",
+    "statement": "The source associates bulk 3's blue shift with restricted structural relaxation.",
+    "limitations": "Indirect interpretation; stronger restriction does not predict higher yield here."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F041",
+    "pdf_page": 5,
+    "quote": "the decreasing AIE efficiency of bulk 3 is caused by the accelerated nonradiative rate",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "observation",
+    "statement": "Yield/lifetime analysis attributes weaker bulk 3 emission to faster nonradiative decay. Table 1 gives knr 12 versus 2.8 x10^8 s^-1 in bulk versus solvent aggregates.",
+    "limitations": "Phenomenological derived rates, not an independent direct measure of traps; room-temperature bulk lifetime is 0.75 ns."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F041",
+    "pdf_page": 6,
+    "quote": "there are various undesirable non-emissive elec- tronic states as compared to the monocrystalline condition",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose surface traps and internal defects caused by rapid crystallization as extra loss channels in bulk 3.",
+    "limitations": "An inferred polycrystalline explanation, not directly resolved defect energies or populations."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F041",
+    "pdf_page": 6,
+    "quote": "The overall amplitude of fast decay components less than 1 ns in bulk 3 is 86.9%",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "observation",
+    "statement": "The dominant sub-nanosecond decay fraction supports heterogeneous, rapidly deactivating bulk sites.",
+    "limitations": "Text reports 86.9%; rounded Table 1 amplitudes 45.9% and 40.9% sum to 86.8%, so avoid implying more precision."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F041",
+    "pdf_page": 6,
+    "quote": "The discordance of increasing emission lifetime and more rapidly quenched emission intensity at 450 nm demonstrates reduced numbers of 450-nm-emissive luminogens",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "author_interpretation",
+    "statement": "Above 140 C, the source interprets lifetime/intensity disagreement as redistribution from blue-emitting to red-emitting local environments.",
+    "limitations": "Population/environment interpretation, not necessarily creation of an excimer; no J-assignment is established for 3."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F041",
+    "pdf_page": 6,
+    "quote": "which can be interpreted as a thermal perturbation followed by enlarged in- tramolecular motions",
+    "subject": "Compound 3 (diethylene-oxide-chain TPE derivative)",
+    "scope": "target",
+    "conditions": "Fast-dried crystalline bulk versus amorphous THF/water aggregates; room-temperature and heated PL, TCSPC, XRD and DSC.",
+    "kind": "author_interpretation",
+    "statement": "The decrease of red-edge lifetimes between 30 and 140 C is attributed to thermally activated internal motion.",
+    "limitations": "The later reversal near isotropization reflects rearrangement, so the full temperature dependence is not monotonic RIM."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E08"
+    ],
+    "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Increased knr and changing emissive-site populations explain lower bulk efficiency; these overlap with the defect/packing interpretation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E08"
+    ],
+    "rationale": "The source explicitly invokes restricted relaxation and thermal activation of motions, but these are insufficient to explain the poorer bulk yield."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Fast crystallization and heterogeneous/polycrystalline local environments are the central proposed source of quenching and thermal redistribution."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E05",
+     "E07"
+    ],
+    "rationale": "J-type coupling is assigned to 1 and 2, not 3. Defect-state loss and a red-edge redistribution are not independently an excimer/exciton assignment."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Increased knr and changing emissive-site populations explain lower bulk efficiency; these overlap with the defect/packing interpretation."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "f36d9a30563176f30d98fe0d4bc6d6b2db7a2925fd4a065e86e9a1fe8451a692",
+  "label_record_sha256": "3993856d5b4708de49a15bc2fec0f5de98867a3403bfde9c13c65966e6ed2177"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

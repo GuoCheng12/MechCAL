@@ -1,0 +1,262 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0152",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc2ccc3cc4ccccc4cc3c2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2'-methyl-1,2-benzanthracene",
+  "source_documents": [
+   {
+    "source_id": "F056",
+    "title": "Non-adiabatic quantum dynamics of polycyclic aromatic hydrocarbons exhibiting anti-Kasha emission from the S2 state",
+    "doi": "10.1039/d5cp03865k",
+    "pdf_sha256": "ee33cfbb6a018877a06aabf3ceeb770aa418248aa8ac427305234874c39a0d9a",
+    "page_count": 14
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F056",
+    "pdf_page": 3,
+    "quote": "All MCTDH dynamics were run at 0 K",
+    "subject": "Four PAHs including the target",
+    "scope": "series_including_target",
+    "conditions": "LVC/MCTDH initial vibrational ground state; B3LYP/TZP gradients and Hessians with ADC(2)/def2TZVP excitation-energy corrections.",
+    "kind": "computation",
+    "statement": "The study uses reduced-mode quantum dynamics after initial S1 or S2 population, not new experimental fluorescence or aggregation measurements.",
+    "limitations": "The 0 K refers to the initial vibrational state; conclusions concern an ultrafast simulated window. SI parameters were not inspected."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F056",
+    "pdf_page": 3,
+    "quote": "20-Methyl-1,2- benzanthracene S0 - S1 328 3.78 0.0047 S0 - S2 308 4.03 0.0968",
+    "subject": "2'-methyl-1,2-benzanthracene",
+    "scope": "target",
+    "conditions": "Table 1 ADC(2)/def2TZVP vertical excitations, gas phase.",
+    "kind": "computation",
+    "statement": "The target has S1/S2 energies 3.78/4.03 eV and oscillator strengths 0.0047/0.0968; its 0.25 eV vertical gap is larger than the other PAHs.",
+    "limitations": "The extraction renders the prime as 0 in the name; Figure 1 visually confirms the printed designation 2'-methyl-1,2-benzanthracene. No graph confirmation is implied."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F056",
+    "pdf_page": 11,
+    "quote": "the population of S2 drops to ca. 10%",
+    "subject": "2'-methyl-1,2-benzanthracene",
+    "scope": "target",
+    "conditions": "Initial bright-S2 population; Fig.10 right, 0-1500 fs gas-phase trajectories.",
+    "kind": "computation",
+    "statement": "The calculated S2 population drops to approximately 10% and remains low while S1 approaches approximately 90%.",
+    "limitations": "Figure 10 visually inspected. Prose says first 300 ps, but the figure axis is fs and caption says 1.5 ps; report the population trend and flag the timing inconsistency rather than endorse 300 ps."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F056",
+    "pdf_page": 11,
+    "quote": "the population of S1 remains at ca. 98% within the entire simulation time.",
+    "subject": "2'-methyl-1,2-benzanthracene",
+    "scope": "target",
+    "conditions": "Initial dark-S1 population; Fig.10 upper right, 1.5 ps simulation.",
+    "kind": "computation",
+    "statement": "The target remains overwhelmingly in S1, leaving only a small S2 population in the source model.",
+    "limitations": "This is not the approximately 10% S2 repopulation found for benzopyrene; series-level summaries must not replace the target trajectory."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F056",
+    "pdf_page": 11,
+    "quote": "ADC(2) method may overestimate the S1–S2 energy gap",
+    "subject": "2'-methyl-1,2-benzanthracene",
+    "scope": "target",
+    "conditions": "Discussion of the target's larger computed S1-S2 gap and lower S2 population.",
+    "kind": "author_interpretation",
+    "statement": "The authors explicitly question whether an overestimated gap explains this target's unusually weak S2 repopulation.",
+    "limitations": "This is an acknowledged model uncertainty, not a corrected gap calculation or proof that the target behaves like the comparators."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F056",
+    "pdf_page": 2,
+    "quote": "These systems have been experimentally shown to exhibit anti-Kasha S2 - S0 fluorescence in organic vapors.",
+    "subject": "Four named PAHs including 2'-methyl-1,2-benzanthracene",
+    "scope": "series_including_target",
+    "conditions": "Historical gas/vapor fluorescence discussed before the present computational methods.",
+    "kind": "author_interpretation",
+    "statement": "The paper identifies the target-containing series as experimentally reported S2 anti-Kasha emitters and seeks to explain that behavior with coupled-state dynamics.",
+    "limitations": "Original cited experiments 46-50 were not inspected and are not new observations made here."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F056",
+    "pdf_page": 11,
+    "quote": "The molecules in the S1 state may access S2 due to the vibrational energy excess",
+    "subject": "Four PAHs including 2'-methyl-1,2-benzanthracene",
+    "scope": "series_including_target",
+    "conditions": "Authors' conclusion from early-time nonadiabatic dynamics.",
+    "kind": "author_interpretation",
+    "statement": "Vibronic coupling and a small energy gap are proposed to maintain a higher-state population capable of S2 fluorescence.",
+    "limitations": "The target-specific populations in E03-E05 qualify this general explanation. No nanosecond radiative propagation or temperature-dependent emission measurement was performed in this source."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F056",
+    "pdf_page": 3,
+    "quote": "fails to predict the correct dimensionality of the conical intersection seams.",
+    "subject": "ADC(2) methodology used for the PAHs",
+    "scope": "series_including_target",
+    "conditions": "Computational-method limitations in results section.",
+    "kind": "author_interpretation",
+    "statement": "The authors acknowledge an ADC(2) limitation for conical-intersection topology; their main explanation is coupled singlet-state dynamics, not verified CI-restriction-induced emission.",
+    "limitations": "A diabatic minimum-energy crossing point in an LVC model must not be relabeled as experimentally demonstrated RACI or ground-state CI quenching."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The source includes this target among S2 emitters and proposes vibronically maintained anti-Kasha emission, but target-specific S2 repopulation is small and gap accuracy is questioned."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific suppression of internal rotations or vibrations is established by the selected evidence; rigidity or emission enhancement alone is insufficient."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The selected source does not establish a target packing, host or matrix confinement mechanism."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific photoinduced electron-transfer pathway is established; orbital transitions alone are insufficient."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The explicit mechanism is redistribution between a relatively dark S1 and brighter S2 through small-gap vibronic coupling. Populations are simulated and depend on the initial state and model assumptions."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Diabatic MECP-based mode selection and coupled-state dynamics do not independently establish a CI-mediated emission/quenching mechanism; ADC(2) CI topology is explicitly limited."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The source includes this target among S2 emitters and proposes vibronically maintained anti-Kasha emission, but target-specific S2 repopulation is small and gap accuracy is questioned."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "17cc32196e5ff42bcf0109fea273560f4b03725c6fb6e600b00c32749bfaee9b",
+  "label_record_sha256": "77235d5cde0a2a4e9909ea8ce547678bcd2e67cfd80d44befd09de118cece609"
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "Cc1ccc2c(ccc3c4ccccc4ccc23)c1",
+  "problem": "wrong skeleton (methylchrysene instead of 2-methylbenz[a]anthracene)",
+  "old_formula": "C19H14",
+  "new_formula": "C19H14",
+  "basis": "PubChem for the paper's name (2-methylbenzo[a]anthracene)",
+  "evidence": [
+   "case SMILES skeleton is chrysene",
+   "name and Fig. 1: methyl-benz[a]anthracene (1,2-benzanthracene = benz[a]anthracene)",
+   "MolScribe reading of Fig. 1 equals the proposed SMILES (methyl position confirmed)"
+  ],
+  "runnable": true
+ }
+}

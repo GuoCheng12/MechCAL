@@ -1,0 +1,307 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0019",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccccc1-c1cn2ccccc2n1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "HPIP",
+  "source_documents": [
+   {
+    "source_id": "F010",
+    "title": "Excited-State Intramolecular Proton Transfer (ESIPT) Emission of Hydroxyphenylimidazopyridine: Computational Study on Enhanced and Polymorph-Dependent Luminescence in the Solid State",
+    "doi": "10.1021/jp308473j",
+    "pdf_sha256": "d6024d37ad97f1f8e21a3ebf057121d6150b7f8e08a74e445d83a078a476eb2b",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F010",
+    "pdf_page": 2,
+    "quote": "Table 1. Photophysical Properties of HPIP",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "Table 1, visually inspected; solution and solid environments.",
+    "kind": "observation",
+    "statement": "Cyclohexane: 578 nm, Phi 0.04, 0.73 ns; BG crystal: 496 nm, Phi 0.50, 5.9 ns; Y crystal: 529 nm, Phi 0.37, 5.8 ns. Ethanol instead gives normal 373 nm emission.",
+    "limitations": "Table combines earlier and newly obtained measurements as stated by authors. Solvent and state conditions differ."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F010",
+    "pdf_page": 3,
+    "quote": "it is unlikely that the specific mode of molecular packing is required",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "Amorphous solid; 0.5 wt% PMMA; dilute THF 1e-5 M frozen at 77 K.",
+    "kind": "author_interpretation",
+    "statement": "Bright emission in amorphous powder, polymer matrix and frozen solution supports conformational fixation rather than a unique crystal arrangement as the main enhancement factor.",
+    "limitations": "Controls constrain the interpretation but do not directly measure excited-state torsional distributions."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F010",
+    "pdf_page": 5,
+    "quote": "The coplanar S1- keto form was more stable (by 32.5 kJ·mol−1)",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "MS-CASPT2 with CASSCF geometries; no solvent included (p.2).",
+    "kind": "computation",
+    "statement": "Computed keto S1 stabilization relative to enol supports ESIPT; emission energies 2.29 eV keto and 3.46 eV enol are compared with solution bands.",
+    "limitations": "Electronic energies are calculated, not measured reaction rates; solvent omitted and active spaces finite."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F010",
+    "pdf_page": 5,
+    "quote": "the corresponding crossing point was found at 90°.",
+    "subject": "HPIP keto form",
+    "scope": "target",
+    "conditions": "Constrained torsion scan, CASSCF(6,6)/ANO-S, Fig. 4.",
+    "kind": "computation",
+    "statement": "Keto S0-S1 gap becomes small near 60 degrees and crosses near 90 degrees; authors associate torsion-accessible CI with weak solution fluorescence.",
+    "limitations": "This is the constrained scan, not the fully relaxed minimal-basis result; do not conflate the two angles."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F010",
+    "pdf_page": 6,
+    "quote": "The intersection point between the S0 and S1 states was found at the torsion angle of 60°",
+    "subject": "HPIP keto form",
+    "scope": "target",
+    "conditions": "Fully relaxed CASSCF(6,6)/ANO-S-MB exploration, continued from p.5.",
+    "kind": "computation",
+    "statement": "A relaxed pathway locates an intersection around 60 degrees, about 19 kJ/mol downhill from the keto S1 minimum at 37.7 degrees.",
+    "limitations": "Method differs from the constrained 90-degree crossing. The paper does not supply measured CI crossing dynamics."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F010",
+    "pdf_page": 6,
+    "quote": "Suppression of the efficient radiationless decay process via the S0/S1 CI allows emissive decay",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "Crystals with torsions below 6 degrees, frozen solution and polymer matrix.",
+    "kind": "author_interpretation",
+    "statement": "Fixing a nearly planar geometry is proposed to prevent twisting toward CI and permit nanosecond keto S1 fluorescence.",
+    "limitations": "RIM, environmental confinement and CI restriction describe overlapping levels of this same proposed pathway."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F010",
+    "pdf_page": 6,
+    "quote": "the S1-keto state can be regarded as an energy trap to inhibit exciton migration.",
+    "subject": "HPIP crystals",
+    "scope": "target",
+    "conditions": "Antiparallel stacked crystal pairs, approximately 3.4 angstrom spacing.",
+    "kind": "author_interpretation",
+    "statement": "The low keto S1 energy and distinct keto/enol electronic structures are proposed to inhibit migration and excimer formation despite close stacking.",
+    "limitations": "An energetic rationale, not direct proof that all intermolecular coupling vanishes; similar solid/matrix photophysics is supporting evidence."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F010",
+    "pdf_page": 6,
+    "quote": "no phosphorescence was observed in the solid state or frozen solution at 77 K",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "Solid and frozen solution at 77 K.",
+    "kind": "observation",
+    "statement": "No phosphorescence is reported; authors assign the proximity n-pi*/pi-pi* effect a minor role.",
+    "limitations": "A non-detection does not exclude every triplet population or arbitrarily weak phosphorescence."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F010",
+    "pdf_page": 7,
+    "quote": "the fluorescence color difference between the two crystal polymorphs",
+    "subject": "HPIP BG and Y crystals",
+    "scope": "target",
+    "conditions": "Comparison of experimental BG/Y energies with CASSCF, MS-CASPT2 and EOM-CCSD; Table 8 on p.6.",
+    "kind": "computation",
+    "statement": "The calculations fail to reproduce the BG/Y color difference satisfactorily; larger calculations and environmental effects remain open.",
+    "limitations": "CI-based enhancement must not be represented as a solved quantitative model of polymorph color."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F010",
+    "pdf_page": 4,
+    "quote": "no drastic change in the dipole moment was observed upon the S1 or the S2 excitations.",
+    "subject": "HPIP enol; keto comparison",
+    "scope": "target",
+    "conditions": "Orbital and Mulliken analyses, Tables 4-5.",
+    "kind": "computation",
+    "statement": "Enol excitation shows limited net CT; keto excitation involves intramolecular redistribution from phenol toward imidazopyridine.",
+    "limitations": "Electronic redistribution is embedded in tautomer photophysics, not a separately established PET turn-on mechanism."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E06"
+    ],
+    "rationale": "Restricted central-bond twisting is the general motion description of the CI-access pathway, not an independent second cause."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "Crystal, polymer and frozen-solvent confinement enable fixation; unique crystal packing is not necessary."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Keto-state emission and ESIPT energy trapping are explicit source-supported parts of the mechanism."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Direct source calculations and interpretation support torsion-mediated CI decay suppressed by near-planar fixation, with method-dependent CI geometry retained."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E06"
+    ],
+    "rationale": "Restricted central-bond twisting is the general motion description of the CI-access pathway, not an independent second cause."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "Crystal, polymer and frozen-solvent confinement enable fixation; unique crystal packing is not necessary."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No host or analyte binding mechanism changing target emission is established in this extraction."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Retain calculated redistribution, but no separate CT-controlled enhancement or TICT mechanism is established beyond ESIPT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Keto-state emission and ESIPT energy trapping are explicit source-supported parts of the mechanism."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "An excimer-emission explanation is disfavored: authors propose suppression of excimer formation and migration, not an emissive excimer. This is bounded to the studied crystals."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or state-population explanation is established; intensity or lifetime changes alone do not isolate it."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "No phosphorescence observed even at 77 K; no positive triplet contribution established, without claiming absolute triplet exclusion."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Direct source calculations and interpretation support torsion-mediated CI decay suppressed by near-planar fixation, with method-dependent CI geometry retained."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "89314b2e3540d436b678a0adc6f1ae277c7f2e0d4dee98a407442962945df97a",
+  "label_record_sha256": "9d65477c660d240e693fa42e035f7329c14b508fd0e0511af4ce0a83960dd345"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: 2-(2'-hydroxyphenyl)imidazo[1,2-a]pyridine, same InChIKey"
+  ],
+  "runnable": true
+ }
+}

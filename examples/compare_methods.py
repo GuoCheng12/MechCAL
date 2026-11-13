@@ -20,7 +20,7 @@ from statistics import mean
 from mechcal.eval.stats import clustered_bootstrap, load_reference_cases, paired_clustered_bootstrap, paper_clusters
 
 ROOT = Path(__file__).resolve().parents[1]
-CASES = ROOT / "benchmarks/photomechbench/raw_v2_119/cases"
+from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
 
 
 def per_case(dirs: list[Path], metric: str) -> dict[str, float]:
@@ -37,12 +37,14 @@ def main() -> None:
     ap.add_argument("methods", nargs="+", help="name=dir[,dir...]")
     ap.add_argument("--metrics", nargs="+", default=["ndcg_at_3", "es_ndcg_at_3", "top1_primary", "recall_at_3"])
     ap.add_argument("--resamples", type=int, default=10_000)
+    ap.add_argument("--exclude", default="", help="comma-separated case numbers to leave out (e.g. 0020,0141)")
     args = ap.parse_args()
+    skip = {"AIE_DDX_MECH_V4_" + c.strip().zfill(4) for c in args.exclude.split(",") if c.strip()}
     methods = {spec.split("=", 1)[0]: [Path(p) for p in spec.split("=", 1)[1].split(",")] for spec in args.methods}
     clusters = paper_clusters(load_reference_cases(CASES))
     report = {}
     for metric in args.metrics:
-        cols = {name: per_case(dirs, metric) for name, dirs in methods.items()}
+        cols = {name: {c: v for c, v in per_case(dirs, metric).items() if c not in skip} for name, dirs in methods.items()}
         out = {"single": {n: {k: round(v, 3) if isinstance(v, float) else v for k, v in
                               clustered_bootstrap(c, clusters, n_resamples=args.resamples).items()}
                           for n, c in cols.items() if c}, "paired": {}}

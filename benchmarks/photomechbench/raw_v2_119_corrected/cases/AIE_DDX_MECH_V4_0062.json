@@ -1,0 +1,284 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0062",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Brc1ccc(C2CC(c3ccc(C(=C(c4ccccc4)c4ccccc4)c4ccccc4)cc3)=NN2c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPEB",
+  "source_documents": [
+   {
+    "source_id": "F026",
+    "title": "Molecular packing-controlled mechanical-induced emission enhancement of tetraphenylethene functionalized pyrazoline derivatives",
+    "doi": "10.1002/chem.201905256",
+    "pdf_sha256": "d09d74260e9461c1e33554f49447fbd5f7ff2d406c9ad6029e47c0bd792c629d",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F026",
+    "pdf_page": 3,
+    "quote": "TPEB, TPEF, TPEN and TPECN exhibited similar absorption",
+    "subject": "TPEB, TPEF, TPEN and TPECN",
+    "scope": "series_including_target",
+    "conditions": "Ethyl acetate solution; Figure 1.",
+    "kind": "observation",
+    "statement": "Series absorption near 315 and 380 nm and emission near 525 nm are similar despite differing nonconjugated substituents.",
+    "limitations": "Similarity in solution does not make solid-state behavior or yields interchangeable."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F026",
+    "pdf_page": 4,
+    "quote": "The HOMOs of TPEB and TPEF were mainly located on the pyrazoline and phenyl of phenylhydrazine moiety",
+    "subject": "TPEB and TPEF",
+    "scope": "series_including_target",
+    "conditions": "B3LYP/6-31G* frontier orbitals, Figure 2.",
+    "kind": "computation",
+    "statement": "Target HOMO is assigned to pyrazoline/phenylhydrazine and LUMO to TPE, supporting ICT.",
+    "limitations": "Computed orbital localization, not a fully characterized TICT state or PET kinetics."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F026",
+    "pdf_page": 5,
+    "quote": "TPEF, TPEN and TPECN, increasing 18.7, 21.6, 11.6 and 21.5- fold, respectively.",
+    "subject": "TPEB, TPEF, TPEN and TPECN",
+    "scope": "series_including_target",
+    "conditions": "THF/water aggregate series, main Figure 3.",
+    "kind": "observation",
+    "statement": "Maximum reported intensity enhancement is 18.7-fold for TPEB.",
+    "limitations": "Fold change is intensity relative to THF, not quantum yield. Source Figure 3 caption repeats two names rather than correctly labeling all four panels."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F026",
+    "pdf_page": 5,
+    "quote": "confining intramolecular rotation of phenyl rings of TPE moieties.",
+    "subject": "TPEB",
+    "scope": "target",
+    "conditions": "Aggregation/solid-state enhancement discussion.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign aggregate emission enhancement to restricted rotation and vibration.",
+    "limitations": "Preserve explicit target/series interpretation; not independent motion spectroscopy."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F026",
+    "pdf_page": 5,
+    "quote": "The ΦF of the ground powder dramatically increased about 2.5-fold to 28.44%.",
+    "subject": "TPEB",
+    "scope": "target",
+    "conditions": "Solid before/after grinding; integrating-sphere yields; Figure 4 visually inspected.",
+    "kind": "observation",
+    "statement": "TPEB yield increases from 12.28% to 28.44%, with peak reported 477 to 505 nm.",
+    "limitations": "Source has numerical inconsistencies: earlier initial peak is 473 nm, later 477 nm; quoted 2.5-fold is approximate. Figure 4 caption misnames panels; assignments use main text and displayed yields."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F026",
+    "pdf_page": 5,
+    "quote": "the translation of the crystalline state of the compounds was not the main reason of fluorescence enhancement.",
+    "subject": "TPEB, TPEF, TPEN and TPECN",
+    "scope": "series_including_target",
+    "conditions": "PXRD/SEM before grinding, after grinding and heating; main-text SI S17-S18 reports.",
+    "kind": "author_interpretation",
+    "statement": "All undergo disordering but intensity changes have opposite sign, so amorphization alone does not explain enhancement.",
+    "limitations": "SI patterns/images not personally inspected; conformational/packing interpretation remains indirect."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F026",
+    "pdf_page": 6,
+    "quote": "the molecules of TPEB formed anti-parallel D-A dimers.",
+    "subject": "TPEB",
+    "scope": "target",
+    "conditions": "Single-crystal Figure 5; crystals from ethanol evaporation.",
+    "kind": "author_interpretation",
+    "statement": "TPEB has antiparallel dimers with approximately 3.60 angstrom separation and weak pi interactions; abstract calls them H-dimers.",
+    "limitations": "H/J descriptions are source packing interpretations, not independent excitonic spectral calculations."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F026",
+    "pdf_page": 6,
+    "quote": "the weak π-π interaction tumble down by grinding.",
+    "subject": "TPEB",
+    "scope": "target",
+    "conditions": "Crystal-derived interpretation of mechanically perturbed solids.",
+    "kind": "author_interpretation",
+    "statement": "Breaking weak pi interactions is proposed to enhance TPEB emission; planarization accounts for red shift.",
+    "limitations": "Ground-state packing change is inferred from crystal/solid comparisons, not a crystal structure of ground powder."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F026",
+    "pdf_page": 5,
+    "quote": "all the ground compounds could be rapidly recovered to initial state after heated for several minutes",
+    "subject": "TPEB, TPEF, TPEN and TPECN",
+    "scope": "series_including_target",
+    "conditions": "Grinding/heating cycles, main Figure 4; SI S16 referenced.",
+    "kind": "observation",
+    "statement": "Heating restores the initial optical state, supporting reversible solid-state response.",
+    "limitations": "Exact temperature/time details require SI; not a chemical reaction assignment."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "RIR/RIV is explicitly invoked for solution-to-aggregate emission; it is distinct from the sign of grinding response."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Target grinding enhancement is assigned to disruption of weak intermolecular pi contacts; crystalline-to-amorphous change alone is insufficient."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Source solvent comparisons and orbital calculations support ICT; no separate TICT geometry is established."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Preserve the source H-dimer/antiparallel aggregate interpretation with weak pi coupling, without claiming excimer emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "RIR/RIV is explicitly invoked for solution-to-aggregate emission; it is distinct from the sign of grinding response."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Target grinding enhancement is assigned to disruption of weak intermolecular pi contacts; crystalline-to-amorphous change alone is insufficient."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Source solvent comparisons and orbital calculations support ICT; no separate TICT geometry is established."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Preserve the source H-dimer/antiparallel aggregate interpretation with weak pi coupling, without claiming excimer emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state mechanism established beyond generic changes in fluorescence intensity."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "c2fae7b2cf13d34e497132228b412841ece7e4c9f31ce003deed00c8f3637009",
+  "label_record_sha256": "146a1193780122b5eddf7cdd6e992ae33a712a5f6f90e688f7b909c9712b34f0"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

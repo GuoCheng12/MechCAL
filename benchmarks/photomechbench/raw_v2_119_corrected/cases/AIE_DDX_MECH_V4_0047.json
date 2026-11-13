@@ -1,0 +1,250 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0047",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(-c2ccc([N+](=O)[O-])c3nsnc23)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BTN",
+  "source_documents": [
+   {
+    "source_id": "F020",
+    "title": "Aggregation Induced Emission and Nonlinear Optical Properties of an Intramolecular Charge-Transfer Compound",
+    "doi": "10.3390/ma14081909",
+    "pdf_sha256": "52455033f2a7e8c272a3d14c28c2324c61ccb3c0e867c19d7f2f4167a94e25be",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F020",
+    "pdf_page": 3,
+    "quote": "stable one-dimensional wire-like structures were precipitated",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Saturated THF cooled from 70 C to room temperature.",
+    "kind": "observation",
+    "statement": "THF cooling affords wire-like aggregates; DCM under the same cooling procedure affords rods.",
+    "limitations": "Morphology does not by itself establish a particular exciton mechanism."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F020",
+    "pdf_page": 4,
+    "quote": "the angle between the benzothiadiazole unit and the adjacent benzene ring is 26.6",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Single crystal from THF/hexane diffusion; Figures 2a-c.",
+    "kind": "observation",
+    "statement": "The crystal contains twisted molecules, antiparallel arrangements and several short heteroatom/hydrogen-bond contacts.",
+    "limitations": "Static crystal structure is not confirmation of the legacy chemical graph."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F020",
+    "pdf_page": 5,
+    "quote": "the electron cloud on the LUMO orbital is mainly located on the benzothiadiazole ring and the nitro group",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G* in vacuum.",
+    "kind": "computation",
+    "statement": "Frontier orbitals support donor-to-benzothiadiazole/nitro CT, with HOMO mainly on dimethylaminophenyl.",
+    "limitations": "Ground-state orbital localization is not a computed TICT pathway."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F020",
+    "pdf_page": 6,
+    "quote": "the solution of BTN in pure tetrahydrofuran did not emit light when excited at its maximum absorption wavelength of 514 nm.",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Pure THF, excitation 514 nm.",
+    "kind": "observation",
+    "statement": "The source reports negligible emission in THF.",
+    "limitations": "No numeric quantum yield or detection floor supplied."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F020",
+    "pdf_page": 7,
+    "quote": "The maximum fluorescence emission peaks range from 672 to 617 nm.",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "THF/n-hexane, 2e-5 M; Figure 6 visually inspected.",
+    "kind": "observation",
+    "statement": "Increasing hexane enhances emission with a blue shift from approximately 672 to 617 nm.",
+    "limitations": "Solvent polarity and aggregation co-vary; this cannot alone isolate packing."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F020",
+    "pdf_page": 7,
+    "quote": "the ICT band red-shifted gradually from 514 to 496, 494 and 492 nm",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Hexane fractions 0,70,80,90%; Figure 6a.",
+    "kind": "observation",
+    "statement": "The reported absorption values decrease from 514 to 492 nm, a blue shift confirmed by the figure.",
+    "limitations": "The source incorrectly calls this red-shifted and exchanges panel references in prose; values retained, direction corrected explicitly."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F020",
+    "pdf_page": 7,
+    "quote": "the intramolecular charge transfer will be eliminated, and the emissions will be recovered.",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Proposed solution-to-aggregate mechanism.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose suppression of nonradiative CT in aggregates.",
+    "limitations": "The claim that CT is eliminated is stronger than demonstrated; no time-resolved separation of states is shown."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F020",
+    "pdf_page": 7,
+    "quote": "some electrons are provided to offset the electron absorption ability of nitro groups",
+    "subject": "BTN",
+    "scope": "target",
+    "conditions": "Aggregate hydrogen bonds and heteroatom contacts.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose contacts reduce the nitro group's electron-withdrawing effect and restore fluorescence.",
+    "limitations": "This is a qualitative electronic explanation, not directly measured electron donation or proof of PET."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E08"
+    ],
+    "rationale": "Specific intermolecular contacts and aggregate morphology are proposed to modify nonradiative CT; this is weaker author interpretation."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Retain the source's CT-quenching/suppression interpretation, without upgrading it to a demonstrated twisted-state geometry."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific restriction of internal motion established in this extraction; AIE or rigidity alone is not sufficient."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E08"
+    ],
+    "rationale": "Specific intermolecular contacts and aggregate morphology are proposed to modify nonradiative CT; this is weaker author interpretation."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Retain the source's CT-quenching/suppression interpretation, without upgrading it to a demonstrated twisted-state geometry."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state mechanism established beyond generic changes in fluorescence intensity."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer emissive mechanism established in the selected conditions."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "8282f94a7502a0fb3b2693282c69934746b4dc4b2e52ed2239dc676f944ef1f2",
+  "label_record_sha256": "74dbe26f82d95bbc67ec8da8d91b892caf57848d4a6da2a5f5f0a4d17a6aadc8"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: same InChIKey",
+   "formula C14H12N4O2S printed near name"
+  ],
+  "runnable": true
+ }
+}

@@ -1,0 +1,252 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0143",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc(C(C)C)cc2c(C)ccc1-2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1b",
+  "source_documents": [
+   {
+    "source_id": "F052",
+    "title": "A Computational Protocol to Predict Anti-Kasha Emissions: The Case of Azulene Derivatives",
+    "doi": "10.1021/acs.jpca.0c05205",
+    "pdf_sha256": "f2996114569616aa01d8892b92f5d13327f1eebe00fb4540a1f485ffce42c24f",
+    "page_count": 46
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F052",
+    "pdf_page": 8,
+    "quote": "guaiazulene or 1,4-dimethyl-7-isopropylazulene (1b)",
+    "subject": "1b / guaiazulene",
+    "scope": "target",
+    "conditions": "Source naming and Figure 1 designation.",
+    "kind": "observation",
+    "statement": "The paper identifies 1b as guaiazulene, distinct from parent 1a and halogenated 1c-d.",
+    "limitations": "Designation only; candidate graph remains unverified."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F052",
+    "pdf_page": 12,
+    "quote": "2.34 (2.16) 0.013 (0.015) 1.91 (1.68) 1.64 3.63 (3.69) 0.020 (0.040) 3.44 (3.45) 3.34",
+    "subject": "1b",
+    "scope": "target",
+    "conditions": "Table 1; ADC(2) values in parentheses, compared with experimental 0-0 transitions in 3-methylpentane.",
+    "kind": "computation",
+    "statement": "ADC(2) S1/S2 0-0 energies are 1.68/3.45 eV versus cited experiment 1.64/3.34 eV; corresponding vertical oscillator strengths are 0.015/0.040.",
+    "limitations": "Do not confuse vertical energy, 0-0 energy or oscillator strength; experiment is reused literature."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F052",
+    "pdf_page": 21,
+    "quote": "0.12 1.7 (3.2±0.4)b,c 6.7×1011 5.5×109 (2.1±0.1×109)b,c 1.8×10-4 0.31 (1.5±0.1)b,c",
+    "subject": "1b",
+    "scope": "target",
+    "conditions": "F052 TVCF model at 298 K; gas-phase PBE0/6-31G(d) geometries/frequencies and ADC(2)/def2-TZVP energies/dipoles. Table 2 visually inspected.",
+    "kind": "computation",
+    "statement": "Computed S1 kr=1.2 x10^6, kIC=6.7 x10^11 s^-1; S2 kr=1.7 x10^7, kIC to S1=5.5 x10^9 s^-1. Predicted S2 PLQY is 0.31%, S1 PLQY 1.8 x10^-4%.",
+    "limitations": "Not measured values. Harmonic-model and excited-state-coupling approximations apply."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F052",
+    "pdf_page": 21,
+    "quote": "Experimental data are averaged values from ref. 33 (b), ref. 34 (c) and ref. 81 (d), respectively.",
+    "subject": "1b, Table 2 experimental column",
+    "scope": "target",
+    "conditions": "External experimental values compiled in F052; Table 2 visually inspected.",
+    "kind": "observation",
+    "statement": "Compiled 1b S2 yield is 1.5 +/-0.1%, kr=3.2 +/-0.4 x10^7 s^-1 and nonradiative rate 2.1 +/-0.1 x10^9 s^-1.",
+    "limitations": "Computed 0.31% substantially underestimates 1.5%; do not describe agreement as exact. Original experiments not personally inspected."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F052",
+    "pdf_page": 16,
+    "quote": "for 1b, HT effects are definitely less important.",
+    "subject": "1b",
+    "scope": "target",
+    "conditions": "FC versus FC+HT spectra; main account of SI Figure S5.",
+    "kind": "computation",
+    "statement": "Authors find similar spectra with/without HT for 1b, unlike parent 1a and 1c; larger S2 oscillator strength makes HT less important.",
+    "limitations": "SI spectra not inspected; retain the explicitly differential series result."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F052",
+    "pdf_page": 28,
+    "quote": "for 1b, 1c and 1d, the presence of heavy-atom substituents at the 1,3 positions blocks this low frequency accepting mode",
+    "subject": "1b, 1c and 1d",
+    "scope": "series_including_target",
+    "conditions": "Computed normal-mode/reorganization-energy analysis, Figure 6.",
+    "kind": "author_interpretation",
+    "statement": "Authors describe reduced contribution of an approximately 850 cm^-1 accepting mode; 1b is also the exception to the common approximately 1450 cm^-1 dominant mode. Total reorganization energy and IC remain higher than in 1a.",
+    "limitations": "Preserve the source's loose 'heavy-atom substituents' wording as interpretation; this does not mean 1b is halogenated. No general emission enhancement or aggregation RIV established."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F052",
+    "pdf_page": 18,
+    "quote": "for azulene derivatives, intersystem crossing processes among other possible non-radiative decay pathways are not relevant.",
+    "subject": "1a-1e, including 1b",
+    "scope": "series_including_target",
+    "conditions": "Model pathway selection based on earlier experimental literature.",
+    "kind": "author_interpretation",
+    "statement": "ISC is neglected and singlet radiative/internal-conversion channels dominate the model.",
+    "limitations": "Model assumption grounded in cited work, not a newly measured zero ISC; heavy atoms do not automatically justify a triplet label."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F052",
+    "pdf_page": 20,
+    "quote": "the fluorescence yield from S2 is at least 1500 times larger than the yield from S1.",
+    "subject": "1a-1e, including 1b",
+    "scope": "series_including_target",
+    "conditions": "F052 TVCF model at 298 K; gas-phase PBE0/6-31G(d) geometries/frequencies and ADC(2)/def2-TZVP energies/dipoles.",
+    "kind": "computation",
+    "statement": "All studied derivatives are predicted to have appreciable S2 but negligible S1 fluorescence.",
+    "limitations": "Comparative prediction, not equality of individual rates/yields. S1 emission is extremely small, not mathematically zero."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Individual rates, transition strengths and vibronic coupling account for low S1 yield and much stronger S2 emission; imperfect quantitative agreement remains explicit."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E08"
+    ],
+    "rationale": "Source predicts non-thermally-equilibrated S2 anti-Kasha emission for 1b and compares to external measurements."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "One accepting mode is blocked by substitution in the source analysis, but total reorganization energy/IC are increased and there is no tested restriction-driven enhancement. Do not map all vibronic calculations to RIM."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer excited-state mechanism established in the extracted evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Individual rates, transition strengths and vibronic coupling account for low S1 yield and much stronger S2 emission; imperfect quantitative agreement remains explicit."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "ISC is neglected in the singlet kinetic model; no positive triplet evidence, and absence is not independently proven."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E08"
+    ],
+    "rationale": "Source predicts non-thermally-equilibrated S2 anti-Kasha emission for 1b and compares to external measurements."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "c0ec92a50aa8d722cc1bf3b503af12e3c8e94eb5225d9e64a01bff234e7bff75",
+  "label_record_sha256": "0cad2c95b6345ceedb0e4780059220c3a91389f7e4494f9f20c5ff5b8f9f7545"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

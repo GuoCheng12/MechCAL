@@ -1,0 +1,274 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0100",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "F[B-]12Oc3ccccc3N=[N+]1c1ccccc1O2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BAz-H",
+  "source_documents": [
+   {
+    "source_id": "F044",
+    "title": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "doi": "10.1039/d4dt02458c",
+    "pdf_sha256": "f918167781b05d4e87c19a92fa3c6156b9eb43cec25df447639247ef0f965970",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "The pristine BAz complex (BAz-H) and halogenated derivatives",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "observation",
+    "statement": "BAz-H is the unsubstituted parent comparator within the studied CIEE series.",
+    "limitations": "Its identity is by source designation; legacy molecular graph remains unverified."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F044",
+    "pdf_page": 4,
+    "quote": "Comparison of (c) absolute FL quantum yield, (d) radiative rate constant, and (e) nonradiative rate constant between 1 wt% PMMA ﬁlms and crystals",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "observation",
+    "statement": "Figure 2 labels room-temperature BAz-H PMMA/crystal yields 0.8%/6.1%, kr 0.15/0.68 and knr 19/10 x10^8 s^-1.",
+    "limitations": "Figure inspected. Both radiative acceleration and nonradiative reduction contribute at room temperature."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "restriction of structural relaxation in the excited state",
+    "subject": "BAz-H",
+    "scope": "series_including_target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "author_interpretation",
+    "statement": "Crystal contacts are proposed to suppress structural relaxation for the BAz series including H.",
+    "limitations": "General source interpretation, not target-specific measured torsional dynamics."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "Comparison of (b) absolute FL quantum yield, (c) radiative rate constant, and (d) nonradiative rate constant",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "observation",
+    "statement": "Figure 3 labels BAz-H 77 K yields 19%, 25%, 27%, kr 0.61, 0.63, 0.59 and knr 2.6, 1.9, 1.6 x10^8 s^-1 for 2MeTHF, Tol/2MP and crystal.",
+    "limitations": "Figure inspected. Unlike halogenated derivatives, BAz-H crystal does not show an increase in measured 77 K kr."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "the calculated coup- ling strength of BAz-H was relatively large (Δε = 0.16 eV).",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "computation",
+    "statement": "BAz-H has greater calculated dimer excitonic splitting, 0.16 eV, than the halogenated members' 0.05-0.08 eV.",
+    "limitations": "Dimer/energy-splitting approximation; not a directly measured coupling constant."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "the small kr value of BAz-H could be caused by forming a tight H-aggregation",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose H-aggregation as a cause of suppressed BAz-H radiative rate relative to halogenated crystals.",
+    "limitations": "This is a quenching contribution, not evidence that H aggregation itself enhances emission."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "2.09 for BAz-H, 2.03 for BAz-F, 2.19 for BAz-Cl",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "computation",
+    "statement": "BAz-H crystal refractive index is estimated as 2.09 in the Lorentz-Lorenz model.",
+    "limitations": "Not directly measured; a high predicted n does not override the target's measured nearly unchanged 77 K kr."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "The large decrease in kr/n2 in the BAz-H crystal could be caused by the eﬀect of H-aggregation.",
+    "subject": "BAz-H",
+    "scope": "target",
+    "conditions": "BAz-H crystal and dilute/PMMA controls at room temperature and 77 K; same source TD-M06-2X dimer and refractive-index models.",
+    "kind": "author_interpretation",
+    "statement": "After refractive-index normalization the H target remains distinct, which the authors attribute to intermolecular electronic coupling.",
+    "limitations": "Oscillator strengths in crystals are only approximated by dimers; authors acknowledge quantitative discrepancies."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Retain the explicit structural-relaxation restriction interpretation; do not substitute it for the target-specific H-aggregate effect."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "Crystal environment restricts relaxation and changes polarizability, though H-coupling offsets the expected radiative benefit."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "H-aggregate electronic coupling is the central explanation for BAz-H's radiative-rate deficit relative to the halogenated series."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Rate balance is temperature-dependent: both rate changes help at room temperature, but 77 K crystal yield improvement tracks lower knr with no kr acceleration."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Retain the explicit structural-relaxation restriction interpretation; do not substitute it for the target-specific H-aggregate effect."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "Crystal environment restricts relaxation and changes polarizability, though H-coupling offsets the expected radiative benefit."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "H-aggregate electronic coupling is the central explanation for BAz-H's radiative-rate deficit relative to the halogenated series."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Rate balance is temperature-dependent: both rate changes help at room temperature, but 77 K crystal yield improvement tracks lower knr with no kr acceleration."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The paper's external-heavy-atom explanation concerns Cl/Br, not the unsubstituted H target."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "7269b70f8c41de4c7bad1ed071bfb2725c59a7ee3e683038848a9c3832b286c7",
+  "label_record_sha256": "5d217c17f2513e219576c2078241ff8682a75d89333c3ddad726eb09d6bac436"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

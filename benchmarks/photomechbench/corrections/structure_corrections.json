@@ -1,0 +1,212 @@
+{
+ "name": "photomechbench_raw_v2_119_structure_corrections",
+ "date": "2026-11-13",
+ "applies_to": "benchmarks/photomechbench/raw_v2_119 (frozen); applied by examples/make_corrected_dataset.py",
+ "verification": {
+  "scope": "the 17 development cases; test cases not yet checked",
+  "checks": [
+   "molecular formula and HRMS against the paper (RDKit)",
+   "systematic or common name parsed with OPSIN 2.8.0 or looked up in PubChem",
+   "structure drawing compared by eye",
+   "structure drawing read by MolScribe 1.1.1 (second, automatic check)"
+  ],
+  "sources": "source PDFs whose sha256 match the case records (main text only, no SI)",
+  "report": "analysis/smiles_verification/dev-pilot-zh.md"
+ },
+ "author_request": "2026-11-13: the author asked for these four corrections to be applied",
+ "labels_changed": false,
+ "corrections": [
+  {
+   "case_id": "AIE_DDX_MECH_V4_0020",
+   "target_name": "CF3-HTTH",
+   "kind": "error_regiochemistry",
+   "problem": "wrong substitution pattern (CF3 para to the ring junction instead of para to OH)",
+   "old_smiles": "Oc1cc(C(F)(F)F)ccc1-c1nc2sc(-c3ccc(C(F)(F)F)cc3O)nc2s1",
+   "new_smiles": "Oc1ccc(C(F)(F)F)cc1-c1nc2sc(-c3cc(C(F)(F)F)ccc3O)nc2s1",
+   "proposed_smiles_as_written": "Oc1ccc(C(F)(F)F)cc1-c1nc2sc(-c3cc(C(F)(F)F)ccc3O)nc2s1",
+   "old_formula": "C18H8F6N2O2S2",
+   "new_formula": "C18H8F6N2O2S2",
+   "basis": "OPSIN parse of the paper's systematic name (identical InChIKey)",
+   "evidence": [
+    "name: 2,2'-(thiazolo[5,4-d]thiazole-2,5-diyl)bis(4-(trifluoromethyl)phenol): CF3 para to OH",
+    "figure 1a: CF3 para to OH, meta to the ring junction",
+    "sister compound name CF3-MTTH: 2-methoxy-5-(trifluoromethyl)phenyl, same pattern"
+   ],
+   "second_check": {
+    "tool": "MolScribe 1.1.1 (swin_base_char_aux_1m680k), main fragment",
+    "main_vs_case": "different",
+    "main_vs_proposed": "same_structure"
+   },
+   "runnable": true
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0141",
+   "target_name": "(2-ferrocenyl)indene",
+   "kind": "error_hydrogen_count",
+   "problem": "two hydrogens missing (C19H14Fe instead of C19H16Fe)",
+   "old_smiles": "C1=C(c2cc[c-]([Fe+2][c-]3cccc3)c2)Cc2ccccc21",
+   "new_smiles": "C1=C(c2cc[cH-]c2)Cc2ccccc21.[Fe+2].c1cc[cH-]c1",
+   "proposed_smiles_as_written": "[Fe+2].[cH-]1cccc1.C1=C(c2cc[cH-]c2)Cc2ccccc21",
+   "old_formula": "C19H14Fe",
+   "new_formula": "C19H16Fe",
+   "basis": "connectivity of the case SMILES kept, hydrogens restored, ionic ferrocene notation",
+   "evidence": [
+    "case SMILES gives C19H14Fe; 2-ferrocenyl-1H-indene is C19H16Fe",
+    "the two Fe-bound [c-] atoms carry no H, so each Cp ring lost one H"
+   ],
+   "second_check": {
+    "tool": "MolScribe 1.1.1 (swin_base_char_aux_1m680k), main fragment",
+    "main_vs_case": "no_key",
+    "main_vs_proposed": "no_key",
+    "note": "unreadable: organometallic sandwich (outside MolScribe scope)"
+   },
+   "runnable": false,
+   "not_runnable_reason": "RDKit ETKDG cannot build a ferrocene sandwich from any SMILES notation tried: the case SMILES embeds as Fe sigma-bonded to two C (Fe-C 1.99 A, others >= 3 A), the ionic notation puts Fe 0.6 A from ring atoms, and eta5 dative bonds fail to embed. The structure-preparation step needs a metallocene template or source geometry; dev runs of 0141 used the sigma-bonded geometry."
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0152",
+   "target_name": "2'-methyl-1,2-benzanthracene",
+   "kind": "error_wrong_skeleton",
+   "problem": "wrong skeleton (methylchrysene instead of 2-methylbenz[a]anthracene)",
+   "old_smiles": "Cc1ccc2c(ccc3c4ccccc4ccc23)c1",
+   "new_smiles": "Cc1ccc2ccc3cc4ccccc4cc3c2c1",
+   "proposed_smiles_as_written": "CC1=CC2=C(C=C1)C=CC3=CC4=CC=CC=C4C=C32",
+   "old_formula": "C19H14",
+   "new_formula": "C19H14",
+   "basis": "PubChem for the paper's name (2-methylbenzo[a]anthracene)",
+   "evidence": [
+    "case SMILES skeleton is chrysene",
+    "name and Fig. 1: methyl-benz[a]anthracene (1,2-benzanthracene = benz[a]anthracene)",
+    "MolScribe reading of Fig. 1 equals the proposed SMILES (methyl position confirmed)"
+   ],
+   "second_check": {
+    "tool": "MolScribe 1.1.1 (swin_base_char_aux_1m680k), main fragment",
+    "main_vs_case": "different",
+    "main_vs_proposed": "same_structure"
+   },
+   "runnable": true
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0153",
+   "target_name": "3,4-benzopyrene",
+   "kind": "error_wrong_molecule",
+   "problem": "wrong molecule (picene C22H14 instead of benzo[a]pyrene C20H12)",
+   "old_smiles": "c1ccc2c(c1)ccc1c2ccc2c3ccccc3ccc21",
+   "new_smiles": "c1ccc2c(c1)cc1ccc3cccc4ccc2c1c34",
+   "proposed_smiles_as_written": "C1=CC=C2C3=C4C(=CC2=C1)C=CC5=C4C(=CC=C5)C=C3",
+   "old_formula": "C22H14",
+   "new_formula": "C20H12",
+   "basis": "PubChem for the paper's name (benzo[a]pyrene); atom and mode count in the paper",
+   "evidence": [
+    "case SMILES is picene, C22H14 (36 atoms)",
+    "paper: '3,4-Benzopyrene is a symmetric molecule (Cs symmetry) with 32 atoms and 90 normal modes' = benzo[a]pyrene C20H12",
+    "Fig. 1 draws benzo[a]pyrene"
+   ],
+   "second_check": {
+    "tool": "MolScribe 1.1.1 (swin_base_char_aux_1m680k), main fragment",
+    "main_vs_case": "different",
+    "main_vs_proposed": "same_structure"
+   },
+   "runnable": true
+  }
+ ],
+ "verified_consistent": [
+  {
+   "case_id": "AIE_DDX_MECH_V4_0003",
+   "target_name": "complex 1",
+   "evidence": [
+    "figure: C6F5-Au-C#N-C6H4-OC10H21 (Scheme 1)"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0009",
+   "target_name": "ADB",
+   "evidence": [
+    "figure: 9,10-bis(4-carboxyphenyl)anthracene (Fig. 1)"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0019",
+   "target_name": "HPIP",
+   "evidence": [
+    "name: 2-(2'-hydroxyphenyl)imidazo[1,2-a]pyridine, same InChIKey"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0030",
+   "target_name": "TPA-PPA-2",
+   "evidence": [
+    "figure: Scheme 1, two para-B(OH)2 benzyl pyridinium arms",
+    "reagent: 4-bromomethylphenylboronic acid"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0047",
+   "target_name": "BTN",
+   "evidence": [
+    "name: same InChIKey",
+    "formula C14H12N4O2S printed near name"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0056",
+   "target_name": "9-(diphenylmethylene)-9H-fluorene",
+   "evidence": [
+    "name: same InChIKey"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0068",
+   "target_name": "DMIM",
+   "evidence": [
+    "formula C20H16N2O2 and HRMS [M+H]+ 317.1288 (calc 317.1285)",
+    "synthesis: 1,8-naphthalic anhydride + N,N-dimethyl-p-phenylenediamine",
+    "figure: Scheme 1"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0083",
+   "target_name": "1",
+   "evidence": [
+    "figure: Schemes 1-2, 4-chloro-1,8-naphthalimide with N-CH2CH2NHCH2CH2OH"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0084",
+   "target_name": "TPC",
+   "evidence": [
+    "name: 1,2,3,4-tetraphenyl-1,3-cyclopentadiene, same InChIKey"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0101",
+   "target_name": "BTHPB",
+   "evidence": [
+    "name: same InChIKey",
+    "formula C20H14N2O2S printed near name"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0104",
+   "target_name": "HPDMCb",
+   "evidence": [
+    "name: 1,2-diphenyl-3,4-bis(diphenylmethylene)-1-cyclobutene, same InChIKey"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0140",
+   "target_name": "TA",
+   "evidence": [
+    "name: azulene-1,3,6-tricarbaldehyde, same InChIKey",
+    "HRMS [M+H]+ 213.0546 (calc 213.0546, -0.1 ppm)"
+   ]
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0154",
+   "target_name": "mFDBP",
+   "evidence": [
+    "name '1,3-phenylene bis(4-fluorophenyl)methadone' (typo for methanone): corrected name has the same InChIKey"
+   ]
+  }
+ ]
+}

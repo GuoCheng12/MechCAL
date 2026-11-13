@@ -1,0 +1,288 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0083",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1c2cccc3c(Cl)ccc(c23)C(=O)N1CCNCCO"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1",
+  "source_documents": [
+   {
+    "source_id": "F036",
+    "title": "A Solid-State-Emissive 1,8-Naphthalimide Probe Based on Photoinduced Electron Transfer and Aggregation-Induced Emission",
+    "doi": "10.1002/slct.201900380",
+    "pdf_sha256": "f153faed9971e7bd43f48d602633369ecec622d7765856af7b31cd563e657477",
+    "page_count": 5
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F036",
+    "pdf_page": 2,
+    "quote": "the emission was switched “on” increasing the quantum yield of 1 at pH 6.8 to Φ=0.528.",
+    "subject": "compound 1 aqueous pH response",
+    "scope": "target",
+    "conditions": "Water 1e-5 M, excitation 360 nm, Fig. 1; pH 10 to 6.8.",
+    "kind": "observation",
+    "statement": "QY rises from 0.024 at pH 10 to 0.528 at 6.8; intensity enhancement 22.",
+    "limitations": "Steady-state protonation-dependent response, not direct electron-transfer rate or ESIPT."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F036",
+    "pdf_page": 2,
+    "quote": "PET from the free amine electron pair to the core fluorophore was feasible.",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "Neutral amine at alkaline pH versus protonated receptor.",
+    "kind": "author_interpretation",
+    "statement": "Authors propose amine-to-fluorophore PET quenching in base and suppression upon protonation.",
+    "limitations": "Source calls protonated species a quaternary ammonium cation; that terminology is not adopted as chemical-graph verification."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F036",
+    "pdf_page": 2,
+    "quote": "PET switching mechanism takes place from pH 10 to pH 7.",
+    "subject": "compound 1 solution titration",
+    "scope": "target",
+    "conditions": "Fluorescence pH titration in water.",
+    "kind": "observation",
+    "statement": "Switching occurs over pH 10-7 with fitted pKa reported as 8.50 +/- 0.08.",
+    "limitations": "Not the paper-strip pH window; main text refers to SI selectivity controls that were not inspected."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F036",
+    "pdf_page": 2,
+    "quote": "a well pronounced green AIE fluorescence (Figure S5) centred at 525 nm",
+    "subject": "compound 1 concentration dependence",
+    "scope": "target",
+    "conditions": "Concentrated solution compared with dilution; main reports SI Figs. S5-S7.",
+    "kind": "observation",
+    "statement": "Concentrated samples show 525 nm band that diminishes on dilution toward approximately 400 nm monomer emission.",
+    "limitations": "Detailed concentrations/spectra in SI not inspected; do not invent aggregation threshold."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F036",
+    "pdf_page": 3,
+    "quote": "according to the Kasha’s exciton theory with formation of J-aggregates.",
+    "subject": "compound 1 aggregate interpretation",
+    "scope": "target",
+    "conditions": "Discussion of target red-shifted aggregate band by analogy with previously reported 4-chloro naphthalimides.",
+    "kind": "author_interpretation",
+    "statement": "Authors invoke prior J-aggregate/exciton explanation for the red-shifted target aggregate emission.",
+    "limitations": "Analogy-based interpretation, not target diffraction or direct excitonic splitting measurement; Kasha exciton theory is not anti-Kasha emission."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F036",
+    "pdf_page": 3,
+    "quote": "The obtained film was exposed successively for 2 seconds to HCl and NH3 vapours.",
+    "subject": "compound 1 glass film",
+    "scope": "target",
+    "conditions": "Acetonitrile sprayed on glass, evaporated in air; Figs. 2-3 visually inspected.",
+    "kind": "observation",
+    "statement": "HCl produces bright emission and subsequent NH3 returns it to low emission within the reported 2 s exposure protocol.",
+    "limitations": "Vapor dose is not quantified; this does not establish cycling durability or aqueous pKa of the film."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F036",
+    "pdf_page": 3,
+    "quote": "with maxima at 472 nm for 1 and 480 nm for 2",
+    "subject": "compound 1 with comparator 2",
+    "scope": "target",
+    "conditions": "Solid films after HCl exposure; 360 nm excitation.",
+    "kind": "observation",
+    "statement": "Target broad film emission peaks at 472 nm with enhancement 44; comparator 2 peaks at 480 nm with enhancement 48.",
+    "limitations": "Authors describe combined monomer and aggregate emission; comparator values must not replace target values."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F036",
+    "pdf_page": 3,
+    "quote": "The better expressed AIE emission in 1 and 2 could be attributed to the hydrogen bonding ability",
+    "subject": "compound 1 and comparator 2 versus 3",
+    "scope": "series_including_target",
+    "conditions": "Ethanolamine-bearing 1/2 compared with dimethylamine 3 in solids.",
+    "kind": "author_interpretation",
+    "statement": "Authors tentatively attribute stronger aggregate emission to OH/NH hydrogen-bonding ability.",
+    "limitations": "No target packing structure or motion measurement; retained as bounded packing-interaction interpretation, not automatic RIM."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F036",
+    "pdf_page": 4,
+    "quote": "in a pH window 2.5-1.5",
+    "subject": "compound 1 on paper",
+    "scope": "target",
+    "conditions": "Acetonitrile-loaded filter paper dried and exposed to aqueous solutions; Fig. 4.",
+    "kind": "observation",
+    "statement": "Paper-supported fluorescence switching requires strongly acidic conditions, unlike solution pH 10-7.",
+    "limitations": "Authors leave detailed thermodynamic origin for future work; matrix context is observed but mechanism unresolved."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F036",
+    "pdf_page": 4,
+    "quote": "Compound 2 is well soluble in water",
+    "subject": "nonchlorinated compound 2 control",
+    "scope": "comparator",
+    "conditions": "Paper-strip aqueous testing.",
+    "kind": "observation",
+    "statement": "Comparator 2 migrates rapidly into water; chlorinated target 1 paper is more stable, which source attributes to increased hydrophobicity.",
+    "limitations": "Comparator solubility is not target aggregation or direct binding evidence."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "Tentative hydrogen-bond-mediated aggregate emission and support-dependent response; exact heterogeneous equilibrium remains unresolved."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Source explicitly proposes protonation-controlled PET in solution and solid film; no claim of direct transient proof."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Preserve authors analogy-based J-aggregate explanation and mixed monomer/aggregate film emission, with limited target-specific structural evidence."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "Tentative hydrogen-bond-mediated aggregate emission and support-dependent response; exact heterogeneous equilibrium remains unresolved."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Source explicitly proposes protonation-controlled PET in solution and solid film; no claim of direct transient proof."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Preserve authors analogy-based J-aggregate explanation and mixed monomer/aggregate film emission, with limited target-specific structural evidence."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection access mechanism is established."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "19baa27ccb0e4844f9a8d069d69fc7b129a0fdd9ee21de3c80f569283b774d17",
+  "label_record_sha256": "6eb82a5a9720b8dfeed64853503cbf25c59aec7b744cd375588b35352c82b4de"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure: Schemes 1-2, 4-chloro-1,8-naphthalimide with N-CH2CH2NHCH2CH2OH"
+  ],
+  "runnable": true
+ }
+}

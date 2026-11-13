@@ -1,0 +1,294 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0079",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1c2cccc3cccc(c23)C(=O)N1CCOCCOCCOCCN1c2ccccc2Sc2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "NI-O-PTZ",
+  "source_documents": [
+   {
+    "source_id": "F032",
+    "title": "Photoinduced Electron Transfer Processes in 1,8-Naphthalimide-Linker-Phenothiazine Dyads",
+    "doi": "10.1021/jp057557r",
+    "pdf_sha256": "06f607962b16bca4b5aefab231091251765d117e00858b37d03428431a929b4f",
+    "page_count": 7
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F032",
+    "pdf_page": 2,
+    "quote": "All solutions were argon-saturated unless otherwise indicated.",
+    "subject": "NI-linker-PTZ dyads",
+    "scope": "series_including_target",
+    "conditions": "355 nm transient excitation selectively excites NI; time-resolved fluorescence uses 300 nm.",
+    "kind": "observation",
+    "statement": "Experiments generally used argon-saturated solutions; PTZ does not absorb beyond 320 nm, so 355 nm excitation addresses NI.",
+    "limitations": "Solution PET study, not aggregation or air-exposed solid-state emission."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F032",
+    "pdf_page": 2,
+    "quote": "This result implies that there is no substantial interaction between NI and PTZ of NI-L-PTZ.",
+    "subject": "NI-linker-PTZ ground-state spectra",
+    "scope": "series_including_target",
+    "conditions": "Absorption comparison in acetonitrile, toluene and n-hexane with NI reference compounds.",
+    "kind": "author_interpretation",
+    "statement": "Similar ground-state spectra argue against substantial pre-existing donor-acceptor interaction.",
+    "limitations": "Does not exclude excited-state PET or every weak conformational interaction."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F032",
+    "pdf_page": 3,
+    "quote": "two transient absorption bands were observed around 420 and 520 nm",
+    "subject": "NI-linker-PTZ dyads",
+    "scope": "series_including_target",
+    "conditions": "Acetonitrile, 355 nm 30 ps excitation.",
+    "kind": "observation",
+    "statement": "Transient bands are assigned to NI radical anion and PTZ radical cation, respectively.",
+    "limitations": "Radical assignment is source interpretation supported by prior spectra; exact kinetics differ among linkers."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F032",
+    "pdf_page": 3,
+    "quote": "NI-O-PTZ 114 0.016 0 0.07 0.11 160 0.009 0.23 <50 0.25",
+    "subject": "NI-O-PTZ",
+    "scope": "target",
+    "conditions": "Table 1 visually checked; solvent-specific steady-state and time-resolved emission.",
+    "kind": "observation",
+    "statement": "Lifetime/QY are 114 ps/0.016 in acetonitrile and 160 ps/0.009 in toluene; hexane <50 ps and 0.25e-3.",
+    "limitations": "Hexane triplet yield not measured. Zero accumulated triplet in acetonitrile does not exclude the authors triplet-PET route."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F032",
+    "pdf_page": 5,
+    "quote": "NI-O-PTZ 8.8 × 109 - 3.5 × 109 1.0 × 109 3.3 × 106",
+    "subject": "NI-O-PTZ",
+    "scope": "target",
+    "conditions": "Table 2 visually checked; lifetime differences and transient kinetics.",
+    "kind": "computation",
+    "statement": "Acetonitrile singlet CT is 3.5e9 s-1, triplet CT 1.0e9 s-1, recombination 3.3e6 s-1. Toluene singlet CT is 3.8e9 and recombination 1.1e9 s-1.",
+    "limitations": "These are target-specific derived rates; long-lived intermolecular recombination component is separate."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F032",
+    "pdf_page": 5,
+    "quote": "the charge transfer process in toluene is the main deactivation process of NI(S1) in NI-L-PTZ.",
+    "subject": "NI-O-PTZ within dyad series",
+    "scope": "series_including_target",
+    "conditions": "Acetonitrile/toluene spectral and kinetic comparison; Figs. 3 and 5.",
+    "kind": "author_interpretation",
+    "statement": "Source assigns singlet and triplet PET in acetonitrile but only singlet PET in toluene.",
+    "limitations": "Triplet involvement in acetonitrile inferred from delayed radical growth and energetics, not direct observed NI triplet."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F032",
+    "pdf_page": 6,
+    "quote": "NI-O-PTZ -1.31 -0.21 -0.24 0.86 0.05 1.15",
+    "subject": "NI-O-PTZ",
+    "scope": "target",
+    "conditions": "Table 3 Weller/PM3 extended-geometry model, solvent order acetonitrile/toluene/hexane.",
+    "kind": "computation",
+    "statement": "Computed singlet/triplet PET energies are -1.31/-0.21, -0.24/+0.86, +0.05/+1.15 eV.",
+    "limitations": "Positive +0.05 eV singlet value in hexane conflicts with prose claiming all singlet values negative. Do not silently turn it negative."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F032",
+    "pdf_page": 6,
+    "quote": "The rate constants of the charge transfer process (kCT) were found to be enhanced in NI-O-PTZ 3-5 times compared with those in NI-C11-PTZ.",
+    "subject": "NI-O-PTZ versus alkyl comparator",
+    "scope": "target",
+    "conditions": "Polyether versus undecyl linkers.",
+    "kind": "author_interpretation",
+    "statement": "Authors invoke stronger electronic coupling through polyether and superexchange to explain faster transfer; also faster recombination in toluene.",
+    "limitations": "This is electronic coupling, not mechanical confinement or viscosity-based RIM."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F032",
+    "pdf_page": 7,
+    "quote": "These may be attributed to the very specific solvent effects such as the exciplex formation.",
+    "subject": "NI derivatives including NI-O-PTZ in toluene",
+    "scope": "series_including_target",
+    "conditions": "Red-shifted, less structured emission in toluene relative to hexane/acetonitrile.",
+    "kind": "author_interpretation",
+    "statement": "Source tentatively invokes NI/toluene exciplex formation.",
+    "limitations": "Series-level interpretation with NI reference support, not a separately resolved target exciplex or AIE."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F032",
+    "pdf_page": 4,
+    "quote": "The energy transfer from NI(S1) to PTZ is not favorable",
+    "subject": "NI-linker-PTZ dyads including NI-O-PTZ",
+    "scope": "series_including_target",
+    "conditions": "Singlet excitation energies NI 3.4 eV and PTZ 5.2 eV.",
+    "kind": "author_interpretation",
+    "statement": "Authors reject singlet energy transfer to PTZ as explanation for quenched NI fluorescence.",
+    "limitations": "This excludes a specific alternative under studied conditions, not triplet participation in PET."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Intramolecular charge-separated-state description of the same PET pathway; not TICT or a separate radiative ICT band."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Radical-ion transient spectra and fluorescence quenching support donor-to-NI PET; rates remain target/solvent specific."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "Preserve the explicit tentative NI/toluene exciplex assignment. It is a solvent exciplex, not an aggregate excimer or target AIE."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Triplet NI participates in PET in acetonitrile but not toluene according to the source. This does not imply RTP or triplet emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No packing, host or matrix constraint on target photophysics is established in the selected evidence."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Intramolecular charge-separated-state description of the same PET pathway; not TICT or a separate radiative ICT band."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Radical-ion transient spectra and fluorescence quenching support donor-to-NI PET; rates remain target/solvent specific."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "Preserve the explicit tentative NI/toluene exciplex assignment. It is a solvent exciplex, not an aggregate excimer or target AIE."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Triplet NI participates in PET in acetonitrile but not toluene according to the source. This does not imply RTP or triplet emission."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection access mechanism is established."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "ac04d99928169df89a1fa0728c1c4ddc98ef1ad660076735f737f84dd74a643a",
+  "label_record_sha256": "8759c66929c71bd87ac48decdc65d290c878dc3fd9bd54006e5182940113254c"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

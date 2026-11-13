@@ -219,7 +219,7 @@
     "ICT_TICT_CT",
     "SOKR_ANTI_KASHA"
    ],
-   "atoms_with_h": 34,
+   "atoms_with_h": 36,
    "charge": 0,
    "elements": [
     "C",
@@ -248,7 +248,7 @@
     "RADIATIVE_RATE_STATE_BALANCE",
     "SOKR_ANTI_KASHA"
    ],
-   "atoms_with_h": 36,
+   "atoms_with_h": 32,
    "charge": 0,
    "elements": [
     "C"

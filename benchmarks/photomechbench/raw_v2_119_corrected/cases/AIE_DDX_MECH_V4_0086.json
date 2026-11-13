@@ -1,0 +1,273 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0086",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccccc1-c1nc2ccccc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "HBT",
+  "source_documents": [
+   {
+    "source_id": "F037",
+    "title": "Role of Conical Intersections on the Efficiency of Fluorescent Organic Molecular Crystals",
+    "doi": "10.1021/acs.jpca.0c11072",
+    "pdf_sha256": "766c03f9fb4871eb97c9a522f8c9a5dda117065100950693b7e977795e2d9fa6",
+    "page_count": 13
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F037",
+    "pdf_page": 6,
+    "quote": "amounting to 0.77 in powder samples.",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "observation",
+    "statement": "The paper reports aggregate enhancement up to QEF 0.77 in powder, compared with negligible organic-solution yield.",
+    "limitations": "Powder result is cited from prior literature, not measured here; avoid describing it as a single-crystal quantum yield."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F037",
+    "pdf_page": 6,
+    "quote": "ESIPT is energetically more favorable in both solution/crystal, releasing 0.38/0.39 eV",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "computation",
+    "statement": "Computed ESIPT relaxation favors cis-keto formation in both media.",
+    "limitations": "Energetic optimization does not quantify proton-transfer yield or rate."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F037",
+    "pdf_page": 6,
+    "quote": "it has a minor eﬀect on the ﬂuorescence rate of the cis-keto form",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "computation",
+    "statement": "Crystallization has little calculated effect on the emissive cis-keto radiative rate; Table 2 gives 0.41 versus 0.35 ns^-1 in cyclohexane and crystal.",
+    "limitations": "Table 2 and Figure 6 visually inspected; enol rates must not be transferred to keto emission."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F037",
+    "pdf_page": 6,
+    "quote": "the crystal MECI remains unstable, surpassing the absorption energy by 1.9 eV.",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "computation",
+    "statement": "The crystal CI requires additional pyramidalization and lies 1.9 eV above absorption in TDDFT.",
+    "limitations": "CASPT2 on those geometries gives 2.05 eV above absorption with a residual 0.36 eV S1-S0 gap; not an exact multireference optimized degeneracy."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "Upon crystallization, the S1−S0 MECI becomes inaccessible for a molecule excited at the FC point.",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "author_interpretation",
+    "statement": "The authors identify loss of the principal CI-mediated decay route as the explanation for enhanced QEF.",
+    "limitations": "An energetic-accessibility interpretation, not measured nonadiabatic dynamics."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "the reorganization energies of low-frequency modes are not signiﬁcantly hampered in the aggregate phase.",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "computation",
+    "statement": "Normal-mode analysis does not show substantial low-frequency vibrational suppression in HBT.",
+    "limitations": "Harmonic representation misses the high-amplitude anharmonic torsion leading to CI; it does not rule out all motion effects."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "The eﬀect of photon reabsorption is minimized in the HBT crystal because of a signiﬁcant Stokes shift",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "author_interpretation",
+    "statement": "ESIPT separates enol absorption from cis-keto emission and reduces reabsorption.",
+    "limitations": "Not an independent exciton or anti-Kasha emission assignment."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "exciton hopping is expected to be a slower process compared to intramolecular relaxation.",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "author_interpretation",
+    "statement": "Small exciton coupling of 0.036 eV relative to enol reorganization of 0.28 eV is used to discount rapid hopping.",
+    "limitations": "A relative-rate expectation; hopping was not directly measured."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F037",
+    "pdf_page": 11,
+    "quote": "herringbone packing eﬀectively blocked rotations about the principal axis",
+    "subject": "HBT",
+    "scope": "target",
+    "conditions": "HBT solution/vacuum versus herringbone crystal; TDDFT/OEEC and CASPT2 checks; literature powder quantum yield.",
+    "kind": "author_interpretation",
+    "statement": "Herringbone steric restrictions are identified as the environmental reason for CI destabilization.",
+    "limitations": "The conclusion also discusses alpha-DCS sheet packing; this evidence is restricted to HBT's herringbone context."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E09"
+    ],
+    "rationale": "Herringbone neighbors hinder the large distortions needed for internal conversion."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "Enol-to-cis-keto ESIPT establishes the emitting state and large Stokes shift; it is not itself shown to be the origin of yield enhancement."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The main source explanation is crystal destabilization of the CI that is accessible through torsion in isolated HBT."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "The tested harmonic low-frequency RIM explanation is explicitly not supported. CI-reaching torsion is retained under RACI."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E09"
+    ],
+    "rationale": "Herringbone neighbors hinder the large distortions needed for internal conversion."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E07"
+    ],
+    "rationale": "Enol-to-cis-keto ESIPT establishes the emitting state and large Stokes shift; it is not itself shown to be the origin of yield enhancement."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Weak exciton coupling and slow expected hopping are contextual negative controls, not the source's enhancement mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The source finds little change of the relevant keto radiative rate. Do not use the enol rate increase to explain keto emission."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The main source explanation is crystal destabilization of the CI that is accessible through torsion in isolated HBT."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "ca56781d388bd3cc3e22ade7a7d73df00c10db2718c82308714bc8d258e2cf73",
+  "label_record_sha256": "fdf54c01f02bccfe4a646011efaecffc7e64f5ff9b4b863054dbb5608b392fdb"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

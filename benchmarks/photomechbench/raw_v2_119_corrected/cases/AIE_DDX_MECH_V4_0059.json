@@ -1,0 +1,297 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0059",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#Cc1ccc(N2c3ccccc3Sc3ccccc32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CzS-CN",
+  "source_documents": [
+   {
+    "source_id": "F024",
+    "title": "Three polymorphs of one luminogen: How the molecular packing affects the RTP and AIE properties？",
+    "doi": "10.1039/c7tc03656f",
+    "pdf_sha256": "db60197849d1d4de809be02a37de29e395211fefdb6d43bff92541b5f99bfbbd",
+    "page_count": 7
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F024",
+    "pdf_page": 3,
+    "quote": "CzS-CN gave a very weak emission at about 529 nm in THF solution with a PL efficiency as low as 2.1%",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "THF solution; main text reporting SI S3.",
+    "kind": "observation",
+    "statement": "Solution yield is 2.1% near 529 nm; emission increases at water fraction greater than 90%.",
+    "limitations": "SI spectrum not inspected; source calls restriction 'intermolecular' in one sentence but identifies motion of molecular groups."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F024",
+    "pdf_page": 3,
+    "quote": "mainly caused by the motions of phenthiazine, cyan groups and phenyl ring",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "Interpretation of weak solution emission and aggregation enhancement.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign weak solution emission to motion of phenothiazine, cyano and phenyl units.",
+    "limitations": "Motion-level source assignment, not direct measurement of specific torsional modes."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F024",
+    "pdf_page": 3,
+    "quote": "RTP lifetimes for the three polymorphs could change from 266 ms to 41 ms, then to 32 ms",
+    "subject": "CzS-CN crystals A, B and C",
+    "scope": "target",
+    "conditions": "Ambient crystalline forms; Figures 1 and 2 visually inspected.",
+    "kind": "observation",
+    "statement": "Prose reports A/B/C RTP lifetimes 266/41/32 ms and total PL yields 22.6/17.8/6.9%.",
+    "limitations": "Both Figure 1 and Figure 2B show 226 ms for A, not prose 266 ms. Preserve conflict; total PL yield is not a phosphorescence-only yield."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F024",
+    "pdf_page": 3,
+    "quote": "RTP lifetimes shortening from 43 ms for the as-prepared powder to 11 ms in the ground state",
+    "subject": "CzS-CN powder",
+    "scope": "target",
+    "conditions": "Mechanical grinding; Figure 2C-D.",
+    "kind": "observation",
+    "statement": "Grinding changes emission from 430 to 497 nm and shortens RTP lifetime from 43 to 11 ms.",
+    "limitations": "As-prepared powder resembles B by PXRD, not the long-lived A polymorph; fumed lifetime is 14 ms in Figure 2D."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F024",
+    "pdf_page": 4,
+    "quote": "For crystal (A), there were three major and one minor ISC channels",
+    "subject": "CzS-CN crystal-derived conformers",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G* calculations of singlets/triplets.",
+    "kind": "computation",
+    "statement": "Authors count more candidate ISC channels in A and B than C to explain RTP differences.",
+    "limitations": "These are energy/orbital-based proposed channels, not measured ISC rates."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F024",
+    "pdf_page": 4,
+    "quote": "crystal (C) should give the more efficient emission than others. But actually it was not",
+    "subject": "CzS-CN crystal conformers",
+    "scope": "target",
+    "conditions": "Calculated S0-S1 oscillator strengths compared with experiment.",
+    "kind": "computation",
+    "statement": "C has f=0.21 versus 0.12-0.13 in A/B, yet lower measured yield, indicating monomer geometry alone is insufficient.",
+    "limitations": "Negative result prevents reducing the whole behavior to isolated-molecule oscillator strength."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F024",
+    "pdf_page": 4,
+    "quote": "The strong intermolecular interactions would restrict the intermolecular motions effectively and lead to the reduced non-radiative transition",
+    "subject": "CzS-CN crystal A",
+    "scope": "target",
+    "conditions": "Crystal contact analysis in Figure 4.",
+    "kind": "author_interpretation",
+    "statement": "Strong pi contacts and hydrogen bonds are proposed to suppress nonradiative decay and prolong RTP.",
+    "limitations": "The quoted wording says intermolecular; no atomistic dynamics or oxygen-permeability control shown."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F024",
+    "pdf_page": 5,
+    "quote": "the formed H-type packing mode in coupled II",
+    "subject": "CzS-CN crystal C versus A/B",
+    "scope": "target",
+    "conditions": "Polymorph packing analysis.",
+    "kind": "author_interpretation",
+    "statement": "H-type packing of C is assigned to low efficiency; A/B have crossed X-type pairs.",
+    "limitations": "Packing assignment is not a general H-aggregate description for all target forms."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F024",
+    "pdf_page": 5,
+    "quote": "the lowest excited state corresponded to the destructive combination of the transition dipole moment for the individual molecule, which was optically forbidden",
+    "subject": "CzS-CN crystal C coupled pair",
+    "scope": "target",
+    "conditions": "Coupled-unit transition-dipole analysis, main text reporting SI S14-S15.",
+    "kind": "computation",
+    "statement": "C's parallel pair is assigned a dark lowest state; A/B crossed pairs have reduced splitting and finite lowest-state transition dipoles.",
+    "limitations": "SI diagrams not inspected; no higher-state emission is asserted."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "H-type versus X-type coupled-unit excited states underpin the polymorph fluorescence interpretation."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E09"
+    ],
+    "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "RTP and proposed ISC differences are central, with explicit lifetime-source discrepancy preserved."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Preserve explicit assignment of solution loss to molecular-group motions and aggregate restriction, without treating all packing effects as internal rotation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Different packing environments control nonradiative loss and emission; polymorphs cannot be pooled as equivalent."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest-binding or inclusion mechanism linked to target emission established; solvent polarity alone does not establish host-guest binding."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer excited-state mechanism established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No separate photoinduced electron-transfer quenching or turn-on established; intramolecular CT is not automatically PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "H-type versus X-type coupled-unit excited states underpin the polymorph fluorescence interpretation."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E09"
+    ],
+    "rationale": "Source explicitly distinguishes isolated-conformer oscillator strengths from packing-induced dark/allowed coupled states."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "RTP and proposed ISC differences are central, with explicit lifetime-source discrepancy preserved."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "07c0b982931db49661885e373dbf3e65ec9c35c1d9dac6bbd58276f4f3adb2bc",
+  "label_record_sha256": "e7e5f0a88bd51da532a5661ddbb8ff98ad4e25574bef82ef51004d578d8c9824"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

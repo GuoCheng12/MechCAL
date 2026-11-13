@@ -35,9 +35,14 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--max-tool-calls", type=int, default=12)
     parser.add_argument("--max-tool-wall-seconds", type=float, default=3600.0)
     parser.add_argument("--allow-test-case", action="store_true")
+    parser.add_argument("--allow-not-runnable", action="store_true")
     args = parser.parse_args(argv)
     if split_of(args.case_id) == "test" and not args.allow_test_case:
         raise SystemExit(HELD_OUT.format(case=args.case_id, flag="--allow-test-case"))
+    from mechcal.eval.dataset import NOT_RUNNABLE, runnable
+    ok, why = runnable(args.case_id)
+    if not ok and not args.allow_not_runnable:
+        raise SystemExit(NOT_RUNNABLE.format(case=args.case_id, reason=why, flag="--allow-not-runnable"))
     if args.out.exists() and any(args.out.iterdir()):
         raise SystemExit(f"{args.out} is not empty; use a new output directory")
     settings = backbone_settings()

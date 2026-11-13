@@ -25,7 +25,7 @@ from mechcal.eval.mechanism_ranking import score_mechanism_ranking
 from mechcal.mechanism_pool import MECHANISM_POOL
 
 ROOT = Path(__file__).resolve().parents[1]
-CASES = ROOT / "benchmarks/photomechbench/raw_v2_119/cases"
+from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
 SHORT = {"ICT_TICT_CT": "ICT", "RADIATIVE_RATE_STATE_BALANCE": "RAD", "TRIPLET_METAL_ENERGY_TRANSFER": "TRIP",
          "RIM_RIR_RIV": "RIM", "PACKING_HOST_MATRIX_CONFINEMENT": "PACK", "AGGREGATE_EXCITON_EXCIMER": "AGG",
          "ESIPT_PT": "ESIPT", "PET_ET": "PET", "HOST_GUEST_INTERACTION": "HG", "RACI_CI_ACCESS": "RACI",

@@ -1,0 +1,287 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0099",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Fc1ccc2c(c1)O[B-]1(F)Oc3cc(F)ccc3[N+]1=N2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BAz-F",
+  "source_documents": [
+   {
+    "source_id": "F044",
+    "title": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "doi": "10.1039/d4dt02458c",
+    "pdf_sha256": "f918167781b05d4e87c19a92fa3c6156b9eb43cec25df447639247ef0f965970",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "moderate isolated yields (34% for BAz-F and 38% for BAz-Cl)",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "observation",
+    "statement": "BAz-F is the fluorinated derivative explicitly synthesized and named in Scheme 1.",
+    "limitations": "This number is isolated synthetic yield, not fluorescence yield."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F044",
+    "pdf_page": 4,
+    "quote": "Comparison of (c) absolute FL quantum yield, (d) radiative rate constant, and (e) nonradiative rate constant between 1 wt% PMMA ﬁlms and crystals",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "observation",
+    "statement": "Figure 2 gives BAz-F PMMA/crystal yields 0.6%/17%, kr 0.08/1.1 x10^8 s^-1 and knr 13/5.4 x10^8 s^-1 at room temperature.",
+    "limitations": "Figure visually inspected. Main p2 summarizes PMMA yields as 0.8-2.3%, inconsistent with the plotted 0.6% for BAz-F; plot-specific value retained and flagged."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F044",
+    "pdf_page": 2,
+    "quote": "restriction of structural relaxation in the excited state",
+    "subject": "BAz-F",
+    "scope": "series_including_target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "author_interpretation",
+    "statement": "Crystal intermolecular contacts are proposed to reduce excited-state structural relaxation.",
+    "limitations": "Series-level interpretation; no direct vibrational-motion measurement for BAz-F."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F044",
+    "pdf_page": 3,
+    "quote": "the kr value of the crystalline sample of BAz-F was 1.7-fold larger than that in the solution",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "observation",
+    "statement": "At 77 K, BAz-F crystal kr is about 1.7-fold above 2MeTHF glass; the source describes little accompanying knr change.",
+    "limitations": "Relative to 2MeTHF, not all possible matrices; rates come from fitted lifetime/yield data."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "Comparison of (b) absolute FL quantum yield, (c) radiative rate constant, and (d) nonradiative rate constant",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "observation",
+    "statement": "Figure 3 labels BAz-F yields 46%, 54%, 57%, kr 0.83, 0.87, 1.4 and knr 1.0, 0.74, 1.1 x10^8 s^-1 for 2MeTHF, Tol/2MP and crystal at 77 K.",
+    "limitations": "Figure visually inspected; crystal knr is not zero, and constancy is approximate."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F044",
+    "pdf_page": 5,
+    "quote": "the enhance- ment of kr was observed because of the weakest calculated coupling strength",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "author_interpretation",
+    "statement": "Despite H-like intermolecular organization, BAz-F's small calculated splitting (0.05 eV) permits radiative enhancement; strong local contact does not necessarily mean strong exciton coupling.",
+    "limitations": "Calculation reported in main; underlying SI dimer data not inspected. This is not J-aggregate enhancement."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "2.09 for BAz-H, 2.03 for BAz-F, 2.19 for BAz-Cl",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "computation",
+    "statement": "Calculated crystal refractive index is 2.03; the common Tol/2MP glass estimate is 1.53.",
+    "limitations": "Lorentz-Lorenz estimate, not measured n."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "the refractive index dominantly contributes to the increase in kr.",
+    "subject": "BAz-F",
+    "scope": "series_including_target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "author_interpretation",
+    "statement": "The source's normalization analysis favors n^2/polarizability as the main cause of halogenated-crystal radiative acceleration.",
+    "limitations": "Dimer oscillator-strength approximation and calculated transition-energy error limit quantitative agreement."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F044",
+    "pdf_page": 6,
+    "quote": "the slight decrease in kr,SB in a crystal was theoretically predicted due to the eﬀect of H-aggregation, especially in BAz-H and BAz-F",
+    "subject": "BAz-F",
+    "scope": "series_including_target",
+    "conditions": "Room-temperature crystal versus 1 wt% PMMA; 77 K crystal versus vitrified 10^-5 M 2MeTHF and Tol/2MP (1:9).",
+    "kind": "computation",
+    "statement": "The source retains a smaller opposing H-aggregation/oscillator-strength contribution even for BAz-F.",
+    "limitations": "An opposing secondary contribution, not the cause of observed enhancement; dimer approximation only."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Source explicitly invokes restriction of structural relaxation as an ambient contribution; the 77 K increase is not explained solely by RIM."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E08"
+    ],
+    "rationale": "The crystalline environment both restricts relaxation at ambient temperature and changes local polarizability."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E09"
+    ],
+    "rationale": "A weak H-aggregation contribution opposing kr is explicitly calculated; retain it as subordinate to polarizability, not as an enhancing J mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "The low-temperature controls isolate radiative acceleration attributed mainly to crystal refractive index."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Source explicitly invokes restriction of structural relaxation as an ambient contribution; the 77 K increase is not explained solely by RIM."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E08"
+    ],
+    "rationale": "The crystalline environment both restricts relaxation at ambient temperature and changes local polarizability."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E09"
+    ],
+    "rationale": "A weak H-aggregation contribution opposing kr is explicitly calculated; retain it as subordinate to polarizability, not as an enhancing J mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "The low-temperature controls isolate radiative acceleration attributed mainly to crystal refractive index."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The extra heavy-atom ISC explanation is specific to Cl/Br, not assigned to F from series membership."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection mechanism is established; rotation restriction alone does not prove CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "7669f4ea29a1303d817f5e328d9ebdeeb4f771e23976e1dafd70032aee26d5e9",
+  "label_record_sha256": "584163be1dfe2ebab3926233a1d5973e19050bc8e962e6d4711ba1d8ae0f7e83"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

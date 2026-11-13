@@ -1,0 +1,246 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0072",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[Si](C)(c1ccc(C=C(C#N)C#N)cc1)[Si](C)(C)c1ccc(C=C(C#N)C#N)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Si2s-2C",
+  "source_documents": [
+   {
+    "source_id": "F031",
+    "title": "Intramolecular Photoinduced Charge Transfer and Recombination Dynamics in Vinylarene Terminated Organosilanes",
+    "doi": "10.1021/acs.jpcb.1c01297",
+    "pdf_sha256": "67047bcb94c263a3ebd64c01c4b5cde81408198ecdfe66b234b0ea2395a11088",
+    "page_count": 12
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F031",
+    "pdf_page": 4,
+    "quote": "No photochemical changes were observed in UV− vis spectra collected before and after irradiation",
+    "subject": "organosilane measurement controls",
+    "scope": "series_including_target",
+    "conditions": "Approximately 1e-4 M dissolved solutions; stirred 2 mm cuvette; 360 nm pump, 200 fs time resolution.",
+    "kind": "observation",
+    "statement": "Before/after UV-vis spectra show no detected photochemical change during transient measurements.",
+    "limitations": "This controls persistent photochemistry, not ultrafast intermediate identity or aggregation."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F031",
+    "pdf_page": 7,
+    "quote": "they can all be classified as a charge-separated state",
+    "subject": "organosilane series",
+    "scope": "series_including_target",
+    "conditions": "Steady-state emission/excitation-derived reorganization energies across acceptors.",
+    "kind": "author_interpretation",
+    "statement": "Authors classify emitting states throughout the studied series as charge separated.",
+    "limitations": "Shared state character does not imply identical recombination kinetics; derived parameters depend on spectral assumptions."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F031",
+    "pdf_page": 4,
+    "quote": "334, 360, and 368 nm for Si2s-2E, Si2s-E,C, and Si2s-2C, respectively",
+    "subject": "Si2s-2C with acceptor controls",
+    "scope": "target",
+    "conditions": "DCM steady-state absorption, Fig. 1.",
+    "kind": "observation",
+    "statement": "Si2s-2C red-edge half-rise is about 368 nm; the authors place the optical sigma-pi* CT transition on this edge.",
+    "limitations": "Half-rise is not an absorption maximum. Earlier E,C data are comparison, not target data."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F031",
+    "pdf_page": 6,
+    "quote": "Si2s-2C 2.8 ± 1.2 237 ± 19",
+    "subject": "Si2s-2C",
+    "scope": "target",
+    "conditions": "Table 1 global sequential fits, DCM, 360 nm excitation; table visually checked.",
+    "kind": "computation",
+    "statement": "Fitted hot-state relaxation is 2.8 +/- 1.2 ps and charge recombination 237 +/- 19 ps.",
+    "limitations": "Kinetic-model estimates from TA, not fluorescence lifetimes or directly resolved reaction coordinates."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F031",
+    "pdf_page": 9,
+    "quote": "Si2s-2C 2.4 ± 0.5 137 ± 8",
+    "subject": "Si2s-2C",
+    "scope": "target",
+    "conditions": "Table 3 global TA fit, cyclohexane, 360 nm excitation.",
+    "kind": "computation",
+    "statement": "Relaxation is 2.4 +/- 0.5 ps and charge recombination 137 +/- 8 ps in cyclohexane.",
+    "limitations": "Underlying cyclohexane TA traces are SI Fig. S7, not inspected."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F031",
+    "pdf_page": 9,
+    "quote": "we do not see an enhancement in the charge-recombination lifetime for Si2s-2C",
+    "subject": "Si2s-2C solvent comparison",
+    "scope": "target",
+    "conditions": "Cyclohexane versus DCM; weak charge screening in nonpolar solvent.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute faster recombination in cyclohexane to increased electronic coupling; unlike Si4s-2C, target lifetime does not lengthen.",
+    "limitations": "This explicit negative comparison prevents transferring the stronger-donor trend."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F031",
+    "pdf_page": 7,
+    "quote": "Si2s-2C 3.573 −2.267 0.653 −2.948 310 134 2200",
+    "subject": "Si2s-2C",
+    "scope": "target",
+    "conditions": "Table 2, DCM; two Franck-Condon weighting schemes; visually inspected.",
+    "kind": "computation",
+    "statement": "Estimated electronic coupling is 310 or 134 inverse cm depending on model.",
+    "limitations": "Uses shared mean reorganization energy and simplified vibrational weighting; not an independent measurement."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F031",
+    "pdf_page": 4,
+    "quote": "stimulated emission band appears instantaneously for Si2s-2C but exhibits a lag or induction for Si2s-2E",
+    "subject": "Si2s-2C and Si2s-2E",
+    "scope": "target",
+    "conditions": "DCM femtosecond TA, Figs. 2-3.",
+    "kind": "observation",
+    "statement": "Stimulated emission appears promptly for the dicyano target, unlike the weaker diester comparator.",
+    "limitations": "Instantaneous means within instrument response, not zero-time molecular dynamics."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Intramolecular CT state character and optical CT transition describe the same pathway as PET, not an independent aggregation mechanism."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Source resolves photoinduced charge separation and back-electron transfer; the measured regime is solution photophysics, not AIE."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific restriction of intramolecular motion is established in the selected evidence; aggregation alone is insufficient."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No packing, host or matrix constraint on target photophysics is established in the selected evidence."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Intramolecular CT state character and optical CT transition describe the same pathway as PET, not an independent aggregation mechanism."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Source resolves photoinduced charge separation and back-electron transfer; the measured regime is solution photophysics, not AIE."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection access mechanism is established."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "e51e4078e881a6e0364b97f4fd9965dea4290f4aee529c767aba7d976d47efc4",
+  "label_record_sha256": "9bccc1198d45cd2ce80bd3b35a46c575f1adc2a63cf7bd7cb4167fc8ab7c64dd"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

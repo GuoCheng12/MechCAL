@@ -22,7 +22,7 @@ from mechcal.eval.submission import ArtifactStore, Submission
 from mechcal.runtime.llm import OpenAIJsonClient
 
 ROOT = Path(__file__).resolve().parents[1]
-CASES = ROOT / "benchmarks/photomechbench/raw_v2_119/cases"
+from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
 
 
 def main() -> None:

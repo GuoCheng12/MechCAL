@@ -1,0 +1,238 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0007",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C(CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)OCC(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)(COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1)COC(=O)CCSc1ccc(Oc2ccc(C(=O)OCc3cc4ccc5cccc6ccc(c3)c4c56)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "D5",
+  "source_documents": [
+   {
+    "source_id": "F003",
+    "title": "Aggregation enhanced excimer emission (AEEE) with efficient blue emission based on pyrene dendrimers",
+    "doi": "10.1039/c6py00443a",
+    "pdf_sha256": "16570f58696dca4b2f104480157842bf930a7aa270b3cd0ed42c8ac60c469c5b",
+    "page_count": 23
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F003",
+    "pdf_page": 5,
+    "quote": "formed the organic analogues, dendrimers D3a,b and D5",
+    "subject": "D5",
+    "scope": "target",
+    "conditions": "Demetallation of precursor D4; Scheme 4 and synthesis description.",
+    "kind": "observation",
+    "statement": "D5 is the demetallated organic analogue, not one of the organoiron dendrimers used in electrochemical comparisons.",
+    "limitations": "This establishes the source designation, not verification of the inherited SMILES."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F003",
+    "pdf_page": 15,
+    "quote": "there is no interaction between the two pyrenyl units in the ground state to form dimers.",
+    "subject": "D3a,b, D5, D9 and D13 in solution",
+    "scope": "series_including_target",
+    "conditions": "Monomer-like absorption across organic solvents.",
+    "kind": "author_interpretation",
+    "statement": "The authors use largely unchanged absorption shape to argue against ground-state dimers in these solution conditions.",
+    "limitations": "This does not exclude ground-state aggregation in high-water mixtures; an absorption-based assignment is not direct intermolecular-distance measurement."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F003",
+    "pdf_page": 18,
+    "quote": "When dendrimer D5 was excited at 343 nm",
+    "subject": "D5",
+    "scope": "target",
+    "conditions": "10 micromolar, THF/water series, Figs. 18-19.",
+    "kind": "observation",
+    "statement": "D5 shows pyrene monomer bands at 377 and 398 nm and an approximately 470 nm band enhanced by aggregation.",
+    "limitations": "Separate this target-specific result from the more extensively analyzed D3a and D3b."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F003",
+    "pdf_page": 20,
+    "quote": "The values were 0.54 in pure THF and 2.66 in the 1 : 9 THF/water mixture.",
+    "subject": "D5",
+    "scope": "target",
+    "conditions": "Excimer/monomer intensity ratio in Figs. 18-19; excitation 343 nm.",
+    "kind": "observation",
+    "statement": "The reported excimer/monomer ratio increases from 0.54 to 2.66 with water-induced aggregation.",
+    "limitations": "A ratio of emission intensities is not an absolute fluorescence quantum yield."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F003",
+    "pdf_page": 19,
+    "quote": "the pyrene is attached directly to the zero generation without flexible chain.",
+    "subject": "D5 versus D3a/D3b",
+    "scope": "target",
+    "conditions": "Comparison of dendrimer linkage design and spectra.",
+    "kind": "author_interpretation",
+    "statement": "The authors distinguish D5 from the flexible-chain derivatives and relate its behavior to pyrene proximity and excimer formation.",
+    "limitations": "Do not copy the flexible-chain RIM explanation or its thresholds from D3a/D3b directly to D5."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F003",
+    "pdf_page": 20,
+    "quote": "This suggests that the excimer emission is due to intramolecular interactions",
+    "subject": "D5",
+    "scope": "target",
+    "conditions": "High-water aggregation; Fig. 19.",
+    "kind": "author_interpretation",
+    "statement": "The source suggests intramolecular pyrene interactions contribute to excimer emission under aggregation conditions.",
+    "limitations": "The intramolecular assignment is tentative; no target-specific time-resolved separation from intermolecular excimers is demonstrated here."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F003",
+    "pdf_page": 20,
+    "quote": "Transmission electron microscope images (TEM) for dendrimer D3a",
+    "subject": "D3a",
+    "scope": "comparator",
+    "conditions": "TEM images at different THF/water ratios, Fig. 24.",
+    "kind": "observation",
+    "statement": "The paper's displayed morphology series is for D3a.",
+    "limitations": "Do not present D3a particle sizes or micrographs as D5 measurements."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Aggregation and pyrene proximity enable the excimer pathway. This is an overlapping environmental/arrangement description, not a separately proven rigidification mechanism."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Target-specific long-wavelength emission and excimer/monomer ratio changes support the source's excimer explanation; intra- versus intermolecular contributions remain bounded."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Aggregation and pyrene proximity enable the excimer pathway. This is an overlapping environmental/arrangement description, not a separately proven rigidification mechanism."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Target-specific long-wavelength emission and excimer/monomer ratio changes support the source's excimer explanation; intra- versus intermolecular contributions remain bounded."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "fb5e18cfc8d6966ba40c3c72928975a31a900fd0466cd75f8520ad740db49151",
+  "label_record_sha256": "e7c21c669f3de5d9b527c417aac73e52f3b157ba6f7b76beec2230d6ee151355"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

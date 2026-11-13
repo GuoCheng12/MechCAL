@@ -1,0 +1,262 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0085",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#CC(=Cc1ccccc1)c1ccc(C(C#N)=Cc2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "α-DCS",
+  "source_documents": [
+   {
+    "source_id": "F037",
+    "title": "Role of Conical Intersections on the Efficiency of Fluorescent Organic Molecular Crystals",
+    "doi": "10.1021/acs.jpca.0c11072",
+    "pdf_sha256": "766c03f9fb4871eb97c9a522f8c9a5dda117065100950693b7e977795e2d9fa6",
+    "page_count": 13
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "α-DCS is a DSB derivative displaying an impressive rise of QEF from 0.002 to 0.90 from the solution to single crystal.",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "observation",
+    "statement": "The paper reports solution QEF 0.002 and single-crystal QEF 0.90 for alpha-DCS.",
+    "limitations": "Experimental values are reproduced from reference 5, not new measurements in this computational paper."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "Here, the FC geometry had a tilt of 62.9° but the planarization of S1 was signiﬁcantly hindered, only reaching 47.1°.",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "computation",
+    "statement": "Crystal embedding limits excited-state planarization: central-ring tilt changes from 62.9 to 47.1 degrees, versus 67.2 to 21.3 degrees in solution.",
+    "limitations": "Optimized static geometries, not measured angular dynamics."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F037",
+    "pdf_page": 7,
+    "quote": "The sheet-like packing in the α-DCS crystal energetically encourages excited molecules to remain in their packing geometry",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "author_interpretation",
+    "statement": "Neighboring face-to-face units sterically hinder departure from the crystal geometry.",
+    "limitations": "This environmental restriction is the enabling condition for the CI-access explanation, not a separate demonstrated harmonic RIM cause."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F037",
+    "pdf_page": 8,
+    "quote": "We located a similar conical intersection for α-DCS, where the rotation was of 88.8° about the same vinylene bond",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "computation",
+    "statement": "A solution CI is reached by nearly perpendicular vinylene rotation; the reported structure has no pyramidalization.",
+    "limitations": "The quotation is a partial sentence; the no-pyramidalization finding appears immediately afterward on the same page."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F037",
+    "pdf_page": 8,
+    "quote": "the crystal packing is too dense to allow for the backbone to draw an arc of nearly a right angle",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "author_interpretation",
+    "statement": "Crystal packing is argued to block the solution-like CI distortion.",
+    "limitations": "The crystal penalty-function search instead yields an extremely distorted stretching geometry, too distorted for multireference evaluation; a reliable crystal CI energy was not obtained."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F037",
+    "pdf_page": 8,
+    "quote": "α-DCS 0.35 175 0.002 95 0.43 0.05 0.90 46",
+    "subject": "alpha-DCS",
+    "scope": "target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "observation",
+    "statement": "Table 3 gives solution/crystal kr 0.35/0.43 and knr 175/0.05 ns^-1; low-frequency reorganization energy is calculated as 95/46 meV for vacuum/crystal.",
+    "limitations": "Table visually inspected. Rates are imported experimental values (reference 5); the nearby prose says nonradiative rates 'increase' for alpha-DCS, inconsistent with this row. Do not repeat that prose as a quantitative fact."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F037",
+    "pdf_page": 8,
+    "quote": "no clear trends emerge linking the quenching of vibrational modes upon crystallization to the change in QEF of the systems",
+    "subject": "alpha-DCS",
+    "scope": "series_including_target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "author_interpretation",
+    "statement": "The series analysis does not correlate harmonic vibrational suppression with QEF, while allowing a possible contribution.",
+    "limitations": "Series-level qualification, not proof that all internal motions are irrelevant."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F037",
+    "pdf_page": 11,
+    "quote": "Vibrational decay was found not to be a strong nonradiative decay channel in either molecules, making them ill-suited to the RIM model.",
+    "subject": "alpha-DCS",
+    "scope": "series_including_target",
+    "conditions": "Chloroform solution versus single crystal; source calculations use TD-omegaB97X-D/6-31G(d), PCM solution and OEEC crystal embedding.",
+    "kind": "author_interpretation",
+    "statement": "The concluding interpretation favors RACI for HBT and alpha-DCS over the specific harmonic-vibrational RIM model.",
+    "limitations": "This narrows RIM rather than disproving all steric motion restriction; the broad benchmark families overlap."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Sheet-like face-to-face neighbors provide the steric restriction enabling RACI."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E06"
+    ],
+    "rationale": "The source tabulates a large fall in knr with only modest kr change. This is a kinetic description of the CI interpretation, not an independent cause."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E08"
+    ],
+    "rationale": "The source centrally attributes the solution-to-crystal enhancement to blocking CI-reaching vinylene rotation; the inaccessible crystal MECI remains computationally unresolved."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "The source explicitly finds the harmonic RIM account inadequate, though low-frequency modes decrease and a contribution cannot be excluded. Broad steric rotational blocking is represented by packing and RACI rather than added as an unqualified RIM label."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Sheet-like face-to-face neighbors provide the steric restriction enabling RACI."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific CT or TICT mechanism is established in this extraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "Exciton coupling is computed in the paper but efficient excitonic dissipation is rejected for this series; no exciton mechanism is needed to explain alpha-DCS enhancement."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E06"
+    ],
+    "rationale": "The source tabulates a large fall in knr with only modest kr change. This is a kinetic description of the CI interpretation, not an independent cause."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No operative target-specific triplet or metal-mediated pathway is established."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E08"
+    ],
+    "rationale": "The source centrally attributes the solution-to-crystal enhancement to blocking CI-reaching vinylene rotation; the inaccessible crystal MECI remains computationally unresolved."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "5be8f78588ad8698ba569be16c3302244e31f4209c0be4d0cb0a084f87a6d764",
+  "label_record_sha256": "bcd2a507fa9cced00324ee731f4dd9a766dd4952a27e5940b83df7363ae39726"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

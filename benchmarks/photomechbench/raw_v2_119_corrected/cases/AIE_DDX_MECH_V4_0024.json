@@ -1,0 +1,302 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0024",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(C(=C(c2ccc(C#Cc3cc[n+](CCCCCC[n+]4ccccc4)cc3)cc2)c2ccc(OC)cc2)c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "G",
+  "source_documents": [
+   {
+    "source_id": "F013",
+    "title": "Constructing adaptive photosensitizers via supramolecular modification based on pillararene host−guest interactions",
+    "doi": "10.1002/anie.202000338",
+    "pdf_sha256": "21c1505df9afe52e3229ed4a2bfc7f870aeb5cf50b43cea17ff2bf4f2b98ba19",
+    "page_count": 6
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F013",
+    "pdf_page": 3,
+    "quote": "G has a small overlap between HOMO and LUMO",
+    "subject": "G",
+    "scope": "target",
+    "conditions": "Reported TD-DFT, Scheme 2.",
+    "kind": "computation",
+    "statement": "Separated donor/acceptor orbitals and a calculated singlet-triplet gap of 0.2 eV are used to propose efficient ISC for ROS production.",
+    "limitations": "No ISC rate was measured in the inspected text; reported calculation is not a new inference experiment."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F013",
+    "pdf_page": 3,
+    "quote": "the consumption of ABDA was calculated to be 4.5 nmol",
+    "subject": "G; Ce6 comparator",
+    "scope": "target",
+    "conditions": "G 30 micromolar, ABDA 5 nmol; white-light assay with probe photobleaching subtracted, Fig. 1a.",
+    "kind": "observation",
+    "statement": "ABDA consumption is reported as 4.5 nmol with G in 140 s; comparator Ce6 gives 1.7 nmol in 300 s.",
+    "limitations": "Different reported time points must be retained; ABDA consumption is not itself an absolute singlet-oxygen quantum yield."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F013",
+    "pdf_page": 3,
+    "quote": "about 0.4 nmol ABDA was consumed",
+    "subject": "G with WP5",
+    "scope": "target",
+    "conditions": "WP5 and G each 30 micromolar in aqueous medium, 5 min white-light irradiation.",
+    "kind": "observation",
+    "statement": "WP5 complexation greatly reduces ROS-indicator consumption relative to G alone.",
+    "limitations": "Fluorescence and ROS need separate comparisons; the complex and free guest are not interchangeable states."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "The consumption of ABDA was calculated to be 2.2 nmol in 300 s",
+    "subject": "G with WP5/P5",
+    "scope": "target",
+    "conditions": "Host and G each 30 micromolar, pH 5.0, Fig. 1a.",
+    "kind": "observation",
+    "statement": "Acidification restores ROS-indicator consumption to 2.2 nmol in 300 s, consistent with partial switching on.",
+    "limitations": "Do not equate this value with the 4.5 nmol/140 s free-G result. Cell viability used pH 6.0 rather than 5.0."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "Negligible change in fluorescence was observed after addition of WP5",
+    "subject": "G and G/host controls",
+    "scope": "target",
+    "conditions": "Aqueous G 30 micromolar; WP5 30 micromolar; Fig. 2a-b.",
+    "kind": "observation",
+    "statement": "Free G is weakly emissive; WP5 addition or acidification of G alone causes negligible fluorescence change, whereas acidification of G plus WP5 below pH 6 enhances emission strongly.",
+    "limitations": "The abstract's generic quenching wording must not obscure that free G already has weak aqueous fluorescence."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "the alkyl chain was threaded into the cavity of WP5.",
+    "subject": "G with WP5",
+    "scope": "target",
+    "conditions": "1H NMR and NOE evidence reported from SI S10-S12.",
+    "kind": "author_interpretation",
+    "statement": "Alkyl/pyridinium shifts and alkyl-host NOEs are interpreted as threading with carboxylate-pyridinium electrostatics, forming a pseudorotaxane.",
+    "limitations": "SI not inspected; detailed binding geometry remains a source-supported interpretation."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "Then photoinduced electron transfer (PET) happened between WP5 and G",
+    "subject": "G with WP5",
+    "scope": "target",
+    "conditions": "Neutral aqueous host-guest complex; source cites SI S13.",
+    "kind": "author_interpretation",
+    "statement": "Authors invoke host-guest PET to suppress ROS generation.",
+    "limitations": "No direction, rate or direct kinetic evidence is established by the inspected main text; do not infer PET from fluorescence alone."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "only NOE signals between protons Ha1,a2 on the endmost pyridinium unit of G and proton H1 on P5 were observed",
+    "subject": "G with protonated P5",
+    "scope": "target",
+    "conditions": "pH 5.0; SI S15/S16-S17 discussed in main text.",
+    "kind": "author_interpretation",
+    "statement": "Authors interpret acidification as movement of protonated host to the terminal pyridinium, not complete host dissociation. Hydrophobic shielding leads to G/P5 coprecipitation and fluorescence enhancement; distance from TPE core permits ROS recovery.",
+    "limitations": "SI not inspected; proposed shuttling model is not a crystal structure of this target complex. Cited analogous crystal structure is background."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F013",
+    "pdf_page": 4,
+    "quote": "the self-assemblies were changed to large aggregates",
+    "subject": "G and host-dependent assemblies",
+    "scope": "target",
+    "conditions": "Main-text report of TEM SI S18: G, G/WP5 and acidic G/WP5.",
+    "kind": "observation",
+    "statement": "Reported morphology changes from free-G vesicles to tiny particles with WP5, then large aggregates at pH 5.",
+    "limitations": "TEM itself not inspected; free-G vesicles complicate describing all aqueous G as exclusively molecularly dissolved."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Host-dependent coprecipitation and aggregate morphology underpin the fluorescence switch; it does not prove a specific internal RIM coordinate."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Central pH-dependent host binding/shuttling interpretation explains switching; not assumed host release."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The source invokes donor-acceptor orbital separation to reduce the singlet-triplet gap. This is bounded electronic-structure support, not measured TICT kinetics."
+   },
+   {
+    "label": "PET_ET",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Explicit host-guest PET suppression of photosensitization and recovery after proposed relocation is retained with limited direct evidence."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Source links small computed singlet-triplet gap and ISC to ROS photosensitization. This is a photosensitizer pathway, not phosphorescence or metal emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "Main text connects aggregation to AIE but does not establish a target-specific restricted internal motion; no automatic RIM label."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Host-dependent coprecipitation and aggregate morphology underpin the fluorescence switch; it does not prove a specific internal RIM coordinate."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Central pH-dependent host binding/shuttling interpretation explains switching; not assumed host release."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The source invokes donor-acceptor orbital separation to reduce the singlet-triplet gap. This is bounded electronic-structure support, not measured TICT kinetics."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway is established here; ground-state protonation alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Explicit host-guest PET suppression of photosensitization and recovery after proposed relocation is retained with limited direct evidence."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific exciton, excimer or new intermolecular emissive state is established; aggregation alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or state-population explanation is established; intensity or lifetime changes alone do not isolate it."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Source links small computed singlet-triplet gap and ISC to ROS photosensitization. This is a photosensitizer pathway, not phosphorescence or metal emission."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "1a9d165b7ca8e813521e23b14120fbc82b46a80ad5896a9ddb05ada05606f675",
+  "label_record_sha256": "0e368b1590249e5c0f6363a22c3eccde564591f8b4a61c869ee343c0ce1158af"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

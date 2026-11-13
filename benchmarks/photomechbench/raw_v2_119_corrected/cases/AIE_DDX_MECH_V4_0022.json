@@ -1,0 +1,223 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0022",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCN(CC)c1ccc(C=Nc2ccc([N+](=O)[O-])cc2)c(O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "compound 3",
+  "source_documents": [
+   {
+    "source_id": "S0021",
+    "title": "Synthesis and optical properties of aggregation-induced emission (AIE) molecules based on ESIPT mechanism as pH- and Zn2+-Responsive fluorescent sensors",
+    "doi": "10.1039/c6ra09920c",
+    "pdf_sha256": "426aeb59a148caaf5959ad5d2ed9fc2d29ee721fd6d50b300bb5b5a86f92f79d",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0021",
+    "pdf_page": 3,
+    "quote": "which increased by 23-fold and 20-fold from the EtOH solution to 90% aqueous mixture, respectively",
+    "subject": "Compounds 2 and 3",
+    "scope": "series_including_target",
+    "conditions": "Ethanol/water, 30 micromolar, buffered pH 7.4.",
+    "kind": "observation",
+    "statement": "Compound 3 has the second value, a 20-fold increase at 90% water.",
+    "limitations": "Water fraction changes solvation and aggregation together; not a unique RIM test."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0021",
+    "pdf_page": 3,
+    "quote": "The fluorescence quantum yields (Ø F) of the 1-3 solid were 27.8%, 55.7% and 68.1%",
+    "subject": "Compounds 1-3",
+    "scope": "series_including_target",
+    "conditions": "Solid-state integrating-sphere measurements.",
+    "kind": "observation",
+    "statement": "Compound 3 has a reported solid-state quantum yield of 68.1%.",
+    "limitations": "Brightness does not identify a mechanism independently."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0021",
+    "pdf_page": 3,
+    "quote": "the HOMO is generally distributed on the 4- diethylaminosalicylaldehyde group, while the LUMO distributed mostly on the 4-nitroaniline group",
+    "subject": "Compound 3",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G* optimized frontier orbitals, Figure 2.",
+    "kind": "computation",
+    "statement": "The calculation places HOMO and LUMO on different parts of compound 3.",
+    "limitations": "Frontier-orbital separation alone does not establish a populated CT state, its kinetics, or TICT."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0021",
+    "pdf_page": 4,
+    "quote": "For molecule 3, it has the minimum twisted conformation, which results in the easiest ESIPT",
+    "subject": "Compound 3",
+    "scope": "target",
+    "conditions": "Comparison of computed twist angles in the three Schiff bases.",
+    "kind": "author_interpretation",
+    "statement": "The source links the smaller twist angle to easier ESIPT and higher yield.",
+    "limitations": "This is the authors' structure-based interpretation, not a computed transition-state barrier."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0021",
+    "pdf_page": 4,
+    "quote": "For compound 3, the fluorescence spectra show unimodal broad curve",
+    "subject": "Compound 3",
+    "scope": "target",
+    "conditions": "Ethanol/water spectra and biexponential neat-film decays.",
+    "kind": "observation",
+    "statement": "Unlike compounds 1 and 2, compound 3 does not show two resolved emission peaks.",
+    "limitations": "The authors suggest overlapping enol/keto emission; do not rewrite this as directly observed resolved dual emission."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0021",
+    "pdf_page": 4,
+    "quote": "the quick decay lifetime is 0.11μs (14.26%), 0.12μs (14.78%) and 0.12μs (16.72%)",
+    "subject": "Compounds 1-3",
+    "scope": "series_including_target",
+    "conditions": "Neat-film decay fits, Figure 3B.",
+    "kind": "observation",
+    "statement": "Compound 3's fast component is 0.12 microseconds with 16.72% amplitude; the same paragraph reports a 0.83 microsecond slow component with 83.28%.",
+    "limitations": "A two-component fit is not uniquely diagnostic of ESIPT or triplets."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0021",
+    "pdf_page": 6,
+    "quote": "Although compound 1 and 3 are also response for Zn2+, and show blue shift of emission, their fluorescence quenched significantly",
+    "subject": "Compounds 1 and 3",
+    "scope": "series_including_target",
+    "conditions": "Source comparison with the detailed compound-2 zinc sensing experiments.",
+    "kind": "observation",
+    "statement": "Compound 3 is reported to quench upon zinc addition.",
+    "limitations": "The 2:1 binding fit and proposed binding structure for compound 2 cannot be transferred to compound 3."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "The source explicitly assigns ESIPT, but its evidence for this target is weaker and less spectrally resolved than for compounds 1/2."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The paper's generic introductory RIR account and AIE response do not establish target-specific motion suppression."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "A zinc-induced response is reported, but the mechanistically resolved binding study is on compound 2, not this target."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Keep frontier-orbital separation as a fact, not an established CT-emission mechanism without a stronger target-specific assignment."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "The source explicitly assigns ESIPT, but its evidence for this target is weaker and less spectrally resolved than for compounds 1/2."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "1da212fa2cf28e2ad728568b23f4f13a32c4261602cc6fb672b02788ca0ee06a",
+  "label_record_sha256": "deb9c67a5b1761278fb4f791eb4906a203118cd913adf56ee09ac04ba7b67fe1"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

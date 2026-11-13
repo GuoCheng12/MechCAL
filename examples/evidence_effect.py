@@ -19,14 +19,16 @@ from mechcal.eval.stats import clustered_bootstrap, load_reference_cases, paper_
 from mechcal.mechanism_pool import MECHANISM_POOL
 
 ROOT = Path(__file__).resolve().parents[1]
-CASES = ROOT / "benchmarks/photomechbench/raw_v2_119/cases"
+from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
 METRICS = ("ndcg_at_3", "top1_primary", "recall_at_3")
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("cycles", nargs="+", help="name=dir[,dir...]")
+    ap.add_argument("--exclude", default="", help="comma-separated case numbers to leave out (e.g. 0020,0141)")
     args = ap.parse_args()
+    skip = {"AIE_DDX_MECH_V4_" + c.strip().zfill(4) for c in args.exclude.split(",") if c.strip()}
     clusters = paper_clusters(load_reference_cases(CASES))
     out = {}
     for spec in args.cycles:
@@ -40,6 +42,8 @@ def main() -> None:
                 if not grade_path.is_file():
                     continue
                 res, grade = json.loads(res_path.read_text()), json.loads(grade_path.read_text())
+                if res["case_id"] in skip:
+                    continue
                 fam = res["board"]["families"]
                 if any(f.get("prior") is None for f in fam.values()):
                     continue

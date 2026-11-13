@@ -1,0 +1,266 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0001",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCC(CC)COC(=O)CCCc1ccc2c(ccc3c4ccccc4ccc23)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PLQ",
+  "source_documents": [
+   {
+    "source_id": "F001",
+    "title": "Kinetics of Excimer Electrogenerated Chemiluminescence of Pyrene and 1-Pyrenebutyricacid 2-Ethylhexylester in Acetonitrile and an Ionic Liquid, Triethylpentylphosphonium Bis(trifluoromethanesulfonyl)imide",
+    "doi": "10.1021/acs.jpcb.9b08813",
+    "pdf_sha256": "22bda901079091f4073c72a7138f5e86c01c207faa520a98cf4b3543149f55a1",
+    "page_count": 12
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F001",
+    "pdf_page": 4,
+    "quote": "the broad PL emission with the maximum around 480 nm",
+    "subject": "PLQ",
+    "scope": "target",
+    "conditions": "PLQ concentration series in MeCN and the ionic liquid [P2225][TFSI].",
+    "kind": "observation",
+    "statement": "The approximately 480 nm broad emission increases with concentration; neat PLQ is dominated by excimer emission.",
+    "limitations": "Pyrene is a comparator; its values are not PLQ measurements."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F001",
+    "pdf_page": 5,
+    "quote": "the formation of excimers is a diffusion-controlled process.",
+    "subject": "PLQ and pyrene",
+    "scope": "series_including_target",
+    "conditions": "Concentration-dependent PL decay fits and diffusion coefficients from electrochemistry.",
+    "kind": "author_interpretation",
+    "statement": "Fitted excimer formation rates and diffusion-limited estimates agree; the much more viscous ionic liquid suppresses excimer formation.",
+    "limitations": "Diffusion-controlled intermolecular encounters are distinct from restriction of internal rotation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F001",
+    "pdf_page": 6,
+    "quote": "a 0.3−0.4 ns delay of the excimer emission in neat PLQ",
+    "subject": "PLQ",
+    "scope": "target",
+    "conditions": "Neat PLQ compared with dilute PLQ monomer emission; main text describes SI Fig. S2.",
+    "kind": "observation",
+    "statement": "A short delayed rise is reported for neat PLQ, interpreted as an orientational rearrangement before excimer formation.",
+    "limitations": "The raw SI decay is not available here; do not confuse this subnanosecond formation delay with delayed fluorescence from triplet states."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F001",
+    "pdf_page": 6,
+    "quote": "four different dimer structures with stacked pyrene rings are possible",
+    "subject": "PLQ dimers",
+    "scope": "target",
+    "conditions": "PBE0/TZVp potential energy curves with assumed parallel-stacked rings, Fig. 5 and Table 3.",
+    "kind": "computation",
+    "statement": "Three modeled PLQ configurations have an excited-state energy minimum at 3.50 angstrom; a sterically disfavored configuration shifts to 4.95 angstrom.",
+    "limitations": "The stacked starting geometry is assumed to reduce cost. These are computed geometries, not an experimental crystal structure."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F001",
+    "pdf_page": 5,
+    "quote": "the enhancement of kr",
+    "subject": "PLQ versus pyrene",
+    "scope": "target",
+    "conditions": "Monomer PL lifetime and integrating-sphere yield at 10 micromolar; Table 2.",
+    "kind": "author_interpretation",
+    "statement": "The source derives radiative and nonradiative rates and attributes the larger PLQ radiative rate to symmetry breaking by its substituent; ionic-liquid interactions also enhance the radiative rate.",
+    "limitations": "Main prose gives a MeCN PLQ lifetime near 210 ns whereas Table 2 lists 198 ns. This discrepancy should be resolved before adopting a precise lifetime."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F001",
+    "pdf_page": 5,
+    "quote": "can be ascribed to the suppression of vibrational relaxations",
+    "subject": "PLQ and pyrene",
+    "scope": "series_including_target",
+    "conditions": "Comparison of inferred nonradiative rates in viscous ionic liquid and MeCN.",
+    "kind": "author_interpretation",
+    "statement": "The authors attribute the reduced nonradiative rate in the ionic liquid to suppressed vibrational relaxation.",
+    "limitations": "This is an indirect interpretation of rate estimates, not resolved vibrational dynamics or a general aggregation-induced RIM mechanism."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F001",
+    "pdf_page": 9,
+    "quote": "the direct formation of the monomer S1 states through the electron transfer prevails",
+    "subject": "PLQ and pyrene ECL",
+    "scope": "series_including_target",
+    "conditions": "Electrogenerated radical-ion annihilation, Marcus-rate analysis and dimer energies.",
+    "kind": "author_interpretation",
+    "statement": "The favored proposed ECL route first creates the monomer excited state by electron transfer, followed by diffusion-driven excimer formation.",
+    "limitations": "This is electrode-driven electron transfer, not evidence for a photoinduced intramolecular PET quencher. Continuum-solvent and electronic-coupling assumptions limit the kinetic model."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F001",
+    "pdf_page": 8,
+    "quote": "a depletion around 495 nm was observed.",
+    "subject": "PLQ and pyrene ECL",
+    "scope": "series_including_target",
+    "conditions": "High-concentration ionic-liquid solutions under square-wave electrochemical excitation.",
+    "kind": "observation",
+    "statement": "The spectral depletion is attributed to reabsorption by accumulated radical anions, not a separate emitting mechanism.",
+    "limitations": "This artifact is concentration- and excitation-dependent; do not turn two apparent peaks into two excited-state mechanism labels."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Retain the authors' suppressed vibrational relaxation explanation under viscous-solvent conditions, with its indirect evidential status."
+   },
+   {
+    "label": "PET_ET",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "Electron transfer generates excited states in the ECL protocol. This broad ET-family assignment is conditional on electrochemical excitation, not conventional intramolecular photoinduced PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Excimer formation is the central explanation supported by concentration trends, kinetics and bounded dimer calculations."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E08"
+    ],
+    "rationale": "Lifetime/yield-derived rates and symmetry/solvent effects support a rate-balance interpretation; reabsorption must not be misclassified as state redistribution."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Retain the authors' suppressed vibrational relaxation explanation under viscous-solvent conditions, with its indirect evidential status."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "Electron transfer generates excited states in the ECL protocol. This broad ET-family assignment is conditional on electrochemical excitation, not conventional intramolecular photoinduced PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Excimer formation is the central explanation supported by concentration trends, kinetics and bounded dimer calculations."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E08"
+    ],
+    "rationale": "Lifetime/yield-derived rates and symmetry/solvent effects support a rate-balance interpretation; reabsorption must not be misclassified as state redistribution."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "5ba18eb2870c2d7a3116ac9a8cd48fdea1afc74de9a652e38603abdcb5093d7a",
+  "label_record_sha256": "5a39e7d8814cd356b323b4fdfc433cff812e3d91d33d3910f4f10a0f6970bc98"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

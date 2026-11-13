@@ -1,0 +1,277 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0017",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(-c2ccc(B(c3c(C)cc(C)cc3C)c3c(C)cc(C)cc3C)cc2)cc1-c1ncc(-c2ccc(-c3ccc(B(c4c(C)cc(C)cc4C)c4c(C)cc(C)cc4C)cc3)cc2)o1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "6d",
+  "source_documents": [
+   {
+    "source_id": "S0017",
+    "title": "Tuning the dual emission of keto/enol forms of excited-state intramolecular proton transfer (ESIPT) emitters via intramolecular charge transfer (ICT)",
+    "doi": "10.1016/j.dyepig.2021.109497",
+    "pdf_sha256": "89aa955fdd4e996161a13f93edfe3acbc12f6ed6d598204c309bbf0184e9c672",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0017",
+    "pdf_page": 3,
+    "quote": "Both 6c and 6d in toluene exhibit two emission bands, ranging from 400 nm to 500 nm and from 500 nm to 650 nm",
+    "subject": "6c and 6d",
+    "scope": "series_including_target",
+    "conditions": "Toluene emission spectra.",
+    "kind": "observation",
+    "statement": "Both compounds display two emission bands.",
+    "limitations": "A dual band alone does not uniquely prove ESIPT; the target is 6d, not every member of the series."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0017",
+    "pdf_page": 3,
+    "quote": "the dual emissions of 6c and 6d should correspond to their enol-form and keto-form emissions",
+    "subject": "6c and 6d",
+    "scope": "series_including_target",
+    "conditions": "Comparison of absorption/excitation/emission and protected analogues.",
+    "kind": "author_interpretation",
+    "statement": "The source assigns the two emissions to enol and keto forms.",
+    "limitations": "The assignment is based on the source's comparisons rather than time-resolved proton tracking."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0017",
+    "pdf_page": 3,
+    "quote": "For 6d, the ICT effects from phenol to TPB is beneficial to the enol form, and the ICT effects from the enamine to TPB is conducive to the keto form",
+    "subject": "6d",
+    "scope": "target",
+    "conditions": "Calculated excited-state enol/keto energies and substituent effects.",
+    "kind": "author_interpretation",
+    "statement": "Opposing local CT effects favor different tautomers.",
+    "limitations": "Local substituent CT effects should not be equated with a strongly solvatochromic whole-molecule CT emitter."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0017",
+    "pdf_page": 3,
+    "quote": "there are small barriers for both S1 (enol)→TS* and S1(keto)→TS*",
+    "subject": "6d",
+    "scope": "target",
+    "conditions": "Calculated ESIPT energy profile, Fig. 2d.",
+    "kind": "computation",
+    "statement": "The calculated profile permits forward and reverse proton transfer.",
+    "limitations": "This is a computational interpretation; barrier accuracy and environmental dependence remain."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0017",
+    "pdf_page": 4,
+    "quote": "In toluene and dichloromethane, 6d mainly shows a enol-form emission.",
+    "subject": "6d",
+    "scope": "target",
+    "conditions": "Solvent-dependent steady-state spectra.",
+    "kind": "observation",
+    "statement": "Enol emission predominates in these two solvents.",
+    "limitations": "The names of the emitting forms follow the authors' assignment."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0017",
+    "pdf_page": 4,
+    "quote": "However, the ratio of two emission peaks remarkably changes when employing different solvents.",
+    "subject": "6d",
+    "scope": "target",
+    "conditions": "Solvent series in Fig. 3d.",
+    "kind": "observation",
+    "statement": "Solvent changes the relative emission contributions.",
+    "limitations": "The peaks change in ratio without a strong change in position; this is not generic strong solvatochromism."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0017",
+    "pdf_page": 4,
+    "quote": "For 6c and 6d, the population decay time of the enol-form emission are identical to the corresponding keto-form emission within experiment error",
+    "subject": "6c and 6d",
+    "scope": "series_including_target",
+    "conditions": "Time-resolved fluorescence reported in the main text, citing SI.",
+    "kind": "observation",
+    "statement": "The reported enol/keto decays are equal within measurement error.",
+    "limitations": "The SI traces were not independently remeasured or verified; equality is consistent with, not proof of, equilibrium."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0017",
+    "pdf_page": 5,
+    "quote": "no obvious dipole moment changes from the ground state to the excited state for the keto forms of 6b and 6c as well as both enol and keto forms of 6d, which reveal that all four configurations are not of the distinct ICT character.",
+    "subject": "Enol and keto forms of 6d, alongside keto forms of 6b and 6c",
+    "scope": "series_including_target",
+    "conditions": "Solvatochromism and dipole-change analysis, Figure 4.",
+    "kind": "author_interpretation",
+    "statement": "The authors do not assign distinct whole-molecule ICT character to either emitting form of 6d.",
+    "limitations": "This limits the meaning of a CT label. It does not erase the separately discussed local substituent CT effects in E03."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "S0017",
+    "pdf_page": 5,
+    "quote": "both enol and keto forms of 6d are not of the HLCT character.",
+    "subject": "6d",
+    "scope": "target",
+    "conditions": "Authors' comparison of the excited-state characters of 6a-6d.",
+    "kind": "author_interpretation",
+    "statement": "The source explicitly excludes HLCT character for both forms of 6d.",
+    "limitations": "HLCT interpretations and OLED results for 6a/6c must not be transferred to 6d."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Retain only the source's local charge-transfer effects on tautomer stability. E08 and E09 explicitly limit the interpretation: neither form of 6d is assigned distinct whole-molecule ICT or HLCT character. This secondary broad-family mapping remains an adjudication question, not an assertion of a separately observed CT emission channel."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "The paper's central explanation is interconversion and emission of the enol and keto forms."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The balance of enol/keto emission is an aspect of the ESIPT pathway, not an independent co-primary causal mechanism."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Retain only the source's local charge-transfer effects on tautomer stability. E08 and E09 explicitly limit the interpretation: neither form of 6d is assigned distinct whole-molecule ICT or HLCT character. This secondary broad-family mapping remains an adjudication question, not an assertion of a separately observed CT emission channel."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "The paper's central explanation is interconversion and emission of the enol and keto forms."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The balance of enol/keto emission is an aspect of the ESIPT pathway, not an independent co-primary causal mechanism."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "53cec383404f871eb2121fe8574d4463821011d665d3eac67a549ac92061014a",
+  "label_record_sha256": "e75380645ce5064ee4885bbd5a523d1b2a6c3871105a54f981129aaf7736b82c"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

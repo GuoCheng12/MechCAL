@@ -10,7 +10,6 @@ Inference only: no hidden reference, rubric or judge is loaded here.
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import subprocess
 from dataclasses import asdict
@@ -21,16 +20,9 @@ from mechcal.agent.loop import AGENT_RELEASE, AgentConfig, AgentRun
 from mechcal.eval.llm_settings import backbone_settings, describe
 from mechcal.runtime.llm import OpenAIJsonClient
 
+from mechcal.eval.dataset import PUBLIC_INPUTS, public_smiles  # noqa: F401  (structure-corrected inputs)
+
 ROOT = Path(__file__).resolve().parents[2]
-PUBLIC_INPUTS = ROOT / "benchmarks/photomechbench/raw_v2_119/inputs.csv"
-
-
-def public_smiles(case_id: str) -> str:
-    with PUBLIC_INPUTS.open(encoding="utf-8") as fh:
-        for row in csv.DictReader(fh):
-            if row["case_id"] == case_id:
-                return row["smiles"]
-    raise KeyError(f"{case_id} not in public inputs")
 
 
 def _commit() -> str:
@@ -47,6 +39,8 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--smiles")
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--config", type=Path, default=ROOT / "mechcal.local.toml")
+    parser.add_argument("--allow-not-runnable", action="store_true",
+                        help="run a case whose structure is marked as not yet preparable (see structure_verification)")
     parser.add_argument("--allow-test-case", action="store_true",
                         help="run a held-out test case (only after the system is frozen)")
     for name, default in asdict(AgentConfig()).items():
@@ -59,6 +53,10 @@ def main(argv: list[str] | None = None) -> dict:
     from mechcal.eval.splits import HELD_OUT, split_of
     if split_of(args.case_id) == "test" and not args.allow_test_case:
         raise SystemExit(HELD_OUT.format(case=args.case_id, flag="--allow-test-case"))
+    from mechcal.eval.dataset import NOT_RUNNABLE, runnable
+    ok, why = runnable(args.case_id)
+    if not ok and not args.allow_not_runnable and not args.smiles:
+        raise SystemExit(NOT_RUNNABLE.format(case=args.case_id, reason=why, flag="--allow-not-runnable"))
     if args.out.exists() and any(args.out.iterdir()):
         raise SystemExit(f"{args.out} is not empty; use a new output directory")
     smiles = args.smiles or public_smiles(args.case_id)

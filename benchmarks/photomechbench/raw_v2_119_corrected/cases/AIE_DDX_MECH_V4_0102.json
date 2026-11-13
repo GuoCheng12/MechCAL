@@ -1,0 +1,298 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0102",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=S(=O)(c1ccc(N2c3ccccc3Oc3ccccc32)cc1)c1ccc(-n2c3ccccc3c3ccc(-c4ccc(-n5c6ccccc6c6ccccc65)cc4)cc32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "pPhDCzDPSPXZ",
+  "source_documents": [
+   {
+    "source_id": "S0102",
+    "title": "Modifying the AIE-TADF chromophore with host-substituents to achieve high efficiency and low roll-off non-doped OLEDs",
+    "doi": "10.1016/j.orgel.2019.105602",
+    "pdf_sha256": "90cddf1b392f07d9ef4acbd967814d82695a58007d643d198770a39f451fa75b",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0102",
+    "pdf_page": 3,
+    "quote": "host-substituents didn’t participate in intramolecular charge transfer.",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "DFT frontier orbitals of the emitter series.",
+    "kind": "author_interpretation",
+    "statement": "The peripheral host substituents are not assigned to the CT channel.",
+    "limitations": "This exclusion concerns peripheral groups, not the DPS-PXZ chromophore's CT state."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0102",
+    "pdf_page": 4,
+    "quote": "They all showed obvious solvatochromic, which indicated strong CT state in these four molecules.",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Solvent-dependent emission spectra, with target spectra reported in SI.",
+    "kind": "author_interpretation",
+    "statement": "The source links solvatochromism to CT in the emitter cores.",
+    "limitations": "The target's SI curve is not independently available in this packet."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0102",
+    "pdf_page": 4,
+    "quote": "the molecular rotations were restricted more easily when the water content was increased.",
+    "subject": "pPhDCzDPSPXZ and mPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "THF/water aggregation series and comparison of N-linked emitters.",
+    "kind": "author_interpretation",
+    "statement": "The source attributes stronger AIE behavior to easier restriction of motion.",
+    "limitations": "Water fraction also changes solvation and aggregation; this is the authors' mechanistic interpretation."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0102",
+    "pdf_page": 4,
+    "quote": "The PL intensities of pPhDCzDPSPXZ and mPhDCzDPSPXZ were increased by 6.4–6.7 times when the water was added to 90% compared to that of pure THF solution",
+    "subject": "pPhDCzDPSPXZ and mPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "90% water compared with pure THF.",
+    "kind": "observation",
+    "statement": "Both N-linked compounds show enhanced emission in the aggregation experiment.",
+    "limitations": "The range is for the pair; do not assign one endpoint to the target without checking the figure."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0102",
+    "pdf_page": 5,
+    "quote": "All of them included prompt fluorescence parts with the lifetimes between 46.2 and 55.2 ns and slow decay components were in the range of 0.62–0.76 μs",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Neat-film transient PL decay under nitrogen.",
+    "kind": "observation",
+    "statement": "The emitter series displays prompt and delayed decay components.",
+    "limitations": "Two decay components alone are not a unique TADF diagnostic."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0102",
+    "pdf_page": 5,
+    "quote": "The reverse intersystem crossing rate constants (kRISC) of pPhDCzDPSPXZ and mPhDCzDPSPXZ were 2–3 folds than DCB-DPS-PXZ and mCP-DPS-PXZ",
+    "subject": "pPhDCzDPSPXZ and mPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Rate constants derived from measured photophysics using the source's SI formulas.",
+    "kind": "author_interpretation",
+    "statement": "The source derives faster rISC for the N-linked pair.",
+    "limitations": "These are derived rates, not directly observed transitions; SI derivation is not independently rechecked."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0102",
+    "pdf_page": 5,
+    "quote": "The delayed component exhibited a clear temperature dependence effect, which demonstrated thermally activated mechanism feature.",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Temperature-dependent neat-film emission, 100 to 300 K; target data cited in SI.",
+    "kind": "author_interpretation",
+    "statement": "The temperature dependence supports thermally activated delayed emission.",
+    "limitations": "The main figure shows the meta analogue; target-specific SI spectra still need retrieval."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0102",
+    "pdf_page": 5,
+    "quote": "The introduction of host-substituents didn’t participate in ICT but functioned on dispersing excitons",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Source interpretation of the covalent self-host design.",
+    "kind": "author_interpretation",
+    "statement": "The source assigns an exciton-dispersing function to peripheral substituents.",
+    "limitations": "Self-host means covalently attached substituents, not a measured guest-binding complex or independent external matrix."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "S0102",
+    "pdf_page": 4,
+    "quote": "pPhDCzDPSPXZ 52.0 750.0 29 26 55 6.3 5.1 548",
+    "subject": "pPhDCzDPSPXZ",
+    "scope": "target",
+    "conditions": "Table 2, neat-film photophysics; absolute PL quantum yield under nitrogen.",
+    "kind": "observation",
+    "statement": "The target-specific table row reports prompt/delayed lifetimes of 52.0/750.0 ns, prompt/delayed quantum-yield contributions of 29/26%, total PLQY of 55%, and a 548 nm peak. Derived kRISC and Kf are 6.3 x 10^5 and 5.1 x 10^6 s^-1.",
+    "limitations": "This row avoids assigning series ranges to the target. The two rates and separated yields are derived quantities, not direct transition measurements; SI formulas and target-specific temperature/oxygen traces still need checking."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "S0102",
+    "pdf_page": 5,
+    "quote": "the intensity of the delayed portion was obviously increased after oxy­ gen removal.",
+    "subject": "Four emitters including pPhDCzDPSPXZ",
+    "scope": "series_including_target",
+    "conditions": "Neat-film fluorescence decays in nitrogen and air, Figure 4b and SI Figure S7.",
+    "kind": "observation",
+    "statement": "The text reports increased delayed emission after oxygen removal for the studied series.",
+    "limitations": "Figure 4b displays the meta analogue. The para target's SI trace is not yet independently available. Retain this as a main-text report, not a verified target-specific SI measurement."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The core has CT character; the peripheral host design should not be misread as an additional primary CT channel."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Thermally activated delayed fluorescence and rISC are central to the studied emitter behavior and are within the existing organic-triplet family."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The paper presents motion restriction as its explanation of the target series' AIE response."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E08"
+    ],
+    "rationale": "Covalent self-host wording is not sufficient to establish a separate external packing/matrix mechanism. The source's aggregation-dependent motion account is already retained under RIM."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Covalently attached host substituents are not evidence of a supramolecular host-guest binding event."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The core has CT character; the peripheral host design should not be misread as an additional primary CT channel."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "The derived rISC and prompt/delayed contributions explain emissive-state utilization within the same TADF account."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Thermally activated delayed fluorescence and rISC are central to the studied emitter behavior and are within the existing organic-triplet family."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "cc92f4c3004ff351306fbb2819dbde91df917619624574eff936f24ded2feab8",
+  "label_record_sha256": "38c44034fe3768ca3383cf5372d471b912b1a7e375ff7918fcb9cc6ee8b096b5"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

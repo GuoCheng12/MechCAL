@@ -265,6 +265,18 @@ C1 的兩個數據都指向先驗：重複不穩定完全來自先驗（3.1）�
 - `c3-priors`（基於 c2-hygiene 的 007c07f）：獨立先驗（1468397）。驗證只完成一半，建議作為可選項保留，暫不合併。
 - 建議把 `c2-hygiene` 合併進 `evidence-evaluation`：它的改動都和數據集無關，而且修的是公平性和工具錯誤。
 
+## 九、補充：4 個開發案例的 SMILES 已更正（2026-11-13 下午）
+
+核實發現 17 個開發案例中 4 個 SMILES 錯誤（0020 取代位置、0141 少 2 個氫、0152 骨架、0153 分子本身）。已按作者要求更正：
+- 原始快照 `raw_v2_119` 保持凍結；更正清單在 `benchmarks/photomechbench/corrections/structure_corrections.json`，由 `examples/make_corrected_dataset.py` 生成 `raw_v2_119_corrected`，所有讀取 SMILES 和參考答案的地方都改用它（`mechcal/eval/dataset.py`）。參考答案和標籤沒有改動，劃分成員不變。
+- 0141（二茂鐵）標為暫不可運行：任何 SMILES 寫法都得不到正確的夾心結構，之前的運行用的是錯誤的幾何。默認的開發運行現在是 16 個案例。
+
+本報告的數字是在更正前跑的，這 4 個案例算的是錯誤的分子（所有方法看到的是同一個錯誤分子，所以方法之間仍是配對比較）。只用其餘 13 個案例重算，結論不變：
+- C2 − Direct：nDCG −0.02（不顯著），ES-nDCG +0.19（顯著），R@3 −0.06（顯著）；
+- 證據相對先驗的效果：C1 −0.01、C2 +0.04、C3 −0.04，都不顯著。
+
+0020、0152、0153 需要在下一輪開發運行時重跑（安排在非高峰時段）。
+
 ## 附：數據和代碼位置
 
 - C1 運行：`outputs/agent/dev4a`、`dev4b`；基線 `outputs/baselines/react_dev`、`direct_dev`；擾動 `outputs/perturbations/c1`；分析 `outputs/analysis/c1_dev4.json`（`examples/c1_analysis.py`）。

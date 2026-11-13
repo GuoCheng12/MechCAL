@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from mechcal.eval.stats import load_reference_cases, paper_clusters  # noqa: E402
 
-BENCH = ROOT / "benchmarks/photomechbench/raw_v2_119"
+from mechcal.eval.dataset import DATASET as BENCH  # noqa: E402  (structure-corrected copy of raw_v2_119)
 OUT = ROOT / "benchmarks/photomechbench/splits/raw_v2_119_dev_test.json"   # outside the frozen raw_v2_119 snapshot
 P = "AIE_DDX_MECH_V4_"
 USED = {  # run by the agent during development (2026-11-11/12)

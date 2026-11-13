@@ -1,0 +1,305 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0140",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=Cc1ccc2c(C=O)cc(C=O)c-2cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TA",
+  "source_documents": [
+   {
+    "source_id": "F049",
+    "title": "Anti-Kasha's Rule Emissive Switching Induced by Intermolecular H-bonding",
+    "doi": "10.1021/acs.chemmater.8b03699",
+    "pdf_sha256": "83fb3b2e4cb6e52224423ee6c7503530bb3356ec0a8b485cfbd5a8e5be78d9c1",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F049",
+    "pdf_page": 3,
+    "quote": "TA initially shows a blue emission with a maximum at 416 nm together with a modest band around 465 nm.",
+    "subject": "TA (azulene-1,3,6-tricarbaldehyde)",
+    "scope": "target",
+    "conditions": "Neutral DMF, 5 x10^-5 M; excitation 365 nm; Figure 2 visually inspected.",
+    "kind": "observation",
+    "statement": "TA initially has 416 and approximately 465 nm emission with QY up to 10% in DMF; small water fractions favor a strong band near 495 nm.",
+    "limitations": "10% is the initial DMF yield, not the water-added aggregate yield."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F049",
+    "pdf_page": 3,
+    "quote": "the absorption band of TA underwent a negligible change along with the alteration of the water fraction",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "DMF/water titration, Figure 2b-c.",
+    "kind": "author_interpretation",
+    "statement": "Nearly unchanged absorption leads authors to rule out H/J aggregation, excimer and exciplex mechanisms for the color switching.",
+    "limitations": "Source exclusion is spectroscopic, not universal proof that every aggregate excited-state interaction is absent."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F049",
+    "pdf_page": 3,
+    "quote": "These observations further indicate the formation of hydrogen bonds between the TA and H2O molecules.",
+    "subject": "TA-water interaction",
+    "scope": "target",
+    "conditions": "D2O titration in DMSO-d6; NMR aromatic upfield shift about 0.05 ppm; FTIR 11% versus 84% RH.",
+    "kind": "author_interpretation",
+    "statement": "The authors infer water-to-TA hydrogen bonding from NMR shifts/broadening and lower-wavenumber carbonyl/OH vibrations.",
+    "limitations": "NMR Figure 3a main-text account; FTIR Figure S13 only reported in main, not personally inspected."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F049",
+    "pdf_page": 4,
+    "quote": "the intermolecular H-bond clusters are responsible for the photophysical switching whereas the further formation of bigger aggregates results in luminescence quenching",
+    "subject": "TA-water clusters",
+    "scope": "target",
+    "conditions": "Small-water clusters about 20 nm by TEM/24 nm by DLS; excessive-water aggregates about 400 nm.",
+    "kind": "author_interpretation",
+    "statement": "Authors distinguish water hydrogen-bond cluster switching from quenching by larger aggregates.",
+    "limitations": "Not generic aggregation-induced enhancement or evidence of a new intermolecular excited state."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F049",
+    "pdf_page": 4,
+    "quote": "no emissive shifts could, however, be observed (only with intensity quenching) for the MA and DA systems with water added",
+    "subject": "Monoformyl MA and diformyl DA",
+    "scope": "comparator",
+    "conditions": "Water addition to comparator solutions, main account of SI Figures S15-S16.",
+    "kind": "observation",
+    "statement": "MA and DA quench but do not reproduce TA's emissive switching.",
+    "limitations": "Comparator results delimit the triformyl response; SI not inspected."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F049",
+    "pdf_page": 4,
+    "quote": "an absorption band with a wavelength of more than 600 nm can be observed without any near-infrared emission.",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "Dual emission and excitation/lifetime comparisons before and after water addition.",
+    "kind": "author_interpretation",
+    "statement": "Authors infer a dark S1 and assign the observed shorter-wavelength bands to higher states. Different excitation spectra and band lifetimes support distinct states; emission is oxygen-stable.",
+    "limitations": "The dark-state/state-number assignment is interpretive; lifetimes and oxygen control are SI results reported in main only."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F049",
+    "pdf_page": 5,
+    "quote": "the S4 and S5 1nπ* states become lower-lying than the S3 π-π* state",
+    "subject": "TA and model hydrates",
+    "scope": "target",
+    "conditions": "TDDFT/B3LYP/6-31G(d), continuum solvent and explicit 2/4/6-water models; main methods p6.",
+    "kind": "computation",
+    "statement": "Hydration stabilizes n-pi* states and suppresses the S3-to-S0 branch, favoring S2-to-S0 emission; authors invoke some CT character for the red shift.",
+    "limitations": "Approximate electronic-state interpretation, not proton transfer; explicit-water stoichiometries are models, not measured binding numbers."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F049",
+    "pdf_page": 5,
+    "quote": "No remarkable shift and switching of emissions can be observed when TA was exposed to methanol",
+    "subject": "TA with alternative hydrogen-bonding solvents",
+    "scope": "target",
+    "conditions": "Methanol and ethylene glycol controls, main account of SI Figures S24-S27.",
+    "kind": "observation",
+    "statement": "Methanol does not reproduce switching; ethylene glycol also affects spectra little. Authors propose water-cluster amplification rather than any hydrogen-bond donor being sufficient.",
+    "limitations": "SI spectra not directly inspected; failure to switch is not proof of absence of all binding."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F049",
+    "pdf_page": 5,
+    "quote": "Similar emissive switching behavior was observed for a TA doped PVA/PAAS film",
+    "subject": "TA in polymer film",
+    "scope": "target",
+    "conditions": "11%/84% RH exposure and water-drop/drying cycles, Figure 5.",
+    "kind": "observation",
+    "statement": "Humidity switches film emission reversibly; direct water addition eventually quenches it and drying restores the original state.",
+    "limitations": "Matrix is a moisture-responsive support; no independent matrix restriction-of-motion mechanism is established."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F049",
+    "pdf_page": 6,
+    "quote": "is here more pronounced than its rigidity effect",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "Conclusion of solution and film photophysical analysis.",
+    "kind": "author_interpretation",
+    "statement": "Authors prioritize electronic excited-state stabilization over hydrogen-bond rigidification.",
+    "limitations": "Does not prove zero rigidity contribution, but does not establish RIM as the emission mechanism."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Water binds aldehyde acceptors in proposed hydrogen-bond clusters and controls emission. Broad host/guest family used for solvent-analyte binding, not a cavity-inclusion claim."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E10"
+    ],
+    "rationale": "Preserve the source's limited CT character/stabilization interpretation, without converting the background ICT-sensor discussion into a stronger target claim."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07",
+     "E10"
+    ],
+    "rationale": "Water changes dark/bright state ordering and emissive branch balance; this overlaps the anti-Kasha mechanism."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Main photophysical account is switching between S3- and S2-dominated emission, not S1 fluorescence."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Authors explicitly favor the electronic over rigidity effect; no positive RIM label is justified from hydrogen bonds alone."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E08",
+     "E09"
+    ],
+    "rationale": "Water binds aldehyde acceptors in proposed hydrogen-bond clusters and controls emission. Broad host/guest family used for solvent-analyte binding, not a cavity-inclusion claim."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E10"
+    ],
+    "rationale": "Preserve the source's limited CT character/stabilization interpretation, without converting the background ICT-sensor discussion into a stronger target claim."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "Authors explicitly reject H/J, excimer and exciplex explanations for this switching. Their spectroscopic exclusion is bounded to the studied DMF/water response."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07",
+     "E10"
+    ],
+    "rationale": "Water changes dark/bright state ordering and emissive branch balance; this overlaps the anti-Kasha mechanism."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No conical-intersection-mediated nonradiative pathway established for this target in the extracted evidence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Main photophysical account is switching between S3- and S2-dominated emission, not S1 fluorescence."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "d3dae84d154e642127fbb61cadd8df6e21b605a7aed2f499f6bb1c715e1b468a",
+  "label_record_sha256": "8cc44b6a95180160e8d29fdea83b35e3216b56c44ca14101d13af13b8300d117"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: azulene-1,3,6-tricarbaldehyde, same InChIKey",
+   "HRMS [M+H]+ 213.0546 (calc 213.0546, -0.1 ppm)"
+  ],
+  "runnable": true
+ }
+}

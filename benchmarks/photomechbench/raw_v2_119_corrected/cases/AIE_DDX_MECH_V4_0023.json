@@ -1,0 +1,293 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0023",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=Nc1ccccc1N=Cc1cc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)ccc1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPESB",
+  "source_documents": [
+   {
+    "source_id": "F012",
+    "title": "Multifunctional AIE-ESIPT dual mechanism tetraphenylethene-based Schiff base for inkless rewritable paper and colorimetric/fluorescent dual-channel Zn2+ sensor",
+    "doi": "10.1039/d0qm00623h",
+    "pdf_sha256": "10c6f266620b6a834f4324acc2828734ab1959471d1a563aba900808f3082975",
+    "page_count": 9
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F012",
+    "pdf_page": 3,
+    "quote": "The 410 nm emission band is attributed to the enol form of TPESB",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "THF absorption and PL; main-text report of SI S1-S2.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign bands near 410 and 590 nm to enol and ESIPT keto forms; absorption maximum is near 325 nm.",
+    "limitations": "Steady-state assignment, not time-resolved proof of proton transfer; spectra cited in SI were not inspected."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F012",
+    "pdf_page": 3,
+    "quote": "the weak emission was significantly increased (about 10 times).",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "Fresh THF/water mixtures; 90% water, SI S3 as reported in main text.",
+    "kind": "observation",
+    "statement": "Freshly prepared 90% water mixtures have about tenfold emission enhancement over THF.",
+    "limitations": "SI plot not inspected; distinguish this immediate AIE test from time-dependent low-water aging."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F012",
+    "pdf_page": 4,
+    "quote": "The initially colourless solution gradually changed into obviously yellow",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "Fig. 1 on p.3: 1e-5 M, excitation 365 nm, water/THF mixtures followed with time.",
+    "kind": "observation",
+    "statement": "At 10% water a 400-500 nm absorption band grows and weak red emission becomes intense yellow. Similar aging occurs at 1-30%, but not at 50-90% water.",
+    "limitations": "Aging conditions matter; absence of further time-dependent enhancement at high water does not negate immediate AIE."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F012",
+    "pdf_page": 4,
+    "quote": "the photoinduced electron transfer (PET) effect can significantly quench the emission of TPESB.",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "Dilute solution and low-water mixtures.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute weak emission partly to PET and propose that hydrogen bonding with added water restricts PET.",
+    "limitations": "Tentative mechanistic assignment; broadened NMR signals reported from SI S5 demonstrate interactions, not an independently resolved PET rate."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F012",
+    "pdf_page": 4,
+    "quote": "addition of water may lead to formation of aggregates",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "Low-water aging; Fig. 1 scattering plus reported SI SEM, precipitation and lifetime controls.",
+    "kind": "author_interpretation",
+    "statement": "Authors propose aggregate-induced RIR suppresses nonradiative loss. At high water, immediate tightly packed nanoparticles are proposed to limit further water interaction.",
+    "limitations": "SEM and lifetime SI not inspected; no quantitative torsional barrier or independent radiative/nonradiative rates."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F012",
+    "pdf_page": 5,
+    "quote": "PEG can passivate the hydroxyl groups of paper",
+    "subject": "TPESB in PEG/paper",
+    "scope": "target",
+    "conditions": "Three-layer rewritable paper; water writing and drying, Fig. 2.",
+    "kind": "author_interpretation",
+    "statement": "PEG is proposed to prevent microcrystalline aggregates and promote water access; water-written fluorescence can be erased by drying and cycled ten times.",
+    "limitations": "This matrix application is not evidence that PEG simply rigidifies the dye; its reported function includes suppressing aggregates and swelling."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F012",
+    "pdf_page": 6,
+    "quote": "blue-shifted to 550 nm after addition of Zn2+",
+    "subject": "TPESB with zinc",
+    "scope": "target",
+    "conditions": "1e-5 M in THF/water 1:1, excitation 365 nm; Figs. 4-5.",
+    "kind": "observation",
+    "statement": "Zn2+ rapidly enhances fluorescence and shifts the weak approximately 600 nm band toward 550 nm, with a new approximately 490 nm absorption band; tested competing ions show only slight changes.",
+    "limitations": "Selectivity is limited to tested ions and conditions; zinc response is not simply solvent-driven aggregation."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F012",
+    "pdf_page": 7,
+    "quote": "The chelation effect will restrict the PET effect and prevent the ESIPT",
+    "subject": "TPESB with zinc",
+    "scope": "target",
+    "conditions": "Binding model supported by main-text accounts of Job plot, MS, NMR and FTIR, SI S15-S19.",
+    "kind": "author_interpretation",
+    "statement": "Authors propose 1:1 Zn coordination involving phenolic oxygens and imine nitrogens; this suppresses PET, ESIPT and nonradiative decay to explain enhanced blue-shifted fluorescence.",
+    "limitations": "All detailed binding controls are SI reported in main, not independently inspected. Zinc binding does not establish metal-centered or triplet emission."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F012",
+    "pdf_page": 7,
+    "quote": "decrease of the HOMO-LUMO energy gap of zinc complex of TPESB",
+    "subject": "TPESB and zinc complex",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G orbital comparison, Fig. 6.",
+    "kind": "computation",
+    "statement": "Calculated complex gap is lower than free TPESB, used to rationalize the new absorption band.",
+    "limitations": "Orbital gap alone does not prove an emissive CT state, PET rate or the observed blue shift."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Explicit aggregate-induced RIR interpretation is retained with its tentative language and indirect controls."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Aggregate packing and matrix-dependent water access modulate emission; this is enabling environment, not a universal PEG-rigidification claim."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Under the frozen analyte-binding definition, zinc chelation changes target emission. This is molecular coordination, not macrocycle inclusion."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Authors assign free-dye keto emission to ESIPT and propose its suppression upon zinc binding; preserve both states."
+   },
+   {
+    "label": "PET_ET",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E08"
+    ],
+    "rationale": "Keep the explicit but incompletely proven PET-quenching/suppression interpretation rather than discarding it for lack of direct kinetics."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Explicit aggregate-induced RIR interpretation is retained with its tentative language and indirect controls."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Aggregate packing and matrix-dependent water access modulate emission; this is enabling environment, not a universal PEG-rigidification claim."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Under the frozen analyte-binding definition, zinc chelation changes target emission. This is molecular coordination, not macrocycle inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "Calculated frontier-gap reduction is not sufficient to establish CT-emission or TICT control."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Authors assign free-dye keto emission to ESIPT and propose its suppression upon zinc binding; preserve both states."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E08"
+    ],
+    "rationale": "Keep the explicit but incompletely proven PET-quenching/suppression interpretation rather than discarding it for lack of direct kinetics."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific exciton, excimer or new intermolecular emissive state is established; aggregation alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or state-population explanation is established; intensity or lifetime changes alone do not isolate it."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "15db4ae593b174f5449e1b926adbb003f1cbaa43332c31257710dc260c2d8abd",
+  "label_record_sha256": "706d598510b7417d696f3c2c21bde5619b483e6166a8aae4ad935099f9e7e5ac"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

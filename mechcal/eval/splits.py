@@ -26,8 +26,10 @@ def split_of(case_id: str) -> str | None:
     return "test" if case_id in set(split["test"]) else None
 
 
-def dev_cases() -> list[str]:
-    return [d["case_id"] for d in load_split()["dev"]]
+def dev_cases(*, include_not_runnable: bool = False) -> list[str]:
+    """Development cases; by default without those whose structure cannot yet be prepared (see dataset.runnable)."""
+    from mechcal.eval.dataset import runnable
+    return [d["case_id"] for d in load_split()["dev"] if include_not_runnable or runnable(d["case_id"])[0]]
 
 
 HELD_OUT = ("{case} is a held-out test case. Test cases are run only after the system (tools, cards, prompts, "

@@ -1,0 +1,236 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0104",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(C2=C(c3ccccc3)C(=C(c3ccccc3)c3ccccc3)C2=C(c2ccccc2)c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "HPDMCb",
+  "source_documents": [
+   {
+    "source_id": "S0104",
+    "title": "Spectroscopic Signature of the Aggregation-Induced Emission Phenomena Caused by Restricted Non-Radiative Decay: A Theoretical Proposal",
+    "doi": "10.1021/acs.jpcc.5b01323",
+    "pdf_sha256": "ee54b08bc8d7d09862ec861f0f7bf1c43a190c4633cfb2645c7220d583b197aa",
+    "page_count": 23
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0104",
+    "pdf_page": 10,
+    "quote": "kic is decreased by about 4 orders of magnitude from solution to solid phase for HPDMCb.",
+    "subject": "HPDMCb",
+    "scope": "target",
+    "conditions": "Calculated internal-conversion rates at 300 K.",
+    "kind": "computation",
+    "statement": "The model predicts strong suppression of internal conversion in the solid.",
+    "limitations": "This numerical ratio is computational, not a measured rate ratio."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0104",
+    "pdf_page": 10,
+    "quote": "Experimentally, HPDMCb is non-luminescent in its dilute acetonitrile solution at room temperature",
+    "subject": "HPDMCb",
+    "scope": "target",
+    "conditions": "Prior experimental observations cited by the source.",
+    "kind": "observation",
+    "statement": "The source reports weak solution emission for the target.",
+    "limitations": "The cited experimental paper is not separately included for this case; this is a secondary report."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0104",
+    "pdf_page": 13,
+    "quote": "the low-frequency modes tend to be suppressed by aggregation and lose the ability to dissipate the excited-state energy non-radiatively.",
+    "subject": "HPDMCb",
+    "scope": "target",
+    "conditions": "Calculated low-frequency modes and relaxation energies in solution and crystal.",
+    "kind": "author_interpretation",
+    "statement": "Suppression of low-frequency motion is linked to reduced nonradiative relaxation.",
+    "limitations": "The source attributes this conclusion to calculated modes, not experimentally observed time-resolved motions."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0104",
+    "pdf_page": 15,
+    "quote": "The low-frequency peaks show remarkable blueshift (more than 40 cm-1) after aggregation into cluster, while the high-frequency peaks shift slightly (less than 20 cm-1).",
+    "subject": "HPDMCb",
+    "scope": "target",
+    "conditions": "Predicted resonance Raman spectra for solution and solid.",
+    "kind": "computation",
+    "statement": "The simulated Raman spectrum provides a proposed signature of restricted low-frequency motion.",
+    "limitations": "These spectra are predictions proposed for validation; they are not Raman measurements."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0104",
+    "pdf_page": 6,
+    "quote": "The packing surroundings in crystal are incorporated in the MM part with the general Amber force field",
+    "subject": "HPDMCb and DCPP",
+    "scope": "series_including_target",
+    "conditions": "QM/MM modeling of a crystal environment.",
+    "kind": "computation",
+    "statement": "The source models an external crystal environment rather than an isolated molecule only.",
+    "limitations": "The environment is represented by a force field; its presence alone is not causal evidence without the associated phase comparisons."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0104",
+    "pdf_page": 10,
+    "quote": "Especially, we note that at 300 K, kic is decreased by about 4 orders of magnitude from solution to solid phase for HPDMCb.",
+    "subject": "HPDMCb",
+    "scope": "target",
+    "conditions": "Calculated solution-to-solid comparison at 300 K, Tables 1 and 2.",
+    "kind": "computation",
+    "statement": "The predicted brightness change is attributed mainly to suppressed internal conversion, not an increase in the radiative rate.",
+    "limitations": "The same paragraph reports an approximately 8% decrease in kr. The calculated quantum-yield change of 0.07% to 78% is not a measured phase-paired result; the cited experimental comparison concerns a solution/water-mixture experiment."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Restricted low-frequency intramolecular motion is the source's central proposed explanation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The modeled crystal environment enables the restrictions. Do not promote an enabling context to primary merely because its description mentions the primary RIM mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "The rate decomposition quantifies the suppression of nonradiative decay; it is not an independent second primary explanation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Restricted low-frequency intramolecular motion is the source's central proposed explanation."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The modeled crystal environment enables the restrictions. Do not promote an enabling context to primary merely because its description mentions the primary RIM mechanism."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "The rate decomposition quantifies the suppression of nonradiative decay; it is not an independent second primary explanation."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "7179deeb58c7676f2027787f3119d702b7977730fd81f24651559ade6edd3f08",
+  "label_record_sha256": "344c64b3a2146c0855b46b0ff964cca014963790781a650064af1ccecd58003f"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: 1,2-diphenyl-3,4-bis(diphenylmethylene)-1-cyclobutene, same InChIKey"
+  ],
+  "runnable": true
+ }
+}

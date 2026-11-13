@@ -1,0 +1,299 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0056",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(C(=C2c3ccccc3-c3ccccc32)c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1 / DPDBF / 9-(diphenylmethylene)-9H-fluorene",
+  "source_documents": [
+   {
+    "source_id": "S0056a",
+    "title": "Aggregation-Induced Emission: Effects of Molecular Structure, Solid-State Conformation, and Morphological Packing Arrangement on Light-Emitting Behaviors of Diphenyldibenzofulvene Derivatives",
+    "doi": "10.1021/jp0630828",
+    "pdf_sha256": "a16b189a1df447ccdf3ceeea8660b4c00635a1d07845c87318000c4c6b07dc0f",
+    "page_count": 8
+   },
+   {
+    "source_id": "S0056b",
+    "title": "A conical intersection model to explain aggregation induced emission in diphenyl dibenzofulvene",
+    "doi": "10.1039/c3cc41730a",
+    "pdf_sha256": "e7daf9fee09be65a9050ed8eb739c376af7a1869e6e81c8b67120b025de9a9b3",
+    "page_count": 3
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0056a",
+    "pdf_page": 1,
+    "quote": "a ring-closed form of 1 with one of its phenyl blades locked, was emissive in the solutions",
+    "subject": "Ring-closed compound 3 compared with DPDBF 1",
+    "scope": "comparator",
+    "conditions": "Solution emission of a chemically locked analogue in the 2007 paper.",
+    "kind": "observation",
+    "statement": "Locking one phenyl blade in an analogue is associated with solution emission.",
+    "limitations": "Chemical locking changes the molecule; it is not a same-molecule intervention."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0056a",
+    "pdf_page": 5,
+    "quote": "their intramolecular rotations are greatly restricted by the surrounding molecules",
+    "subject": "DPDBF derivatives 1 and 2",
+    "scope": "series_including_target",
+    "conditions": "Crystal versus solution comparison in the 2007 paper.",
+    "kind": "author_interpretation",
+    "statement": "The earlier paper explains crystal emission through restricted phenyl rotation.",
+    "limitations": "This broad interpretation should not be treated as independent proof of the later CI pathway."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0056a",
+    "pdf_page": 1,
+    "quote": "The crystals of 1 and 2 emitted stronger, bluer lights than their amorphous powders",
+    "subject": "DPDBF derivatives 1 and 2",
+    "scope": "series_including_target",
+    "conditions": "Crystalline versus amorphous samples.",
+    "kind": "observation",
+    "statement": "Packing state changes emission intensity and color.",
+    "limitations": "The source's conformational explanation is separate from the observed spectral change."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0056b",
+    "pdf_page": 1,
+    "quote": "In solution, the seam is accessed through rotation around the exocyclic fulvene bond, leading to radiationless decay to the ground state.",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "2013 multireference quantum-chemical model of solution photophysics.",
+    "kind": "computation",
+    "statement": "The later model identifies a torsion-accessible conical-intersection decay route.",
+    "limitations": "This is a theoretical refinement of the older motion-restriction explanation."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0056b",
+    "pdf_page": 1,
+    "quote": "In the solid, the seam cannot be accessed because the torsion is blocked, and DPDBF becomes emissive.",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "Crystal-embedded calculations compared with solution.",
+    "kind": "computation",
+    "statement": "Crystal confinement blocks the modeled nonradiative route.",
+    "limitations": "The result is conditional on the crystal model, not all aggregates or packing forms."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0056b",
+    "pdf_page": 2,
+    "quote": "The faint emission observed in experiments peaks at 441 nm (2.81 eV) and comes from this minimum",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "Assignment to the S2-Minac minimum after approximately 350 nm excitation in acetonitrile.",
+    "kind": "author_interpretation",
+    "statement": "The model assigns the faint solution fluorescence to S2 rather than S1.",
+    "limitations": "The S2 attribution is computationally motivated and condition-specific, not direct state-resolved experimental proof."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0056b",
+    "pdf_page": 3,
+    "quote": "Time-resolved spectra for DPDBF would be interesting in this context to confirm that the excited state lifetime in solution corresponds to decay at a CI.",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "Validation proposed by the authors.",
+    "kind": "author_interpretation",
+    "statement": "The paper identifies time-resolved confirmation of CI decay as future work.",
+    "limitations": "This sentence must not be converted into a completed ultrafast measurement."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0056b",
+    "pdf_page": 3,
+    "quote": "This indicates that, in contrast to the solution case, emission in the solid comes from the S1 state.",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "Comparison of calculated solid-state emission with experiment.",
+    "kind": "author_interpretation",
+    "statement": "The later paper assigns different emitting states in solution and solid.",
+    "limitations": "This is a model-based assignment; preserve the source's state and wavelength uncertainties."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "S0056b",
+    "pdf_page": 3,
+    "quote": "This disfavours exciton formation because the coupling between the DPDBF monomers is small",
+    "subject": "DPDBF",
+    "scope": "target",
+    "conditions": "Crystal model with nonparallel DBF slabs; the supporting TD-DFT calculations are cited in the SI.",
+    "kind": "author_interpretation",
+    "statement": "The later paper argues that weak intermolecular coupling disfavors exciton formation in its crystal model.",
+    "limitations": "This is a model- and packing-specific argument, not a universal exclusion of excitons in all DPDBF aggregates. The cited SI calculation is not yet verified."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Retain the earlier broad motion-restriction account, explicitly linked to the later CI refinement, not an unrelated co-primary cause."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Packing provides the constraint that suppresses torsion and changes emission."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "The 2013 source gives a specific CI-access account of nonradiative decay and its restriction in the solid."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E08"
+    ],
+    "rationale": "The later source assigns solution emission to S2 and solid emission to S1. The higher-state assignment is conditional and theoretical."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Retain the earlier broad motion-restriction account, explicitly linked to the later CI refinement, not an unrelated co-primary cause."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Packing provides the constraint that suppresses torsion and changes emission."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E05",
+     "E08"
+    ],
+    "rationale": "The extracted source explanation is intramolecular CI access and emitting-state change, not a newly established excimer."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for the target in this selected source evidence. This is not a claim that the mechanism is impossible."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "The 2013 source gives a specific CI-access account of nonradiative decay and its restriction in the solid."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E08"
+    ],
+    "rationale": "The later source assigns solution emission to S2 and solid emission to S1. The higher-state assignment is conditional and theoretical."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "c5d94827816c97c3cee58e2d91b28c915474f6dcd3f3a522d06d388a7909fc95",
+  "label_record_sha256": "d1c389c08f27fbb571a7c225a2b90899de9047af3f16d3db404830e6c580e5d9"
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: same InChIKey"
+  ],
+  "runnable": true
+ }
+}

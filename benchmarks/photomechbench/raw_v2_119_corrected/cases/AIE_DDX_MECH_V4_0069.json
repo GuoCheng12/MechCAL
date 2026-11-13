@@ -1,0 +1,228 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0069",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C(O)c1ccccc1Nc1cccc(C(F)(F)F)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Flufenamic acid (FFA)",
+  "source_documents": [
+   {
+    "source_id": "F030",
+    "title": "Aggregation-induced emission and polymorphism/shape/size-dependent emission behaviours of fenamates for potential drug evaluation",
+    "doi": "10.1039/c9ob00338j",
+    "pdf_sha256": "36ea32b82393e28db299fb5c3493ed63a8f52a2cf8edd2392dee177567cfef53",
+    "page_count": 7
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F030",
+    "pdf_page": 3,
+    "quote": "This phenomenon also exists in MFA and FFA, indicating the presence of AIE activities",
+    "subject": "FFA with fenamate comparators",
+    "scope": "series_including_target",
+    "conditions": "Ethanol/water anti-solvent crystallization; FFA SI Figs. S22-S24 cited in main.",
+    "kind": "observation",
+    "statement": "Authors report AIE for FFA as well as MFA; detailed water-series plots shown in main are TFA, not FFA.",
+    "limitations": "SI not inspected; TFA 50% onset must not transfer to FFA."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F030",
+    "pdf_page": 3,
+    "quote": "FFA I and FFA III emit blue light (λem = 438 nm) and cyan light (λem = 458 nm), respectively",
+    "subject": "FFA polymorphs",
+    "scope": "target",
+    "conditions": "365 nm excitation; main text and Table 1.",
+    "kind": "observation",
+    "statement": "FFA I and III emit at 438 and 458 nm.",
+    "limitations": "Different polymorphs, not two emissions assigned to one solution species."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F030",
+    "pdf_page": 4,
+    "quote": "φF c 44.1 52.6 67.7 19.3 58.7 10.3",
+    "subject": "FFA polymorphs",
+    "scope": "target",
+    "conditions": "Table 1, integrating sphere; visually checked column alignment.",
+    "kind": "observation",
+    "statement": "FFA I/III have reported QY values 58.7/10.3 and lifetimes 4.39/0.58, respectively.",
+    "limitations": "Table omits explicit QY-percent and lifetime units; preserve printed values without silently inventing units. MFA and TFA columns not transferred."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F030",
+    "pdf_page": 4,
+    "quote": "the polymorphism-dependent emission behaviour of FFA is also ascribed to the similar phenomenon of conjugation.",
+    "subject": "FFA polymorphs",
+    "scope": "target",
+    "conditions": "Conformer orbital plots and published crystal structures, Fig. 3.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign redder FFA III emission to greater coplanarity/conjugation.",
+    "limitations": "Not an explicit ICT/TICT or radiative-rate result; no new calculations performed."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F030",
+    "pdf_page": 4,
+    "quote": "which obviously limits the rotation and vibration of molecules",
+    "subject": "fenamate hydrogen-bonded dimers including FFA",
+    "scope": "series_including_target",
+    "conditions": "Fig. 3 dimer comparison; stronger MFA I bond contrasted with broadly similar bonds in FFA I/III.",
+    "kind": "author_interpretation",
+    "statement": "Authors invoke dimer hydrogen bonds limiting molecular rotation/vibration; this is a series-level enabling interpretation, not an FFA-specific dynamic test.",
+    "limitations": "Discussion particularly addresses MFA compensation; source typo O-H...H is not treated as verified hydrogen-bond atom assignment."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F030",
+    "pdf_page": 4,
+    "quote": "The crystals of FFA III with totally different shapes and sizes were detected almost the same UV-Vis diffuse reflectance spectra and PL spectra",
+    "subject": "FFA III shape/size control",
+    "scope": "target",
+    "conditions": "Fig. 4k-o small needles versus large flakes, visually inspected.",
+    "kind": "observation",
+    "statement": "FFA III spectra remain nearly unchanged with shape/size, unlike TFA and MFA controls.",
+    "limitations": "Does not exclude every possible morphology effect; SI facet spectra not inspected."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F030",
+    "pdf_page": 6,
+    "quote": "In this way, FFA I in ethanol−water mixtures with different water fractions were obtained.",
+    "subject": "FFA I preparation",
+    "scope": "target",
+    "conditions": "7.0 mg in ethanol; add water to total 4 mL, room temperature.",
+    "kind": "observation",
+    "statement": "Source provides a separate FFA I water-fraction preparation, distinguished from FFA III prepared using a warm concentrated stock.",
+    "limitations": "Preparation identity is source-reported; PXRD verification is in missing SI."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Retain explicit series-level dimer restriction interpretation with limited target specificity; not proven FFA torsional kinetics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06"
+    ],
+    "rationale": "Polymorph-dependent molecular conformation and hydrogen-bond organization, not generic size dependence, govern source interpretation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Retain explicit series-level dimer restriction interpretation with limited target specificity; not proven FFA torsional kinetics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06"
+    ],
+    "rationale": "Polymorph-dependent molecular conformation and hydrogen-bond organization, not generic size dependence, govern source interpretation."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target host-guest binding mechanism is established; ordinary solvent polarity is not host inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer excited-state assignment is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer photophysics is established. Ground-state protonation or hydrogen bonding alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific photoinduced electron-transfer pathway is established in the selected evidence."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific aggregate exciton, excimer or exciplex assignment is established; aggregation or close packing alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct radiative-rate or bright/dark-state balance mechanism is established beyond the other pathways; intensity and lifetime alone are insufficient."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer pathway is established; metal binding alone is insufficient."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection access mechanism is established."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or suppression of Kasha's rule is established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "e64e84f9158e4077563a891a0a73a1672ef959a57a5a853a12d0bc6ad2db66b4",
+  "label_record_sha256": "23c668077a03455be5d2bc5ae4184df6a79b6c9347a5ac48fb2451f60ef60ae5"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

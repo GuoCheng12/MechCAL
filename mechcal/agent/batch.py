@@ -74,6 +74,8 @@ def main(argv: list[str] | None = None) -> list[dict]:
     parser.add_argument("--parallel", type=int, default=6)
     parser.add_argument("--grade", action="store_true", help="grade each finished run (calls the judge model)")
     parser.add_argument("--allow-test", action="store_true", help="allow held-out test cases (only after freezing)")
+    parser.add_argument("--allow-not-runnable", action="store_true",
+                        help="allow cases whose structure is marked as not yet preparable")
     parser.add_argument("--subject", choices=sorted(COMMANDS), default="agent", help="MechCAL agent or a baseline")
     args = parser.parse_args(argv)
     if not (args.cases or args.cases_file):
@@ -84,6 +86,13 @@ def main(argv: list[str] | None = None) -> list[dict]:
         raise SystemExit(HELD_OUT.format(case=", ".join(held), flag="--allow-test"))
     if args.allow_test:
         extra = [*extra, "--allow-test-case"]
+    from mechcal.eval.dataset import NOT_RUNNABLE, runnable
+    blocked = [(c, runnable(c)[1]) for c in case_ids(args) if not runnable(c)[0]]
+    if blocked and not args.allow_not_runnable:
+        raise SystemExit(NOT_RUNNABLE.format(case=", ".join(c for c, _ in blocked), reason=blocked[0][1],
+                                             flag="--allow-not-runnable"))
+    if args.allow_not_runnable:
+        extra = [*extra, "--allow-not-runnable"]
     if not os.environ.get("MECHCAL_OPENAI_API_KEY") and not os.environ.get("DEEPSEEK_API_KEY"):
         raise SystemExit("No API key in the environment; source ~/.config/mechcal/secrets.env and env/deepseek.env.sh")
     args.out.mkdir(parents=True, exist_ok=True)

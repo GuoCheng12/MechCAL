@@ -1,0 +1,293 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0033",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C=CC[n+]1ccn(-c2ccc(C(=C(c3ccc(-n4cc[n+](CC=C)c4)cc3)c3ccc(-n4cc[n+](CC=C)c4)cc3)c3ccc(-n4cc[n+](CC=C)c4)cc3)cc2)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "ALITPE",
+  "source_documents": [
+   {
+    "source_id": "S0033",
+    "title": "A novel approach to supramolecular Aggregation-Induced emission using tetracationic tetraphenylethylene and sulfated beta-Cyclodextrin",
+    "doi": "10.1016/j.jphotochem.2023.115328",
+    "pdf_sha256": "38b2cf9fbd96dd4de793746edca90709cccd45905bfc94985237f39afb5cf6a9",
+    "page_count": 11
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0033",
+    "pdf_page": 4,
+    "quote": "corresponding to an approximate 84-fold enhancement in emission intensity",
+    "subject": "ALITPE with sulfated beta-cyclodextrin (SCD)",
+    "scope": "target",
+    "conditions": "31.3 micromolar ALITPE in water; SCD titration, Fig. 1.",
+    "kind": "observation",
+    "statement": "Emission increases approximately 84-fold up to around 6.5 micromolar SCD, then decreases with excess SCD.",
+    "limitations": "The response is nonmonotonic. Do not summarize all increases in host concentration as fluorescence enhancement."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0033",
+    "pdf_page": 4,
+    "quote": "When it aggregates in the presence of polyanionic supramolecular SCD, the intramolecular rotation of the free ALITPE molecule becomes restricted",
+    "subject": "ALITPE with SCD",
+    "scope": "target",
+    "conditions": "Interpretation of the concentration-dependent fluorescence and charge-neutralized assemblies.",
+    "kind": "author_interpretation",
+    "statement": "The authors connect oppositely charged host-guest association, aggregation and restriction of ALITPE rotation.",
+    "limitations": "The rotation mechanism is inferred, not a directly measured torsional potential."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0033",
+    "pdf_page": 6,
+    "quote": "notably slow decay of the complex",
+    "subject": "ALITPE with SCD",
+    "scope": "target",
+    "conditions": "Time-resolved anisotropy at 31.3 micromolar ALITPE and 6.5 micromolar SCD, Fig. 5.",
+    "kind": "observation",
+    "statement": "An anisotropy fit gives rotational correlation time around 2.8 ns and residual anisotropy around 0.15; the source also reports DLS aggregates around 150 nm.",
+    "limitations": "Whole-assembly rotation is not internal phenyl rotation. DLS is reported in the main text but underlying SI Fig. S3 is unavailable."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0033",
+    "pdf_page": 6,
+    "quote": "the inefficiency of unsubstituted βCD molecules in inducing the aggregation of ALITPE molecules",
+    "subject": "ALITPE with native beta-cyclodextrin versus SCD",
+    "scope": "target",
+    "conditions": "Native-host control, Fig. 6, compared with sulfated host.",
+    "kind": "author_interpretation",
+    "statement": "The weak response with native beta-cyclodextrin supports an important role for the charged sulfate groups rather than a generic cyclodextrin cavity.",
+    "limitations": "A comparative interpretation of fluorescence, not an atomically resolved binding measurement."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0033",
+    "pdf_page": 6,
+    "quote": "it takes around 80 mM of NaCl to reduce the fluorescence intensity of this supramolecular aggregate until it reaches the emission level of the free dye in water",
+    "subject": "ALITPE with SCD under salt titration",
+    "scope": "target",
+    "conditions": "31.3 micromolar ALITPE and 6.5 micromolar SCD; NaCl additions, Fig. 7-9.",
+    "kind": "observation",
+    "statement": "Increasing salt reduces fluorescence towards the free-dye level near 80 mM. Absorption/scattering and lifetime trends support loss of the emitting assemblies.",
+    "limitations": "Salt tolerance is finite. Do not turn a relative tolerance comparison into a claim that salt leaves the assembly unaffected."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0033",
+    "pdf_page": 8,
+    "quote": "the absorption spectra revealed an increment in the long-wavelength offset",
+    "subject": "ALITPE with SCD under heating",
+    "scope": "target",
+    "conditions": "31.3 micromolar ALITPE and 6.5 micromolar SCD; Figs. 11-13, temperature-dependent spectra and lifetimes.",
+    "kind": "observation",
+    "statement": "Heating reduces emission and lifetime while increasing the long-wavelength absorption offset. The displayed curves were checked; the source interprets the offset as increased turbidity/aggregation.",
+    "limitations": "Unlike the salt and excess-host responses, thermal quenching is not assigned to aggregate disassembly. Scattering is a proxy for aggregation, not a quantitative aggregate count."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0033",
+    "pdf_page": 8,
+    "quote": "Since the temperature increase does not lead to the dissociation",
+    "subject": "ALITPE with SCD under heating",
+    "scope": "target",
+    "conditions": "Interpretation of simultaneous temperature-dependent absorption, fluorescence and lifetime measurements.",
+    "kind": "author_interpretation",
+    "statement": "The authors attribute thermal quenching to increased nonradiative molecular motion while aggregates remain present.",
+    "limitations": "The claim of a sole cause is the authors' interpretation; no independent separation of radiative and nonradiative rates is provided here."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0033",
+    "pdf_page": 4,
+    "quote": "The Autodock Vina was used to perform molecular docking calculations.",
+    "subject": "ALITPE and SCD",
+    "scope": "target",
+    "conditions": "PM3-optimized inputs, docking with a 40 angstrom cubic search box, exhaustiveness 1000; successive docking builds 1:1 and 2:1 models.",
+    "kind": "computation",
+    "statement": "Docking explores plausible host-guest arrangements and interactions.",
+    "limitations": "Selected geometries are model hypotheses, not experimental determination of stoichiometry, cavity occupancy or aggregate morphology."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "S0033",
+    "pdf_page": 9,
+    "quote": "stabilize ALITPE on the surface of SCD",
+    "subject": "ALITPE and SCD",
+    "scope": "target",
+    "conditions": "Interpretation of docking in Fig. 15 and the host/salt experiments.",
+    "kind": "author_interpretation",
+    "statement": "The source describes electrostatic and other noncovalent contacts at the SCD surface.",
+    "limitations": "Do not equate surface association with verified cavity inclusion. Docked pi contacts alone do not establish H/J excitons or excimer emission."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "S0033",
+    "pdf_page": 9,
+    "quote": "there were no significant enhancement in the fluorescence intensity of ALITPE",
+    "subject": "ALITPE without SCD",
+    "scope": "target",
+    "conditions": "Main-text summary of control experiments varying NaCl, pH and temperature; SI Fig. S4-S6 not supplied.",
+    "kind": "observation",
+    "statement": "The source reports no significant turn-on for free ALITPE under the tested perturbations, supporting a role for SCD.",
+    "limitations": "Underlying control plots are unavailable. This is not a statement that free-dye fluorescence is invariant under every possible condition."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06",
+     "E09"
+    ],
+    "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E05",
+     "E08",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The source attributes emission enhancement to restricted rotation and thermal quenching to nonradiative molecular motion in still-aggregated material. The assignment remains indirect."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06",
+     "E09"
+    ],
+    "rationale": "The host-induced aggregate environment constrains molecular motion. Assembly is supported; specific packing geometry is not resolved."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E05",
+     "E08",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Oppositely charged host-guest association is central to the source account and supported by native-host and salt controls. Retain surface association without asserting deep cavity inclusion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer assignment or diagnostic comparison is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism is established. Changing solution pH or ground-state protonation alone does not establish ESIPT."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer pathway is established by the selected source evidence."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Particle formation and AIE alone do not establish H/J excitonic or excimer emission; no such target assignment is established here."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "84c3ffc91141c40c24794eacd81e8c18c10ab7669f2837e1fc9234950024d700",
+  "label_record_sha256": "3987d7202b9043474f31da4f71da3bbe869a3ff01d31440e2cf87edd15e11cd3"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

@@ -1,0 +1,270 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0013",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccc(C(F)(F)F)cc4O)[nH]c3nc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "ITP4",
+  "source_documents": [
+   {
+    "source_id": "F008",
+    "title": "Enhancement of the Excited-state Intramolecular Proton Transfer Process to Produce All-powerful DSE Molecules for Bridging the Gap Between ACQ and AIE",
+    "doi": "10.1016/j.dyepig.2018.08.066",
+    "pdf_sha256": "88fc948273fe86e60697cee3fd496d565f4d378821dc27449c9928ae18a25e7b",
+    "page_count": 47
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F008",
+    "pdf_page": 8,
+    "quote": "ITP4 Benzene 369 2.6 505 7298 85 3.35 2.5 0.4",
+    "subject": "ITP4",
+    "scope": "target",
+    "conditions": "Table 1, 2e-5 M benzene, quantum yield and lifetime.",
+    "kind": "observation",
+    "statement": "ITP4 emits at 505 nm with 85 percent quantum yield and 3.35 ns lifetime; listed kr/knr are 2.5/0.4 in 1e8 s-1.",
+    "limitations": "Steady-state and lifetime measurements constrain rates, not a unique microscopic pathway."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F008",
+    "pdf_page": 12,
+    "quote": "and 64-92%, respectively (Figure 5).",
+    "subject": "ITP3 and ITP4",
+    "scope": "series_including_target",
+    "conditions": "Solvent series in Table 1/Fig. 5.",
+    "kind": "observation",
+    "statement": "ITP4 maintains 64-92 percent yields across tested solvents including methanol; Table 1 reports 53 percent in the solid.",
+    "limitations": "The solution range and solid value must be reported separately; do not copy ITP3's 41-82 percent range."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F008",
+    "pdf_page": 12,
+    "quote": "possibly due to the less powerful ESIPT capability",
+    "subject": "ITP2 compared with electron-withdrawing ITP3/ITP4",
+    "scope": "series_including_target",
+    "conditions": "Substituent comparison across polar solvents.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute stronger emission of ITP3/ITP4 relative to methyl-substituted ITP2 to stronger ESIPT.",
+    "limitations": "A substituent comparison is indirect support; it does not measure proton-transfer dynamics in ITP4."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F008",
+    "pdf_page": 13,
+    "quote": "was observed for ITP3, ITP4, and ITP6",
+    "subject": "ITP3, ITP4 and ITP6",
+    "scope": "series_including_target",
+    "conditions": "Et3N addition, approximately 1000 equivalents, in DMF/CH3CN.",
+    "kind": "observation",
+    "statement": "Authors assign blue-shifted emission under base conditions to phenolate formation and disruption of intramolecular H bonds.",
+    "limitations": "This is ground-state deprotonation evidence under base addition, not independent direct proof of ESIPT."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F008",
+    "pdf_page": 11,
+    "quote": "53%, respectively. The detailed analysis of the ITP3 crystal structure revealed",
+    "subject": "ITP2/ITP3/ITP4 solid comparison",
+    "scope": "series_including_target",
+    "conditions": "Para substituents on ring D, Table 1.",
+    "kind": "observation",
+    "statement": "ITP4 has 53 percent solid yield versus ITP1 11 percent; authors use substituent changes and self-assembly to explain the series.",
+    "limitations": "The detailed structural evidence is for ITP3, not ITP4. Do not assign ITP3's resolved J packing to ITP4 as an observation."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F008",
+    "pdf_page": 12,
+    "quote": "Figure 4. Molecular interactions in the single crystal of ITP3",
+    "subject": "ITP3 crystal",
+    "scope": "comparator",
+    "conditions": "Crystal structure and stacking analysis.",
+    "kind": "observation",
+    "statement": "The reported homogeneous 1H-imi crystal and J-type packing belong to ITP3.",
+    "limitations": "No ITP4 crystal is provided in the listed deposited set; this evidence cannot independently establish ITP4 packing or exciton type."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F008",
+    "pdf_page": 16,
+    "quote": "the TICT for nonradiative de-excitation and finely controlling their self-assembly.",
+    "subject": "ITP series including ITP4",
+    "scope": "series_including_target",
+    "conditions": "Authors' mechanism synthesis based on solution and solid comparisons.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose ESIPT-enhanced suppression of nonradiative TICT together with control of self-assembly.",
+    "limitations": "This is a series-level interpretation rather than a separately measured TICT trajectory or packing geometry in ITP4."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F008",
+    "pdf_page": 9,
+    "quote": "CHCl3 368 3.2 500 7174 92 3.24 2.8 0.2",
+    "subject": "ITP4",
+    "scope": "target",
+    "conditions": "Table 1, CHCl3 versus solid.",
+    "kind": "observation",
+    "statement": "The source lists CHCl3 yield/lifetime 92 percent/3.24 ns and solid 53 percent/3.84 ns. Derived radiative and nonradiative rates differ between environments.",
+    "limitations": "These are kinetic summaries and do not independently establish the structural cause."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E07"
+    ],
+    "rationale": "Solid-state differences motivate a tentative packing contribution; ITP3's exact geometry is not transferred."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E07"
+    ],
+    "rationale": "Authors invoke restriction of a competing TICT nonradiative pathway."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E07"
+    ],
+    "rationale": "Retain the source's ESIPT-centered interpretation with explicit indirect and series-level limitations."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Target-specific yields and lifetimes constrain radiative/nonradiative balance."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E07"
+    ],
+    "rationale": "Solid-state differences motivate a tentative packing contribution; ITP3's exact geometry is not transferred."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E07"
+    ],
+    "rationale": "Authors invoke restriction of a competing TICT nonradiative pathway."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E07"
+    ],
+    "rationale": "Retain the source's ESIPT-centered interpretation with explicit indirect and series-level limitations."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Target-specific yields and lifetimes constrain radiative/nonradiative balance."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established by the selected target-related evidence in this source-led draft. This is not a claim of scientific impossibility."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "85ea260a6c4810e5ffa6deb4876d63b7d7013f79c6dd0a408b811e6b4b93c3e8",
+  "label_record_sha256": "707de9496d922435e290a698673c59417da70b12c29e2dc14a75e5f7b9f32741"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

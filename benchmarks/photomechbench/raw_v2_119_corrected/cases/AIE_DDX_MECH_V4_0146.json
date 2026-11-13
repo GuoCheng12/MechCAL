@@ -1,0 +1,304 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0146",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2c(c1)cc(C1=NSS[N]1)c1ccccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PDTDA",
+  "source_documents": [
+   {
+    "source_id": "F054",
+    "title": "A theoretical investigation on the excited-state decay and anti-kasha fluorescence of phenanthrene dithiadiazolyl radical",
+    "doi": "10.1016/j.cplett.2025.142279",
+    "pdf_sha256": "c62c3d1ae8f996aadb5cc5bece7dd73a8fcb3e7249626377377f123b96a5347a",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F054",
+    "pdf_page": 3,
+    "quote": "Eight-state-averaged CASSCF calculations with equal weights",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "SA8-CASSCF(11,10) geometries; SDSPT2 refined energies; FCclasses rates at 300 K.",
+    "kind": "computation",
+    "statement": "The paper computes minima and conical intersections with a multireference treatment, rather than reporting a new emission experiment.",
+    "limitations": "Methods pp.3-4; the rate model uses harmonic/adiabatic-Hessian approximations and excludes Herzberg-Teller corrections. SI was not inspected."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F054",
+    "pdf_page": 5,
+    "quote": "The geometrical parameters for D3-min are nearly identical with those of D0-min",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "Optimized isolated PDTDA minima, Table 3.",
+    "kind": "computation",
+    "statement": "D3-min retains the approximately -46.5 degree torsion, whereas D1-min is nearly planar (-0.8 degree); this links relaxation to interfragment torsion.",
+    "limitations": "Stationary points do not determine actual branching fractions. The authors could not locate a D3/D2 CI."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F054",
+    "pdf_page": 6,
+    "quote": "which hinders the DTDA twisting motion",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "PDTDA in rigid polystyrene film; earlier experiment cited as reference 12.",
+    "kind": "author_interpretation",
+    "statement": "The authors assign the previously reported 360 nm film emission to a D1 Franck-Condon-region geometry maintained by hindered twisting.",
+    "limitations": "This is a main-text interpretation of an earlier experiment, not a newly measured film or personally inspected earlier paper. Do not transfer this assignment to free solution."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F054",
+    "pdf_page": 6,
+    "quote": "radiative and non- radiative decay rate constants at D₁-min were 2.42 × 104 s−1 and 5.44 × 1011 s−1, respectively.",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "Relaxed D1 minimum, 300 K rate calculation.",
+    "kind": "computation",
+    "statement": "The D1 minimum is predicted to be nearly nonemissive, with nonradiative decay vastly faster than radiative decay; its computed 602 nm emission disagrees with the cited 410 nm solution band.",
+    "limitations": "The comparison mixes gas-phase calculations with earlier solution measurements. The source Figure 6 depicts 2.05 eV, whereas prose gives 2.06 eV."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F054",
+    "pdf_page": 8,
+    "quote": "the system sequentially decays via conical in­ tersections CI-D5/D6, CI-D4/D5, and CI-D3/D4.",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "SDSPT2 GIIC potential-energy profiles after excitation to D6; Fig.6 visually inspected.",
+    "kind": "computation",
+    "statement": "Torsional relaxation is assigned to successive D6/D5, D5/D4 and D4/D3 intersection regions, followed by branching toward D3-min or D1-min through D2.",
+    "limitations": "The exact quote preserves the PDF soft hyphen. Two CASSCF CIs acquire 0.22/0.36 eV gaps after SDSPT2 correction; D3/D2 crossing remains inferred, not optimized."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F054",
+    "pdf_page": 8,
+    "quote": "4.40 × 105 s−1 and knr = 1.65 × 105 s−1",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "D3 minimum, 300 K harmonic rate calculation.",
+    "kind": "computation",
+    "statement": "D3-min has predicted radiative and nonradiative rates of 4.40e5 and 1.65e5 s^-1, respectively; computed emission is 362 nm.",
+    "limitations": "These are local-minimum rates, not an overall measured fluorescence yield or population trajectory; calculated emission differs from 380 nm THF and 410 nm MeCN values cited from prior work."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F054",
+    "pdf_page": 8,
+    "quote": "D3 → D0 radiative decay with anti-Kasha character is the possible origin of fluorescence of isolated PDTDA molecule.",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "Isolated-molecule theoretical interpretation contrasted with earlier solvent emission.",
+    "kind": "author_interpretation",
+    "statement": "The source proposes D3-to-D0 anti-Kasha fluorescence rather than emission from relaxed D1.",
+    "limitations": "The wording is a possible origin; no direct experimental state assignment is made in this paper. Do not generalize the assignment to the rigid-film condition."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F054",
+    "pdf_page": 9,
+    "quote": "electron exchange between phenanthrene and DTDA rings was identified",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "Electronic-configuration analysis along the computed relaxation pathway, Fig.7 and main-text section 3.4.",
+    "kind": "author_interpretation",
+    "statement": "The authors assign interfragment electron exchange to the nonradiative pathway and distinguish double-excitation character allowing D3 radiation from D1 configurations unfavorable for radiation.",
+    "limitations": "This is a multiconfigurational electron-exchange interpretation, not measured redox chemistry or a proven conventional donor-acceptor TICT state. Tables S4-S8 were not inspected."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F054",
+    "pdf_page": 9,
+    "quote": "could suppress non-radiative population losses, thereby enhancing fluorescence quantum yields.",
+    "subject": "PDTDA radical",
+    "scope": "target",
+    "conditions": "Concluding proposed restriction of phenanthrene/DTDA torsion.",
+    "kind": "author_interpretation",
+    "statement": "The authors explicitly suggest torsional restriction as a strategy to reduce nonradiative loss and increase fluorescence yield.",
+    "limitations": "This is a theoretical design proposal, not an experimentally established aggregation-induced-emission mechanism."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E09"
+    ],
+    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+   },
+   {
+    "label": "PET_ET",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Interfragment electron exchange is explicitly proposed in the computed relaxation mechanism. This family is used in its broad electron-transfer sense, not as experimentally verified PET."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E09"
+    ],
+    "rationale": "Preserve the explicit hindered-torsion film interpretation and proposed torsional-restriction strategy, bounded as theory and cited prior-film evidence, not demonstrated AIE."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The rigid polystyrene environment is explicitly invoked to hinder twisting and select film emission; evidence is a discussion of prior work."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No discrete host-guest binding or inclusion mechanism is established; solvent polarity or packing alone does not establish this family."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific ICT/TICT emissive-state assignment is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is reported in the selected evidence."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Interfragment electron exchange is explicitly proposed in the computed relaxation mechanism. This family is used in its broad electron-transfer sense, not as experimentally verified PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation or close contacts do not by themselves establish an aggregate exciton, excimer, exciplex, or H/J excited state."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Computed rates and electronic configurations distinguish a nearly dark relaxed D1 from emissive D3; local rate competition does not determine the total quantum yield."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No triplet, metal-mediated, or energy-transfer explanation is established for this target by the selected evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "Computed intersection-mediated torsional relaxation competes with D3 emission. It is CI-mediated decay, with incomplete crossing localization, not proven aggregate restriction of CI access."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "The central proposed isolated-PDTDA emission pathway is D3-to-D0 anti-Kasha fluorescence; retain uncertainty and environment dependence."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "c121322ae41a28ea0a3f674facbbbd587043649d6cf3042570d3ee5005d3c7f9",
+  "label_record_sha256": "b33033e5f56cdf78ae2c1f80896592a0713ad0c25fe0de54bc629a739595add6"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

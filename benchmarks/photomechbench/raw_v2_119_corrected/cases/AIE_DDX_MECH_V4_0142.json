@@ -1,0 +1,297 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0142",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2cccc-2cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "azulene | 1a | Az",
+  "source_documents": [
+   {
+    "source_id": "F051",
+    "title": "A Reappraisal of Kasha's Rule",
+    "doi": "10.1039/c9cp00739c",
+    "pdf_sha256": "5972f2c98defd118cc04936b408f63a4bf94380eeeba6960f4a35936c8384693",
+    "page_count": 11
+   },
+   {
+    "source_id": "F052",
+    "title": "A Computational Protocol to Predict Anti-Kasha Emissions: The Case of Azulene Derivatives",
+    "doi": "10.1021/acs.jpca.0c05205",
+    "pdf_sha256": "f2996114569616aa01d8892b92f5d13327f1eebe00fb4540a1f485ffce42c24f",
+    "page_count": 46
+   },
+   {
+    "source_id": "F053",
+    "title": "Excited state dynamics of azulene and its derivatives: The impact of energy gap and vibronic coupling on anti-Kasha emission in solution",
+    "doi": "10.1016/j.molliq.2025.127260",
+    "pdf_sha256": "1dcd024d6cbfd5fd467595f7de76a918bb8f6b9c1151bd5e40c9cea0c6144807",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F051",
+    "pdf_page": 5,
+    "quote": "No sign of the S1S0 transition emission has been recorded on excitation at 220, 237, 269, 296 and 315 nm",
+    "subject": "Azulene",
+    "scope": "target",
+    "conditions": "2-methylpentane; steady-state room-temperature spectroscopy, Figures 3-5.",
+    "kind": "observation",
+    "statement": "No S1 emission is detected across these excitation wavelengths; S2 emission appears with the same envelope and excitation matches S0-to-S2 absorption.",
+    "limitations": "Source notes S1 emission in literature under low-temperature laser excitation; absence is condition-specific."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F051",
+    "pdf_page": 5,
+    "quote": "there is such a Franck-Condon shift on photoexcitation that the geometry for emission is distinct to the geometry for absorption.",
+    "subject": "Azulene",
+    "scope": "target",
+    "conditions": "Absorption/emission corrected for Einstein frequency factors, Figure 6.",
+    "kind": "author_interpretation",
+    "statement": "Authors infer different absorbing/emitting geometries from absent mirror-image symmetry while retaining azulene as a true anti-Kasha exception.",
+    "limitations": "Interpretation of spectra; no motion-restriction or aggregation experiment."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F052",
+    "pdf_page": 21,
+    "quote": "1a 0.16 2.7 (2.3±0.1)b,c 1.9×1011 6.3×108 (5.3±1.2×108)b,c,d 8.4×10-4 4.3 (3.5±0.4)b,c",
+    "subject": "Azulene 1a",
+    "scope": "target",
+    "conditions": "TVCF rates using ADC(2) energies/dipoles and DFT frequencies, 298 K; Table 2 visually inspected.",
+    "kind": "computation",
+    "statement": "Calculated S1-to-S0 kr=1.6 x10^6, kIC=1.9 x10^11 s^-1; S2-to-S0 kr=2.7 x10^7 and S2-to-S1 kIC=6.3 x10^8 s^-1; S2 yield 4.3%, S1 yield 8.4 x10^-4%.",
+    "limitations": "Parentheses are external experimental values reused by F052: S2 yield 3.5 +/-0.4%, not a new measurement. Rates use harmonic approximations and gas-phase optimized geometries."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F052",
+    "pdf_page": 16,
+    "quote": "The vibronic features of the experimental S2 absorption and emission spectra are only recovered after the inclusion of HT effects",
+    "subject": "Azulene 1a",
+    "scope": "target",
+    "conditions": "Franck-Condon versus Herzberg-Teller spectral calculations, Figure 3.",
+    "kind": "computation",
+    "statement": "Including HT terms improves vibronic spectral shape; FC-only spectra fail to reproduce positions/intensities.",
+    "limitations": "Spectra are normalized and shifted to experimental 0-0 energies; shape agreement is not independent absolute-energy validation."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F052",
+    "pdf_page": 25,
+    "quote": "when comparing 1a and 1d, or 1b and 1e, they have almost the same S2-S1 adiabatic energy gap, but still a significantly different rate.",
+    "subject": "Azulene 1a and substituted series",
+    "scope": "series_including_target",
+    "conditions": "Computed S2-to-S1 rates versus energy gaps and reorganization energies.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute deviations from a simple gap-only trend to nonadiabatic couplings and total reorganization energies.",
+    "limitations": "No assumption that all derivatives have identical rates, yields or accepting modes."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F053",
+    "pdf_page": 4,
+    "quote": "by 20 ps 90.5 % of the excited molecules occupy the S2 state, whereas 9.5 % occupy the S1 state.",
+    "subject": "Azulene Az",
+    "scope": "target",
+    "conditions": "LVC/MCTDH two-singlet model, B3LYP/TZP COSMO cyclohexane; selected 18 of 48 normal modes.",
+    "kind": "computation",
+    "statement": "The simulated S2 population stays near 98% initially and reaches 90.5% at 20 ps.",
+    "limitations": "Population fraction is not PLQY; excludes longer-time emission and full-dimensional nuclear dynamics. Symmetry-restricted model gives about 97% instead."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F053",
+    "pdf_page": 5,
+    "quote": "turning off Q33 halves the amount of the loss of the S2 population",
+    "subject": "Azulene Az",
+    "scope": "target",
+    "conditions": "Virtual mode-ablation simulations; Q16/Q33/Q39 dominate selected-mode early dynamics.",
+    "kind": "computation",
+    "statement": "Removing Q33 leaves about 94% S2 population; removing all three gives 98.7% at 20 ps (Table 2). Removing Q16 or Q39 alone has little effect.",
+    "limitations": "Turning model modes off is not physical restriction in an aggregate. No RIM claim is inferred from this virtual intervention alone."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F053",
+    "pdf_page": 7,
+    "quote": "the rate constant of the internal conversion depends not only on the electronic energy gap, but also on vibronic couplings and molecular structure.",
+    "subject": "Azulene Az with artificially changed gaps",
+    "scope": "target",
+    "conditions": "Az Hamiltonian with gaps changed to 1.10, 0.87 and 0.56 eV; Figure 6.",
+    "kind": "computation",
+    "statement": "Gap-adjusted Az curves differ from actual substituted-molecule curves, supporting coupling/structure dependence beyond energy gap.",
+    "limitations": "Hypothetical gap perturbations are controls, not measurements of derivatives."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F053",
+    "pdf_page": 5,
+    "quote": "Az (2 %) > Az-Cl (0.4 %) > Az-OH (5 ⋅ 10−5 %) > Az-NMe2 (10−6 %)",
+    "subject": "Azulene and 2-substituted comparators",
+    "scope": "series_including_target",
+    "conditions": "F053 quotes external experimental reference 44 for solution PLQY.",
+    "kind": "observation",
+    "statement": "F053 uses 2% for Az in its comparison, rather than F052's compiled 3.5 +/-0.4% or calculated 4.3%.",
+    "limitations": "External values reported in main, not freshly measured here. Do not pool different source conditions or replace experimental yields with 20 ps populations."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F053",
+    "pdf_page": 1,
+    "quote": "the S1 state of azulene decays rapidly via an energetically achievable S1/S0 conical intersection",
+    "subject": "Azulene S1",
+    "scope": "target",
+    "conditions": "Introduction's literature-based explanation, citing reference 45.",
+    "kind": "author_interpretation",
+    "statement": "The source explicitly invokes S1/S0 CI-mediated decay to explain absent S1 fluorescence.",
+    "limitations": "A cited mechanistic account, not a CI optimized or trajectory demonstrated by this two-excited-state study. No claim of restricted CI access on aggregation."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06"
+    ],
+    "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No source-grounded restriction of intramolecular motion established for this target under the extracted conditions; emission or vibrations alone do not establish RIM."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific external packing or matrix confinement mechanism established in the extracted evidence."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific binding of a guest, solvent or analyte that alters emission established."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer excited-state mechanism established in the extracted evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway established; hydrogen bonding or an OH substituent alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No distinct photoinduced electron-transfer quenching or turn-on established; CT-state character is not by itself a separate PET process."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific aggregate exciton, excimer or exciplex emission established; aggregation alone does not establish this family."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "Competing S2 radiation/IC and very rapid S1 decay rationalize state-selective emission; rates and early dynamics are model-dependent."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-centered or energy-transfer mechanism established by the extracted evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Retain the explicit literature-based S1/S0 CI explanation with low evidential independence. This is CI-mediated decay, not proven RACI under aggregation."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E06"
+    ],
+    "rationale": "All three linked sources support a bounded S2 anti-Kasha account through spectra, kinetic calculations and early dynamics."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "1129cca42c6ff211a72cd9f515c358fb33b5a1a5493abb78caa08aa026f19110",
+  "label_record_sha256": "9053cb2edb46960569eef9bdd6280279ea7465e8b5430487ad871ec8f9f70fde"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

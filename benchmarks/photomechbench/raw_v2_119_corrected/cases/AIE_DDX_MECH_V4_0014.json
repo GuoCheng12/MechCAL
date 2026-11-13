@@ -1,0 +1,207 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0014",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(-c2ccc(B(c3c(C)cc(C)cc3C)c3c(C)cc(C)cc3C)cc2)cc1-c1ncc(-c2ccc(-c3ccc(N(c4ccccc4)c4ccccc4)cc3)cc2)o1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "6a",
+  "source_documents": [
+   {
+    "source_id": "S0017",
+    "title": "Tuning the dual emission of keto/enol forms of excited-state intramolecular proton transfer (ESIPT) emitters via intramolecular charge transfer (ICT)",
+    "doi": "10.1016/j.dyepig.2021.109497",
+    "pdf_sha256": "89aa955fdd4e996161a13f93edfe3acbc12f6ed6d598204c309bbf0184e9c672",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0017",
+    "pdf_page": 2,
+    "quote": "The emission spectrum of 6a in toluene exhibits a single emission band around 418 nm with a shoulder peak at 430 nm",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "Toluene, Figure 1 and comparison with O-methyl compound 5a.",
+    "kind": "observation",
+    "statement": "6a has the stated single-band emission, assigned by the authors to the enol form.",
+    "limitations": "The methoxy control supports an assignment; it does not directly observe proton-transfer dynamics."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0017",
+    "pdf_page": 3,
+    "quote": "there is a large energy difference between S1(enol) and the transition state of ESIPT",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "Calculated enol/keto excited-state landscape, Figure 2a.",
+    "kind": "computation",
+    "statement": "The source finds a high forward proton-transfer barrier and uses it to explain enol-only emission.",
+    "limitations": "Do not label efficient operating ESIPT merely because this molecule has an ESIPT-capable skeleton."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0017",
+    "pdf_page": 5,
+    "quote": "The large solvatochromic shift indicates that the enol-form emissions of 6a and 6c are of typical ICT characters",
+    "subject": "6a and 6c",
+    "scope": "series_including_target",
+    "conditions": "Solvent-dependent enol emission and Lippert-Mataga analysis.",
+    "kind": "author_interpretation",
+    "statement": "The source supports CT character in the enol emission.",
+    "limitations": "This is state-specific; it does not establish ICT for every keto/enol configuration."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0017",
+    "pdf_page": 6,
+    "quote": "Hence, both 6a and 6c do not possess thermally activated delayed fluorescence (TADF) characteristics",
+    "subject": "6a and 6c",
+    "scope": "series_including_target",
+    "conditions": "Temperature-dependent doped-film and degassed-toluene PL, SI Figures S24/S26 reported in main text.",
+    "kind": "author_interpretation",
+    "statement": "The authors reject TADF because no long-lived emission or clear oxygen quenching is observed.",
+    "limitations": "Missing SI traces remain unverified. This excludes TADF, not all possible triplet involvement."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0017",
+    "pdf_page": 7,
+    "quote": "the reverse intersystem crossing (RISC) process from T6 (enol) to S1(enol)",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "Calculated high-lying triplet/singlet energies, Figure 7a; device exciton-utilization discussion.",
+    "kind": "author_interpretation",
+    "statement": "The authors propose high-state RISC as an explanation of exciton utilization.",
+    "limitations": "Near-degenerate computed energies suggest feasibility, not a measured RISC rate or direct observation."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Enol stabilization and HLCT emission are central to the target's interpretation."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Retain the explicitly tentative high-state RISC proposal, while excluding TADF. This is a source-supported hypothesis, not confirmed dynamics."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Enol stabilization and HLCT emission are central to the target's interpretation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The source explains why proton transfer is inhibited in 6a; an ESIPT-capable scaffold alone is not a positive operating-mechanism label."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Retain the explicitly tentative high-state RISC proposal, while excluding TADF. This is a source-supported hypothesis, not confirmed dynamics."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not established for this target in the selected source evidence. This does not imply that the mechanism is impossible."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "e683483a926603dd9642793af40631a9bccb3585c4a92d90594ab3f58b25d4b5",
+  "label_record_sha256": "4cc4eca97cb95c59284f34811e522feb66d5a60f9b8eab6ba1cd98931eb99d3f"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

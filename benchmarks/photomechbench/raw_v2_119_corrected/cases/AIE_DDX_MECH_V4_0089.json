@@ -1,0 +1,297 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0089",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#CC(C#N)=C(c1ccc(F)cc1)c1ccc(-c2ccc(N(c3ccccc3)c3ccccc3)cc2)s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPA-T-DCV-Ph-F",
+  "source_documents": [
+   {
+    "source_id": "F039",
+    "title": "Excited state dynamics and exciton difusion in triphenylamine/dicyanovinyl push–pull small molecule for organic optoelectronics",
+    "doi": "10.1038/s41598-020-78197-2",
+    "pdf_sha256": "2e48f3435f9aab64953fef13ac71c35411dc5aea17089ff7ae42322f2a1fb3b1",
+    "page_count": 10
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F039",
+    "pdf_page": 3,
+    "quote": "lifetime values of ~ 0.04 ns in toluene and ~ 0.4 ns in chloroform",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "observation",
+    "statement": "Dilute-solution lifetimes are about 0.04 and 0.4 ns with PL yields 0.01 and 0.04, respectively.",
+    "limitations": "Source monoexponential fits; Figure 2 visually inspected. Different solvents must not be pooled."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F039",
+    "pdf_page": 3,
+    "quote": "This resulted in much longer excited state lifetime of ~ 3 ns with the corresponding increase in PL QY",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "observation",
+    "statement": "PMMA dispersion gives about 3 ns lifetime; Figure 2b labels QY approximately 0.2.",
+    "limitations": "Matrix is intended to constrain conformations while limiting intermolecular interactions, not to demonstrate dye aggregation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F039",
+    "pdf_page": 3,
+    "quote": "TPA-T-DCV-Ph-F undergoes strong change in dipole moment upon photoexcitation",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "author_interpretation",
+    "statement": "The source invokes CT-related dipole redistribution and solvent stabilization to explain solvent-dependent relaxation.",
+    "limitations": "Detailed orbital calculations are referenced to ESI section 3, not inspected here; no PET reaction or verified TICT state is claimed."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F039",
+    "pdf_page": 4,
+    "quote": "We therefore propose that this geometry is close to a CI.",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "computation",
+    "statement": "Excited-state optimization approaches near-degenerate S0/S1 where TDDFT fails; the authors propose proximity to a CI.",
+    "limitations": "An approximate inference from convergence failure and interpolated surfaces, not a located exact multireference MECI."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F039",
+    "pdf_page": 5,
+    "quote": "where the relatively large molecular deformation needed to reach the CI is efficiently suppressed",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "author_interpretation",
+    "statement": "Rigid surroundings are proposed to suppress CI-reaching deformation and lengthen emission lifetime.",
+    "limitations": "Conditional mechanistic interpretation supported by the matrix comparison, not direct time-resolved CI observation."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F039",
+    "pdf_page": 5,
+    "quote": "We did not explicitly calculate the rates for ISC and CI",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "author_interpretation",
+    "statement": "Singlet-triplet crossings are present in the illustrative surfaces, but the authors expect ISC to be slow relative to CI decay.",
+    "limitations": "No calculated branching rates or observed triplet kinetics; do not assign a positive triplet mechanism from the diagram alone."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F039",
+    "pdf_page": 5,
+    "quote": "The weighted average exciton lifetime was determined to be ~ 3.7 ns while the measured PL QY was ~ 0.17.",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "observation",
+    "statement": "Neat films have a biexponential transient and weighted lifetime about 3.7 ns with QY about 0.17.",
+    "limitations": "The fast component is attributed to intermolecular energy transfer and excitonic traps; these are not the isolated PMMA conditions."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F039",
+    "pdf_page": 6,
+    "quote": "The exciton diffusion length of ~ 16 nm was derived from the exciton displacement statistics",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "computation",
+    "statement": "Source Monte Carlo fits to PC60BM volume-quenching data estimate about 16 nm diffusion length in solution-processed films.",
+    "limitations": "Model-derived, with approximately 65 meV energetic disorder and fitted hopping time; no new inference simulation was performed."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F039",
+    "pdf_page": 8,
+    "quote": "The excitation power was set between 0.5–4 µW to avoid the possibility of exciton-exciton annihilation and photobleaching.",
+    "subject": "TPA-T-DCV-Ph-F",
+    "scope": "target",
+    "conditions": "Dilute toluene/chloroform, dispersed PMMA matrix and spin-coated neat films; time-resolved PL excited at 520 nm and source TDDFT.",
+    "kind": "observation",
+    "statement": "The time-resolved PL protocol limits excitation power to reduce annihilation and bleaching artifacts.",
+    "limitations": "A design control, not proof that all such effects are absent; dilute-solution optical densities were 0.06-0.12."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "Conformational restriction is explicitly tested by PMMA and used in the source interpretation; it overlaps with the proposed CI-access pathway."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Rigid PMMA and neat-film environments suppress large conformational relaxation; PMMA is not treated as an aggregate."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "CT-related excited-state dipole change and solvent stabilization are reported; no specific twisted geometry is established."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Film exciton migration and trap-related nonradiative relaxation contribute to the film photophysics, separately from the isolated-molecule matrix effect."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Preserve the authors' approximate CI explanation, explicitly bounded by TDDFT failure rather than exact CI optimization."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "Conformational restriction is explicitly tested by PMMA and used in the source interpretation; it overlaps with the proposed CI-access pathway."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Rigid PMMA and neat-film environments suppress large conformational relaxation; PMMA is not treated as an aggregate."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No guest binding, pore uptake or host inclusion mechanism is established; a solvent or self-assembly is not automatically host-guest chemistry."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "CT-related excited-state dipole change and solvent stabilization are reported; no specific twisted geometry is established."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific excited-state proton-transfer pathway is established."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer quenching or turn-on is established; energy transfer and CT character are not by themselves PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Film exciton migration and trap-related nonradiative relaxation contribute to the film photophysics, separately from the isolated-molecule matrix effect."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E07"
+    ],
+    "rationale": "Lifetime/yield differences support changed nonradiative behavior but no independent radiative-rate mechanism is isolated."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "ISC is considered but expected too slow to dominate, and no rates were calculated."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Preserve the authors' approximate CI explanation, explicitly bounded by TDDFT failure rather than exact CI optimization."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-singlet-state emission or anti-Kasha mechanism is established; higher-state absorption alone is insufficient."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "70f7ed6812b21c657f1bb16a0ce4f0d7ecd3bba21394ea6af41374f3ae22c6a7",
+  "label_record_sha256": "f671cc360f9d944b6b7fa73e1e7b9f6d1023cc4e6902fc6b738bed044853485e"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

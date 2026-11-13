@@ -1,0 +1,315 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0080",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc(O)c(C=Nc2cc(C(C)(C)C)ccc2O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "L2",
+  "source_documents": [
+   {
+    "source_id": "F025",
+    "title": "AIE-active Schiff base compounds as fluorescent probes for highly sensitive and selective detection of Fe3+ ions",
+    "doi": "10.1039/c9qm00792j",
+    "pdf_sha256": "b91b2e12313bfd972c4215cafd544247f1158cef04c4686b91c1f347a7822b54",
+    "page_count": 13
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F025",
+    "pdf_page": 5,
+    "quote": "fluorescence intensity (with excitation wavelength of 255 nm) gradually increased and reached maximum at 90% water fraction for L1 at 317 nm and emission maximum for L2 was attained with 60% at 320 nm.",
+    "subject": "L1 and L2",
+    "scope": "series_including_target",
+    "conditions": "1e-5 M ligands in THF/water; excitation 255 nm.",
+    "kind": "observation",
+    "statement": "Target L2 reaches maximum emission at 60% water, 320 nm.",
+    "limitations": "The two ligand optima differ; stronger water fraction is not uniformly better."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F025",
+    "pdf_page": 5,
+    "quote": "the C=N isomerization are gradually arrested through intramolecular hydrogen bonding.",
+    "subject": "L1 and L2",
+    "scope": "series_including_target",
+    "conditions": "Increasing water in the AIE solvent mixtures.",
+    "kind": "author_interpretation",
+    "statement": "Authors assign AIE to suppression of C=N isomerization by hydrogen bonding, reducing nonradiative loss.",
+    "limitations": "No excited-state proton-transfer measurement or isotope control; do not infer ESIPT from Schiff-base chemistry."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F025",
+    "pdf_page": 5,
+    "quote": "the Ф values for L2 increased from 0.017 to 0.136",
+    "subject": "L2",
+    "scope": "target",
+    "conditions": "1e-5 M; relative quantum yields using anthracene/methanol standard, main text referring to Table S2.",
+    "kind": "observation",
+    "statement": "Quantum yield rises 0.017 to 0.136 from THF to 60% water, then is 0.035 at 99.5% water.",
+    "limitations": "SI Table S2 not inspected; precipitation/scattering at higher water fractions complicate interpretation."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F025",
+    "pdf_page": 5,
+    "quote": "the aggregates would precipitate out resulting in a drastic decrease in fluorescence intensity.",
+    "subject": "L1 and L2",
+    "scope": "series_including_target",
+    "conditions": "Above respective optimum water fractions.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute high-water intensity loss to agglomeration, turbidity and precipitation.",
+    "limitations": "Blue shifts in turbid samples are attributed to scattering, not demonstrated new emissive states."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F025",
+    "pdf_page": 6,
+    "quote": "Both the ligands exhibited fluorescence quenching towards four metal ions (Co2+, Fe2+, Cu2+ and Fe3+) in THF medium",
+    "subject": "L1 and L2",
+    "scope": "series_including_target",
+    "conditions": "1e-5 M ligands, 10 equivalents tested metal ions; THF versus THF/water 40:60.",
+    "kind": "observation",
+    "statement": "THF selectivity is poor; AIE medium preferentially responds to Fe3+, with small Fe2+ interference retained.",
+    "limitations": "Selective means within the tested ions/conditions, not universal ion exclusion."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F025",
+    "pdf_page": 7,
+    "quote": "the stoichiometry of both L1 and L2 towards Fe3+ complex was established as 1:1",
+    "subject": "L1 and L2 with Fe3+",
+    "scope": "series_including_target",
+    "conditions": "Job's absorption plots and Benesi-Hildebrand fits in respective AIE media.",
+    "kind": "author_interpretation",
+    "statement": "Authors infer 1:1 Fe3+ binding; association constant for target is 2.930e5 M-1.",
+    "limitations": "Job's maximum and fits are not an independently resolved coordination structure."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F025",
+    "pdf_page": 7,
+    "quote": "The average fluorescence lifetime of L1 and L2 in THF-H2O was found to be 6.98 and 4.86 ns respectively.",
+    "subject": "L2 with/without Fe3+",
+    "scope": "target",
+    "conditions": "THF/water 40:60; main Table 1 and Figure 5.",
+    "kind": "observation",
+    "statement": "Lifetime decreases from 4.86 to 2.5 ns and quantum yield from 0.136 to 0.01 upon Fe3+ addition.",
+    "limitations": "Values visually checked in Table 1. Shortened lifetime complicates the authors' static-only quenching interpretation."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F025",
+    "pdf_page": 7,
+    "quote": "This reasonable reduction in radiative processes and enhancement in nonradiative processes results in the fluorescence quenching",
+    "subject": "L2 with Fe3+",
+    "scope": "target",
+    "conditions": "THF/water 40:60; rates derived from lifetime and yield.",
+    "kind": "computation",
+    "statement": "Table 1 reports kr 0.027 to 0.004 ns-1 and knr 0.177 to 0.396 ns-1.",
+    "limitations": "Source-derived apparent rates under a simplified yield/lifetime model; not direct microscopic rate measurements."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F025",
+    "pdf_page": 9,
+    "quote": "the electron cloud of ligands spread from ligands to metal and the ligand to metal charge transfer (LMCT) is due to the unpaired electrons present in the FMO.",
+    "subject": "L1/L2-Fe3+ complexes",
+    "scope": "series_including_target",
+    "conditions": "Gas-phase DFT; 6-31G** for light atoms and LANL2DZ for Fe; Figure 7.",
+    "kind": "computation",
+    "statement": "Authors use frontier orbitals and reduced complex gaps to support LMCT/PET quenching.",
+    "limitations": "Ground-state FMO gaps alone do not prove excited-state transfer kinetics or discriminate paramagnetic quenching."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F025",
+    "pdf_page": 11,
+    "quote": "The fluorescence turn-off response of L1/L2 with Fe3+ could be attributed to PET inhibition mechanism",
+    "subject": "L1/L2-Fe3+",
+    "scope": "series_including_target",
+    "conditions": "Conclusion compared with main p.7 and p.9.",
+    "kind": "author_interpretation",
+    "statement": "The source explicitly uses 'PET inhibition' in conclusion, while results describe PET/LMCT causing quenching.",
+    "limitations": "Preserve the reported ET-family interpretation with unresolved direction/wording, not as definitive causal proof."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+   },
+   {
+    "label": "PET_ET",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Preserve explicit PET/LMCT assignment for Fe3+-induced turn-off, but the source alternates between PET and PET inhibition and does not uniquely establish transfer dynamics."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Measured lifetimes/yields and derived kr/knr show changed apparent decay balance under Fe3+ binding."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Source's AIE explanation is arrested C=N isomerization, with hydrogen bonding proposed and no direct torsion kinetics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Aggregated solvent environment is proposed to arrest isomerization; morphology is described, not a resolved molecular packing structure."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Under the frozen broad family, Fe3+ binding to ligand recognition sites alters emission; no cavity inclusion is implied."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "The explicitly proposed process is ligand-to-metal electron-transfer quenching, recorded under PET_ET; no separate intramolecular TICT mechanism is established."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism established; hydrogen bonding or ground-state acid-base chemistry alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E09",
+     "E10"
+    ],
+    "rationale": "Preserve explicit PET/LMCT assignment for Fe3+-induced turn-off, but the source alternates between PET and PET inhibition and does not uniquely establish transfer dynamics."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation alone does not establish excitonic coupling, H/J aggregation, excimer or exciplex emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Measured lifetimes/yields and derived kr/knr show changed apparent decay balance under Fe3+ binding."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E09"
+    ],
+    "rationale": "Fe3+ coordination/LMCT in this source is an electron-transfer quenching proposal, not evidence for emissive metal states, triplet transfer or lanthanide antenna behavior."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection-mediated nonradiative pathway established; twisting alone is insufficient."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No emission from higher excited states or suppression of Kasha's rule established."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "baf167cf9334d0db563270ff5da7e93de321b1c0d0714b5641658a4f5d323904",
+  "label_record_sha256": "3b5a9915c017e1b1ceea9aa5275087a757c763b9742c499ebecbda5528f75bae"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

@@ -1,0 +1,275 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0032",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "BrCCCCOc1ccc(C(=C(c2ccc(OCCCCBr)cc2)c2ccc(OCCCCBr)cc2)c2ccc(OCCCCBr)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPE-(Br)4",
+  "source_documents": [
+   {
+    "source_id": "S0032",
+    "title": "Monosulfonicpillar[5]arene: Synthesis, Characterization, and Complexation with Tetraphenylethene for Aggregation-Induced Emission",
+    "doi": "10.1038/s41598-018-22446-y",
+    "pdf_sha256": "2968393ac8ef9a074e86f30e1d36c529c030ecc72c284b31f6095d132892a396",
+    "page_count": 8
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "S0032",
+    "pdf_page": 3,
+    "quote": "the crosspeak A indicates that H4 is in close contact with Hd, He",
+    "subject": "G1 and MSP5",
+    "scope": "comparator",
+    "conditions": "Model guest G1 in chloroform, NOESY and titration.",
+    "kind": "observation",
+    "statement": "G1 shows intermolecular NOESY contacts and a reported association constant of (1.08 +/- 0.22) x 10^2 per molar.",
+    "limitations": "G1 is a small model guest, not TPE-(Br)4. Do not transfer its association constant or full binding pose to the target."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "S0032",
+    "pdf_page": 3,
+    "quote": "The proton NMR spectrum of MSP5 with TPE-(Br)4 in d-chloroform solution was also obtained and similar complexation-induced chemical shift changes were detected",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Target-host mixture in deuterated chloroform; main text reports SI Fig. S58.",
+    "kind": "observation",
+    "statement": "Target-specific chemical shift changes are reported as consistent with host-guest complexation.",
+    "limitations": "The underlying SI spectrum is not in this packet; the main-text report is retained without claiming an independent rereading of the spectrum."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "S0032",
+    "pdf_page": 3,
+    "quote": "Strong emission in dilute solution was observed from the complex of TPE-(Br)4⊂MSP5",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Fig. 3b spectra at 2 micromolar in chloroform; photographs at 200 micromolar, 298 K.",
+    "kind": "observation",
+    "statement": "The combined host-guest sample emits strongly while separate components are essentially nonemissive at the same concentration.",
+    "limitations": "Spectra and photographs use different concentrations. This observation alone does not identify the nonradiative pathway."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "S0032",
+    "pdf_page": 3,
+    "quote": "formation of host-guest inclusion complex that restricts the intramolecular rotation of phenyl rings",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Host titration and increased target fluorescence.",
+    "kind": "author_interpretation",
+    "statement": "The authors explain the enhancement through host-assisted restriction of phenyl rotation.",
+    "limitations": "No direct torsion dynamics measurement is shown; this source interpretation is supported indirectly by binding and control experiments."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "S0032",
+    "pdf_page": 4,
+    "quote": "the fluorescence of TPE-(Br)4 was almost unchanged",
+    "subject": "TPE-(Br)4 with DMP5 or MCP5",
+    "scope": "target",
+    "conditions": "Alternative hosts in chloroform, Fig. 4a and main-text control description.",
+    "kind": "observation",
+    "statement": "Alternative host binding does not reproduce the MSP5 turn-on. The source explicitly argues binding alone is insufficient.",
+    "limitations": "This is a negative control on a generic binding-sufficiency claim, not evidence against all host-guest effects."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "S0032",
+    "pdf_page": 4,
+    "quote": "No fluorescence was observed when M1 mixed with TPE-(Br)4",
+    "subject": "TPE-(Br)4 with noncyclic sulfonic fragment M1",
+    "scope": "target",
+    "conditions": "Fig. 4b, sulfonic-group control without the pillar cavity.",
+    "kind": "observation",
+    "statement": "The sulfonic fragment alone does not produce the turn-on seen with MSP5.",
+    "limitations": "The joint host structure and assembly context matter; neither a cavity alone nor an isolated sulfonic group explains all controls."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "S0032",
+    "pdf_page": 5,
+    "quote": "self-assemble into nanoparticles with the average diameter of 16 nm",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Main text summarizes SEM, DLS, Tyndall effect and DOSY; underlying Fig. S60-S61 are not supplied.",
+    "kind": "observation",
+    "statement": "The source reports a common diffusion behavior and nanoparticle formation around 16 nm for the combined sample.",
+    "limitations": "Reported assembly evidence, not a resolved packing structure or proof of excitonic/excimer emission; SI data not independently inspected."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "S0032",
+    "pdf_page": 5,
+    "quote": "The solubility of the host-guest complex (fluorescent nanoparticles) in chloroform was reduced due to the hydrophilic group",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Assembly in chloroform; interpretation integrating alternative hosts and sulfonic-group controls.",
+    "kind": "author_interpretation",
+    "statement": "The source couples host-assisted restriction of motion with reduced solubility and aggregation in explaining emission.",
+    "limitations": "Confinement and RIM describe overlapping aspects of the same pathway, not necessarily separate additive mechanisms."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "S0032",
+    "pdf_page": 5,
+    "quote": "intensity decreased gradually upon raising the temperature",
+    "subject": "TPE-(Br)4 with MSP5",
+    "scope": "target",
+    "conditions": "Temperature cycle, Fig. 5c-d; 1 micromolar in THF.",
+    "kind": "observation",
+    "statement": "Emission decreases on heating and recovers on returning to room temperature.",
+    "limitations": "Temperature experiments use THF rather than the chloroform binding titrations; intensity alone cannot distinguish disassembly from increased nonradiative motion."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E09"
+    ],
+    "rationale": "Retain the source's host-assisted RIR explanation, explicitly as an indirect mechanistic interpretation rather than measured rotation dynamics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Nanoparticle formation and altered solubility provide the external assembly context for motion restriction. This overlaps with host binding and RIM."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Target complexation and appropriate host architecture are central to the turn-on. Negative controls exclude a blanket claim that any host binding is sufficient."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E09"
+    ],
+    "rationale": "Retain the source's host-assisted RIR explanation, explicitly as an indirect mechanistic interpretation rather than measured rotation dynamics."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Nanoparticle formation and altered solubility provide the external assembly context for motion restriction. This overlaps with host binding and RIM."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Target complexation and appropriate host architecture are central to the turn-on. Negative controls exclude a blanket claim that any host binding is sufficient."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific charge-transfer assignment or diagnostic comparison is established in the selected evidence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer mechanism is established. Changing solution pH or ground-state protonation alone does not establish ESIPT."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No photoinduced electron-transfer pathway is established by the selected source evidence."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Particle formation and AIE alone do not establish H/J excitonic or excimer emission; no such target assignment is established here."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Lifetime or intensity changes alone do not isolate radiative rates or a distinct bright/dark-state mechanism. Do not duplicate a generic nonradiative explanation as a separate established pathway."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet, metal-mediated or energy-transfer mechanism is established in the selected evidence."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection calculation or assignment is established in the selected evidence."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emissive mechanism or anti-Kasha assignment is established in the selected evidence."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "d25fa5b394f91114b226a4671ab3889335b8a08d9f3fd89b5436af8bba3e8423",
+  "label_record_sha256": "cd2ccdb425bc82e153f80d0cc8d1bec6221d48854a8040a4be5a17b085379b3d"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}

@@ -1,0 +1,277 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0027",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC[n+]1ccc(C=Cc2ccc(C(=C(c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)c3ccc(C=Cc4cc[n+](CC)cc4)cc3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPE-4EP",
+  "source_documents": [
+   {
+    "source_id": "F014",
+    "title": "Multifunctional Supramolecular Assemblies with Aggregation-Induced Emission (AIE) for Cell Line Identification, Cell Contamination Evaluation and Cancer Cell Discrimination",
+    "doi": "10.1021/acsnano.0c03404",
+    "pdf_sha256": "3468403615d022d51aba8b945bf13ce6f93783168044611db3fe3315f07c5414",
+    "page_count": 26
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F014",
+    "pdf_page": 7,
+    "quote": "only part pyridinium groups of the TPE-4EP could insert into the cavity of CB[8]",
+    "subject": "TPE-4EP with CB[8]",
+    "scope": "target",
+    "conditions": "1H NMR titration in D2O, guest 0.2 mM; Fig. 1 p.7.",
+    "kind": "author_interpretation",
+    "statement": "New shifted peaks and weakened original pyridinium peaks indicate partial inclusion; authors invoke steric hindrance and propose a hyperbranched assembly.",
+    "limitations": "Do not infer inclusion of all four arms or assign TPE-3EP's 3.7% yield to this guest; hyperbranching is a proposed topology."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F014",
+    "pdf_page": 7,
+    "quote": "their largest absorbance peaks had different degrees of red-shift.",
+    "subject": "TPE-4EP with CB[8]",
+    "scope": "target",
+    "conditions": "Ultrapure water, guest 30 micromolar, guest:CB[8] 1:2; Fig. 2A p.9.",
+    "kind": "observation",
+    "statement": "Target absorption maximum shifts from 390 to 405 nm after CB[8] assembly.",
+    "limitations": "Absorption shifts are target-specific; electrostatic perturbation does not alone establish ICT, an exciton or an excimer."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F014",
+    "pdf_page": 9,
+    "quote": "The UV/Vis absorption spectra (A) and fluorescence spectra (B)",
+    "subject": "TPE-4EP with and without CB[8]",
+    "scope": "target",
+    "conditions": "Fig. 2B-C visually inspected; ultrapure water, guest 30 micromolar; ratio 1:2. Absolute PL yield method on pp.18-19.",
+    "kind": "observation",
+    "statement": "The target's PL intensity increases and blue-shifts on complexation; Fig. 2C gives quantum yield 1.4% to 2.0%.",
+    "limitations": "Values are read from the displayed target-specific table, not inferred from intensity scaling. No emission lifetime or separated rate constants are supplied."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F014",
+    "pdf_page": 8,
+    "quote": "the intramolecular motion in the bulk assembly could be further restricted.",
+    "subject": "TPE-2EP, TPE-3EP and TPE-4EP CB[8] assemblies",
+    "scope": "series_including_target",
+    "conditions": "Aqueous host-induced assembly; p.8 photophysical discussion.",
+    "kind": "author_interpretation",
+    "statement": "Authors propose that shared CB[8] cavities, bulky host and linked neighboring molecules restrict intramolecular motions, explaining fluorescence enhancement.",
+    "limitations": "An explicit series interpretation including the target, not independently measured molecular motion. It does not imply equal occupancy or enhancement across the series."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F014",
+    "pdf_page": 8,
+    "quote": "the hydrophobic cavity of CB[8] had a low-polarity microenvironment",
+    "subject": "TPE-EP series including TPE-4EP",
+    "scope": "series_including_target",
+    "conditions": "Blue shifts of the host-bound aqueous assemblies, Fig. 2B.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute blue-shifted emission to a lower-polarity cavity environment.",
+    "limitations": "Retain this polarity interpretation without upgrading it to experimentally established ICT/TICT; the paper does not explicitly resolve a CT excited state."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F014",
+    "pdf_page": 9,
+    "quote": "By calculating the quantitative data, the Ka between three kinds of AIE molecules and CB[8]",
+    "subject": "TPE-4EP with CB[8]",
+    "scope": "target",
+    "conditions": "Fluorescence titrations reported from SI S2; methods p.19 use 25 micromolar guest; excitation 390 nm.",
+    "kind": "observation",
+    "statement": "The target's reported association constant is 4.14e4, assigned in the stated 2EP/3EP/4EP sequence.",
+    "limitations": "SI fit equations/uncertainties and the dimensional convention were not inspected; do not overinterpret a simple binding constant for a multivalent assembly."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F014",
+    "pdf_page": 10,
+    "quote": "the TPE- 4EP@CB[8] had a square structure",
+    "subject": "TPE-4EP@CB[8]",
+    "scope": "target",
+    "conditions": "SEM and cryo-TEM discussion, Fig. 3; 30 micromolar samples.",
+    "kind": "observation",
+    "statement": "The source reports target assemblies as square-shaped, about 400-500 nm.",
+    "limitations": "Morphology is reported from the main text; it is not molecular-resolution packing or proof of identical aggregation in cells."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F014",
+    "pdf_page": 13,
+    "quote": "the enhancement of fluorescence intensity was the effect of the accumulation of assemblies.",
+    "subject": "TPE-4EP@CB[8] in cells",
+    "scope": "target",
+    "conditions": "SV-HUC-1 and T24 cells, 30 micromolar assembly; time-dependent flow cytometry, Fig. 5.",
+    "kind": "author_interpretation",
+    "statement": "Authors attribute increasing cell fluorescence to uptake/accumulation. TPE-4EP assemblies stain primarily inside cells and give the smallest fluorescence increase of these three assemblies.",
+    "limitations": "Do not assign all cellular signal increase to per-molecule photophysical turn-on; size/shape-driven uptake is an author interpretation."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F014",
+    "pdf_page": 11,
+    "quote": "it was hardly observed the fluorescence signals of AIE supramolecular assemblies in cells",
+    "subject": "TPE-EP series including TPE-4EP",
+    "scope": "series_including_target",
+    "conditions": "Low-temperature co-staining control at 4 C versus 37 C; 20 min; Fig. 4 and SI S6-S7 discussed.",
+    "kind": "observation",
+    "statement": "Assembly fluorescence in cells is strongly reduced at 4 C while tracker signal remains; authors use this to support active uptake.",
+    "limitations": "Temperature inhibition is not a unique proof of a particular endocytosis pathway; SI controls not inspected."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Authors explicitly propose CB[8]- and assembly-imposed RIM, supported indirectly by optical enhancement rather than direct torsional measurements."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E07"
+    ],
+    "rationale": "Cavity confinement and linked supramolecular assemblies are the enabling environment for RIM; overlapping mechanisms, not independent proof."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "NMR and optical titrations support target-specific CB[8] association and changed emission; occupancy limitations are retained."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Authors explicitly propose CB[8]- and assembly-imposed RIM, supported indirectly by optical enhancement rather than direct torsional measurements."
+   },
+   {
+    "label": "PACKING_HOST_MATRIX_CONFINEMENT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E07"
+    ],
+    "rationale": "Cavity confinement and linked supramolecular assemblies are the enabling environment for RIM; overlapping mechanisms, not independent proof."
+   },
+   {
+    "label": "HOST_GUEST_INTERACTION",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "NMR and optical titrations support target-specific CB[8] association and changed emission; occupancy limitations are retained."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "The paper proposes electrostatic/polarity effects but does not establish target CT/TICT; do not infer it from pyridinium chemistry or a blue shift."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No excited-state proton-transfer pathway is established here; ground-state protonation alone is insufficient."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific photoinduced electron-transfer pathway is established in this extraction."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific exciton, excimer or new intermolecular emissive state is established; aggregation alone is insufficient."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [
+     "E03",
+     "E08"
+    ],
+    "rationale": "Quantum yield increases and cell accumulation are documented, but no distinct radiative-rate/state-balance mechanism is isolated."
+   },
+   {
+    "label": "TRIPLET_METAL_ENERGY_TRANSFER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific triplet or metal/energy-transfer photophysics is established in this extraction."
+   },
+   {
+    "label": "RACI_CI_ACCESS",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No target-specific conical-intersection pathway is established in this extraction."
+   },
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No higher-state emission or anti-Kasha mechanism is established in this extraction."
+   }
+  ]
+ },
+ "provenance": {
+  "annotation_method": "assistant_source_reconstruction",
+  "origin_snapshot": "raw_data_v2_120_identity_revision_20261004",
+  "raw_record_sha256": "5b4648a55818945b13df5ba745df5e965d590ea5b3cd4becef346fe3232532fa",
+  "label_record_sha256": "cca65370a9b730e741ad8b9273cbfdbec82a83829a54eb73a70a2faf3711ca6f"
+ },
+ "structure_verification": {
+  "status": "unverified",
+  "note": "legacy SMILES, not yet checked against the source paper",
+  "runnable": true
+ }
+}
