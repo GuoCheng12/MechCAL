@@ -50,6 +50,9 @@ class AgentConfig:
     api_backoff_seconds: float = 5.0         # wait before retry k: backoff * 3**k (5, 15, 45 s)
     max_internal_errors: int = 3             # unexpected exceptions tolerated per run before stopping with a result
     self_check: bool = True
+    # priors from separate tool-free model calls (structure, facts, family definitions only), averaged and
+    # fixed for the run; 0: the Planner sets them in its first step. The CLI runs with 3.
+    prior_samples: int = 0
     iterate: bool = True                     # False: plan once, run, submit (ablation)
     recipes: bool = True                     # False: single tools only (ablation)
 
@@ -250,6 +253,16 @@ class Adoption(_M):
         return None if v is None else _label(v)
 
 
+class PriorItem(_M):
+    label: str
+    prior: float = Field(ge=0, le=1)
+    basis: str = ""
+
+
+class PriorOutput(_M):
+    priors: list[PriorItem]
+
+
 class PlannerStep(_M):
     @model_validator(mode="before")
     @classmethod
@@ -414,6 +427,9 @@ class AgentRun:
         self.planner_prompt = load_prompt("agent_professor.md" if self.cfg.worker else "agent_planner.md")
         self.worker_prompt = load_prompt("agent_worker.md")
         self.critic_prompt = load_prompt("agent_critic.md")
+        self.prior_prompt = load_prompt("agent_prior.md")
+        self.priors_fixed = False
+        self.prior_samples: list[dict] = []
 
     # -- catalog
     def _tool_cards(self) -> list[dict]:
@@ -580,15 +596,17 @@ class AgentRun:
                 f["adopted_as"] = cid
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: adopt {a.finding_id} rejected ({exc})")
-        results_exist = self._computations() > 0
+        locked = self.priors_fixed or self._computations() > 0
         for u in step.updates:
             fam = self.board.families[u.label]
             keys = ["plausibility", "status", "reason", "next_test", "prior", "prior_basis"]
-            if results_exist and fam.prior is not None and u.prior is not None and abs(u.prior - fam.prior) > 1e-9:
+            if locked and fam.prior is not None and (u.prior is not None or u.prior_basis is not None):
                 keys = keys[:4]                      # a prior is set before evidence; afterwards only plausibility moves
-                self.protocol["prior_changes_refused"] = self.protocol.get("prior_changes_refused", 0) + 1
-                self.history.append(f"step {n}: prior of {u.label} kept at {fam.prior} (priors are fixed once results "
-                                    "exist; express what the evidence changed through plausibility)")
+                if u.prior is not None and abs(u.prior - fam.prior) > 1e-9:
+                    self.protocol["prior_changes_refused"] = self.protocol.get("prior_changes_refused", 0) + 1
+                    why = "it came from the independent elicitation" if self.priors_fixed else "results exist"
+                    self.history.append(f"step {n}: prior of {u.label} kept at {fam.prior} ({why}; express what the "
+                                        "evidence changes through plausibility)")
             for key in keys:
                 if getattr(u, key) is not None:
                     setattr(fam, key, getattr(u, key))
@@ -1008,12 +1026,50 @@ class AgentRun:
         self.proposals = proposals[:5]
         self.log.write({"role": "critic_summary", "before_submit": before_submit, "proposals": self.proposals})
 
+    # -- priors
+    def _elicit_priors(self) -> None:
+        """Independent priors: tool-free samples from structure and chemistry knowledge, averaged, fixed for the run."""
+        payload = {"verified_smiles": self.smiles, "mechanism_pool": mechanism_definitions(),
+                   "structural_facts": self.facts}
+        samples = []
+        for i in range(self.cfg.prior_samples):
+            out = self._ask(self.client, "prior", self.prior_prompt, payload, PriorOutput)
+            got = {p.label: p for p in (out.priors if out else []) if p.label in MECHANISM_POOL}
+            if len(got) == len(MECHANISM_POOL):
+                samples.append(got)
+            else:
+                self.log.write({"role": "prior", "event": "incomplete_sample", "sample": i + 1, "families": sorted(got)})
+        self.prior_samples = [{lab: {"prior": p.prior, "basis": p.basis} for lab, p in s.items()} for s in samples]
+        if not samples:
+            self.history.append("Independent prior elicitation failed: set a prior and prior_basis for every family "
+                                "in your first step.")
+            self.log.write({"role": "prior_summary", "samples": 0})
+            return
+        spread = {}
+        for label in MECHANISM_POOL:
+            values = [s[label].prior for s in samples]
+            mean = sum(values) / len(values)
+            closest = min(samples, key=lambda s: abs(s[label].prior - mean))[label]
+            fam = self.board.families[label]
+            fam.prior = fam.plausibility = round(mean, 3)
+            fam.prior_basis = closest.basis
+            fam.reason = f"prior from {len(samples)} independent sample(s): {', '.join(f'{v:g}' for v in values)}"
+            spread[label] = round(max(values) - min(values), 3)
+        self.priors_fixed = True
+        self.log.write({"role": "prior_summary", "samples": len(samples),
+                        "priors": {lab: self.board.families[lab].prior for lab in MECHANISM_POOL}, "spread": spread})
+
     # -- main
     def run(self) -> dict:
         started = time.monotonic()
         self.log.write({"role": "start", "release": AGENT_RELEASE, "config": asdict(self.cfg),
                         "case_id": self.case_id, "smiles": self.smiles, "facts": len(self.facts["facts"])})
         submitted, pre_submit_critic_done = False, False
+        if self.cfg.prior_samples > 0:
+            try:
+                self._elicit_priors()
+            except Exception as exc:  # noqa: BLE001 - the Planner sets priors instead
+                self._internal_error(exc, "prior")
         n = 0
         while True:
             n += 1
@@ -1126,7 +1182,7 @@ class AgentRun:
             "usage": self.usage.as_dict(), "tool_cost": self.gateway.cost(), "critic_runs": self.critic_runs,
             "self_check_removed": [c.claim_id for c in self.board.claims if eligible is not None and c.claim_id not in eligible
                                    and c.label in self.board.ranking()[:3]],
-            "protocol": self._protocol_metrics(),
+            "protocol": self._protocol_metrics(), "prior_samples": self.prior_samples,
             "submission": submission.model_dump(), "board": self.board.model_dump(),
             "raw_grounding": check.model_dump(),
         }
