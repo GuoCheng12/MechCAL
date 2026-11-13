@@ -256,14 +256,16 @@ C1 的兩個數據都指向先驗：重複不穩定完全來自先驗（3.1）�
 - 每個家族寫清楚判定規則，特別是 AGG 和 PACK 的邊界。
 - 記錄實驗條件（溶液、聚集、晶體、基質），讓依賴條件的機制有據可查。
 - 加入「計算能區分」的對照案例（例如同一骨架有無 ESIPT 位點、強弱給體-受體），讓證據的作用可以被評估。
-- 所有 SMILES 先做驗證（已有 `analysis/smiles_verification/` 的試點方法）。
+- 所有 SMILES 先做驗證（已完成：119 個全部按原文和 SI 核實，22 個更正，見 `analysis/smiles_verification/` 和 `benchmarks/photomechbench/corrections/`）。
 - 家族分布更均衡，案例數更多，才能看出 ±0.05 級別的差別。
 
-**暫停時的代碼狀態**（都在本地，未推送）：
+**暫停時的代碼狀態**（寫報告時；之後的更新見本段末）：
 - `evidence-evaluation`：C1 + 成本日誌修復（628592c）+ 本報告。
 - `c2-hygiene`：編號去除、先驗鎖定、參考面板、TD-DFTB 修復、基線不崩潰、擾動按陳述檢測（882807e、8424cc2、007c07f、5ee6ee3）。
 - `c3-priors`（基於 c2-hygiene 的 007c07f）：獨立先驗（1468397）。驗證只完成一半，建議作為可選項保留，暫不合併。
 - 建議把 `c2-hygiene` 合併進 `evidence-evaluation`：它的改動都和數據集無關，而且修的是公平性和工具錯誤。
+
+更新（2026-11-13 晚）：兩個分支都已合併進 `evidence-evaluation`（ac122fc、b662bad；獨立先驗默認關閉），並已推送；臨時分支和工作目錄已刪除。之後又加了基線結構事實和評審 token 記錄（5477719）、能力卡片和評分規則的作者確認（770dca4、41fd996）、測試集 SMILES 更正（be59d3c）。新數據集將整體替換現在的 102 個測試案例。
 
 ## 九、補充：4 個開發案例的 SMILES 已更正（2026-11-13 下午）
 
@@ -290,6 +292,6 @@ C1 的兩個數據都指向先驗：重複不穩定完全來自先驗（3.1）�
 ## 附：數據和代碼位置
 
 - C1 運行：`outputs/agent/dev4a`、`dev4b`；基線 `outputs/baselines/react_dev`、`direct_dev`；擾動 `outputs/perturbations/c1`；分析 `outputs/analysis/c1_dev4.json`（`examples/c1_analysis.py`）。
-- C2 代碼：分支 `c2-hygiene`（工作目錄 `/ai/workspace/MechCAL-c2`），提交 882807e、8424cc2、007c07f；運行在該目錄的 `outputs/agent/dev5a`、`dev5b`、`outputs/baselines/react_dev_c2`、`outputs/perturbations/c2`。
-- 面板：`mechcal/agent/reference_panel.json`，重建命令 `python examples/build_reference_panel.py --out outputs/reference_panel` 然後 `--install`。
-- 17 GB 的舊成本日誌保留在 `outputs/agent/cost_log.doubled-20261113.jsonl`，可以刪除。
+- C2 運行：`outputs/agent/dev5a`、`dev5b`；ReAct `outputs/baselines/react_dev_c2`；中止的擾動實驗 `outputs/perturbations/c2-stopped`。C3 運行：`outputs/agent/dev6a`、`dev6b`（中止）、`c3-smoke-0047`。更正結構的重跑：`outputs/agent/corrected3_a`、`corrected3_b`、`outputs/baselines/react_corrected3`、`direct_corrected3`。（C2、C3 的運行原本在臨時工作目錄裡，已移到主倉庫的 `outputs/`；運行記錄內部的絕對路徑仍指向舊目錄，重新評分不受影響。）
+- 面板：`mechcal/agent/reference_panel.json`，重建命令 `python examples/build_reference_panel.py --out outputs/reference_panel` 然後 `--install`；之前的構建結果在 `outputs/reference_panel_builds/`。
+- 17 GB 的舊成本日誌已刪除（只有重複記錄，去重後的 505 條保留在 `outputs/agent/cost_log.jsonl`）。
