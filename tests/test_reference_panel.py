@@ -72,3 +72,21 @@ def test_report_carries_panel_context_for_its_artifacts(tmp_path, monkeypatch):
     report = run._report(task, {"status": "done", "summary": "ok", "claims": []}, 1)
     assert report["reference_panel"]["T001"][0]["panel_percentile"] == 10
     json.dumps(report)
+
+
+def test_every_role_gets_the_same_neutral_panel_description():
+    """The panel is described, not interpreted: no prompt tells a role what counts as typical."""
+    from pathlib import Path
+    import re
+    from mechcal.eval.grounded_subjects import REACT_PROTOCOL
+    root = Path(__file__).resolve().parents[1] / "mechcal/prompts"
+    texts = {name: (root / name).read_text() for name in ("agent_professor.md", "agent_planner.md", "agent_worker.md")}
+    texts["react"] = REACT_PROTOCOL
+    flat = {k: re.sub(r"\s+", " ", v) for k, v in texts.items()}
+    core = ("percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes and "
+            "other widely studied luminescent or absorbing molecules, chosen as common examples and not to resemble "
+            "the molecules studied here; isolated molecules, no metal complexes), computed with the same tool and "
+            "default settings. The panel has no mechanism labels.")
+    for name, text in flat.items():
+        assert core in text, name
+        assert not re.search(r"is typical|means typical|use it", text), name

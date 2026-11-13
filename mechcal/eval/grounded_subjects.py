@@ -164,8 +164,11 @@ You may use tools before submitting. Reply with exactly one JSON action per turn
 - {"action": "submit", "mechanism_predictions": [...]}  -> final answer, ends the episode
 The prepared input structure has artifact_id given in the payload; many tools take it as
 source_artifact_id. Tool results list numeric values by JSON pointer: cite those exactly.
-A result's reference_panel (when present) gives, for standard descriptors, the percentile among
-common organic chromophores computed with the same tool and default settings (no mechanism labels).
+A result's reference_panel (when present) gives, for each standard descriptor, its percentile,
+median and interquartile range among 43 common organic chromophores (aromatics, dyes and other
+widely studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
+molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
+default settings. The panel has no mechanism labels.
 When must_submit_now is true, submit immediately."""
 
 

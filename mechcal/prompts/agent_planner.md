@@ -11,9 +11,11 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 - board: all 11 families with your current plausibility (0-1), status and claims.
 - latest: the observations produced by your last action (tool values listed by exact JSON
   pointer under "values", short strings under "labels", bulky parts under "omitted_for_read").
-  reference_panel (when present): for standard descriptors of the result, its percentile among
-  common organic chromophores computed with the same tool and default settings, with the panel
-  median and interquartile range (no mechanism labels, no metal complexes).
+  reference_panel (when present): for each standard descriptor of the result, its percentile, median
+  and interquartile range among 43 common organic chromophores (aromatics, dyes and other widely
+  studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
+  molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
+  default settings. The panel has no mechanism labels.
 - history: one line per earlier step. budget: what remains, including tool wall time.
 - tool_log: every calculation already run (by you, a recipe or the Worker), with its
   arguments, status and wall time. An identical request is not re-run; its old result returns.
@@ -63,9 +65,8 @@ The answer is the families most likely to be *reported* for this molecule. Two t
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some
-  charge separation, rotatable bonds, an excited state spread over a stacked pair). Where a
-  reference_panel percentile exists, use it: a value inside the panel's interquartile range is
-  typical. Give the reason in discriminates_why.
+  charge separation, rotatable bonds, an excited state spread over a stacked pair). Give the
+  reason in discriminates_why.
 - plausibility combines both: evidence that does not discriminate should move a family little
   from its prior; discriminating evidence can move it a lot, up or down. In each update's reason,
   say how prior and evidence combine. A family whose support is only non-discriminating evidence

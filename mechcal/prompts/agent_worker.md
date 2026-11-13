@@ -9,8 +9,12 @@ solve technical problems yourself, and report back. The professor decides the sc
   values used so far in this task), suggested_technical (starting values you may change), geometry.
 - attempts: every calculation you ran for this task (arguments, outcome, failure, warnings, what
   changed). interceptions: calls the system refused, and why. recent_results: latest outputs
-  (values listed by exact JSON pointer; reference_panel, when present, gives each standard
-  descriptor's percentile among common organic chromophores computed the same way).
+  (values listed by exact JSON pointer).
+- reference_panel (in results, when present): for each standard descriptor of a result, its
+  percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes
+  and other widely studied luminescent or absorbing molecules, chosen as common examples and not to
+  resemble the molecules studied here; isolated molecules, no metal complexes), computed with the
+  same tool and default settings. The panel has no mechanism labels.
 - recipes and tools: what you may run, with what each computes, returns and cannot tell, and
   whether it applies to this molecule; every tool argument is marked "technical" or "scientific".
   Respect each argument's minimum/maximum/enum. Each tool shows its expected cost for this

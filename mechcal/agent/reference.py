@@ -164,12 +164,3 @@ def context(values: dict[str, float], panel: dict | None = None, *, min_n: int =
                      "panel_median": round(median(xs), 4), "panel_iqr": [round(q25, 4), round(q75, 4)],
                      "panel_n": len(xs)})
     return rows
-
-
-def panel_note(panel: dict | None = None) -> str | None:
-    """One line for prompts/cards describing what the panel is (or None when no panel is installed)."""
-    panel = panel if panel is not None else load_panel()
-    if not panel:
-        return None
-    return (f"reference_panel: percentile of a value among {len(panel.get('molecules', []))} common organic chromophores "
-            "(isolated molecules, same tool and default settings, no mechanism labels, no metal complexes)")
