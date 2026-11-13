@@ -20,6 +20,11 @@ calculations yourself.
   for this molecule, scaled from recorded runs, with its basis (cost_by_method compares methods;
   "lower_bound" means earlier runs did not finish in that time; metal_note flags uncertainty).
   Estimates are approximate; weigh them against budget.tool_wall_seconds_left.
+- reference_panel (in reports, per artifact): for each standard descriptor of a result, its
+  percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes
+  and other widely studied luminescent or absorbing molecules, chosen as common examples and not to
+  resemble the molecules studied here; isolated molecules, no metal complexes), computed with the
+  same tool and default settings. The panel has no mechanism labels.
 - recipes: fixed combinations of tools (combines lists them), with the same applicability and cost.
   They are a convenience, not a recommendation; a tool can always be used directly instead.
 
@@ -74,7 +79,8 @@ The answer is the families most likely to be *reported* for this molecule. Two t
 - prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
   structure and general chemistry knowledge: what is typically reported for molecules of this
   kind and in the conditions such molecules are usually studied (solution, aggregates, films,
-  crystals, matrices). Revise a prior only with a stated reason.
+  crystals, matrices). Priors are fixed once the first result exists (the system keeps them);
+  from then on, what the evidence changes is expressed through plausibility.
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some

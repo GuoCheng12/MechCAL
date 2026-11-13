@@ -11,6 +11,11 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
 - board: all 11 families with your current plausibility (0-1), status and claims.
 - latest: the observations produced by your last action (tool values listed by exact JSON
   pointer under "values", short strings under "labels", bulky parts under "omitted_for_read").
+  reference_panel (when present): for each standard descriptor of the result, its percentile, median
+  and interquartile range among 43 common organic chromophores (aromatics, dyes and other widely
+  studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
+  molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
+  default settings. The panel has no mechanism labels.
 - history: one line per earlier step. budget: what remains, including tool wall time.
 - tool_log: every calculation already run (by you, a recipe or the Worker), with its
   arguments, status and wall time. An identical request is not re-run; its old result returns.
@@ -55,7 +60,8 @@ The answer is the families most likely to be *reported* for this molecule. Two t
 - prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
   structure and general chemistry knowledge: what is typically reported for molecules of this
   kind and in the conditions such molecules are usually studied (solution, aggregates, films,
-  crystals, matrices). Revise a prior only with a stated reason.
+  crystals, matrices). Priors are fixed once the first result exists (the system keeps them);
+  from then on, what the evidence changes is expressed through plausibility.
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some

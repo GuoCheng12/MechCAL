@@ -45,6 +45,7 @@ namespaces = false
 mechcal = [
   "profiles/*.json",
   "prompts/*.md", "eval/prompts/*.md", "eval/rubrics/*.json",
+  "agent/cards/*.json", "agent/reference_panel.json",
   "baselines/chemgraph_mas/README.md", "baselines/chemgraph_mas/requirements-core.txt"
 ]
 

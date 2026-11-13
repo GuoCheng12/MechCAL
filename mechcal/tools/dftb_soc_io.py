@@ -18,6 +18,17 @@ def finite(values):
     return data
 
 
+def _lowest_roots(path: Path, keep: int = 3) -> str:
+    """EXC.DAT with only the lowest ``keep`` roots of each spin (all of it when only those were solved)."""
+    lines = path.read_text().splitlines()
+    rows = [(i, l.split()) for i, l in enumerate(lines) if '->' in l.split()]
+    kept = set()
+    for spin in ('S', 'T'):
+        manifold = sorted((float(f[0]), i) for i, f in rows if f[-1] == spin)
+        kept.update(i for _, i in manifold[:keep])
+    return '\n'.join(l for i, l in enumerate(lines) if '->' not in l.split() or i in kept) + '\n'
+
+
 def prepare(source: Path, target: Path):
     spectra, matrices = source/'spectra', source/'matrices'
     manifest = json.loads((source/'input_manifest.json').read_text())
@@ -113,11 +124,14 @@ def prepare(source: Path, target: Path):
     lines=[l.split() for l in (spectra/'XplusY.DAT').read_text().splitlines() if l.strip()]
     position=0
     for _ in range(2):
-        if position>=len(lines) or lines[position]!=[str(ndim),'3']:
+        # a block holds every solved root (3, or more when the solver needed more); roots 1-3 are kept
+        if (position>=len(lines) or len(lines[position])!=2 or lines[position][0]!=str(ndim)
+                or not lines[position][1].isdigit() or int(lines[position][1])<3):
             raise ValueError('Unknown RPA block dimensions')
+        nroots=int(lines[position][1])
         position+=1
         block_spin=None
-        for root in range(1,4):
+        for root in range(1,nroots+1):
             if position>=len(lines):
                 raise ValueError('Missing RPA state header')
             header=lines[position]
@@ -138,8 +152,9 @@ def prepare(source: Path, target: Path):
                 position+=1
             if len(vector)!=ndim or (spin,root) in state_vectors or energy<=0:
                 raise ValueError('Invalid RPA vector size/state/energy')
-            state_vectors[(spin,root)]=finite(vector).tolist()
-            state_energies[(spin,root)]=energy
+            if root<=3:
+                state_vectors[(spin,root)]=finite(vector).tolist()
+                state_energies[(spin,root)]=energy
     if position!=len(lines) or set(state_vectors)!={(s,i) for s in ('S','T') for i in range(1,4)}:
         raise ValueError('Unconsumed/duplicate RPA block')
     rows=manifest['states']
@@ -149,8 +164,9 @@ def prepare(source: Path, target: Path):
         if abs(state_energies[(r['spin'],int(r['state'][1:]))]-r['excitation_ev'])>0.0006:
             raise ValueError('RPA and EXC state energies disagree')
     target.mkdir(exist_ok=False)
-    for name in ('geometry.xyz','EXC.DAT','SPX.DAT'):
+    for name in ('geometry.xyz','SPX.DAT'):
         shutil.copyfile(spectra/name,target/name)
+    (target/'EXC.DAT').write_text(_lowest_roots(spectra/'EXC.DAT'))
     shutil.copyfile(matrices/'oversqr.dat',target/'oversqr.dat')
     (target/'band.out').write_text('\n'.join(f'{e:.12g} {o:.12g}' for e,o in bands)+'\n')
     labels={'s':'s1','p_y':'p1','p_z':'p2','p_x':'p3'}

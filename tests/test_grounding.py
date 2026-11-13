@@ -190,6 +190,27 @@ def test_layer_a_detects_falsification_and_ignores_controls(real_like):
     assert summary["flip_conclusion"]["pass_rate"] == 0.0
 
 
+def test_claim_level_detection_counts_changed_claims_flagged_by_grounding_or_judge(real_like):
+    sub, store, donor = real_like
+    rows = perturb.run_suite([(sub, store, SMILES, donor)], text_scorer)
+    summary = perturb.summarize_suite(rows)
+    # the text-only score is fooled, but Layer A still flags every falsified claim
+    for op in ("tamper_value", "tamper_value_text", "swap_molecule", "strip_artifacts", "inject_fake_citation"):
+        assert summary[op]["claim_detection_rate"] == 1.0, op
+    assert summary["flip_conclusion"]["claim_detection_rate"] == 0.0      # needs the judge
+    assert summary["paraphrase"]["claims_targeted"] == 0
+    judged = lambda sub, store, smiles: [(1.0, {0: "contradicted"})] + [0.0] * (len(sub.mechanism_predictions) - 1)
+    flip = perturb.summarize_suite(perturb.run_suite([(sub, store, SMILES, donor)], judged))["flip_conclusion"]
+    assert flip["claim_detection_rate"] == 1.0 and flip["pass_rate"] == 0.0   # flagged, though the score held
+
+
+def test_tamper_rewrites_the_cited_number_not_a_similar_integer():
+    from mechcal.eval.perturb import _replace_number
+    text = "The bright state is state 3 with excitation energy 3.3313 eV."
+    assert _replace_number(text, 3.3313, 33.313) == "The bright state is state 3 with excitation energy 33.3130 eV."
+    assert _replace_number("f = 0.93 and 0.9314", 0.9314, 9.314) == "f = 0.93 and 9.3140"
+
+
 def test_text_only_scoring_is_fooled(real_like):
     sub, store, donor = real_like
     summary = perturb.summarize_suite(perturb.run_suite([(sub, store, SMILES, donor)], text_scorer))

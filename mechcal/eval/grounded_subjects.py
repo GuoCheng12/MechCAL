@@ -7,6 +7,7 @@ budget, that outcome is recorded as such and scores as an empty answer.
 from __future__ import annotations
 
 import json
+import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -123,8 +124,12 @@ class DirectSubject:
     def run(self, case_id: str, smiles: str) -> SubjectResult:
         usage, transcript, feedback = UsageLedger(), [], None
         for _ in range(self.max_repairs + 1):
-            result = self.client.complete_json_result(system_prompt=self.system, payload=_task_payload(smiles),
-                                                      schema_feedback=feedback)
+            result = _complete(self.client, system_prompt=self.system, payload=_task_payload(smiles),
+                               schema_feedback=feedback)
+            if result is None:
+                feedback = "The model call failed after retries."
+                transcript.append({"response": None, "parse_error": feedback})
+                continue
             usage.add("direct", result.usage)
             transcript.append({"response": result.data, "parse_error": result.parse_error})
             try:
@@ -137,6 +142,19 @@ class DirectSubject:
                              usage.as_dict(), {"tool_calls": 0, "tool_wall_seconds": 0.0}, transcript, feedback)
 
 
+def _complete(client, *, retries: int = 3, backoff_seconds: float = 5.0, **kwargs):
+    """One baseline model call with the agent's robustness: an invalid reply (no text, no JSON object)
+    comes back with ``parse_error`` instead of raising; provider errors are retried with backoff,
+    then None. A baseline run therefore never ends in a crash."""
+    for k in range(retries + 1):
+        try:
+            return client.complete_json_result(**kwargs, preserve_invalid_response=True)
+        except Exception:  # noqa: BLE001 - network, timeout or server error
+            if k < retries:
+                time.sleep(backoff_seconds * 3 ** k)
+    return None
+
+
 REACT_PROTOCOL = """
 
 You may use tools before submitting. Reply with exactly one JSON action per turn:
@@ -146,6 +164,11 @@ You may use tools before submitting. Reply with exactly one JSON action per turn
 - {"action": "submit", "mechanism_predictions": [...]}  -> final answer, ends the episode
 The prepared input structure has artifact_id given in the payload; many tools take it as
 source_artifact_id. Tool results list numeric values by JSON pointer: cite those exactly.
+A result's reference_panel (when present) gives, for each standard descriptor, its percentile,
+median and interquartile range among 43 common organic chromophores (aromatics, dyes and other
+widely studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
+molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
+default settings. The panel has no mechanism labels.
 When must_submit_now is true, submit immediately."""
 
 
@@ -155,9 +178,10 @@ class ReactSubject:
     name = "react"
 
     def __init__(self, client, gateway_factory: Callable[[str, str], ToolGateway], *,
-                 max_model_calls: int = 20, max_tool_calls: int = 8) -> None:
+                 max_model_calls: int = 20, max_tool_calls: int = 8, cost_log_path: str | None = None) -> None:
         self.client, self.gateway_factory = client, gateway_factory
         self.max_model_calls, self.max_tool_calls = max_model_calls, max_tool_calls
+        self.cost_log_path = cost_log_path          # same recorded timings as the agent (read only)
         self.system = load_eval_prompt(INSTRUCTIONS) + REACT_PROTOCOL
 
     def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
@@ -170,7 +194,7 @@ class ReactSubject:
         self._entries = {e["tool"]: e for e in entries}
         facts = structural_facts(smiles)
         kind = next(a.kind for a in gateway.case_run.artifact_manifest.artifacts if a.artifact_id == gateway.prepared_artifact_id)
-        costs = CostModel(int(facts["summary"]["atoms_with_h"]), smiles=smiles)
+        costs = CostModel(int(facts["summary"]["atoms_with_h"]), self.cost_log_path, smiles=smiles)
         cost = lambda tool: {"cost": costs.estimate(tool, {k: v["default"] for k, v in self._entries[tool]["args"].items()
                                                            if "default" in v})}
         return cardlib.catalog(entries, cardlib.molecule_profile(facts, kind), ARG_CLASS,
@@ -186,7 +210,10 @@ class ReactSubject:
             payload = {**base, "history": history,
                        "tool_calls_used": gateway.executed_calls(),
                        "must_submit_now": step == self.max_model_calls or gateway.executed_calls() >= self.max_tool_calls}
-            result = self.client.complete_json_result(system_prompt=self.system, payload=payload)
+            result = _complete(self.client, system_prompt=self.system, payload=gateway.public(payload))
+            if result is None:
+                history.append({"action": None, "observation": {"status": "error", "error": "The model call failed after retries."}})
+                continue
             usage.add("react", result.usage)
             action = result.data if isinstance(result.data, dict) else {}
             kind = action.get("action")

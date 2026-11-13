@@ -54,7 +54,19 @@ def spin_parameters(config: QCConfig, symbols: list[str]) -> tuple[dict, dict]:
         "slater_koster_sha256": hashes, "shell_resolved_spin": True}
 
 
-def parse_states(text: str, nstates: int) -> list[dict]:
+# DFTB+'s Casida/Arpack solver can stop at its iteration limit when few roots are requested; its own
+# remedy is to solve for more roots. The lowest requested roots are kept, so results are unchanged.
+MORE_ROOTS_MARK = "Increase the number of excited states to solve for"
+RETRY_ROOTS = 12
+
+
+def needs_more_roots(directory: Path) -> bool:
+    log = directory / "process.log"
+    return log.exists() and MORE_ROOTS_MARK in log.read_text(errors="replace")
+
+
+def parse_states(text: str, nstates: int, solved: int | None = None) -> list[dict]:
+    """Singlet and triplet roots from EXC.DAT; ``solved`` roots per manifold were computed, the lowest ``nstates`` kept."""
     states = []
     try:
         if not any('w [eV]' in line and 'Osc.Str.' in line and 'Sym.' in line for line in text.splitlines()):
@@ -77,9 +89,9 @@ def parse_states(text: str, nstates: int) -> list[dict]:
         result = []
         for spin in ("S", "T"):
             manifold = sorted([s for s in states if s["spin"] == spin], key=lambda s: s["excitation_ev"])
-            if len(manifold) != nstates:
-                raise ValueError(f"Expected {nstates} {spin} states, found {len(manifold)}.")
-            result.extend(dict(state=f"{spin}{i}", **state) for i, state in enumerate(manifold, 1))
+            if len(manifold) != (solved or nstates):
+                raise ValueError(f"Expected {solved or nstates} {spin} states, found {len(manifold)}.")
+            result.extend(dict(state=f"{spin}{i}", **state) for i, state in enumerate(manifold[:nstates], 1))
         return result
     except ValueError as exc:
         raise QCError("parse_failed", str(exc)) from exc
@@ -96,7 +108,8 @@ def compare_states(job: QCJob, atoms, nstates: int) -> dict:
     prefix = str(Path(job.config.parameter_dir).resolve()) + "/"
     if any(c in prefix for c in ('"', '\n', '\r')):
         raise QCError("invalid_args", "Parameter path contains unsupported HSD delimiters.")
-    (directory / "dftb_in.hsd").write_text(f'''Geometry = GenFormat {{
+    def write_input(roots: int) -> None:
+        (directory / "dftb_in.hsd").write_text(f'''Geometry = GenFormat {{
  <<< "input.gen"
 }}
 Driver = {{}}
@@ -116,24 +129,29 @@ Hamiltonian = DFTB {{
  }}
 }}
 ExcitedState = Casida {{
- NrOfExcitations = {nstates}
+ NrOfExcitations = {roots}
  Symmetry = Both
  Diagonaliser = Arpack {{}}
 }}
 Options {{ WriteResultsTag = Yes }}
 ParserOptions {{ ParserVersion = 14 }}
 ''')
-    try:
-        output = job.execute([job.config.dftb_binary], directory)
-    except QCError as exc:
-        log = directory / "process.log"
-        if log.exists() and "SCC is NOT converged" in log.read_text():
-            raise QCError("not_converged", "DFTB SCC did not converge.") from exc
-        raise
+    for roots in (nstates, max(RETRY_ROOTS, nstates + 6)):
+        write_input(roots)
+        try:
+            output = job.execute([job.config.dftb_binary], directory)
+            break
+        except QCError as exc:
+            log = directory / "process.log"
+            if log.exists() and "SCC is NOT converged" in log.read_text():
+                raise QCError("not_converged", "DFTB SCC did not converge.") from exc
+            if roots == nstates and needs_more_roots(directory):
+                continue                              # the solver's own remedy: solve for more roots
+            raise
     if "SCC is NOT converged" in output:
         raise QCError("not_converged", "DFTB SCC did not converge.")
     try:
-        states = parse_states((directory / "EXC.DAT").read_text(), nstates)
+        states = parse_states((directory / "EXC.DAT").read_text(), nstates, solved=roots)
     except OSError as exc:
         raise QCError("parse_failed", "Missing spin-resolved excitation table.") from exc
     singlets, triplets = states[:nstates], states[nstates:]
@@ -141,7 +159,7 @@ ParserOptions {{ ParserVersion = 14 }}
              "singlet_minus_triplet_ev": s["excitation_ev"] - t["excitation_ev"]}
             for s in singlets for t in triplets]
     gap = gaps[0]["singlet_minus_triplet_ev"]
-    return {"states": states, "spin_gaps": gaps, "s1_minus_t1_ev": gap,
+    return {"states": states, "spin_gaps": gaps, "s1_minus_t1_ev": gap, "roots_solved_per_spin": roots,
         "energy_print_resolution_ev": 0.001, "oscillator_strength_unit": "dimensionless",
         "parameter_provenance": provenance, "geometry_scope": "unchanged selected source geometry",
         "method": "SCC-TD-DFTB/mio-1-1, gas-phase neutral closed-shell reference, vertical S/T roots",

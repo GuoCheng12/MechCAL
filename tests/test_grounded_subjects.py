@@ -142,3 +142,31 @@ def test_react_forces_submission_and_reports_exhaustion(gateway_factory):
     assert result.status == "no_valid_submission" and result.submission is None
     assert client.payloads[1]["payload"]["must_submit_now"] is True   # tool budget used up
     assert result.transcript[1]["observation"]["status"] == "rejected"
+
+
+def test_baselines_survive_invalid_replies_and_provider_errors(gateway_factory, monkeypatch):
+    """C1 ReAct runs crashed on 'no final text' / 'no JSON object'; baselines now get the agent's robustness."""
+    import mechcal.eval.grounded_subjects as gs
+    monkeypatch.setattr(gs.time, "sleep", lambda s: None)
+
+    class Flaky:
+        def __init__(self, items):
+            self.items, self.kwargs = list(items), []
+
+        def complete_json_result(self, **kwargs):
+            self.kwargs.append(kwargs)
+            item = self.items.pop(0)
+            if isinstance(item, Exception):
+                raise item
+            return item
+
+    invalid = Reply({}, parse_error="ValueError: Responses API returned no final text")
+    react = Flaky([invalid, RuntimeError("502"), RuntimeError("502"), RuntimeError("502"), RuntimeError("502"),
+                   Reply({"action": "submit", **preds(STRUCTURAL)})])
+    result = ReactSubject(react, gateway_factory, max_model_calls=4, max_tool_calls=1).run("CASE", SMILES)
+    assert result.status == "submitted"
+    assert all(k["preserve_invalid_response"] for k in react.kwargs)
+    assert result.transcript[0]["observation"]["error"].startswith("ValueError: Responses API")
+    assert result.transcript[1]["observation"]["status"] == "error"          # four provider errors: one failed step
+    direct = Flaky([RuntimeError("x")] * 4 + [Reply(preds(STRUCTURAL))])
+    assert DirectSubject(direct).run("CASE", SMILES).status == "submitted"

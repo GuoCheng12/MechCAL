@@ -21,6 +21,35 @@ from mechcal.eval.tool_checks import classify_failure, result_warnings
 
 MAX_OBSERVATION_VALUES = 200
 MAX_STRING_CHARS = 300
+REDACTED_CASE = "this_case"
+REDACTED_DIR = "<run_dir>"
+
+
+def redact(value: Any, needles: list[tuple[str, str]]) -> tuple[Any, int]:
+    """Replace identifying text (case id, local paths) in every string of a JSON-like value.
+
+    Returns the cleaned value and the number of strings changed. Dict keys are kept: they are
+    pointers the agent may use for exact reads.
+    """
+    count = 0
+
+    def clean(x):
+        nonlocal count
+        if isinstance(x, str):
+            y = x
+            for needle, repl in needles:
+                if needle and needle in y:
+                    y = y.replace(needle, repl)
+            count += y != x
+            return y
+        if isinstance(x, dict):
+            return {k: clean(v) for k, v in x.items()}
+        if isinstance(x, (list, tuple)):
+            return [clean(v) for v in x]
+        return x
+    return clean(value), count
+
+
 # Bookkeeping leaves that are not scientific observations.
 NOISE_SEGMENTS = ("/timing/", "/tool_args/", "/runtime/", "/provenance/")
 
@@ -130,6 +159,10 @@ class ToolGateway:
     parents: dict = field(default_factory=dict)   # produced artifact id -> source_artifact_id it was computed from
     produced: dict = field(default_factory=dict)  # T### alias -> reusable artifact ids that call produced
     _profile: dict | None = field(default=None, repr=False)
+    reference_values: dict = field(default_factory=dict)  # T### alias -> descriptor values (see mechcal.agent.reference)
+    atoms_of: dict = field(default_factory=dict)          # excited-state bundle id -> its atom count (dimer or molecule)
+    monomer_s1: float | None = None
+    _size: tuple[int, int] | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         from mechcal.capabilities import default_capability_registry
@@ -162,7 +195,7 @@ class ToolGateway:
         unknown = [i for i in ids if i not in self.tool_ids()]
         if unknown:
             raise KeyError(f"Unknown or disallowed tools: {unknown}")
-        return self.registry.describe_tools(ids, self.case_run.artifact_manifest, amesp_enabled=self.enable_amesp)
+        return self.public(self.registry.describe_tools(ids, self.case_run.artifact_manifest, amesp_enabled=self.enable_amesp))
 
     def catalog(self) -> list[dict]:
         """Compact cards: id, description and readiness; full argument schemas via ``describe``."""
@@ -175,8 +208,22 @@ class ToolGateway:
             cards.append({"tool": cap.capability_id, "description": cap.description, "status": status})
         return cards
 
+    # ---- what agents may see -----------------------------------------------------------------
+    def identifiers(self) -> list[tuple[str, str]]:
+        """Text that would identify the case or the benchmark: the run directory and the case id."""
+        dirs = sorted({str(self.run_dir.resolve()), str(self.run_dir)}, key=len, reverse=True)
+        return [(d, REDACTED_DIR) for d in dirs if len(d) > 1] + [(self.case_id, REDACTED_CASE)]
+
+    def public(self, value: Any) -> Any:
+        """A value as an agent may see it: no case identifier, no local file paths."""
+        return redact(value, self.identifiers())[0]
+
     # ---- execution -------------------------------------------------------------------------
     def call(self, capability_id: str, tool_args: dict | None = None) -> dict:
+        """Run (or refuse) one tool call; the returned observation never carries the case id or local paths."""
+        return self.public(self._call(capability_id, tool_args))
+
+    def _call(self, capability_id: str, tool_args: dict | None = None) -> dict:
         from mechcal.schemas import DispatchRequest
         from mechcal.schemas.execution import AgentExecutionPlan
 
@@ -256,10 +303,41 @@ class ToolGateway:
         limit = tool_args.get("max_wall_seconds")
         if obs.get("failure_class") == "system" and isinstance(limit, (int, float)) and elapsed >= 0.97 * limit:
             obs["failure_code"] = "timeout"            # the call used its whole time limit, whatever the message says
+        if result.status in {"success", "partial"}:
+            panel = self._reference(capability_id, tool_args, result, alias)
+            if panel:
+                obs["reference_panel"] = panel
         self._observations[alias] = dict(obs)
         if note:
             obs["note"] = note
         return obs
+
+    def _molecule_size(self) -> tuple[int, int]:
+        if self._size is None:
+            from rdkit import Chem
+            mol = Chem.MolFromSmiles(self.smiles)
+            self._size = (Chem.AddHs(mol).GetNumAtoms(), mol.GetNumHeavyAtoms()) if mol is not None else (0, 0)
+        return self._size
+
+    def _reference(self, capability_id: str, tool_args: dict, result, alias: str) -> list[dict]:
+        """Descriptor values of this result and where they fall in the reference panel (no labels)."""
+        from mechcal.agent import reference
+        natoms, heavy = self._molecule_size()
+        po = result.structured_results.get("parsed_observables") if isinstance(
+            result.structured_results.get("parsed_observables"), dict) else result.structured_results
+        if capability_id == "microscopic.run_baseline_bundle" and isinstance(po, dict):
+            atoms = po.get("mulliken_charge_count")
+            for aid in [alias, result.tool_result_id, *(r.artifact_id for r in result.artifact_updates)]:
+                self.atoms_of[aid] = atoms
+        source = self.resolve(tool_args.get("source_artifact_id")) if tool_args.get("source_artifact_id") else None
+        if natoms == 0:
+            return []
+        values = reference.extract(capability_id, po, natoms=natoms, heavy_atoms=heavy,
+                                   source_atoms=self.atoms_of.get(source), monomer_s1=self.monomer_s1)
+        if "s1_excitation_ev" in values and self.monomer_s1 is None:
+            self.monomer_s1 = values["s1_excitation_ev"]       # the molecule's own S1, for dimer shifts
+        self.reference_values[alias] = values
+        return reference.context(values)
 
     def _persist(self, result, index: int) -> str:
         path = self.run_dir / "rounds" / result.round_id / f"execution_{result.dispatch_id.replace(':', '_')}_tool_result.json"
@@ -302,7 +380,10 @@ class ToolGateway:
         }
 
     def read(self, artifact_id: str, pointer: str = "") -> dict:
-        """Exact lookup into a recorded artifact (no computation, no new evidence)."""
+        """Exact lookup into a recorded artifact (no computation, no new evidence), as an agent may see it."""
+        return self.public(self._read(artifact_id, pointer))
+
+    def _read(self, artifact_id: str, pointer: str = "") -> dict:
         artifact = self.store.artifacts.get(artifact_id)
         if artifact is None:
             record = next((r for r in self.case_run.artifact_manifest.artifacts if r.artifact_id == artifact_id), None)
@@ -341,7 +422,7 @@ class ToolGateway:
                                                                         if not isinstance(v, (list, dict)) or len(str(v)) < 80},
                          **({"failure_code": failure} if failure else {}),
                          **({"warnings": [w["code"] for w in obs.get("warnings", [])]} if (obs := self._observations.get(c.artifact_id, {})).get("warnings") else {})})
-        return rows
+        return self.public(rows)
 
     def applicability(self, capability_id: str) -> dict | None:
         """Declared scope of a carded tool against this molecule (SMILES-derived); None for uncarded tools."""

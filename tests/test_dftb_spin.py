@@ -134,3 +134,63 @@ def test_nonconvergence_is_not_used(config, case, monkeypatch):
     result = execute_external(dispatch('compare_singlet_triplet_states'), case, config=config)
     assert result.status == 'failed'
     assert result.structured_results['failure_code'] == 'not_converged'
+
+
+MORE = TABLE.rstrip() + """
+4.300 0.00000000 36 -> 40 0.990 4.400 T
+4.500 0.01000000 36 -> 40 0.990 4.400 S
+"""
+
+
+def test_more_solved_roots_keep_the_lowest_requested():
+    states = parse_states(MORE, 3, solved=4)
+    assert [s['state'] for s in states] == ['S1', 'S2', 'S3', 'T1', 'T2', 'T3']
+    assert [s['excitation_ev'] for s in states] == [3.527, 3.973, 4.222, 3.325, 3.640, 3.886]
+    with pytest.raises(QCError):
+        parse_states(MORE, 3)                      # 4 roots found where 3 were solved
+
+
+def test_solver_iteration_limit_is_retried_with_more_roots(config, case, monkeypatch):
+    """DFTB+ asks for more roots when its Casida solver stops at the iteration limit; the retry keeps the lowest."""
+    config = parameter_fixture(config)
+    seen = []
+
+    def stub(self, argv, directory):
+        roots = int(next(l for l in (directory/'dftb_in.hsd').read_text().splitlines() if 'NrOfExcitations' in l).split('=')[1])
+        seen.append(roots)
+        if roots == 3:
+            (directory/'process.log').write_text('ERROR!\n-> Maximum number of iterations reached. Increase the number of '
+                                                 'excited states to solve for (NrOfExcitations).\n')
+            raise QCError('failed', 'Exit 1')
+        (directory/'EXC.DAT').write_text(MORE.replace('4.300 0.00000000 36', '4.300 0.00000000 35') +
+                                         ''.join(f'{5 + i / 10:.3f} 0.00000000 35 -> 41 0.99 5.0 {s}\n'
+                                                 for i in range(roots - 4) for s in 'ST'))
+        return 'ok'
+    monkeypatch.setattr(QCJob, 'execute', stub)
+    result = execute_external(dispatch('compare_singlet_triplet_states'), case, config=config)
+    assert seen == [3, 12] and result.status == 'success'
+    data = result.structured_results['parsed_observables']
+    assert data['s1_minus_t1_ev'] == pytest.approx(.202) and data['roots_solved_per_spin'] == 12
+
+
+def test_other_failures_are_not_retried(config, case, monkeypatch):
+    config = parameter_fixture(config)
+    calls = []
+
+    def stub(self, argv, directory):
+        calls.append(1)
+        (directory/'process.log').write_text('ERROR STOP something else\n')
+        raise QCError('failed', 'Exit 1')
+    monkeypatch.setattr(QCJob, 'execute', stub)
+    assert execute_external(dispatch('compare_singlet_triplet_states'), case, config=config).status == 'failed'
+    assert len(calls) == 1
+
+
+def test_soc_input_keeps_three_roots_per_spin(tmp_path):
+    from mechcal.tools.dftb_soc_io import _lowest_roots
+    path = tmp_path / 'EXC.DAT'
+    path.write_text(MORE)
+    rows = [l.split() for l in _lowest_roots(path).splitlines() if '->' in l.split()]
+    assert sorted(float(r[0]) for r in rows if r[-1] == 'S') == [3.527, 3.973, 4.222]
+    assert sorted(float(r[0]) for r in rows if r[-1] == 'T') == [3.325, 3.640, 3.886]
+    assert 'w [eV]' in _lowest_roots(path)
