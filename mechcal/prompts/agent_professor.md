@@ -20,6 +20,11 @@ calculations yourself.
   for this molecule, scaled from recorded runs, with its basis (cost_by_method compares methods;
   "lower_bound" means earlier runs did not finish in that time; metal_note flags uncertainty).
   Estimates are approximate; weigh them against budget.tool_wall_seconds_left.
+- reference_panel (in reports, per artifact): for each standard descriptor of a result (S1 energy and
+  oscillator strength, hole-electron distance, torsion energy range, lowest frequency, dimer
+  interaction and S1 shift, ...), its percentile among common organic chromophores computed with
+  the same tool and default settings, with the panel median and interquartile range. The panel has
+  no mechanism labels and no metal complexes. Near the median means typical of most molecules.
 - recipes: fixed combinations of tools (combines lists them), with the same applicability and cost.
   They are a convenience, not a recommendation; a tool can always be used directly instead.
 
@@ -79,8 +84,9 @@ The answer is the families most likely to be *reported* for this molecule. Two t
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some
-  charge separation, rotatable bonds, an excited state spread over a stacked pair). Give the
-  reason in discriminates_why.
+  charge separation, rotatable bonds, an excited state spread over a stacked pair). Where a
+  reference_panel percentile exists, use it: a value inside the panel's interquartile range is
+  typical. Give the reason in discriminates_why.
 - plausibility combines both: evidence that does not discriminate should move a family little
   from its prior; discriminating evidence can move it a lot, up or down. In each update's reason,
   say how prior and evidence combine. A family whose support is only non-discriminating evidence

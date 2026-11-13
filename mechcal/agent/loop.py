@@ -21,6 +21,7 @@ from mechcal.agent.board import Board, ClaimIn, Status
 from mechcal.agent.facts import structural_facts
 from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
 from mechcal.agent import cards as cardlib
+from mechcal.agent import reference
 from mechcal.agent import supervision as sv
 from mechcal.agent.costs import CostModel, expected_seconds
 from mechcal.eval.grounding import ELIGIBLE, check_submission
@@ -927,6 +928,10 @@ class AgentRun:
                                **({"warnings": [w["code"] for w in a.warnings]} if a.warnings else {})}
                               for a in task.attempts]
         report["artifacts"] = [aid for a in task.attempts for aid in a.artifact_ids]
+        panel = {aid: rows for aid in report["artifacts"]
+                 if (rows := reference.context(self.gateway.reference_values.get(aid) or {}))}
+        if panel:                                    # system-written: where the results fall among common chromophores
+            report["reference_panel"] = panel
         report["interceptions"] = [{"code": i["code"], "name": i["name"]} for i in task.interceptions]
         if task.notes:
             report["system_notes"] = list(task.notes)

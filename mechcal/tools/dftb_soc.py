@@ -7,7 +7,7 @@ from pathlib import Path
 from ase.io import write
 
 from mechcal.tools.dftb_soc_io import prepare
-from mechcal.tools.dftb_spin import spin_parameters, parse_states
+from mechcal.tools.dftb_spin import RETRY_ROOTS, needs_more_roots, parse_states, spin_parameters
 from mechcal.tools.pysoc_protocol import RawSOC, METHOD
 from mechcal.tools.pysoc_source import SOURCE_HASHES, SOURCE_COMMIT
 from mechcal.tools.qc_process import QCError
@@ -32,7 +32,7 @@ def generate(job, atoms):
     prefix = str(Path(job.config.parameter_dir).resolve())+'/'
     if any(c in prefix for c in ('"','\n','\r')):
         raise QCError('invalid_args','Unsupported HSD path delimiters')
-    common = f'''Geometry = GenFormat {{
+    common_for = lambda roots: f'''Geometry = GenFormat {{
  <<< "input.gen"
 }}
 Driver = {{}}
@@ -52,7 +52,7 @@ Hamiltonian = DFTB {{
  }}
 }}
 ExcitedState = Casida {{
- NrOfExcitations = 3
+ NrOfExcitations = {roots}
  Symmetry = Both
  Diagonaliser = Arpack {{}}
  WriteTransitions = Yes
@@ -68,14 +68,22 @@ ParserOptions {{ ParserVersion = 14 }}
         directory.mkdir(parents=True)
         write(directory/'input.gen',atoms,format='gen')
         write(directory/'geometry.xyz',atoms,format='xyz')
-    (spectra/'dftb_in.hsd').write_text(common+'''Analysis { WriteEigenvectors = Yes
+    for roots in (3, RETRY_ROOTS):       # PySOC reads S1-S3/T1-T3; more roots only when the solver needs them
+        common = common_for(roots)
+        (spectra/'dftb_in.hsd').write_text(common+'''Analysis { WriteEigenvectors = Yes
  EigenvectorsAsText = Yes }
 Options { WriteResultsTag = Yes }
 ''')
-    output=job.execute([job.config.dftb_binary],spectra)
+        try:
+            output=job.execute([job.config.dftb_binary],spectra)
+            break
+        except QCError:
+            if roots == 3 and needs_more_roots(spectra):
+                continue
+            raise
     if 'SCC is NOT converged' in output:
         raise QCError('not_converged','DFTB reference did not converge')
-    states=parse_states((spectra/'EXC.DAT').read_text(),3)
+    states=parse_states((spectra/'EXC.DAT').read_text(),3,solved=roots)
     (matrices/'dftb_in.hsd').write_text(common+'Options { WriteHS = Yes }\n')
     export_status=export_overlap(job,matrices)
     required=[spectra/n for n in ('band.out','eigenvec.out','XplusY.DAT','SPX.DAT','EXC.DAT','geometry.xyz')]

@@ -159,6 +159,10 @@ class ToolGateway:
     parents: dict = field(default_factory=dict)   # produced artifact id -> source_artifact_id it was computed from
     produced: dict = field(default_factory=dict)  # T### alias -> reusable artifact ids that call produced
     _profile: dict | None = field(default=None, repr=False)
+    reference_values: dict = field(default_factory=dict)  # T### alias -> descriptor values (see mechcal.agent.reference)
+    atoms_of: dict = field(default_factory=dict)          # excited-state bundle id -> its atom count (dimer or molecule)
+    monomer_s1: float | None = None
+    _size: tuple[int, int] | None = field(default=None, repr=False)
 
     def __post_init__(self) -> None:
         from mechcal.capabilities import default_capability_registry
@@ -299,10 +303,41 @@ class ToolGateway:
         limit = tool_args.get("max_wall_seconds")
         if obs.get("failure_class") == "system" and isinstance(limit, (int, float)) and elapsed >= 0.97 * limit:
             obs["failure_code"] = "timeout"            # the call used its whole time limit, whatever the message says
+        if result.status in {"success", "partial"}:
+            panel = self._reference(capability_id, tool_args, result, alias)
+            if panel:
+                obs["reference_panel"] = panel
         self._observations[alias] = dict(obs)
         if note:
             obs["note"] = note
         return obs
+
+    def _molecule_size(self) -> tuple[int, int]:
+        if self._size is None:
+            from rdkit import Chem
+            mol = Chem.MolFromSmiles(self.smiles)
+            self._size = (Chem.AddHs(mol).GetNumAtoms(), mol.GetNumHeavyAtoms()) if mol is not None else (0, 0)
+        return self._size
+
+    def _reference(self, capability_id: str, tool_args: dict, result, alias: str) -> list[dict]:
+        """Descriptor values of this result and where they fall in the reference panel (no labels)."""
+        from mechcal.agent import reference
+        natoms, heavy = self._molecule_size()
+        po = result.structured_results.get("parsed_observables") if isinstance(
+            result.structured_results.get("parsed_observables"), dict) else result.structured_results
+        if capability_id == "microscopic.run_baseline_bundle" and isinstance(po, dict):
+            atoms = po.get("mulliken_charge_count")
+            for aid in [alias, result.tool_result_id, *(r.artifact_id for r in result.artifact_updates)]:
+                self.atoms_of[aid] = atoms
+        source = self.resolve(tool_args.get("source_artifact_id")) if tool_args.get("source_artifact_id") else None
+        if natoms == 0:
+            return []
+        values = reference.extract(capability_id, po, natoms=natoms, heavy_atoms=heavy,
+                                   source_atoms=self.atoms_of.get(source), monomer_s1=self.monomer_s1)
+        if "s1_excitation_ev" in values and self.monomer_s1 is None:
+            self.monomer_s1 = values["s1_excitation_ev"]       # the molecule's own S1, for dimer shifts
+        self.reference_values[alias] = values
+        return reference.context(values)
 
     def _persist(self, result, index: int) -> str:
         path = self.run_dir / "rounds" / result.round_id / f"execution_{result.dispatch_id.replace(':', '_')}_tool_result.json"
