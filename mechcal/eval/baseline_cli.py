@@ -35,6 +35,8 @@ def main(argv: list[str] | None = None) -> dict:
     parser.add_argument("--max-tool-calls", type=int, default=12)
     parser.add_argument("--max-tool-wall-seconds", type=float, default=3600.0)
     parser.add_argument("--allow-test-case", action="store_true")
+    parser.add_argument("--cost-log", default=str(ROOT / "outputs/agent/cost_log.jsonl"),
+                        help="recorded tool timings shown as costs, read only (same log as the agent); 'off' disables")
     args = parser.parse_args(argv)
     if split_of(args.case_id) == "test" and not args.allow_test_case:
         raise SystemExit(HELD_OUT.format(case=args.case_id, flag="--allow-test-case"))
@@ -49,7 +51,8 @@ def main(argv: list[str] | None = None) -> dict:
                "max_tool_wall_seconds": args.max_tool_wall_seconds}
     (args.out / "manifest.json").write_text(json.dumps({
         "subject": args.subject, "commit": _commit(), "case_id": args.case_id, "smiles": smiles,
-        "budgets": budgets if args.subject == "react" else {"max_model_calls": 2}, "model": describe(settings)}, indent=1))
+        "budgets": budgets if args.subject == "react" else {"max_model_calls": 2}, "model": describe(settings),
+        **({"cost_log": args.cost_log} if args.subject == "react" else {})}, indent=1))
     client = OpenAIJsonClient(settings)
     with tool_environment(args.config, args.out) as deployment:
         if args.subject == "direct":
@@ -59,8 +62,8 @@ def main(argv: list[str] | None = None) -> dict:
                 return ToolGateway(case_id=case_id, smiles=smi, run_dir=args.out / "tools",
                                    enable_amesp=bool(deployment.runtime.get("enable_amesp", True)),
                                    max_wall_seconds=args.max_tool_wall_seconds)
-            result = ReactSubject(client, factory, max_model_calls=args.max_model_calls,
-                                  max_tool_calls=args.max_tool_calls).run(args.case_id, smiles)
+            result = ReactSubject(client, factory, max_model_calls=args.max_model_calls, max_tool_calls=args.max_tool_calls,
+                                  cost_log_path=None if args.cost_log == "off" else args.cost_log).run(args.case_id, smiles)
     out = {"case_id": args.case_id, "subject": args.subject, "status": result.status, "error": result.error,
            "submission": result.submission.model_dump() if result.submission else None,
            "usage": result.usage, "tool_cost": result.tool_cost, "budgets": budgets}

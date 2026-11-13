@@ -25,7 +25,7 @@ from mechcal.agent import supervision as sv
 from mechcal.agent.costs import CostModel, expected_seconds
 from mechcal.eval.grounding import ELIGIBLE, check_submission
 from mechcal.eval.grounded_subjects import UsageLedger
-from mechcal.eval.tool_gateway import ToolGateway
+from mechcal.eval.tool_gateway import ToolGateway, redact
 from mechcal.mechanism_pool import MECHANISM_POOL, mechanism_definitions
 from mechcal.runtime.prompts import load_prompt
 
@@ -475,6 +475,11 @@ class AgentRun:
 
     def _call_model(self, client, role: str, kwargs: dict, model_cls):
         """One model call with bounded retries; None if the provider keeps failing (never raises)."""
+        payload, changed = redact(kwargs.get("payload"), self.gateway.identifiers())
+        if changed:                                  # last line of defence: no case id or local path reaches a model
+            self.protocol["identifiers_redacted"] = self.protocol.get("identifiers_redacted", 0) + changed
+            self.log.write({"role": role, "event": "identifiers_redacted", "strings": changed})
+            kwargs = {**kwargs, "payload": payload}
         for k in range(self.cfg.api_retries + 1):
             try:
                 return client.complete_json_result(**kwargs, response_format=self._format(role, model_cls))
@@ -574,9 +579,16 @@ class AgentRun:
                 f["adopted_as"] = cid
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: adopt {a.finding_id} rejected ({exc})")
+        results_exist = self._computations() > 0
         for u in step.updates:
             fam = self.board.families[u.label]
-            for key in ("plausibility", "status", "reason", "next_test", "prior", "prior_basis"):
+            keys = ["plausibility", "status", "reason", "next_test", "prior", "prior_basis"]
+            if results_exist and fam.prior is not None and u.prior is not None and abs(u.prior - fam.prior) > 1e-9:
+                keys = keys[:4]                      # a prior is set before evidence; afterwards only plausibility moves
+                self.protocol["prior_changes_refused"] = self.protocol.get("prior_changes_refused", 0) + 1
+                self.history.append(f"step {n}: prior of {u.label} kept at {fam.prior} (priors are fixed once results "
+                                    "exist; express what the evidence changed through plausibility)")
+            for key in keys:
                 if getattr(u, key) is not None:
                     setattr(fam, key, getattr(u, key))
         for c in step.claims:

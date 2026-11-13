@@ -21,6 +21,35 @@ from mechcal.eval.tool_checks import classify_failure, result_warnings
 
 MAX_OBSERVATION_VALUES = 200
 MAX_STRING_CHARS = 300
+REDACTED_CASE = "this_case"
+REDACTED_DIR = "<run_dir>"
+
+
+def redact(value: Any, needles: list[tuple[str, str]]) -> tuple[Any, int]:
+    """Replace identifying text (case id, local paths) in every string of a JSON-like value.
+
+    Returns the cleaned value and the number of strings changed. Dict keys are kept: they are
+    pointers the agent may use for exact reads.
+    """
+    count = 0
+
+    def clean(x):
+        nonlocal count
+        if isinstance(x, str):
+            y = x
+            for needle, repl in needles:
+                if needle and needle in y:
+                    y = y.replace(needle, repl)
+            count += y != x
+            return y
+        if isinstance(x, dict):
+            return {k: clean(v) for k, v in x.items()}
+        if isinstance(x, (list, tuple)):
+            return [clean(v) for v in x]
+        return x
+    return clean(value), count
+
+
 # Bookkeeping leaves that are not scientific observations.
 NOISE_SEGMENTS = ("/timing/", "/tool_args/", "/runtime/", "/provenance/")
 
@@ -162,7 +191,7 @@ class ToolGateway:
         unknown = [i for i in ids if i not in self.tool_ids()]
         if unknown:
             raise KeyError(f"Unknown or disallowed tools: {unknown}")
-        return self.registry.describe_tools(ids, self.case_run.artifact_manifest, amesp_enabled=self.enable_amesp)
+        return self.public(self.registry.describe_tools(ids, self.case_run.artifact_manifest, amesp_enabled=self.enable_amesp))
 
     def catalog(self) -> list[dict]:
         """Compact cards: id, description and readiness; full argument schemas via ``describe``."""
@@ -175,8 +204,22 @@ class ToolGateway:
             cards.append({"tool": cap.capability_id, "description": cap.description, "status": status})
         return cards
 
+    # ---- what agents may see -----------------------------------------------------------------
+    def identifiers(self) -> list[tuple[str, str]]:
+        """Text that would identify the case or the benchmark: the run directory and the case id."""
+        dirs = sorted({str(self.run_dir.resolve()), str(self.run_dir)}, key=len, reverse=True)
+        return [(d, REDACTED_DIR) for d in dirs if len(d) > 1] + [(self.case_id, REDACTED_CASE)]
+
+    def public(self, value: Any) -> Any:
+        """A value as an agent may see it: no case identifier, no local file paths."""
+        return redact(value, self.identifiers())[0]
+
     # ---- execution -------------------------------------------------------------------------
     def call(self, capability_id: str, tool_args: dict | None = None) -> dict:
+        """Run (or refuse) one tool call; the returned observation never carries the case id or local paths."""
+        return self.public(self._call(capability_id, tool_args))
+
+    def _call(self, capability_id: str, tool_args: dict | None = None) -> dict:
         from mechcal.schemas import DispatchRequest
         from mechcal.schemas.execution import AgentExecutionPlan
 
@@ -302,7 +345,10 @@ class ToolGateway:
         }
 
     def read(self, artifact_id: str, pointer: str = "") -> dict:
-        """Exact lookup into a recorded artifact (no computation, no new evidence)."""
+        """Exact lookup into a recorded artifact (no computation, no new evidence), as an agent may see it."""
+        return self.public(self._read(artifact_id, pointer))
+
+    def _read(self, artifact_id: str, pointer: str = "") -> dict:
         artifact = self.store.artifacts.get(artifact_id)
         if artifact is None:
             record = next((r for r in self.case_run.artifact_manifest.artifacts if r.artifact_id == artifact_id), None)
@@ -341,7 +387,7 @@ class ToolGateway:
                                                                         if not isinstance(v, (list, dict)) or len(str(v)) < 80},
                          **({"failure_code": failure} if failure else {}),
                          **({"warnings": [w["code"] for w in obs.get("warnings", [])]} if (obs := self._observations.get(c.artifact_id, {})).get("warnings") else {})})
-        return rows
+        return self.public(rows)
 
     def applicability(self, capability_id: str) -> dict | None:
         """Declared scope of a carded tool against this molecule (SMILES-derived); None for uncarded tools."""

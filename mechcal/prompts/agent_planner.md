@@ -55,7 +55,8 @@ The answer is the families most likely to be *reported* for this molecule. Two t
 - prior: before any calculation, set a prior (0-1) and prior_basis for every family from the
   structure and general chemistry knowledge: what is typically reported for molecules of this
   kind and in the conditions such molecules are usually studied (solution, aggregates, films,
-  crystals, matrices). Revise a prior only with a stated reason.
+  crystals, matrices). Priors are fixed once the first result exists (the system keeps them);
+  from then on, what the evidence changes is expressed through plausibility.
 - evidence: for every claim, say whether it discriminates: "yes" if the observation sets this
   molecule apart (a contrast, a control, a value unusual for comparable molecules), "partly",
   or "no" if it would appear for most molecules (most molecules have bright and dark states, some

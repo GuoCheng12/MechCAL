@@ -155,9 +155,10 @@ class ReactSubject:
     name = "react"
 
     def __init__(self, client, gateway_factory: Callable[[str, str], ToolGateway], *,
-                 max_model_calls: int = 20, max_tool_calls: int = 8) -> None:
+                 max_model_calls: int = 20, max_tool_calls: int = 8, cost_log_path: str | None = None) -> None:
         self.client, self.gateway_factory = client, gateway_factory
         self.max_model_calls, self.max_tool_calls = max_model_calls, max_tool_calls
+        self.cost_log_path = cost_log_path          # same recorded timings as the agent (read only)
         self.system = load_eval_prompt(INSTRUCTIONS) + REACT_PROTOCOL
 
     def _catalog(self, gateway: ToolGateway, smiles: str) -> list[dict]:
@@ -170,7 +171,7 @@ class ReactSubject:
         self._entries = {e["tool"]: e for e in entries}
         facts = structural_facts(smiles)
         kind = next(a.kind for a in gateway.case_run.artifact_manifest.artifacts if a.artifact_id == gateway.prepared_artifact_id)
-        costs = CostModel(int(facts["summary"]["atoms_with_h"]), smiles=smiles)
+        costs = CostModel(int(facts["summary"]["atoms_with_h"]), self.cost_log_path, smiles=smiles)
         cost = lambda tool: {"cost": costs.estimate(tool, {k: v["default"] for k, v in self._entries[tool]["args"].items()
                                                            if "default" in v})}
         return cardlib.catalog(entries, cardlib.molecule_profile(facts, kind), ARG_CLASS,
@@ -186,7 +187,7 @@ class ReactSubject:
             payload = {**base, "history": history,
                        "tool_calls_used": gateway.executed_calls(),
                        "must_submit_now": step == self.max_model_calls or gateway.executed_calls() >= self.max_tool_calls}
-            result = self.client.complete_json_result(system_prompt=self.system, payload=payload)
+            result = self.client.complete_json_result(system_prompt=self.system, payload=gateway.public(payload))
             usage.add("react", result.usage)
             action = result.data if isinstance(result.data, dict) else {}
             kind = action.get("action")
