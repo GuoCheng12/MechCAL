@@ -7,6 +7,7 @@ budget, that outcome is recorded as such and scores as an empty answer.
 from __future__ import annotations
 
 import json
+import time
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -123,8 +124,12 @@ class DirectSubject:
     def run(self, case_id: str, smiles: str) -> SubjectResult:
         usage, transcript, feedback = UsageLedger(), [], None
         for _ in range(self.max_repairs + 1):
-            result = self.client.complete_json_result(system_prompt=self.system, payload=_task_payload(smiles),
-                                                      schema_feedback=feedback)
+            result = _complete(self.client, system_prompt=self.system, payload=_task_payload(smiles),
+                               schema_feedback=feedback)
+            if result is None:
+                feedback = "The model call failed after retries."
+                transcript.append({"response": None, "parse_error": feedback})
+                continue
             usage.add("direct", result.usage)
             transcript.append({"response": result.data, "parse_error": result.parse_error})
             try:
@@ -135,6 +140,19 @@ class DirectSubject:
                 feedback = str(exc)
         return SubjectResult(case_id, self.name, "no_valid_submission", None, ArtifactStore(case_id=case_id),
                              usage.as_dict(), {"tool_calls": 0, "tool_wall_seconds": 0.0}, transcript, feedback)
+
+
+def _complete(client, *, retries: int = 3, backoff_seconds: float = 5.0, **kwargs):
+    """One baseline model call with the agent's robustness: an invalid reply (no text, no JSON object)
+    comes back with ``parse_error`` instead of raising; provider errors are retried with backoff,
+    then None. A baseline run therefore never ends in a crash."""
+    for k in range(retries + 1):
+        try:
+            return client.complete_json_result(**kwargs, preserve_invalid_response=True)
+        except Exception:  # noqa: BLE001 - network, timeout or server error
+            if k < retries:
+                time.sleep(backoff_seconds * 3 ** k)
+    return None
 
 
 REACT_PROTOCOL = """
@@ -189,7 +207,10 @@ class ReactSubject:
             payload = {**base, "history": history,
                        "tool_calls_used": gateway.executed_calls(),
                        "must_submit_now": step == self.max_model_calls or gateway.executed_calls() >= self.max_tool_calls}
-            result = self.client.complete_json_result(system_prompt=self.system, payload=gateway.public(payload))
+            result = _complete(self.client, system_prompt=self.system, payload=gateway.public(payload))
+            if result is None:
+                history.append({"action": None, "observation": {"status": "error", "error": "The model call failed after retries."}})
+                continue
             usage.add("react", result.usage)
             action = result.data if isinstance(result.data, dict) else {}
             kind = action.get("action")
