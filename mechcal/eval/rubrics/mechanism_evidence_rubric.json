@@ -1,6 +1,7 @@
 {
  "mechanism_evidence_rubric_version": "0.3.0",
- "status": "draft_pending_author_review",
+ "status": "approved_by_author",
+ "approved": "2026-11-13",
  "based_on": "0.2.0 rubric (mechanism_evidence_rubric_v3.json)",
  "revision_date": "2026-11-11",
  "revision_scope": "Keep the 0.2.0 route and condition text. Add per-condition evidence requirements (which claim kinds may satisfy each condition), derived structure-only and closed-book ceilings, and the Layer A grounding gate. Experimental observations are not available in the SMILES-only protocol; observation-only conditions are retained for a future condition-aware subset.",
