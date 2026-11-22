@@ -59,7 +59,12 @@ def test_schema_and_parser():
         parse_model_submission(preds([{"statement": "x", "kind": "vibes"}]), "CASE")
     two = preds(STRUCTURAL)
     two["mechanism_predictions"].pop()
-    with pytest.raises(ValueError, match="three"):
+    assert len(parse_model_submission(two, "CASE").mechanism_predictions) == 2     # one to seven claimed families
+    assert (schema["properties"]["mechanism_predictions"]["minItems"], schema["properties"]["mechanism_predictions"]["maxItems"]) == (1, 7)
+    with pytest.raises(ValueError, match="at least 1"):
+        parse_model_submission({"mechanism_predictions": []}, "CASE")
+    two["mechanism_predictions"][1]["label"] = "ICT_TICT_CT"
+    with pytest.raises(ValueError, match="distinct"):
         parse_model_submission(two, "CASE")
 
 

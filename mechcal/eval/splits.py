@@ -1,4 +1,6 @@
-"""Development/test split of PhotoMechBench (by paper cluster; see examples/make_dev_test_split.py).
+"""Development/test split of PhotoMechBench ``rebuilt_302`` (by paper unit; ``units`` maps case -> unit).
+
+The split of the earlier 119 cases (examples/make_dev_test_split.py) is kept as ``SPLIT_119_PATH``.
 
 Test cases are held out: the agent must not be run on them before the system is frozen. The CLI and
 the batch runner refuse a test case unless explicitly allowed (``--allow-test-case`` / ``--allow-test``).
@@ -10,7 +12,9 @@ import json
 from functools import lru_cache
 from pathlib import Path
 
-SPLIT_PATH = Path(__file__).resolve().parents[2] / "benchmarks/photomechbench/splits/raw_v2_119_dev_test.json"
+_SPLITS = Path(__file__).resolve().parents[2] / "benchmarks/photomechbench/splits"
+SPLIT_PATH = _SPLITS / "rebuilt_302_dev_test.json"
+SPLIT_119_PATH = _SPLITS / "raw_v2_119_dev_test.json"
 
 
 @lru_cache(maxsize=1)

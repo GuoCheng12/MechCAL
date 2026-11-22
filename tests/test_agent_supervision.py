@@ -24,7 +24,8 @@ def worker_report(status, **extra):
 
 def submit(p):
     return {"proposal_responses": [{"proposal_id": x["proposal_id"], "decision": "decline", "reason": "t"}
-                                   for x in p["proposals"]], "action": {"type": "submit"}}
+                                   for x in p["proposals"]],
+            "updates": [{"label": "RIM_RIR_RIV", "claimed": True}], "action": {"type": "submit"}}
 
 
 def run_agent(tmp_path, planner, worker_replies, **cfg):
@@ -163,7 +164,7 @@ def test_planner_cannot_run_parameterised_tools_or_recipes_with_worker_on(tmp_pa
 def test_adopted_finding_becomes_board_evidence(tmp_path):
     planner = [{"action": contrast(type="delegate", task="List dihedrals.", tools=[DIH])},
                lambda p: {"adopt": [{"finding_id": p["latest"]["claims"][0]["finding_id"], "label": "RIM_RIR_RIV"}],
-                          "action": {"type": "submit"}}]
+                          "updates": [{"label": "RIM_RIR_RIV", "claimed": True}], "action": {"type": "submit"}}]
     worker = [worker_tool(DIH, {"source_artifact_id": "structure:prepared"}),
               worker_report("done", claims=[{"label": "not-a-family", "kind": "prior", "statement": "Rotors exist."}])]
     run, result, client = run_agent(tmp_path, planner, worker)
@@ -447,7 +448,7 @@ def test_priors_and_generic_evidence_are_recorded_and_checked(tmp_path):
 
     def step2(p):
         pointer = next(k for k in p["latest"]["values"] if k.endswith("candidate_count"))
-        return {"updates": [{"label": "RIM_RIR_RIV", "plausibility": 0.7}],
+        return {"updates": [{"label": "RIM_RIR_RIV", "plausibility": 0.7, "claimed": True}],
                 "claims": [{"label": "RIM_RIR_RIV", "kind": "computed", "statement": f"There are {p['latest']['values'][pointer]:g} rotors.",
                             "discriminates": "no", "discriminates_why": "most molecules have rotors",
                             "quantities": [{"name": "n", "value": p["latest"]["values"][pointer],

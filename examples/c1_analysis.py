@@ -25,7 +25,8 @@ from mechcal.eval.mechanism_ranking import score_mechanism_ranking
 from mechcal.mechanism_pool import MECHANISM_POOL
 
 ROOT = Path(__file__).resolve().parents[1]
-from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
+from mechcal.eval.dataset import CORRECTED_119  # noqa: E402
+CASES = CORRECTED_119 / "cases"   # the 119-case references the analysed runs were graded with
 SHORT = {"ICT_TICT_CT": "ICT", "RADIATIVE_RATE_STATE_BALANCE": "RAD", "TRIPLET_METAL_ENERGY_TRANSFER": "TRIP", "TRIPLET_ISC_RTP_TADF": "TRIP",
          "RIM_RIR_RIV": "RIM", "PACKING_HOST_MATRIX_CONFINEMENT": "PACK", "AGGREGATE_EXCITON_EXCIMER": "AGG",
          "ESIPT_PT": "ESIPT", "PET_ET": "PET", "HOST_GUEST_INTERACTION": "HG", "RACI_CI_ACCESS": "RACI",

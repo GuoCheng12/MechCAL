@@ -15,6 +15,13 @@ from mechcal.eval.splits import dev_cases, load_split
 
 ROOT = Path(__file__).resolve().parents[1]
 P = "AIE_DDX_MECH_V4_"
+CORRECTED = dataset.CORRECTED_119
+
+
+def corrected_smiles(case_id: str) -> str:
+    import csv
+    with (CORRECTED / "inputs.csv").open(encoding="utf-8", newline="") as fh:
+        return {r["case_id"]: r["smiles"] for r in csv.DictReader(fh)}[case_id]
 
 
 def builder():
@@ -27,8 +34,8 @@ def builder():
 def test_committed_copy_equals_a_fresh_build():
     files = builder().build()
     for path, text in files.items():
-        assert (dataset.DATASET / path).read_text(encoding="utf-8") == text, path
-    on_disk = {str(p.relative_to(dataset.DATASET)) for p in dataset.DATASET.rglob("*") if p.is_file()}
+        assert (CORRECTED / path).read_text(encoding="utf-8") == text, path
+    on_disk = {str(p.relative_to(CORRECTED)) for p in CORRECTED.rglob("*") if p.is_file()}
     assert on_disk == set(files)
 
 
@@ -42,7 +49,7 @@ def test_only_listed_smiles_change_and_references_are_mapped_not_edited():
     assert all(fixed[c]["split"] == ("dev" if c in dev else "test") for c in fixed)
     for raw_path in sorted((dataset.RAW / "cases").glob("*.json")):
         raw = json.loads(raw_path.read_text())
-        new = json.loads((dataset.CASES_DIR / raw_path.name).read_text())
+        new = json.loads((CORRECTED / "cases" / raw_path.name).read_text())
         assert new["provenance"] == raw["provenance"]
         assert new["hidden_reference"] == reduce_hidden_reference(raw["hidden_reference"])
         kept = {k: v for k, v in new["hidden_reference"].items()
@@ -58,17 +65,17 @@ def test_only_listed_smiles_change_and_references_are_mapped_not_edited():
             assert new["structure_verification"]["original_smiles"] == smiles_raw
         else:
             assert smiles_new == smiles_raw
-        assert dataset.public_smiles(raw["case_id"]) == smiles_new
+        assert corrected_smiles(raw["case_id"]) == smiles_new
 
 
 @pytest.mark.parametrize("case,formula", [("0020", "C18H8F6N2O2S2"), ("0141", "C19H16Fe"),
                                           ("0152", "C19H14"), ("0153", "C20H12")])
 def test_corrected_formulas_match_the_papers(case, formula):
-    assert CalcMolFormula(Chem.MolFromSmiles(dataset.public_smiles(P + case))) == formula
+    assert CalcMolFormula(Chem.MolFromSmiles(corrected_smiles(P + case))) == formula
 
 
 def test_verification_status_covers_every_case():
-    counts = json.loads((dataset.DATASET / "manifest.json").read_text())["verification_counts"]
+    counts = json.loads((CORRECTED / "manifest.json").read_text())["verification_counts"]
     assert counts == {"corrected": 22, "verified_consistent": 97, "unverified": 0}           # every case checked
     corrections = json.loads(dataset.CORRECTIONS.read_text())
     assert corrections["verification"]["labels_read"] is False
@@ -79,7 +86,7 @@ def test_metallocene_case_is_not_runnable_until_its_geometry_can_be_prepared(tmp
     ok, why = dataset.runnable(P + "0141")
     assert not ok and "sandwich" in why
     assert P + "0141" not in dev_cases() and P + "0141" in dev_cases(include_not_runnable=True)
-    assert len(dev_cases()) == 16
+    assert len(dev_cases()) == 28                     # rebuilt_302: 29 development cases, one not runnable
     from mechcal.agent import cli
     with pytest.raises(SystemExit, match="cannot be run yet"):
         cli.main(["--case-id", P + "0141", "--out", str(tmp_path / "x")])
@@ -110,7 +117,7 @@ def test_original_records_are_flagged_exactly_where_they_were_corrected():
     flagged = {c for c, s in raw.items() if structure_warnings(s)}
     fixed = {c["case_id"] for c in json.loads(dataset.CORRECTIONS.read_text())["corrections"]}
     assert flagged == {P + c for c in ("0001", "0002", "0007", "0011", "0152", "0153")} and flagged <= fixed
-    assert not any(structure_warnings(dataset.public_smiles(c)) for c in raw)                # none left
+    assert not any(structure_warnings(corrected_smiles(c)) for c in raw)                # none left
 
 
 def test_family_mapping_rules():
@@ -141,7 +148,7 @@ def test_family_mapping_rules():
 
 def test_every_mapped_label_is_in_the_seven_family_pool():
     assert len(MECHANISM_POOL) == 7 and len(ELEVEN_FAMILY_POOL) == 11
-    for path in sorted(dataset.CASES_DIR.glob("*.json")):
+    for path in sorted((CORRECTED / "cases").glob("*.json")):
         hidden = json.loads(path.read_text())["hidden_reference"]
         assert {m["label"] for m in hidden["reference_mechanisms"]} <= set(MECHANISM_POOL)
         assert {d["label"] for d in hidden["mechanism_decisions"]} <= set(MECHANISM_POOL)

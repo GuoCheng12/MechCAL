@@ -40,7 +40,7 @@ def test_agent_payloads_carry_no_case_id_and_priors_stay_fixed(tmp_path):
         {"updates": priors, "action": {"type": "read", "artifact_id": "structure:prepared", "pointer": ""}},
         {"updates": [{"label": "RIM_RIR_RIV", "prior": 0.35}],          # no result yet: a prior may still change
          "action": contrast(type="tool", name=DIH, args={"source_artifact_id": "structure:prepared"})},
-        {"updates": [{"label": "RIM_RIR_RIV", "prior": 0.9, "plausibility": 0.6, "reason": "rotors listed"}],
+        {"updates": [{"label": "RIM_RIR_RIV", "prior": 0.9, "plausibility": 0.6, "reason": "rotors listed", "claimed": True}],
          "action": {"type": "submit"}},
     ]
     client = ByRole(planner)

@@ -31,7 +31,7 @@ def model_submission_schema() -> dict:
     schema["required"] = ["mechanism_predictions"]
     defs = schema["$defs"]
     defs["Prediction"]["properties"]["label"]["enum"] = list(MECHANISM_POOL)
-    schema["properties"]["mechanism_predictions"].update(minItems=3, maxItems=3)
+    schema["properties"]["mechanism_predictions"].update(minItems=1, maxItems=len(MECHANISM_POOL))
     return schema
 
 
@@ -42,8 +42,6 @@ def parse_model_submission(data: Any, case_id: str) -> Submission:
         submission = Submission.model_validate({"case_id": case_id, "mechanism_predictions": data["mechanism_predictions"]})
     except ValidationError as exc:
         raise ValueError(_compact_errors(exc)) from exc
-    if len(submission.mechanism_predictions) != 3:
-        raise ValueError("Submit exactly three predictions")
     return submission
 
 

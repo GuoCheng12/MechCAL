@@ -19,7 +19,8 @@ from mechcal.eval.stats import clustered_bootstrap, load_reference_cases, paper_
 from mechcal.mechanism_pool import MECHANISM_POOL
 
 ROOT = Path(__file__).resolve().parents[1]
-from mechcal.eval.dataset import CASES_DIR as CASES  # noqa: E402  (structure-corrected cases)
+from mechcal.eval.dataset import CORRECTED_119  # noqa: E402
+CASES = CORRECTED_119 / "cases"   # the 119-case references the analysed runs were graded with
 METRICS = ("ndcg_at_3", "top1_primary", "recall_at_3")
 
 

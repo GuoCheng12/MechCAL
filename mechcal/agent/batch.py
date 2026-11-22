@@ -33,7 +33,7 @@ def _unlimited_stack() -> None:      # Amesp needs a large stack (same as `ulimi
 
 def case_ids(args) -> list[str]:
     raw = args.cases.split(",") if args.cases else Path(args.cases_file).read_text().split()
-    return [c if c.startswith(PREFIX) else PREFIX + c.zfill(4) for c in (x.strip() for x in raw) if c]
+    return [PREFIX + c.zfill(4) if c.isdigit() else c for c in (x.strip() for x in raw) if c]   # "47" or a full id
 
 
 COMMANDS = {"agent": ["-m", "mechcal.agent.cli"],
@@ -74,7 +74,7 @@ def run_case(case_id: str, out: Path, extra: list[str], grade: bool, subject: st
                            stdout=log, stderr=subprocess.STDOUT)
         if (run_dir / "grade.json").is_file():
             m = json.loads((run_dir / "grade.json").read_text())["metrics"]
-            row.update(ndcg=round(m["ndcg_at_3"], 3), es_ndcg=round(m["es_ndcg_at_3"], 3))
+            row.update({k: None if m[k] is None else round(m[k], 3) for k in ("es_rec", "top1", "evr", "ep")})
     print(json.dumps(row), flush=True)
     return row
 

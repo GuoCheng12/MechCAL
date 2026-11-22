@@ -80,8 +80,8 @@ Avoid excessive praise when answering questions. Please remember that your answe
 - The user is the author of MechCAL and PhotoMechBench. The AAAI-26 submission was rejected; the target is ACL via ARR (deadline 2027-01-04). Since 2026-11-11 Claude is the chief designer and executor, replacing earlier work done with Codex.
 - Treat the Codex handoff's vision as authoritative, but re-verify its design rationale, test counts, "fixed" items and reported results against code and runs before relying on them.
 - Vision: evidence should help discover and compare mechanisms, not only explain predictions.
-- The task is frozen: SMILES-only input, the fixed pool of 11 mechanism families, a top-3 ranking with evidence.
-- Current release: MechCAL 0.3.0 on branch `evidence-evaluation`. As of 2026-11-13, MechCAL development is paused until the dataset is rebuilt; the rebuilt dataset will replace the current 102 test cases entirely. Paper writing comes later.
+- The task is frozen: SMILES-only input, the fixed pool of 7 mechanism families, an ordered list of 1–7 claimed families (the first is the main mechanism) with evidence (since 2026-11-22; before that a top-3 ranking). On 2026-11-13 the author reduced the pool from 11 to 7, keeping only families for which computation can give discriminating evidence (`docs/family-reduction-review-zh.md`; old labels are mapped by `mechcal/eval/family_reduction.py`).
+- Current release: MechCAL 0.3.0 on branch `evidence-evaluation`. The rebuilt dataset `rebuilt_302` (302 cases; dev 29 / test 273 by paper unit) replaced the 119 cases on 2026-11-22, and development continues on its dev set (`docs/test-verdict-plan-zh.md`). Paper writing comes later.
 
 ## Communication
 
@@ -102,12 +102,12 @@ Avoid excessive praise when answering questions. Please remember that your answe
 - Never give hidden references, the rubric or judge output to any evaluated system (Planner, Worker, Critic, baselines). No case identifier or local path may reach a model.
 - Test cases are locked: never run an agent or baseline on them before the system (tools, cards, prompts, rubric, judge) is frozen (`--allow-test-case` / `--allow-test` only after freezing).
 - A failed or blocked calculation is not evidence for or against a mechanism.
-- Result tables need paper-clustered bootstrap confidence intervals (`examples/compare_methods.py`), the floors (best constant top-3: R@3 about 0.48 on 119 cases; structure kNN, leave-one-paper-out) and compute accounting. Still to do before the final experiments: a judge from a different model family, the equal-budget Worker-value ablation (reported regardless of outcome), and a human spot-check of labels.
+- Metrics are per molecule only (`docs/evaluation-metrics-zh.md`): ES-Rec, Top-1, EVR, EP, with Rec and BAL secondary. Result tables (`examples/molecule_table.py`) need paper-unit bootstrap confidence intervals, the floors (random, all seven, most frequent three, structure kNN-5 with the paper unit left out) and compute accounting. Still to do before the final experiments: a judge from a different model family, the equal-budget Worker-value ablation (reported regardless of outcome), and a human spot-check of labels.
 
 ## Data
 
 - `benchmarks/photomechbench/raw_v2_119` is the frozen original snapshot (its checksums are tested); never edit it.
-- Read SMILES and case files only through `mechcal/eval/dataset.py` (the structure-corrected copy `raw_v2_119_corrected`). Structure corrections go into `benchmarks/photomechbench/corrections/structure_corrections.json`; rebuild the copy with `examples/make_corrected_dataset.py` (and check with `--check`). Case 0141 (ferrocene) is marked not runnable.
+- Read SMILES and case files only through `mechcal/eval/dataset.py`, which reads `benchmarks/photomechbench/rebuilt_302` (read only; split in `splits/rebuilt_302_dev_test.json`). The earlier 119-case copy `raw_v2_119_corrected` is kept for its own tests and for analyses of old runs: its structure corrections go into `benchmarks/photomechbench/corrections/structure_corrections.json`; rebuild the copy with `examples/make_corrected_dataset.py` (and check with `--check`). Case 0141 (ferrocene) is marked not runnable.
 - Source papers and supporting information are copyrighted and stay outside the repository (`/ai/workspace/PhotoMechBench_sources`).
 
 ## Running Experiments

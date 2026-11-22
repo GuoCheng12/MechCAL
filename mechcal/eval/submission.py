@@ -55,7 +55,7 @@ class EvidenceClaim(_Model):
 
 class Prediction(_Model):
     label: str
-    rank: int = Field(ge=1, le=3)
+    rank: int = Field(ge=1, le=len(MECHANISM_POOL))
     evidence: list[EvidenceClaim] = Field(default_factory=list)
     limitations: list[str] = Field(default_factory=list)
 
@@ -67,8 +67,10 @@ class Prediction(_Model):
 
 
 class Submission(_Model):
+    """The families a method claims are reported for the molecule, in order: rank 1 is its main mechanism."""
+
     case_id: str
-    mechanism_predictions: list[Prediction] = Field(min_length=1, max_length=3)
+    mechanism_predictions: list[Prediction] = Field(min_length=1, max_length=len(MECHANISM_POOL))
 
     @model_validator(mode="after")
     def _ranking(self):

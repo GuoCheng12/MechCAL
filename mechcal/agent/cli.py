@@ -20,7 +20,7 @@ from mechcal.agent.loop import AGENT_RELEASE, AgentConfig, AgentRun
 from mechcal.eval.llm_settings import backbone_settings, describe
 from mechcal.runtime.llm import OpenAIJsonClient
 
-from mechcal.eval.dataset import PUBLIC_INPUTS, public_smiles  # noqa: F401  (structure-corrected inputs)
+from mechcal.eval.dataset import public_smiles
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -85,7 +85,7 @@ def main(argv: list[str] | None = None) -> dict:
         result = run.run()
     print(json.dumps({k: result[k] for k in ("case_id", "status", "stop_reason", "seconds", "usage", "tool_cost")},
                      indent=1))
-    print("top-3:", [p["label"] for p in result["submission"]["mechanism_predictions"]])
+    print("claimed:", [p["label"] for p in (result["submission"] or {}).get("mechanism_predictions", [])])
     return result
 
 

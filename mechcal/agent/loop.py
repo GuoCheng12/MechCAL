@@ -174,6 +174,7 @@ class FamilyUpdate(_M):
     next_test: str | None = None
     prior: float | None = Field(default=None, ge=0, le=1)
     prior_basis: str | None = None
+    claimed: bool | None = None
     @field_validator("label")
     @classmethod
     def _known(cls, v):
@@ -527,7 +528,8 @@ class AgentRun:
     def _planner_payload(self, must_submit: bool) -> dict:
         flagged = {p["label"] for p in self.proposals if p.get("label")}
         return {
-            "task": "Rank the three most plausible mechanism families and support each with checkable evidence.",
+            "task": ("State which mechanism families are reported for this molecule (one to seven, the main mechanism "
+                     "first) and support each with checkable evidence."),
             "verified_smiles": self.smiles, "mechanism_pool": mechanism_definitions(),
             "structural_facts": self.facts, "board": self.board.view(detailed=flagged),
             "latest": self.latest, "history": self.history[-12:],
@@ -599,9 +601,9 @@ class AgentRun:
         locked = self.priors_fixed or self._computations() > 0
         for u in step.updates:
             fam = self.board.families[u.label]
-            keys = ["plausibility", "status", "reason", "next_test", "prior", "prior_basis"]
+            keys = ["plausibility", "status", "reason", "next_test", "claimed", "prior", "prior_basis"]
             if locked and fam.prior is not None and (u.prior is not None or u.prior_basis is not None):
-                keys = keys[:4]                      # a prior is set before evidence; afterwards only plausibility moves
+                keys = keys[:5]                      # a prior is set before evidence; afterwards only plausibility moves
                 if u.prior is not None and abs(u.prior - fam.prior) > 1e-9:
                     self.protocol["prior_changes_refused"] = self.protocol.get("prior_changes_refused", 0) + 1
                     why = "it came from the independent elicitation" if self.priors_fixed else "results exist"
@@ -1014,7 +1016,9 @@ class AgentRun:
         if missing_prior and self.usage.by_role["planner"]["calls"] >= 1:
             proposals.append({"label": None, "kind": "missing_prior",
                               "text": f"Give a prior (and its basis) for: {missing_prior}."})
-        check = check_submission(self.board.to_submission(), self.gateway.store, self.smiles)
+        ranking = self.board.ranking()          # check the claimed families and the three most plausible ones
+        checked = [f for f in ranking if self.board.families[f].claimed or f in ranking[:3]]
+        check = check_submission(self.board.to_submission(checked), self.gateway.store, self.smiles)
         for pred in check.predictions:
             for c in pred.claims:
                 if c.outcome not in ELIGIBLE | {"prior"}:
@@ -1089,6 +1093,12 @@ class AgentRun:
                 if missing:
                     self.history.append(f"step {n}: proposals {sorted(missing)} were not answered; answer them")
                 action = step.action
+                if action.type == "submit" and not must_submit and not self.board.answer():
+                    self.latest = {"status": "rejected", "error": (
+                        "No family is marked claimed. In updates, set \"claimed\": true for every family you "
+                        "judge to be reported for this molecule (one to seven), then submit.")}
+                    self.history.append(f"step {n}: submit rejected (no claimed family)")
+                    continue
                 if action.type == "submit" or must_submit:
                     if self.cfg.critic and not pre_submit_critic_done and not must_submit:
                         pre_submit_critic_done = True
@@ -1165,10 +1175,10 @@ class AgentRun:
     def _finish(self, submitted: bool, seconds: float) -> dict:
         self._sync_costs()
         self.costs.append_log()                       # this run's records only
-        raw = self.board.to_submission()
-        check = check_submission(raw, self.gateway.store, self.smiles)
+        raw = self.board.to_submission()             # None: the Planner never marked a family as claimed
+        check = check_submission(raw, self.gateway.store, self.smiles) if raw else None
         eligible = None
-        if self.cfg.self_check:
+        if self.cfg.self_check and check:
             eligible = set()
             for pred in check.predictions:
                 claims = self.board.claims_for(pred.label)
@@ -1177,14 +1187,14 @@ class AgentRun:
                         eligible.add(claims[c.claim_index].claim_id)
         submission = self.board.to_submission(eligible=eligible)
         result = {
-            "case_id": self.case_id, "release": AGENT_RELEASE, "status": "submitted" if submitted else "stopped",
+            "case_id": self.case_id, "release": AGENT_RELEASE, "status": ("submitted" if submitted else "stopped") if raw else "no_valid_submission",
             "stop_reason": self.stop_reason, "seconds": round(seconds, 1), "config": asdict(self.cfg),
             "usage": self.usage.as_dict(), "tool_cost": self.gateway.cost(), "critic_runs": self.critic_runs,
             "self_check_removed": [c.claim_id for c in self.board.claims if eligible is not None and c.claim_id not in eligible
-                                   and c.label in self.board.ranking()[:3]],
+                                   and c.label in self.board.answer()],
             "protocol": self._protocol_metrics(), "prior_samples": self.prior_samples,
-            "submission": submission.model_dump(), "board": self.board.model_dump(),
-            "raw_grounding": check.model_dump(),
+            "submission": submission.model_dump() if submission else None, "board": self.board.model_dump(),
+            "raw_grounding": check.model_dump() if check else None,
         }
         (self.run_dir / "result.json").write_text(json.dumps(result, ensure_ascii=False, indent=1, default=str))
         (self.run_dir / "artifacts.json").write_text(self.gateway.store.model_dump_json())

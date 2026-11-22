@@ -24,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))                      # this checkout's mechcal, not an installed copy
-from mechcal.eval.dataset import CASES_DIR, RAW  # noqa: E402
+from mechcal.eval.dataset import CASES_DIR, CORRECTED_119, RAW  # noqa: E402
 
 PANEL = {
     "benzene": "c1ccccc1",
@@ -81,7 +81,7 @@ def benchmark_skeletons() -> set[str]:
     """Skeletons of every benchmark molecule, from the original and the structure-corrected SMILES."""
     from rdkit import Chem
     keys = set()
-    for cases in (RAW / "cases", CASES_DIR):
+    for cases in (RAW / "cases", CORRECTED_119 / "cases", CASES_DIR):
         for path in cases.glob("*.json"):
             smi = json.loads(path.read_text())["public_input"]["molecule"]["structure"]["value"]
             mol = Chem.MolFromSmiles(smi)

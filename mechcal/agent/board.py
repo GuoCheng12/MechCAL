@@ -38,6 +38,7 @@ class FamilyState(_M):
     next_test: str = ""
     prior: float | None = Field(default=None, ge=0, le=1)   # from structure and chemistry knowledge, before evidence
     prior_basis: str = ""
+    claimed: bool = False           # the Planner's current answer: this family is reported for the molecule
 
 
 class Board(_M):
@@ -55,6 +56,10 @@ class Board(_M):
 
     def ranking(self) -> list[str]:
         return sorted(self.families, key=lambda f: (-self.families[f].plausibility, MECHANISM_POOL.index(f)))
+
+    def answer(self) -> list[str]:
+        """The families the Planner currently claims, by plausibility: the first is its main mechanism."""
+        return [f for f in self.ranking() if self.families[f].claimed]
 
     def add_claim(self, label: str, claim: EvidenceClaim, *, step: int, origin: str = "planner",
                   discriminates: str | None = None, discriminates_why: str = "") -> str:
@@ -83,7 +88,7 @@ class Board(_M):
         for rank, label in enumerate(ranking, start=1):
             f = self.families[label]
             row = {"rank": rank, "label": label, "prior": f.prior, "plausibility": round(f.plausibility, 3),
-                   "status": f.status, "n_claims": len(self.claims_for(label))}
+                   "claimed": f.claimed, "status": f.status, "n_claims": len(self.claims_for(label))}
             if label in show:
                 row.update(reason=f.reason, prior_basis=f.prior_basis, next_test=f.next_test,
                            claims=[{"claim_id": c.claim_id, "kind": c.claim.kind, "statement": c.claim.statement,
@@ -92,14 +97,15 @@ class Board(_M):
             rows.append(row)
         return {"families": rows}
 
-    def to_submission(self, *, eligible: set[str] | None = None) -> Submission:
-        """Project the top-3 into the grounded submission. ``eligible`` optionally filters claim ids."""
+    def to_submission(self, labels: list[str] | None = None, *, eligible: set[str] | None = None) -> Submission | None:
+        """Project families (default: the claimed ones, in order) into the grounded submission; None when
+        there are none. ``eligible`` optionally filters claim ids."""
         preds = []
-        for rank, label in enumerate(self.ranking()[:3], start=1):
+        for rank, label in enumerate(self.answer() if labels is None else labels, start=1):
             claims = [c.claim for c in self.claims_for(label) if eligible is None or c.claim_id in eligible]
             preds.append(Prediction(label=label, rank=rank, evidence=claims,
                                     limitations=self.limitations.get(label) or ["Isolated-molecule calculations only."]))
-        return Submission(case_id=self.case_id, mechanism_predictions=preds)
+        return Submission(case_id=self.case_id, mechanism_predictions=preds) if preds else None
 
 
 class ClaimIn(BaseModel):

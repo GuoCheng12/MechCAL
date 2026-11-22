@@ -1,4 +1,4 @@
-"""The development/test split is reproducible, keeps papers together, and test cases are locked."""
+"""The 119-case development/test split is reproducible and keeps papers together; test cases are locked."""
 
 import importlib.util
 import json
@@ -6,7 +6,7 @@ from pathlib import Path
 
 import pytest
 
-from mechcal.eval.splits import SPLIT_PATH, load_split, split_of
+from mechcal.eval.splits import SPLIT_119_PATH, load_split, split_of
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -21,7 +21,7 @@ def builder():
 def test_committed_split_is_reproducible_and_paper_disjoint():
     module = builder()
     rebuilt = module.build()
-    committed = json.loads(SPLIT_PATH.read_text())
+    committed = json.loads(SPLIT_119_PATH.read_text())
     assert rebuilt == committed, "the split file differs from what examples/make_dev_test_split.py builds"
     dev = {d["case_id"] for d in committed["dev"]}
     assert {module.P + k for k in module.USED} <= dev          # everything used in development stays dev
@@ -29,7 +29,7 @@ def test_committed_split_is_reproducible_and_paper_disjoint():
 
 
 def test_every_family_has_two_primary_dev_cases():
-    primary = load_split()["coverage"]["dev"]["primary"]
+    primary = load_split(str(SPLIT_119_PATH))["coverage"]["dev"]["primary"]
     assert len(primary) == 11 and min(primary.values()) >= 2
 
 

@@ -1,10 +1,13 @@
-Task: from the verified SMILES only, rank the three most plausible photophysical
-mechanism families from the fixed pool and give molecule-specific evidence and
-limitations for each. Families can overlap; rank by how plausible each is for this
-molecule. No experimental data, compound name or source paper is available.
+Task: from the verified SMILES only, state which photophysical mechanism families
+from the fixed pool are reported for this molecule, and give molecule-specific
+evidence and limitations for each. Families can overlap. No experimental data,
+compound name or source paper is available.
 
-Submit exactly three predictions with distinct labels and ranks 1, 2, 3. Each
-prediction has a list of evidence claims and a list of limitations. Every claim is
+Submit one to seven predictions with distinct labels and ranks 1, 2, ... in order
+of plausibility; rank 1 is your main mechanism. Claim a family only if you judge it
+applies: a claimed family that is not reported counts against you, and so does a
+reported family you leave out. Each prediction has a list of evidence claims and a
+list of limitations. Every claim is
 one of three kinds:
 
 - "structural": a fact about this molecule's graph (groups, connectivity,

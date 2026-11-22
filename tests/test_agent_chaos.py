@@ -106,7 +106,7 @@ def test_agent_run_survives_chaos(tmp_path, seed):
     cfg = AgentConfig(max_planner_calls=8, max_computations=5, critic_every=2, worker_max_calls=3, api_backoff_seconds=0)
     result = AgentRun(Chaos(seed), case_id="FUZZ", smiles=SMILES[seed % 3], run_dir=tmp_path, config=cfg,
                       enable_amesp=False).run()
-    assert (tmp_path / "result.json").exists() and result["status"] in {"submitted", "stopped"}
+    assert (tmp_path / "result.json").exists() and result["status"] in {"submitted", "stopped", "no_valid_submission"}
     events = [json.loads(line) for line in (tmp_path / "events.jsonl").read_text().splitlines()]
     assert not [e for e in events if e.get("role") == "internal_error"], "an exception reached the safety net"
 

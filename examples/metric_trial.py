@@ -23,7 +23,7 @@ from statistics import mean
 
 from mechcal.agent.schedule import wait_for_off_peak
 from mechcal.eval import set_metrics as sm
-from mechcal.eval.dataset import CASES_DIR, public_smiles
+from mechcal.eval.dataset import CORRECTED_119
 from mechcal.eval.family_reduction import ENVIRONMENT, MERGED_INTO, OUT_OF_POOL
 from mechcal.eval.grounding import check_submission
 from mechcal.eval.stats import load_reference_cases, paper_clusters
@@ -86,7 +86,7 @@ def main() -> None:
     ap.add_argument("--limit", type=int, default=0, help="dry run: at most this many runs per method")
     args = ap.parse_args()
     skip = {"AIE_DDX_MECH_V4_" + c.strip().zfill(4) for c in args.exclude.split(",") if c.strip()}
-    refs = {c.case_id: c for c in load_reference_cases(CASES_DIR)}
+    refs = {c.case_id: c for c in load_reference_cases(CORRECTED_119 / "cases")}   # the 119-case references
     clusters = paper_clusters(list(refs.values()))
     judge = None
     if not args.no_judge:
@@ -129,7 +129,7 @@ def main() -> None:
             scores, verdicts, grounded, computed = {}, [], 0, 0
             if sub:
                 store = ArtifactStore.model_validate_json((run_dir / "artifacts.json").read_text())
-                smiles = public_smiles(cid)
+                smiles = ref.smiles
                 check = check_submission(sub, store, smiles)
                 computed, grounded = check.computed_claims, check.grounded_computed_claims
                 for pred in sub.mechanism_predictions:

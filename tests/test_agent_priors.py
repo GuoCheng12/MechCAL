@@ -20,7 +20,8 @@ def test_priors_are_averaged_fixed_and_recorded(tmp_path):
     planner = [
         lambda p: {"updates": [{"label": "RIM_RIR_RIV", "prior": 0.9, "plausibility": 0.35}],      # prior refused
                    "action": contrast(type="tool", name=DIH, args={"source_artifact_id": "structure:prepared"})},
-        {"updates": [{"label": "ICT_TICT_CT", "plausibility": 0.75, "reason": "D-A path"}], "action": {"type": "submit"}},
+        {"updates": [{"label": "ICT_TICT_CT", "plausibility": 0.75, "reason": "D-A path", "claimed": True}],
+         "action": {"type": "submit"}},
     ]
     client = ByRole(planner, prior=priors)
     cfg = AgentConfig(max_planner_calls=5, max_computations=2, critic=False, worker=False, prior_samples=3)
@@ -42,7 +43,7 @@ def test_priors_are_averaged_fixed_and_recorded(tmp_path):
 
 def test_failed_elicitation_leaves_priors_to_the_planner(tmp_path):
     incomplete = {"priors": [{"label": "ICT_TICT_CT", "prior": 0.5}]}
-    planner = [{"updates": [{"label": lab, "prior": 0.2, "prior_basis": "x"} for lab in MECHANISM_POOL],
+    planner = [{"updates": [{"label": lab, "prior": 0.2, "prior_basis": "x", "claimed": True} for lab in MECHANISM_POOL],
                 "action": {"type": "submit"}}]
     client = ByRole(planner, prior=[incomplete] * 2)
     cfg = AgentConfig(max_planner_calls=3, critic=False, worker=False, prior_samples=2)

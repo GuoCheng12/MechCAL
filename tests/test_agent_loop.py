@@ -49,8 +49,11 @@ def test_facts_and_claim_conversion():
     board = Board.initial("C", SMILES)
     board.families["ICT_TICT_CT"].plausibility = 0.8
     board.add_claim("RIM_RIR_RIV", claim, step=1)
+    assert board.answer() == [] and board.to_submission() is None        # nothing claimed yet: no answer
+    board.families["RIM_RIR_RIV"].claimed = board.families["ICT_TICT_CT"].claimed = True
     sub = board.to_submission()
-    assert sub.mechanism_predictions[0].label == "ICT_TICT_CT" and len(sub.mechanism_predictions) == 3
+    assert [p.label for p in sub.mechanism_predictions] == ["ICT_TICT_CT", "RIM_RIR_RIV"]   # claimed, by plausibility
+    assert [p.rank for p in sub.mechanism_predictions] == [1, 2] and board.view()["families"][0]["claimed"] is True
     assert check_submission(sub, __import__("mechcal.eval.submission", fromlist=["ArtifactStore"]).ArtifactStore(case_id="C"),
                             SMILES).predictions
 
@@ -94,7 +97,7 @@ def test_full_loop_offline(tmp_path):
         pointer = next(p for p in latest["values"] if p.endswith("/atom_indices/0"))
         value = latest["values"][pointer]
         return {"reading": "Dihedral inventory returned.",
-                "updates": [{"label": "RIM_RIR_RIV", "plausibility": 0.6, "status": "mixed"}],
+                "updates": [{"label": "RIM_RIR_RIV", "plausibility": 0.6, "status": "mixed", "claimed": True}],
                 "claims": [
                     {"label": "RIM_RIR_RIV", "kind": "computed", "statement": f"The first dihedral starts at atom index {value:g}.",
                      "quantities": [{"name": "first_atom", "value": value, "artifact_id": latest["artifact_id"], "pointer": pointer}]},
@@ -104,7 +107,7 @@ def test_full_loop_offline(tmp_path):
 
     planner = [
         {"oops": True},                                   # invalid -> repaired
-        {"updates": [{"label": "ICT_TICT_CT", "plausibility": 0.7, "reason": "D-A path"}],
+        {"updates": [{"label": "ICT_TICT_CT", "plausibility": 0.7, "reason": "D-A path", "claimed": True}],
          "claims": [{"label": "ICT_TICT_CT", "kind": "structural", "statement": "Amine donor conjugated to nitrile.", "fact_ids": [da]},
                     {"label": "RIM_RIR_RIV", "kind": "structural", "statement": "Rotor next to the ring.", "fact_ids": [rotor]}],
          "action": contrast(type="tool", name=DIH_TOOL, args={"source_artifact_id": "structure:prepared"})},
@@ -132,7 +135,7 @@ def test_full_loop_offline(tmp_path):
     assert client.payloads["planner"][1]["feedback"]                    # repair feedback after invalid output
     assert client.payloads["critic"] and "board" not in client.payloads["critic"][0]["payload"]  # blind critic
     labels = [p["label"] for p in result["submission"]["mechanism_predictions"]]
-    assert labels[0] == "ICT_TICT_CT"
+    assert labels == ["ICT_TICT_CT", "RIM_RIR_RIV"]                     # the claimed families only, by plausibility
     ict = result["submission"]["mechanism_predictions"][0]["evidence"]
     assert all("0.91" not in c["statement"] for c in ict)              # fabricated claim removed by self-check
     assert result["self_check_removed"]
@@ -152,8 +155,27 @@ def test_budget_forces_submission(tmp_path):
     client = ByRole([always_tool] * 10)
     cfg = AgentConfig(max_planner_calls=10, max_computations=2, critic=False, worker=False)
     result = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path, config=cfg, enable_amesp=False).run()
+    assert result["stop_reason"] == "budget" and result["tool_cost"]["tool_calls"] == 2
+    assert result["status"] == "no_valid_submission" and result["submission"] is None      # nothing was ever claimed
+
+
+def test_budget_end_uses_the_families_claimed_so_far_and_submit_needs_a_claim(tmp_path):
+    args = iter([{}, {"source_artifact_id": "structure:prepared"}] * 5)
+    claim_then_tool = lambda p: {"updates": [{"label": "PET_ET", "plausibility": 0.5, "claimed": True}],
+                                 "action": contrast(type="tool", name=DIH_TOOL, args=next(args))}
+    cfg = AgentConfig(max_planner_calls=10, max_computations=2, critic=False, worker=False)
+    result = AgentRun(ByRole([claim_then_tool] * 10), case_id="CASE", smiles=SMILES, run_dir=tmp_path / "a", config=cfg,
+                      enable_amesp=False).run()
     assert result["status"] == "submitted" and result["stop_reason"] == "budget"
-    assert result["tool_cost"]["tool_calls"] == 2
+    assert [p["label"] for p in result["submission"]["mechanism_predictions"]] == ["PET_ET"]
+    client = ByRole([{"action": {"type": "submit"}},
+                     {"updates": [{"label": "ESIPT_PT", "claimed": True}], "action": {"type": "submit"}}])
+    run = AgentRun(client, case_id="CASE", smiles=SMILES, run_dir=tmp_path / "b", config=cfg, enable_amesp=False)
+    result = run.run()
+    assert "submit rejected (no claimed family)" in " ".join(run.history)
+    assert client.payloads["planner"][1]["payload"]["latest"]["status"] == "rejected"
+    assert result["stop_reason"] == "planner_submitted"
+    assert [p["label"] for p in result["submission"]["mechanism_predictions"]] == ["ESIPT_PT"]
 
 
 def test_planner_aliases_seen_in_the_first_0003_smoke_are_normalized():

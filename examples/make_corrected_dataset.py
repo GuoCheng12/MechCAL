@@ -24,7 +24,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from mechcal.eval.dataset import CORRECTIONS, DATASET, RAW  # noqa: E402
+from mechcal.eval.dataset import CORRECTED_119 as DATASET, CORRECTIONS, RAW  # noqa: E402
 from mechcal.eval.family_reduction import reduce_hidden_reference  # noqa: E402
 from mechcal.eval.structure_checks import structure_warnings  # noqa: E402
 
