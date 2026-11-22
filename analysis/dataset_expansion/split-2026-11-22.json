@@ -1,0 +1,2427 @@
+{
+ "created": "2026-11-22",
+ "rule": "option B, dev share 0.1, seed 74; see analysis/dataset_expansion/split-proposal-zh.md",
+ "unit_definition": "papers linked by cross-paper Morgan (r2, 2048) Tanimoto >= 0.65, plus sister papers 10.1016/j.jphotochem.2026.117427 and the F15 paper; unit name = smallest DOI in the unit",
+ "counts": {
+  "dev": 29,
+  "test": 273
+ },
+ "cases": [
+  {
+   "case_id": "AIE_DDX_MECH_V4_0001",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.9b08813",
+   "doi": "10.1021/acs.jpcb.9b08813",
+   "publication_date": "2019-12-05",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0002",
+   "split": "test",
+   "unit": "10.1021/acsomega.8b02717",
+   "doi": "10.1021/acsomega.8b02717",
+   "publication_date": "2019-01-29",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0003",
+   "split": "dev",
+   "unit": "10.1039/c3cc00157a",
+   "doi": "10.1039/c3cc00157a",
+   "publication_date": "2013-01-01",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0004",
+   "split": "test",
+   "unit": "10.1039/c5sc01226k",
+   "doi": "10.1039/c5sc01226k",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0005",
+   "split": "test",
+   "unit": "10.1039/c5sc01226k",
+   "doi": "10.1039/c5sc01226k",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0006",
+   "split": "test",
+   "unit": "10.1039/c5sc01226k",
+   "doi": "10.1039/c5sc01226k",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0007",
+   "split": "test",
+   "unit": "10.1039/c6py00443a",
+   "doi": "10.1039/c6py00443a",
+   "publication_date": "2016-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0010",
+   "split": "test",
+   "unit": "10.1016/j.snb.2014.07.012",
+   "doi": "10.1016/j.snb.2014.07.012",
+   "publication_date": "2014-07-12",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0011",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2023.111182",
+   "doi": "10.1016/j.dyepig.2023.111182",
+   "publication_date": "2023-02-24",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0012",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2018.08.066",
+   "doi": "10.1016/j.dyepig.2018.08.066",
+   "publication_date": "2018-09-03",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0013",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2018.08.066",
+   "doi": "10.1016/j.dyepig.2018.08.066",
+   "publication_date": "2018-09-03",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0014",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2021.109497",
+   "doi": "10.1016/j.dyepig.2021.109497",
+   "publication_date": "2021-06-06",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0015",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2021.109497",
+   "doi": "10.1016/j.dyepig.2021.109497",
+   "publication_date": "2021-06-06",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0016",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2021.109497",
+   "doi": "10.1016/j.dyepig.2021.109497",
+   "publication_date": "2021-06-06",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0018",
+   "split": "test",
+   "unit": "10.1021/acs.analchem.6b04974",
+   "doi": "10.1021/acs.analchem.6b04974",
+   "publication_date": "2017-02-03",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0019",
+   "split": "dev",
+   "unit": "10.1021/jp308473j",
+   "doi": "10.1021/jp308473j",
+   "publication_date": "2012-12-03",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0020",
+   "split": "dev",
+   "unit": "10.1038/s42004-019-0113-8",
+   "doi": "10.1038/s42004-019-0113-8",
+   "publication_date": "2019-01-28",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0021",
+   "split": "test",
+   "unit": "10.1039/c6ra09920c",
+   "doi": "10.1039/c6ra09920c",
+   "publication_date": "2016-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0022",
+   "split": "test",
+   "unit": "10.1039/c6ra09920c",
+   "doi": "10.1039/c6ra09920c",
+   "publication_date": "2016-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0023",
+   "split": "test",
+   "unit": "10.1039/d0qm00623h",
+   "doi": "10.1039/d0qm00623h",
+   "publication_date": "2020-09-30",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0024",
+   "split": "test",
+   "unit": "10.1002/anie.202000338",
+   "doi": "10.1002/anie.202000338",
+   "publication_date": "2020-04-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0030",
+   "split": "dev",
+   "unit": "10.1039/c7tb02399e",
+   "doi": "10.1039/c7tb02399e",
+   "publication_date": "2017-01-01",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0031",
+   "split": "test",
+   "unit": "10.1016/j.jcis.2017.03.097",
+   "doi": "10.1016/j.jcis.2017.03.097",
+   "publication_date": "2017-03-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0038",
+   "split": "test",
+   "unit": "10.1002/anie.201902766",
+   "doi": "10.1002/anie.201902766",
+   "publication_date": "2019-03-27",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0039",
+   "split": "test",
+   "unit": "10.1002/anie.201916357",
+   "doi": "10.1002/anie.201916357",
+   "publication_date": "2020-01-13",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0040",
+   "split": "test",
+   "unit": "10.1002/anie.201916357",
+   "doi": "10.1002/anie.201916357",
+   "publication_date": "2020-01-13",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0041",
+   "split": "test",
+   "unit": "10.1002/anie.201916357",
+   "doi": "10.1002/anie.201916357",
+   "publication_date": "2020-01-13",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0042",
+   "split": "test",
+   "unit": "10.1021/acs.jpca.1c02646",
+   "doi": "10.1021/acs.jpca.1c02646",
+   "publication_date": "2021-05-14",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0044",
+   "split": "test",
+   "unit": "10.1021/jp5089433",
+   "doi": "10.1021/jp5089433",
+   "publication_date": "2014-12-29",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0047",
+   "split": "dev",
+   "unit": "10.3390/ma14081909",
+   "doi": "10.3390/ma14081909",
+   "publication_date": "2021-04-11",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0048",
+   "split": "test",
+   "unit": "10.1021/acsami.9b18336",
+   "doi": "10.1021/acsami.9b18336",
+   "publication_date": "2019-12-27",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0049",
+   "split": "test",
+   "unit": "10.1021/acsnano.0c02197",
+   "doi": "10.1021/acsnano.0c02197",
+   "publication_date": "2020-04-13",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0051",
+   "split": "test",
+   "unit": "10.1039/c8sc02810a",
+   "doi": "10.1039/c8sc02810a",
+   "publication_date": "2018-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0055",
+   "split": "test",
+   "unit": "10.1016/j.orgel.2019.105602",
+   "doi": "10.1016/j.orgel.2019.105602",
+   "publication_date": "2019-12-19",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0056",
+   "split": "dev",
+   "unit": "10.1021/jp0630828",
+   "doi": "10.1021/jp0630828",
+   "publication_date": "2007-01-18",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0059",
+   "split": "test",
+   "unit": "10.1039/c7tc03656f",
+   "doi": "10.1039/c7tc03656f",
+   "publication_date": "2017-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0060",
+   "split": "test",
+   "unit": "10.1039/c9qm00792j",
+   "doi": "10.1039/c9qm00792j",
+   "publication_date": "2020-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0062",
+   "split": "test",
+   "unit": "10.1002/chem.201905256",
+   "doi": "10.1002/chem.201905256",
+   "publication_date": "2020-01-16",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0063",
+   "split": "test",
+   "unit": "10.1002/chem.201905256",
+   "doi": "10.1002/chem.201905256",
+   "publication_date": "2020-01-16",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0064",
+   "split": "test",
+   "unit": "10.1016/j.snb.2014.08.068",
+   "doi": "10.1016/j.snb.2014.08.068",
+   "publication_date": "2014-08-29",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0066",
+   "split": "test",
+   "unit": "10.1021/jp311020w",
+   "doi": "10.1021/jp311020w",
+   "publication_date": "2013-01-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0068",
+   "split": "dev",
+   "unit": "10.1039/c5sc01151e",
+   "doi": "10.1039/c5sc01151e",
+   "publication_date": "2015-01-01",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0072",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.1c01297",
+   "doi": "10.1021/acs.jpcb.1c01297",
+   "publication_date": "2021-07-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0073",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.1c01297",
+   "doi": "10.1021/acs.jpcb.1c01297",
+   "publication_date": "2021-07-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0074",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.1c01297",
+   "doi": "10.1021/acs.jpcb.1c01297",
+   "publication_date": "2021-07-23",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0078",
+   "split": "test",
+   "unit": "10.1021/jp057557r",
+   "doi": "10.1021/jp057557r",
+   "publication_date": "2006-05-20",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0079",
+   "split": "test",
+   "unit": "10.1021/jp057557r",
+   "doi": "10.1021/jp057557r",
+   "publication_date": "2006-05-20",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0080",
+   "split": "test",
+   "unit": "10.1039/c9qm00792j",
+   "doi": "10.1039/c9qm00792j",
+   "publication_date": "2020-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0081",
+   "split": "test",
+   "unit": "10.1039/d0nj03667f",
+   "doi": "10.1039/d0nj03667f",
+   "publication_date": "2020-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0082",
+   "split": "test",
+   "unit": "10.1002/anie.201802842",
+   "doi": "10.1002/anie.201802842",
+   "publication_date": "2018-05-03",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0083",
+   "split": "dev",
+   "unit": "10.1002/slct.201900380",
+   "doi": "10.1002/slct.201900380",
+   "publication_date": "2019-04-11",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0089",
+   "split": "test",
+   "unit": "10.1038/s41598-020-78197-2",
+   "doi": "10.1038/s41598-020-78197-2",
+   "publication_date": "2020-12-03",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0090",
+   "split": "test",
+   "unit": "10.1021/acsnano.9b06578",
+   "doi": "10.1021/acsnano.9b06578",
+   "publication_date": "2019-09-30",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0094",
+   "split": "test",
+   "unit": "10.1021/acs.jpcc.6b10026",
+   "doi": "10.1021/acs.jpcc.6b10026",
+   "publication_date": "2016-11-10",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0095",
+   "split": "test",
+   "unit": "10.1021/acs.jpcc.6b10026",
+   "doi": "10.1021/acs.jpcc.6b10026",
+   "publication_date": "2016-11-10",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0096",
+   "split": "test",
+   "unit": "10.1002/ajoc.202000133",
+   "doi": "10.1002/ajoc.202000133",
+   "publication_date": "2020-08-10",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0097",
+   "split": "test",
+   "unit": "10.1039/c5cc03603h",
+   "doi": "10.1039/c5cc03603h",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0098",
+   "split": "test",
+   "unit": "10.1039/d4dt02458c",
+   "doi": "10.1039/d4dt02458c",
+   "publication_date": "2024-11-14",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0099",
+   "split": "test",
+   "unit": "10.1039/d4dt02458c",
+   "doi": "10.1039/d4dt02458c",
+   "publication_date": "2024-11-14",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0100",
+   "split": "test",
+   "unit": "10.1039/d4dt02458c",
+   "doi": "10.1039/d4dt02458c",
+   "publication_date": "2024-11-14",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0101",
+   "split": "dev",
+   "unit": "10.1039/c0cp01181a",
+   "doi": "10.1039/c0cp01181a",
+   "publication_date": "2010-12-20",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0102",
+   "split": "test",
+   "unit": "10.1016/j.orgel.2019.105602",
+   "doi": "10.1016/j.orgel.2019.105602",
+   "publication_date": "2019-12-19",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0125",
+   "split": "test",
+   "unit": "10.1021/acsnano.1c03700",
+   "doi": "10.1021/acsnano.1c03700",
+   "publication_date": "2021-06-02",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0139",
+   "split": "test",
+   "unit": "10.1002/advs.201801629",
+   "doi": "10.1002/advs.201801629",
+   "publication_date": "2018-12-07",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0140",
+   "split": "dev",
+   "unit": "10.1021/acs.chemmater.8b03699",
+   "doi": "10.1021/acs.chemmater.8b03699",
+   "publication_date": "2018-10-18",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0141",
+   "split": "dev",
+   "unit": "10.1021/jp2021227",
+   "doi": "10.1021/jp2021227",
+   "publication_date": "2011-06-21",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0142",
+   "split": "test",
+   "unit": "10.1039/c9cp00739c",
+   "doi": "10.1039/c9cp00739c",
+   "publication_date": "2019-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0154",
+   "split": "dev",
+   "unit": "10.1016/j.chempr.2016.08.010",
+   "doi": "10.1016/j.chempr.2016.08.010",
+   "publication_date": "2016-10-01",
+   "origin": "original dev"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0155",
+   "split": "test",
+   "unit": "10.1038/s41467-021-21676-5",
+   "doi": "10.1038/s41467-021-21676-5",
+   "publication_date": "2021-03-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0156",
+   "split": "test",
+   "unit": "10.1038/s41467-021-21676-5",
+   "doi": "10.1038/s41467-021-21676-5",
+   "publication_date": "2021-03-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0160",
+   "split": "test",
+   "unit": "10.1038/s41467-021-21676-5",
+   "doi": "10.1038/s41467-021-21676-5",
+   "publication_date": "2021-03-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0161",
+   "split": "test",
+   "unit": "10.1039/c5sc01733e",
+   "doi": "10.1039/c5sc01733e",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0162",
+   "split": "test",
+   "unit": "10.1039/c5sc01733e",
+   "doi": "10.1039/c5sc01733e",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0163",
+   "split": "test",
+   "unit": "10.1039/c5sc01733e",
+   "doi": "10.1039/c5sc01733e",
+   "publication_date": "2015-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0164",
+   "split": "test",
+   "unit": "10.1016/j.cej.2021.129628",
+   "doi": "10.1016/j.cej.2021.129628",
+   "publication_date": "2021-04-05",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0165",
+   "split": "test",
+   "unit": "10.1016/j.cej.2021.129628",
+   "doi": "10.1016/j.cej.2021.129628",
+   "publication_date": "2021-04-05",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0166",
+   "split": "test",
+   "unit": "10.1016/j.cej.2021.129628",
+   "doi": "10.1016/j.cej.2021.129628",
+   "publication_date": "2021-04-05",
+   "origin": "original test"
+  },
+  {
+   "case_id": "AIE_DDX_MECH_V4_0167",
+   "split": "test",
+   "unit": "10.1039/c9qm00509a",
+   "doi": "10.1039/c9qm00509a",
+   "publication_date": "2019-01-01",
+   "origin": "original test"
+  },
+  {
+   "case_id": "EXPA_001",
+   "split": "test",
+   "unit": "10.1002/anie.202525240",
+   "doi": "10.1002/anie.202525240",
+   "publication_date": "2026-03-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_002",
+   "split": "test",
+   "unit": "10.1002/anie.202525240",
+   "doi": "10.1002/anie.202525240",
+   "publication_date": "2026-03-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_003",
+   "split": "test",
+   "unit": "10.3390/ijms27177631",
+   "doi": "10.3390/ijms27177631",
+   "publication_date": "2026-08-26",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_004",
+   "split": "test",
+   "unit": "10.3390/ijms27177631",
+   "doi": "10.3390/ijms27177631",
+   "publication_date": "2026-08-26",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_005",
+   "split": "test",
+   "unit": "10.1002/chem.71407",
+   "doi": "10.1002/chem.71407",
+   "publication_date": "2026-07-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_006",
+   "split": "test",
+   "unit": "10.1002/chem.71407",
+   "doi": "10.1002/chem.71407",
+   "publication_date": "2026-07-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_007",
+   "split": "test",
+   "unit": "10.1002/chem.71407",
+   "doi": "10.1002/chem.71407",
+   "publication_date": "2026-07-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_008",
+   "split": "test",
+   "unit": "10.1002/cptc.202500374",
+   "doi": "10.1002/cptc.202500374",
+   "publication_date": "2026-04-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_009",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.129102",
+   "doi": "10.1016/j.saa.2026.129102",
+   "publication_date": "2026-11-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_010",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.129102",
+   "doi": "10.1016/j.saa.2026.129102",
+   "publication_date": "2026-11-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_011",
+   "split": "test",
+   "unit": "10.1016/j.molliq.2025.128639",
+   "doi": "10.1016/j.molliq.2025.128639",
+   "publication_date": "2025-10-03",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_012",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117261",
+   "doi": "10.1016/j.jphotochem.2026.117261",
+   "publication_date": "2026-04-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_013",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117261",
+   "doi": "10.1016/j.jphotochem.2026.117261",
+   "publication_date": "2026-04-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_014",
+   "split": "test",
+   "unit": "10.1002/chem.202502289",
+   "doi": "10.1016/j.jphotochem.2026.117427",
+   "publication_date": "2026-06-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_015",
+   "split": "test",
+   "unit": "10.1002/chem.202502289",
+   "doi": "10.1016/j.jphotochem.2026.117427",
+   "publication_date": "2026-06-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_016",
+   "split": "test",
+   "unit": "10.1002/chem.202502289",
+   "doi": "10.1016/j.jphotochem.2026.117427",
+   "publication_date": "2026-06-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_017",
+   "split": "test",
+   "unit": "10.1002/chem.202503484",
+   "doi": "10.1002/chem.202503484",
+   "publication_date": "2026-02-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_018",
+   "split": "test",
+   "unit": "10.1002/chem.202503484",
+   "doi": "10.1002/chem.202503484",
+   "publication_date": "2026-02-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_019",
+   "split": "test",
+   "unit": "10.1002/chem.202503484",
+   "doi": "10.1002/chem.202503484",
+   "publication_date": "2026-02-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_020",
+   "split": "test",
+   "unit": "10.1021/acs.jpcc.6c04793",
+   "doi": "10.1021/acs.jpcc.6c04793",
+   "publication_date": "2026-10-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_021",
+   "split": "dev",
+   "unit": "10.1002/chem.71835",
+   "doi": "10.1002/chem.71835",
+   "publication_date": "2026-10-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_022",
+   "split": "test",
+   "unit": "10.1007/s10895-026-04856-8",
+   "doi": "10.1007/s10895-026-04856-8",
+   "publication_date": "2026-07-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_023",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.128452",
+   "doi": "10.1016/j.saa.2026.128452",
+   "publication_date": "2026-07-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_024",
+   "split": "test",
+   "unit": "10.1063/5.0319036",
+   "doi": "10.1063/5.0319036",
+   "publication_date": "2026-05-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_025",
+   "split": "dev",
+   "unit": "10.1039/d5ra08595k",
+   "doi": "10.1039/d5ra08595k",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_026",
+   "split": "test",
+   "unit": "10.1002/poc.70045",
+   "doi": "10.1002/poc.70045",
+   "publication_date": "2025-11-24",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_027",
+   "split": "test",
+   "unit": "10.1002/asia.70787",
+   "doi": "10.1002/asia.70787",
+   "publication_date": "2026-05-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_028",
+   "split": "test",
+   "unit": "10.1002/asia.70787",
+   "doi": "10.1002/asia.70787",
+   "publication_date": "2026-05-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_029",
+   "split": "test",
+   "unit": "10.1016/j.jlumin.2026.121937",
+   "doi": "10.1016/j.jlumin.2026.121937",
+   "publication_date": "2026-04-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_030",
+   "split": "test",
+   "unit": "10.1016/j.jlumin.2026.121937",
+   "doi": "10.1016/j.jlumin.2026.121937",
+   "publication_date": "2026-04-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_031",
+   "split": "test",
+   "unit": "10.1016/j.jlumin.2026.121937",
+   "doi": "10.1016/j.jlumin.2026.121937",
+   "publication_date": "2026-04-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_032",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117566",
+   "doi": "10.1016/j.jphotochem.2026.117566",
+   "publication_date": "2026-07-31",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_033",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117566",
+   "doi": "10.1016/j.jphotochem.2026.117566",
+   "publication_date": "2026-07-31",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_034",
+   "split": "test",
+   "unit": "10.1021/acs.jpcc.6c04347",
+   "doi": "10.1021/acs.jpcc.6c04347",
+   "publication_date": "2026-10-02",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_035",
+   "split": "test",
+   "unit": "10.1021/acs.jpcc.6c04347",
+   "doi": "10.1021/acs.jpcc.6c04347",
+   "publication_date": "2026-10-02",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_036",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.1002/ejoc.202500876",
+   "publication_date": "2026-04-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_037",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.1002/ejoc.202500876",
+   "publication_date": "2026-04-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_038",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.1002/ejoc.202500876",
+   "publication_date": "2026-04-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_039",
+   "split": "dev",
+   "unit": "10.1002/slct.202501958",
+   "doi": "10.1002/slct.202501958",
+   "publication_date": "2025-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_040",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1007/s43630-026-00955-4",
+   "publication_date": "2026-07-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_041",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1007/s43630-026-00955-4",
+   "publication_date": "2026-07-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_042",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1007/s43630-026-00955-4",
+   "publication_date": "2026-07-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_043",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.128334",
+   "doi": "10.1016/j.saa.2026.128334",
+   "publication_date": "2026-06-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_044",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.128334",
+   "doi": "10.1016/j.saa.2026.128334",
+   "publication_date": "2026-06-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_045",
+   "split": "test",
+   "unit": "10.1016/j.cej.2026.175765",
+   "doi": "10.1016/j.cej.2026.175765",
+   "publication_date": "2026-04-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_046",
+   "split": "test",
+   "unit": "10.1016/j.molliq.2025.128949",
+   "doi": "10.1016/j.molliq.2025.128949",
+   "publication_date": "2025-11-20",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_047",
+   "split": "test",
+   "unit": "10.1016/j.molliq.2025.128949",
+   "doi": "10.1016/j.molliq.2025.128949",
+   "publication_date": "2025-11-20",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_048",
+   "split": "test",
+   "unit": "10.1016/j.molliq.2025.128949",
+   "doi": "10.1016/j.molliq.2025.128949",
+   "publication_date": "2025-11-20",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_049",
+   "split": "dev",
+   "unit": "10.1002/adom.202502168",
+   "doi": "10.1002/adom.202502168",
+   "publication_date": "2025-09-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_050",
+   "split": "dev",
+   "unit": "10.1002/adom.202502168",
+   "doi": "10.1002/adom.202502168",
+   "publication_date": "2025-09-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_051",
+   "split": "dev",
+   "unit": "10.1002/adom.202502168",
+   "doi": "10.1002/adom.202502168",
+   "publication_date": "2025-09-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_052",
+   "split": "test",
+   "unit": "10.1007/s10895-026-04749-w",
+   "doi": "10.1007/s10895-026-04749-w",
+   "publication_date": "2026-03-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_053",
+   "split": "test",
+   "unit": "10.1007/s10895-026-04749-w",
+   "doi": "10.1007/s10895-026-04749-w",
+   "publication_date": "2026-03-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_054",
+   "split": "test",
+   "unit": "10.1002/adom.71472",
+   "doi": "10.1002/adom.71472",
+   "publication_date": "2026-07-20",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_055",
+   "split": "test",
+   "unit": "10.1002/adom.71472",
+   "doi": "10.1002/adom.71472",
+   "publication_date": "2026-07-20",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_056",
+   "split": "test",
+   "unit": "10.1039/d6qm00664g",
+   "doi": "10.1039/d6qm00664g",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_057",
+   "split": "test",
+   "unit": "10.1039/d6qm00664g",
+   "doi": "10.1039/d6qm00664g",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_058",
+   "split": "test",
+   "unit": "10.1039/d6qm00664g",
+   "doi": "10.1039/d6qm00664g",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_059",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.128911",
+   "doi": "10.1016/j.saa.2026.128911",
+   "publication_date": "2026-10-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_060",
+   "split": "dev",
+   "unit": "10.1002/chem.71179",
+   "doi": "10.1002/chem.71179",
+   "publication_date": "2026-05-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_061",
+   "split": "dev",
+   "unit": "10.1002/chem.71179",
+   "doi": "10.1002/chem.71179",
+   "publication_date": "2026-05-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_062",
+   "split": "dev",
+   "unit": "10.1002/chem.71179",
+   "doi": "10.1002/chem.71179",
+   "publication_date": "2026-05-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_063",
+   "split": "test",
+   "unit": "10.1021/acs.orglett.5c02265",
+   "doi": "10.1021/acs.orglett.5c02265",
+   "publication_date": "2025-07-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_064",
+   "split": "test",
+   "unit": "10.1021/acs.orglett.5c02265",
+   "doi": "10.1021/acs.orglett.5c02265",
+   "publication_date": "2025-07-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_065",
+   "split": "test",
+   "unit": "10.1021/acs.joc.6c01175",
+   "doi": "10.1021/acs.joc.6c01175",
+   "publication_date": "2026-09-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_066",
+   "split": "test",
+   "unit": "10.1021/acs.joc.6c01175",
+   "doi": "10.1021/acs.joc.6c01175",
+   "publication_date": "2026-09-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_067",
+   "split": "test",
+   "unit": "10.1021/acs.joc.6c01175",
+   "doi": "10.1021/acs.joc.6c01175",
+   "publication_date": "2026-09-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_068",
+   "split": "test",
+   "unit": "10.1016/j.molstruc.2025.144705",
+   "doi": "10.1016/j.molstruc.2025.144705",
+   "publication_date": "2025-11-12",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_069",
+   "split": "test",
+   "unit": "10.1016/j.molstruc.2025.144705",
+   "doi": "10.1016/j.molstruc.2025.144705",
+   "publication_date": "2025-11-12",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_070",
+   "split": "test",
+   "unit": "10.1016/j.molstruc.2025.144705",
+   "doi": "10.1016/j.molstruc.2025.144705",
+   "publication_date": "2025-11-12",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_071",
+   "split": "test",
+   "unit": "10.1021/jacs.5c22031",
+   "doi": "10.1021/jacs.5c22031",
+   "publication_date": "2026-07-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_072",
+   "split": "test",
+   "unit": "10.1021/jacs.5c22031",
+   "doi": "10.1021/jacs.5c22031",
+   "publication_date": "2026-07-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_073",
+   "split": "test",
+   "unit": "10.1021/jacs.5c22031",
+   "doi": "10.1021/jacs.5c22031",
+   "publication_date": "2026-07-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_074",
+   "split": "test",
+   "unit": "10.1002/agt2.70390",
+   "doi": "10.1002/agt2.70390",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_075",
+   "split": "test",
+   "unit": "10.1002/agt2.70390",
+   "doi": "10.1002/agt2.70390",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_076",
+   "split": "test",
+   "unit": "10.1002/agt2.70390",
+   "doi": "10.1002/agt2.70390",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_077",
+   "split": "test",
+   "unit": "10.1002/agt2.70411",
+   "doi": "10.1002/agt2.70411",
+   "publication_date": "2026-08-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_078",
+   "split": "test",
+   "unit": "10.1002/agt2.70411",
+   "doi": "10.1002/agt2.70411",
+   "publication_date": "2026-08-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_079",
+   "split": "test",
+   "unit": "10.1002/agt2.70411",
+   "doi": "10.1002/agt2.70411",
+   "publication_date": "2026-08-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_080",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2026.113634",
+   "doi": "10.1016/j.dyepig.2026.113634",
+   "publication_date": "2026-02-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_081",
+   "split": "test",
+   "unit": "10.1016/j.dyepig.2026.113634",
+   "doi": "10.1016/j.dyepig.2026.113634",
+   "publication_date": "2026-02-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_082",
+   "split": "test",
+   "unit": "10.1016/j.jlumin.2026.122294",
+   "doi": "10.1016/j.jlumin.2026.122294",
+   "publication_date": "2026-11-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_083",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117130",
+   "doi": "10.1016/j.jphotochem.2026.117130",
+   "publication_date": "2026-02-18",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_084",
+   "split": "test",
+   "unit": "10.1021/acs.analchem.6c02737",
+   "doi": "10.1021/acs.analchem.6c02737",
+   "publication_date": "2026-08-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_085",
+   "split": "test",
+   "unit": "10.1021/acs.analchem.6c02737",
+   "doi": "10.1021/acs.analchem.6c02737",
+   "publication_date": "2026-08-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_086",
+   "split": "test",
+   "unit": "10.1021/acs.analchem.6c02737",
+   "doi": "10.1021/acs.analchem.6c02737",
+   "publication_date": "2026-08-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_087",
+   "split": "test",
+   "unit": "10.1039/d6sc01073c",
+   "doi": "10.1039/d6sc01073c",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_088",
+   "split": "test",
+   "unit": "10.1039/d6sc01073c",
+   "doi": "10.1039/d6sc01073c",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_089",
+   "split": "test",
+   "unit": "10.1039/d6sc01073c",
+   "doi": "10.1039/d6sc01073c",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_090",
+   "split": "test",
+   "unit": "10.1002/cptc.202500262",
+   "doi": "10.1002/cptc.202500262",
+   "publication_date": "2025-11-03",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_091",
+   "split": "test",
+   "unit": "10.1002/cptc.202500262",
+   "doi": "10.1002/cptc.202500262",
+   "publication_date": "2025-11-03",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_092",
+   "split": "test",
+   "unit": "10.1002/cptc.202500262",
+   "doi": "10.1002/cptc.202500262",
+   "publication_date": "2025-11-03",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_093",
+   "split": "dev",
+   "unit": "10.1021/acs.jpcb.5c07733",
+   "doi": "10.1021/acs.jpcb.5c07733",
+   "publication_date": "2026-02-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_094",
+   "split": "dev",
+   "unit": "10.1021/acs.jpcb.5c07733",
+   "doi": "10.1021/acs.jpcb.5c07733",
+   "publication_date": "2026-02-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_095",
+   "split": "dev",
+   "unit": "10.1021/acs.jpcb.5c07733",
+   "doi": "10.1021/acs.jpcb.5c07733",
+   "publication_date": "2026-02-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_096",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.5c03855",
+   "doi": "10.1021/acs.jpcb.5c03855",
+   "publication_date": "2025-07-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_097",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.5c03855",
+   "doi": "10.1021/acs.jpcb.5c03855",
+   "publication_date": "2025-07-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_098",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.5c03855",
+   "doi": "10.1021/acs.jpcb.5c03855",
+   "publication_date": "2025-07-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_099",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2025.116817",
+   "doi": "10.1016/j.jphotochem.2025.116817",
+   "publication_date": "2025-10-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_100",
+   "split": "test",
+   "unit": "10.1002/anie.202508776",
+   "doi": "10.1002/anie.202508776",
+   "publication_date": "2025-07-31",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_101",
+   "split": "test",
+   "unit": "10.1002/anie.202508776",
+   "doi": "10.1002/anie.202508776",
+   "publication_date": "2025-07-31",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_102",
+   "split": "test",
+   "unit": "10.1021/acsaom.5c00562",
+   "doi": "10.1021/acsaom.5c00562",
+   "publication_date": "2026-01-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_103",
+   "split": "test",
+   "unit": "10.1021/acsaom.5c00562",
+   "doi": "10.1021/acsaom.5c00562",
+   "publication_date": "2026-01-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_104",
+   "split": "test",
+   "unit": "10.1021/acsaom.5c00562",
+   "doi": "10.1021/acsaom.5c00562",
+   "publication_date": "2026-01-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_105",
+   "split": "test",
+   "unit": "10.1021/acsami.5c10294",
+   "doi": "10.1021/acsami.5c10294",
+   "publication_date": "2025-08-05",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_106",
+   "split": "test",
+   "unit": "10.1021/acsami.5c10294",
+   "doi": "10.1021/acsami.5c10294",
+   "publication_date": "2025-08-05",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_107",
+   "split": "test",
+   "unit": "10.1021/acsami.5c10294",
+   "doi": "10.1021/acsami.5c10294",
+   "publication_date": "2025-08-05",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_108",
+   "split": "test",
+   "unit": "10.1016/j.saa.2026.129073",
+   "doi": "10.1016/j.saa.2026.129073",
+   "publication_date": "2026-10-31",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_109",
+   "split": "test",
+   "unit": "10.1002/adfm.76766",
+   "doi": "10.1002/adfm.76766",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_110",
+   "split": "test",
+   "unit": "10.1002/adfm.76766",
+   "doi": "10.1002/adfm.76766",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_111",
+   "split": "test",
+   "unit": "10.1002/adfm.76766",
+   "doi": "10.1002/adfm.76766",
+   "publication_date": "2026-07-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_112",
+   "split": "test",
+   "unit": "10.1039/d5cc05926g",
+   "doi": "10.1039/d5cc05926g",
+   "publication_date": "2025-12-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_113",
+   "split": "test",
+   "unit": "10.1039/d5cc05926g",
+   "doi": "10.1039/d5cc05926g",
+   "publication_date": "2025-12-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_114",
+   "split": "test",
+   "unit": "10.1039/d5cc05926g",
+   "doi": "10.1039/d5cc05926g",
+   "publication_date": "2025-12-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_115",
+   "split": "test",
+   "unit": "10.1021/jacs.6c18646",
+   "doi": "10.1021/jacs.6c18646",
+   "publication_date": "2026-10-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_116",
+   "split": "test",
+   "unit": "10.1021/jacs.6c18646",
+   "doi": "10.1021/jacs.6c18646",
+   "publication_date": "2026-10-14",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_117",
+   "split": "test",
+   "unit": "10.1063/5.0348405",
+   "doi": "10.1063/5.0348405",
+   "publication_date": "2026-10-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_118",
+   "split": "test",
+   "unit": "10.1063/5.0348405",
+   "doi": "10.1063/5.0348405",
+   "publication_date": "2026-10-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_120",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.6c03904",
+   "doi": "10.1021/acs.jpcb.6c03904",
+   "publication_date": "2026-08-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_121",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.6c03904",
+   "doi": "10.1021/acs.jpcb.6c03904",
+   "publication_date": "2026-08-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_122",
+   "split": "test",
+   "unit": "10.1002/anie.202504390",
+   "doi": "10.1002/anie.202504390",
+   "publication_date": "2025-04-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_123",
+   "split": "test",
+   "unit": "10.1002/anie.202504390",
+   "doi": "10.1002/anie.202504390",
+   "publication_date": "2025-04-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_124",
+   "split": "test",
+   "unit": "10.1002/anie.202504390",
+   "doi": "10.1002/anie.202504390",
+   "publication_date": "2025-04-09",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_125",
+   "split": "test",
+   "unit": "10.1002/ajoc.70310",
+   "doi": "10.1002/ajoc.70310",
+   "publication_date": "2026-02-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_126",
+   "split": "test",
+   "unit": "10.1002/ajoc.70310",
+   "doi": "10.1002/ajoc.70310",
+   "publication_date": "2026-02-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_127",
+   "split": "test",
+   "unit": "10.1002/open.70264",
+   "doi": "10.1002/open.70264",
+   "publication_date": "2026-07-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_128",
+   "split": "test",
+   "unit": "10.1002/open.70264",
+   "doi": "10.1002/open.70264",
+   "publication_date": "2026-07-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_129",
+   "split": "test",
+   "unit": "10.1002/open.70264",
+   "doi": "10.1002/open.70264",
+   "publication_date": "2026-07-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_130",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1016/j.jphotochem.2026.117156",
+   "publication_date": "2026-03-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_131",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1016/j.jphotochem.2026.117156",
+   "publication_date": "2026-03-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_132",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1016/j.jphotochem.2026.117156",
+   "publication_date": "2026-03-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_133",
+   "split": "test",
+   "unit": "10.1002/adom.71991",
+   "doi": "10.1002/adom.71991",
+   "publication_date": "2026-10-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_134",
+   "split": "test",
+   "unit": "10.1002/adom.71991",
+   "doi": "10.1002/adom.71991",
+   "publication_date": "2026-10-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_135",
+   "split": "test",
+   "unit": "10.1002/adom.71991",
+   "doi": "10.1002/adom.71991",
+   "publication_date": "2026-10-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_136",
+   "split": "test",
+   "unit": "10.1002/chem.71711",
+   "doi": "10.1002/chem.71711",
+   "publication_date": "2026-09-18",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_137",
+   "split": "test",
+   "unit": "10.1002/chem.71711",
+   "doi": "10.1002/chem.71711",
+   "publication_date": "2026-09-18",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_138",
+   "split": "test",
+   "unit": "10.1002/chem.71711",
+   "doi": "10.1002/chem.71711",
+   "publication_date": "2026-09-18",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_139",
+   "split": "test",
+   "unit": "10.3390/s26072236",
+   "doi": "10.3390/s26072236",
+   "publication_date": "2026-04-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_140",
+   "split": "test",
+   "unit": "10.3390/s26072236",
+   "doi": "10.3390/s26072236",
+   "publication_date": "2026-04-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_141",
+   "split": "test",
+   "unit": "10.3390/s26072236",
+   "doi": "10.3390/s26072236",
+   "publication_date": "2026-04-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_142",
+   "split": "test",
+   "unit": "10.3390/molecules31111859",
+   "doi": "10.3390/molecules31111859",
+   "publication_date": "2026-05-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_143",
+   "split": "test",
+   "unit": "10.3390/molecules31111859",
+   "doi": "10.3390/molecules31111859",
+   "publication_date": "2026-05-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_144",
+   "split": "test",
+   "unit": "10.3390/molecules31111859",
+   "doi": "10.3390/molecules31111859",
+   "publication_date": "2026-05-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_145",
+   "split": "test",
+   "unit": "10.1039/d6cc02787c",
+   "doi": "10.1039/d6cc02787c",
+   "publication_date": "2026-06-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_146",
+   "split": "test",
+   "unit": "10.1039/d6cc02787c",
+   "doi": "10.1039/d6cc02787c",
+   "publication_date": "2026-06-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_147",
+   "split": "test",
+   "unit": "10.1039/d6cc02787c",
+   "doi": "10.1039/d6cc02787c",
+   "publication_date": "2026-06-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_148",
+   "split": "test",
+   "unit": "10.1039/d5cc04833h",
+   "doi": "10.1039/d5cc04833h",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_149",
+   "split": "test",
+   "unit": "10.1039/d5cc04833h",
+   "doi": "10.1039/d5cc04833h",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_150",
+   "split": "test",
+   "unit": "10.1039/d5cc04833h",
+   "doi": "10.1039/d5cc04833h",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_151",
+   "split": "test",
+   "unit": "10.1021/acs.jpclett.6c01387",
+   "doi": "10.1021/acs.jpclett.6c01387",
+   "publication_date": "2026-05-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_152",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1039/d5cp04504e",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_153",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1039/d5cp04504e",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_154",
+   "split": "test",
+   "unit": "10.1007/s43630-026-00955-4",
+   "doi": "10.1039/d5cp04504e",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_155",
+   "split": "test",
+   "unit": "10.1002/anie.3622603",
+   "doi": "10.1002/anie.3622603",
+   "publication_date": "2026-09-02",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_156",
+   "split": "test",
+   "unit": "10.1002/anie.3622603",
+   "doi": "10.1002/anie.3622603",
+   "publication_date": "2026-09-02",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_157",
+   "split": "dev",
+   "unit": "10.1002/cptc.70148",
+   "doi": "10.1002/cptc.70148",
+   "publication_date": "2026-04-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_158",
+   "split": "test",
+   "unit": "10.1016/j.talanta.2026.129712",
+   "doi": "10.1016/j.talanta.2026.129712",
+   "publication_date": "2026-03-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_159",
+   "split": "test",
+   "unit": "10.1016/j.talanta.2026.129712",
+   "doi": "10.1016/j.talanta.2026.129712",
+   "publication_date": "2026-03-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_160",
+   "split": "test",
+   "unit": "10.1016/j.talanta.2026.129712",
+   "doi": "10.1016/j.talanta.2026.129712",
+   "publication_date": "2026-03-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_161",
+   "split": "test",
+   "unit": "10.1039/d5cc03875h",
+   "doi": "10.1039/d5cc03875h",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_162",
+   "split": "test",
+   "unit": "10.1039/d5cc03875h",
+   "doi": "10.1039/d5cc03875h",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_163",
+   "split": "test",
+   "unit": "10.1016/j.talanta.2026.130199",
+   "doi": "10.1016/j.talanta.2026.130199",
+   "publication_date": "2026-06-23",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_164",
+   "split": "test",
+   "unit": "10.3390/s26082411",
+   "doi": "10.3390/s26082411",
+   "publication_date": "2026-04-15",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_165",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.3390/molecules31183211",
+   "publication_date": "2026-09-11",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_166",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.3390/molecules31183211",
+   "publication_date": "2026-09-11",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_167",
+   "split": "test",
+   "unit": "10.1016/j.saa.2025.127320",
+   "doi": "10.1016/j.saa.2025.127320",
+   "publication_date": "2025-12-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_168",
+   "split": "test",
+   "unit": "10.1016/j.saa.2025.127320",
+   "doi": "10.1016/j.saa.2025.127320",
+   "publication_date": "2025-12-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_169",
+   "split": "test",
+   "unit": "10.1016/j.bios.2025.117285",
+   "doi": "10.1016/j.bios.2025.117285",
+   "publication_date": "2025-02-19",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_170",
+   "split": "test",
+   "unit": "10.1002/cphc.202500182",
+   "doi": "10.1002/cphc.202500182",
+   "publication_date": "2025-05-26",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_171",
+   "split": "test",
+   "unit": "10.1002/cphc.202500182",
+   "doi": "10.1002/cphc.202500182",
+   "publication_date": "2025-05-26",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_172",
+   "split": "test",
+   "unit": "10.1002/ceur.70327",
+   "doi": "10.1002/ceur.70327",
+   "publication_date": "2026-06-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_173",
+   "split": "test",
+   "unit": "10.1021/jacs.6c06955",
+   "doi": "10.1021/jacs.6c06955",
+   "publication_date": "2026-05-16",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_174",
+   "split": "test",
+   "unit": "10.1021/jacs.6c06955",
+   "doi": "10.1021/jacs.6c06955",
+   "publication_date": "2026-05-16",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_175",
+   "split": "test",
+   "unit": "10.1002/ejoc.202500876",
+   "doi": "10.3390/molecules31183211",
+   "publication_date": "2026-09-11",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_176",
+   "split": "test",
+   "unit": "10.1002/adma.74534",
+   "doi": "10.1002/adma.74534",
+   "publication_date": "2026-08-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_177",
+   "split": "test",
+   "unit": "10.1002/adma.74534",
+   "doi": "10.1002/adma.74534",
+   "publication_date": "2026-08-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_178",
+   "split": "dev",
+   "unit": "10.1039/d6cp02044e",
+   "doi": "10.1039/d6cp02044e",
+   "publication_date": "2026-09-16",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_179",
+   "split": "test",
+   "unit": "10.1002/anie.202509567",
+   "doi": "10.1002/anie.202509567",
+   "publication_date": "2025-06-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_180",
+   "split": "test",
+   "unit": "10.1002/anie.202509567",
+   "doi": "10.1002/anie.202509567",
+   "publication_date": "2025-06-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_181",
+   "split": "test",
+   "unit": "10.1002/anie.202509567",
+   "doi": "10.1002/anie.202509567",
+   "publication_date": "2025-06-22",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_182",
+   "split": "test",
+   "unit": "10.1039/d5cp03671b",
+   "doi": "10.1039/d5cp03671b",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_183",
+   "split": "test",
+   "unit": "10.1039/d5cp03671b",
+   "doi": "10.1039/d5cp03671b",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_184",
+   "split": "test",
+   "unit": "10.1016/j.talanta.2026.130399",
+   "doi": "10.1016/j.talanta.2026.130399",
+   "publication_date": "2026-08-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_185",
+   "split": "test",
+   "unit": "10.1039/d6cp01430e",
+   "doi": "10.1039/d6cp01430e",
+   "publication_date": "2026-07-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_186",
+   "split": "test",
+   "unit": "10.1039/d6cp01430e",
+   "doi": "10.1039/d6cp01430e",
+   "publication_date": "2026-07-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_187",
+   "split": "test",
+   "unit": "10.1021/acsphyschemau.5c00067",
+   "doi": "10.1021/acsphyschemau.5c00067",
+   "publication_date": "2025-09-11",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_188",
+   "split": "test",
+   "unit": "10.1021/acsphyschemau.5c00067",
+   "doi": "10.1021/acsphyschemau.5c00067",
+   "publication_date": "2025-09-11",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_189",
+   "split": "test",
+   "unit": "10.1002/chem.202502289",
+   "doi": "10.1002/chem.202502289",
+   "publication_date": "2025-11-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_190",
+   "split": "test",
+   "unit": "10.1016/j.snb.2026.140477",
+   "doi": "10.1016/j.snb.2026.140477",
+   "publication_date": "2026-07-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_191",
+   "split": "test",
+   "unit": "10.1016/j.snb.2026.140477",
+   "doi": "10.1016/j.snb.2026.140477",
+   "publication_date": "2026-07-08",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_192",
+   "split": "test",
+   "unit": "10.1039/d5tc01389e",
+   "doi": "10.1039/d5tc01389e",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_193",
+   "split": "test",
+   "unit": "10.1002/anie.202500718",
+   "doi": "10.1002/anie.202500718",
+   "publication_date": "2025-04-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_194",
+   "split": "test",
+   "unit": "10.1002/anie.202500718",
+   "doi": "10.1002/anie.202500718",
+   "publication_date": "2025-04-17",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_195",
+   "split": "test",
+   "unit": "10.1021/acs.jpcb.5c07987",
+   "doi": "10.1021/acs.jpcb.5c07987",
+   "publication_date": "2026-02-03",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_196",
+   "split": "test",
+   "unit": "10.1039/d4tc04850d",
+   "doi": "10.1039/d4tc04850d",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_197",
+   "split": "test",
+   "unit": "10.1039/d4tc04850d",
+   "doi": "10.1039/d4tc04850d",
+   "publication_date": "2025-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_198",
+   "split": "test",
+   "unit": "10.1021/acs.jpclett.6c02116",
+   "doi": "10.1021/acs.jpclett.6c02116",
+   "publication_date": "2026-08-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_199",
+   "split": "test",
+   "unit": "10.1021/jacs.5c15490",
+   "doi": "10.1021/jacs.5c15490",
+   "publication_date": "2025-10-15",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_200",
+   "split": "dev",
+   "unit": "10.1016/j.cclet.2025.111987",
+   "doi": "10.1016/j.cclet.2025.111987",
+   "publication_date": "2025-10-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_201",
+   "split": "dev",
+   "unit": "10.1016/j.cclet.2025.111987",
+   "doi": "10.1016/j.cclet.2025.111987",
+   "publication_date": "2025-10-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_202",
+   "split": "dev",
+   "unit": "10.1016/j.cclet.2025.111987",
+   "doi": "10.1016/j.cclet.2025.111987",
+   "publication_date": "2025-10-21",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_203",
+   "split": "test",
+   "unit": "10.1021/jacs.5c09956",
+   "doi": "10.1021/jacs.5c09956",
+   "publication_date": "2025-08-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_204",
+   "split": "test",
+   "unit": "10.1021/jacs.5c09956",
+   "doi": "10.1021/jacs.5c09956",
+   "publication_date": "2025-08-07",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "EXPA_205",
+   "split": "test",
+   "unit": "10.1002/chem.71657",
+   "doi": "10.1002/chem.71657",
+   "publication_date": "2026-09-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_001",
+   "split": "test",
+   "unit": "10.3390/molecules30234607",
+   "doi": "10.3390/molecules30234607",
+   "publication_date": "2025-11-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_002",
+   "split": "test",
+   "unit": "10.3390/molecules30234607",
+   "doi": "10.3390/molecules30234607",
+   "publication_date": "2025-11-30",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_003",
+   "split": "test",
+   "unit": "10.1002/anie.3726851",
+   "doi": "10.1002/anie.3726851",
+   "publication_date": "2026-09-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_004",
+   "split": "test",
+   "unit": "10.1002/anie.3726851",
+   "doi": "10.1002/anie.3726851",
+   "publication_date": "2026-09-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_005",
+   "split": "test",
+   "unit": "10.1002/anie.3726851",
+   "doi": "10.1002/anie.3726851",
+   "publication_date": "2026-09-29",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_006",
+   "split": "test",
+   "unit": "10.1021/acs.chemmater.6c01251",
+   "doi": "10.1021/acs.chemmater.6c01251",
+   "publication_date": "2026-08-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_007",
+   "split": "test",
+   "unit": "10.1021/acs.chemmater.6c01251",
+   "doi": "10.1021/acs.chemmater.6c01251",
+   "publication_date": "2026-08-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_008",
+   "split": "test",
+   "unit": "10.1021/acs.chemmater.6c01251",
+   "doi": "10.1021/acs.chemmater.6c01251",
+   "publication_date": "2026-08-10",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_009",
+   "split": "test",
+   "unit": "10.1021/acsaom.6c00161",
+   "doi": "10.1021/acsaom.6c00161",
+   "publication_date": "2026-05-27",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_010",
+   "split": "test",
+   "unit": "10.3390/chemosensors14010009",
+   "doi": "10.3390/chemosensors14010009",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_011",
+   "split": "test",
+   "unit": "10.3390/chemosensors14010009",
+   "doi": "10.3390/chemosensors14010009",
+   "publication_date": "2026-01-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_012",
+   "split": "test",
+   "unit": "10.1021/photonsci.6c00003",
+   "doi": "10.1021/photonsci.6c00003",
+   "publication_date": "2026-03-04",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_013",
+   "split": "test",
+   "unit": "10.1016/j.jphotochem.2026.117704",
+   "doi": "10.1016/j.jphotochem.2026.117704",
+   "publication_date": "2026-10-06",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_014",
+   "split": "test",
+   "unit": "10.1002/adom.71933",
+   "doi": "10.1002/adom.71933",
+   "publication_date": "2026-10-01",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_015",
+   "split": "test",
+   "unit": "10.1002/chem.202503195",
+   "doi": "10.1002/chem.202503195",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_016",
+   "split": "test",
+   "unit": "10.1002/chem.202503195",
+   "doi": "10.1002/chem.202503195",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_017",
+   "split": "test",
+   "unit": "10.1002/chem.202503195",
+   "doi": "10.1002/chem.202503195",
+   "publication_date": "2026-01-28",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_018",
+   "split": "test",
+   "unit": "10.1002/chem.71622",
+   "doi": "10.1002/chem.71622",
+   "publication_date": "2026-08-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_019",
+   "split": "test",
+   "unit": "10.1002/chem.71622",
+   "doi": "10.1002/chem.71622",
+   "publication_date": "2026-08-25",
+   "origin": "expansion"
+  },
+  {
+   "case_id": "PILOT_020",
+   "split": "test",
+   "unit": "10.1002/chem.71622",
+   "doi": "10.1002/chem.71622",
+   "publication_date": "2026-08-25",
+   "origin": "expansion"
+  }
+ ]
+}
