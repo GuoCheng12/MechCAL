@@ -1,0 +1,171 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_007",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc2c(c1)Cc1cc(C(C)(C)C)ccc1-2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2,7-dtbF",
+  "source_documents": [
+   {
+    "source_id": "P03",
+    "title": "Steric Control of Molecular Packing Governs Excimer Emission in Fluorene-Based Molecular Solids",
+    "doi": "10.1021/acs.chemmater.6c01251",
+    "pmcid": "PMC13528581",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2026-08-10",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "cyclohexane to acetonitrile"
+   },
+   {
+    "state": "film",
+    "media": "Zeonex"
+   },
+   {
+    "state": "crystal",
+    "media": "single crystal / crystalline powder"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P03",
+    "pdf_page": null,
+    "location": "Results: solution and solid state",
+    "quote": "Consistent with this assignment, minimal solvatochromism is observed across solvents ranging from cyclohexane (ε′ = 2.023) to acetonitrile (ε′ = 35.94), as shown in Table S1, indicating minimal charge-transfer character.",
+    "subject": "all fluorene derivatives",
+    "scope": "target",
+    "conditions": "cyclohexane to acetonitrile",
+    "kind": "observation",
+    "statement": "Minimal solvatochromism: emission is from a locally excited fluorene state, not charge transfer.",
+    "limitations": "Solution only."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P03",
+    "pdf_page": null,
+    "location": "Results: excited-state dynamics",
+    "quote": "In contrast, none of the tert-butyl-substituted derivatives exhibit rise-time components, indicating that excimer formation is not established under these packing conditions.",
+    "subject": "2-tbF, 2,7-dtbF, 3,6-dtbF",
+    "scope": "target",
+    "conditions": "crystalline powder, TCSPC",
+    "kind": "observation",
+    "statement": "tert-Butyl derivatives show no excimer formation; emission stays monomer-like.",
+    "limitations": "None."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P03",
+    "pdf_page": null,
+    "location": "Results: triplet-state characterization",
+    "quote": "This clear decoupling demonstrates that the red-shifted emission observed in the solid state does not originate from triplet-state phosphorescence.",
+    "subject": "all fluorene derivatives",
+    "scope": "target",
+    "conditions": "77 K phosphorescence vs room-temperature solid emission",
+    "kind": "observation",
+    "statement": "The solid-state long-wavelength emission is not phosphorescence.",
+    "limitations": "Triplet emission exists at 77 K but is not the solid-state emission studied."
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Minimal solvatochromism; no charge-transfer character.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "No excimer formation in the solid; emission remains monomer-like.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The solid-state emission is not phosphorescence.",
+    "exclusion_basis": "paper"
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "tert-butyl groups prevent cofacial pi-stacking in the crystal",
+    "evidence_ids": [
+     "E02"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "PILOT_C03",
+   "factor": "steric bulk of 2,7/3,6 alkyl substituents (methyl vs tert-butyl)",
+   "difference": "methyl/unsubstituted pack cofacially and form excimers; tert-butyl disrupts stacking and suppresses excimers"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "compound abbreviation in the paper = 2,7-di-tert-butyl-9H-fluorene (OPSIN)",
+   "commercial compound (Materials)"
+  ],
+  "second_source": "visual check of the figure (MolScribe could not read it: R groups, abbreviated chains, boron complex or low-resolution image)",
+  "formula": "C21H26"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

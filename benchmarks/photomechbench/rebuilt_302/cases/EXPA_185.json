@@ -1,0 +1,270 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_185",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cn1c(-c2ccccc2O)nc2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "mHBI (1-methyl-2-(2'-hydroxyphenyl)benzimidazole)",
+  "source_documents": [
+   {
+    "source_id": "F09",
+    "title": "Purple-to-green emission: excited-state intramolecular proton transfer in an aromatic D–π–A system",
+    "doi": "10.1039/d6cp01430e",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F09-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6cp01430e",
+    "file": "10.1039_d6cp01430e_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-08",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "MeCN",
+   "MeOH",
+   "DMSO",
+   "water",
+   "with TBAOH (anion)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This significant spectral displacement indicates the occurrence of ESIPT.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "MeCN",
+    "kind": "author_interpretation",
+    "statement": "Dual emission near 365 and 490 nm with a large Stokes shift for the red band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "the emission band centered at B365 nm can be assigned to the radiative transition from the excited state enol tautomer (enol*) to its ground state (enol), whereas the B490 nm emission demonstrates characteristic keto* tautomer emission.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "MeCN",
+    "kind": "author_interpretation",
+    "statement": "365 nm = enol*, 490 nm = keto* emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This observation suggests that the B316 nm absorption band in mHBI corresponds to the ground-state keto tautomer.",
+    "subject": "mHBI vs mHBI-OMe",
+    "scope": "target",
+    "conditions": "MeCN, DMSO",
+    "kind": "author_interpretation",
+    "statement": "A 316 nm band, absent in the methyl ether, is a ground-state keto tautomer coexisting with the enol.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "mHBI-OMe exhibits single absorption at B290 nm and only single emission at B365 nm was observed, which indicates that mHBI-OMe cannot undergo intramolecular proton transfer.",
+    "subject": "mHBI-OMe",
+    "scope": "target",
+    "conditions": "MeCN",
+    "kind": "observation",
+    "statement": "The methyl ether has only the enol-type absorption and the 365 nm emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This is attributed to MeOH suppressing the ESIPT process and enhancing the enol emission at B365 nm.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "MeOH",
+    "kind": "author_interpretation",
+    "statement": "In methanol, solvent hydrogen bonding suppresses ESIPT and enhances the enol emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F09",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "In MeOH solution, apart from the ESA signal at 380–460 nm which has been attributed to the excited state enol, another broad ESA band appeared in the 600–800 nm range, indicating that this species was the excited state of the keto tautomer.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "fs-TA, MeOH, pump 315 nm",
+    "kind": "observation",
+    "statement": "A keto* excited-state absorption band (600-800 nm) is resolved.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "meanwhile the O–H bond is weakened in the S1 state, which promotes the ESIPT process.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "The O-H bond weakens and the O-H...N hydrogen bond strengthens in S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F09",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "In the meantime, the keto emission exhibited a blue shift from 491 nm in MeCN to 473 nm in MeOH, representing an intramolecular charge transfer (ICT) effect.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "MeCN vs MeOH",
+    "kind": "author_interpretation",
+    "statement": "The keto band's solvent shift is read as an ICT effect.",
+    "limitations": "One-sentence assignment with citations; no CT analysis of the keto state."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F09",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "corresponding to the protondonating group (–OH) of mHBI transferring a proton to the bulk water to form an anion.",
+    "subject": "mHBI",
+    "scope": "target",
+    "conditions": "water, TBAOH",
+    "kind": "author_interpretation",
+    "statement": "In water or base a third, blue-emitting anion forms by proton transfer to the solvent.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Keto-band solvatochromism read as an ICT effect (one sentence, no CT analysis)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Enol*-to-keto* proton transfer gives the 490 nm keto emission; protic solvent suppresses it; fs-TA resolves the keto* species; the methyl ether control shows no proton transfer. A ground-state keto tautomer also contributes, and an anion forms in water."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "Keto-band solvatochromism read as an ICT effect (one sentence, no CT analysis)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Enol*-to-keto* proton transfer gives the 490 nm keto emission; protic solvent suppresses it; fs-TA resolves the keto* species; the methyl ether control shows no proton transfer. A ground-state keto tautomer also contributes, and an anion forms in water."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F09-CG1",
+   "varied_factor": "phenol OH vs methyl ether on 1-methyl-2-arylbenzimidazole",
+   "paper_difference": "mHBI shows enol and keto emission (ESIPT plus a ground-state keto tautomer); the methyl ether shows only the 365 nm enol-type emission."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "name in the main text and SI, parsed with OPSIN",
+   "SI Scheme S1: N-methyl-o-phenylenediamine + salicylaldehyde (Na2S2O5, DMF); 1H NMR OH 11.29 ppm, NCH3 3.85 ppm",
+   "enol tautomer written; the paper reports a minor ground-state keto tautomer (316 nm band)"
+  ],
+  "formula": "C14H12N2O"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

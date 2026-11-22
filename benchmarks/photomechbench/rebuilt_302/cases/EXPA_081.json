@@ -1,0 +1,228 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_081",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCOC(=O)c1cc(C)sc1Nc1c([O-])c(=[NH+]c2sc(C)cc2C(=O)OCC)c1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "SQ-O3",
+  "source_documents": [
+   {
+    "source_id": "B05",
+    "title": "Facile J-aggregating molecular scaffolds for chromatically tunable latent fingerprint imaging",
+    "doi": "10.1016/j.dyepig.2026.113634",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "B05-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.dyepig.2026.113634",
+    "file": "10.1016_j.dyepig.2026.113634_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-02-17",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMF solution and DMF/water (non-emissive)",
+   "glycerol/DMF",
+   "microcrystalline solid",
+   "ball-milled with magnetic powder"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B05",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This unique fluo rescence system is rare and achieves high quantum yields due to stable J-aggregation, driven by the molecule's intrinsic D-A-D structure and excellent planarity, as confirmed by single crystal diffraction analysis.",
+    "subject": "SQ-M1, SQ-O3",
+    "scope": "target",
+    "conditions": "microcrystals",
+    "kind": "author_interpretation",
+    "statement": "Bright solid-state emission attributed to J-aggregation.",
+    "limitations": "Evidence is the crystal packing; no aggregate exciton spectroscopy (e.g. band narrowing vs monomer)."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Further investigation using glycerol/DMF mixtures to restrict molecular motion showed that SQ-M1, SQ-M2, SQ-O3, and SQ-O4 still maintained their non-emissive characteristics (Fig. 2b–c, and Fig. S3).",
+    "subject": "SQ-M1-SQ-O4",
+    "scope": "target",
+    "conditions": "glycerol/DMF",
+    "kind": "observation",
+    "statement": "Restricting motion by viscosity does not turn on emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This contrasts with typical aggregation-induced emission behavior [46–51], suggesting that a different fluorescence mechanism may be involved in the solid-state emission, as their pristine microcrystals exhibit bright emission [52].",
+    "subject": "SQ-M1-SQ-O4",
+    "scope": "target",
+    "conditions": "DMF/water, glycerol/DMF vs crystals",
+    "kind": "author_interpretation",
+    "statement": "Not AIE-type (motion restriction) emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B05",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "leading to tightly stacked J-aggregation with a strong faceto-face π–π interaction with an area of 50.1% (Fig. 4a–iii, iv).",
+    "subject": "SQ-M1",
+    "scope": "target",
+    "conditions": "single crystal (TFA solvate)",
+    "kind": "observation",
+    "statement": "Slip-stacked J arrangement, 3.68 Å, 36.9°.",
+    "limitations": "Crystal grown from TFA; PXRD after TFA loss matches the product."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B05",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Within each column, SQ-O3 molecules were connected by the continuous intermolecular π–π stacking with a distance of 3.299 Å, area of 45.3% and arranged with a",
+    "subject": "SQ-O3",
+    "scope": "target",
+    "conditions": "single crystal (TFA solvate)",
+    "kind": "observation",
+    "statement": "Slip-stacked columns (slip angle 37.9°).",
+    "limitations": "As for SQ-M1."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Their φPL were then measured using integrating sphere technology, resulting in values of 82.6% for SQ-M1, 25.8% for SQ-M2, 53.3% for SQ-O3, and 31.2% for SQ-O4 (Table S2), respectively.",
+    "subject": "SQ-M1-SQ-O4",
+    "scope": "target",
+    "conditions": "microcrystals",
+    "kind": "observation",
+    "statement": "Solid-state PLQY 26-83%.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B05",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This is consistent with the principle that the destruction of the crystalline structure during ball milling leads to a decrease in luminescence efficiency.",
+    "subject": "SQ@Mp",
+    "scope": "target",
+    "conditions": "ball-milled with magnetic powder",
+    "kind": "observation",
+    "statement": "Breaking the crystals lowers emission.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Bright crystalline emission attributed to J-aggregated slip stacks (solution and DMF/water are non-emissive). Evidence is structural (crystal packing) plus loss of emission on milling; no exciton spectroscopy."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Restricting molecular motion in glycerol does not turn on emission; the paper says this contrasts with AIE behaviour.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Intramolecular N-H...O=C hydrogen bonds are present in the crystal, but proton transfer is not discussed."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Bright crystalline emission attributed to J-aggregated slip stacks (solution and DMF/water are non-emissive). Evidence is structural (crystal packing) plus loss of emission on milling; no exciton spectroscopy."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: squaric acid + 2.2 equiv of the ethyl aminothiophene carboxylate named in the SI",
+   "HRMS value 448.0763 matches C20H20N2O6S2",
+   "single-crystal structure"
+  ],
+  "used_si": true,
+  "note": "1,3-bis(arylamino)squaraine drawn as the zwitterion. The SI labels the HRMS value '[M-H]-' but it equals the neutral exact mass.",
+  "formula": "C20H20N2O6S2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.dyepig.2026.113634_SI_1_image24.png, img 10.1016_j.dyepig.2026.113634_SI_1_image25.png, main p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

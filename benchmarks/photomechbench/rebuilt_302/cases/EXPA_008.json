@@ -1,0 +1,178 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_008",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1C(=C2Nc3ccccc3N2)C(=O)C(=C2Nc3ccccc3N2)C(=O)C1=C1Nc2ccccc2N1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1 (all-keto form 1A)",
+  "source_documents": [
+   {
+    "source_id": "A04",
+    "title": "Excited State Intramolecular Proton Transfer‐Mediated Thermally Activated Delayed Fluorescence Behavior of Hexapole Hydrogen Bonding Molecule",
+    "doi": "10.1002/cptc.202500374",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A04-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/cptc.202500374",
+    "file": "10.1002_cptc.202500374_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-04-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents, degassed and aerated)",
+   "frozen solution 80 K"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A04",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The emission intensity increased under an argon atmosphere, and the degassed sample solution showed a long-lived component with a time constant of 15 μs.",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "solution, degassed vs air",
+    "kind": "observation",
+    "statement": "Oxygen-sensitive long-lived (15 µs) emission component.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A04",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Variable temperature lifetime measurements suggested that phosphorescence disappears at 160 K, and thermally activated delayed fluorescence is observed at elevated temperatures.",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "variable temperature",
+    "kind": "observation",
+    "statement": "Phosphorescence at low temperature, TADF at higher temperature.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A04",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Theoretical calculations revealed that all-keto form 1A is photoexcited, generating 1B* after one proton transfer, and thermally activated delayed fluorescence is observed via reverse intersystem crossing from higher-lying triplet states (T2 and T3) to the singlet state (S1).",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "calculation",
+    "kind": "computation",
+    "statement": "Single ESIPT 1A*→1B*, then TADF via rISC from T2/T3.",
+    "limitations": "The rISC pathway is computational."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Excited-state proton transfer 1A*→1B* precedes emission (calculation)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Oxygen-sensitive long-lived emission, low-temperature phosphorescence and TADF at higher temperature."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Excited-state proton transfer 1A*→1B* precedes emission (calculation)."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Oxygen-sensitive long-lived emission, low-temperature phosphorescence and TADF at higher temperature."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "drawn as the all-keto ground-state tautomer 1A shown in the paper (Figure 1b); same formula C27H18N6O3 as the trihydroxy name",
+   "compound prepared by a cited literature route (COF model compound)"
+  ],
+  "used_si": false,
+  "tautomer_note": "paper states the all-keto isomer is the stable ground-state form",
+  "formula": "C27H18N6O3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_cptc.202500374_SI_1.pdf p11, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,201 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0081",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=NNc1nc2ccccc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "probe L",
+  "source_documents": [
+   {
+    "source_id": "10.1039_d0nj03667f",
+    "title": "An AIE and PET fluorescent probe for effective Zn(II) detection and imaging in living cells",
+    "doi": "10.1039/d0nj03667f",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "e2485091eafe6c5bff5819c5d6b82c8c82b88b0db2a56556592fe2193deca148"
+   }
+  ],
+  "publication_date": "2020-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "EtOH/water (HEPES, pH 7.2)",
+   "Zn2+ and other ions",
+   "HeLa cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_d0nj03667f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the fluorescence intensity of probe L increased 50-fold from 0 % to 100 %",
+    "subject": "L",
+    "scope": "target",
+    "conditions": "EtOH/water",
+    "kind": "observation",
+    "statement": "50-fold AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_d0nj03667f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "However, with the increasing fraction of water, the rotation of C = C double bond was limited to some extent, which leads to the enhancement of fluorescence intensity",
+    "subject": "L",
+    "scope": "target",
+    "conditions": "high water fraction",
+    "kind": "author_interpretation",
+    "statement": "Restricted C=C rotation in aggregates.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_d0nj03667f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "In low water fractions, the smoothly photoinduced electron transfer between tetrastyrene and N donor suppressed its emission.",
+    "subject": "L",
+    "scope": "target",
+    "conditions": "low water fraction",
+    "kind": "author_interpretation",
+    "statement": "PET from the N donor quenches the TPE emission.",
+    "limitations": "No energetics, electrochemistry or control compound."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_d0nj03667f",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "due to the interruption of the PET phenomenon on pure probe L",
+    "subject": "L-Zn2+",
+    "scope": "target",
+    "conditions": "Zn2+",
+    "kind": "author_interpretation",
+    "statement": "Zn2+ chelation interrupts PET and turns emission on.",
+    "limitations": "Concerns the complex."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_d0nj03667f",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "An AIE and PET fluorescent probe for effective Zn",
+    "subject": "L",
+    "scope": "target",
+    "conditions": "title",
+    "kind": "author_interpretation",
+    "statement": "The paper presents AIE and PET as the probe's two principles.",
+    "limitations": "Title claim; the Zn2+ switching of PET concerns the complex."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "AIE is explained by restricted C=C rotation of the TPE unit in aggregates; co-equal with PET in the title."
+   },
+   {
+    "label": "PET_ET",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E05"
+    ],
+    "rationale": "PET from the nitrogen donor is said to quench the free probe at low water fractions; the title names AIE and PET as the probe's principles. Weak: no energetics, electrochemistry or control compound; role kept as the paper's (guideline §3.4, weak-evidence primary)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "AIE is explained by restricted C=C rotation of the TPE unit in aggregates; co-equal with PET in the title."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The o-hydroxy hydrazone could in principle transfer a proton, but the paper does not discuss it."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E05"
+    ],
+    "rationale": "PET from the nitrogen donor is said to quench the free probe at low water fractions; the title names AIE and PET as the probe's principles. Weak: no energetics, electrochemistry or control compound; role kept as the paper's (guideline §3.4, weak-evidence primary)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "Zn2+ chelation interrupts PET (complex; E04)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous primary PET; now PET and RIM co_primary. Author decision 2026-11-16: when the paper presents a mechanism as its main explanation, the role follows the paper (§3.4, weak-evidence primary) over the §3.2 probe-PET rule; the weakness is in the rationale.",
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

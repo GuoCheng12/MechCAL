@@ -1,0 +1,172 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_003",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1=CC(C)=[N+]2C1=C(c1c3ccccc3cc3ccccc13)c1c(C)cc(C)n1[B-]2(F)F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1 (anthracene-BODIPY dyad, BF2)",
+  "source_documents": [
+   {
+    "source_id": "P02",
+    "title": "Hydration-Gated Photoinduced Electron Transfer in BODIPY Dyes",
+    "doi": "10.1002/anie.3726851",
+    "pmcid": "PMC13749329",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2026-09-29",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "hexane, toluene, DCM, MeCN"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: O-BODIPYs as building blocks",
+    "quote": "In more polar media, fluorescence is progressively quenched: in dichloromethane ΦF decreases to 0.072, and in acetonitrile ΦF drops to 0.006, consistent with efficient PET driven by dielectric stabilization of the formed CT state [34].",
+    "subject": "dyad 1",
+    "scope": "target",
+    "conditions": "hexane, toluene, DCM, MeCN",
+    "kind": "observation",
+    "statement": "Dyad 1 is strongly emissive in nonpolar solvents and quenched in polar solvents, attributed to PET to a CT state.",
+    "limitations": "Solvent series only."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: O-BODIPYs as building blocks",
+    "quote": "Efficient PET is observed in 1 in polar solvents (Table 1) despite modest endergonicity (ΔG°PET = +0.14 eV), consistent with prior reports [39].",
+    "subject": "dyad 1",
+    "scope": "target",
+    "conditions": "MeCN, electrochemistry",
+    "kind": "observation",
+    "statement": "Electrochemical driving force for PET in dyad 1.",
+    "limitations": "Rehm-Weller estimate."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: Scope of hydration-gated PET",
+    "quote": "In the corresponding F‐BODIPY‐based dyads 1–4, charge recombination from the CT state populated the triplet manifold via spin–orbit charge‐transfer intersystem crossing (SOCT‐ISC) [49].",
+    "subject": "dyads 1-4",
+    "scope": "target",
+    "conditions": "organic solvents (previous work)",
+    "kind": "author_interpretation",
+    "statement": "Charge recombination of the CT state of the F-BODIPY dyads populates the triplet via SOCT-ISC.",
+    "limitations": "Cited from the authors' earlier work [49]; not re-measured for dyad 1 here."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Polar-solvent quenching of dyad 1 is attributed to PET from anthracene to BODIPY."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "CT recombination populates the triplet by SOCT-ISC (from the authors' previous work)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Polar-solvent quenching of dyad 1 is attributed to PET from anthracene to BODIPY."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "CT recombination populates the triplet by SOCT-ISC (from the authors' previous work)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "PILOT_C01",
+   "factor": "boron substituent: BF2 (1) vs B(OTEG)2 (1-TEG)",
+   "difference": "PET in polar organic solvents for 1; suppressed in MeCN and switched on only in water for 1-TEG"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure drawn in Figure 2a",
+   "core confirmed by HRMS of 1-OMe (C29H29BN2O2, SI) = 1 with F replaced by OMe"
+  ],
+  "second_source": "visual check of the figure (MolScribe could not read it: R groups, abbreviated chains, boron complex or low-resolution image)",
+  "formula": "C27H23BF2N2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

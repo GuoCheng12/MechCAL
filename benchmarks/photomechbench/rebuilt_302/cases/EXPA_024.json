@@ -1,0 +1,186 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_024",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "[O-]c1c(-c2ccccc2)cc(-[n+]2c(-c3ccccc3)cc(-c3ccccc3)cc2-c2ccccc2)cc1-c1ccccc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "B30 (Reichardt's dye)",
+  "source_documents": [
+   {
+    "source_id": "A14",
+    "title": "Twisted intramolecular charge transfer in betaine B30",
+    "doi": "10.1063/5.0319036",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A14-SI",
+    "title": "Supporting information",
+    "doi": "10.1063/5.0319036",
+    "file": "10.1063_5.0319036_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-05-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (glycerol, ethylene glycol and others)",
+   "low temperature"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A14",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "the lowest excited singlet state of B30 can relax to a twisted conformation in which fluorescence and stimulated emission are forbidden",
+    "subject": "B30",
+    "scope": "target",
+    "conditions": "solution, transient absorption",
+    "kind": "observation",
+    "statement": "S1 relaxes to a twisted, non-emissive conformation.",
+    "limitations": "Confirms earlier work."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A14",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "A decrease in the calculated oscillator strength to essentially zero explains the absence of radiative transitions in the twisted conformation",
+    "subject": "B30",
+    "scope": "target",
+    "conditions": "minimum-energy-path calculations",
+    "kind": "computation",
+    "statement": "The twisted state is dark (f ≈ 0).",
+    "limitations": "Calculation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A14",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "The requirement for a substantial reorganization of the surrounding solvent rationalizes the increase of fluorescence at low temperatures and viscous media.",
+    "subject": "B30",
+    "scope": "target",
+    "conditions": "glycerol, ethylene glycol, low temperature",
+    "kind": "author_interpretation",
+    "statement": "Slowed twisting/solvent reorganisation in viscous or cold media lets fluorescence appear.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Fluorescence appears in viscous or frozen media where the twisting relaxation is slowed (molecular-rotor rule)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Relaxation of the charge-transfer S1 state to a twisted (TICT) conformation is the paper's subject."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The twisted state is dark because its oscillator strength drops to ~0 (calculation)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Fluorescence appears in viscous or frozen media where the twisting relaxation is slowed (molecular-rotor rule)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Relaxation of the charge-transfer S1 state to a twisted (TICT) conformation is the paper's subject."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The twisted state is dark because its oscillator strength drops to ~0 (calculation)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "standard dye; systematic name given in the paper's introduction, parsed with OPSIN (zwitterion)"
+  ],
+  "used_si": false,
+  "formula": "C41H29NO",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.0)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

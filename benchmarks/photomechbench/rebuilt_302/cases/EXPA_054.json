@@ -1,0 +1,160 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_054",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(Sc2cc(-c3nc(-c4ccccc4)nc(-c4ccccc4)n3)cc(Sc3ccccc3)c2N2c3ccccc3Oc3ccccc32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PXZ-dSP-TRZ",
+  "source_documents": [
+   {
+    "source_id": "A31",
+    "title": "Effect of Phenylsulfanyl Substitution on Thermally Activated Delayed Fluorescence: Mild Heavy‐Atom Sulfur Enhances Triplet Harvesting in Photo‐ and Radioluminescence",
+    "doi": "10.1002/adom.71472",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A31-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adom.71472",
+    "file": "10.1002_adom.71472_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-20",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "crystal",
+   "solution",
+   "scintillator tests"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A31",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Incorporation of phenylsulfanyl groups into the benchmark PXZ-TRZ framework affords PXZdSP-TRZ, in which the singlet–triplet energy gap is reduced and spin–orbit coupling is enhanced, promoting selective reverse intersystem crossing (rISC).",
+    "subject": "PXZ-dSP-TRZ vs PXZ-TRZ",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "Smaller ΔEST and larger SOC accelerate rISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A31",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "PXZ-dSP-TRZ exhibits markedly improved TADF performance",
+    "subject": "PXZ-dSP-TRZ",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "Higher PLQY (up to 90%), 0.9 µs delayed lifetime, kRISC 6 × 10^6 s-1.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Sulfur-assisted rISC and improved crystalline TADF."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Sulfur-assisted rISC and improved crystalline TADF."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A31-CG1",
+   "varied_factor": "ortho phenylsulfanyl groups on the acceptor-side phenylene",
+   "paper_difference": "Sulfur lowers ΔEST and raises SOC, giving faster rISC and better TADF."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: 2-(3,4,5-trifluorophenyl)-4,6-diphenyltriazine, SNAr of PXZ at the 4-F, then SNAr of thiophenol at the remaining 3,5-F, so the SPh groups sit ortho to the donor N",
+   "abstract states the heavy atoms are 'in the ortho position relative to the donor'",
+   "structure recognition of the scheme gives the same connectivity",
+   "MALDI-TOF and elemental analysis for C45H30N4OS2 match"
+  ],
+  "used_si": false,
+  "conflict_note": "the printed name (3,5-bis(phenylsulfanyl)-4-triazinylphenyl, i.e. SPh ortho to the acceptor) contradicts the route, the abstract and the drawing; route and drawing followed",
+  "formula": "C45H30N4OS2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

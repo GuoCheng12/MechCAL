@@ -1,0 +1,239 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_014",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCn1c2ccccc2c2cc(-c3ccc(-c4ccc5c(c4)sc4ccccc45)c4nsnc34)ccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3D2Et",
+  "source_documents": [
+   {
+    "source_id": "P08",
+    "title": "Non-Volatile Thermochromic Fluorescence Switching with Pressure Erasing in an Organic Crystal via Exciton Coupling Amplification",
+    "doi": "10.1002/adom.71933",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "P08-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adom.71933",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-10-01",
+  "publication_date_note": "OpenAlex date; precedes the acceptance date printed in the PDF (2026-10-05), to be checked",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "toluene (monomer)"
+   },
+   {
+    "state": "crystal",
+    "media": "O-form and G-form polymorphs"
+   },
+   {
+    "state": "film",
+    "media": "PVA ink"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Relative to the monomer, the O‑form crystal shows a significant red shift in both absorption (to 447 nm) and emission (to 595 nm), consistent with stronger intermolecular interactions in the aggregated state.",
+    "subject": "3D2Et",
+    "scope": "target",
+    "conditions": "toluene solution vs O-form and G-form crystals",
+    "kind": "observation",
+    "statement": "O-form is red-shifted from the monomer; G-form is close to the monomer.",
+    "limitations": "Spectral comparison only."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P08",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "As shown in Figure 3c, the exciton coupling energy of the O‑form is 41 meV, significantly higher than that of the G‑form (21 meV).",
+    "subject": "3D2Et dimers from the two crystal structures",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d) on crystal geometries",
+    "kind": "computation",
+    "statement": "Calculated exciton coupling 41 meV (O-form) vs 21 meV (G-form).",
+    "limitations": "Dimer model from crystal geometry; one functional."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Notably, the distance between adjacent molecules in intra-dimer expands from 3.96 Å in the O‑form to 7.22 Å in the G‑form",
+    "subject": "3D2Et",
+    "scope": "target",
+    "conditions": "single crystals (CCDC 2546963, 2546962)",
+    "kind": "observation",
+    "statement": "Intradimer distance grows and molecules twist more in the G-form.",
+    "limitations": "Crystal structures; the thermally converted powder is matched by PXRD."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P08",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This indicates that conformational change alone cannot account for the observed optical response",
+    "subject": "3D2Et",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d)",
+    "kind": "computation",
+    "statement": "Conformational energy difference (0.09 eV) is much smaller than the 0.29 eV spectral shift.",
+    "limitations": "Single-molecule estimate."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "confirming that the emission from both crystals is fluorescence",
+    "subject": "3D2Et O-form and G-form",
+    "scope": "target",
+    "conditions": "crystals, 298 K and 77 K",
+    "kind": "observation",
+    "statement": "Single-exponential ns decays at 298 and 77 K: the emission is fluorescence.",
+    "limitations": "Does not exclude dark triplet channels."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "P08",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This decrease in exciton coupling energy triggers a cascade of photophysical effects, including redistribution of oscillator strength and modulation of the excited‑state potential energy surface",
+    "subject": "3D2Et",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Weaker coupling redistributes oscillator strength, which the authors link to the quantum-yield rise (0.17 to 0.40).",
+    "limitations": "No measured or computed radiative rates are reported."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Thermochromism attributed to reduced intermolecular exciton coupling after the O-to-G phase transition."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Quantum-yield change explained through oscillator-strength redistribution, as a consequence of the exciton-coupling change."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Dihedral angles change between polymorphs, but no restricted motion is invoked; conformational change alone is said not to explain the shift."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Donor-acceptor structure, but the paper does not discuss charge transfer."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair (no OH/NH next to an acceptor).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Thermochromism attributed to reduced intermolecular exciton coupling after the O-to-G phase transition."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Quantum-yield change explained through oscillator-strength redistribution, as a consequence of the exciton-coupling change."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Emission of both crystal forms is shown to be fluorescence (single-exponential ns decay at 298 and 77 K).",
+    "exclusion_basis": "paper"
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "heat-written, pressure-erased polymorph change alters dimer packing",
+    "evidence_ids": [
+     "E03"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI synthesis: dibenzo[b,d]thiophen-3-ylboronic acid + 4,7-dibromo-2,1,3-benzothiadiazole, then (9-ethyl-9H-carbazol-3-yl)boronic acid",
+   "OPSIN parse of 9-ethyl-3-[7-(dibenzo[b,d]thiophen-3-yl)-2,1,3-benzothiadiazol-4-yl]-9H-carbazole"
+  ],
+  "si_checked": "2026-11-15",
+  "note": "the SI heading for the final step names an unrelated compound (copy error); reagents and product name 3D2Et are consistent",
+  "formula": "C32H21N3S2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at fig image1.png"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

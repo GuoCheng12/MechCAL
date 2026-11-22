@@ -1,0 +1,181 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_016",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[n+]1ccccc1/C=C/c1cc([N+](=O)[O-])ccc1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "5(NO2)",
+  "source_documents": [
+   {
+    "source_id": "A08",
+    "title": "Playing with substitution in N-methyl pyridinium phenol superphotoacids to tune the interplay between intramolecular charge transfer and excited-state proton transfer",
+    "doi": "10.1016/j.jphotochem.2026.117427",
+    "format": "PDF",
+    "pages": 14,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A08-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117427",
+    "file": "10.1016_j.jphotochem.2026.117427_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-06-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "aqueous buffers",
+   "alcohols"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A08",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "ESPT was found to be operative for all the investigated ortho isomers on a picosecond time scale, as revealed by ultrafast transient absorption spectroscopy, in both water (where pKa* < 0) and alcoholic solvents.",
+    "subject": "ortho isomers 2-5",
+    "scope": "target",
+    "conditions": "water and alcohols, fsTA",
+    "kind": "observation",
+    "statement": "Picosecond excited-state proton transfer (to solvent) in all ortho isomers.",
+    "limitations": "Proton transfer is to the solvent, not intramolecular."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A08",
+    "pdf_page": 13,
+    "location": null,
+    "quote": "ICT from the phenolic ring to the N-methylpyridinium moiety is responsible for the photoacid behaviour and is enhanced by the pos itive mesomeric effect of the substituent",
+    "subject": "series 1-5",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Intramolecular charge transfer drives the photoacidity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A08",
+    "pdf_page": 13,
+    "location": null,
+    "quote": "Only the strongest electron-withdrawing nitro-group is instead able to reduce the dipolar character of the emitting state of the depro tonated molecule in alcohols, hence giving high fluorescence.",
+    "subject": "5(NO2)",
+    "scope": "target",
+    "conditions": "alcohols, deprotonated form",
+    "kind": "observation",
+    "statement": "The nitro derivative is the bright exception.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "The nitro group reduces the dipolar CT character of the emitting state, giving high fluorescence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Efficient ESPT to solvent (fsTA)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "The nitro group reduces the dipolar CT character of the emitting state, giving high fluorescence."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Efficient ESPT to solvent (fsTA)."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A08-CG1",
+   "varied_factor": "para substituent on the phenol (H, F, NO2)",
+   "paper_difference": "Substituents tune ICT and photoacidity; only the nitro compound gives strong emission of the deprotonated form."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN (2-[(E)-2-(1-methylpyridin-1-ium-2-yl)vinyl]-4-nitro-phenol iodide)",
+   "elemental analysis C14H13N2O3I matches",
+   "SMILES is the emissive cation; counter-ion iodide"
+  ],
+  "used_si": true,
+  "counterion": "iodide",
+  "formula": "C14H13N2O3+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

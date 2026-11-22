@@ -1,0 +1,179 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_021",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cn1cc(/C=C/c2ccc3ccccc3[n+]2C)c2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2-IVQ",
+  "source_documents": [
+   {
+    "source_id": "A11",
+    "title": "H ‐Aggregated Cationic Isomers to Boost ROS Generation for Photodynamic Therapy",
+    "doi": "10.1002/chem.71835",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A11-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71835",
+    "file": "10.1002_chem.71835_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-10-30",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents)",
+   "aggregate: aqueous media, high concentration",
+   "cells (mitochondria)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A11",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "the formation of H-aggregates at high concentrations actually enables effective generation of the photodynamic effect",
+    "subject": "2-IVQ",
+    "scope": "target",
+    "conditions": "aqueous media, high concentration",
+    "kind": "observation",
+    "statement": "2-IVQ forms H-aggregates more readily; ROS generation rises at high concentration.",
+    "limitations": "ROS assays; no triplet measured directly."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A11",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "at low concentrations, 2-IVQ exhibits a weaker photodynamic effect compared to 4-IVQ, which further supports the formation of H-aggregates in 2-IVQ at high concentrations",
+    "subject": "2-IVQ vs 4-IVQ",
+    "scope": "target",
+    "conditions": "aqueous media",
+    "kind": "observation",
+    "statement": "Concentration dependence of ROS generation compared with the isomer.",
+    "limitations": "Indirect evidence for aggregation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A11",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Haggregated fluorophores would reach a special singlet excitation state with forbidden irradiation transition pathway to ground state, thus increasing the ISC efficiency to form triplet states for ROS generation",
+    "subject": "2-IVQ",
+    "scope": "target",
+    "conditions": "H-aggregates",
+    "kind": "author_interpretation",
+    "statement": "Dark lower exciton state of the H-aggregate lengthens the singlet lifetime and favours ISC.",
+    "limitations": "Proposed mechanism; ISC not measured."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "H-aggregation (Kasha exciton coupling, dark lower state) is the design principle and main explanation."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Enhanced ISC in the H-aggregate is proposed to explain ROS generation; no triplet measurement."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "H-aggregation (Kasha exciton coupling, dark lower state) is the design principle and main explanation."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Enhanced ISC in the H-aggregate is proposed to explain ROS generation; no triplet measurement."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI synthesis: 2-methylquinoline + MeI, then condensation with compound 3 (160 g/mol, consistent with 1-methylindole-3-carbaldehyde)",
+   "HRMS C21H19N2+ matches; two N-CH3 13C signals (39.35, 33.99)"
+  ],
+  "used_si": true,
+  "counterion": "iodide (from MeI quaternisation)",
+  "formula": "C21H19N2+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

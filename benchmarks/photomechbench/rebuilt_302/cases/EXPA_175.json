@@ -1,0 +1,236 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_175",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCNc1cc2c3c(c(NCC)cc4c3c1C(=O)N(CC)C4=O)C(=O)N(CC)C2=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "compound 1 (tetraethyl core-diamino NDI, control)",
+  "source_documents": [
+   {
+    "source_id": "D11",
+    "title": "Spectrophotometric Studies of a Fluorescent Naphthalenediimide PET and ICT pH Indicator and DNA Intercalator",
+    "doi": "10.3390/molecules31183211",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D11-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/molecules31183211",
+    "file": "10.3390_molecules31183211_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-09-11",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "1:1 (v/v) methanol/water, pH titration"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D11",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The four proton receptors are capable, when unprotonated, of PET from an amine to the excited NDI fluorophore, which results in a decreased fluorescence output.",
+    "subject": "compound 3",
+    "scope": "target",
+    "conditions": "1:1 methanol/water",
+    "kind": "author_interpretation",
+    "statement": "Unprotonated amines quench the NDI by PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D11",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The effective switching fluorescent enhancement of compound 3 is 190-fold",
+    "subject": "compound 3",
+    "scope": "target",
+    "conditions": "1:1 methanol/water, pH titration",
+    "kind": "observation",
+    "statement": "190-fold off-on switching (QY 0.38 when protonated).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D11",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Unlike compound 2, compound 3 exhibits both PET and ICT mechanisms.",
+    "subject": "compound 3",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D11",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The ICT mechanism causes a change in the absorbance observed as a bathochromic shift in the UV-vis spectrum on going from acidic to basic pHs.",
+    "subject": "compound 3",
+    "scope": "target",
+    "conditions": "pH series",
+    "kind": "observation",
+    "statement": "ICT shows in the absorption shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D11",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Assuming a coulombic term contributes 0.10 V (versus SCE), the driving for PET within compound 2 is −1.1 eV.",
+    "subject": "compound 2",
+    "scope": "target",
+    "conditions": "Rehm-Weller",
+    "kind": "author_interpretation",
+    "statement": "PET is strongly exergonic in compound 2.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D11",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "However, a more competitive deactivation pathway in core-unsubstituted NDIs is rapid intersystem crossing (ISC) from the S1 excited",
+    "subject": "compound 2",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Fast S1-to-upper-triplet ISC keeps compound 2 nearly dark (QY < 0.001) at any pH.",
+    "limitations": "Cites the literature; ISC is not measured here."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D11",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Compound 2 is a one-input H+ -driven YES logic gate by design but functions as a PASS 0 logic gate.",
+    "subject": "compound 2",
+    "scope": "target",
+    "conditions": "pH titration",
+    "kind": "observation",
+    "statement": "No off-on switching on protonation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D11",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Compound 1 is a fluorescent PASS 1 logic gate devoid of tertiary amine receptors.",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Control without PET receptors.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "D11",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Indeed, it gives a strong fluorescence independent of any external input (Figure 5). The fluorescence quantum yield (ΦF ) is 32% in 1:1 (v/v) methanol/water.",
+    "subject": "compound 1",
+    "scope": "target",
+    "conditions": "1:1 methanol/water, pH 3-11",
+    "kind": "observation",
+    "statement": "QY 32%, pH-independent.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Core-amino NDI with CT absorption, but no CT mechanism is assigned to this control."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The core NH groups can hydrogen-bond to the imide carbonyls, but the paper does not discuss proton transfer."
+   },
+   {
+    "label": "PET_ET",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E08",
+     "E09"
+    ],
+    "rationale": "Control without tertiary amine receptors: strong, pH-independent fluorescence (QY 32%).",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "D11-CG1",
+   "varied_factor": "NDI receptor design: core substitution (none vs two amino groups) and tertiary-amine receptors (present vs absent)",
+   "paper_difference": "The core-unsubstituted bis(dimethylaminoethyl) NDI stays dark at every pH (fast ISC); core amination with four dimethylaminoethyl receptors gives a 190-fold PET off-on switch; the core-diamino control without tertiary amines is bright (QY 32%) at every pH."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "paper: from 2,6-dibromo-NDA with excess amine; ethylamine in the SI route (Scheme S1)",
+   "structure recognition of Figure 1 and SI Scheme S1 labelled 1"
+  ],
+  "used_si": true,
+  "note": "No HRMS; identity from the route, NMR and the drawings.",
+  "formula": "C22H24N4O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.3390_molecules31183211_SI_1.pdf p6, 10.3390_molecules31183211_SI_1.pdf p7, 10.3390_molecules31183211_SI_1.pdf p8, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

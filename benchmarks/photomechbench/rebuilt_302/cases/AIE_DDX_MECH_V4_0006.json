@@ -1,0 +1,235 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0006",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COC(=O)C1=C(C(=O)OC)N(c2ccc(Br)cc2)C(c2ccccc2)N(c2ccc(Br)cc2)C1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "THP 3",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c5sc01226k",
+    "title": "Insight into the strong aggregation-induced emission of low-conjugated racemic C6-unsubstituted tetrahydropyrimidines through crystal-structure-property relationship of polymorphs",
+    "doi": "10.1039/c5sc01226k",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "e7f366a024738b815c39a8ce0139fa9800d7c13f2bc81c3eb5de98da1226e304"
+   }
+  ],
+  "publication_date": "2015-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane, ethanol, acetonitrile",
+   "crystalline polymorphs"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "THPs 1–3 in different organic solvents (cyclohexane, ethanol and acetonitrile etc.) are practically non-emissive",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Non-emissive in solution, emissive as crystalline polymorphs.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Owing to intramolecular motions (the rotation of single C–C and C–N bonds and the",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Large knr in solution from single-bond rotations and flipping of the central ring.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "because of the restriction of intramolecular motion (RIM) by intra- and intermolecular interactions, and their kr values increase to 0.41–1.03",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "polymorphs",
+    "kind": "observation",
+    "statement": "On aggregation knr falls (to 0.05-3.48 × 10^8 s-1) and kr rises (to 0.41-1.03 × 10^8 s-1).",
+    "limitations": "Rates for the series; per-polymorph values in Table 1."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Although 1–3 are poorly conjugated, the radiative rate constants (kr) of their polymorphs are as large as conventional fluorophores",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "polymorphs",
+    "kind": "author_interpretation",
+    "statement": "Large kr is explained by through-bond and through-space conjugation in the packed conformations.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "which means that both a local excitation state (LE) and an intramolecular charge transfer excitation state (ICT) exist.",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "DFT orbitals",
+    "kind": "computation",
+    "statement": "HOMO/LUMO separation suggests mixed LE/ICT states.",
+    "limitations": "Orbital picture only; computed for compound 1 polymorphs."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1039_c5sc01226k",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "intramolecular motion but also from enhanced electronic coupling and radiatively-favored inter-crossed local excitation (LE) and intramolecular charge transfer (ICT) excitation states.",
+    "subject": "THP 3 (series statement)",
+    "scope": "analog",
+    "conditions": "polymorphs",
+    "kind": "author_interpretation",
+    "statement": "AIE = RIM plus enhanced electronic coupling and radiatively favoured LE/ICT states.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "THP 3: single-bond rotations and ring flipping give large knr in solution; their restriction in the polymorphs lowers knr."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Mixed LE/ICT excited states, from orbital distributions only, are part of the radiative argument."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E06"
+    ],
+    "rationale": "THP 3: the paper separates kr and knr and explains the strong solid emission equally by a raised kr from through-bond/through-space conjugation in the packed conformation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "THP 3: single-bond rotations and ring flipping give large knr in solution; their restriction in the polymorphs lowers knr."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Mixed LE/ICT excited states, from orbital distributions only, are part of the radiative argument."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The through-space conjugation is between the two carboxylates of the same molecule; packing changes the conformation, not an intermolecular coupling. Not labelled."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E06"
+    ],
+    "rationale": "THP 3: the paper separates kr and knr and explains the strong solid emission equally by a raised kr from through-bond/through-space conjugation in the packed conformation."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Single-exponential fluorescence decays; no triplet discussion (THP 3 carries Br but no heavy-atom effect is discussed)."
+   }
+  ],
+  "environment_context": [
+   "RS vs RR/SS packing modes set the conformation and through-space conjugation"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0004-CG1",
+   "varied_factor": "ester alkyl (1: ethyl vs 2: methyl) and N-aryl para-Br (2 vs 3)",
+   "paper_difference": "Same mechanism for the series; emission differences are traced to polymorph packing, not to the substituent."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

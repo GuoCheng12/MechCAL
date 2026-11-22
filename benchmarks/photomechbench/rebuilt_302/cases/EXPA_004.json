@@ -1,0 +1,178 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_004",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCc1cc(-c2nnc(-c3ccco3)s2)c(O)cc1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "FTD-EtB",
+  "source_documents": [
+   {
+    "source_id": "A02",
+    "title": "Aggregation-Modulated Excited-State Intramolecular Proton Transfer and Antifungal Potential of Selected 1,3,4-Thiadiazole Derivatives",
+    "doi": "10.3390/ijms27177631",
+    "format": "PDF",
+    "pages": 33,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A02-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/ijms27177631",
+    "file": "10.3390_ijms27177631_SI_1.zip",
+    "format": "ZIP"
+   }
+  ],
+  "publication_date": "2026-08-26",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (solvents of different polarity)",
+   "aqueous media",
+   "micelles (two detergents)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A02",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The spectroscopic results support the occurrence of excited-state intramolecular proton transfer (ESIPT) in both derivatives and indicate that this process is facilitated by molecular aggregation.",
+    "subject": "PhTD-ClB and FTD-EtB",
+    "scope": "target",
+    "conditions": "solvents, aqueous media, micelles",
+    "kind": "observation",
+    "statement": "ESIPT (enol/keto emission) in both compounds, favoured by aggregation.",
+    "limitations": "Steady-state and TCSPC data; no excited-state calculation of the proton transfer."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A02",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The combined fluorescence and RLS results indicate that molecular aggregation modifies the balance between the enol- and keto-related emission pathways and promotes an AIE-like enhancement of the ESIPT-associated long-wavelength emission.",
+    "subject": "PhTD-ClB and FTD-EtB",
+    "scope": "target",
+    "conditions": "aqueous and low-polarity media",
+    "kind": "observation",
+    "statement": "Aggregation shifts the enol/keto emission balance and enhances keto emission.",
+    "limitations": "The intermolecular interaction behind the enhancement is not identified."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A02",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Assuming a card-pack arrangement, Kasha’s exciton model yields approximate intermolecular separations of 3.65 Å for PhTD-ClB and 3.77 Å for FTD-EtB.",
+    "subject": "PhTD-ClB and FTD-EtB",
+    "scope": "target",
+    "conditions": "aggregates",
+    "kind": "computation",
+    "statement": "Exciton-splitting analysis of hypsochromic absorption components (card-pack, H-type geometry).",
+    "limitations": "Model estimate assuming a geometry."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "ESIPT (dual enol/keto fluorescence) is the paper's main explanation; supported by steady-state and lifetime data only."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Aggregation (H-type card-pack exciton coupling from absorption) modulates the ESIPT emission balance."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "ESIPT (dual enol/keto fluorescence) is the paper's main explanation; supported by steady-state and lifetime data only."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Aggregation (H-type card-pack exciton coupling from absorption) modulates the ESIPT emission balance."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "IUPAC name in the abstract parsed with OPSIN",
+   "earlier characterisation (NMR, EI-MS, elemental analysis) cited in the paper"
+  ],
+  "used_si": false,
+  "formula": "C14H12N2O3S",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

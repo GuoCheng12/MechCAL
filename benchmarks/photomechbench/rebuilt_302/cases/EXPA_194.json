@@ -1,0 +1,243 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_194",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCC(CCCCCCCC)CN1C(=O)c2ccc3c4ccc5c6c(ccc(c7ccc(c2c37)C1=S)c64)C(=S)N(CC(CCCCCCCC)CCCCCCCCCC)C5=S"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "S-3 (trithionated PBI)",
+  "source_documents": [
+   {
+    "source_id": "F16",
+    "title": "Thionated Perylenebisimides as Heavy‐Atom‐Free Triplet Photosensitizers: Intersystem Crossing, Electron Spin Dynamics, and Application in Photodynamic Therapy",
+    "doi": "10.1002/anie.202500718",
+    "format": "PDF",
+    "pages": 14,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "F16-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202500718",
+    "file": "10.1002_anie.202500718_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-04-17",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "deaerated dichloromethane (ns-TA)",
+   "air-saturated dichloromethane (singlet oxygen)",
+   "frozen toluene/2-MeTHF (TREPR)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F16",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The thionation induced intersystem crossing (ISC) in perylenebisimide (PBI) derivatives was studied.",
+    "subject": "S-1 to S-3",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Replacing imide C=O by C=S switches on ISC in the PBI chromophore.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F16",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The T increases from 98% (S-1) to 100% (S-3), indicating that the ISC efficiency of thionated PBI is very high (determined with ground state bleaching method, using nanosecond transient absorption spectra).",
+    "subject": "S-1, S-3",
+    "scope": "target",
+    "conditions": "deaerated DCM, ns-TA",
+    "kind": "observation",
+    "statement": "Triplet yield 98% (S-1) and 100% (S-3), versus 8% for unthionated S-0 (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F16",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "A broad positive absorption band in the range of 400–800 nm was observed (Figure 2a), which is assigned to the triplet state absorption (excited state absorption, ESA), i.e., due to T1 →Tn transitions.",
+    "subject": "S-1",
+    "scope": "target",
+    "conditions": "ns-TA, deaerated DCM",
+    "kind": "observation",
+    "statement": "Triplet-triplet absorption is observed directly.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F16",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "However, the triplet state lifetimes of the compounds are short, τ S-1 = 0.78 µs, τ S-2(trans) = 0.35 µs, τ S-2(cis) = 0.32 µs, and τ S-3 = 0.12 µs.",
+    "subject": "S-1, S-3",
+    "scope": "target",
+    "conditions": "ns-TA, N2",
+    "kind": "observation",
+    "statement": "Triplet lifetime shortens with each added sulfur (0.78 to 0.12 us; unthionated PBI about 127 us).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F16",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "These short triplet excited state lifetimes may be attributed to the enhanced SOCs between the T1 and S0 state.",
+    "subject": "S-1 to S-3",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Sulfur raises T1-S0 spin-orbit coupling, shortening the triplet.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F16",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Previously, the ISC processes of the thionated PBI derivatives were studied with fs-TA spectra,[10,11] and it was found that ISC timescale is ca. 1 ps, much faster than the fluorescence process",
+    "subject": "thionated PBIs",
+    "scope": "target",
+    "conditions": "fs-TA (earlier work)",
+    "kind": "author_interpretation",
+    "statement": "ISC in about 1 ps outcompetes fluorescence.",
+    "limitations": "From previous work; not remeasured here."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F16",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Based on the similar ZFS D of the thionated PBI derivatives as compared to the ZFS D of that of the triplet state of the unsubstituted PBI,[31] we conclude that the T1 state has π π ∗ character, not nπ ∗ character.",
+    "subject": "S-1 to S-3",
+    "scope": "target",
+    "conditions": "TREPR, frozen toluene/2-MeTHF",
+    "kind": "observation",
+    "statement": "TREPR zero-field splitting identifies a pi-pi* T1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F16",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "For all neutral compounds, the T1 state has π π * character. The S1 state has nπ * character for all compounds except S-0.",
+    "subject": "S-1 to S-3 vs S-0",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "S1 is n-pi* in the thionated dyes, so S1(n-pi*) to T(pi-pi*) ISC is El-Sayed allowed.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Triplet yield 100%; the extra sulfurs raise T1-S0 spin-orbit coupling and cut the triplet lifetime to 0.12 us (pi-pi* T1 by TREPR)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Triplet yield 100%; the extra sulfurs raise T1-S0 spin-orbit coupling and cut the triplet lifetime to 0.12 us (pi-pi* T1 by TREPR)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F16-CG1",
+   "varied_factor": "number of imide C=O groups replaced by C=S on the same N,N'-bis(2-octyldodecyl) PBI (one vs three)",
+   "paper_difference": "Both reach near-unit triplet yield; the triplet lifetime falls from 0.78 us (S-1) to 0.12 us (S-3) and the singlet oxygen yield from 99% to 11%."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "Scheme 1 structures (N-CH2CH(C8H17)(C10H21) imides); compounds made by the cited literature method; three of the four carbonyls thionated (all three-sulfur patterns are equivalent by symmetry)",
+   "SI MALDI-TOF m/z 998.6 (C64H90N2OS3, 998.62)"
+  ],
+  "formula": "C64H90N2OS3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.75)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

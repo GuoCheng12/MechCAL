@@ -1,0 +1,138 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_013",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccccc1-c1noc(-c2ccccc2O)n1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "MPOD",
+  "source_documents": [
+   {
+    "source_id": "A07",
+    "title": "Proton transfer of 1,2,4-oxadiazole derivatives: twin vs single proton transfer",
+    "doi": "10.1016/j.jphotochem.2026.117261",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A07-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117261",
+    "file": "10.1016_j.jphotochem.2026.117261_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-04-10",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E03",
+    "source_id": "A07",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "the ESIPT is less favoured in MPOD than HPOD",
+    "subject": "MPOD vs HPOD",
+    "scope": "target",
+    "conditions": "solution, calculation",
+    "kind": "computation",
+    "statement": "Methoxy replacement of the second OH weakens ESIPT in the remaining ring.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "ESIPT from the remaining phenol, weaker than in HPOD."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "ESIPT from the remaining phenol, weaker than in HPOD."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A07-CG1",
+   "varied_factor": "second phenolic OH vs OMe",
+   "paper_difference": "HPOD shows single ESIPT along the α-ring; methylation of the β-ring OH in MPOD weakens ESIPT."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "IUPAC name in the abstract parsed with OPSIN"
+  ],
+  "used_si": false,
+  "formula": "C15H12N2O3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.34)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

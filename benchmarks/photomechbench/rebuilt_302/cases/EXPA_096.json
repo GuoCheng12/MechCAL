@@ -1,0 +1,261 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_096",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1c2cccc(O)c2C(=O)c2c(O)cccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1,8-DHAQ",
+  "source_documents": [
+   {
+    "source_id": "C03",
+    "title": "Intermolecular Interactions in Crystals Modulate Intramolecular Excited State Proton Transfer Reactions",
+    "doi": "10.1021/acs.jpcb.5c03855",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C03-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpcb.5c03855",
+    "file": "10.1021_acs.jpcb.5c03855_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-07-28",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: hexane, acetonitrile (fs transient absorption)",
+   "crystal: single crystals (fs transient absorption, absorption, fluorescence)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "These isomers show intermolecular hydrogen bonding within the crystal lattice, resulting in larger excitonic couplings, which significantly alters their reaction pathways compared to their behavior in solution.",
+    "subject": "1,4- and 1,5-DHAQ",
+    "scope": "target",
+    "conditions": "single crystals vs solution",
+    "kind": "author_interpretation",
+    "statement": "Intermolecular H-bonds in the crystal raise excitonic coupling and change the excited-state pathway.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "We show that 1,8-DHAQ, which does not form intermolecular hydrogen bonds in the crystal, shows minimal changes in dynamics between the phases.",
+    "subject": "1,8-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal vs solution",
+    "kind": "observation",
+    "statement": "Without intermolecular H-bonds the ESIPT dynamics barely change.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In contrast, in the case of 1,4-DHAQ, intermolecular interactions within the molecular crystal phase open up an ESIPT relaxation channel, which is not observed in the solution phase.",
+    "subject": "1,4-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal vs solution",
+    "kind": "observation",
+    "statement": "An ESIPT channel appears only in the crystal.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C03",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The fitted time constants for 1,8-DHAQ crystals suggest analogous assignments; subpicosecond time scales for proton transfer, vibrational relaxation occurring over tens of picoseconds, and an electronic state lifetime extending several hundred picoseconds.",
+    "subject": "1,8-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal, fs transient absorption",
+    "kind": "observation",
+    "statement": "Sub-ps proton transfer in the crystal, as in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C03",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "only the subps component has physical significance, likely corresponding to the ESIPT process in 1,5DHAQ, as previously confirmed by time-resolved fluorescence studies on microcrystals.",
+    "subject": "1,5-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal, fs transient absorption",
+    "kind": "observation",
+    "statement": "Sub-ps component assigned to ESIPT; fast nonradiative decay in the crystal.",
+    "limitations": "Poor signal-to-noise after 10 ps."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Molecular orbitals (MOs) from TDDFT calculations, using an eight-molecule-in-lattice model, reveal more delocalized excitation, or exciton character, in the crystalline phase compared to the solution-phase transitions (Figures S8− S11).",
+    "subject": "DHAQ crystals",
+    "scope": "target",
+    "conditions": "TDDFT eight-molecule cluster",
+    "kind": "computation",
+    "statement": "Excitations delocalise over neighbours in the crystal.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C03",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "In contrast, the absorption line of 1,8DHAQ crystals exhibited a Gaussian profile, similar to its solution phase, implying that the excitonic effects are less pronounced as found theoretically (Table 1).",
+    "subject": "1,8-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal absorption",
+    "kind": "observation",
+    "statement": "No excitonic splitting in the 1,8 crystal.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C03",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "The splitting indicates that the two absorption bands near the edge of the spectrum are associated with excitonic states.",
+    "subject": "1,4-/1,5-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal absorption",
+    "kind": "observation",
+    "statement": "Split band edge assigned to excitonic states.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C03",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "ESIPT is predicted to be slightly exothermic in 1,4-DHAQ (Figure 5(b)) with an energy gap of 0.09 eV, whereas there is a strong driving force for the occurrence of ESIPT in 1,8-DHAQ and in 1,5-DHAQ (Figures S14 and S17).",
+    "subject": "1,4-, 1,5-, 1,8-DHAQ",
+    "scope": "target",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "Weak ESIPT driving force in 1,4-DHAQ, strong in 1,8 and 1,5.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "C03",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "a remarkable change for the molecular dynamics of 1,4-DHAQ between solution and crystal, indicating the generation of a fast nonradiative pathway, i.e., ESIPT, in the presence of the solid-state lattice for the bath coupling.",
+    "subject": "1,4-DHAQ",
+    "scope": "target",
+    "conditions": "single crystal vs solution",
+    "kind": "author_interpretation",
+    "statement": "The lattice opens fast ESIPT-mediated nonradiative decay.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E09"
+    ],
+    "rationale": "Sub-ps ESIPT in crystal and solution with a strong computed driving force."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E09"
+    ],
+    "rationale": "Sub-ps ESIPT in crystal and solution with a strong computed driving force."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Used as the reference without intermolecular H-bonds: excitonic effects are weak (Gaussian absorption, E07), but the paper does not exclude them."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C03-CG1",
+   "varied_factor": "position of the two hydroxy groups on anthraquinone (1,8 vs 1,5 vs 1,4)",
+   "paper_difference": "1,8-DHAQ has no intermolecular H-bonds in the crystal and its ESIPT dynamics are unchanged; in 1,5- and 1,4-DHAQ intermolecular H-bonds and excitonic coupling change the pathway, and in 1,4-DHAQ ESIPT opens only in the crystal."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "1,8-dihydroxyanthraquinone (dantron), named isomer",
+   "OPSIN of 1,8-dihydroxyanthracene-9,10-dione"
+  ],
+  "used_si": false,
+  "formula": "C14H8O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.56)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

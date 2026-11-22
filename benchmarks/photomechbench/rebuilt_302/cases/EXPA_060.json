@@ -1,0 +1,255 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_060",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "F[B-]1(F)Oc2c3ccccc3c3c4c(ccc(c24)=[N+]1c1ccccc1)=[N+](c1ccccc1)[B-](F)(F)O3"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "5 (R = H)",
+  "source_documents": [
+   {
+    "source_id": "B07",
+    "title": "Synthesis and Optical Properties of Diboron Complexes of 1,4‐Anthraquinone Derivatives",
+    "doi": "10.1002/chem.71179",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B07-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71179",
+    "file": "10.1002_chem.71179_SI_1.pdf",
+    "format": "PDF"
+   },
+   {
+    "source_id": "B07-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71179",
+    "file": "10.1002_chem.71179_SI_2.zip",
+    "format": "ZIP"
+   }
+  ],
+  "publication_date": "2026-05-25",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "dichloromethane",
+   "1,4-dioxane",
+   "methanol/ethylene glycol"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B07",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The decrease in fluorescence quantum yield with increasing electron-donating ability was attributed to intramolecular PeT, and protonation restored fluorescence.",
+    "subject": "5-8",
+    "scope": "target",
+    "conditions": "dichloromethane",
+    "kind": "author_interpretation",
+    "statement": "Quenching that grows with donor strength is assigned to intramolecular PeT.",
+    "limitations": "No transient detection of the charge-separated state."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B07",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The fluorescence quantum yield (Φf ) decreased as the electron-donating ability of substituent R increased (5: Φf = 0.15, 6: Φf = 0.25, 7: Φf = 0.02, 8: Φf = 0.00).",
+    "subject": "5-8",
+    "scope": "target",
+    "conditions": "dichloromethane",
+    "kind": "observation",
+    "statement": "Φf falls from 0.25 (CF3) to 0 (NMe2) as R becomes more donating.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "These results suggest that the decrease in the Φf value originates from the enhancement of nonradiative processes.",
+    "subject": "5-7",
+    "scope": "target",
+    "conditions": "dichloromethane, TCSPC",
+    "kind": "observation",
+    "statement": "kf is constant (~0.043e9 s-1); only knr changes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "On the basis of these results, the observed fluorescence quenching is attributed to dynamic intermolecular photoinduced electron transfer (PeT) from DMA to 5",
+    "subject": "5 + N,N-dimethylaniline",
+    "scope": "target",
+    "conditions": "dichloromethane",
+    "kind": "observation",
+    "statement": "Stern-Volmer and lifetime quenching of 5 by an external donor, used as a model for the intramolecular process.",
+    "limitations": "Intermolecular model; does not show the intramolecular PeT directly."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "As shown in Figure S8, the calculated HOMO energies follow the order 8> 7> 5> 6, which correlates well with the experimentally observed fluorescence quenching efficiencies.",
+    "subject": "donor units of 5-8",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "Donor HOMO energy tracks the quenching order.",
+    "limitations": "Isolated donor fragments; no excited-state ET energetics."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B07",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "This fluorescence behavior is attributed to protonation of the dimethylamino groups, which converts the electron-donating groups into electron-withdrawing groups, thereby suppressing the intramolecular PeT process.",
+    "subject": "8 + TFA",
+    "scope": "target",
+    "conditions": "dichloromethane, excess TFA",
+    "kind": "observation",
+    "statement": "Protonating the NMe2 groups turns on fluorescence at 648 nm.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "These results suggest that intramolecular rotation and vibration do not play a major role in the relatively low fluorescence quantum yield observed upon introduction of the methoxy group.",
+    "subject": "7",
+    "scope": "target",
+    "conditions": "methanol/ethylene glycol viscosity series",
+    "kind": "observation",
+    "statement": "Raising viscosity does not restore the emission of 7.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This behavior is consistent with a greater contribution of the ICT transition in 7 compared to 5, leading to enhanced sensitivity to changes in the solvent environment.",
+    "subject": "7 vs 5",
+    "scope": "target",
+    "conditions": "methanol/ethylene glycol",
+    "kind": "author_interpretation",
+    "statement": "7 shows a small red shift and strong quenching with solvent change, read as larger ICT character.",
+    "limitations": "Only a 6 nm shift; ICT shown mainly by TD-DFT on absorption."
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "B07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This result suggests that changes in the solvent environment (including increased dielectric constant and specific interactions), rather than suppression of intramolecular rotation and vibration due to increased viscosity, may contribute to the observed quenching.",
+    "subject": "5",
+    "scope": "target",
+    "conditions": "methanol/ethylene glycol",
+    "kind": "observation",
+    "statement": "Viscosity does not raise the emission of 5.",
+    "limitations": "Hedged ('may')."
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "B07",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "while the N-phenyl substituents are significantly twisted from the chromophore plane.",
+    "subject": "5",
+    "scope": "target",
+    "conditions": "single crystal",
+    "kind": "observation",
+    "statement": "N-aryl donors are twisted 66-84° from the chromophore.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "A viscosity series argues against motion-controlled quenching (E09), but the statement is hedged; not labelled contradicted."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "TD-DFT assigns the S0-S1 absorption ICT character, but emission is a mirror image with a very small Stokes shift; no ICT claim for the emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Used as the reference: intermolecular PeT from added DMA quenches it (E04), but the paper does not assign its own decay to intramolecular PeT."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B07-CG1",
+   "varied_factor": "para substituent on the N-aryl groups (H, OMe, NMe2)",
+   "paper_difference": "Fluorescence drops from Φf 0.15 (H) to 0.02 (OMe) to non-emissive (NMe2) as intramolecular PeT from the aryl donors grows; protonating NMe2 restores emission."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SMILES from Scheme 1 and the X-ray structure (CCDC 2457602, C26H16B2F4N2O2)",
+   "EIMS M+ 486 and elemental analysis match"
+  ],
+  "used_si": false,
+  "note": "Drawn as the delocalised β-iminoenolate form the crystal structure supports (BF2 chelates N1/O9 and N4/O10).",
+  "formula": "C26H16B2F4N2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.78)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

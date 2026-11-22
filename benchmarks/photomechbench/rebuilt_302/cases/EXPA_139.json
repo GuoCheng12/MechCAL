@@ -1,0 +1,232 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_139",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)c1cccc(C(C)C)c1N1C(=O)c2cc3c4ccccc4oc3c3c2c(cc2c4ccccc4oc23)C1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3a (N-2,6-diisopropylphenyl, benzofuran-annulated)",
+  "source_documents": [
+   {
+    "source_id": "C27",
+    "title": "Naphthalimide Derivatives with Extended Heterocyclic Systems—Synthesis, Spectral and Sensing Properties",
+    "doi": "10.3390/s26072236",
+    "format": "PDF",
+    "pages": 17,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C27-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/s26072236",
+    "file": "10.3390_s26072236_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-04-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: DMF 1e-5 M and other solvents",
+   "titrations with acid and metal ions"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C27",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The reference compound 3a emits blue fluorescence with an intense maximum at 414 nm and a quantum yield of 27%.",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "DMF, 1e-5 M",
+    "kind": "observation",
+    "statement": "Bright blue emission without a receptor.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C27",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The receptor-containing analogue 3b displays an emission band of identical shape and position but with significantly reduced intensity",
+    "subject": "3b",
+    "scope": "target",
+    "conditions": "DMF, 1e-5 M",
+    "kind": "observation",
+    "statement": "Same band, QY 4.9% vs 26.9% (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C27",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The pronounced fluorescence suppression without any change in emission wavelength is a clear indication of an operative reductive PET process from the dimethylamino receptor to the excited NI chromophore, effectively quenching the fluorescence.",
+    "subject": "3b",
+    "scope": "target",
+    "conditions": "DMF",
+    "kind": "author_interpretation",
+    "statement": "Quenching without a spectral shift is assigned to PET from the receptor amine.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C27",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "The difference between the energy of orbitals of the receptor (HOMO) and the one of the chromophore (HOMO-1) is 0.3 eV, suggesting that, when excitation occurs, an electron would be transferred from the receptor to the fluorophore, which will lead to the quenching of 3b emission.",
+    "subject": "3b",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "The receptor HOMO lies 0.3 eV above the chromophore HOMO-1, allowing PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C27",
+    "pdf_page": 14,
+    "location": null,
+    "quote": "Fluorescence titration experiments confirmed that the receptor-bearing benzofuranannulated NI functions as a switch-ON PET sensor for protons and selected metal cations, with pronounced responses toward Cu(II) and Sn(II).",
+    "subject": "3b + H+ or metal ions",
+    "scope": "target",
+    "conditions": "DMF/water titrations",
+    "kind": "observation",
+    "statement": "Protonation or metal binding restores the emission.",
+    "limitations": "Needs a proton or metal ion, not in the input."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C27",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Both symmetrically benzofuran-annulated imides 3 exhibit a broad, structured absorption band in the 325–400 nm region, which can be assigned to a π–π* transition within the extended aromatic system.",
+    "subject": "3a, 3b",
+    "scope": "target",
+    "conditions": "DMF",
+    "kind": "observation",
+    "statement": "π-π* chromophore with small Stokes shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C27",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This electronic arrangement is manifested by a broad, structureless absorption band in the blue region, with a maximum at 417 nm, which can be assigned to an intramolecular charge-transfer (ICT) transition (Figure 2a).",
+    "subject": "13a, 13b",
+    "scope": "target",
+    "conditions": "DMF",
+    "kind": "observation",
+    "statement": "Benzodioxin-annulated NIs have an ICT band at 417 nm.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C27",
+    "pdf_page": 14,
+    "location": null,
+    "quote": "In contrast, benzodioxin-annulated derivatives exhibit broad, structureless absorption bands assigned to intramolecular charge-transfer transitions and inherently low fluorescence quantum yields in polar media, accompanied by large Stokes shifts.",
+    "subject": "13a, 13b",
+    "scope": "target",
+    "conditions": "polar solvents",
+    "kind": "author_interpretation",
+    "statement": "ICT character with large Stokes shift and low QY (13b 2.1%, 13a 5.2%).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C27",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "In these systems, the receptor orbital is located energetically below the chromophore HOMO (Figure 5), which prevents photoinduced electron transfer and explains the negligible PET effect in these compounds.",
+    "subject": "13b",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "No PET driving force in the benzodioxin series.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Reference without a receptor; brighter (QY 26.9%) than 3b, but the paper does not state PET is excluded for it."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C27-CG1",
+   "varied_factor": "imide N substituent on the benzofuran-annulated naphthalimide (2,6-diisopropylphenyl vs 2-(dimethylamino)ethyl receptor)",
+   "paper_difference": "The amine receptor quenches the emission by PET (QY 26.9% to 4.9%, same band); protons or metal ions switch it back on."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "same benzofuran-annulated chromophore as 3b (SI name, OPSIN) with the N-(2,6-diisopropylphenyl) imide named in the main text (Scheme 1)"
+  ],
+  "used_si": true,
+  "formula": "C36H27NO4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

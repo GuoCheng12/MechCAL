@@ -1,0 +1,263 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_101",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc(N2C(=O)c3cccc4c(-c5ccccc5N5c6ccccc6C(c6ccccc6)(c6ccccc6)c6ccccc65)ccc(c34)C2=O)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "V-2 (9,9-diphenylacridine)",
+  "source_documents": [
+   {
+    "source_id": "C09",
+    "title": "Achieving Charge‐Transfer‐Featured Organic Room‐Temperature Phosphorescence with Combined High Efficiency and Long Lifetime via V‐Shaped D–A Dyads",
+    "doi": "10.1002/anie.202508776",
+    "format": "PDF",
+    "pages": 5,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C09-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202508776",
+    "file": "10.1002_anie.202508776_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-07-31",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene (N2)",
+   "film: PMMA, 77-300 K"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "This improvement stems from preserving a substantial degree of forbiddenness in the radiative transition process of the compound while simultaneously increasing its D–A dihedral angle, which can promote more efficient spin-orbit coupling and thus more rapid intersystem crossing.",
+    "subject": "V-1, V-2",
+    "scope": "target",
+    "conditions": "PMMA film and toluene",
+    "kind": "author_interpretation",
+    "statement": "Long-lived, efficient RTP comes from a forbidden radiative transition plus faster ISC at a larger D-A angle.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The positive solvatochromism in its Fl spectrum verifies the 1 CT feature of the S1 state of V-1",
+    "subject": "V-1",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "S1 is a charge-transfer state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Further nanosecond TA measurements reveal that, akin to U-1, V1 progresses the ISC from its 1 CT-typed S1 to 3 LEA -typed T1 states in Tol, i.e., governed by a SOCT-ISC effect (Figure S7).",
+    "subject": "V-1",
+    "scope": "target",
+    "conditions": "toluene, ns transient absorption",
+    "kind": "observation",
+    "statement": "ISC goes from 1CT to the acceptor-localised 3LE (SOCT-ISC).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C09",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "V-1@PMMA not only exhibits a long τ Ph of 152 ms (Figure 2b), but also demonstrates a high ΦPh of 25%, which is threefold higher than that of U-1@PMMA.",
+    "subject": "V-1",
+    "scope": "target",
+    "conditions": "1.5 wt% in PMMA, ambient",
+    "kind": "observation",
+    "statement": "RTP with τPh 152 ms and ΦPh 25%.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C09",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "verify the occurrence of a T1 (3 LE)→T2 (3 CT) reverse internal conversion (RIC) process in V1@PMMA at ambient conditions",
+    "subject": "V-1",
+    "scope": "target",
+    "conditions": "PMMA film, ambient",
+    "kind": "observation",
+    "statement": "The emitting triplet is reached by reverse internal conversion from 3LE to 3CT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C09",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "indicating that the phenyl substitution enhances both SOCME and the forbiddenness of the radiative transition process.",
+    "subject": "V-2 vs V-1",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "V-2 has larger kISC and smaller kFl than V-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C09",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the prolonged τ Ph in V-2@PMMA can be attributed to its reduced knr,T , potentially stemming from its more rigid D–A molecular framework.",
+    "subject": "V-2",
+    "scope": "target",
+    "conditions": "PMMA film, 77-300 K",
+    "kind": "author_interpretation",
+    "statement": "Temperature-dependent lifetimes put the longer τPh of V-2 down to a smaller knr,T.",
+    "limitations": "Assumes kPh is temperature-independent below 180 K."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C09",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "yielding a more rigid D–A framework in V-2 compared to V-1 (Figures 2g and S15), which contributes to the reduction of knr,T .",
+    "subject": "V-2 vs V-1",
+    "scope": "target",
+    "conditions": "IGMH analysis",
+    "kind": "computation",
+    "statement": "Phenyl groups on the donor add D-A van der Waals contacts that stiffen the framework.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "S1 is a CT state (positive solvatochromism) and the emitting triplet has CT character, which the CT-mediated ISC (SOCT-ISC) relies on; the performance itself is explained by rates."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The abstract explains the long lifetime and high efficiency by keeping the radiative 3CT→S0 transition forbidden (small kPh) while speeding up ISC; rate constants are measured. For V-2 the longer τPh is assigned to a smaller knr,T."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Long-lived RTP in PMMA with faster ISC than V-1 (kISC 3.2e7 s-1)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The D-A framework is called more rigid, lowering knr,T, but no specific intramolecular motion is named (guideline §3.3); not labelled RIM."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "S1 is a CT state (positive solvatochromism) and the emitting triplet has CT character, which the CT-mediated ISC (SOCT-ISC) relies on; the performance itself is explained by rates."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The abstract explains the long lifetime and high efficiency by keeping the radiative 3CT→S0 transition forbidden (small kPh) while speeding up ISC; rate constants are measured. For V-2 the longer τPh is assigned to a smaller knr,T."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Long-lived RTP in PMMA with faster ISC than V-1 (kISC 3.2e7 s-1)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C09-CG1",
+   "varied_factor": "9,9-dimethyl vs 9,9-diphenyl acridine donor",
+   "paper_difference": "The diphenyl donor (V-2) raises kISC, lowers kFl and stiffens the D-A framework, lowering knr,T and lengthening τPh."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "analogue of V-1 with 9,9-diphenylacridan (SI)",
+   "SI HRMS [M+H]+ C53H41N2O2 matches C53H40N2O2"
+  ],
+  "used_si": true,
+  "note": "The SI name has a (acridinyl)methyl linker, which the HRMS formula and the N-arylation route rule out; written without CH2, like V-1.",
+  "formula": "C53H40N2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.8)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

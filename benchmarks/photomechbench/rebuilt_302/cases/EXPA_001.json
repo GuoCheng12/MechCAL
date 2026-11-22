@@ -1,0 +1,182 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_001",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(/C=C/C(=O)c2ccc3cccc(O)c3c2O)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DDMC",
+  "source_documents": [
+   {
+    "source_id": "A01",
+    "title": "Aggregation‐Driven Thorough Cascaded Proton Transfer Process Targeting Ultralow‐Threshold Near‐Infrared Organic Single‐Crystal Lasers",
+    "doi": "10.1002/anie.202525240",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A01-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202525240",
+    "file": "10.1002_anie.202525240_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-03-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents)",
+   "film: 1 wt% in polystyrene",
+   "crystal: single-crystal microwires"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A01",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "the strong J-type coupling of 4260 cm−1 in DDMC single-crystal microwires effectively stabilizes TB* level by lowering excited state energy, supporting a thorough ESDPT process",
+    "subject": "DDMC",
+    "scope": "target",
+    "conditions": "single-crystal microwires",
+    "kind": "observation",
+    "statement": "Strong J-type coupling in the crystal stabilises the double-proton-transfer tautomer TB*.",
+    "limitations": "Coupling magnitude derived from spectra and calculation."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A01",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "it is verified that J-aggregates in single crystal effectively lower the energy of TB*, enabling a thorough cascaded ESIPT process, whereas DDMC monomers undergo only a single incomplete ESIPT process",
+    "subject": "DDMC",
+    "scope": "target",
+    "conditions": "crystal vs monomer (PS film, solution)",
+    "kind": "observation",
+    "statement": "Cascaded double ESIPT in J-aggregated crystals; single incomplete ESIPT in the monomer (PL, fluorescence upconversion, calculation).",
+    "limitations": "Lasing-oriented study; solution data are mainly spectral."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A01",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "the second proton transfer is inferred to be feasible in aggregates but thermodynamically prohibited in monomer",
+    "subject": "DDMC",
+    "scope": "target",
+    "conditions": "DFT, monomer vs aggregate",
+    "kind": "computation",
+    "statement": "Calculated TB* lies above TA* in the monomer and below it in the aggregate.",
+    "limitations": "Ground- and excited-state energies from DFT only."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Single ESIPT in the monomer and cascaded double ESIPT in the crystal are the paper's central mechanism."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "J-type exciton coupling in the crystal is what enables the second proton transfer; both are presented as the core explanation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Single ESIPT in the monomer and cascaded double ESIPT in the crystal are the paper's central mechanism."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "J-type exciton coupling in the crystal is what enables the second proton transfer; both are presented as the core explanation."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A01-CG1",
+   "varied_factor": "second hydroxy group on the naphthalene (1,8-dihydroxy vs 1-hydroxy)",
+   "paper_difference": "DDMC can undergo cascaded double ESIPT in the crystal; DMHC only single ESIPT."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "IUPAC name in the paper parsed with OPSIN",
+   "formula C21H19NO3 matches the crystal data table in the SI"
+  ],
+  "used_si": true,
+  "formula": "C21H19NO3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1002_anie.202525240_SI_1_image2.png, img 10.1002_anie.202525240_SI_1_image5.png, main p3, main p7"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

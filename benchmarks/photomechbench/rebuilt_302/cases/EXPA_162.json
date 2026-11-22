@@ -1,0 +1,257 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_162",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC[N+](CC)=c1ccc2nc3c(cc(NCCNC(=O)C4(C)CCc5c(C)c(O)c(C)c(C)c5O4)c4ccccc43)[se]c-2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "EtNBSe-2C-Tro",
+  "source_documents": [
+   {
+    "source_id": "D06",
+    "title": "A PET-activated photosensitizer based on ROS-sensitive Trolox for tumor microenvironment-responsive imaging and therapy",
+    "doi": "10.1039/d5cc03875h",
+    "format": "PDF",
+    "pages": 4,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D06-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5cc03875h",
+    "file": "10.1039_d5cc03875h_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "aqueous solution (fluorescence)",
+   "methanol (singlet oxygen, ns transient absorption)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In normal cells, both fluorescence and photodynamic therapy effects are effectively quenched via photoinduced electron transfer (PET).",
+    "subject": "EtNBS-2C-Tro, EtNBSe-2C-Tro",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Trolox quenches emission and photosensitization by PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Density functional theory (DFT) calculations revealed that upon excitation, electron transfer from the Trolox moiety to the EtNBS unit enables the occurrence of PET",
+    "subject": "EtNBS-nC-Tro",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Trolox HOMO above the dye HOMO: reductive PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Meanwhile, fluorescence and transient absorption spectra verified the dramatic inhibition of both emission and triplet state formation.",
+    "subject": "conjugates",
+    "scope": "target",
+    "conditions": "",
+    "kind": "observation",
+    "statement": "Both singlet emission and triplet formation are suppressed.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D06",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "For instance, the Ff of EtNBS-nC-Tro decreased from 7.6% to 0.27% as the linker chain length was gradually shortened, a trend also observed for EtNBSe-nC-Tro.",
+    "subject": "EtNBS-nC-Tro, EtNBSe-nC-Tro",
+    "scope": "target",
+    "conditions": "aqueous solution",
+    "kind": "observation",
+    "statement": "Shorter linker, stronger quenching (2C is the most quenched).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D06",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The fluorescent quantum yields (Ff) for EtNBS and EtNBSe were 21% and 3%, respectively.",
+    "subject": "parent dyes",
+    "scope": "target",
+    "conditions": "aqueous solution",
+    "kind": "observation",
+    "statement": "Reference quantum yields of the unconjugated dyes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D06",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Specifically, the FT of EtNBSe-2C-Tro was found to be only 4.7% of EtNBSe.",
+    "subject": "EtNBSe-2C-Tro vs EtNBSe",
+    "scope": "target",
+    "conditions": "methanol, ns transient absorption",
+    "kind": "observation",
+    "statement": "Triplet yield of the conjugate is 4.7% of the parent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D06",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This significant difference of FT between EtNBSe and EtNBSe-2C-Tro demonstrates that PET quenches the triplet state of EtNBSe-2C-Tro, leading to a decrease in 1O2 generation.",
+    "subject": "EtNBSe-2C-Tro",
+    "scope": "target",
+    "conditions": "methanol",
+    "kind": "author_interpretation",
+    "statement": "PET competes with triplet formation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Upon oxidation of the Trolox chromanol ring by ROS, the HOMO level of Trolox drops below that of EtNBS, thereby inhibiting the PET process and enabling selective fluorescence response and PDT.",
+    "subject": "conjugates + ROS",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Oxidised Trolox can no longer donate an electron.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "PET from Trolox quenches both fluorescence and triplet formation (triplet yield 4.7% of the parent)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "The Se dye forms triplets (ns-TA, singlet oxygen); PET competes with this ISC channel."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "PET from Trolox quenches both fluorescence and triplet formation (triplet yield 4.7% of the parent)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "The Se dye forms triplets (ns-TA, singlet oxygen); PET competes with this ISC channel."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PROBE_REACTION: ROS oxidation of the Trolox chromanol blocks PET (reaction product) (E08)"
+  ],
+  "contrast_group": {
+   "group": "D06-CG1",
+   "varied_factor": "chalcogen of the benzo[a]phenochalcogenazinium dye (S vs Se)",
+   "paper_difference": "Both conjugates are PET-quenched; the Se dye carries a large triplet yield (parent singlet-oxygen yield 78% vs 3% for S) whose formation PET also suppresses."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "selenium analogue from EtNBSe-2C-NH2 (Scheme S1)",
+   "SI HRMS [M]+ C36H41N4O3Se"
+  ],
+  "used_si": true,
+  "note": "Cation; counterion not stated.",
+  "formula": "C36H41N4O3Se+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.47)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

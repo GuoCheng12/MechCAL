@@ -1,0 +1,254 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_182",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(=O)N(CC(N)=O)[C@@H](C)c1ccccc1)[C@@H](C)c1ccccc1)Cc1ccc(-c2c3ccccc3cc3ccccc23)cc1)[C@@H](C)c1ccccc1)Cc1ccc(-c2ccc(N(C)C)cc2)cc1)[C@@H](C)c1ccccc1)[C@@H](C)c1ccccc1)[C@@H](C)c1ccccc1)[C@@H](C)c1ccccc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "(i,i+2)-Ac peptoid dyad",
+  "source_documents": [
+   {
+    "source_id": "F02",
+    "title": "Unexpected dynamics of peptoid-conjugated dyad systems: ultrafast photoinduced electron transfer in off-facial arrangement",
+    "doi": "10.1039/d5cp03671b",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F02-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5cp03671b",
+    "file": "10.1039_d5cp03671b_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-28",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "acetonitrile, degassed (steady state, TCSPC, fsTA, FLUP)",
+   "DMSO (fsTA, FLUP)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The quenching of locally excited (LE) emission via PET was confirmed by steady-state (Fig. 2b) and TCSPC (Fig. 2c) measurements for both (i,i + 2)-Ac and (i,i + 3)-Ac.",
+    "subject": "(i,i+2)-Ac, (i,i+3)-Ac vs Ctrl",
+    "scope": "target",
+    "conditions": "acetonitrile, degassed",
+    "kind": "observation",
+    "statement": "Anthracene LE emission is quenched relative to the Ant-only control peptoid.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Exciplex emission (ExE), resulting from the PET process, appeared at longer wavelengths",
+    "subject": "(i,i+2)-Ac, (i,i+3)-Ac",
+    "scope": "target",
+    "conditions": "acetonitrile",
+    "kind": "observation",
+    "statement": "A weak red-shifted exciplex band (above 550 nm) appears in both dyads.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F02",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "kinetic model reveals a four-state evolution of PET",
+    "subject": "(i,i+2)-Ac, (i,i+3)-Ac",
+    "scope": "target",
+    "conditions": "fsTA, acetonitrile and DMSO",
+    "kind": "observation",
+    "statement": "Global analysis of fsTA resolves four PET stages.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F02",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "As shown in Fig. 5f, the extracted kinetics clearly reveal faster PET in (i,i + 2)-Ac at early times",
+    "subject": "(i,i+2)-Ac vs (i,i+3)-Ac",
+    "scope": "target",
+    "conditions": "fsTA, anthracene radical anion band",
+    "kind": "observation",
+    "statement": "The anthracene anion rises faster in the off-facial dyad during the first ~10 ps.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F02",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Our ultrafast time-resolved spectroscopic studies and steady-state emission results indicate the stronger quenching in (i,i + 2)-Ac than in (i,i + 3)-Ac (Fig. 2b).",
+    "subject": "(i,i+2)-Ac vs (i,i+3)-Ac",
+    "scope": "target",
+    "conditions": "acetonitrile",
+    "kind": "observation",
+    "statement": "The off-facial dyad is quenched more strongly.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F02",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "ultrafast spectroscopy directly captured the opposite trend: the off-facial (i,i + 2)-Ac system undergoes faster initial",
+    "subject": "(i,i+2)-Ac vs (i,i+3)-Ac",
+    "scope": "target",
+    "conditions": "fsTA, FLUP",
+    "kind": "author_interpretation",
+    "statement": "Initial PET is faster in the off-facial dyad, opposite to the ground-state geometry expectation; the paper attributes this to conformational heterogeneity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F02",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The optimized exciplex structure of (i,i + 2)-Hexa reveals a significant conformational rearrangement along the helix when compared to its ground state (Fig. 4a and Fig. 3b), suggesting a kinetic disadvantage for exciplex formation.",
+    "subject": "(i,i+2) model hexamer",
+    "scope": "target",
+    "conditions": "TDDFT B3LYP-D3BJ/6-31G(d,p), vacuum",
+    "kind": "computation",
+    "statement": "Forming the face-to-face exciplex needs large helix rearrangement in the off-facial dyad.",
+    "limitations": "6-mer model instead of the 9-mer."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F02",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "In contrast, (i,i + 3)-Hexa undergoes slight structural changes to form the exciplex (Fig. 4b).",
+    "subject": "(i,i+3) model hexamer",
+    "scope": "target",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "The co-facial dyad needs little rearrangement to form the exciplex.",
+    "limitations": "6-mer model."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Photoinduced electron transfer from DMA to excited anthracene quenches the LE emission and forms exciplex and radical-ion species, followed directly by fsTA and upconversion; initial PET is faster and quenching stronger than in the co-facial dyad."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Weak intramolecular through-space exciplex emission between the covalently linked donor and acceptor (guideline 3.5: intramolecular excimer/exciplex), arising from PET; TDDFT exciplex geometries."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Photoinduced electron transfer from DMA to excited anthracene quenches the LE emission and forms exciplex and radical-ion species, followed directly by fsTA and upconversion; initial PET is faster and quenching stronger than in the co-facial dyad."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E07",
+     "E08"
+    ],
+    "rationale": "Weak intramolecular through-space exciplex emission between the covalently linked donor and acceptor (guideline 3.5: intramolecular excimer/exciplex), arising from PET; TDDFT exciplex geometries."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F02-CG1",
+   "varied_factor": "position of the DMA donor residue relative to the anthracene residue in the same 9-mer Nspe peptoid helix (i,i+2 off-facial vs i,i+3 co-facial)",
+   "paper_difference": "The off-facial (i,i+2) dyad shows faster initial PET and stronger LE quenching than the co-facial (i,i+3) dyad, opposite to the ground-state distance expectation."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SI Scheme S2: Ac-(Nspe)4-N(DMA-biphenylmethyl)-(Nspe)1-N(Ant-benzyl)-(Nspe)2-NH2 on Rink amide resin (Suzuki coupling of 4-iodobenzyl residues)",
+   "SI Table S1 MALDI-TOF [M+Na]+ calc. 1798.899, found 1798.890 (formula C112H117N11O10)",
+   "(S)-1-phenylethyl side chains from (S)-(-)-1-phenylethylamine"
+  ],
+  "formula": "C112H117N11O10"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

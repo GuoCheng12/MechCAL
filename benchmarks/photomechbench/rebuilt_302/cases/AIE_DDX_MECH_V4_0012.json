@@ -1,0 +1,287 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0012",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccccc4O)[nH]c3nc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "ITP1",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "title": "Enhancement of the Excited-state Intramolecular Proton Transfer Process to Produce All-powerful DSE Molecules for Bridging the Gap Between ACQ and AIE",
+    "doi": "10.1016/j.dyepig.2018.08.066",
+    "format": "PDF",
+    "pages": 47,
+    "pdf_sha256": "88fc948273fe86e60697cee3fd496d565f4d378821dc27449c9928ae18a25e7b"
+   }
+  ],
+  "publication_date": "2018-09-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "benzene, THF, DMF, DMSO, MeCN, acetone, chloroform, methanol",
+   "solid/crystal"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "were designed by a strategy in which the excited-state intramolecular proton transfer (ESIPT)",
+    "subject": "ITP series",
+    "scope": "analog",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "ESIPT enhanced to restrict the TICT nonradiative channel.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 16,
+    "location": null,
+    "quote": "the TICT for nonradiative de-excitation and finely controlling their self-assembly.",
+    "subject": "ITP series",
+    "scope": "analog",
+    "conditions": "conclusion",
+    "kind": "author_interpretation",
+    "statement": "DSE from ESIPT-suppressed TICT plus controlled self-assembly.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Even in methanol, ITP1 exhibits clear enol/keto PL efficiency with ΦF",
+    "subject": "ITP1",
+    "scope": "target",
+    "conditions": "methanol",
+    "kind": "observation",
+    "statement": "Separate enol (395 nm) and keto (525 nm) emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "35 due to the enhancement of ESIPTthat restricts the TICT.",
+    "subject": "ITP1 vs DF1",
+    "scope": "target",
+    "conditions": "benzene",
+    "kind": "observation",
+    "statement": "kr nearly unchanged while knr falls ~35-fold vs DF1; assigned to ESIPT suppressing TICT.",
+    "limitations": "TICT inferred, not observed."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "but the knr of ITP1 was about three times that of DF1",
+    "subject": "ITP1 vs DF1",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "Solid-state knr of ITP1 is three times higher with similar kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "bonding interactions restricting the rotation of ring D",
+    "subject": "ITP1, DF1",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Intramolecular H-bonding restricts rotation of ring D, a key factor for efficiency.",
+    "limitations": "Structural argument only."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "consisted of equivalent of two different imidazole isomers (3H-imi and 1H-imi) in one single",
+    "subject": "ITP1",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "observation",
+    "statement": "Heterogeneous packing with strong π-π contacts (3.4-3.9 Å).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "aggregate packing in photoluminogens readily decrease their PL efficiency",
+    "subject": "ITP1 (and design of the series)",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Strong π-π / H-aggregate packing lowers ITP1 solid efficiency.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Intramolecular H-bonding restricting ring-D rotation is named as one factor for good efficiency."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "S2"
+    ],
+    "rationale": "TICT is the nonradiative channel that enhanced ESIPT suppresses; inferred from rates, not observed."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E02"
+    ],
+    "rationale": "Enol/keto dual emission; the design enhances ESIPT."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "π-π / H-aggregate packing lowers the solid-state efficiency of ITP1."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "The argument is made on kr/knr: kr unchanged, knr changed."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Intramolecular H-bonding restricting ring-D rotation is named as one factor for good efficiency."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "S2"
+    ],
+    "rationale": "TICT is the nonradiative channel that enhanced ESIPT suppresses; inferred from rates, not observed."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E02"
+    ],
+    "rationale": "Enol/keto dual emission; the design enhances ESIPT."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "π-π / H-aggregate packing lowers the solid-state efficiency of ITP1."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "The argument is made on kr/knr: kr unchanged, knr changed."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "heterogeneous self-assembly with π-π contacts in the crystal"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0012-CG1",
+   "varied_factor": "para substituent on ring D (H in ITP1 vs CF3 in ITP4)",
+   "paper_difference": "The electron-withdrawing para group strengthens ESIPT and gives J-type packing in the series, raising solid and solution efficiency."
+  }
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC(C)c1cc2c(s1)N=c1[nH]c(-c3ccccc3O)nc1=C(c1ccccc1Cl)C2",
+  "problem": "seven-membered ring with extra CH2 instead of pyridine",
+  "old_formula": "C24H20ClN3OS",
+  "new_formula": "C23H18ClN3OS",
+  "basis": "systematic name (ITP1); MolScribe reading = proposed; sister ITP4 case is correct",
+  "evidence": [
+   "systematic name (ITP1); MolScribe reading = proposed; sister ITP4 case is correct"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ESIPT_PT"
+  ]
+ }
+}

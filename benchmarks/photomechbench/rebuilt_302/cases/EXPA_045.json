@@ -1,0 +1,178 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_045",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc2c(c1)B1c3c(ccc([Se]c4ccc5c6c4Oc4ccc(C(C)(C)C)cc4B6c4cc(C(C)(C)C)cc6c7cc(C(C)(C)C)ccc7n-5c46)c3O2)-n2c3ccc(C(C)(C)C)cc3c3cc(C(C)(C)C)cc1c32"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DBNOSe",
+  "source_documents": [
+   {
+    "source_id": "A27",
+    "title": "Balancing the reverse intersystem crossing and radiative decay via meta- substitution of selenium in multi-resonance emitters for efficient organic light emitting diodes",
+    "doi": "10.1016/j.cej.2026.175765",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A27-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.cej.2026.175765",
+    "file": "10.1016_j.cej.2026.175765_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-04-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (toluene)",
+   "doped film (OLED host)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A27",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "By introducing selenium at the meta-position relative to the boron atom, the emitter DBNOSe achieves a unique balance between enhanced reverse intersystem crossing and preserved radiative decay.",
+    "subject": "DBNOSe",
+    "scope": "target",
+    "conditions": "doped film / solution",
+    "kind": "observation",
+    "statement": "Faster rISC while keeping a high kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A27",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "DBNOSe exhibits a markedly accelerated RISC rate of 1.35 × 106 s− 1 while maintaining a high radiative efficiency",
+    "subject": "DBNOSe",
+    "scope": "target",
+    "conditions": "doped film",
+    "kind": "observation",
+    "statement": "kRISC 1.35 × 10^6 s-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A27",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In contrast, ortho-substitution leads to excessive selenium participation that suppresses kr, whereas para-substitution results in insufficient SOC enhancement and subopti mal kRISC.",
+    "subject": "ortho/para analogues",
+    "scope": "target",
+    "conditions": "comparison",
+    "kind": "author_interpretation",
+    "statement": "Position of Se trades kr against kRISC.",
+    "limitations": "Analogues not all characterised in this paper."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "The title result is the balance between rISC and a preserved radiative rate."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Heavy-atom (Se) acceleration of reverse ISC in an MR-TADF emitter."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "The title result is the balance between rISC and a preserved radiative rate."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Heavy-atom (Se) acceleration of reverse ISC in an MR-TADF emitter."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN",
+   "MALDI-TOF [M+H]+ 1100.18 and elemental analysis for C72H74B2N2O2Se match"
+  ],
+  "used_si": true,
+  "formula": "C72H74B2N2O2Se",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

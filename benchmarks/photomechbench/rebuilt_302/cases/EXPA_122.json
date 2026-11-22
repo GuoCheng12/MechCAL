@@ -1,0 +1,237 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_122",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "FC(F)(F)c1ccc(C2=CC(c3ccc(C(F)(F)F)cc3)=C3N=C(N4CCCC4)N=C4N=C(N5CCCC5)N=C2N43)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Pyr-5AP-CF3",
+  "source_documents": [
+   {
+    "source_id": "C20",
+    "title": "Enhanced Luminance of Pentaazaphenalene‐Based Delayed Fluorescence Emitters by Breaking Forbidden Transition",
+    "doi": "10.1002/anie.202504390",
+    "format": "PDF",
+    "pages": 6,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C20-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202504390",
+    "file": "10.1002_anie.202504390_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-04-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene and acetonitrile, 1e-5 M, O2 vs Ar",
+   "film: doped solid films (PLQY)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C20",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "However, azaphenalenes are D3h /D3h -like structures and nonemissive because their electronic transition between S1 and the ground state (S0 ) is principally symmetrically forbidden, making it difficult to realize high luminescence efficiency (Tables S1 and S2).",
+    "subject": "5AP core",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "The bare 5AP S0-S1 transition is symmetry-forbidden.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C20",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This cooperative interaction dramatically enhances the transition dipole moments and the f values",
+    "subject": "Pyr-5AP-CF3, Pyr-5AP-CN",
+    "scope": "target",
+    "conditions": "TDA-PBE0-2",
+    "kind": "computation",
+    "statement": "Donor and acceptor substituents enlarge the HOMO-LUMO overlap and the oscillator strength (f: CN > CF3 > Br > 5AP).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C20",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "ФPL s for Pyr-5AP-CF3 and Pyr-5AP-CN in toluene solution were 60.8% and 57.1%, respectively (Table 3), which were much larger than that of Pyr-5AP-Br (4.0%).",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "toluene 1e-5 M, Ar",
+    "kind": "observation",
+    "statement": "ΦPL 60.8% (CF3), 57.1% (CN), 4.0% (Br); kr 6.4e7/8.0e7/3.6e7 s-1, knr of the Br compound 8.7e8 s-1 (Table 3).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C20",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "design strategy successfully enhances emission by breaking the forbidden transition of 5AP.",
+    "subject": "Pyr-5AP-CF3, Pyr-5AP-CN",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "Emission is switched on by making the S0-S1 transition allowed.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C20",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Pyr-5AP-CF3 and Pyr-5AP-CN exhibited no delayed components under an oxygen atmosphere but showed clear delayed emissions under argon (Ar) bubbling condition.",
+    "subject": "Pyr-5AP-CF3, Pyr-5AP-CN",
+    "scope": "target",
+    "conditions": "toluene, O2 vs Ar",
+    "kind": "observation",
+    "statement": "Oxygen-sensitive delayed emission (TADF).",
+    "limitations": "The delayed share is small (Φd 0.8%)."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C20",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the delayed fluorescence lifetimes (τ d ) of Pyr-5AP-CF3 and Pyr-5AP-CN were 9.5 and 7.5 µs, respectively, whereas no delayed component was observed for Pyr-5AP-Br",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "toluene, Ar",
+    "kind": "observation",
+    "statement": "µs delayed fluorescence for CF3/CN (kRISC ~1e5 s-1); none for the dibromide.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C20",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The solvent effects were negligible due to the predominantly short-range charge transfer nature of the transition between S0 and S1 , as confirmed by the theoretical calculations.",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "toluene vs acetonitrile",
+    "kind": "observation",
+    "statement": "Negligible solvatochromism; short-range CT transition.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The title's 'breaking forbidden transition': larger f and kr turn the nonemissive 5AP into a ΦPL 60.8% emitter."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Oxygen-sensitive µs delayed fluorescence (TADF, small ΔEST); a minor share of the emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The S0-S1 transition has short-range CT character with negligible solvatochromism (E07); not used to explain the emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The title's 'breaking forbidden transition': larger f and kr turn the nonemissive 5AP into a ΦPL 60.8% emitter."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Oxygen-sensitive µs delayed fluorescence (TADF, small ΔEST); a minor share of the emission."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C20-CG1",
+   "varied_factor": "7,9-substituents on 2,5-dipyrrolidino-5AP (Br vs 4-CF3-phenyl vs 4-CN-phenyl)",
+   "paper_difference": "Aryl acceptors make the S0-S1 transition allowed (larger f and kr) and switch on emission (ΦPL 57-61% vs 4%) with TADF; the dibromide stays weakly emissive with no delayed component."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the main text: 2,5-di(1-pyrrolidino)-7,9-bis(4-(trifluoromethyl)phenyl)-1,3,4,6,9b-pentaazaphenalene",
+   "route: Suzuki coupling of Pyr-5AP-Br (SI)"
+  ],
+  "used_si": true,
+  "note": "5AP core written in one Kekulé form with the central N9b.",
+  "formula": "C30H25F6N7",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_anie.202504390_SI_1.pdf p3, 10.1002_anie.202504390_SI_1.pdf p9, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

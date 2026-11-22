@@ -1,0 +1,177 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_030",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(=O)c1cc(N=Nc2ccc(Cl)cc2)ccc1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Cl-PAAP",
+  "source_documents": [
+   {
+    "source_id": "A18",
+    "title": "Effect of halide substitution on photophysical, solvatochromic, fluorescence and intramolecular charge transfer characteristics of phenylazo acetylphenol dyes: Experimental and DFT studies",
+    "doi": "10.1016/j.jlumin.2026.121937",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A18-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jlumin.2026.121937",
+    "file": "10.1016_j.jlumin.2026.121937_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-04-22",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents incl. n-hexane, ethanol)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A18",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Fluorescence quantum yields and estimated lifetimes showed considerable heavy-atom effects, with Br derivatives exhibiting improved intersystem crossing (up to 2.11 × 1011 s− 1 in n-hexane) as calculated from steady state spectroscopic data.",
+    "subject": "F/Cl/Br-PAAP",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "ISC rates rise from F to Br (derived, not measured).",
+    "limitations": "ISC rates derived from steady-state data; no triplet measurement."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A18",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "dipole moment analyses suggest a gradual increase in excited-state po larity from F to Br",
+    "subject": "F/Cl/Br-PAAP",
+    "scope": "target",
+    "conditions": "solvatochromic analysis",
+    "kind": "observation",
+    "statement": "Excited-state dipole rises with heavier halogen.",
+    "limitations": "Few solvents."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A18",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "because the solvatochromic analysis is limited to a small number of solvents, the observed trends should be seen as suggestive rather than generalizable",
+    "subject": "F/Cl/Br-PAAP",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Authors' own caveat.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Halogen-tuned ICT/excited-state polarity is the paper's theme; the evidence is a limited solvatochromic analysis that the authors call suggestive."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Heavy-atom-enhanced ISC inferred from quantum yields and lifetimes; no triplet measurement."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Halogen-tuned ICT/excited-state polarity is the paper's theme; the evidence is a limited solvatochromic analysis that the authors call suggestive."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The 2-hydroxyacetophenone unit could allow ESIPT, but the paper does not discuss it."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Heavy-atom-enhanced ISC inferred from quantum yields and lifetimes; no triplet measurement."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A18-CG1",
+   "varied_factor": "para halogen (F, Cl, Br)",
+   "paper_difference": "Heavier halogens give larger excited-state polarity and faster (derived) ISC."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the experimental section parsed with OPSIN (commercial sample; no further characterisation in the paper)"
+  ],
+  "used_si": false,
+  "formula": "C14H11ClN2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

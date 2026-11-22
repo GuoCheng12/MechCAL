@@ -1,0 +1,236 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_125",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCc1c2[nH]c3ccccc3c2c(-c2ccc(C3=C4C(=O)N(CC(CC)CCCC)C(c5ccc(-c6c7[nH]c8ccccc8c7c(CCCCC)c7[nH]c8ccccc8c67)cc5)=C4C(=O)N3CC(CC)CCCC)cc2)c2[nH]c3ccccc3c12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "dyad 1 (ICZ-phenylDPP-ICZ)",
+  "source_documents": [
+   {
+    "source_id": "C22",
+    "title": "Synthesis of Indolocarbazole‐Diketopyrrolopyrrole Dyads and Investigation of Their Photoinduced Electron Transfer Properties",
+    "doi": "10.1002/ajoc.70310",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C22-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/ajoc.70310",
+    "file": "10.1002_ajoc.70310_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-02-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: cyclohexane, toluene, CHCl3, THF, DCM, acetonitrile (fs/ns transient absorption)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "the fluorescence response of dyad 1 was quenched with a quenching efficiency of 99.9% with respect to its reference acceptor DPP 2a",
+    "subject": "dyad 1",
+    "scope": "target",
+    "conditions": "DCM, 470 nm excitation",
+    "kind": "observation",
+    "statement": "DPP fluorescence is almost fully quenched in the dyad.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Fluorescence was also observed to be almost completely quenched in polar solvents (e.g. dichloromethane, tetrahydrofuran, acetonitrile) as compared to nonpolar solvent such as cyclohexane and toluene, which suggested that the charge transfer or electron transfer might potentially be an important deactivation channel in the dyads.",
+    "subject": "dyads 1-3",
+    "scope": "target",
+    "conditions": "cyclohexane to acetonitrile",
+    "kind": "observation",
+    "statement": "Quenching grows with solvent polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Thus, initial transient spectral dynamics can be assigned to photoinduced electron transfer from ICZ donor to phenyl-DPP (2a) acceptor resulting in charge separated (CS) state.",
+    "subject": "dyad 1",
+    "scope": "target",
+    "conditions": "DCM, fs transient absorption",
+    "kind": "observation",
+    "statement": "DPP radical-anion absorption: ICZ→DPP electron transfer to a CS state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "However, unlike dyad 1, new ESA signature of the DPP anion radical is absent in dyad 2, suggesting partial charge transfer (CT) from donor ICZ to thiophene-DPP (3) acceptor.",
+    "subject": "dyad 2",
+    "scope": "target",
+    "conditions": "DCM, fs transient absorption",
+    "kind": "observation",
+    "statement": "No DPP anion band: partial CT rather than full charge separation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "In essence, TA spectroscopy revealed that all three dyads undergo ultrafast charge separation dynamics acting as a dominant pathway for non-radiative relaxation in dichloromethane.",
+    "subject": "dyads 1-3",
+    "scope": "target",
+    "conditions": "DCM",
+    "kind": "author_interpretation",
+    "statement": "Ultrafast charge separation is the main nonradiative channel in DCM.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C22",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "On the other hand, in nonpolar toluene, instead of charge separation, we only observed a spectroscopic signature of the charge transfer",
+    "subject": "dyads",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "In toluene a CT state forms instead of a CS state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C22",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This indicates that the excited states of dyads are getting de-excited non-radiatively probably through electron transfer mechanism not through energy transfer pathway.",
+    "subject": "dyads",
+    "scope": "target",
+    "conditions": "steady-state spectra",
+    "kind": "author_interpretation",
+    "statement": "Energy transfer is ruled out in favour of electron transfer.",
+    "limitations": "Hedged ('probably')."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "In toluene only a CT state forms instead of charge separation."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "99.9% quenching in DCM, polarity-dependent; fs-TA shows the DPP radical anion of the ICZ→DPP charge-separated state."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "In toluene only a CT state forms instead of charge separation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The ICZ NH groups have no intramolecular proton acceptor.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "99.9% quenching in DCM, polarity-dependent; fs-TA shows the DPP radical anion of the ICZ→DPP charge-separated state."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C22-CG1",
+   "varied_factor": "aryl unit of the DPP acceptor (phenyl vs thiophene)",
+   "paper_difference": "With phenyl-DPP the excited dyad forms a full charge-separated state (DPP radical anion); with thiophene-DPP only partial charge transfer is seen."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of Scheme 2 (main text p3-p4)",
+   "MALDI [M+H]+ C80H85N6O2 matches C80H84N6O2",
+   "route: Suzuki coupling of boronated ICZ with the dibromo phenyl-DPP"
+  ],
+  "used_si": false,
+  "formula": "C80H84N6O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3, main p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

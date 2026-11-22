@@ -1,0 +1,181 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0094",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCCCCCCCCCCC)c(OCCCCCCCCCCCC)c6)nn5)cc4)cc3)nn2)cc1OCCCCCCCCCCCC"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "title": "Advantages of Mobile Liquid-Crystal Phase of AIE Luminogens for Effective Solid-State Emission",
+    "doi": "10.1021/acs.jpcc.6b10026",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "0c149cf7a99733779f5389ce4a5c0fd8c1f0d5cb857c183aca721d840b37f97a"
+   }
+  ],
+  "publication_date": "2016-11-10",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water aggregates",
+   "bulk LC film",
+   "temperature series to 210 °C"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "inducing a homogeneous zigzag-stacked columnar structure with j-type coupled transition dipoles of the TPE derivatives.",
+    "subject": "TPE derivatives",
+    "scope": "analog",
+    "conditions": "LC bulk",
+    "kind": "author_interpretation",
+    "statement": "Mobile LC phase gives homogeneous J-coupled columns.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the radiative rates of bulks 1 and 2 are 2.9 and 2.0 times accelerated",
+    "subject": "bulk 2",
+    "scope": "target",
+    "conditions": "LC bulk vs THF/water aggregate",
+    "kind": "observation",
+    "statement": "kr doubles (1.4 vs 0.69 × 10^8 s-1); knr similar.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The 55% faster nonradiative rate of bulk 2 compared to that of bulk 1",
+    "subject": "bulk 2 vs 1",
+    "scope": "target",
+    "conditions": "LC bulk",
+    "kind": "author_interpretation",
+    "statement": "Imperfect stacking raises knr of bulk 2.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "E01"
+    ],
+    "rationale": "J-type transition-dipole coupling in zigzag columns red-shifts and accelerates emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The bulk advantage is assigned to a faster kr, with knr set by stacking quality."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Thermally activated intramolecular motion is mentioned for thermal quenching only; not the bulk explanation (earlier secondary dropped)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "S1",
+     "E01"
+    ],
+    "rationale": "J-type transition-dipole coupling in zigzag columns red-shifts and accelerates emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The bulk advantage is assigned to a faster kr, with knr set by stacking quality."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "rectangular columnar LC phase; heating to isotropization"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0094-CG1",
+   "varied_factor": "exterior chains: dodecyl (2, LC) vs di(ethylene oxide) (3, crystalline)",
+   "paper_difference": "The mobile LC phase gives homogeneous J-coupled stacks and faster kr; the crystalline bulk has defects and faster knr."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "R-group table (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "AGGREGATE_EXCITON_EXCIMER",
+   "RADIATIVE_RATE_STATE_BALANCE"
+  ]
+ }
+}

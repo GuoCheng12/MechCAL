@@ -1,0 +1,181 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0090",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCC(CC)c1cc(=O)[nH]c(NC(=O)Nc2ccc(/C(=C(/c3ccccc3)c3ccc(NC(=O)Nc4nc(C(CC)CCCC)cc(=O)[nH]4)cc3)c3ccccc3)cc2)n1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "(E)-TPE-UPy",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acsnano.9b06578",
+    "title": "“Seeing” and Controlling Photoisomerization by (Z)‑/(E)‑Isomers with Aggregation-Induced Emission Characteristics",
+    "doi": "10.1021/acsnano.9b06578",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "cee069a13a1d431055e90230ca6c99e0864b9abfd11f7c465143155efd8cb392"
+   }
+  ],
+  "publication_date": "2019-09-30",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "chloroform",
+   "chloroform with organic acid",
+   "THF"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acsnano.9b06578",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "At the same time, the intramolecular motions are somewhat restricted to turn on the PL of the solution.",
+    "subject": "(E)-TPE-UPy",
+    "scope": "target",
+    "conditions": "chloroform supramolecular polymers",
+    "kind": "author_interpretation",
+    "statement": "H-bonded supramolecular polymers restrict motion and turn on PL.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acsnano.9b06578",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "bright blue emission is detected when aggregates of (E)-TPE-UPy are formed",
+    "subject": "(E)-TPE-UPy",
+    "scope": "target",
+    "conditions": "THF aggregates",
+    "kind": "observation",
+    "statement": "Aggregates emit bright blue.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acsnano.9b06578",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "no photochemical reaction including photoisomerization occurs in a THF suspension of (E)-isomer",
+    "subject": "(E)-TPE-UPy",
+    "scope": "target",
+    "conditions": "THF suspension",
+    "kind": "observation",
+    "statement": "Aggregation blocks photoisomerization.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acsnano.9b06578",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "0.16 eV for (E)-TPE-UPy",
+    "subject": "(E)-TPE-UPy",
+    "scope": "target",
+    "conditions": "DFT torsion scan",
+    "kind": "computation",
+    "statement": "Small S1-S0 gap near 90° twist: CI-mediated decay.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Supramolecular polymerisation and aggregation restrict the C=C torsion that leads to the CI and to photoisomerization, turning on emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Supramolecular polymerisation and aggregation restrict the C=C torsion that leads to the CI and to photoisomerization, turning on emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The ureidopyrimidinone N-H...O bonds are intermolecular dimer contacts; ESIPT is not discussed."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "quadruple H-bonded supramolecular polymers; THF aggregates"
+  ],
+  "out_of_pool": [
+   "Z/E photoisomerization, controlled by aggregation"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

@@ -1,0 +1,263 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_111",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "F[B-]1(F)c2cc(Br)ccc2-c2nccc[n+]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PMB-BF2",
+  "source_documents": [
+   {
+    "source_id": "C08",
+    "title": "Synergistic Diphenylboron and Heavy‐Atom Effect: A BF 2 ‐Free Strategy for Four‐Coordinated Boron Room‐Temperature Phosphorescence",
+    "doi": "10.1002/adfm.76766",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C08-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adfm.76766",
+    "file": "10.1002_adfm.76766_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene (room temperature and 77 K)",
+   "powder",
+   "crystal",
+   "film: 1 wt% in PMMA"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "PMB powder shows only a strong blue fluorescence band at 420 nm (Figure 2c and Table 1), with a fluorescence quantum yield (ΦF ) as high as 76.6%, and no phosphorescence signal is detected (Figure S17).",
+    "subject": "PMB",
+    "scope": "target",
+    "conditions": "powder",
+    "kind": "observation",
+    "statement": "Bright fluorescence and no phosphorescence without bromine.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The same behavior is observed for PMB in its crystal and doped film (named PMB@PMMA) states, where only fluorescence is detected.",
+    "subject": "PMB",
+    "scope": "target",
+    "conditions": "crystal, PMMA film",
+    "kind": "observation",
+    "statement": "No RTP in any solid form.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Their fluorescence emission spectra are both broad and featureless, with peaks at 478 nm and 469 nm (Figure 2a,b), respectively, indicating intramolecular charge transfer (CT) character for their lowest singlet excited state.",
+    "subject": "PMB, PMB-Br",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "Broad, featureless fluorescence: S1 has CT character.",
+    "limitations": "Spectral shape only here; NTO/hole-electron analysis supports it."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C08",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The introduction of the bromine atom endows the powder samples with green phosphorescence featuring a lifetime of 1.72 ms.",
+    "subject": "PMB-Br",
+    "scope": "target",
+    "conditions": "powder",
+    "kind": "observation",
+    "statement": "Green RTP, τP 1.72 ms.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C08",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Theoretical calculations reveal that the bromine atom intramolecularly enhances the key spin-orbit coupling (SOC) constant to 16.13 cm−1 , providing the core driving force for efficient intersystem crossing; simultaneously, it intermolecularly cooperates with BPh2 to construct a rigid network that stabilizes the excitons.",
+    "subject": "PMB-Br",
+    "scope": "target",
+    "conditions": "TD-DFT, QM/MM",
+    "kind": "computation",
+    "statement": "Br raises S1-T2 SOC to 16.13 cm-1 and builds a rigid packing network.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C08",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Although the powder efficiency of PMB-Br is moderate (ΦP = 1.9%), the dramatically higher ΦP (7.3%) in PMB-Br@PMMA film confirms that the ISC process is highly efficient and that non-radiative decay is the primary bottleneck.",
+    "subject": "PMB-Br",
+    "scope": "target",
+    "conditions": "powder vs 1 wt% PMMA",
+    "kind": "observation",
+    "statement": "ΦP rises from 1.9% to 7.3% when dispersed in PMMA.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C08",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This dense interaction network can effectively restrict molecular vibrations, providing crucial structural rigidity for stabilizing triplet excitons [43, 44].",
+    "subject": "PMB-Br",
+    "scope": "target",
+    "conditions": "single crystal",
+    "kind": "author_interpretation",
+    "statement": "Br-mediated contacts rigidify the crystal.",
+    "limitations": "No specific vibration identified."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C08",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "In aggregated states (powder or crystal), PMB-BF2 exhibits greenish-yellow RTP with τP = 2.05–3.85 ms and ΦP = 3.5–3.7%, which are slightly higher than those of PMB-Br.",
+    "subject": "PMB-BF2",
+    "scope": "target",
+    "conditions": "powder, crystal",
+    "kind": "observation",
+    "statement": "RTP with τP 2.05-3.85 ms.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C08",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "Under these conditions, the ΦP of PMB-Br dramatically increases from 1.9% (powder) to 7.3% (PMB-Br@PMMA), whereas that of PMB-BF2 increases only modestly from 3.5% to 4.9%.",
+    "subject": "PMB-Br, PMB-BF2",
+    "scope": "target",
+    "conditions": "PMMA film",
+    "kind": "observation",
+    "statement": "Isolated in PMMA, PMB-Br outperforms PMB-BF2.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "C08",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "PMB-BF2 exhibits a maximum SOC of only 0.60 cm−1 (S1 –T2 )",
+    "subject": "PMB-BF2",
+    "scope": "target",
+    "conditions": "QM/MM crystal model",
+    "kind": "computation",
+    "statement": "Weak SOC for the BF2 analogue.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E08",
+     "E09",
+     "E10"
+    ],
+    "rationale": "RTP (2.05-3.85 ms) in powder and crystal despite weak SOC; the paper calls it the rigidification-predominated pathway of BF2 boron RTP."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E08",
+     "E09",
+     "E10"
+    ],
+    "rationale": "RTP (2.05-3.85 ms) in powder and crystal despite weak SOC; the paper calls it the rigidification-predominated pathway of BF2 boron RTP."
+   }
+  ],
+  "environment_context": [
+   "dense C-H...F and C-H...Br networks rigidify the BF2 crystal (rigidification-predominated RTP); no specific motion named"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "BF2 analogue of PMB-Br (main text); structure recognition of main-text and SI drawings",
+   "crystal structure discussed (C-H...F and C-H...Br contacts)"
+  ],
+  "used_si": true,
+  "note": "No separate HRMS line found for PMB-BF2 in the text layer; structure from the drawings and the 'isostructural BF2 analogue' description.",
+  "formula": "C10H6BBrF2N2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_adfm.76766_SI_1.pdf p10, 10.1002_adfm.76766_SI_1.pdf p11, 10.1002_adfm.76766_SI_1.pdf p9, main p6"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

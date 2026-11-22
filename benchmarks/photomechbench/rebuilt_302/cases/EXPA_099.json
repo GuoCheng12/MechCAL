@@ -1,0 +1,182 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_099",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(-c2oc3cccc(OC)c3c(=O)c2O)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "45DM3HF (4',5-dimethoxy-3-hydroxyflavone)",
+  "source_documents": [
+   {
+    "source_id": "C06",
+    "title": "Excited state intramolecular proton transfer reaction in 4′,5-dimethoxy-3-hydroxyflavone: partial shielding of intermolecular H-bonding with protic molecules by 5-OCH3 group and its impact on ESIPT rate and fluorescence spectra",
+    "doi": "10.1016/j.jphotochem.2025.116817",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C06-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2025.116817",
+    "file": "10.1016_j.jphotochem.2025.116817_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2025-10-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: aprotic solvents (acetonitrile, DMF and others)",
+   "solution: alcohols",
+   "aprotic solvent + water"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Partial inhibition of intermolecular H-bonding was revealed both theoretically and experimentally, owing to which ESIPT reaction in the title compound demonstrates less pronounced sensitivity to proton donors and/or humidity in aprotic surroundings.",
+    "subject": "45DM3HF",
+    "scope": "target",
+    "conditions": "aprotic and protic solvents",
+    "kind": "author_interpretation",
+    "statement": "The 5-methoxy group partly shields the carbonyl from H-bonding, so ESIPT is less sensitive to protic molecules.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Experimental steady-state and time-resolved investigation of fluo rescent properties of 4′,5-dimethoxyflavonol in alcoholic media confirmed partial inhibition of the effect of intermolecular H-bonds with protic molecules to decrease ESIPT rate.",
+    "subject": "45DM3HF",
+    "scope": "target",
+    "conditions": "methanol, ethanol, isopropanol, tert-butanol",
+    "kind": "observation",
+    "statement": "Two-band N*/T* fluorescence and T* decay times give ESIPT rates 2-9 times faster than in the 4'-methoxy model.",
+    "limitations": "The comparison rates for 4M3HF are taken from the authors' earlier work [38]."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Quantum-chemical modeling reveals that 5-methoxy group can block intermolecular H-bonding with the external unshared electron pair of carbonyl oxygen atom only partially, this manifests itself in incomplete retarding of ESIPT process in alcoholic surrounding.",
+    "subject": "45DM3HF",
+    "scope": "target",
+    "conditions": "DFT with explicit protic molecules",
+    "kind": "computation",
+    "statement": "The methoxy group blocks the external carbonyl lone pair only partly.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C06",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Slight long-wavelength shift in absorption and ~ twice increase of low-intensive (trace) normal form fluorescence band indicate formation of intermolecular hydrogen bond of the title compound with water molecules followed by insufficient ESIPT retarding.",
+    "subject": "45DM3HF",
+    "scope": "target",
+    "conditions": "aprotic solvent + water",
+    "kind": "observation",
+    "statement": "Water slightly raises the normal-form (N*) band: H-bonding retards ESIPT a little.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Two-band normal/phototautomer fluorescence and ESIPT rates from T* decay times; the paper is about how the 5-methoxy group shields ESIPT from intermolecular H-bonds."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Two-band normal/phototautomer fluorescence and ESIPT rates from T* decay times; the paper is about how the 5-methoxy group shields ESIPT from intermolecular H-bonds."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "title compound 4',5-dimethoxy-3-hydroxyflavone",
+   "OPSIN of 3-hydroxy-5-methoxy-2-(4-methoxyphenyl)-4H-chromen-4-one"
+  ],
+  "used_si": false,
+  "formula": "C17H14O5",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3, main p4, main p8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

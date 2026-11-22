@@ -1,0 +1,220 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_154",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2c(-c3ccc(-c4ccc(-c5ccc(-c6cccc7ccccc67)cc5)cc4)cc3)cccc2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1TP1 (4,4''-di(1-naphthyl)-p-terphenyl)",
+  "source_documents": [
+   {
+    "source_id": "C21",
+    "title": "Photophysical properties of oligophenylenes end-capped with naphthyls in solution and solid state",
+    "doi": "10.1039/d5cp04504e",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C21-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5cp04504e",
+    "file": "10.1039_d5cp04504e_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-28",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: chloroform 295 K",
+   "solid",
+   "77 K glass (phosphorescence)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C21",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Para-DNpOPhs exhibit high fluorescence quantum yields and enhanced radiative rates, kf whereas meta-analogues show blue-shifted spectra and reduced oscillator strengths due to localized frontier orbitals.",
+    "subject": "DNpOPhs",
+    "scope": "target",
+    "conditions": "chloroform, solid",
+    "kind": "observation",
+    "statement": "Φf/kf in CHCl3: p-1P1 0.63 / 6.3e8 s-1, m-1P1 0.24 / 1.2e8 s-1 (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C21",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "TD-DFT calculations reproduce the experimental trends, demonstrating a linear correlation between computed oscillator strengths, f and measured kf in solution, consistent with the Strickler–Berg relationship.",
+    "subject": "DNpOPhs",
+    "scope": "target",
+    "conditions": "chloroform, TD-DFT",
+    "kind": "computation",
+    "statement": "kf scales with the computed oscillator strength.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C21",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These characteristics suggest that the observed fluorescence arises from a locally excited p–p* state, rather than from excimer formation or intermolecular p–p* interactions between the phenylene backbone and the naphthyl groups.",
+    "subject": "para-DNpOPhs",
+    "scope": "target",
+    "conditions": "solution and solid",
+    "kind": "author_interpretation",
+    "statement": "Emission is LE π-π*, not excimer.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C21",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Because phosphorescence was observed from all DNpOPhs, the knr values is attributed primarily to intersystem crossing from the S1 state to the triplet state.",
+    "subject": "DNpOPhs",
+    "scope": "target",
+    "conditions": "77 K phosphorescence; room-temperature rates",
+    "kind": "author_interpretation",
+    "statement": "knr is assigned mainly to ISC.",
+    "limitations": "Room-temperature IC is not separated (the paper notes both may contribute)."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C21",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This deviation from linearity suggests that radiative processes are no longer solely dictated by the transition dipole moment in the condensed phase.",
+    "subject": "DNpOPhs with large f",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "In the solid kf levels off (~5e8 s-1) for large f.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C21",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the meta-dinaphthylbenzenes (m-1PX, X = 1 and 2) display the UV absorption bands shifted to higher energies relative to their para-counterparts, consistent with the known blue-shift associated with interrupted p-conjugation in meta-linked oligophenylenes.",
+    "subject": "m-1P1 vs p-1P1",
+    "scope": "target",
+    "conditions": "chloroform",
+    "kind": "observation",
+    "statement": "Meta linkage interrupts conjugation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E05"
+    ],
+    "rationale": "The paper's explanation: substitution topology sets the oscillator strength and kf (Strickler-Berg correlation). Longest para chain: kf 14e8 s-1 (Φf 0.98) in chloroform, but kf saturates at 4.7e8 s-1 in the solid."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Phosphorescence at 77 K; the paper attributes knr mainly to ISC."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Excimer emission is excluded for the para series (E03), but solid-state kf saturation is put down to unspecified intermolecular interactions (E05); not labelled either way."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E05"
+    ],
+    "rationale": "The paper's explanation: substitution topology sets the oscillator strength and kf (Strickler-Berg correlation). Longest para chain: kf 14e8 s-1 (Φf 0.98) in chloroform, but kf saturates at 4.7e8 s-1 in the solid."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Phosphorescence at 77 K; the paper attributes knr mainly to ISC."
+   }
+  ],
+  "environment_context": [
+   "solid-state kf saturation attributed to intermolecular interactions (E05)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of the SI drawings (C38H26; p-terphenyl with two 1-naphthyl ends)",
+   "code convention of the series confirmed by the recognised m-1P1, p-1P1 and 1BP1 drawings (first and last digits = naphthyl attachment)"
+  ],
+  "used_si": true,
+  "formula": "C38H26",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d5cp04504e_SI_1.pdf p5, 10.1039_d5cp04504e_SI_1.pdf p9, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

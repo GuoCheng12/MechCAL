@@ -1,0 +1,221 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_083",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCC(CC)COc1c2cc(-c3cc(C(=O)OC)cc(C(=O)OC)c3)sc2c(OCC(CC)CCCC)c2cc(-c3cc(C(=O)OC)cc(C(=O)OC)c3)sc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BDT-diISO",
+  "source_documents": [
+   {
+    "source_id": "B10",
+    "title": "Experimental Photophysical investigation of a new Benzodithiophene–Diisophthalate ester revealing HLCT behavior",
+    "doi": "10.1016/j.jphotochem.2026.117130",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "B10-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117130",
+    "file": "10.1016_j.jphotochem.2026.117130_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-02-18",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "12 solvents from hexane to acetonitrile"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B10",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Steady-state and time-resolved photoluminescence studies reveal a tunable excited-state behavior that evolves systematically from local excited (LE) → hybridized local and charge transfer (HLCT) → charge-transfer (CT) character with increasing solvent polarity.",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "12 solvents, hexane to acetonitrile",
+    "kind": "observation",
+    "statement": "Emissive state changes from LE to HLCT to CT with polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B10",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In contrast, highly polar environments promote a CT-dominated state featuring markedly quenched fluorescence (ΦPL ~ 0.03), a large Stokes shift (~112 nm), broad emission (FWHM ~95 nm), and moderate intramolecular charge separation",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "highly polar solvents",
+    "kind": "observation",
+    "statement": "CT-dominated emission is weak and broad.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B10",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Lip pert–Mataga analysis indicates an increase in dipole-moment from 0.3 D (S0) to 12.3 D (S1), confirming CT contribution.",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "solvatochromism",
+    "kind": "observation",
+    "statement": "Excited-state dipole 12.3 D.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B10",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Consistent with HLCT behavior, the radiative rate (kr ≈ 0.8–1.3 × 108 s− 1) remains nearly constant across solvents, reflecting the pre served LE oscillator strength, whereas the non-radiative rate (knr) in creases by more than an order of magnitude in polar environments.",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "12 solvents, TRPL",
+    "kind": "observation",
+    "statement": "kr constant, knr up >10x: the Φ drop is a non-radiative effect while LE character keeps kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B10",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Biexponential decay analysis further reveals solvent-dependent LE/CT mixing",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "TRPL",
+    "kind": "observation",
+    "statement": "Two components report the LE/CT balance.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B10",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In low-to-medium polarity media, the molecule displays LE-dominant HLCT behavior with long lifetimes (τavg ≈ 4.0 ns), small Stokes shifts, and high radiative efficiency.",
+    "subject": "BDT-diISO",
+    "scope": "target",
+    "conditions": "low-to-medium polarity solvents",
+    "kind": "observation",
+    "statement": "LE-dominant HLCT emits efficiently.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Polarity drives the emissive state toward CT (Lippert-Mataga dipole 12.3 D), which quenches emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "The paper explains the emission efficiency by the LE/CT balance: kr stays constant through the preserved LE oscillator strength while knr rises >10x in polar solvents."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Polarity drives the emissive state toward CT (Lippert-Mataga dipole 12.3 D), which quenches emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "The paper explains the emission efficiency by the LE/CT balance: kr stays constant through the preserved LE oscillator strength while knr rises >10x in polar solvents."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Hot-exciton RISC of HLCT emitters is introduced from the literature only; no triplet measurement."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the paper parsed with OPSIN; route BDTOEHSn + dimethyl 5-bromoisophthalate",
+   "MALDI-TOF M+ and elemental analysis for C46H54O10S2"
+  ],
+  "used_si": false,
+  "note": "2-Ethylhexyl stereocentres unspecified, as in the paper.",
+  "formula": "C46H54O10S2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.jphotochem.2026.117130_SI_1_image3.png"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

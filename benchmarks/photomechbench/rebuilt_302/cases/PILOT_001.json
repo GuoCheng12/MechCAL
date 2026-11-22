@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_001",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC[n+]1c(/C=C/c2ccc(N3CCN(c4cccc(Cl)c4)CC3)cc2)sc2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "4a",
+  "source_documents": [
+   {
+    "source_id": "P01",
+    "title": "PET-Driven Fluorescence Modulation in Halochromic Styryl Hemicyanine Dyes Targeting DNA Minor Groove",
+    "doi": "10.3390/molecules30234607",
+    "pmcid": "PMC12693099",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2025-11-30",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "TE buffer, organic solvents"
+   },
+   {
+    "state": "bound",
+    "media": "dsDNA (minor groove)"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.2 Fluorescence",
+    "quote": "The fluorescence quenching is attributed to the PET effect from the nitrogen atoms of the piperazine substituent, as demonstrated by theoretical computations.",
+    "subject": "dyes 4a-4c",
+    "scope": "target",
+    "conditions": "TE buffer (pH 8), with and without dsDNA",
+    "kind": "author_interpretation",
+    "statement": "Weak intrinsic fluorescence is attributed to PET from the piperazine nitrogens.",
+    "limitations": "Mechanistic assignment by the authors, supported by orbital energies, not by a direct ET measurement."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.2 Fluorescence",
+    "quote": "The titration with hydrochloric acid enhances fluorescence of dyes in solution and their respective dye–DNA complexes, providing further evidence for the intramolecular PET effect.",
+    "subject": "dyes 4a-4c",
+    "scope": "target",
+    "conditions": "TE buffer titrated with HCl; dye-DNA complexes titrated with HCl",
+    "kind": "observation",
+    "statement": "Protonation (HCl) restores fluorescence of the free dyes and of their DNA complexes.",
+    "limitations": "Protonation also changes conjugation and geometry, so the recovery is not specific to PET alone."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.1 Absorption (DFT)",
+    "quote": "The lone pair orbitals of the amino groups in the receptor are of higher energies than those of the fluorophore, which is a precondition for a typical reductive photoinduced electron transfer process.",
+    "subject": "dye 4c",
+    "scope": "analog",
+    "conditions": "B3LYP/6-31+G(d,p), water (PCM)",
+    "kind": "computation",
+    "statement": "The receptor (piperazine) HOMO lies between the fluorophore HOMO-1 and LUMO, allowing reductive PET.",
+    "limitations": "Computed for 4c; 4a is assumed analogous."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.1 Absorption (DFT)",
+    "quote": "Hence, the HOMO-1 → LUMO transition is classified as an internal charge transfer (ICT) transition.",
+    "subject": "dye 4c",
+    "scope": "analog",
+    "conditions": "TD-DFT, water (PCM)",
+    "kind": "computation",
+    "statement": "The main absorption band is an ICT transition from the N-phenylpiperazine donor to the benzothiazolium acceptor.",
+    "limitations": "Concerns absorption; the paper does not attribute the emission behaviour to ICT."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.1 Absorption",
+    "quote": "All dyes exhibit negative solvatochromism when going from nonpolar to polar solvents (e.g., from toluene to DMSO).",
+    "subject": "dyes 4a-4c",
+    "scope": "target",
+    "conditions": "H2O, DMF, DMSO, EtOH, CH2Cl2, CHCl3, toluene",
+    "kind": "observation",
+    "statement": "Strong negative absorption solvatochromism, consistent with a charge-transfer transition.",
+    "limitations": "Absorption only."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "P01",
+    "pdf_page": null,
+    "location": "Results 2.2.1 Absorption",
+    "quote": "The dyes exhibit a single absorption band in the visible region, ruling out the possibility of aggregate formation under the experimental conditions.",
+    "subject": "dyes 4a-4c",
+    "scope": "target",
+    "conditions": "TE buffer, 2-40 µM",
+    "kind": "observation",
+    "statement": "No aggregation in buffer at the working concentrations.",
+    "limitations": "Toluene is an outlier that the authors tentatively attribute to stacking or H-aggregates; emission there is not analysed."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The absorption band is assigned as ICT with negative solvatochromism; not used to explain the emission switching."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Fluorescence quenching attributed to reductive PET from the piperazine donor; acid restores emission; orbital energetics support PET."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The absorption band is assigned as ICT with negative solvatochromism; not used to explain the emission switching."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair (no OH/NH adjacent to an acceptor).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Fluorescence quenching attributed to reductive PET from the piperazine donor; acid restores emission; orbital energetics support PET."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "The authors rule out aggregate formation in buffer under the experimental conditions.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "DNA binding together with protonation enhances emission; authors also mention rigidization",
+    "evidence_ids": [
+     "E02"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of the systematic name in Materials and Methods 3.1: (E)-2-(4-(4-(3-chlorophenyl)piperazin-1-yl)styryl)-3-ethylbenzo[d]thiazol-3-ium"
+  ],
+  "counterion": "iodide (omitted)",
+  "second_source": "visual check of the figure (MolScribe could not read it: R groups, abbreviated chains, boron complex or low-resolution image)",
+  "formula": "C27H27ClN3S+"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,198 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_184",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C=CCN1C[C@H](C(=O)N(CCCN(C)C)C(=O)NCC)C[C@@H]2c3cccc4[nH]cc(c34)C[C@H]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "cabergoline",
+  "source_documents": [
+   {
+    "source_id": "F04",
+    "title": "PET-modulated fluorescence enhancement of cabergoline: A DFT and time-resolved fluorescence guided analytical strategy",
+    "doi": "10.1016/j.talanta.2026.130399",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "F04-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.talanta.2026.130399",
+    "file": "10.1016_j.talanta.2026.130399_SI_1.doc",
+    "format": "DOC"
+   }
+  ],
+  "publication_date": "2026-08-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "aqueous acetonitrile without acid",
+   "with HCl (0.3 M final)",
+   "ex 280 nm, em 330 nm"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F04",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The fluorescence emission of CG is not strong in its native state due to a PET process originating from its electron-donating amine group.",
+    "subject": "cabergoline",
+    "scope": "target",
+    "conditions": "aqueous acetonitrile, ex 280 / em 330 nm",
+    "kind": "author_interpretation",
+    "statement": "Native cabergoline is weakly fluorescent because of PET from its amine.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F04",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This lifetime extension strongly supports suppression of the PET-mediated quenching process.",
+    "subject": "cabergoline vs acidified",
+    "scope": "target",
+    "conditions": "time-resolved fluorescence",
+    "kind": "observation",
+    "statement": "Average lifetime rises from 3.5 to 4.9 ns on acidification.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F04",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "While the reduced HOMO-LUMO energy gap suggests a change in the electronic excitation energy, the significant enhancement in fluorescence intensity is primarily attributed to the suppression of non-radiative decay pathways.",
+    "subject": "cabergoline vs protonated",
+    "scope": "target",
+    "conditions": "DFT + emission",
+    "kind": "author_interpretation",
+    "statement": "The intensity gain on protonation is assigned to removal of a nonradiative (PET) channel, not to the gap change.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F04",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "explains the inability of the protonated amine to donate electrons to the excited fluorophore, thereby suppressing the PET quenching pathway.",
+    "subject": "protonated cabergoline",
+    "scope": "target",
+    "conditions": "DFT ESP and Mulliken charges",
+    "kind": "computation",
+    "statement": "Protonation removes the electron density on both tertiary amine nitrogens.",
+    "limitations": "Ground-state charges only."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F04",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "partial protonation oc curs within this pH window, which likely precluded the full suppression of the PET effect originating from the lone pair electrons on the amine moieties.",
+    "subject": "cabergoline",
+    "scope": "target",
+    "conditions": "pH titration",
+    "kind": "author_interpretation",
+    "statement": "Tertiary amine pKa 6.05-6.42: full turn-on needs strong acid.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Paper's explanation of the weak native emission: PET from the tertiary amine lone pairs to the excited indole chromophore; acid turns it off. Support is a lifetime increase (3.5 to 4.9 ns) and ground-state DFT; no redox data or donor-free control."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Paper's explanation of the weak native emission: PET from the tertiary amine lone pairs to the excited indole chromophore; acid turns it off. Support is a lifetime increase (3.5 to 4.9 ns) and ground-state DFT; no redox data or donor-free control."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "Emission of the protonated (ammonium) form, in which PET is blocked (E02, E04)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": false,
+  "basis": [
+   "IUPAC name printed in the paper ((6aR,9R,10aR)-N-[3-(dimethylamino)propyl]-N-(ethylcarbamoyl)-7-prop-2-enyl-...-indolo[4,3-fg]quinoline-9-carboxamide), parsed with OPSIN",
+   "InChIKey KORNTPPJEAJQIU-KJXAQDMKSA-N (cabergoline)"
+  ],
+  "formula": "C26H37N5O2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

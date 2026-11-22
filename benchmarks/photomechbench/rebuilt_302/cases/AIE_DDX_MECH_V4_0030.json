@@ -1,0 +1,174 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0030",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "OB(O)c1ccc(C[n+]2ccc(-c3ccc(N(c4ccccc4)c4ccc(-c5cc[n+](Cc6ccc(B(O)O)cc6)cc5)cc4)cc3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPA-PPA-2",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c7tb02399e",
+    "title": "Aggregation-Induced Emission (AIE)-Active Fluorescent Probes with Multi-Binding Sites toward ATP Sensing and the Live Cell Imaging",
+    "doi": "10.1039/c7tb02399e",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "bbe8da1665d66ac802ccfdec4e9d7488c246c0768a47ca7e9fb7fa2631f83774"
+   }
+  ],
+  "publication_date": "2017-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "water with 2% DMSO",
+   "organic solvents",
+   "HepG-2 cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c7tb02399e",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "It was also well know that AIE-active materials are sensitive to the changes of environmental viscosity, which is reasonably due to the restriction of intramolecular rotations (RIR), blocking the non-radiative pathway and opening up the 22 radiative channel.",
+    "subject": "TPA-PP series",
+    "scope": "analog",
+    "conditions": "aqueous media, ATP binding",
+    "kind": "author_interpretation",
+    "statement": "AIE and ATP turn-on attributed to RIR.",
+    "limitations": "Argued for the series and TPA-PPA-3; no viscosity test for TPA-PPA-2."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c7tb02399e",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The emission study of probes in different solvents indicated that the fluorescence property is greatly affected by the solvent polarity, which is probably due to the intramolecular 18 charge transfer (ICT) property.",
+    "subject": "TPA-PP series",
+    "scope": "target",
+    "conditions": "solvents",
+    "kind": "observation",
+    "statement": "Solvent-dependent emission assigned to ICT.",
+    "limitations": "Hedged ('probably')."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c7tb02399e",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "which indicates that probes have obvious intramolecular charge transfer (ICT) tendency.",
+    "subject": "TPA-PP series",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "HOMO on TPA, LUMO on pyridinium.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The paper attributes the AIE/turn-on of its triphenylamine probes to restricted intramolecular rotation. Weak: a general argument, not tested for TPA-PPA-2."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Solvatochromic emission and separated frontier orbitals indicate ICT."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The paper attributes the AIE/turn-on of its triphenylamine probes to restricted intramolecular rotation. Weak: a general argument, not tested for TPA-PPA-2."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Solvatochromic emission and separated frontier orbitals indicate ICT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "aggregation in water; binding to ATP"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure: Scheme 1, two para-B(OH)2 benzyl pyridinium arms",
+   "reagent: 4-bromomethylphenylboronic acid"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

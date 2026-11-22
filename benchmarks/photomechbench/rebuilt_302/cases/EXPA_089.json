@@ -1,0 +1,313 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_089",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCC(CC)Cn1c(C(=O)OCC)cc2c3c4nc5cc6c(cc5nc4c4c5cc(C(=O)OCC)n(CC(CC)CCCC)c5sc4c3sc21)C1c2cc3nc4c(nc3cc2C6c2cc3nc5c(nc3cc21)c1c2cc(C(=O)OCC)n(CC(CC)CCCC)c2sc1c1sc2c(cc(C(=O)OCC)n2CC(CC)CCCC)c51)c1c2cc(C(=O)OCC)n(CC(CC)CCCC)c2sc1c1sc2c(cc(C(=O)OCC)n2CC(CC)CCCC)c41"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3F (three fins)",
+  "source_documents": [
+   {
+    "source_id": "B06",
+    "title": "Homoconjugation-induced enhancements of photophysical properties in donor–acceptor triptycenes arise from interplay between intramolecular charge transfer and exciton states",
+    "doi": "10.1039/d6sc01073c",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B06-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6sc01073c",
+    "file": "10.1039_d6sc01073c_SI_1.pdf",
+    "format": "PDF"
+   },
+   {
+    "source_id": "B06-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6sc01073c",
+    "file": "10.1039_d6sc01073c_SI_2.cif",
+    "format": "CIF"
+   }
+  ],
+  "publication_date": "2026-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "CH2Cl2 (absorption)",
+   "solvents of different polarity",
+   "degassed toluene (time-resolved)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B06",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "We can therefore conclude that the S1 / S0 transition and the longest wavelength absorbance are of ICT character.",
+    "subject": "0F-3F",
+    "scope": "target",
+    "conditions": "solvents of different polarity",
+    "kind": "observation",
+    "statement": "Positive solvatochromism of the emission: S1 is an ICT state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B06",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "that nICT pertains to the singlet S1 / S0 transition from the donor ladder-region(s) into the acceptor phenazine(s).",
+    "subject": "0F-3F",
+    "scope": "target",
+    "conditions": "LR-TDDFT (tuned LC-BLYP)",
+    "kind": "computation",
+    "statement": "S1 is ladder-donor to phenazine-acceptor CT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B06",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "The experimental and calculated values for MMID are in excellent agreement while those for MICT are not.",
+    "subject": "1F-3F",
+    "scope": "target",
+    "conditions": "CH2Cl2",
+    "kind": "observation",
+    "statement": "The mid-spectrum transition dipole scales with the square root of the number of fins, as an exciton model predicts; the ICT band does not.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B06",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "suggests that exciton interactions are only occurring upon population of the higher excited states represented by nMID.",
+    "subject": "1F-3F",
+    "scope": "target",
+    "conditions": "CH2Cl2",
+    "kind": "author_interpretation",
+    "statement": "Exciton coupling between fins is confined to the higher (mid-spectrum) states.",
+    "limitations": "Absorption-based; emission is from the ICT state."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B06",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Examining the peak intensities, 3MID more than doubles moving from 1F",
+    "subject": "1F vs 2F vs 3F",
+    "scope": "target",
+    "conditions": "CH2Cl2",
+    "kind": "observation",
+    "statement": "Mid-spectrum absorptivity grows 45 → 94 → 128 x 10^3 M-1 cm-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Overall, these observations demonstrate generality to the exciton model proposed for a trefoil system, which agrees very well with the nMID region for 1F–3F.",
+    "subject": "1F-3F",
+    "scope": "target",
+    "conditions": "CH2Cl2",
+    "kind": "author_interpretation",
+    "statement": "Trefoil exciton model fits.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "most notably for the largest molecule 3F with a value of 86 ± 12% which is comparable with some of the most strongly emitting superradiant J-aggregates.",
+    "subject": "3F",
+    "scope": "target",
+    "conditions": "degassed toluene",
+    "kind": "observation",
+    "statement": "Φf 66-86% across the series, highest for 3F.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "effectively throttled by the kr of the ICT state.",
+    "subject": "1F-3F",
+    "scope": "target",
+    "conditions": "toluene, TCSPC",
+    "kind": "author_interpretation",
+    "statement": "Emission rate is set by the ICT kr (3-5 x 10^7 s-1), not by the exciton manifold; lifetimes lengthen from 1F to 3F.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "B06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "is well-shielded from the external solution thereby circumventing intermolecular loss pathways.",
+    "subject": "3F",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "The trefoil core shields 3F from solvent, lowering knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "B06",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "are monoexponential, which is characteristic of triplet excitons on these timescales.",
+    "subject": "0F-3F",
+    "scope": "target",
+    "conditions": "toluene, µs transient absorption, reversible O2 quenching",
+    "kind": "observation",
+    "statement": "Long-lived triplets are formed.",
+    "limitations": "Triplet yield not quantified; ps-TA blocked by emission."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Emission from the ICT state."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Exciton coupling between the covalently linked fins through the homoconjugated triptycene (guideline §3.6); evidence is the √N scaling of the mid-spectrum transition dipole. It concerns absorption; emission stays ICT."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Highest Φf (86%) with ICT-limited kr and a slower knr."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Long-lived triplet excitons by µs-TA with O2 quenching."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Emission from the ICT state."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Exciton coupling between the covalently linked fins through the homoconjugated triptycene (guideline §3.6); evidence is the √N scaling of the mid-spectrum transition dipole. It concerns absorption; emission stays ICT."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "Highest Φf (86%) with ICT-limited kr and a slower knr."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E10"
+    ],
+    "rationale": "Long-lived triplet excitons by µs-TA with O2 quenching."
+   }
+  ],
+  "environment_context": [
+   "the trefoil core shields 3F from the solvent (lower knr)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B06-CG1",
+   "varied_factor": "number of donor-acceptor fins on the triptycene (1, 2, 3)",
+   "paper_difference": "Same ICT emission; mid-spectrum absorption grows by homoconjugation-mediated exciton coupling between fins; 3F is the brightest (Φf 86%)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SMILES assembled from the route: thieno[2,3-b]pyrrole (Hemetsberger) → N-2-ethylhexyl → C2 borylation → 2,2′ homocoupling → oxalyl-chloride o-quinone 6 → condensation with the amino-triptycene",
+   "HRMS of intermediates 3-6 and of the product match",
+   "fin regiochemistry: MolDetect+MolScribe structure of 0F (SI p21) is identical to the route-built 0F",
+   "HRMS [M+H]+ C128H147N12O12S6 matches"
+  ],
+  "note": "2-Ethylhexyl stereocentres unspecified.",
+  "formula": "C128H146N12O12S6",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.81)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

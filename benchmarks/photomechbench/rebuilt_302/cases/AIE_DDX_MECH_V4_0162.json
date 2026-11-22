@@ -1,0 +1,192 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0162",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(C(=C(c2ccccc2)c2ccc(C(C)=C(C#N)C#N)cc2)c2ccc(OC)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPDC",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c5sc01733e",
+    "title": "Tuning the singlet-triplet energy gap: a unique approach to efficient photosensitizers with aggregation-induced emission (AIE) characteristics",
+    "doi": "10.1039/c5sc01733e",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "e3cb557a3d322f1483d261020303b57f5be6954eb2474e1e43da05cc001cad52"
+   }
+  ],
+  "publication_date": "2015-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMSO",
+   "DMSO/water nanoaggregates",
+   "TAT nanoparticles",
+   "HeLa cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1039_c5sc01733e",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "A detailed study revealed that PPDC exhibited the highest singlet oxygen efficiency (0.89) as nanoaggregates, while TPDC exhibited the lowest efficiency (0.28), inversely correlated with their DEST values.",
+    "subject": "TPDC, TPPDC, PPDC",
+    "scope": "analog",
+    "conditions": "nanoaggregates",
+    "kind": "observation",
+    "statement": "1O2 yield rises as ΔEST falls.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1039_c5sc01733e",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the DEST values of TPDC, TPPDC and PPDC are 0.48, 0.35 and 0.27 eV, respectively",
+    "subject": "TPDC, TPPDC, PPDC",
+    "scope": "analog",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "ΔEST 0.48 / 0.35 / 0.27 eV.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S3",
+    "source_id": "10.1039_c5sc01733e",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "small DEST values can be realized via intramolecular charge transfer within molecular systems containing spatially separated donor and acceptor moieties",
+    "subject": "series",
+    "scope": "analog",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "D-A charge separation lowers ΔEST.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S4",
+    "source_id": "10.1039_c5sc01733e",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "PPDC, TPPDC and TPDC were calculated to be 0.89, 0.32 and 0.28, respectively",
+    "subject": "series",
+    "scope": "analog",
+    "conditions": "ABDA assay",
+    "kind": "observation",
+    "statement": "Singlet-oxygen quantum yields.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "S3"
+    ],
+    "rationale": "D-A charge separation is the design route to a small ΔEST."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "S4"
+    ],
+    "rationale": "TPDC: ISC efficiency set by ΔEST controls triplet-sensitised 1O2 generation (measured)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "AIE is shown but no motion-based explanation is given."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "S3"
+    ],
+    "rationale": "D-A charge separation is the design route to a small ΔEST."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "S4"
+    ],
+    "rationale": "TPDC: ISC efficiency set by ΔEST controls triplet-sensitised 1O2 generation (measured)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0161-CG1",
+   "varied_factor": "conjugation between TPE donor and dicyanovinyl acceptor (TPDC, TPPDC, PPDC)",
+   "paper_difference": "ΔEST 0.48 → 0.27 eV raises 1O2 yield 0.28 → 0.89."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

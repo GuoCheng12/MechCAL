@@ -1,0 +1,201 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0020",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(C(F)(F)F)cc1-c1nc2sc(-c3cc(C(F)(F)F)ccc3O)nc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CF3-HTTH",
+  "source_documents": [
+   {
+    "source_id": "10.1038_s42004-019-0113-8",
+    "title": "Mechanochromism induced through the interplay between excimer reaction and excited state intramolecular proton transfer",
+    "doi": "10.1038/s42004-019-0113-8",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "5fb2ebb6ebb36ed46146448c25a97b1dfaed2e1a3e2343cdd91a26e9f9ac3e4e"
+   }
+  ],
+  "publication_date": "2019-01-28",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "crystal",
+   "thin film",
+   "PMMA",
+   "solution"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1038_s42004-019-0113-8",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Here we show the interplay between ESIPT and excimer formation in CF3-HTTH (2,2′-(thiazolo[5,4-d]thiazole-2,5-diyl)bis(4-(trifluoromethyl)phenol) solid crystal, resulting in the extensively broad multiple emissions spanning from 420 to 750 nm.",
+    "subject": "CF3-HTTH",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "observation",
+    "statement": "ESIPT coupled with excimer formation gives triple emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1038_s42004-019-0113-8",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "unveil the pre-equilibrium ESIPT between the normal (N*) and tautomer (T*) form, for which the slow population decay and well-ordered lattice packing facilitate excimeric (E*) formation, rendering N* (460 nm), T* (520 nm) and E* (600 nm) triple emissions.",
+    "subject": "CF3-HTTH",
+    "scope": "target",
+    "conditions": "crystal kernel, time-resolved",
+    "kind": "observation",
+    "statement": "N*/T* equilibrium plus excimer E*.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1038_s42004-019-0113-8",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In contrast, the lower degree of packing on the solid surface prohibits excimer formation, showing only the ESIPT process.",
+    "subject": "CF3-HTTH",
+    "scope": "target",
+    "conditions": "crystal surface, film",
+    "kind": "observation",
+    "statement": "Without ordered packing only ESIPT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1038_s42004-019-0113-8",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This viewpoint is supported by the disappearance of tautomer 520 nm emission in sol",
+    "subject": "CF3-MTTM (no OH)",
+    "scope": "analog",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "Tautomer emission vanishes without the proton donor.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Pre-equilibrium ESIPT between N* and T* in the crystal."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Ordered packing in the crystal kernel enables excimer emission at 600 nm; lost on the surface and in films."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Pre-equilibrium ESIPT between N* and T* in the crystal."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Ordered packing in the crystal kernel enables excimer emission at 600 nm; lost on the surface and in films."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The earlier secondary label has no rate-based argument in the text; not labelled."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "crystal kernel vs surface; vapour-deposited film; PMMA"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "Oc1cc(C(F)(F)F)ccc1-c1nc2sc(-c3ccc(C(F)(F)F)cc3O)nc2s1",
+  "problem": "wrong substitution pattern (CF3 para to the ring junction instead of para to OH)",
+  "old_formula": "C18H8F6N2O2S2",
+  "new_formula": "C18H8F6N2O2S2",
+  "basis": "OPSIN parse of the paper's systematic name (identical InChIKey)",
+  "evidence": [
+   "name: 2,2'-(thiazolo[5,4-d]thiazole-2,5-diyl)bis(4-(trifluoromethyl)phenol): CF3 para to OH",
+   "figure 1a: CF3 para to OH, meta to the ring junction",
+   "sister compound name CF3-MTTH: 2-methoxy-5-(trifluoromethyl)phenyl, same pattern"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ESIPT_PT",
+   "AGGREGATE_EXCITON_EXCIMER"
+  ]
+ }
+}

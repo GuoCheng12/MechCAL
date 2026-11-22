@@ -1,0 +1,241 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0018",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCN(CC)c1ccc(/C=N/C(C#N)=C(/N)C#N)c(O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "compound 1",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "title": "Rational design of a red-emissive fluorophore with AIE and ESIPT characteristics and its application in light-up sensing of esterase",
+    "doi": "10.1021/acs.analchem.6b04974",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "1f955fdb89fc68b190e9237ce6cb27d9b1e2fc1038d64360fb39d0a88fc1b3bc"
+   }
+  ],
+  "publication_date": "2017-02-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMSO",
+   "DMSO/water mixtures",
+   "solid",
+   "crystals",
+   "HeLa cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "compound 1 emits bright red fluorescence (λem = 650 nm, ΦF = 24.3%) in the solid state with a large Stokes shift of 174 nm.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "Bright red solid emission, 174 nm Stokes shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "while the hydroxyl groups are responsible for ESIPT and essential for their AIE characteristics in aggregate and solid states.",
+    "subject": "salicyladazine AIEgens",
+    "scope": "analog",
+    "conditions": "earlier work",
+    "kind": "author_interpretation",
+    "statement": "ESIPT from the hydroxyl group, carried over from the authors' earlier work.",
+    "limitations": "From previous work; no enol/keto analysis for 1 in this paper."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "resulting in 1 with ESIPT and strong fluorescence in the aggregate states.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "aggregates",
+    "kind": "author_interpretation",
+    "statement": "ESIPT assigned to 1.",
+    "limitations": "Asserted."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The difference in the crystal structures of 1, 2 and 3 reveals that the interplanar spacing among molecules plays a decisive role in realizing the AIE characteristics of 1.",
+    "subject": "1 vs 2, 3",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "Interplanar spacing decides AIE vs ACQ.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The distance between the central benzene planes of adjacent molecules is 4.01 Å, which is greater than 3.80 Å and could impede intermolecular π-π interactions",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "observation",
+    "statement": "J-aggregates with 4.01 Å spacing avoid π-π quenching.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "confirming that ICT has little contribution to the red-shifted emission of 1.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Little solvatochromism: ICT excluded as origin of the red shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1021_acs.analchem.6b04974",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "is resulted from the non-radiative decay of excited electrons due to frequent intermolecular collision",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "good solvent",
+    "kind": "author_interpretation",
+    "statement": "Short solution lifetime (0.2 ns) from intermolecular collisions.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ESIPT is a design element and title claim. Weak: rests on the hydroxyl group, the large Stokes shift and the authors' earlier work; no enol/keto data here."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "AIE vs ACQ is decided by intermolecular interplanar spacing: J-aggregates of 1 at 4.01 Å avoid π-π quenching, closer packing of 2 and 3 quenches."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The short solution lifetime is ascribed to intermolecular collisions (E07), not to a restricted intramolecular motion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Little solvatochromism; the paper concludes ICT contributes little to the red emission.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ESIPT is a design element and title claim. Weak: rests on the hydroxyl group, the large Stokes shift and the authors' earlier work; no enol/keto data here."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "AIE vs ACQ is decided by intermolecular interplanar spacing: J-aggregates of 1 at 4.01 Å avoid π-π quenching, closer packing of 2 and 3 quenches."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "J-aggregate crystal packing with 4.01 Å interplanar spacing"
+  ],
+  "out_of_pool": [
+   "esterase cleavage of probe 4 releases 1 (reaction-based probe)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCN(CC)c1ccc(/C=N/N=C/C(C#N)=C(/N)C#N)c(O)c1",
+  "problem": "azine with an extra N=C instead of the Schiff base",
+  "old_formula": "C16H18N6O",
+  "new_formula": "C15H17N5O",
+  "basis": "synthesis (aldehyde + diaminomaleonitrile 1:1), MS C15H17N5NaO [M+Na]+; MolScribe reading of the labelled structure = proposed",
+  "evidence": [
+   "synthesis (aldehyde + diaminomaleonitrile 1:1), MS C15H17N5NaO [M+Na]+; MolScribe reading of the labelled structure = proposed"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "AGGREGATE raised from secondary to co_primary: the abstract names interplanar spacing as the decisive factor.",
+  "previous_primary": [
+   "ESIPT_PT"
+  ]
+ }
+}

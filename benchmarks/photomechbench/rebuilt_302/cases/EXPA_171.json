@@ -1,0 +1,255 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_171",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc2oc(=O)c(C(=O)c3ccccc3)cc2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BC6 (3-benzoyl-6-methoxycoumarin)",
+  "source_documents": [
+   {
+    "source_id": "D14",
+    "title": "The Dark State, Vibronic Coupling, and Viscosity Sensing of Methoxylated Benzoyl Coumarins",
+    "doi": "10.1002/cphc.202500182",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D14-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/cphc.202500182",
+    "file": "10.1002_cphc.202500182_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-05-26",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene, THF, ACN, water, PBS",
+   "water/glycerin (viscosity)",
+   "77 K glass",
+   "solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D14",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "However, the observed fluorescence quenching is better ascribed to the presence of a dark charge transfer (1CT) state.",
+    "subject": "BC8, BC6",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Quenching comes from a dark CT state, not from TICT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "These computational analyses confirmed the presence of a dark CT (1CT) state with a small energy gap to emissive hybridized local and charge-transfer (1HLCT) state by both TD-DFT and ADC(2) methods.",
+    "subject": "BC8, BC6",
+    "scope": "target",
+    "conditions": "TD-DFT, ADC(2)",
+    "kind": "computation",
+    "statement": "Dark 1CT lies close to the emissive 1HLCT state.",
+    "limitations": "Computation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Under high-viscosity conditions, the restriction of 1HLCT ! 1CT transition and configurational conversion effectively suppresses nonradiative decay, thereby leading to enhanced FL emission.",
+    "subject": "BC8, BC6",
+    "scope": "target",
+    "conditions": "water/glycerin",
+    "kind": "author_interpretation",
+    "statement": "Viscosity blocks the HLCT-to-CT conversion and turns emission on.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D14",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The oscillator strengths of AC8 and BC8 (≈0.03) are smaller than those of BC6 and AC6 (0.12–0.13), which agrees with the lower FL emission QY of 8-methoxyl coumarins as compared to 6-methoxyl coumarins in ACN.",
+    "subject": "BC8 vs BC6",
+    "scope": "target",
+    "conditions": "ACN; TD-DFT",
+    "kind": "computation",
+    "statement": "The 8-methoxy isomers have a weaker S1 transition and lower QY.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D14",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The computed FL QY for the studied compounds is found to range from 14.5 to 16.7% (Table 4), corroborating the observed",
+    "subject": "AC/BC series",
+    "scope": "target",
+    "conditions": "77 K, computed kfl and kIC",
+    "kind": "computation",
+    "statement": "Computed kfl/kIC reproduce the low-temperature QY.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D14",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "To date, the mechanism of viscosity sensing has predominantly been attributed to a twisted intramolecular charge transfer effect.",
+    "subject": "viscosity probes",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "The paper sets its dark-CT account against the usual TICT account.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D14",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The 6-methoxyl coumarin contains heightened emission as compared to its 8-methoxyl counterparts in solvents.",
+    "subject": "6- vs 8-methoxy",
+    "scope": "target",
+    "conditions": "ACN, water, PBS",
+    "kind": "observation",
+    "statement": "e.g. BC8 0.29% vs higher QY for the 6-isomers in ACN (Table 1).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Viscosity restricts the HLCT-to-CT configurational conversion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "The quenching state is a (non-twisted) dark CT state and the emitter is an HLCT state; the paper argues against TICT."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Emission is controlled by a dark 1CT state close to the emissive 1HLCT state; oscillator strength and computed kfl/kIC explain the QY differences."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Viscosity restricts the HLCT-to-CT configurational conversion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "The quenching state is a (non-twisted) dark CT state and the emitter is an HLCT state; the paper argues against TICT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "Emission is controlled by a dark 1CT state close to the emissive 1HLCT state; oscillator strength and computed kfl/kIC explain the QY differences."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "D14-CG1",
+   "varied_factor": "methoxy position on the 3-benzoyl coumarin (8 vs 6)",
+   "paper_difference": "The 8-methoxy isomer has a weak S1 transition (f about 0.03 vs 0.12) and lower QY; both are viscosity-sensitive through the dark 1CT state."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: 5-methoxysalicylaldehyde + ethyl benzoylacetate (Knoevenagel/lactonisation, main text p2)",
+   "name in the paper: 8/6-methoxylated 3-benzoyl coumarin"
+  ],
+  "used_si": false,
+  "formula": "C17H12O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.67)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

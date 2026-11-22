@@ -1,0 +1,182 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_108",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(-c2cc3ccccc3[nH]2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2-phenylindole (2PI)",
+  "source_documents": [
+   {
+    "source_id": "C12",
+    "title": "Room temperature phosphorescence of 2-phenylindole. Singlet-triplet absorption and phosphorescence quantum yield – complete resolution of Jablonski diagram",
+    "doi": "10.1016/j.saa.2026.129073",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C12-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.saa.2026.129073",
+    "file": "10.1016_j.saa.2026.129073_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-10-31",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "matrix: PVA film/4-mm block",
+   "solution (reference spectra)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C12",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Direct absorption of the triplet state explains efficient phosphorescence seen in the conducted experiment.",
+    "subject": "2-phenylindole",
+    "scope": "target",
+    "conditions": "PVA film, 405 nm excitation",
+    "kind": "author_interpretation",
+    "statement": "Direct S0→T1 absorption populates T1 and gives efficient phosphorescence.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C12",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The excitation at 405 nm results in a pure phosphorescence emission with a mean lifetime of 1.29 ms, see Fig. SM9 and [4].",
+    "subject": "2-phenylindole",
+    "scope": "target",
+    "conditions": "4-mm PVA block, room temperature",
+    "kind": "observation",
+    "statement": "Pure RTP with a 1.29 ms mean lifetime.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C12",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The emission efficiency (quantum yield) of the triplet state is 0.35, estimated by comparison with the fluorescence of coumarin 152 in acetonitrile.",
+    "subject": "2-phenylindole",
+    "scope": "target",
+    "conditions": "PVA film",
+    "kind": "observation",
+    "statement": "Phosphorescence quantum yield 0.35 (fluorescence 0.36).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C12",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In rigid systems such as polymer films, where molecular motion is strongly restricted, fluorescence anisotropy reveals the relative orientation of the fluorescence and phosphorescence tran sition moments.",
+    "subject": "2-phenylindole",
+    "scope": "target",
+    "conditions": "PVA film",
+    "kind": "observation",
+    "statement": "The rigid film fixes the molecules (used for anisotropy).",
+    "limitations": "Background statement; not a mechanism claim."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "RTP in PVA (1.29 ms, Φ 0.35) after direct singlet-triplet absorption; the paper resolves the full singlet/triplet scheme."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The indole NH has no intramolecular proton acceptor.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "RTP in PVA (1.29 ms, Φ 0.35) after direct singlet-triplet absorption; the paper resolves the full singlet/triplet scheme."
+   }
+  ],
+  "environment_context": [
+   "rigid PVA matrix (E04)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "title compound 2-phenylindole",
+   "OPSIN of 2-phenyl-1H-indole"
+  ],
+  "used_si": false,
+  "formula": "C14H11N",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.03)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

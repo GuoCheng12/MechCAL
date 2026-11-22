@@ -1,0 +1,266 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_146",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc(S(=O)c2cc(S(=O)c3ccc(C)cc3)c3ccc4cc(C(C)(C)C)cc5ccc2c3c54)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DSO (sulfoxide)",
+  "source_documents": [
+   {
+    "source_id": "C31",
+    "title": "Oxidation-state-controlled switching between AIE and ACQ in pyrene luminophores",
+    "doi": "10.1039/d6cc02787c",
+    "format": "PDF",
+    "pages": 4,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C31-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6cc02787c",
+    "file": "10.1039_d6cc02787c_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-06-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: DCM and other solvents",
+   "aggregate: THF/water",
+   "solid: crystals and polymorphs"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C31",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The flexible sulphide exhibits weak emission, partial conformational locking in the sulfoxide enables strong AIE through suppression of nonradiative decay, whereas the rigid sulfone undergoes aggregationcaused quenching (ACQ).",
+    "subject": "DS, DSO, DSO2",
+    "scope": "target",
+    "conditions": "THF/water, solid",
+    "kind": "author_interpretation",
+    "statement": "Oxidation state switches between weak emission, AIE and ACQ.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C31",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "These results reveal that AIE arises from a delicate interplay between conformational restriction and excitedstate nature, extending beyond conventional restriction of intramolecular rotation mechanisms.",
+    "subject": "DS, DSO, DSO2",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "AIE depends on both conformational restriction and excited-state character.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C31",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Despite similar emission energies, the quantum yields (FF) increase from DS (0.13) and DSO (0.23) to DSO2 (0.53), indicating suppression of non-radiative decay in the fully oxidized system (Table S1).",
+    "subject": "DS, DSO, DSO2",
+    "scope": "target",
+    "conditions": "dilute DCM",
+    "kind": "observation",
+    "statement": "Solution Φ 0.13 / 0.23 / 0.53.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C31",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Consistently, DSO2 displays the most pronounced red-shift, indicative of strengthened intramolecular charge transfer (ICT) arising from enhanced donor–acceptor character.",
+    "subject": "DSO2",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "The sulfone has the strongest ICT character.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C31",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The flexible and packing-sensitive DS system undergoes only modest emission enhancement due to persistent non-radiative pathways, whereas the partially rigidified DSO achieves an optimal balance between conformational restriction and excited-state stabilization, leading to pronounced AIE.",
+    "subject": "DS vs DSO",
+    "scope": "target",
+    "conditions": "THF/water, crystals",
+    "kind": "author_interpretation",
+    "statement": "Flexible DS keeps nonradiative channels; partly locked DSO shows strong AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C31",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Upon oxidation, conformational freedom is progressively reduced, enforcing an orthogonal orientation of the phenyl ring relative to the pyrene core (Fig. 4d and e).",
+    "subject": "DSO, DSO2",
+    "scope": "target",
+    "conditions": "single crystals",
+    "kind": "observation",
+    "statement": "Oxidation locks the tolyl rings orthogonal to pyrene.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C31",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Notably, the enhanced PLQY of DSg originates primarily from suppression of the knr, while the kr rates remain comparatively similar across the polymorphs.",
+    "subject": "DS polymorphs",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "The brightest DS polymorph differs by knr, not kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C31",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "leading to a highly rigid and electronically decoupled arrangement (Fig. 5c)",
+    "subject": "DSO2",
+    "scope": "target",
+    "conditions": "single crystal",
+    "kind": "observation",
+    "statement": "Tight but electronically decoupled packing.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C31",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "adopts a highly rigid and tightly packed structure that promotes non-radiative deactivation, resulting in aggregation-caused quenching",
+    "subject": "DSO2",
+    "scope": "target",
+    "conditions": "aggregates/solid",
+    "kind": "author_interpretation",
+    "statement": "Tight packing quenches the sulfone in the solid.",
+    "limitations": "No intermolecular electronic coupling identified (packing called decoupled)."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Strong AIE through partial conformational locking (orthogonal tolyl rings) that suppresses nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "The paper adds excited-state stabilisation from oxidation as the second ingredient of the AIE."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Strong AIE through partial conformational locking (orthogonal tolyl rings) that suppresses nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E05"
+    ],
+    "rationale": "The paper adds excited-state stabilisation from oxidation as the second ingredient of the AIE."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C31-CG1",
+   "varied_factor": "oxidation state of the two sulphur linkers (sulphide vs sulfoxide)",
+   "paper_difference": "The flexible sulphide shows only modest aggregation enhancement; the sulfoxide, with tolyl rings locked orthogonal, shows strong AIE."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "m-CPBA oxidation product of DS (main text, SI)",
+   "OPSIN of 7-tert-butyl-1,3-bis[(4-methylphenyl)sulfinyl]pyrene",
+   "SI HRMS [M+H]+ C34H31S2O2 matches C34H30O2S2",
+   "single-crystal structure"
+  ],
+  "used_si": true,
+  "note": "Sulfoxide configurations not specified; the SI NMR suggests a diastereomer mixture.",
+  "formula": "C34H30O2S2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d6cc02787c_SI_1.pdf p26, 10.1039_d6cc02787c_SI_1.pdf p27"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

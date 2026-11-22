@@ -1,0 +1,251 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_199",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1(C)C2Oc3c(cc4c5c3CCCN5CCC4)C=C2C(c2ccccc2)=C2C=c3cc4c5c(c3OC21)CCC[N+]=5CCC4"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BM3 (julolidine ring-fused bis-chromenylium NIR-II dye)",
+  "source_documents": [
+   {
+    "source_id": "F20",
+    "title": "Bright, Robust and Readily Accessible Fluorophore Family for NIR-II Bioimaging",
+    "doi": "10.1021/jacs.5c15490",
+    "format": "PDF",
+    "pages": 17,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F20-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/jacs.5c15490",
+    "file": "10.1021_jacs.5c15490_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-10-15",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "CH2Cl2",
+   "CHCl3",
+   "DMSO",
+   "methanol",
+   "PBS",
+   "PBS + Tween 80"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F20",
+    "pdf_page": 13,
+    "location": null,
+    "quote": "DFT analysis reveals that the high extinction coefficients arise from enhanced oscillator strength and reduced fwhm, while the superior quantum yields result from low electron−phonon coupling strength and minimal nonradiative decays.",
+    "subject": "BM3",
+    "scope": "target",
+    "conditions": "DFT/TDDFT vs ECXb",
+    "kind": "author_interpretation",
+    "statement": "Brightness explained by a large S0-S1 oscillator strength and weak electron-phonon coupling.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F20",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Our calculations reveal that ECXb exhibits a significantly higher HR factor of 6.39 at 7.83 cm−1, approximately six times greater than that of BM3. This elevated HR factor in ECXb is primarily attributed to the rotational freedom of the xanthene bridge. In contrast, the incorporation of the oxygen-bridging atoms in BM3 effectively restricts this rotational motion, thereby reducing HR factors and nonradiative decay.",
+    "subject": "BM3 vs ECXb",
+    "scope": "target",
+    "conditions": "S1 Huang-Rhys factors, vacuum",
+    "kind": "computation",
+    "statement": "Low-frequency Huang-Rhys factors are about six times smaller in BM3; the oxygen bridges restrict a rotation present in the benchmark dye.",
+    "limitations": "Computed for the benchmark comparison only."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F20",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Both the enhanced oscillator strength f and the reduced fwhm contribute to the improved εmax of BM3.",
+    "subject": "BM3",
+    "scope": "target",
+    "conditions": "TDDFT + CH2Cl2 spectra",
+    "kind": "computation",
+    "statement": "Larger f and narrower band than ECXb.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F20",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This consistent Stokes shift indicates minimal structural reorganization between the ground and excited states, reflecting low reorganization energy and a relatively rigid molecular framework.",
+    "subject": "BM1-BM3",
+    "scope": "target",
+    "conditions": "several solvents",
+    "kind": "observation",
+    "statement": "Stokes shift about 30 nm in all solvents.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F20",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "BM3, however, presents a striking contrast: its large, rigid, planar structure drives pronounced Haggregation, severely compromising its solubility.",
+    "subject": "BM3",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "In PBS the absorption maximum moves from 896 to 733 nm (H-aggregate).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F20",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "BM3, however, displays a markedly different behavior: severe aggregation in PBS drastically quenches its emission (Figures 3g and S5d). Strikingly, upon introducing Tween 80, the fluorescence intensity of BM3 in PBS surges nearly 10-fold, reaching brightness levels comparable to that in methanol.",
+    "subject": "BM3",
+    "scope": "target",
+    "conditions": "PBS vs PBS + Tween 80",
+    "kind": "observation",
+    "statement": "Aggregation quenches emission; surfactant restores the monomer and about 10-fold intensity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F20",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Furthermore, BM3, featuring cyclic amino groups as terminal substituents, demonstrates superior optical properties relative to BM1 and BM2, including red-shifted absorption/ emission and higher molar absorptivity and quantum yield, attributable to enhanced electron-donating capacity and conformational restraint.",
+    "subject": "BM3 vs BM1, BM2",
+    "scope": "target",
+    "conditions": "CH2Cl2 and other solvents",
+    "kind": "author_interpretation",
+    "statement": "The julolidine end groups give higher yield than dimethyl/diethyl amino analogues.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The small Huang-Rhys factors are traced to the oxygen bridges restricting a rotation that is free in the benchmark dye (computed comparison)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "H-aggregation in PBS quenches emission; Tween 80 restores the monomer."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The paper explains the high brightness by a large oscillator strength and weak electron-phonon coupling (small Huang-Rhys factors, small Stokes shift) that keep nonradiative decay low."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The small Huang-Rhys factors are traced to the oxygen bridges restricting a rotation that is free in the benchmark dye (computed comparison)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "TICT is discussed only for a rejected design (D1), not for BM3."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "H-aggregation in PBS quenches emission; Tween 80 restores the monomer."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The paper explains the high brightness by a large oscillator strength and weak electron-phonon coupling (small Huang-Rhys factors, small Stokes shift) that keep nonradiative decay low."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "main Figure 2c-d route and structure: two 8-hydroxyjulolidine-9-carbaldehydes + 4,4-dimethylcyclohexadienone (piperidine/HOAc), then PhLi and acid",
+   "SI HRMS [M+] found 581.3162, calcd 581.3163; the SI prints the formula as C35H41N2O2+, but 581.3163 is C40H41N2O2+ (this structure)",
+   "the two sp3 CH-O carbons are stereocentres; relative configuration not given, left unspecified",
+   "cation only; the counterion is not reported in the text"
+  ],
+  "formula": "C40H41N2O2+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_jacs.5c15490_SI_1.pdf p14, 10.1021_jacs.5c15490_SI_1.pdf p20, 10.1021_jacs.5c15490_SI_1.pdf p42, main p6"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

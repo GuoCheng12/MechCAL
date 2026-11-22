@@ -1,0 +1,207 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_150",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(N2CCc3ccccc3C2Cc2nccc3ccccc23)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "D1 (isoquinolin-1-ylmethyl, N-phenyl)",
+  "source_documents": [
+   {
+    "source_id": "C29",
+    "title": "Design, synthesis and structural investigation of a novel class of aggregation-induced emission (AIE) molecular scaffolds",
+    "doi": "10.1039/d5cc04833h",
+    "format": "PDF",
+    "pages": 4,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C29-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5cc04833h",
+    "file": "10.1039_d5cc04833h_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: THF",
+   "aggregate: THF/water",
+   "crystal"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C29",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Singlecrystal structural analysis revealed that the a-substituent restricted intramolecular rotation in the aggregated state constitutes the primary mechanism for the AIE phenomenon.",
+    "subject": "α-substituted THIQs",
+    "scope": "target",
+    "conditions": "THF/water aggregates, crystals",
+    "kind": "author_interpretation",
+    "statement": "AIE is assigned to the α-rotor restricting intramolecular rotation in the aggregate.",
+    "limitations": "Evidence is crystal conformations and AIE screening; no viscosity, lifetime or kinetic data."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C29",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The results revealed that the a-(isoquinolin-1ylmethyl)-substituted THIQs exhibited significantly higher AIE activity (B and C), in which compound D7 demonstrated exceptional performance, with its fluorescence intensity exceeding the detection limit at 50 mM (Table S2 in the SI).",
+    "subject": "D1-D7",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "observation",
+    "statement": "Isoquinolin-1-ylmethyl THIQs are more AIE-active; D7 is the strongest.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C29",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "is expected to increase molecular distortion and decrease the rotational freedom of single bonds, thereby minimizing non-radiative energy dissipation caused by molecular rotation and vibration in the aggregated state",
+    "subject": "isoquinolin-1-ylmethyl rotor",
+    "scope": "target",
+    "conditions": "design rationale",
+    "kind": "author_interpretation",
+    "statement": "The peri H-8 of 1-methylisoquinoline twists the rotor and limits single-bond rotation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C29",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The most AIE-active compound D7 demonstrates a dramatically enlarged dihedral angle of 122.151 between rings P1 and P2 (E).",
+    "subject": "D7",
+    "scope": "target",
+    "conditions": "single crystal",
+    "kind": "observation",
+    "statement": "Strongly twisted rotor in the D7 crystal (122.15°).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C29",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The AIE effect observed in C13 and D7 is predominantly attributed to the restriction of the RIR mechanism.",
+    "subject": "C13, D7",
+    "scope": "target",
+    "conditions": "aggregates, crystals",
+    "kind": "author_interpretation",
+    "statement": "AIE of C13 and D7 assigned to restricted intramolecular rotation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C29",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In contrast, electron-withdrawing substituents significantly enhance the AIE activity, especially for compound C13 (10 mM), which might be attributed to the formation of a donor–p–acceptor (D–p–A) structure.",
+    "subject": "C13",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "The benzoyl acceptor raises AIE activity, tentatively via D-π-A character.",
+    "limitations": "Hedged ('might'); no solvatochromism or CT evidence."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "AIE-active member of the isoquinolin-1-ylmethyl series; the rotor design restricts rotation. No crystal structure for D1."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "AIE-active member of the isoquinolin-1-ylmethyl series; the rotor design restricts rotation. No crystal structure for D1."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor (no OH/NH).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name 1-((2-phenyl-1,2,3,4-tetrahydroisoquinolin-1-yl)methyl)isoquinoline (OPSIN)"
+  ],
+  "used_si": true,
+  "note": "Racemic; written without configuration.",
+  "formula": "C25H22N2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d5cc04833h_SI_1.pdf p6, 10.1039_d5cc04833h_SI_1.pdf p83, 10.1039_d5cc04833h_SI_1.pdf p84, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

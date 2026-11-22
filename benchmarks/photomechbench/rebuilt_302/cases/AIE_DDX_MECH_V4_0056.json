@@ -1,0 +1,188 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0056",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(C(=C2c3ccccc3-c3ccccc32)c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1 / DPDBF / 9-(diphenylmethylene)-9H-fluorene",
+  "source_documents": [
+   {
+    "source_id": "10.1021_jp0630828",
+    "title": "Aggregation-Induced Emission: Effects of Molecular Structure, Solid-State Conformation, and Morphological Packing Arrangement on Light-Emitting Behaviors of Diphenyldibenzofulvene Derivatives",
+    "doi": "10.1021/jp0630828",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "a16b189a1df447ccdf3ceeea8660b4c00635a1d07845c87318000c4c6b07dc0f"
+   },
+   {
+    "source_id": "10.1039_c3cc41730a",
+    "title": "A conical intersection model to explain aggregation induced emission in diphenyl dibenzofulvene",
+    "doi": "10.1039/c3cc41730a",
+    "format": "PDF",
+    "pages": 3,
+    "pdf_sha256": "e7daf9fee09be65a9050ed8eb739c376af7a1869e6e81c8b67120b025de9a9b3"
+   }
+  ],
+  "publication_date": "2007-01-18",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water mixtures",
+   "crystals vs amorphous powder",
+   "OLED devices"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_jp0630828",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Propeller-shaped molecules diphenyldibenzofulvene (1) and (4-methoxyphenyl)phenyldibenzofulvene (2) were nonemissive when dissolved in good solvents but became luminescent when aggregated in poor solvents or in the solid state",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "solution vs aggregates/solid",
+    "kind": "observation",
+    "statement": "AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_jp0630828",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "8-Phenylbenzo[e]acephenanthrylene (3), a ring-closed form of 1 with one of its phenyl blades locked, was emissive in the solutions, suggesting that the AIE effects of 1 and 2 are caused by the restrictions of intramolecular rotations of their aromatic blades in the aggregation state.",
+    "subject": "1 vs locked 3",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Locking one blade makes the dye emissive in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_jp0630828",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "In the solid state, intramolecular rotations of the molecules of 1 and 2 are physically restricted, which opens their radiative decay channels, hence their observed AIE effects.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "author_interpretation",
+    "statement": "Restricted blade rotation causes AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c3cc41730a",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In solution, the seam is accessed through rotation around the exocyclic fulvene bond, leading to radiationless decay to the ground state.",
+    "subject": "1 (DPDBF)",
+    "scope": "target",
+    "conditions": "CASSCF/QM-MM",
+    "kind": "computation",
+    "statement": "Rotation about the exocyclic bond reaches a conical intersection seam.",
+    "limitations": "Second source, computational."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Restricted rotation of the phenyl blades (exocyclic bond) blocks access to the conical intersection; the locked analogue emits in solution."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Restricted rotation of the phenyl blades (exocyclic bond) blocks access to the conical intersection; the locked analogue emits in solution."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "π-π stacking quenches the locked analogue 3, not compound 1."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "crystals emit bluer and stronger than amorphous powder (conformational twisting, rigidification)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: same InChIKey"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "The second source is computational; the case rests on the experimental Tang paper.",
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

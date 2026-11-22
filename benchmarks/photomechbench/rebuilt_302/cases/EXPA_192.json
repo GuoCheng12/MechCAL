@@ -1,0 +1,242 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_192",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c2cc3cc4c(=O)n(C5CCCCC5)c(=O)c4c(S)c3cc2c(=O)n1C1CCCCC1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1SNT-IC (N,N'-dicyclohexyl-1-mercapto-naphthalene-2,3,6,7-dicarboximide)",
+  "source_documents": [
+   {
+    "source_id": "F14",
+    "title": "Solvatochromic multi-colour fluorescence driven by thiol-type ESIPT in a 1-mercapto-naphthaldiimide compound",
+    "doi": "10.1039/d5tc01389e",
+    "format": "PDF",
+    "pages": 5,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F14-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5tc01389e",
+    "file": "10.1039_d5tc01389e_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solid powder",
+   "PMMA and COP films (1 wt%)",
+   "DMSO, MeCN, CHCl3, cyclohexane",
+   "with DBU (anion)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F14",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "A novel thiol (SH)-type excited-state intramolecular proton transfer (ESIPT) compound, 1SNT-IC, was designed and synthesized.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "The S-H group next to the imide carbonyl is the proton donor (S-H...O=C).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Another FL at 649 nm is attributed to T* via ESIPT",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "solid powder, excitation 442 nm",
+    "kind": "observation",
+    "statement": "Dual emission: N* at 490 nm (0.30 ns) and T* at 649 nm (Stokes shift 7216 cm-1, 0.55 ns).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "smooth tautomerisation from N* to T*",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "TD-DFT, DMSO",
+    "kind": "computation",
+    "statement": "Calculated N* 387 nm and T* 533 nm emission with a downhill N*-to-T* path (-0.78 eV).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "These results strongly support the structural basis for the potential ESIPT ability in the excited state.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "FT-IR in KBr + calculated spectra",
+    "kind": "observation",
+    "statement": "Split C=O stretches reproduce the calculated intramolecular S-H...O=C hydrogen bond.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "It was suggested that ESIPT occurs in all solvents, including DMSO, with notably different emission colours between T* and A* depending on the solvent polarity.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "DMSO, MeCN, CHCl3, cyclohexane",
+    "kind": "author_interpretation",
+    "statement": "ESIPT persists in all solvents; the N*/T* ratio changes with polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F14",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "After the addition of an organic base (DBU), an anionic (A*) state appeared, leading to a multi-colour emission.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "solvents + DBU",
+    "kind": "observation",
+    "statement": "Deprotonation gives a third, anion emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F14",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "With increasing solvent polarity, the FL lifetimes increased, and the quantum yields of T* and A* decreased due to the stabilisation of the T* and A* states.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "T* and A* yields fall in polar solvents.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F14",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Whether in solid or dispersed films, naphthalene moieties tend to induce strong intermolecular interactions due to their enlarged p-conjugation, leading to an overall decrease in FL quantum yield.",
+    "subject": "1SNT-IC",
+    "scope": "target",
+    "conditions": "solid, PMMA and COP films",
+    "kind": "author_interpretation",
+    "statement": "Low solid/film yields (about 0.5-5%) blamed on intermolecular interactions.",
+    "limitations": "General remark; no aggregate species identified."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Thiol-type ESIPT (S-H...O=C): a large-Stokes-shift T* emission alongside N*, supported by TD-DFT and FT-IR evidence for the hydrogen bond; ESIPT persists in all solvents; base gives an anion emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Thiol-type ESIPT (S-H...O=C): a large-Stokes-shift T* emission alongside N*, supported by TD-DFT and FT-IR evidence for the hydrogen bond; ESIPT persists in all solvents; base gives an anion emission."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "solid state and films: low yields attributed in general terms to intermolecular interactions of the naphthalene units (E08)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "main Fig. 1a structure (2,3,6,7-naphthalene diimide, SH at C1 next to an imide carbonyl, N-cyclohexyl imides)",
+   "SI elemental analysis and HRMS [M-H]- 461.1536 for C26H26N2O4S",
+   "the SI heading calls it a 'dianhydride'; the structure, route (from 1BrNT-IC) and formula are the diimide"
+  ],
+  "formula": "C26H26N2O4S",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d5tc01389e_SI_1.pdf p10, 10.1039_d5tc01389e_SI_1.pdf p3, 10.1039_d5tc01389e_SI_1.pdf p5, main p1"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

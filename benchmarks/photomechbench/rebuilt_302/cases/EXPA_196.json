@@ -1,0 +1,240 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_196",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCOC(=O)C1=[N+]2C(=Cc3c(C)c(CC)c(C)n3[B-]2(F)F)C=C1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "aBDP4 (asymmetrical ethoxycarbonyl BODIPY)",
+  "source_documents": [
+   {
+    "source_id": "F18",
+    "title": "Enhancement of intersystem crossing in asymmetrically substituted BODIPY photosensitizers",
+    "doi": "10.1039/d4tc04850d",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F18-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d4tc04850d",
+    "file": "10.1039_d4tc04850d_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane",
+   "toluene",
+   "dichloromethane",
+   "acetonitrile",
+   "carbon disulfide (1O2 phosphorescence)",
+   "77 K glass"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F18",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "For instance, aBDP4 displayed a FD value of 47% in cyclohexane.",
+    "subject": "aBDP4",
+    "scope": "target",
+    "conditions": "cyclohexane, air",
+    "kind": "observation",
+    "statement": "Singlet oxygen yield 0.47 (CYH), 0.38 (TOL), 0.14 (DCM), 0.07 (ACN) (Table 1).",
+    "limitations": "Singlet oxygen yield is an indirect measure of triplet formation."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F18",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "In contrast, compounds with nearly degenerate S1 and T2 levels (i.e., DES1–T2 values of ca. 0.1 eV, such as aBDP3, aBDP4, and aBDP14) should enhance the S1 - T2 ISC process. As a result, intermediate FD values ranging from 21% to 47% are observed for these compounds in apolar solvents.",
+    "subject": "aBDP4",
+    "scope": "target",
+    "conditions": "SCS-ADC(2)/aug-cc-pVTZ + experiment",
+    "kind": "computation",
+    "statement": "S1 and T2 are nearly degenerate in aBDP4, opening S1-to-T2 ISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F18",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "We conclude that the S1 - T2 ISC process should be the main ISC process for these compounds.",
+    "subject": "aBDPs",
+    "scope": "target",
+    "conditions": "SCS-ADC(2)",
+    "kind": "computation",
+    "statement": "S1-to-T2 is the main ISC channel in the asymmetrical dyes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F18",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "However, attempts to detect phosphorescence for aBDPs were unsuccessful (Fig. S27, ESI†), indicating that their triplet states are subject to rapid nonradiative decay under these conditions.",
+    "subject": "aBDPs",
+    "scope": "target",
+    "conditions": "77 K toluene/THF glass",
+    "kind": "observation",
+    "statement": "No phosphorescence; triplet formation is inferred from singlet oxygen only.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F18",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The introduction of an ethoxycarbonyl group on one of the rings further enhances this effect, which can be attributed to an asymmetric charge distribution between the pyrrolic rings, reducing the aromaticity and increasing non-radiative decays.",
+    "subject": "aBDPs with one ester ring",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "Fluorescence yield falls (aBDP4: 0.47 in CYH to 0.07 in ACN) because asymmetric charge distribution raises nonradiative decay.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F18",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "The very low FD values of approximately 5% measured for the symmetrical sBDP1 and sBDP2 are consistent with the thermodynamically uphill S1 - T2 ISC process (T2 being 0.25 eV above S1, see Table 3).",
+    "subject": "sBDP2",
+    "scope": "target",
+    "conditions": "four solvents + SCS-ADC(2)",
+    "kind": "observation",
+    "statement": "sBDP2: singlet oxygen yield 0.02-0.03; T2 lies 0.25 eV above S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F18",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "while preserving high fluorescence quantum yields",
+    "subject": "sBDP2",
+    "scope": "target",
+    "conditions": "",
+    "kind": "observation",
+    "statement": "sBDP2 fluoresces with Phi_Fl 0.92-0.97 in all four solvents (Table 1).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "The fall of fluorescence yield with polarity is assigned to higher nonradiative decay from the asymmetric charge distribution."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Heavy-atom-free ISC enabled by the asymmetric substitution: S1-to-T2 near-degeneracy (computed) and singlet oxygen yield up to 0.47 in non-polar solvents. Triplets are inferred from singlet oxygen only (no phosphorescence, no transient absorption)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The paper reports negative solvatochromism (ground state more polar than S1) and CT character of T2, but does not assign the emission to an ICT state."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "The fall of fluorescence yield with polarity is assigned to higher nonradiative decay from the asymmetric charge distribution."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Heavy-atom-free ISC enabled by the asymmetric substitution: S1-to-T2 near-degeneracy (computed) and singlet oxygen yield up to 0.47 in non-polar solvents. Triplets are inferred from singlet oxygen only (no phosphorescence, no transient absorption)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F18-CG1",
+   "varied_factor": "symmetric vs asymmetric pyrrole substitution of the BODIPY core (2,6-diester tetramethyl vs one 5-ester ring and one 1,3-dimethyl-2-ethyl ring)",
+   "paper_difference": "The symmetrical diester sBDP2 is a bright fluorophore with singlet oxygen yield about 0.03 (T2 0.25 eV above S1); asymmetrical aBDP4 has nearly degenerate S1/T2, singlet oxygen yield up to 0.47 in cyclohexane and much lower fluorescence."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "main Fig. 2 structure; SI route from 3-ethyl-2,4-dimethylpyrrole and ethyl 5-formylpyrrole-2-carboxylate",
+   "SI 1H NMR (meso-H, two pyrrole CH doublets, ester, ethyl, two CH3) and HRMS [M+Na]+ C16H19BF2N2NaO2"
+  ],
+  "formula": "C16H19BF2N2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d4tc04850d_SI_1.pdf p6"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,228 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0082",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCCCCCCCCCN1C(=O)c2cccc3cccc(c23)C1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "ODNI",
+  "source_documents": [
+   {
+    "source_id": "10.1002_ange.201802842",
+    "title": "Spontaneously Self-Assembled Naphthalimide Nanosheets: Aggregation Induced Emission and Unveiling a-PET for Sensitive Detection of Organic Volatile Contaminants in Water",
+    "doi": "10.1002/ange.201802842",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "db880f297dbd0e96e83c0bb4c83f9a3bd5116adfad5cc46c91abc30ca47489e1"
+   },
+   {
+    "source_id": "10.1002_anie.201802842",
+    "title": "Spontaneously Self-Assembled Naphthalimide Nanosheets: Aggregation Induced Emission and Unveiling a-PET for Sensitive Detection of Organic Volatile Contaminants in Water",
+    "doi": "10.1002/anie.201802842",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "5b2418d04fc8526d016bb002e1abf2d6561c2709e8bb75587f44e393f46e17a3"
+   }
+  ],
+  "publication_date": "2018-05-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMF",
+   "DMF/water",
+   "water nanosheets",
+   "with xylenes/mesitylene"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "A simple design strategy of long alkyl chain substitution was formulated to block the detrimental π−π interaction that potentially transforms the aggregation caused quenching (ACQ) chromophores into aggregation induced emission (AIE) active smart nanomaterials.",
+    "subject": "ODNI",
+    "scope": "target",
+    "conditions": "water nanosheets",
+    "kind": "author_interpretation",
+    "statement": "AIE by blocking π-π interactions of the NI cores.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "ODNI started aggregating at 40% fw with redshifted intense AIE emission",
+    "subject": "ODNI",
+    "scope": "target",
+    "conditions": "DMF/water",
+    "kind": "observation",
+    "statement": "AIE (5-8-fold) vs ACQ-prone parent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "All these interactions were almost abolished in ODNI-NS indicating the existence of NI cores in an amorphous phase in the NS.",
+    "subject": "ODNI",
+    "scope": "target",
+    "conditions": "nanosheets, XRD",
+    "kind": "observation",
+    "statement": "π-stacking reflections absent: amorphous NI cores.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "with two emission bands at 380 nm and 530-540 nm which could be assigned to ππ transition and excimer emission respectively",
+    "subject": "NI derivatives",
+    "scope": "analog",
+    "conditions": "DMF",
+    "kind": "author_interpretation",
+    "statement": "Tentative excimer band in DMF.",
+    "limitations": "Tentative."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the process of a-PET from electron rich OVCs to ODNI-NS could be involved in the suppression of fluorescence emission.",
+    "subject": "ODNI nanosheets + xylenes",
+    "scope": "target",
+    "conditions": "water",
+    "kind": "author_interpretation",
+    "statement": "Acceptor-excited PET from analyte to NI quenches emission.",
+    "limitations": "Intermolecular, analyte-dependent."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The obtained HOMO value for ODNI was −6.565 eV",
+    "subject": "ODNI",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "HOMO ordering permits a-PET from p-xylene/mesitylene.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1002_anie.201802842",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "A steady enhancement in the hydrodynamic diameter of the NS with increasing analytes concentration",
+    "subject": "ODNI nanosheets",
+    "scope": "target",
+    "conditions": "DLS",
+    "kind": "observation",
+    "statement": "No disaggregation on quenching.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ACQ→AIE is explained by the alkyl chain blocking detrimental π-π interactions of the NI cores (amorphous cores in the nanosheets); a tentative excimer band in DMF."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The only PET in the paper is intermolecular, from the analyte to excited ODNI, and needs an analyte the input does not contain; recorded out of pool."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ACQ→AIE is explained by the alkyl chain blocking detrimental π-π interactions of the NI cores (amorphous cores in the nanosheets); a tentative excimer band in DMF."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "self-assembled nanosheets directed by octadecyl chains"
+  ],
+  "out_of_pool": [
+   "acceptor-excited PET from electron-rich analytes (xylenes, mesitylene) to excited ODNI quenches the nanosheet emission (E05, E06, E07)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous primary PET; now AGGREGATE primary (abstract: blocking π-π interactions turns ACQ into AIE). Author decision 2026-11-16: PET between the molecule and an analyte absent from the input goes out of pool, like mechanisms of complexes (§3.4).",
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

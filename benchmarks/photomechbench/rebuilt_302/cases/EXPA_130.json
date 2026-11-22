@@ -1,0 +1,268 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_130",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2c(-c3ccc4cc(-c5cccc6ccccc56)ccc4c3)cccc2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2611 (2,6-di(1-naphthyl)naphthalene)",
+  "source_documents": [
+   {
+    "source_id": "C19",
+    "title": "Deep-blue solid-state emission from Ternaphthalene: Photophysical tuning via multi-chromophore architectures",
+    "doi": "10.1016/j.jphotochem.2026.117156",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C19-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117156",
+    "file": "10.1016_j.jphotochem.2026.117156_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-03-07",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: chloroform and acetonitrile, 295 K",
+   "solid: crystals/powder",
+   "77 K ethanol glass (phosphorescence)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Kinetic analysis revealed that this efficiency stems from the significant suppression of non-radiative rates (knr) due to the restricted intramolecular rotation in the rigid crystal lattice.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "crystal vs chloroform",
+    "kind": "author_interpretation",
+    "statement": "High solid-state yields come from lower knr as the crystal restricts ring rotation.",
+    "limitations": "No viscosity or low-temperature test in solution."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Furthermore, a decisive topological effect on the radiative rate (kf) was demonstrated.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "chloroform, solid",
+    "kind": "observation",
+    "statement": "kf depends on the naphthalene connectivity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C19",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This negligible solvatochromic shift indicates that the lowest excited singlet state (S1) possesses a locally excited (LE) nature rather than intra molecular charge transfer (ICT) character.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "chloroform vs acetonitrile",
+    "kind": "observation",
+    "statement": "No solvatochromism: LE, not ICT, emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C19",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This suggests that the twisted multichromophore architecture effectively suppresses the formation of nonemissive H-aggregates, thereby preventing complete fluorescence quenching (ACQ) commonly observed in planar polycyclic aromatic hydrocarbons.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "author_interpretation",
+    "statement": "Twisting prevents H-aggregation quenching.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "intramolecular rotation (RIR) mechanism, placing TNps within the framework of crystallization-induced emission enhancement (CIEE), rather than aggregation-induced emission in amorphous states.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Solid-state gains are assigned to RIR (CIEE).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Collec tively, these calculations demonstrate that while the multi-chromophore scaffold ensures high singlet energy (deep-blue emission), the specific topology of the naphthalene connectivities (1,4-, 1,5- and 2,6- vs. 2,7-) acts as a decisive switch for the radiative probability.",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Connectivity controls the S1 oscillator strength.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This theoretical result aligns perfectly with the experimentally observed large radiative rates (kf ~ 5 × 108 s− 1), confirming the allowed nature of the π-π* transition.",
+    "subject": "1,4-, 1,5-, 2,6-TNps",
+    "scope": "target",
+    "conditions": "chloroform",
+    "kind": "observation",
+    "statement": "f 0.23-0.64 and kf ~5e8 s-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "In sharp contrast, the derivatives based on the 2,7-naphthalene linkage (2711, 2712 and 2722) display drastically different electronic features.",
+    "subject": "2,7-TNps",
+    "scope": "target",
+    "conditions": "TD-DFT, chloroform",
+    "kind": "computation",
+    "statement": "2,7-linked TNps have very small f; kf 0.2-0.5e8 s-1 and τf 11-13 ns.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "These results lead to the conclusion that the dramatic variation in fluorescence lifetimes observed in the TNp series—spanning from nanoseconds to tens of nanoseconds—is governed not by external factors such as aggregation or solvation, but predominantly by the internal molecular topology (1,4-, 1,5- and 2,6- vs. 2,7-connectivity).",
+    "subject": "TNps",
+    "scope": "target",
+    "conditions": "chloroform, acetonitrile, solid",
+    "kind": "author_interpretation",
+    "statement": "Lifetimes follow topology, not aggregation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E05"
+    ],
+    "rationale": "knr drops from 0.6e8 to 0.3e8 s-1 in the crystal (Φf 0.94), which the abstract assigns to restricted intramolecular rotation (CIEE)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Allowed S1 transition with kf 5.6e8 s-1 (Φf 0.90 in CHCl3); the abstract's topological effect on kf."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E05"
+    ],
+    "rationale": "knr drops from 0.6e8 to 0.3e8 s-1 in the crystal (Φf 0.94), which the abstract assigns to restricted intramolecular rotation (CIEE)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Negligible solvatochromism: the paper assigns an LE, not ICT, S1 state.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Allowed S1 transition with kf 5.6e8 s-1 (Φf 0.90 in CHCl3); the abstract's topological effect on kf."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Phosphorescence at 77 K is used only to measure the triplet energy; not a mechanism here."
+   }
+  ],
+  "environment_context": [
+   "twisted structure suppresses H-aggregate (ACQ) quenching in the solid (E04)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C19-CG1",
+   "varied_factor": "connectivity of the central naphthalene (2,6 vs 2,7) with two 1-naphthyl wings",
+   "paper_difference": "2611 has an allowed S1 transition (kf 5.6e8 s-1, τf 1.6 ns); 2711 is nearly forbidden (kf 0.5e8 s-1, τf 13.2 ns)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "compound code 2611 (2,6-linked central naphthalene, two 1-naphthyl wings)",
+   "structure recognition of Chart 1"
+  ],
+  "used_si": false,
+  "formula": "C30H20",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

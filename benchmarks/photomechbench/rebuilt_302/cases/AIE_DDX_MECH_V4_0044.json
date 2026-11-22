@@ -1,0 +1,255 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0044",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc(C(=O)Nc2cccc(-c3nc4ccccc4o3)c2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3OTB",
+  "source_documents": [
+   {
+    "source_id": "10.1021_jp5089433",
+    "title": "From dark TICT state to Emissive quasi-TICT State: The AIE Mechanism of N-(3-(benzo[d]oxazol-2-yl)phenyl)-4-tert-butylbenzamide",
+    "doi": "10.1021/jp5089433",
+    "format": "PDF",
+    "pages": 30,
+    "pdf_sha256": "71be0a3f4753204d6836771ed02098663e4f64bb5dd26ea8effaef81931d8f8e"
+   }
+  ],
+  "publication_date": "2014-12-29",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF and other solvents",
+   "THF/water",
+   "film, nanosheet, powder, crystal",
+   "77 K and lower"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "The fluorescence quantum yield of 3OTB powder is 8±2%, 47times higher than that of THF solution (0.17%)",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "THF vs powder",
+    "kind": "observation",
+    "statement": "AIE (47-fold).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "with increase of solvent polarity, the TICT emission red shifts together with a decrease of the relative intensity",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Polarity-sensitive TICT band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 12,
+    "location": null,
+    "quote": "Due to these weak interactions, the free configuration twist is partially restricted and a quasi-TICT* state can be formed",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Crystal contacts partially restrict the twist: emissive quasi-TICT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 21,
+    "location": null,
+    "quote": "With increasing ordering of molecular arrangements, intramolecular rotation is more restricted and correspondingly, the quasi-TICT* emission becomes stronger.",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "film, nanosheet, powder, crystal",
+    "kind": "author_interpretation",
+    "statement": "More order, more restriction, stronger quasi-TICT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 16,
+    "location": null,
+    "quote": "while the electron transition in 1x* (λcal = 479 nm, f= 0.003)",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Relaxed TICT is dark (f 0.003) vs LE (f 0.877).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 20,
+    "location": null,
+    "quote": "replaced by the structured phosphorescence (with detecting lifetime longer than µs magnitude, see Figure S6).",
+    "subject": "3OTB",
+    "scope": "target",
+    "conditions": "low temperature",
+    "kind": "observation",
+    "statement": "Structured phosphorescence at the lowest temperatures.",
+    "limitations": "Not the ambient AIE mechanism."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1021_jp5089433",
+    "pdf_page": 17,
+    "location": null,
+    "quote": "the calculated absorption spectra and maximum wavelengths of the selected dimer from crystal structures show almost no spectral shift when compared with monomer",
+    "subject": "3OTB dimer",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "No dimer shift.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Partial restriction of the twist by packing creates the emissive quasi-TICT state; more order gives stronger emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Emission comes from a quasi-TICT state that stops short of the dark relaxed TICT minimum."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Oscillator strength falls from LE to relaxed TICT; the quasi-TICT keeps some brightness."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Phosphorescence appears only at low temperature."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Partial restriction of the twist by packing creates the emissive quasi-TICT state; more order gives stronger emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E05"
+    ],
+    "rationale": "Emission comes from a quasi-TICT state that stops short of the dark relaxed TICT minimum."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The hydroxyl of the parent HBX is absent; the meta amide N-H cannot H-bond to the benzoxazole N.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "A computed crystal dimer shows no spectral shift (E07); used to reject LE assignment, not an explicit exclusion of exciton coupling."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Oscillator strength falls from LE to relaxed TICT; the quasi-TICT keeps some brightness."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Phosphorescence appears only at low temperature."
+   }
+  ],
+  "environment_context": [
+   "weak C-H...O / C-H...C contacts in the crystal; nanosheets from THF/water"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "RIM raised from secondary to co_primary (title: dark TICT → emissive quasi-TICT by restricted twist; guideline §3.4 molecular rotor).",
+  "previous_primary": [
+   "ICT_TICT_CT"
+  ]
+ }
+}

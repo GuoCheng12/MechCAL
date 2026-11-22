@@ -1,0 +1,182 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0095",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COCCOCCOc1ccc(-n2cc(-c3ccc(C(=C(c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)c4ccc(-c5cn(-c6ccc(OCCOCCOC)c(OCCOCCOC)c6)nn5)cc4)cc3)nn2)cc1OCCOCCOC"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "title": "Advantages of Mobile Liquid-Crystal Phase of AIE Luminogens for Effective Solid-State Emission",
+    "doi": "10.1021/acs.jpcc.6b10026",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "0c149cf7a99733779f5389ce4a5c0fd8c1f0d5cb857c183aca721d840b37f97a"
+   }
+  ],
+  "publication_date": "2016-11-10",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water aggregates",
+   "crystalline bulk",
+   "temperature series"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "inducing a homogeneous zigzag-stacked columnar structure with j-type coupled transition dipoles of the TPE derivatives.",
+    "subject": "TPE derivatives",
+    "scope": "analog",
+    "conditions": "LC bulk",
+    "kind": "author_interpretation",
+    "statement": "Mobile LC phase gives homogeneous J-coupled columns.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "0.074 (bulk) vs. 0.22 (amorphous aggregate in THF/water solvent mixtures).",
+    "subject": "bulk 3",
+    "scope": "target",
+    "conditions": "crystalline bulk vs aggregate",
+    "kind": "observation",
+    "statement": "Lower yield in the crystalline bulk.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the decreasing AIE efficiency of bulk 3 is caused by the accelerated nonradiative rate",
+    "subject": "bulk 3",
+    "scope": "target",
+    "conditions": "crystalline bulk",
+    "kind": "observation",
+    "statement": "knr rises (12 vs 2.8 × 10^8 s-1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acs.jpcc.6b10026",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The overall amplitude of fast decay components less than 1 ns in bulk 3 is 86.9%",
+    "subject": "bulk 3",
+    "scope": "target",
+    "conditions": "crystalline bulk",
+    "kind": "observation",
+    "statement": "Dominant fast-decaying (defect) sites.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Rate analysis assigns the weaker bulk emission to a faster knr from non-emissive defect sites formed in rapid crystallisation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Thermally activated motion is invoked for temperature-dependent lifetimes only; the earlier secondary is dropped."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "J-coupling is argued for the LC bulks 1 and 2, not for crystalline 3."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Rate analysis assigns the weaker bulk emission to a faster knr from non-emissive defect sites formed in rapid crystallisation."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "crystalline bulk with surface traps and defects"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0094-CG1",
+   "varied_factor": "exterior chains: dodecyl (2, LC) vs di(ethylene oxide) (3, crystalline)",
+   "paper_difference": "The mobile LC phase gives homogeneous J-coupled stacks and faster kr; the crystalline bulk has defects and faster knr."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "R-group table (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RADIATIVE_RATE_STATE_BALANCE"
+  ]
+ }
+}

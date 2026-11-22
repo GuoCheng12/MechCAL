@@ -1,0 +1,217 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0125",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(N(c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)c2ccc(-c3ccc(C=C(C#N)C#N)s3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPE-TTMN-OMe",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acsnano.1c03700",
+    "title": "Molecular Engineering of High-Performance Aggregation-Induced Emission Photosensitizers to Boost Cancer Theranostics Mediated by Acid-Triggered Nucleus-Targeted Nanovectors",
+    "doi": "10.1021/acsnano.1c03700",
+    "format": "PDF",
+    "pages": 11,
+    "pdf_sha256": "d3ae314fe99a5073d6078ea6e26feaa7ed52990504146446b9de1575633eb341"
+   }
+  ],
+  "publication_date": "2021-06-02",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF",
+   "THF/water",
+   "solid",
+   "nanoparticles"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acsnano.1c03700",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the suﬃcient rotations could consume exciton energy upon photoexcitation, thus allowing weak or no emission when dissolved in solution.",
+    "subject": "TTMN series",
+    "scope": "analog",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Free rotations quench solution emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acsnano.1c03700",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "their emission maxima were respectively red-shifted to 664, 670, 685, and 712 nm in aggregates",
+    "subject": "TPE-TTMN-OMe (third)",
+    "scope": "target",
+    "conditions": "THF/water aggregates",
+    "kind": "observation",
+    "statement": "AIE (~129-fold for OMe).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acsnano.1c03700",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "showed high D−A strength and extended π-conjugation with varying degrees.",
+    "subject": "TTMN series",
+    "scope": "analog",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "D-A (ICT) design red-shifts the series.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acsnano.1c03700",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "0.011 eV for TPE-TTMN-OMe",
+    "subject": "TPE-TTMN-OMe",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Small ΔEST favours ISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_acsnano.1c03700",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "TPE-TTMN, TPE-TTMN-OMe, and TPE-TTMN-TPA even exceeded Rose Bengal",
+    "subject": "TPE-TTMN-OMe",
+    "scope": "target",
+    "conditions": "DCFH assay",
+    "kind": "observation",
+    "statement": "High ROS generation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "AIE: rotations dissipate energy in solution and are restricted in aggregates."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Donor-acceptor ICT design sets the NIR emission."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Small ΔEST and measured ROS generation imply efficient ISC (photosensitiser)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "AIE: rotations dissipate energy in solution and are restricted in aggregates."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Donor-acceptor ICT design sets the NIR emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Small ΔEST and measured ROS generation imply efficient ISC (photosensitiser)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "COc1ccc(N(c2ccc(/C=C/c3csc(C=C(C#N)C#N)c3)cc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1",
+  "problem": "extra vinylene and 2,4-thiophene instead of direct 2,5-thiophene",
+  "old_formula": "C49H35N3OS",
+  "new_formula": "C47H33N3OS",
+  "basis": "Scheme 1A drawing; synthesis uses (5-formylthiophen-2-yl)boronic acid",
+  "evidence": [
+   "Scheme 1A drawing; synthesis uses (5-formylthiophen-2-yl)boronic acid"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

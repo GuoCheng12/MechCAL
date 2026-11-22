@@ -1,0 +1,193 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_164",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN1C(=O)c2cccc3c(NN=Cc4ccc(N(C)C)cc4)ccc(c23)C1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "compound 5 (naphthalimide hydrazone)",
+  "source_documents": [
+   {
+    "source_id": "D09",
+    "title": "New Naphthalimide Derivative as a Colorimetric and Fluorescent Probe for Detection of pH, Strong Bases and Volatile Acids",
+    "doi": "10.3390/s26082411",
+    "format": "PDF",
+    "pages": 17,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D09-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/s26082411",
+    "file": "10.3390_s26082411_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-04-15",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "organic solvents (chloroform to DMSO)",
+   "thin film and strip paper"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D09",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "(quenched fluorescence) due to the presence of PET from the tertiary nitrogen atom from the N,N-dimethylamine group in the side chain of the molecule.",
+    "subject": "compound 5",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Designed off state: PET from the dimethylamino receptor.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D09",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "were observed in the solvents with small polarity, as well as an absence of fluorescence in the solvents with high polarity.",
+    "subject": "compound 5",
+    "scope": "target",
+    "conditions": "chloroform to methanol",
+    "kind": "observation",
+    "statement": "QY 0.019 (chloroform) to 0.001 (polar solvents).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the molecule may undergo a hypso- or bathochromic color shift as a result of the reduction or enhancement in the efficiency of the ICT from the donor moiety (the secondary nitrogen atom from the imino group at the C-4 position of the naphthalimide) to the acceptor moiety (the carbonyl group of the naphthalimide).",
+    "subject": "compound 5",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Colour changes come from ICT of the 4-amino-naphthalimide.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D09",
+    "pdf_page": 14,
+    "location": null,
+    "quote": "Using the protonation of the secondary amine, directly attached to the naphthalimide and the tertiary amine in the side chain, in the presence of acids and their vapors, not only in solution, but also in the thin film and strip paper, the compound shows a considerable hypsochromic shift in color and strong fluorescence.",
+    "subject": "compound 5 + acid",
+    "scope": "target",
+    "conditions": "solution, film, paper",
+    "kind": "observation",
+    "statement": "Protonation turns on strong fluorescence.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "ICT of the 4-amino-naphthalimide explains the colour shifts."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Paper's off-state mechanism: PET from the dimethylamino group; protonation restores strong emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "ICT of the 4-amino-naphthalimide explains the colour shifts."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "Paper's off-state mechanism: PET from the dimethylamino group; protonation restores strong emission."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "protonated forms (acid vapours) block PET (E04)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of the paper's name 6-(2-(4-(dimethylamino)benzylidene)hydrazinyl)-2-methyl-1H-benzo[de]isoquinoline-1,3(2H)-dione",
+   "route: 4-hydrazinyl-N-methyl-naphthalimide (HRMS C13H11N3O2) + 4-(dimethylamino)benzaldehyde"
+  ],
+  "used_si": false,
+  "note": "Hydrazone geometry not stated; written without stereo.",
+  "formula": "C22H20N4O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p3, main p5, main p8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

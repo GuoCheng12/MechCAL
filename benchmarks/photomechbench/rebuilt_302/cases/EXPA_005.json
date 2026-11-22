@@ -1,0 +1,193 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_005",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c(O)c(-c2ccn[nH]2)oc2ccccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PRA-3HC",
+  "source_documents": [
+   {
+    "source_id": "A03",
+    "title": "Pyrazole‐Substituted 3‐Hydroxychromones: Conformation‐Dependent Proton‐Transfer Isomerization",
+    "doi": "10.1002/chem.71407",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A03-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71407",
+    "file": "10.1002_chem.71407_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (cyclohexane, toluene, dichloromethane, acetonitrile, DMSO)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In low-polarity solvents, PRA-3HC predominantly adopts the N1-H(a) form, yielding efficient ESIPT emission with fluorescence quantum yields of 65%–66%.",
+    "subject": "PRA-3HC",
+    "scope": "target",
+    "conditions": "low-polarity solvents",
+    "kind": "observation",
+    "statement": "Efficient ESIPT (tautomer) emission from the N1-H(a) isomer.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Increased solvent polarity shifts the ground-state equilibrium toward the non-emissive N2-H(b) isomer with nπ* transition",
+    "subject": "PRA-3HC",
+    "scope": "target",
+    "conditions": "polar solvents",
+    "kind": "author_interpretation",
+    "statement": "In polar solvents a non-emissive isomer with an nπ* lowest state dominates.",
+    "limitations": "nπ* assignment rests on calculation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A03",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "spectroscopic studies further demonstrate that only the N1-H(a) isomer undergoes efficient ESIPT and contributes to the tautomer emission",
+    "subject": "PRA-3HC",
+    "scope": "target",
+    "conditions": "solution, time-resolved",
+    "kind": "observation",
+    "statement": "Only one ground-state isomer undergoes efficient ESIPT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "A03",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "whereas that of N2-H(b) contains substantial nπ* character",
+    "subject": "PRA-3HC isomer N2-H(b)",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "The non-emissive isomer has an nπ*-dominated S1.",
+    "limitations": "Calculation."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "ESIPT tautomer emission from isomer (a), shown by steady-state and time-resolved data."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E06"
+    ],
+    "rationale": "The loss of emission in polar solvents is explained by a non-emissive isomer whose lowest state is nπ* (state ordering)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "ESIPT tautomer emission from isomer (a), shown by steady-state and time-resolved data."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E06"
+    ],
+    "rationale": "The loss of emission in polar solvents is explained by a non-emissive isomer whose lowest state is nπ* (state ordering)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A03-CG1",
+   "varied_factor": "pyrazole N-H vs N-methyl at N1 or N2 (intramolecular hydrogen-bond topology)",
+   "paper_difference": "Only conformer/isomer (a) undergoes efficient ESIPT; isomer or conformer (b) has a dark nπ* state; methylation fixes or biases the population."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN (drawn as the N1-H(a) tautomer that dominates in low-polarity solvents)",
+   "ESI-HRMS [M+H]+ C12H9N2O3 matches"
+  ],
+  "used_si": true,
+  "formula": "C12H8N2O3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_chem.71407_SI_1.pdf p10, 10.1002_chem.71407_SI_1.pdf p11, 10.1002_chem.71407_SI_1.pdf p12, 10.1002_chem.71407_SI_1.pdf p14"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

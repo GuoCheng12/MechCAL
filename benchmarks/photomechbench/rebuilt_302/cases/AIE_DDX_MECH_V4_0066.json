@@ -1,0 +1,199 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0066",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(C(=NN=C(c2ccccc2)c2ccc(OC)cc2O)c2ccccc2)c(O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "compound 1 (benzophenone azine)",
+  "source_documents": [
+   {
+    "source_id": "10.1021_jp311020w",
+    "title": "Reversible Thermochromism of Aggregation-Induced Emission-Active Benzophenone Azine Based on Polymorph-Dependent Excited-State Intramolecular Proton Transfer Fluorescence",
+    "doi": "10.1021/jp311020w",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "38ec20116bd3844dcaabfe96da101035340e6e318d42768149fa0d6890ff65c1"
+   }
+  ],
+  "publication_date": "2013-01-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water",
+   "crystals G and YG",
+   "annealed and melt-quenched solids"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_jp311020w",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "the switching between the two different polymorphs was responsible for the tunable solid fluorescence as a consequence of polymorph-dependent excited-state intramolecular proton transfer (ESIPT) fluorescence",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "polymorphs G and YG",
+    "kind": "observation",
+    "statement": "Polymorph-dependent ESIPT emission (521 vs 540 nm).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_jp311020w",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "a Stokes shift as large as 152 nm was observed for 1 as a result of ESIPT.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "aggregates",
+    "kind": "observation",
+    "statement": "Large Stokes shift from ESIPT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_jp311020w",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "intramolecular hydrogen bonds from the salicylaldimine, which provided a structural basis for ESIPT process, were observed for both of the two polymorphs.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "O-H...N hydrogen bonds in both polymorphs.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_jp311020w",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "might be ascribed to the free rotations around N−N and C−C single bonds; however, in high volume fraction, rotations were inhibited because of the closely packed molecules in aggregate state, resulting in strong ESIPT fluorescence.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "AIE: N-N and C-C rotations quench in solution, inhibited in aggregates.",
+    "limitations": "Proposed ('might')."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_jp311020w",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "molecules in polymorph 1-Crys.(YG) packed in a much tighter mode, resulting in the fluorescence in a relative longer wavelength range.",
+    "subject": "1",
+    "scope": "target",
+    "conditions": "YG polymorph",
+    "kind": "author_interpretation",
+    "statement": "Tighter packing red-shifts the emission.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "AIE is explained by inhibited N-N and C-C rotations in the aggregate, enabling ESIPT emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Polymorph-dependent ESIPT fluorescence is the title mechanism (large Stokes shift, intramolecular H-bonds)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "AIE is explained by inhibited N-N and C-C rotations in the aggregate, enabling ESIPT emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Polymorph-dependent ESIPT fluorescence is the title mechanism (large Stokes shift, intramolecular H-bonds)."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "tight vs loose polymorph packing (E05); annealing/melting switches polymorphs"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previously no primary label (both secondary); ESIPT and RIM are the abstract's two explanations.",
+  "previous_primary": []
+ }
+}

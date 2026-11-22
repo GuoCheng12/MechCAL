@@ -1,0 +1,248 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_190",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCN1/C(=C/C=C(/C=C/C2=[N+](CC)c3ccccc3C2(C)C)c2cc[n+](Cc3ccc(OC(=S)N(C)C)cc3)c3ccccc23)C(C)(C)c2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Cy5Ql-HClO (dual-PET Cy5 probe)",
+  "source_documents": [
+   {
+    "source_id": "F05",
+    "title": "A zero intrinsic fluorescence Cy5 probe with dual-PET quenching for highly sensitive and instrument-independent HClO imaging in tumor and wound models",
+    "doi": "10.1016/j.snb.2026.140477",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "F05-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.snb.2026.140477",
+    "file": "10.1016_j.snb.2026.140477_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-08",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "PBS pH 7.4 with 1% DMF",
+   "DFT in water (SMD)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F05",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "By integrating an electrondeficient quinolinium at the Cy5 meso-position (primary PET channel) with a dimethylthiocarbamate recogni tion unit (secondary PET quencher)",
+    "subject": "Cy5Ql-HClO",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Two quenchers: the meso-quinolinium and the dimethylthiocarbamate.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The dual-PET mechanism was validated by density functional theory (DFT) calculations, which corroborated efficient electron transfer from the Cy5 core to both quenching units (Fig. 1b).",
+    "subject": "Cy5Ql-HClO",
+    "scope": "target",
+    "conditions": "DFT B3LYP/6-31+G(d), water",
+    "kind": "computation",
+    "statement": "Orbital energies place both quenchers for electron transfer with the Cy5 core.",
+    "limitations": "Ground-state orbital energies only."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Experimentally, this concerted quenching yielded an undetectable ab solute fluorescence quantum yield (ΦF) for Cy5Ql-HClO",
+    "subject": "Cy5Ql-HClO",
+    "scope": "target",
+    "conditions": "PBS pH 7.4, 1% DMF",
+    "kind": "observation",
+    "statement": "Phi_F of the probe is below detection; Cy5Ql (released dye) 8.69%, Cy5 14.9%.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The quinolinium at the meso-position provides the first PET channel (LUMO lies within Cy5 band gap). The second channel involves the dimethylthiocarbamate group. Although its HOMO is not between Cy5 HOMO and LUMO, ΔE = EHOMO, fluorophore – EHOMO, quencher = 0.12 eV < < 0.6 eV threshold [32].",
+    "subject": "Cy5Ql-HClO, Cy5Ql-H2O2",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Quinolinium LUMO inside the Cy5 gap (d-PET); thiocarbamate HOMO 0.12 eV below the Cy5 HOMO (a-PET).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F05",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This analog retains only the primary quinoliniumbased PET quencher, the phenylborate recognition group displays none PET effect (Fig. 1c, and Fig. S13). As anticipated, it exhibited measurably higher background fluorescence and a significantly greater absolute quantum yield compared to Cy5Ql-HClO (Fig. 1d), and lower SBR",
+    "subject": "Cy5Ql-H2O2 vs Cy5Ql-HClO",
+    "scope": "target",
+    "conditions": "PBS pH 7.4",
+    "kind": "observation",
+    "statement": "With only the quinolinium quencher the probe keeps Phi_F 0.73%.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F05",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In the intact probe, the electron-deficient quinolinium efficiently suppresses Cy5 fluorescence. HClO-specific cleavage of the dimethylthiocarbamate triggers a self-elimination reaction via a p-hydroxybenzyl alcohol linker, releasing neutral quinoline",
+    "subject": "Cy5Ql-HClO + HClO",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "The reaction releases the neutral-quinoline dye Cy5Ql, removing both quenchers.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F05",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Fluorescence lifetime measurements revealed comparable decay kinetics for Cy5Ql-HClO and the parent dye Cy5Ql, with both exhibiting lifetimes in the range of 3–5 ns.",
+    "subject": "Cy5Ql-HClO vs Cy5Ql",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "Probe and released dye have similar 3-5 ns lifetimes.",
+    "limitations": "An undetectable quantum yield with an unchanged lifetime suggests the measured decay comes from a residual emitting fraction; the paper does not discuss this."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F05",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "DLS confirms no aggregation at con centrations up to 1 mM (Fig. 2h)",
+    "subject": "Cy5Ql-HClO",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "No aggregates up to 1 mM.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Two PET quenchers (d-PET to the meso-quinolinium, a-PET from the thiocarbamate) give an undetectable quantum yield; the boronate control with only the quinolinium keeps 0.73%. Support is DFT orbital energies plus the control; the unchanged lifetime is not discussed."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Two PET quenchers (d-PET to the meso-quinolinium, a-PET from the thiocarbamate) give an undetectable quantum yield; the boronate control with only the quinolinium keeps 0.73%. Support is DFT orbital energies plus the control; the unchanged lifetime is not discussed."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "DLS shows no aggregation up to 1 mM.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PROBE_REACTION: HClO cleaves the thiocarbamate; 1,6-elimination releases the bright neutral-quinoline dye Cy5Ql (E06)"
+  ],
+  "contrast_group": {
+   "group": "F05-CG1",
+   "varied_factor": "recognition group on the N-benzyl of the meso-quinolinium Cy5 (dimethylthiocarbamate vs pinacol boronate)",
+   "paper_difference": "With the thiocarbamate (second PET quencher) the probe is dark (Phi_F undetectable); with the boronate (no PET) background emission remains (Phi_F 0.73%)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SI Scheme S1: Cy5Ql (meso-quinolin-4-yl pentamethine cyanine, N-ethyl indolenines) N-alkylated at the quinoline with a 4-substituted benzyl bromide",
+   "SI structure drawings recognised with MolScribe (same SMILES)",
+   "the cation mass of Cy5Ql (538.8 g/mol) matches the SI amounts (200 mg = 0.371 mmol)",
+   "dication; counterions not given, SMILES carries the dye ion",
+   "ESI-HRMS shown only as an image (Fig. S9), value not read"
+  ],
+  "formula": "C48H52N4OS+2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.snb.2026.140477_SI_1_image10.png, main p2, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

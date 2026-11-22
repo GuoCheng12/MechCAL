@@ -1,0 +1,221 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0014",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(-c2ccc(B(c3c(C)cc(C)cc3C)c3c(C)cc(C)cc3C)cc2)cc1-c1ncc(-c2ccc(-c3ccc(N(c4ccccc4)c4ccccc4)cc3)cc2)o1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "6a",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "title": "Tuning the dual emission of keto/enol forms of excited-state intramolecular proton transfer (ESIPT) emitters via intramolecular charge transfer (ICT)",
+    "doi": "10.1016/j.dyepig.2021.109497",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "89aa955fdd4e996161a13f93edfe3acbc12f6ed6d598204c309bbf0184e9c672"
+   }
+  ],
+  "publication_date": "2021-06-06",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene and other solvents",
+   "polystyrene film",
+   "doped films, 77 K-RT",
+   "OLED"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The emission spectrum of 6a in toluene exhibits a single emission band around 418 nm with a shoulder peak at 430 nm",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "Single enol-type emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Moreover, there is a large energy difference between S1(enol) and the transition state of ESIPT (TS*), which brings a barrier to the proton transfer reaction (Fig. 2a).",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "High ESIPT barrier; keto S1 slightly above enol S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Therefore, 6a only shows the single enol-form emission in various sol vents (Fig. 3a).",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Only enol emission in every solvent: no ESIPT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "H1",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "These results suggest that the excited-state enol forms of 6a and 6c possess the character of hybridized local and charge-transfer (HLCT) excited state",
+    "subject": "6a, 6c",
+    "scope": "target",
+    "conditions": "solvatochromism",
+    "kind": "author_interpretation",
+    "statement": "Enol emission of 6a and 6c is HLCT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "T1",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Hence, both 6a and 6c do not possess thermally activated delayed fluorescence (TADF) characteristics",
+    "subject": "6a, 6c",
+    "scope": "target",
+    "conditions": "77 K to RT decays, degassed toluene",
+    "kind": "observation",
+    "statement": "No long-lived component or O2 quenching: no TADF.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "the reverse intersystem crossing (RISC) process from T6 (enol) to S1(enol)",
+    "subject": "6a",
+    "scope": "target",
+    "conditions": "TD-DFT energy landscape",
+    "kind": "computation",
+    "statement": "High-lying RISC (T6→S1) proposed for exciton use in OLEDs.",
+    "limitations": "Tentative; calculated levels only."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "H1"
+    ],
+    "rationale": "The TPB on the phenol para-position stabilises an HLCT enol emission (solvatochromism)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "T1"
+    ],
+    "rationale": "High-lying RISC is proposed from calculated levels; TADF is excluded by the decay measurements."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "H1"
+    ],
+    "rationale": "The TPB on the phenol para-position stabilises an HLCT enol emission (solvatochromism)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "The paper shows ESIPT does not occur for 6a: a large barrier, and only enol emission in all solvents.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "HLCT is named without a rate analysis (guideline §3.6): only ICT is labelled."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "T1"
+    ],
+    "rationale": "High-lying RISC is proposed from calculated levels; TADF is excluded by the decay measurements."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0014-CG1",
+   "varied_factor": "position of the TPA donor / TPB acceptor on the 2-(2'-hydroxyphenyl)oxazole",
+   "paper_difference": "Substituent placement selects enol-only (6a), keto-only (6b) or dual enol/keto emission (6c, 6d)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "text (6a substituent placement) (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "ESIPT marked contradicted for 6a (paper: barrier, enol-only emission); previous labels had it unlisted.",
+  "previous_primary": [
+   "ICT_TICT_CT"
+  ]
+ }
+}

@@ -1,0 +1,233 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_120",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1(C)c2ccccc2N(c2ccc(-c3nc(-c4ccccc4)nc(-c4ccccc4)n3)cc2)c2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMAC-TRZ",
+  "source_documents": [
+   {
+    "source_id": "C17",
+    "title": "Elucidating Nonradiative Relaxation of Charge-Transfer-Type Thermally Activated Delayed Fluorescence Emitters: The Vibrational Effect",
+    "doi": "10.1021/acs.jpcb.6c03904",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C17-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpcb.6c03904",
+    "file": "10.1021_acs.jpcb.6c03904_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-08-17",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: N2-saturated 1,4-dioxane, THF, DMF (steady state, fs transient absorption)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Despite comparable CT character, emitters exhibit fluorescence quantum yields differing by up to two-orders-ofmagnitude, originating from largely differed kNRS.",
+    "subject": "PXZ-TRZ, DMAC-TRZ, PXZ-DPS, DMAC-DPS",
+    "scope": "target",
+    "conditions": "N2-saturated dioxane, THF, DMF",
+    "kind": "observation",
+    "statement": "ΦF in dioxane: PXZ-TRZ 4.55%, DMAC-TRZ 41.5%, DMAC-DPS 68.2% (Table 1); the spread comes from kNRS.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "By applying the Englman−Jortner energy-gap law and the Jortner−Bixon model, we quantitatively reveal the vibrational effect on kNRS: (1) kNRS of D−A and D-A-D emitters is dominated by high- (∼900 cm−1) and low-frequency (∼60 cm−1) modes, respectively;",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "solvent series, fs-TA, Huang-Rhys analysis",
+    "kind": "computation",
+    "statement": "Energy-gap-law fits split kNRS into high-frequency (D-A) and low-frequency (D-A-D) promoting modes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "the more rigid DMAC donor reduces the reorganization energy, thereby suppressing the vibrational promotion of kNRS",
+    "subject": "DMAC vs PXZ emitters",
+    "scope": "target",
+    "conditions": "vibrational analysis",
+    "kind": "computation",
+    "statement": "The DMAC donor lowers reorganization energy and kNRS.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C17",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "These results demonstrate that the emitting S1 state of all four CT-TADF molecules shares a comparable long-range CT nature, yet their ΦF values differ strikingly.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "Lippert-Mataga analysis, TD-DFT",
+    "kind": "observation",
+    "statement": "Large excited-state dipoles and CT ~87-91%: S1 is long-range CT in all four.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C17",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Taken together, the I→II process can be assigned to the charge-transfer evolution on S1 state, where species I corresponds to the directly populated LE state and species II to the relaxed CT state.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "fs transient absorption",
+    "kind": "observation",
+    "statement": "LE→CT evolution on S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C17",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Therefore, the rapid increase in kNRS with decreasing ΔES1/S0 results from the combined effects of the reduced energy gap and enhanced vibrational coupling, rather than from the energy-gap decrease alone.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "Polarity raises kNRS through both a smaller gap and stronger vibrational coupling.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C17",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Nevertheless, DA-D emitters exhibit substantially slower kNRS than their D−A analogues (Table 2), indicating the strong electron-vibration coupling in D-A-D emitters cannot lead to efficient promotion of kNRS.",
+    "subject": "D-A-D vs D-A",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "D-A-D emitters decay nonradiatively more slowly.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "S1 is a long-range CT state (Lippert-Mataga dipoles, LE→CT evolution in fs-TA); shared by all four, so it does not explain the differences."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "The paper's explanation of the ΦF differences is the S1/S0 nonradiative rate kNRS, analysed with the energy-gap law and vibronic coupling (Jortner-Bixon); CT character is comparable. The rigid DMAC donor lowers kNRS (ΦF 41.5% in dioxane)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Donor rigidity and low-frequency modes enter as vibronic coupling in the energy-gap law, not as a restricted motion (boundary of guideline §3.5, first bullet, awaiting the author); not labelled RIM."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "S1 is a long-range CT state (Lippert-Mataga dipoles, LE→CT evolution in fs-TA); shared by all four, so it does not explain the differences."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06"
+    ],
+    "rationale": "The paper's explanation of the ΦF differences is the S1/S0 nonradiative rate kNRS, analysed with the energy-gap law and vibronic coupling (Jortner-Bixon); CT character is comparable. The rigid DMAC donor lowers kNRS (ΦF 41.5% in dioxane)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Studied as TADF emitters, but the paper analyses only the S1/S0 decay; no delayed fluorescence or RISC measured here."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "prototypical emitter DMAC-TRZ: 10-(4-(4,6-diphenyl-1,3,5-triazin-2-yl)phenyl)-9,9-dimethyl-9,10-dihydroacridine (OPSIN)",
+   "structure drawn in the paper"
+  ],
+  "used_si": false,
+  "formula": "C36H28N4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

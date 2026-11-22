@@ -1,0 +1,228 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_204",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN1c2ccccc2Sc2cc3c(cc21)c(-c1ccccc1)c(-c1ccccc1)[n+]1c2ccccc2sc31"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3b (benzothiazolo-pyrido-phenothiazinium analogue of 3a)",
+  "source_documents": [
+   {
+    "source_id": "F24",
+    "title": "Electrochemical Annulation of Phenothiazines with Alkynes: Access to Anti-Kasha Triple-Emission, Light-Sensitive, and Room-Temperature Phosphorescent Materials",
+    "doi": "10.1021/jacs.5c09956",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F24-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/jacs.5c09956",
+    "file": "10.1021_jacs.5c09956_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-08-07",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "dichloromethane",
+   "excitation-wavelength-dependent emission"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F24",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Theoretical calculations reveal that compound 3a exhibits two relatively large energy gaps between adjacent excited states, with ΔE values of 0.67 eV for S3 → S2 and 0.55 eV for S2 → S1 (Scheme 1).",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Large S3-S2 and S2-S1 gaps.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F24",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "They exhibit obvious triple-emission, and their emission wavelengths are located in the range of blue to orange (417−605 nm) in dichloromethane (Figure S7).",
+    "subject": "3a-3i",
+    "scope": "target",
+    "conditions": "dichloromethane",
+    "kind": "observation",
+    "statement": "Three emission bands per salt.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F24",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "In addition, compound 3a still exhibits distinct triple-emission peaks at 407 (τ = 1.06 ns), 473 (τ = 5.24 ns), and 564 nm (τ = 4.53 ns) with the white-light CIE1931 coordinates (0.34, 0.37) and a quantum yield of 5% in the poly(methyl methacrylate) (PMMA) film (0.02 wt %) (Figure S12, Tables S4 and S5).",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "PMMA film 0.02 wt%",
+    "kind": "observation",
+    "statement": "Triple emission persists in the film; in DCM the bands are at 419, 502 and 587 nm (QY 19%).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F24",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "These experiments demonstrate that such compounds exhibit anti-Kasha behavior",
+    "subject": "3a, 3b",
+    "scope": "target",
+    "conditions": "excitation- and emission-wavelength-dependent spectra",
+    "kind": "observation",
+    "statement": "The band ratios depend on excitation wavelength: emission from S3 and S2 as well as S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F24",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "singlet state emission (S2 → S0, 3a: f = 0.0700; 3b: f = 0.0046), and the shortest wavelength from high-lying singlet state emission (S3 → S0, 3a: f = 0.4853; 3b: f = 1.0754, Figure 1).",
+    "subject": "3a, 3b",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Oscillator strengths assigned to the S2 and S3 emissions (S1: 0.69 for both).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F24",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The relatively large energy gap ΔE(S3 → S2) values (3a: 0.67 eV, 3b: 0.48 eV) and ΔE(S2 → S1) values (3a: 0.55 eV, 3b: 0.78 eV) could effectively inhibit the partial internal conversion (IC) processes from the S3 to S2 state and from the",
+    "subject": "3a, 3b",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "author_interpretation",
+    "statement": "Large gaps slow internal conversion between the upper singlets.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F24",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This inhibition enables the fluorescence emission from the S3 and S2 states to compete favorably with the IC",
+    "subject": "3a, 3b",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Radiative decay of S3 and S2 competes with slowed internal conversion.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The paper explains the triple emission by state energetics: large S3-S2 and S2-S1 gaps slow internal conversion so that radiative decay from S3 and S2 competes (with the computed oscillator strengths); anti-Kasha emission itself is recorded out of pool."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "The paper explains the triple emission by state energetics: large S3-S2 and S2-S1 gaps slow internal conversion so that radiative decay from S3 and S2 competes (with the computed oscillator strengths); anti-Kasha emission itself is recorded out of pool."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: emission from S3 and S2 in addition to S1 (anti-Kasha triple emission) (E02, E04)"
+  ],
+  "contrast_group": {
+   "group": "F24-CG1",
+   "varied_factor": "heteroaryl annulated to 10-methylphenothiazine with diphenylacetylene (pyridine-derived quinolizinium vs benzothiazole-derived thiazolopyridinium)",
+   "paper_difference": "Both show S3, S2 and S1 emission; the computed gaps differ (S3-S2 0.67 vs 0.48 eV, S2-S1 0.55 vs 0.78 eV) and so do the S2/S3 oscillator strengths."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SI name 9-methyl-6,7-diphenyl-9H-benzo[4',5']thiazolo[3',2':1,2]pyrido[4,3-b]phenothiazin-5-ium chloride, parsed with OPSIN",
+   "SI HRMS calcd C34H23N2S2+ 523.1298, found 523.1289; 1H NMR shows the two phenothiazine singlets (8.06, 6.49 ppm)",
+   "cation only (chloride)"
+  ],
+  "formula": "C34H23N2S2+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_jacs.5c09956_SI_1.pdf p110, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

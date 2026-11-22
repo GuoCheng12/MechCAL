@@ -1,0 +1,254 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_128",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)CCNc1ccc2c3c(cccc13)C(=O)N(CC(=O)OC(C)(C)C)C2=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1B (4-(2-dimethylaminoethyl)amino-NI)",
+  "source_documents": [
+   {
+    "source_id": "C28",
+    "title": "A Systematic Study of Auxochrome Effects on Fluorescence Under Conditions of Varying Temperature, pH, or Viscosity: Photo‐induced electron transfer and Twisted Intramolecular Charge Transfer",
+    "doi": "10.1002/open.70264",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C28-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/open.70264",
+    "file": "10.1002_open.70264_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-21",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: MeCN 5-60 °C",
+   "solution: methanol-glycerol (1-50 cP)",
+   "aqueous buffer: pH series"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C28",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Thus, PET-enabled B series compounds gave less intense fluorescence than their A analogs without this pathway; likewise TICT-enabled auxochromes (C, F) gave fluorophores with lower fluorescence than those where TICT was suppressed (A, D, E, H).",
+    "subject": "series 1 (A, B, F, G)",
+    "scope": "target",
+    "conditions": "MeCN",
+    "kind": "observation",
+    "statement": "φ in MeCN: 1A 0.65, 1B 0.17, 1F 0.04, 1G 0.03 (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C28",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The quantum yields of G series compounds, where both TICT and PET can operate, were lower than those from the compounds with access to only one of these quenching pathways (B, F), indicating that both deactivation mechanisms contribute to fluorescence quenching in the same sample.",
+    "subject": "1G",
+    "scope": "target",
+    "conditions": "MeCN",
+    "kind": "observation",
+    "statement": "With N-methylpiperazine both PET and TICT quench.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C28",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Consistently, we observed a significant decrease in fluorescence intensity from PET-enabled 1B on increasing the temperature from 5 to 60 °C in MeCN and a much smaller decrease from its control 1A (Figure 2).",
+    "subject": "1B vs 1A",
+    "scope": "target",
+    "conditions": "MeCN, 5-60 °C",
+    "kind": "observation",
+    "statement": "PET quenching of 1B grows with temperature; 1A barely changes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C28",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The decrease in fluorescence from 1G can therefore be attributed to increased activation of the PET channel.",
+    "subject": "1G",
+    "scope": "target",
+    "conditions": "MeCN, 5-60 °C",
+    "kind": "author_interpretation",
+    "statement": "The temperature drop of 1G is PET, since TICT stays constant in this series.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C28",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "In the PET-enabled B series, fluorescence intensity reliably increased with viscosity.",
+    "subject": "1B",
+    "scope": "target",
+    "conditions": "methanol-glycerol, 1-50 cP",
+    "kind": "observation",
+    "statement": "Viscosity raises the emission of the PET-enabled compounds.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C28",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Increasing viscosity probably retards the fold ing necessary for the molecules to attain the correct conformation for PET to occur.",
+    "subject": "B series",
+    "scope": "target",
+    "conditions": "methanol-glycerol",
+    "kind": "author_interpretation",
+    "statement": "Viscosity slows the folding of the pendant amine that PET needs.",
+    "limitations": "Hedged ('probably'); H-bonding by glycerol not excluded."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C28",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Therefore, the fluorescence enhancement seen with 2G results from suppression of PET while that from 1G and 3G can likely be attributed to suppression of a combination of both PET and TICT.",
+    "subject": "1G",
+    "scope": "target",
+    "conditions": "methanol-glycerol",
+    "kind": "author_interpretation",
+    "statement": "Viscosity suppresses both PET and TICT in 1G.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C28",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Third, we have confirmed that acidic conditions that protonate a pendant nitrogen block PET and so increase fluorescence while TICT is largely unaffected by pH changes as the aniline-type nitrogens are not basic enough to be protonated except at quite extreme values.",
+    "subject": "B and G series",
+    "scope": "target",
+    "conditions": "aqueous buffer, pH series",
+    "kind": "observation",
+    "statement": "Protonating the pendant amine blocks PET and raises fluorescence.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Viscosity raises the emission; the paper suggests it slows the folding the pendant amine needs for PET. Hedged."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05",
+     "E08"
+    ],
+    "rationale": "φ 0.17 vs 0.65 for the control; quenching grows with temperature and is relieved by protonating the pendant amine."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Viscosity raises the emission; the paper suggests it slows the folding the pendant amine needs for PET. Hedged."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The secondary alkylamino donor is chosen as TICT-suppressed (E01); the 4-amino-naphthalimide emission itself is a push-pull state, which the paper does not use as a mechanism."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The 4-NH faces no intramolecular proton acceptor.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05",
+     "E08"
+    ],
+    "rationale": "φ 0.17 vs 0.65 for the control; quenching grows with temperature and is relieved by protonating the pendant amine."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "protonation of the pendant amine blocks PET (needs a proton, not in the input) (E08)"
+  ],
+  "contrast_group": {
+   "group": "C28-CG1",
+   "varied_factor": "pendant tertiary amine on the 4-alkylamino chain (n-butylamino vs 2-(dimethylamino)ethylamino)",
+   "paper_difference": "The pendant dimethylamino group enables PET and cuts φ from 0.65 to 0.17 in MeCN; the quenching grows with temperature and is relieved by viscosity and protonation."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of the SI drawings (SI p3, p31, p54)",
+   "route: displacement of the 4-bromo-naphthalimide with N,N-dimethylethylenediamine"
+  ],
+  "used_si": true,
+  "formula": "C22H27N3O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_open.70264_SI_1.pdf p3, 10.1002_open.70264_SI_1.pdf p31, 10.1002_open.70264_SI_1.pdf p54"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

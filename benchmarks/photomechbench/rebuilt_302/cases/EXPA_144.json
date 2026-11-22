@@ -1,0 +1,264 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_144",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCC(CCCCCCCC)CN1C(=O)c2ccc3c4ccc5c6c(ccc(c7ccc(c2c37)C1=O)c64)C(=O)N(CCCCCCN1C(=O)c2ccccc2C12c1ccc(N(CC)CC)cc1Oc1cc(N(CC)CC)ccc12)C5=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Rho-HEX-PBI",
+  "source_documents": [
+   {
+    "source_id": "C23",
+    "title": "Preparation and Photophysical Study of Rhodamine–Perylenebisimide Electron Donor–Acceptor Dyad/Triads Containing Flexible Linkers",
+    "doi": "10.3390/molecules31111859",
+    "format": "PDF",
+    "pages": 20,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C23-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/molecules31111859",
+    "file": "10.3390_molecules31111859_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-05-28",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: n-hexane, toluene, DCM, acetonitrile",
+   "deaerated toluene (ns-TA, triplet-triplet energy transfer)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C23",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "These results propose a photo-induced electron transfer (PET) process in this compound upon photoexcitation, which is responsible for the fluorescence quenching of the dyad and triads in polar solvents.",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "PBI fluorescence quenching is assigned to PET from the rhodamine lactam.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C23",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "When the Rho moiety is in its closed form, the FRET is inhibited, and the quenching of the fluorescence is mainly due to PET.",
+    "subject": "closed-ring Rho conjugates",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "With the lactam closed, energy transfer is off and PET quenches.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C23",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "demonstrate that the PET is thermodynamically allowed for all dyads and triads [39–41].",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "Rehm-Weller, CV in DCM",
+    "kind": "computation",
+    "statement": "ΔGCS is negative (about -0.4 to -1.0 eV) in all solvents studied.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C23",
+    "pdf_page": 17,
+    "location": null,
+    "quote": "Nevertheless, fluorescence measurements reveal that the emission of the PBI unit is strongly quenched, even in non-polar solvents such as toluene.",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "ΦF in toluene 0.2% (Et triad), 1.7% (HEX triad), 5.9% (HEX dyad) vs 95.2% for PBI-Br (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C23",
+    "pdf_page": 17,
+    "location": null,
+    "quote": "Nanosecond transient absorption measurements confirm the formation of the PBI triplet excited state (lifetime is up to 126 µs).",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "deaerated toluene, ns-TA",
+    "kind": "observation",
+    "statement": "A long-lived PBI triplet forms.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C23",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The production of the trace triplet state is probably due to the CR.",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "ns-TA",
+    "kind": "author_interpretation",
+    "statement": "The triplet comes from charge recombination (CR-induced ISC).",
+    "limitations": "Hedged; trace yields (Φ∆ 1.4-2.9%)."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C23",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "However, the mutual orientation of the PBI and the Rho units in the dyad and triads is not fixed; therefore, the CR-induced ISC is non-efficient (for instance, the situation is not optimized for the SOCT-ISC mechanism).",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "flexible alkyl linkers",
+    "kind": "author_interpretation",
+    "statement": "Flexible linkers make CR-ISC inefficient.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C23",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "While a Förster resonance energy transfer (FRET) probably occurs between PBI and the open-ring rhodamine, a photo-induced electron transfer is proposed to be responsible for the quenching of the fluorescence of the PBI moiety.",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "FRET needs the ring-opened rhodamine; PET explains the quenching.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C23",
+    "pdf_page": 14,
+    "location": null,
+    "quote": "Neither FRET nor charge separation/charge recombination processes were observed with fs-TA spectra, despite the quenching of the fluorescence, which may be due to the ultrafast electron transfer or the energy transfer processes.",
+    "subject": "dyad and triads",
+    "scope": "target",
+    "conditions": "fs-TA",
+    "kind": "observation",
+    "statement": "No CS state is resolved in fs-TA.",
+    "limitations": "The PET assignment is not confirmed by transient radical-ion bands."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "PBI emission is strongly quenched (Table 1) and Rehm-Weller ΔGCS is negative; the paper assigns the quenching to PET from the closed rhodamine lactam. fs-TA does not resolve the CS state (E09). ΦF 5.9% for the dyad with one donor."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "A long-lived PBI triplet (ns-TA) and low singlet-oxygen yields, attributed to inefficient charge-recombination ISC."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair (the lactam is N-alkylated).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "PBI emission is strongly quenched (Table 1) and Rehm-Weller ΔGCS is negative; the paper assigns the quenching to PET from the closed rhodamine lactam. fs-TA does not resolve the CS state (E09). ΦF 5.9% for the dyad with one donor."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "A long-lived PBI triplet (ns-TA) and low singlet-oxygen yields, attributed to inefficient charge-recombination ISC."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "FRET to the ring-opened rhodamine (another form of the donor) (E08)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "PBI imidised with the rhodamine B lactam amines (compounds 2/3: N-(2-aminoethyl)/N-(6-aminohexyl) rhodamine B lactams) as in the main-text Scheme and SI routes; other imide N from 2-octyldodecylamine (compound 4)",
+   "SI MALDI-HRMS calcd for C78H91N5O6 matches"
+  ],
+  "used_si": true,
+  "formula": "C78H91N5O6",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.65)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

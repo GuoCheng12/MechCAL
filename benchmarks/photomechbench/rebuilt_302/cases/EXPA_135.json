@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_135",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cc(C)c(N2c3ccc(-c4c5c(c(-c6ccc7c(c6)B6c8ccccc8Oc8cccc(c86)N7c6c(C)cc(C)cc6C)c6nsnc46)N=S=N5)cc3B3c4ccccc4Oc4cccc2c43)c(C)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BBT-OABNA",
+  "source_documents": [
+   {
+    "source_id": "C18",
+    "title": "Rigid Boron‐Fused Frameworks for Efficient Near‐Infrared Emission and Optical Gain Beyond 900 nm",
+    "doi": "10.1002/adom.71991",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C18-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adom.71991",
+    "file": "10.1002_adom.71991_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-10-27",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene",
+   "film: spin-coated neat/doped films",
+   "OLED devices"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C18",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The resulting emitters exhibited reduced knr s, enhanced photoluminescence quantum yields, and higher external electroluminescence quantum efficiencies in NIR organic light-emitting diodes relative to a conventional donor-based analogue.",
+    "subject": "BBT-DABNA, BBT-OABNA vs BBT-TPA",
+    "scope": "target",
+    "conditions": "toluene, spin-coated films, OLEDs",
+    "kind": "observation",
+    "statement": "Boron-fused MR units lower knr and raise PLQY relative to the triphenylamine analogue.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C18",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Analysis of the rate constants revealed that these improvements originated not only from enhanced kr but also from suppressed knr (Table 1).",
+    "subject": "BBT-MR compounds",
+    "scope": "target",
+    "conditions": "solution/film",
+    "kind": "observation",
+    "statement": "Both larger kr and smaller knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C18",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The PLQYs of the spin-coated films were 7.2%, 7.7%, and 14.5% for BBT-TPA, BBT-DABNA, and BBTOABNA, respectively",
+    "subject": "all three",
+    "scope": "target",
+    "conditions": "spin-coated films",
+    "kind": "observation",
+    "statement": "Film PLQY 7.2% (TPA), 7.7% (DABNA), 14.5% (OABNA).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C18",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Despite possessing similarly fused and structurally constrained skeletons, the MR compounds exhibited smaller structural displacements and suppressed strongly coupled vibrational modes, indicating more delocalized structural relaxation and weaker electronvibrational coupling.",
+    "subject": "BBT-MR compounds",
+    "scope": "target",
+    "conditions": "DFT, Huang-Rhys analysis",
+    "kind": "computation",
+    "statement": "Smaller Huang-Rhys factors and reorganization energies for the MR compounds.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C18",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Notably, BBT-OABNA exhibited approximately a twofold increase in PLQY compared to BBT-TPA, owing to the effective suppression of knr , demonstrating the effectiveness of the rigid boron-framework design strategy for developing high-performance NIR-emitting materials.",
+    "subject": "BBT-OABNA vs BBT-TPA",
+    "scope": "target",
+    "conditions": "film",
+    "kind": "author_interpretation",
+    "statement": "Twofold PLQY from suppressed knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C18",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "MR-derived boron-fused frameworks were incorporated to suppress electron– vibration coupling while maintaining long-wavelength emission arising from long-range CT excited states.",
+    "subject": "BBT-MR compounds",
+    "scope": "target",
+    "conditions": "conclusion",
+    "kind": "author_interpretation",
+    "statement": "The emission comes from long-range CT states.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Emission arises from long-range CT excited states (conclusion); the CT character is shared and does not explain the differences."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Energy-gap-law framing: knr is the bottleneck in the NIR, and the paper explains the PLQY order by knr (and kr) from Table 1 plus Huang-Rhys analysis. BBT-OABNA has the smallest knr and twice the PLQY of BBT-TPA."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Rigid frameworks act through weaker vibronic coupling in the energy-gap law (guideline §3.5 first bullet, awaiting the author); not labelled RIM."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Emission arises from long-range CT excited states (conclusion); the CT character is shared and does not explain the differences."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Energy-gap-law framing: knr is the bottleneck in the NIR, and the paper explains the PLQY order by knr (and kr) from Table 1 plus Huang-Rhys analysis. BBT-OABNA has the smallest knr and twice the PLQY of BBT-TPA."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C18-CG1",
+   "varied_factor": "donor on the benzobisthiadiazole acceptor (triphenylamine vs B/N or B/N/O multiple-resonance frameworks)",
+   "paper_difference": "The rigid boron-fused donors weaken electron-vibration coupling, lower knr and raise PLQY (7.2% to 14.5% in film) at >860 nm."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of the SI drawing (SI p11)",
+   "SI HRMS [M]+ calcd for C60H42B2N6O2S2 matches",
+   "route: N/O MR unit 10 from 9 (C33H35BClNO3) coupled to the BBT core"
+  ],
+  "used_si": true,
+  "formula": "C60H42B2N6O2S2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_adom.71991_SI_1.pdf p11, 10.1002_adom.71991_SI_1.pdf p49, 10.1002_adom.71991_SI_1.pdf p6, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,190 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0068",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(N2C(=O)c3cccc4cccc(c34)C2=O)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMIM",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c5sc01151e",
+    "title": "Polymorph crystal packing effects on charge transfer emission in the solid state",
+    "doi": "10.1039/c5sc01151e",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "652ccae1db38eed59ae7caf7a12b5c765175cdfc9eb3ff8b92c45abc7b2d0994"
+   }
+  ],
+  "publication_date": "2015-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "CHCl3",
+   "orange and green polymorph crystals"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c5sc01151e",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The donor N,N-dimethylaniline and acceptor naphthalimide groups are twisted with respect to each other; the degree of twist is marginally different for the two structures.",
+    "subject": "DMIM",
+    "scope": "target",
+    "conditions": "two polymorphs",
+    "kind": "observation",
+    "statement": "Twisted donor-acceptor dyad.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c5sc01151e",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Very weak room temperature emission was observed for DMIM in a CHCl3 solution, but crystals deposited on a glass slide glowed when irradiated at 488 nm using a fluorescence microscope.",
+    "subject": "DMIM",
+    "scope": "target",
+    "conditions": "CHCl3 vs crystals",
+    "kind": "observation",
+    "statement": "Emission appears in crystals.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c5sc01151e",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "One key point to note for DMIM, which is somewhat distinctive to other literature examples, is the observation of photoinduced electron transfer within the dyad in the crystalline state.",
+    "subject": "DMIM",
+    "scope": "target",
+    "conditions": "crystals, transient spectroscopy",
+    "kind": "observation",
+    "statement": "PET within the dyad in the crystal; emission is charge-recombination fluorescence from the CT state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c5sc01151e",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The origin of the effect for DMIM appears to be alterations in rate constants for non-radiative decay.",
+    "subject": "DMIM polymorphs",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Polymorph differences come from knr (~2.6-3.5x).",
+    "limitations": "Assumes similar kr."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Photoinduced electron transfer within the twisted dyad gives a CT state whose recombination fluorescence is the solid-state emission."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The polymorph difference is explained by different non-radiative rate constants."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The emitting CT state is the product of the electron transfer in a twisted dyad; by guideline §3.3 it is not labelled ICT separately."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Photoinduced electron transfer within the twisted dyad gives a CT state whose recombination fluorescence is the solid-state emission."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The polymorph difference is explained by different non-radiative rate constants."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "two crystal polymorphs with different packing"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "formula C20H16N2O2 and HRMS [M+H]+ 317.1288 (calc 317.1285)",
+   "synthesis: 1,8-naphthalic anhydride + N,N-dimethyl-p-phenylenediamine",
+   "figure: Scheme 1"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous ICT secondary dropped by guideline §3.3.",
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

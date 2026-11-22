@@ -1,0 +1,216 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0097",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#CC(=C(C#N)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1)c1ccc(N(c2ccccc2)c2ccc(C(=C(c3ccccc3)c3ccccc3)c3ccccc3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPETPAFN",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c5cc03603h",
+    "title": "Silica shelled and block copolymer encapsulated red-emissive AIE nanoparticles with 50% quantum yield for two-photon excited vascular imaging",
+    "doi": "10.1039/c5cc03603h",
+    "format": "PDF",
+    "pages": 5,
+    "pdf_sha256": "866a8f6d9c5c0b6ed5f6b08257da87ca5abc7aa25c10d7b39b08b1e52c947cf2"
+   }
+  ],
+  "publication_date": "2015-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "hexane, toluene, THF",
+   "THF/water",
+   "F127 and F127-SiO2 nanoparticles",
+   "two-photon imaging in mice"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the emission maximum of TPETPAFN is red-shifted from 597 nm in hexane to 643 nm in toluene and 652 nm in THF",
+    "subject": "TPETPAFN",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Red shift and weakening with polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "demonstrates its strong ICT character.",
+    "subject": "TPETPAFN",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "ICT fluorogen.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The protective silica layer thus provides a relatively less polar environment for TPETPAFN by minimizing its contact with water.",
+    "subject": "TPETPAFN in F127-SiO2 NPs",
+    "scope": "target",
+    "conditions": "nanoparticles",
+    "kind": "author_interpretation",
+    "statement": "Less polar shell raises QY of the ICT dye (24% → 50%).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "No obvious fluorescence enhancement has been observed for TPE based NPs with and without SiO2 coating",
+    "subject": "TPE (control)",
+    "scope": "analog",
+    "conditions": "nanoparticles",
+    "kind": "observation",
+    "statement": "Non-ICT control does not benefit from silica.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The longer lifetime of TPETPAFN-F127-SiO2 NPs should be due to blocking of nonradiative decay pathways",
+    "subject": "TPETPAFN NPs",
+    "scope": "target",
+    "conditions": "nanoparticles",
+    "kind": "author_interpretation",
+    "statement": "Lifetime 1.81 → 4.18 ns: knr reduced at similar kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1039_c5cc03603h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "When fw reaches 90%, the corresponding fluorescence intensities of TPETPAFN and TPE are increased up to 70-fold and 86-fold, respectively",
+    "subject": "TPETPAFN",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "observation",
+    "statement": "AIE (70-fold).",
+    "limitations": "No AIE mechanism stated."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The strong ICT character makes emission polarity-sensitive; the less polar silica shell explains the doubled QY, while the non-ICT TPE control is unaffected."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Lifetime and yield together are read as reduced knr at nearly constant kr."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "AIE is shown (E06) but no motion-based explanation is given."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The strong ICT character makes emission polarity-sensitive; the less polar silica shell explains the doubled QY, while the non-ICT TPE control is unaffected."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Lifetime and yield together are read as reduced knr at nearly constant kr."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "F127 polymer and silica shell; less polar microenvironment"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previously no primary label; ICT is the conclusion's explanation of the QY gain, now primary.",
+  "previous_primary": []
+ }
+}

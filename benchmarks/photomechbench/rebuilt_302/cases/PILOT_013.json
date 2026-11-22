@@ -1,0 +1,206 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_013",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(/C=N/c2ccccc2/N=C/c2ccc(O)cc2O)c(O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "L1 (isolated as L1.EA and L1.MeOH solvates)",
+  "source_documents": [
+   {
+    "source_id": "P07",
+    "title": "Solvent-dependent crystal forms of an o-phenylenediamine-derived Schiff base: ESIPT behaviour, photophysical properties and luminescent metal-ion sensing",
+    "doi": "10.1016/j.jphotochem.2026.117704",
+    "format": "PDF",
+    "pages": 16,
+    "obtained_via": "manual (author, browser)"
+   }
+  ],
+  "publication_date": "2026-10-06",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "DMSO, DMF, MeOH, EtOH, MeCN"
+   },
+   {
+    "state": "crystal",
+    "media": "ethyl acetate and methanol solvates"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P07",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Both compounds exhibit excited-state intramolecular proton transfer (ESIPT), which dominates their fluorescence behaviour.",
+    "subject": "L1 (both solvate forms)",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "ESIPT is stated as the dominant emission mechanism.",
+    "limitations": "Abstract claim; the emission data show a single band at 428-446 nm and no separately assigned keto band."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P07",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "is attributed to the electronic transition of the intramolecularly hydrogen-bonded enol form, which is capable of undergoing excited-state intramolecular proton transfer",
+    "subject": "L1",
+    "scope": "target",
+    "conditions": "DMSO, DMF, MeOH, EtOH, MeCN",
+    "kind": "observation",
+    "statement": "A 360-370 nm absorption band is assigned to the H-bonded enol form able to undergo ESIPT.",
+    "limitations": "Assignment of an absorption band, not a measurement of proton transfer."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P07",
+    "pdf_page": 12,
+    "location": null,
+    "quote": "Single-crystal X-ray diffraction revealed that both forms adopt the keto-amine tautomer in the solid state",
+    "subject": "L1.EA, L1.MeOH",
+    "scope": "target",
+    "conditions": "single crystals, 100 K",
+    "kind": "observation",
+    "statement": "The transferable proton sits on N in the crystal (keto-amine).",
+    "limitations": "Ground-state tautomer; says nothing about excited-state transfer."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P07",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Conversion of the KK tautomer into the KE tautomer requires overcoming a proton-transfer barrier of 2.26 kcal",
+    "subject": "L1",
+    "scope": "target",
+    "conditions": "ωB97X-D/def2-TZVP/PCM(ethanol)",
+    "kind": "computation",
+    "statement": "Low ground-state proton-transfer barriers between tautomers.",
+    "limitations": "Ground-state calculation; no excited-state proton-transfer profile for the free ligand."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P07",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "suggesting that aggregation and intermolecular interactions in the solid phase promote non-radiative deactivation of the excited states, thereby quenching the fluorescence of both compounds",
+    "subject": "L1.EA, L1.MeOH",
+    "scope": "target",
+    "conditions": "solid state",
+    "kind": "author_interpretation",
+    "statement": "Weaker solid-state emission attributed to aggregation-promoted nonradiative decay.",
+    "limitations": "No specific intermolecular coupling identified."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "ESIPT is the paper's stated mechanism; the support is indirect (enol absorption band, keto-amine crystal tautomer, ground-state barriers), with no keto emission or excited-state calculation for the free ligand."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "ICT is invoked only for solid-state absorption bands and for metal complexes; not established for the ligand's emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "ESIPT is the paper's stated mechanism; the support is indirect (enol absorption band, keto-amine crystal tautomer, ground-state barriers), with no keto emission or excited-state calculation for the free ligand."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Solid-state quenching is attributed to aggregation in general terms only; recorded as environment_context."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "solid-state quenching attributed to aggregation and intermolecular interactions (no specific coupling named)",
+    "evidence_ids": [
+     "E05"
+    ]
+   }
+  ],
+  "out_of_pool": [
+   {
+    "mechanism": "metal-ion sensing via coordination-modulated ESIPT/ICT and a possible TICT pathway of the Zn2+ complex (complex, not the free ligand)",
+    "evidence_ids": []
+   }
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "synthesis: 2 equiv. 2,4-dihydroxybenzaldehyde + o-phenylenediamine",
+   "elemental analysis formula C20H16N2O4 matches",
+   "OPSIN parse of N,N'-bis(2,4-dihydroxybenzylidene)benzene-1,2-diamine (same connectivity)"
+  ],
+  "second_source": "single-crystal structures (CCDC 2563589, 2563590)",
+  "note": "SI not available (author checked the article page)",
+  "formula": "C20H16N2O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main.pdf p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

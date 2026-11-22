@@ -1,0 +1,237 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_015",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(/C=C/c2cc(=O)c3ccccc3o2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "5 (O)",
+  "source_documents": [
+   {
+    "source_id": "P09",
+    "title": "Chalcogen-Substituted Molecular Rotors as Polarity and Viscosity Sensors for Amyloid-β Fibril Formation and Bioimaging",
+    "doi": "10.1002/chem.202503195",
+    "format": "PDF",
+    "pages": 14,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "P09-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.202503195",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-28",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "PBS, organic solvents, water-glycerol"
+   },
+   {
+    "state": "bound",
+    "media": "amyloid-β fibrils; live cells"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "All four compounds displayed pronounced solvatochromism, a hallmark of ICT fluorophores.",
+    "subject": "compounds 5-8",
+    "scope": "target",
+    "conditions": "toluene to water",
+    "kind": "observation",
+    "statement": "Strong positive emission solvatochromism.",
+    "limitations": "Detailed solvent series shown for 6; others in SI."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "reveals that the emission of these chromone rotors originates from an ICT transition between the HOMO and LUMO",
+    "subject": "compounds 5-8",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Emissive transition has ICT character; gap narrows from 5 to 8.",
+    "limitations": "Frontier-orbital level analysis."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In polar, low-viscosity media such as PBS, stabilization of the charge-separated configuration facilitates rotation about the D–π–A bond, promoting formation of a TICT state with reduced D–A orbital overlap and suppressed radiative decay.",
+    "subject": "compounds 5-8",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "Weak emission in PBS attributed to rotation into a dark TICT state.",
+    "limitations": "No TICT state computed explicitly."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "All compounds exhibit a linear increase in absorption and emission intensity with increasing the concentration (5–50 µM) without the appearance of new bands or spectral distortions",
+    "subject": "compounds 5-8",
+    "scope": "target",
+    "conditions": "PBS, 5-50 µM",
+    "kind": "observation",
+    "statement": "No dye aggregation in PBS at working concentrations.",
+    "limitations": "Only this concentration range in PBS."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P09",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "in high-viscosity media, this rotation is suppressed, favoring the brighter ICT emission",
+    "subject": "compounds 5-8",
+    "scope": "target",
+    "conditions": "water-glycerol",
+    "kind": "author_interpretation",
+    "statement": "Viscosity turn-on attributed to suppressed rotation.",
+    "limitations": "Interpretation of the glycerol series."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "P09",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "compound 5 displayed a smaller overall enhancement (∼50-fold from water to 100% glycerol)",
+    "subject": "5 (O)",
+    "scope": "target",
+    "conditions": "water to 100% glycerol",
+    "kind": "observation",
+    "statement": "Fluorescence increases strongly with viscosity.",
+    "limitations": "Glycerol also lowers polarity relative to water."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Viscosity turn-on of a molecular rotor: restricted twisting suppresses the dark TICT channel."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ICT emission with polarity-stabilised TICT quenching."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "Viscosity turn-on of a molecular rotor: restricted twisting suppresses the dark TICT channel."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "ICT emission with polarity-stabilised TICT quenching."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair (no OH/NH next to an acceptor).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "No aggregation in PBS at 5-50 µM (linear absorption/emission, no new bands).",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No heavy atom; the heavy-atom ISC argument is made only for the S/Se/Te analogues."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "binding to amyloid fibrils and viscous cellular regions immobilises the rotor",
+    "evidence_ids": [
+     "E05"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B1-CG1",
+   "factor": "chalcogen in the chromone acceptor (O / Se / Te)",
+   "paper_difference": "emission falls O > S > Se > Te; Se/Te quenching attributed to heavy-atom ISC; viscosity response largest for S/Se"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of the paper's name (E)-2-(4-(dimethylamino)styryl)-4H-chromen-4-one",
+   "ESI-MS calculated formula C19H17NO2 matches"
+  ],
+  "si_checked": "2026-11-15",
+  "formula": "C19H17NO2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at si.pdf p15"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

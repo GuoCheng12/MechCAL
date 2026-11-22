@@ -1,0 +1,172 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_041",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2c(-c3ccc4cc(-c5ccc6cc(-c7cccc8ccccc78)ccc6c5)ccc4c3)cccc2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "126261",
+  "source_documents": [
+   {
+    "source_id": "A25",
+    "title": "Synthesis and photophysical properties of quaternaphthalenes: topology-dependent radiative dynamics in deep-blue emitters",
+    "doi": "10.1007/s43630-026-00955-4",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A25-SI",
+    "title": "Supporting information",
+    "doi": "10.1007/s43630-026-00955-4",
+    "file": "10.1007_s43630-026-00955-4_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution",
+   "solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A25",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Several QNps, especially 126151 and 126261, showed high fluorescence quantum yields and large radiative rate constants, whereas 126272 exhibited a smaller radiative rate and a longer fluorescence lifetime, indicating suppression of the radiative transition probability by a specific linkage topology.",
+    "subject": "QNps",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Linkage topology sets the radiative rate constant.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A25",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "TD-DFT calculations showed that highly emissive QNps possess large oscillator strengths and mainly HOMO–LUMObased S1 ← S0 transitions.",
+    "subject": "QNps",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Bright isomers have large S1 oscillator strengths.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A25",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The negligible solvent dependence of the fluorescence spectra supports locally excited π–π* emissive states rather than intramolecular charge-transfer states.",
+    "subject": "QNps",
+    "scope": "target",
+    "conditions": "solvents",
+    "kind": "observation",
+    "statement": "Emission is LE ππ*, not CT.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Topology-dependent oscillator strength and radiative rate govern the emission (high quantum yield from a large radiative rate constant)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Negligible solvatochromism; the paper assigns LE ππ* emission rather than CT.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Topology-dependent oscillator strength and radiative rate govern the emission (high quantum yield from a large radiative rate constant)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A25-CG1",
+   "varied_factor": "naphthalene linkage topology (1,5- vs 2,6- vs 2,7-linked inner unit)",
+   "paper_difference": "1,5/2,6-linked isomers have large kr and high quantum yield; the 2,7-linked isomer has a small kr."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure from the paper's linkage code (1261 = 2,6-bis(1-naphthyl)naphthalene, extended to four units), name built and parsed with OPSIN; C40H26"
+  ],
+  "used_si": false,
+  "note": "code-to-structure mapping inferred from the paper's definition of 1261; to be confirmed by structure recognition",
+  "formula": "C40H26",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p1, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

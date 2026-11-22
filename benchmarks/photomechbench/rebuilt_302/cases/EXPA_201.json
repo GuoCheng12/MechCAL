@@ -1,0 +1,315 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_201",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCN1c2ccccc2-c2cc3cccccc-3[n+]2[B-]1(F)F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Ph-NN (N-butyl-2-(1-azaazulen-2-yl)anilide BF2 complex)",
+  "source_documents": [
+   {
+    "source_id": "F23",
+    "title": "1-Azaazulene constructs: Overcoming the weak fluorescence of azulene derivatives via S1-S0 transitions",
+    "doi": "10.1016/j.cclet.2025.111987",
+    "format": "PDF",
+    "pages": 5,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "F23-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.cclet.2025.111987",
+    "file": "10.1016_j.cclet.2025.111987_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2025-10-21",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "oxygen-free toluene, 1e-5 M",
+   "thin films (ACQ)",
+   "single crystals"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F23",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "1-azaazulene constructs demonstrate effective S1 -S0 transitions, resulting in enhanced fluorescence.",
+    "subject": "Ph-NN, Ph-ON, Py-NN",
+    "scope": "target",
+    "conditions": "toluene, oxygen-free",
+    "kind": "author_interpretation",
+    "statement": "Unlike azulene (S2 emission), the 1-azaazulene complexes emit from S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F23",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Notably, the reduced S2 -S1 energy separation accelerates the non-radiative S2 → S1 conversion compared to azulene, effectively suppressing the anti-Kasha S2 → S0 radiative transition.",
+    "subject": "1-azaazulene core",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "A smaller S2-S1 gap and a wider S0-S1 gap than azulene make the core Kasha-compliant.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F23",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In contrast to the anti-Kasha fluorescence observed in azulene derivatives, all four 1-azaazulene constructs display S1 → S0 emission fluorescence.",
+    "subject": "Ph-NN, Ph-ON, Py-NN",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "All complexes emit from S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "However, its PLQY is only 0.3 %, likely due to ultrafast nonradiative decay.",
+    "subject": "Ph-NN",
+    "scope": "target",
+    "conditions": "toluene, 1e-5 M",
+    "kind": "author_interpretation",
+    "statement": "Ph-NN: 705 nm emission, PLQY 0.3%, lifetime 0.18 ns.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "reveals an exceptionally short luminescence lifetime (τ ) of 0.18 ns for Ph-NN, yielding a radiative transition rate (kr ) of 1.67 × 107 s−1 and a nonradiative rate (knr ) of 5.54 × 109 s−1 (Table 1).",
+    "subject": "Ph-NN",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "kr 1.67e7 s-1, knr 5.54e9 s-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In contrast, Ph-NN and Ca-NN show significantly red-shifted absorption at 597 and 555 nm, accompanied by broader absorption bands lacking distinct shoulders, which suggests excitations with pronounced charge-transfer (CT) characteristics.",
+    "subject": "Ph-NN",
+    "scope": "target",
+    "conditions": "toluene absorption",
+    "kind": "author_interpretation",
+    "statement": "Broad, red-shifted absorption read as CT excitation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Ph-ON and Py-NN display maximum absorption peaks at 487 and 501 nm, respectively, with pronounced shoulder peaks, indicating dominant localized excitations.",
+    "subject": "Ph-ON, Py-NN",
+    "scope": "target",
+    "conditions": "toluene absorption",
+    "kind": "author_interpretation",
+    "statement": "Structured absorption: locally excited character.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Their enhanced PLQYs arise from both increased kr and reduced knr .",
+    "subject": "Ph-ON (and Ca-NN)",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "Ph-ON: PLQY 2.9%, 0.84 ns, kr 3.45e7, knr 1.16e9 s-1 (versus Ph-NN).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F23",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Py-NN, incorporating a pyrrole group, achieved a remarkable photoluminescence quantum yield (PLQY) of 19.3 % at 560 nm, attributed to enhanced HOMO-LUMO orbital overlap with an oscillator strength (f) of 0.4973, resulting in a high radiative rate (kr = 9.51 × 107 s−1 ) and suppressed non-radiative decay (knr = 0.40 × 109 s−1 ).",
+    "subject": "Py-NN",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "Py-NN: PLQY 19.3%, 2.03 ns; the highest kr and lowest knr of the series.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In addition, Py-NN demonstrated a relatively large energy gap (E = 2.75 eV) and smallest reorganization energy (λM = 3942 cm−1 ), which is conducive to decelerating nonradiative decay rate (see Supporting information for details).",
+    "subject": "Py-NN",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Larger gap and smallest reorganization energy slow nonradiative decay.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E11",
+    "source_id": "F23",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "TD-DFT calculations show that the oscillator strengths (f) for the S0 → S1 transition of Ph-NN, Ph-ON, Ca-NN, and Py-NN are 0.3299, 0.3009, 0.3458, and 0.4973, respectively.",
+    "subject": "Ph-NN, Ph-ON, Py-NN",
+    "scope": "target",
+    "conditions": "TD-DFT B3LYP/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "S0-S1 oscillator strengths.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E12",
+    "source_id": "F23",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "These pronounced π -π interactions lead to a decrease in the PLQY of the thin films due to aggregation-caused quenching (ACQ) effects (Table S5 in Supporting information).",
+    "subject": "all four complexes",
+    "scope": "target",
+    "conditions": "single crystals, thin films",
+    "kind": "author_interpretation",
+    "statement": "Antiparallel pi-stacking (3.32-3.47 A) in the crystals; film PLQY drops (ACQ).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Broad red-shifted absorption read as CT excitation."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E12"
+    ],
+    "rationale": "Pi-stacking in the solid lowers the film PLQY (ACQ)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05",
+     "E11"
+    ],
+    "rationale": "S1 emission at 705 nm with very low PLQY, explained by ultrafast nonradiative decay (knr 5.5e9 s-1 against kr 1.7e7 s-1)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Broad red-shifted absorption read as CT excitation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E12"
+    ],
+    "rationale": "Pi-stacking in the solid lowers the film PLQY (ACQ)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05",
+     "E11"
+    ],
+    "rationale": "S1 emission at 705 nm with very low PLQY, explained by ultrafast nonradiative decay (knr 5.5e9 s-1 against kr 1.7e7 s-1)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F23-CG1",
+   "varied_factor": "chelating aryl group on the 2-position of the 1-azaazulene BF2 complex (N-butylanilide, phenolate, pyrrolide)",
+   "paper_difference": "PLQY 0.3% (Ph-NN, CT-like, knr 5.5e9 s-1), 2.9% (Ph-ON) and 19.3% (Py-NN, largest f and kr, smallest knr and reorganization energy); all emit from S1."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "Scheme 1: 2-(2-aminophenyl)-1-azaazulene (Suzuki), N-butylation (n-BuLi, BuBr), then BF3.Et2O",
+   "SI HRMS [M+H]+ calcd for C19H19BF2N2 325.1682, found 325.1670; X-ray (Table S1, C19H19BF2N2)"
+  ],
+  "formula": "C19H19BF2N2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.79)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

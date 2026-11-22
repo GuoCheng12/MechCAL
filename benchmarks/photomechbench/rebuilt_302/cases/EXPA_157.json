@@ -1,0 +1,243 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_157",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1=CC(C)=[N+]2C1=C(c1ccc3c(c1)OCCOCCOc1ccccc1OCCOCCO3)c1c(C)cc(C)n1[B-]2(F)F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "probe 1 (dibenzo-18-crown-6 BODIPY)",
+  "source_documents": [
+   {
+    "source_id": "D04",
+    "title": "Ba 2+ ‐Selective and pH‐Stable Dibenzo‐18‐Crown‐6 Equipped BODIPYs with Pronounced Fluorescence Enhancement in Aqueous Solution",
+    "doi": "10.1002/cptc.70148",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D04-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/cptc.70148",
+    "file": "10.1002_cptc.70148_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-04-30",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMSO (monomer, 509 nm)",
+   "water/DMSO 999/1 (aggregates)",
+   "MeCN (cyclic voltammetry)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D04",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Here, we observed that a cation switches off a photoinduced electron transfer (PET) and hampers aggregation between BODIPY dyes in aqueous solution.",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "water/DMSO 999/1",
+    "kind": "author_interpretation",
+    "statement": "Two quenching processes in the free probe: PET and aggregation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D04",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Assuming that the same trend applies, the decrease in the Eox value of the DB-18C6 moiety in compounds 1 and 2, resulting from its enhanced electron-donating ability, leads to a slightly negative ΔGPET value for the reductive PET process in both systems.",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "Rehm-Weller estimate, MeCN",
+    "kind": "author_interpretation",
+    "statement": "Intramolecular PET from the crown ether to the BODIPY is estimated slightly exergonic.",
+    "limitations": "Estimated by analogy; the crown oxidation overlaps the BODIPY wave."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D04",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "That leads to the assumption that in 1 and 2, also a PET takes place, which quenches the fluorescence.",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "PET quenches the free probes.",
+    "limitations": "Stated as an assumption."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D04",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Therefore, we conclude that 1 and 2 aggregate to less ordered self-assembly products formed in an",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "water/DMSO 999/1",
+    "kind": "author_interpretation",
+    "statement": "Red-shifted, broadened bands (about 610-620 nm) come from less ordered aggregates; reference 3 shows none.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D04",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In our case, the observed shifts in absorption and emission, as well as the spectral widths, are inconsistent with J-aggregation.",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "water/DMSO",
+    "kind": "observation",
+    "statement": "The aggregates are not J-aggregates.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D04",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "Ba2+ switches off the PET from the DB-18C6 to the BODIPY core and also prevents aggregation between multiple dye molecules in aqueous solution.",
+    "subject": "probe 1 + Ba2+",
+    "scope": "target",
+    "conditions": "water/DMSO",
+    "kind": "author_interpretation",
+    "statement": "Ba2+ binding removes both quenching channels (FE 185).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D04",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This suggests that Ba2+ induces de-aggregation of the probes, as indicated by the decrease in fluorescence intensity at 610 nm (1) and 620 nm (2), respectively, and that Ba2+ binding leads to an interruption of the PET process in 1 and 2, which is reflected by the further increase in fluorescence intensity at 509 nm.",
+    "subject": "probes 1 and 2",
+    "scope": "target",
+    "conditions": "Ba2+ titration",
+    "kind": "observation",
+    "statement": "The aggregate band falls first, then the monomer band rises as PET is interrupted.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Paper names PET from the dibenzo crown to the BODIPY as one of the two quenching processes of the free probe; the driving force is only estimated (slightly negative)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "In water the probe forms less ordered aggregates with red-shifted, weak emission; the paper names aggregation as the second quenching process."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Paper names PET from the dibenzo crown to the BODIPY as one of the two quenching processes of the free probe; the driving force is only estimated (slightly negative)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E04",
+     "E05",
+     "E07"
+    ],
+    "rationale": "In water the probe forms less ordered aggregates with red-shifted, weak emission; the paper names aggregation as the second quenching process."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "Ba2+ binding by the crown ether switches off PET and de-aggregates the probe (complex, not the free molecule) (E06, E07)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "meso-(dibenzo-18-crown-6-4'-yl) tetramethyl BODIPY (Scheme 1)",
+   "SI HRMS [M+H]+ C33H37BN2O6F2"
+  ],
+  "used_si": true,
+  "formula": "C33H37BF2N2O6",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_cptc.70148_SI_1.pdf p16, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

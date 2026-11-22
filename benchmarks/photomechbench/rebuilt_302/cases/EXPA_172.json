@@ -1,0 +1,206 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_172",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc2c(-c3ccccc3)cc3c4cc(-c5ccccc5)c5ccc(C)cc(c(c1)c23)c54"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1-Ph-Me (dimethyl diphenyl dicyclohepta[cd,fg]-as-indacene)",
+  "source_documents": [
+   {
+    "source_id": "D16",
+    "title": "Facile Synthesis of Dicyclohepta[ cd , fg ]‐ as ‐indacene and Confirmation of its Anti‐Kasha S 3 Emission",
+    "doi": "10.1002/ceur.70327",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D16-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/ceur.70327",
+    "file": "10.1002_ceur.70327_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-06-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "CCl4, toluene solution"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D16",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Compound 1-Ph-Me exhibits near-infrared (NIR) absorption as well as weak anti-Kasha emission.",
+    "subject": "1-Ph-Me",
+    "scope": "target",
+    "conditions": "CCl4, toluene",
+    "kind": "observation",
+    "statement": "QY 0.07% (CCl4), emission at 616 nm.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D16",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Notably, two absorption bands ranging from 750 to 1700 nm (S0 → S1 band) and 520 to 680 nm (S0 → S2 band) showed no overlap with the excitation spectrum, indicating that the observed emission originates from the S3 excited state of 1-Ph-Me (Figure S18).",
+    "subject": "1-Ph-Me",
+    "scope": "target",
+    "conditions": "excitation spectra",
+    "kind": "observation",
+    "statement": "Emission comes from S3.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D16",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "In this sense, the S0 → S2 transition of azulene, which potentially decays with emission, almost corresponds to the S0 → S3 and S0 → S4 transitions of 1-Ph-Me (shown in red).",
+    "subject": "1-Ph-Me",
+    "scope": "target",
+    "conditions": "TD-DFT orbitals",
+    "kind": "computation",
+    "statement": "The emissive azulene-like state is S3 in the dimer: the state order of the fused biazulene explains which state emits.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D16",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The loose-bolt effect associated with the phenyl groups is also likely to contribute [38].",
+    "subject": "1-Ph-Me",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Phenyl motion may shorten the emission lifetime.",
+    "limitations": "Hedged ('likely')."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D16",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "In contrast, 1-Ph-Me displayed an anti-Kasha emission peak at 616 nm, representing a six-fold enhancement compared to 1-Ph, although the under lying mechanism is not yet fully understood.",
+    "subject": "1-Ph-Me vs 1-Ph",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Methyl groups raise the S3 emission six-fold, mechanism unknown.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Loose-bolt motion of the phenyls is suggested to shorten the lifetime (hedged)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Anti-Kasha S3 emission explained by the state order of the fused biazulene: the azulene-like emissive state becomes S3."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Loose-bolt motion of the phenyls is suggested to shorten the lifetime (hedged)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Anti-Kasha S3 emission explained by the state order of the fused biazulene: the azulene-like emissive state becomes S3."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: anti-Kasha emission from S3 (E01, E02)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI route: 6,6'-dimethyl-4,4'-biazulene (HRMS C22H18), 1,1'-dibromo (C22H16Br2), 6,6'-dimethyl-1,1'-diphenyl-4,4'-biazulene, then bromination and intramolecular Yamamoto coupling",
+   "formula C34H24 for the 3,3'-coupled product"
+  ],
+  "used_si": true,
+  "note": "The closing bond position (3,3') is inferred from the dicyclohepta[cd,fg]-as-indacene ring system named in the paper.",
+  "formula": "C34H24",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_ceur.70327_SI_1.pdf p5, 10.1002_ceur.70327_SI_1.pdf p53, 10.1002_ceur.70327_SI_1.pdf p54, 10.1002_ceur.70327_SI_1.pdf p55"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

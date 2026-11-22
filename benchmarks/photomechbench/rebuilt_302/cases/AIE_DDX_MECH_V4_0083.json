@@ -1,0 +1,187 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0083",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1c2cccc3c(Cl)ccc(c23)C(=O)N1CCNCCO"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1",
+  "source_documents": [
+   {
+    "source_id": "10.1002_slct.201900380",
+    "title": "A Solid-State-Emissive 1,8-Naphthalimide Probe Based on Photoinduced Electron Transfer and Aggregation-Induced Emission",
+    "doi": "10.1002/slct.201900380",
+    "format": "PDF",
+    "pages": 5,
+    "pdf_sha256": "f153faed9971e7bd43f48d602633369ecec622d7765856af7b31cd563e657477"
+   }
+  ],
+  "publication_date": "2019-04-11",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "water/ethanol, pH 2-12",
+   "concentrated solution",
+   "paper support with HCl/NH3 vapour"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_slct.201900380",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In this work we focused on the design and synthesis of a fluorescence sensing 4-chloro-1,8-naptalimide derivative operating simultaneously by photoinduced electron transfer (PET) and aggregation induced emission (AIE) mechanisms.",
+    "subject": "probe 1",
+    "scope": "target",
+    "conditions": "solution and solid",
+    "kind": "author_interpretation",
+    "statement": "Designed as PET plus AIE sensor.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_slct.201900380",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The photoinduced fluorescence enhancement of the probe was FE = 22 after protonation in solution",
+    "subject": "probe 1",
+    "scope": "target",
+    "conditions": "solution, pH titration",
+    "kind": "observation",
+    "statement": "Protonating the amine receptor turns emission on 22-fold.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_slct.201900380",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In solid state on paper support the PET process in the probe was switched “off” in a pH window 2.5-1.5.",
+    "subject": "probe 1",
+    "scope": "target",
+    "conditions": "paper support",
+    "kind": "observation",
+    "statement": "PET switching also in the solid.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_slct.201900380",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "in concentrated solutions the new compound 1 displayed a well pronounced green AIE fluorescence (Figure S5) centred at 525 nm",
+    "subject": "probe 1",
+    "scope": "target",
+    "conditions": "concentrated solution, solid",
+    "kind": "observation",
+    "statement": "A red-shifted aggregate band (525 nm vs 405 nm monomer).",
+    "limitations": "Origin of the aggregate band not analysed."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Fluorophore-spacer-receptor PET probe: protonation of the amine blocks PET and turns emission on."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Aggregates show a separate red-shifted green band; the paper calls it AIE without assigning a mechanism."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Fluorophore-spacer-receptor PET probe: protonation of the amine blocks PET and turns emission on."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Aggregates show a separate red-shifted green band; the paper calls it AIE without assigning a mechanism."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure: Schemes 1-2, 4-chloro-1,8-naphthalimide with N-CH2CH2NHCH2CH2OH"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

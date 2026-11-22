@@ -1,0 +1,258 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_079",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cc(C)c(C2=C3C=CC(N[C@@H](c4c(C)cc(C)cc4C)[C@@H](NC4=[N+]5C(=C(c6c(C)cc(C)cc6C)c6ccc(Cl)n6[B-]5(F)F)C=C4)c4c(C)cc(C)cc4C)=[N+]3[B-](F)(F)n3c(Cl)ccc32)c(C)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "(S,S)-4 (meso-mesityl, dimesityl bridge)",
+  "source_documents": [
+   {
+    "source_id": "B03",
+    "title": "Helically Flexible Boron‐Dipyrromethenes for Solution‐Processed Isotropic Films With Preserved Chiral Exciton Coupling",
+    "doi": "10.1002/agt2.70411",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B03-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/agt2.70411",
+    "file": "10.1002_agt2.70411_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-08-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane to methanol",
+   "dilute CHCl3 (ECD, CPL)",
+   "spin-coated neat films"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Notably, blocking meso-aryl rotation by replacing the mesop-tolyl groups of (S,S)-1 and (S,S)-2 with sterically hindered mesityl groups to generate (S,S)-3 and (S,S)-4 led to a substantial",
+    "subject": "(S,S)-1 vs (S,S)-3",
+    "scope": "target",
+    "conditions": "cyclohexane to methanol",
+    "kind": "observation",
+    "statement": "Locking the meso aryl raises fluorescence efficiency.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "particularly in lowpolarity solvents (e.g., ϕflu = 0.17 for (S,S)-1 vs. ϕflu = 0.78 for (S,S)-3 in cyclohexane; see Figure 3).",
+    "subject": "(S,S)-1 vs (S,S)-3",
+    "scope": "target",
+    "conditions": "cyclohexane",
+    "kind": "observation",
+    "statement": "Φfl 0.17 (free p-tolyl rotor) vs 0.78 (locked mesityl).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Additionally, it is well established that meso-aryl “rotors” in BODIPYs—freely rotating aryl substituents at the BODIPY 8-position—promote non-radiative decay pathways enabled by conformational relaxation, thereby reducing luminescence efficiency",
+    "subject": "meso-aryl BODIPYs",
+    "scope": "target",
+    "conditions": "literature",
+    "kind": "author_interpretation",
+    "statement": "Free meso-aryl rotation opens non-radiative decay.",
+    "limitations": "Cited prior knowledge; not re-measured with viscosity here."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This spectroscopic behavior is consistent with increasing contribution of a luminescent BODIPY-toBODIPY SBCT state—responsible for the short-wavelength absorption band and the quenching of the fluorescence response (Figure 3)—as the polarity of the medium increases",
+    "subject": "(S,S)-1-4",
+    "scope": "target",
+    "conditions": "solvents of increasing polarity",
+    "kind": "observation",
+    "statement": "Symmetry-breaking CT between the two BODIPYs quenches emission in polar solvents.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Expectedly, the fluorescence of (S,S)-4 shows a stronger dependence on solvent polarity, reflecting the presence of an overcrowded, mesitylbased diamine bridge, which favors BODIPY-to-BODIPY SBCT, particularly in polar solvents",
+    "subject": "(S,S)-4",
+    "scope": "target",
+    "conditions": "solvents of increasing polarity",
+    "kind": "observation",
+    "statement": "The crowded bridge favours SBCT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "new (S,S)-3 and (S,S)-4 exhibit the expected strong and sharp Vis positive couplets (Figure 4), demonstrating efficient intramolecular chiral exciton coupling between the involved BODIPY chromophores",
+    "subject": "(S,S)-3, (S,S)-4",
+    "scope": "target",
+    "conditions": "dilute CHCl3, ECD",
+    "kind": "observation",
+    "statement": "Exciton-coupled ECD couplet from the two BODIPYs.",
+    "limitations": "Chiroptical (absorption) signature."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B03",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "is significantly higher than that of the diphenylated-bridge-based analogue (S,S)-3",
+    "subject": "(S,S)-4 vs (S,S)-3",
+    "scope": "target",
+    "conditions": "dilute CHCl3, ECD",
+    "kind": "observation",
+    "statement": "Bridge crowding strengthens the exciton couplet (Δ[θ] 30 vs 12 x 10^6).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "enabling chiral exciton coupling (e.g., positive ECD couplet for (M)-helicoBODIPYs).",
+    "subject": "helicoBODIPYs incl. (S,S)-1",
+    "scope": "target",
+    "conditions": "dilute solution, ECD",
+    "kind": "observation",
+    "statement": "Two BODIPY chromophores couple excitonically.",
+    "limitations": "From the Figure 1 caption."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Meso aryl locked by mesityl, as in 3."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The overcrowded bridge favours BODIPY-to-BODIPY SBCT, giving the strongest polarity-dependent quenching."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Intramolecular exciton coupling between the two covalently linked BODIPYs (guideline §3.5 treats intramolecular excimers as AGGREGATE); the evidence is the ECD couplet. Strongest couplet of the series."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Meso aryl locked by mesityl, as in 3."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The overcrowded bridge favours BODIPY-to-BODIPY SBCT, giving the strongest polarity-dependent quenching."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Intramolecular exciton coupling between the two covalently linked BODIPYs (guideline §3.5 treats intramolecular excimers as AGGREGATE); the evidence is the ECD couplet. Strongest couplet of the series."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B03-CG1",
+   "varied_factor": "relative to (S,S)-3: meso aryl free p-tolyl rotor (1) or bridge aryl mesityl instead of phenyl (4)",
+   "paper_difference": "Locking the meso aryl raises Φfl from 0.17 to 0.78; crowding the bridge strengthens exciton coupling and SBCT quenching in polar solvents."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI route: 3,5-dichloro-8-mesitylBODIPY + (1S,2S)-1,2-dimesitylethane-1,2-diamine",
+   "HRMS [M-H]- C56H55B2Cl2F4N6 matches"
+  ],
+  "used_si": true,
+  "formula": "C56H56B2Cl2F4N6",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_agt2.70411_SI_1.pdf p10, 10.1002_agt2.70411_SI_1.pdf p6, 10.1002_agt2.70411_SI_1.pdf p9"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,182 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0080",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1ccc(O)c(C=Nc2cc(C(C)(C)C)ccc2O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "L2",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c9qm00792j",
+    "title": "AIE-active Schiff base compounds as fluorescent probes for highly sensitive and selective detection of Fe3+ ions",
+    "doi": "10.1039/c9qm00792j",
+    "format": "PDF",
+    "pages": 13,
+    "pdf_sha256": "b91b2e12313bfd972c4215cafd544247f1158cef04c4686b91c1f347a7822b54"
+   }
+  ],
+  "publication_date": "2020-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF",
+   "THF/water mixtures",
+   "Fe3+ and other metal ions"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c9qm00792j",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Lesser fluorescence intensity for L1 and L2 in THF medium is due to the intramolecular C=N isomerization.",
+    "subject": "L1, L2",
+    "scope": "target",
+    "conditions": "THF",
+    "kind": "author_interpretation",
+    "statement": "C=N isomerization quenches emission in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c9qm00792j",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "With the increase in water content, the C=N isomerization are gradually arrested through intramolecular hydrogen bonding.",
+    "subject": "L1, L2",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "Aggregation arrests C=N isomerization.",
+    "limitations": "No torsional or rate data."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c9qm00792j",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "The fluorescence turn-off response of L1/L2 with Fe3+ could be attributed to PET inhibition mechanism",
+    "subject": "L1/L2-Fe3+ complexes",
+    "scope": "target",
+    "conditions": "Fe3+",
+    "kind": "author_interpretation",
+    "statement": "PET/LMCT quenching on Fe3+ binding.",
+    "limitations": "Concerns the complex."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c9qm00792j",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the Ф values for L2 increased from 0.017 to 0.136",
+    "subject": "L2",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "observation",
+    "statement": "Φ 0.017 → 0.136 (THF → 60% water).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "L2: AIE from arresting C=N isomerization (an intramolecular torsion) in aggregates."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E04"
+    ],
+    "rationale": "L2: AIE from arresting C=N isomerization (an intramolecular torsion) in aggregates."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The o-hydroxy Schiff base could in principle undergo ESIPT, but the paper does not discuss it."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "PET/LMCT concerns the Fe3+ complex (guideline §3.4); recorded out of pool."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "kr/knr changes are reported for Fe3+ binding, i.e. for the complex; not labelled on the free ligand."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "Fe3+ binding quenches by PET/LMCT and changes kr/knr (complex; E03)"
+  ],
+  "contrast_group": {
+   "group": "REANN-0060-CG1",
+   "varied_factor": "methyl on the salicylidene ring (L1: H, L2: 5-CH3)",
+   "paper_difference": "Same AIE explanation; L2 peaks at lower water fraction (60% vs 90%)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name in abstract (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "PET_ET"
+  ]
+ }
+}

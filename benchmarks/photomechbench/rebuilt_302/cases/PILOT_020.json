@@ -1,0 +1,259 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_020",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[Si](C)(C)C#Cc1ccc(C#C[Si](C)(C)C)c2nc3c4cc(C(=C(c5ccccc5)c5ccccc5)c5ccccc5)cc5c6nc7c(C#C[Si](C)(C)C)ccc(C#C[Si](C)(C)C)c7nc6c6cc(C(=C(c7ccccc7)c7ccccc7)c7ccccc7)cc(c3nc12)c6c45"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "4 (triPE-TMS)",
+  "source_documents": [
+   {
+    "source_id": "P10",
+    "title": "Proximal Steric Shielding Unlocks High Solid-State Luminescence in Quinoxaline-Fused Pyrene Heteroacenes",
+    "doi": "10.1002/chem.71622",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "P10-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71622",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-08-25",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "CHCl3 and five other solvents"
+   },
+   {
+    "state": "aggregate",
+    "media": "THF/water"
+   },
+   {
+    "state": "film",
+    "media": "drop-cast neat film"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P10",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "A modular synthetic route gives four soluble azaacenes with low solution PLQYs (6%–14%) but strongly enhanced emission in neat films.",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "CHCl3 solution vs drop-cast neat films",
+    "kind": "observation",
+    "statement": "Low PLQY in solution, high in neat films.",
+    "limitations": "Film morphology not characterised."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P10",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "the high PLQY arises from a favourable solid-state arrangement in which proximal substituent geometry suppresses close π–π contacts and reduces non-radiative decay",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "neat films",
+    "kind": "author_interpretation",
+    "statement": "Main explanation: steric suppression of π–π contacts.",
+    "limitations": "Crystal structures are toluene solvates and may differ from films."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P10",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "These observations confirm that the enhanced neat-film emission of TPE-QPHAs cannot be explained by conventional AIE behavior alone.",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "THF/water 0-90%",
+    "kind": "observation",
+    "statement": "Aggregates in THF/water are not brighter and have shorter lifetimes than in THF.",
+    "limitations": "Says 'alone': does not exclude a partial motion-restriction contribution."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P10",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This spatial separation of frontier orbital contributions provides clear evidence for the intramolecular charge-transfer nature of the lowest excited state",
+    "subject": "compounds 1-4 (NTOs shown for 3)",
+    "scope": "target",
+    "conditions": "solvent series; TD-DFT",
+    "kind": "computation",
+    "statement": "S1 has TPE-to-QPP charge-transfer character; solvatochromic emission.",
+    "limitations": "Characterises the emissive state; not used to explain the solid-state enhancement."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "the smaller TMS substituents in 4 provide reduced proximal shielding of the hexacene backbone, allowing greater conformational flexibility",
+    "subject": "4 (triPE-TMS)",
+    "scope": "target",
+    "conditions": "neat film",
+    "kind": "author_interpretation",
+    "statement": "Less shielding allows flexibility and closer intermolecular contacts (film PLQY 0.28).",
+    "limitations": "No crystal structure of 4."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "P10",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "indicating that the decrease in PLQY is primarily governed by an increase in knr",
+    "subject": "4",
+    "scope": "target",
+    "conditions": "neat film",
+    "kind": "observation",
+    "statement": "Highest knr in the series; kr similar.",
+    "limitations": "Rates derived from PLQY and lifetime."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Greater conformational flexibility contributes to faster nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Emissive state has TPE-to-core CT character (solvatochromism, NTOs); not the explanation of the solid-state enhancement."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E05"
+    ],
+    "rationale": "Solid-state emission governed by whether substituents prevent close π–π contacts between hexacene cores."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Lower PLQY explained by knr rather than kr."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Greater conformational flexibility contributes to faster nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Emissive state has TPE-to-core CT character (solvatochromism, NTOs); not the explanation of the solid-state enhancement."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair (no OH/NH next to an acceptor).",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E05"
+    ],
+    "rationale": "Solid-state emission governed by whether substituents prevent close π–π contacts between hexacene cores."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Lower PLQY explained by knr rather than kr."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "proximal steric shielding controls packing in neat films",
+    "evidence_ids": [
+     "E02"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B1-CG2",
+   "factor": "TIPS vs TMS alkynylsilanes on the quinoxaline (triPE fixed)",
+   "paper_difference": "film PLQY 0.82 (TIPS) vs 0.28 (TMS); larger shielding suppresses π–π contacts and knr"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI synthesis: 2,7-disubstituted pyrene-4,5,9,10-tetraone (triPE or tetraPE) condensed with 2.2 equiv. 3,6-bis((trialkylsilyl)ethynyl)benzene-1,2-diamine",
+   "MALDI-HRMS calculated [M+H]+ 1299.5063 matches C88H74N4Si4 (the SI formula string C88H122N4Si4 is a typo)",
+   "same builder reproduces the HRMS formula of compound 1 (C124H130N4Si4)"
+  ],
+  "si_checked": "2026-11-15",
+  "formula": "C88H74N4Si4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at si.pdf p38"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

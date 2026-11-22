@@ -1,0 +1,228 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0011",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1cc2ccc3ccc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6ccc7ccc8cccc9ccc6c7c89)cc5)cc4)c4ccc(c1)c2c34"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3a",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "title": "Novel Y-shaped multi-stimuli responsive pyrene substituted quinoxaline and pyridopyrazine-based push-pull molecules showing solvatochromism, aggregation induced excimer emission, acidofluorochromism and moisture detection",
+    "doi": "10.1016/j.dyepig.2023.111182",
+    "format": "PDF",
+    "pages": 16,
+    "pdf_sha256": "1dbbf9785d101d79e72be12a51330fd55fe27867e5b0212642543094c3d1fdfe"
+   }
+  ],
+  "publication_date": "2023-02-24",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene to DMSO",
+   "THF/water mixtures",
+   "THF concentration series",
+   "crystal",
+   "TFA/TEA in CHCl3 and solid",
+   "moist THF"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "For 3a and 3d, red-shift of 105 nm and 91 nm was observed, respectively, on increasing solvent polarity from toluene to DMSO.",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "toluene to DMSO",
+    "kind": "observation",
+    "statement": "Strong positive solvatochromism (ICT).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "justifies the possibility of TICT process in these molecules",
+    "subject": "3a-d",
+    "scope": "analog",
+    "conditions": "THF/hexane; crystal conformation",
+    "kind": "author_interpretation",
+    "statement": "TICT proposed from polarity-dependent shifts and twisted structure.",
+    "limitations": "Indirect."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "In 3a, there is a dual emission at 10% THF-H2O mixture due to presence of both monomer and excimer species.",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "observation",
+    "statement": "Monomer and excimer bands; 493 nm aggregate band with more water.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "When the concentration was increased to 10− 2 M, this peak diminished, giving rise to a new peak at 501 nm with enhanced emission compared to previous concentrations",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "THF concentration series",
+    "kind": "observation",
+    "statement": "Concentration-induced excimer band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Crystal structure of 3a showed twisted structure with herringbone packing arrangement and intermolecular π-π stacking of pyrene units.",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "observation",
+    "statement": "Pyrene π-π stacking in the crystal.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1016_j.dyepig.2023.111182",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "might be occuring as a result of photo-induced electron transfer (PET) in the protonated forms of 3a-d from electron donor pyrene to the pro tonated quinoxaline ring",
+    "subject": "protonated 3a-d",
+    "scope": "analog",
+    "conditions": "CHCl3 with TFA",
+    "kind": "author_interpretation",
+    "statement": "Tentative PET quenching in the protonated form.",
+    "limitations": "Concerns the protonated species, not the input molecule."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Pyrene-donor/quinoxaline-acceptor ICT gives strong solvatochromism; TICT is proposed for polar solvents and moisture sensing."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Aggregation- and concentration-induced pyrene excimer emission, with π-stacked pyrenes in the crystal."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Pyrene-donor/quinoxaline-acceptor ICT gives strong solvatochromism; TICT is proposed for polar solvents and moisture sensing."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "PET is proposed only for the TFA-protonated form (E06); by guideline §3.4 it belongs to that species and is recorded out of pool."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Aggregation- and concentration-induced pyrene excimer emission, with π-stacked pyrenes in the crystal."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "herringbone packing with pyrene π-π contacts (E05)"
+  ],
+  "out_of_pool": [
+   "tentative PET quenching in the TFA-protonated form (E06)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "c1cc2ccc3cc(-c4ccc(-c5nc6ccccc6nc5-c5ccc(-c6cc7ccc8cccc9ccc(c6)c7c89)cc5)cc4)cc4ccc(c1)c2c34",
+  "problem": "pyren-2-yl instead of pyren-1-yl",
+  "old_formula": "C52H30N2",
+  "new_formula": "C52H30N2",
+  "basis": "synthesis heading 2,3-bis(4-(pyren-1-yl)phenyl)quinoxaline (3a); OPSIN = proposed",
+  "evidence": [
+   "synthesis heading 2,3-bis(4-(pyren-1-yl)phenyl)quinoxaline (3a); OPSIN = proposed"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous PET secondary moved out of pool: it concerns the protonated form (guideline §3.4 analogy).",
+  "previous_primary": [
+   "ICT_TICT_CT",
+   "AGGREGATE_EXCITON_EXCIMER"
+  ]
+ }
+}

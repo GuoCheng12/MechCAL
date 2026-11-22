@@ -1,0 +1,125 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_005",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COCCOCCOCCO[B-]1(OCCOCCOCCOC)n2c(C)cc(C)c2C=C2C(C)=CC(C)=[N+]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "7-TEG (reference without donor)",
+  "source_documents": [
+   {
+    "source_id": "P02",
+    "title": "Hydration-Gated Photoinduced Electron Transfer in BODIPY Dyes",
+    "doi": "10.1002/anie.3726851",
+    "pmcid": "PMC13749329",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2026-09-29",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "MeCN, water"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: Scope of hydration-gated PET",
+    "quote": "Reference compounds 6‐TEG and 7‐TEG, lacking an electron donor, likewise retain high fluorescence in both solvents.",
+    "subject": "6-TEG, 7-TEG",
+    "scope": "target",
+    "conditions": "MeCN and water",
+    "kind": "observation",
+    "statement": "Without an aromatic donor there is no quenching in water or MeCN, i.e. no PET.",
+    "limitations": "None."
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Reference compound without an electron donor: no quenching, i.e. no PET.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "PILOT_C02",
+   "factor": "aromatic donor at meso: 9-anthryl (1-TEG) vs none (7-TEG)",
+   "difference": "1-TEG shows hydration-gated PET; 7-TEG stays fluorescent"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure drawn in Figure 3a",
+   "HRMS (SI): calcd for (M+Na) C27H45BN2NaO8 = SMILES formula + Na; meso-H singlet at 7.48 ppm"
+  ],
+  "si_checked": "2026-11-14",
+  "second_source": "visual check of the figure (MolScribe could not read it: R groups, abbreviated chains, boron complex or low-resolution image)",
+  "formula": "C27H45BN2O8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

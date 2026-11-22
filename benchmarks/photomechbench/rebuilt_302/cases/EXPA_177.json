@@ -1,0 +1,268 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_177",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCCc1c(C=C2C(=O)c3cc(F)c(F)cc3C2=C(C#N)C#N)[se]c2c1sc1c3sc4c5sc6c(CCCCCCCCCCC)c(C=C7C(=O)c8cc(F)c(F)cc8C7=C(C#N)C#N)[se]c6c5n(CC(CCCC)CCCCCC)c4c3n(CC(CCCC)CCCCCC)c12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CT-2Se",
+  "source_documents": [
+   {
+    "source_id": "D21",
+    "title": "Electron‐Rich Cores Empower Organic C‐Shaped Dyes With Emission Peaking Around 1000 nm, 14.3% PLQY, and >3% EQE in OLEDs",
+    "doi": "10.1002/adma.74534",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D21-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adma.74534",
+    "file": "10.1002_adma.74534_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-08-06",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "thin films (PLQY, fs-TA)",
+   "solution (solvent series)",
+   "single crystal (CT-Se)",
+   "OLED devices"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D21",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "This molecular architecture synergistically enhances intramolecular charge transfer (ICT) while suppressing internal reorganization energy through increased molecular rigidity.",
+    "subject": "CT series",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Design: stronger ICT plus smaller internal reorganization energy.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D21",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "As the emission energy gap decreases, the non-radiative decay rate (kic ) increases exponentially, leading to a steep drop in internal quantum",
+    "subject": "NIR emitters",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Energy-gap law framing.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D21",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The results in Table 1 indicate that substituting sulfur with selenium leads to a systematic reduction in internal reorganization energy relative to CB12.",
+    "subject": "CT-Se, CT-2Se",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Se lowers the internal reorganization energy.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D21",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "CT-F, CT-Se, and CT-2Se exhibit emission maxima/Φem values of 970 nm/14.26%, 974 nm/13.39%, and 985 nm/11.61%, respectively.",
+    "subject": "CT series",
+    "scope": "target",
+    "conditions": "thin film",
+    "kind": "observation",
+    "statement": "kr/knr (1e8 s-1): CT-Se 0.94/6.07, CT-2Se 0.91/6.95 (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D21",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Such delocalization effectively suppresses electron–phonon coupling in narrow-bandgap systems, thereby mitigating the energy-gap law and reducing non-radiative decay, leading to enhanced NIR OLED performance.",
+    "subject": "CT series",
+    "scope": "target",
+    "conditions": "thin film spectral shifts",
+    "kind": "author_interpretation",
+    "statement": "Delocalised excitons couple weakly to vibrations, lowering knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D21",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "While Se incorporation intrinsically reduces λint , the dual-selenium structure in CT-2Se significantly facilitates kISC and knr via enhanced spin-orbit coupling.",
+    "subject": "CT-2Se vs CT-Se",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "The second Se adds an ISC loss channel that outweighs the smaller reorganization energy.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D21",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This superior coplanarity reflects enhanced molecular rigidity, a feature conducive to minimizing internal reorganization energy.",
+    "subject": "CT-Se",
+    "scope": "target",
+    "conditions": "single crystal",
+    "kind": "observation",
+    "statement": "Core torsion 3.24 deg in CT-Se vs 6.3 deg in the S analogues; Se...O 2.63 A lock.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D21",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The solventdependent emission studies in Figure S2 further reveal that the external reorganization energy remains small despite the enhanced intramolecular charge transfer.",
+    "subject": "CT series",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "ICT character with small solvatochromic relaxation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Enhanced ICT by the electron-rich core."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "PLQY set by kr/knr: lower reorganization energy, but knr rises with the second Se."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Two selenium atoms enhance spin-orbit coupling and ISC, an extra loss channel."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E08"
+    ],
+    "rationale": "Enhanced ICT by the electron-rich core."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "PLQY set by kr/knr: lower reorganization energy, but knr rises with the second Se."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "Two selenium atoms enhance spin-orbit coupling and ISC, an extra loss channel."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "D21-CG1",
+   "varied_factor": "number of selenophenes in the heptacyclic core (one vs two)",
+   "paper_difference": "Both have low reorganization energy; the second Se raises knr through spin-orbit-coupling-assisted ISC, so CT-2Se has the lower PLQY (11.6% vs 13.4%)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "core from the structure recognition of SI intermediates 3a/3b (undecyl and N-2-butyloctyl chains from the route)",
+   "end groups: Knoevenagel with 2-(5,6-difluoro-3-oxo-2,3-dihydro-1H-inden-1-ylidene)malononitrile (main text p8)",
+   "SI HRMS C88H102N6O2F4S3Se2 (intermediates 3a C62H98N2S3Se2, 4a C64H98N2O2S3Se2)"
+  ],
+  "used_si": true,
+  "note": "Exocyclic C=C geometry of the end groups not encoded.",
+  "formula": "C88H102F4N6O2S3Se2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.4)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

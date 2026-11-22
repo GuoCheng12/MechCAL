@@ -1,0 +1,181 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0042",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cc(N(C)C)cc(C)c1/C=C1\\Sc2ccccc2C1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "HTI Z-1",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.jpca.1c02646",
+    "title": "Electronic and Geometric Characterization of TICT Formation in Hemithioindigo Photoswitches by Picosecond Infrared Spectroscopy",
+    "doi": "10.1021/acs.jpca.1c02646",
+    "format": "PDF",
+    "pages": 11,
+    "pdf_sha256": "fead5a82cd90817c405bc66de052fa88029a99ac1ca2217e81c178decd05c320"
+   }
+  ],
+  "publication_date": "2021-05-14",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane-d12",
+   "dichloromethane-d2",
+   "DMSO-d6",
+   "ps transient IR"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.jpca.1c02646",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Z-1 and Z-2 show no spectral evolution of the initial excited-state spectrum toward new excited-state species in the apolar solvent dCH.",
+    "subject": "Z-1",
+    "scope": "target",
+    "conditions": "cyclohexane-d12",
+    "kind": "observation",
+    "statement": "No TICT species in apolar solvent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.jpca.1c02646",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "210 ps for Z-1 and 32 ps for Z-2 in dDCM.",
+    "subject": "Z-1",
+    "scope": "target",
+    "conditions": "dichloromethane-d2",
+    "kind": "observation",
+    "statement": "TICT state decays in 210 ps (17.8 ps in DMSO).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acs.jpca.1c02646",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "For Z-1, in dDCM (see Figure 3a,c), the C−O band shows a qualitatively similar behavior",
+    "subject": "Z-1",
+    "scope": "target",
+    "conditions": "ps-IR",
+    "kind": "observation",
+    "statement": "C=O marker band shifts as in Z-2: charge flows into the HTI fragment.",
+    "limitations": "Assignment relies on Z-2 calculations."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acs.jpca.1c02646",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Here, we present a combined experimental and theoretical study of the twisted intramolecular charge transfer (TICT) process in hemithioindigo photoswitches.",
+    "subject": "HTI series",
+    "scope": "analog",
+    "conditions": "abstract",
+    "kind": "author_interpretation",
+    "statement": "TICT formation characterised by transient IR.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Polar solvents open a TICT pathway seen by ps-IR; absent in cyclohexane."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Polar solvents open a TICT pathway seen by ps-IR; absent in cyclohexane."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "Z/E photoisomerization competing with TICT in apolar solvents"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ICT_TICT_CT"
+  ]
+ }
+}

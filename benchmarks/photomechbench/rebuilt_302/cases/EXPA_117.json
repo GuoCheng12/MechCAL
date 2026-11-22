@@ -1,0 +1,221 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_117",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "S=c1c2ccccc2oc2ccccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "xanthione (XT)",
+  "source_documents": [
+   {
+    "source_id": "C15",
+    "title": "Probing the potential for anti-Kasha behavior through direct measurements of S2 lifetimes in xanthione and thioxanthone",
+    "doi": "10.1063/5.0348405",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C15-SI",
+    "title": "Supporting information",
+    "doi": "10.1063/5.0348405",
+    "file": "10.1063_5.0348405_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-10-22",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: series of nonpolar, polar and H-bonding solvents (fs transient absorption, steady-state emission)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C15",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This reaffirmation of the broad applicability of the energy gap law suggests that where a molecule exhibits unexpectedly large “anti-Kasha” emission that result must be discussed in terms of particular features of vibronic coupling in that molecule.",
+    "subject": "XT, TX",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "author_interpretation",
+    "statement": "S2 lifetimes follow the energy gap law.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C15",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Summarizing, the present experimental and computational data on XT show that in line with earlier studies, this molecule indeed exhibits anti-Kasha emission with an S2 lifetime of 10–20 ps.",
+    "subject": "XT",
+    "scope": "target",
+    "conditions": "solvent series, fs transient absorption",
+    "kind": "observation",
+    "statement": "S2 lives 10-20 ps and emits (anti-Kasha).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C15",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "Between XT and TX, a decrease in Eg by 60% (1.2–0.5 eV – adiabatic energies) leads to an exponential acceleration in S2 → S1 IC from 10–20 to 0.4 ps, accompanied by the expected decrease in “anti-Kasha” S2 emission intensity.",
+    "subject": "XT vs TX",
+    "scope": "target",
+    "conditions": "solution, fs transient absorption",
+    "kind": "observation",
+    "statement": "A smaller S2-S1 gap speeds S2→S1 IC 25-50 fold and weakens S2 emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C15",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The dominant relaxation is the 18.5 ps component assigned to the S2 to T1 relaxation on the basis of the associated spectral evolution [Fig. 3(b)].",
+    "subject": "XT",
+    "scope": "target",
+    "conditions": "solution, transient absorption",
+    "kind": "observation",
+    "statement": "S2 decays mainly to T1 in 18.5 ps.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C15",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Thus, the present calculations are consistent with a long S2 excited state lifetime in XT, with the tens of picoseconds relaxation likely arising through S2 /S1 vibronic coupling, and not via traversing the MECI.",
+    "subject": "XT",
+    "scope": "target",
+    "conditions": "XMS-CASPT2",
+    "kind": "computation",
+    "statement": "The S2/S1 conical intersection needs a 1 eV uphill out-of-plane distortion and is not the decay route.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C15",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "We suggest (following the work of Rai-Constapel et al.33 ) that H-bonding solvents lead to a level inversion in the ground state absorption so that the TX bright state becomes the S1 ππ∗ state, which then decays by ISC to a ππ∗ triplet state in competition with fluorescence.",
+    "subject": "TX",
+    "scope": "target",
+    "conditions": "H-bonding solvents",
+    "kind": "author_interpretation",
+    "statement": "In protic solvents ππ*/nπ* inversion makes the bright state S1, which competes ISC with fluorescence.",
+    "limitations": "Builds on earlier work [33]."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05"
+    ],
+    "rationale": "S2 emission survives because the large S2-S1 gap slows internal conversion (energy gap law); state order and gap explain the anti-Kasha emission (author decision 2026-11-16)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "S2 relaxes mainly to T1 in 18.5 ps."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05"
+    ],
+    "rationale": "S2 emission survives because the large S2-S1 gap slows internal conversion (energy gap law); state order and gap explain the anti-Kasha emission (author decision 2026-11-16)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "S2 relaxes mainly to T1 in 18.5 ps."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: S2→S0 emission with a 10-20 ps S2 lifetime (E02)"
+  ],
+  "contrast_group": {
+   "group": "C15-CG1",
+   "varied_factor": "sulfur as thiocarbonyl (xanthione) vs ring sulfur with a carbonyl (thioxanthone)",
+   "paper_difference": "The S2-S1 gap drops from about 1.2 to 0.5 eV, S2→S1 internal conversion speeds up from 10-20 ps to 0.4 ps and S2 emission weakens, as the energy gap law predicts."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "named compound xanthione (9H-xanthene-9-thione), Figure 1 structure"
+  ],
+  "used_si": false,
+  "formula": "C13H8OS",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.05)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

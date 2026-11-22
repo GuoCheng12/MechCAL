@@ -1,0 +1,222 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0074",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[Si](C)(c1ccc(C=C(C#N)C#N)cc1)[Si](C)(C)[Si](C)(C)[Si](C)(C)c1ccc(C=C(C#N)C#N)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Si4s-2C",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "title": "Intramolecular Photoinduced Charge Transfer and Recombination Dynamics in Vinylarene Terminated Organosilanes",
+    "doi": "10.1021/acs.jpcb.1c01297",
+    "format": "PDF",
+    "pages": 12,
+    "pdf_sha256": "67047bcb94c263a3ebd64c01c4b5cde81408198ecdfe66b234b0ea2395a11088"
+   }
+  ],
+  "publication_date": "2021-07-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "dichloromethane",
+   "chloroform",
+   "cyclohexane",
+   "fs transient absorption"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the latter is the optically induced intramolecular charge transfer transition that results from combining the silane donor and arene acceptor.",
+    "subject": "organosilanes",
+    "scope": "analog",
+    "conditions": "absorption",
+    "kind": "observation",
+    "statement": "A σ→π* CT absorption band exists only in the silane-arene hybrids.",
+    "limitations": "From earlier work by the group; red-edge trend measured here."
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "which populates the emissive charge-separated state",
+    "subject": "organosilanes",
+    "scope": "analog",
+    "conditions": "fluorescence excitation",
+    "kind": "observation",
+    "statement": "The σ→π* transition directly populates the emissive CT state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S3",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "All structures exhibit similar photoinduced ultrafast spectral dynamics that we ascribe to relaxation of the nascent charge-separated excited state followed by a return to the ground state via charge recombination.",
+    "subject": "organosilanes",
+    "scope": "analog",
+    "conditions": "fs transient absorption",
+    "kind": "observation",
+    "statement": "CT-state relaxation then charge recombination.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S4",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "weak acceptors produce charge-separated states that exhibit relatively large electronic coupling for back-electron transfer (approaching the adiabatic limit) that result in fast recombination",
+    "subject": "organosilanes",
+    "scope": "analog",
+    "conditions": "DCM, cyclohexane; Marcus analysis",
+    "kind": "author_interpretation",
+    "statement": "Recombination analysed as back-electron transfer; acceptor strength sets coupling.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "not observed in the strongest donor−acceptor pairs, Si4s-2C, where the electronic coupling is much smaller",
+    "subject": "Si4s-2C",
+    "scope": "target",
+    "conditions": "cyclohexane, TA",
+    "kind": "observation",
+    "statement": "No fast population loss; recombination slows to ~860 ps in cyclohexane.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.jpcb.1c01297",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "greater charge-pair separation lowers the electronic coupling",
+    "subject": "Si4s-2C",
+    "scope": "target",
+    "conditions": "cyclohexane",
+    "kind": "author_interpretation",
+    "statement": "Longer silane: weaker coupling, inverted-regime recombination.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "S3",
+     "E01"
+    ],
+    "rationale": "Si4s-2C: direct σ→π* excitation of the σ-π conjugated silane donor / vinylarene acceptor populates the emissive CT state (guideline §3.3: CT state of a conjugated D-A system → ICT)."
+   },
+   {
+    "label": "PET_ET",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "S4",
+     "E02"
+    ],
+    "rationale": "The nonradiative return of the CT state is analysed as back-electron transfer (electronic coupling, Marcus inverted regime)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "S3",
+     "E01"
+    ],
+    "rationale": "Si4s-2C: direct σ→π* excitation of the σ-π conjugated silane donor / vinylarene acceptor populates the emissive CT state (guideline §3.3: CT state of a conjugated D-A system → ICT)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "S4",
+     "E02"
+    ],
+    "rationale": "The nonradiative return of the CT state is analysed as back-electron transfer (electronic coupling, Marcus inverted regime)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0072-CG1",
+   "varied_factor": "acceptor strength (dicyanovinyl 2C vs diestervinyl 2E) at Si2; silane length (Si2 vs Si4) for 2C",
+   "paper_difference": "Weak acceptors give strongly coupled CT states with fast recombination; longer silane lowers coupling."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

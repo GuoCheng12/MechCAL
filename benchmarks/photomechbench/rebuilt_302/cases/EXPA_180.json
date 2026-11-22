@@ -1,0 +1,255 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_180",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCO[B-]1(c2ccc(OC)cc2)n2cccc2C(c2c(C)cc(C)cc2C)=C2C=CC=[N+]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1h (B-4-methoxyphenyl, B-OEt)",
+  "source_documents": [
+   {
+    "source_id": "F01",
+    "title": "Modular Assembly of B(III)‐Coordinated Fluorophores with Quantitatively Predictable Photoinduced Electron Transfer for Chemosensing and Bioimaging",
+    "doi": "10.1002/anie.202509567",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "F01-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202509567",
+    "file": "10.1002_anie.202509567_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-06-22",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane",
+   "toluene",
+   "dichloromethane",
+   "THF",
+   "acetonitrile"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Dyes featuring typical electron-withdrawing groups at the B-position, such as 1a (4-cyanophenyl, Figure S7) and 1b (pyridyl, Figure S8), showed strong fluorescence in both polar (e.g., acetonitrile, THF) and non-polar solvents (e.g., cyclohexane, toluene), with high FL > 0.718, indicating the negligible PeT effects.",
+    "subject": "1a",
+    "scope": "target",
+    "conditions": "cyclohexane, toluene, DCM, THF, acetonitrile",
+    "kind": "observation",
+    "statement": "1a stays bright in all five solvents (Phi_FL 0.72-0.81, SI Figure S7).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Conversely, dyes with typical electron-donating groups at the B-position, such as 1n (pyrene, Figure S20) and 1o (triphenylamine, Figure S21), showed complete fluorescence quenching in all solvents with FL ∼ 0.001, suggesting the presence of a significant PeT effect.",
+    "subject": "1o",
+    "scope": "target",
+    "conditions": "cyclohexane to acetonitrile",
+    "kind": "observation",
+    "statement": "1o is dark in every solvent (Phi_FL 0.001).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The driving force for the a-PeT process was defined as E = EHOMO,fluorophore – EHOMO,quencher (details see supplementary discussion, Figures S4–S6).",
+    "subject": "series 1",
+    "scope": "target",
+    "conditions": "DFT M06-2X/def2-SVP",
+    "kind": "computation",
+    "statement": "PeT driving force from the HOMO offset between the BODIPY core and the B-aryl quencher.",
+    "limitations": "Ground-state orbital energies only."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Notably, by fixing the indacene plane structure (1a-1o, Scheme 1a), the electrondonating capacity of B-aryl increases, causing E values to decrease progressively from 1.20 eV (1a, 4-cyanophenyl) to 0.68 eV (1f, 4-methylphenyl) and further to −0.72 eV (1o, triphenylamine).",
+    "subject": "1a, 1o",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Delta E is 1.20 eV for 1a (above the ~0.6 eV threshold) and -0.72 eV for 1o.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "As shown in Figure 3c, E ∼ 0.6 eV is the critical threshold for PeT activation: only when E exceeds ∼ 0.6 eV (1a-1f), the dyes maintain FL > 0.4 in various solvents (Figures S7–S12, and S23), including DMSO.",
+    "subject": "series 1",
+    "scope": "target",
+    "conditions": "five solvents",
+    "kind": "observation",
+    "statement": "Across the series, Phi_FL correlates with Delta E; above ~0.6 eV the dyes stay bright.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Using 80% and 10% FL value thresholds as observation windows for PeT activity, we found that as solvent polarity increased, the PeT effect intensified, the sliding windows narrowed regularly, the curve slopes rose, and all fits showed strong correlation (R2 > 0.93).",
+    "subject": "series 1",
+    "scope": "target",
+    "conditions": "cyclohexane to acetonitrile",
+    "kind": "observation",
+    "statement": "PeT strengthens with solvent polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F01",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "As expected, the 4methoxyphenyl group that directly linked to the boron center, exhibited progressively increasing E values across different frameworks: 0.22 eV (1 h, FL : 0.463 ∼ 0.001)",
+    "subject": "1h",
+    "scope": "target",
+    "conditions": "cyclohexane to acetonitrile",
+    "kind": "observation",
+    "statement": "1h: Delta E 0.22 eV; Phi_FL falls from 0.463 (cyclohexane) and 0.222 (toluene) to 0.001 in DCM, THF and acetonitrile (SI Figure S14).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F01-SI",
+    "pdf_page": 28,
+    "location": "10.1002_anie.202509567_SI_1.pdf",
+    "quote": "For instance, in B(III)-derivatives 1h, 2f, and 3g (Figure S4), the HOMO is primarily distributed across the BODIPY core, whereas the HOMO-1 localizes to the Battached 4-methoxyphenyl group (1h), the meso-linked 4-methoxyphenyl group (2f), and the B-O bond-connected morpholino group (3g), respectively.",
+    "subject": "1h",
+    "scope": "target",
+    "conditions": "DFT, THF (SMD)",
+    "kind": "computation",
+    "statement": "The quencher orbital of 1h sits on the B-anisyl group, just below the BODIPY HOMO.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "F01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Notably, the steric hindrance provided by the boron-linked phenyl group and mesityl substituent effectively prevented π –π stacking interactions between fluorophore planes, thereby suppressing ACQ (aggregation-caused quenching).[68–70] Consequently, 1a-1f with weak PeT effects, demonstrated bright solid-state fluorescence properties (Figure S1).",
+    "subject": "1a",
+    "scope": "target",
+    "conditions": "single crystal, solid",
+    "kind": "author_interpretation",
+    "statement": "No pi-pi stacking in the crystal; 1a is bright in the solid.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "a-PeT from the B-anisyl group (Delta E 0.22 eV, below the threshold): emission survives in cyclohexane but is quenched in DCM, THF and acetonitrile; the paper reads the solvent dependence as PeT strengthening with polarity."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E05",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "a-PeT from the B-anisyl group (Delta E 0.22 eV, below the threshold): emission survives in cyclohexane but is quenched in DCM, THF and acetonitrile; the paper reads the solvent dependence as PeT strengthening with polarity."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "F01-CG1",
+   "varied_factor": "B-aryl group on the same meso-mesityl B(III)-dipyrrin (4-cyanophenyl, 4-methoxyphenyl, 4-diphenylaminophenyl)",
+   "paper_difference": "The DFT PeT driving force falls from 1.20 eV (1a) to 0.22 eV (1h) and -0.72 eV (1o); 1a is bright in all solvents, 1h is bright only in non-polar solvents, 1o is dark everywhere."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "One-pot route from mesityl-dipyrromethane DPM-1 (DDQ, arylboronic acid, ethanol); 1H NMR shows unsubstituted pyrrole positions and three inequivalent mesityl methyls (4-methoxyphenylboronic acid)",
+   "SI HRMS [M-OEt]+ C25H24BN2O+"
+  ],
+  "formula": "C27H29BN2O2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

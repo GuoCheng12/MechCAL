@@ -1,0 +1,204 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0013",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)c1cc2c(-c3ccccc3Cl)c3nc(-c4ccc(C(F)(F)F)cc4O)[nH]c3nc2s1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "ITP4",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "title": "Enhancement of the Excited-state Intramolecular Proton Transfer Process to Produce All-powerful DSE Molecules for Bridging the Gap Between ACQ and AIE",
+    "doi": "10.1016/j.dyepig.2018.08.066",
+    "format": "PDF",
+    "pages": 47,
+    "pdf_sha256": "88fc948273fe86e60697cee3fd496d565f4d378821dc27449c9928ae18a25e7b"
+   }
+  ],
+  "publication_date": "2018-09-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "benzene, THF, DMF, DMSO, MeCN, acetone, chloroform, methanol",
+   "solid"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "were designed by a strategy in which the excited-state intramolecular proton transfer (ESIPT)",
+    "subject": "ITP series",
+    "scope": "analog",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "ESIPT enhanced to restrict the TICT nonradiative channel.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 16,
+    "location": null,
+    "quote": "the TICT for nonradiative de-excitation and finely controlling their self-assembly.",
+    "subject": "ITP series",
+    "scope": "analog",
+    "conditions": "conclusion",
+    "kind": "author_interpretation",
+    "statement": "DSE from ESIPT-suppressed TICT plus controlled self-assembly.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 12,
+    "location": null,
+    "quote": "and 64-92%, respectively (Figure 5).",
+    "subject": "ITP4 (with ITP3)",
+    "scope": "target",
+    "conditions": "all tested solvents incl. methanol",
+    "kind": "observation",
+    "statement": "ITP4 keeps 64-92% yield in every solvent; 53% in solid.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 12,
+    "location": null,
+    "quote": "possibly due to the less powerful ESIPT capability",
+    "subject": "ITP2 vs ITP3/ITP4",
+    "scope": "analog",
+    "conditions": "polar solvents",
+    "kind": "author_interpretation",
+    "statement": "The 4-EWG compounds are brighter than 4-methyl ITP2 because of stronger ESIPT.",
+    "limitations": "Hedged."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.dyepig.2018.08.066",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "were introduced at the para-position of ring D to produce more J-aggregates and alleviate said",
+    "subject": "ITP3/ITP4 design",
+    "scope": "analog",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Para substituents meant to give J-aggregates and fewer π-π contacts.",
+    "limitations": "J packing shown for ITP3, not ITP4."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "S1",
+     "S2"
+    ],
+    "rationale": "Series-level claim that ESIPT suppresses the nonradiative TICT channel."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E02"
+    ],
+    "rationale": "ESIPT-based DSE emitter; stronger ESIPT from the para EWG explains its high yields."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "S1",
+     "S2"
+    ],
+    "rationale": "Series-level claim that ESIPT suppresses the nonradiative TICT channel."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E02"
+    ],
+    "rationale": "ESIPT-based DSE emitter; stronger ESIPT from the para EWG explains its high yields."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "J-aggregate packing is shown for ITP3; for ITP4 it is only the design intent (E03)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "kr/knr are tabulated for ITP4 but not used in an argument (guideline §3.2); not labelled."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0012-CG1",
+   "varied_factor": "para substituent on ring D (H in ITP1 vs CF3 in ITP4)",
+   "paper_difference": "The electron-withdrawing para group strengthens ESIPT and gives J-type packing in the series, raising solid and solution efficiency."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "OPSIN name (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ESIPT_PT"
+  ]
+ }
+}

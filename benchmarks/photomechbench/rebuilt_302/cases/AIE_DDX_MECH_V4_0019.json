@@ -1,0 +1,237 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0019",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccccc1-c1cn2ccccc2n1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "HPIP",
+  "source_documents": [
+   {
+    "source_id": "10.1021_jp308473j",
+    "title": "Excited-State Intramolecular Proton Transfer (ESIPT) Emission of Hydroxyphenylimidazopyridine: Computational Study on Enhanced and Polymorph-Dependent Luminescence in the Solid State",
+    "doi": "10.1021/jp308473j",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "d6024d37ad97f1f8e21a3ebf057121d6150b7f8e08a74e445d83a078a476eb2b"
+   }
+  ],
+  "publication_date": "2012-12-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane, THF, ethanol",
+   "77 K THF",
+   "PMMA 0.5 wt%",
+   "BG and Y crystals"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "two of its crystal polymorphs in which molecules are packed as stacked pairs and in nearly coplanar conformation exhibit bright excited-state intramolecular proton transfer (ESIPT) luminescence of different colors (blue-green and yellow).",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "crystal polymorphs",
+    "kind": "observation",
+    "statement": "Bright ESIPT emission in two polymorphs.",
+    "limitations": "Reported in earlier work by the same group."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "very weak ESIPT fluorescence that is yellow to orange in color in apolar and aprotic cyclohexane, normal blue fluorescence in protic ethanol, and both normal and ESIPT dual fluorescence in THF (Figure 2)",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "cyclohexane, ethanol, THF",
+    "kind": "observation",
+    "statement": "Solvent-dependent normal/ESIPT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Though HPIP showed very weak ESIPT luminescence in solution, it showed bright luminescence not only in crystals, but also in frozen dilute solutions and polymer matrixes.",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "77 K THF, PMMA",
+    "kind": "observation",
+    "statement": "Emission turns on whenever the molecule is immobilised, packed or not.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The presence of the S0/S1 CI provided the efficient and fast decay process of the excited state, resulting in the low quantum yield of fluorescence in solution.",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "CASSCF/MS-CASPT2",
+    "kind": "computation",
+    "statement": "Twisting of the keto S1 to a CI quenches emission in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Therefore, fixation of the torsion angle ϕ at or close to the coplanar conformation in the solid state should be the origin of the observed emission enhancement in the crystalline state.",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Blocked torsion explains the solid-state enhancement.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "indicating that the S1-keto state can be regarded as an energy trap to inhibit exciton migration.",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "stacked pairs in crystals",
+    "kind": "author_interpretation",
+    "statement": "Exciton migration and excimer formation are inhibited despite stacking.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1021_jp308473j",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The fact that no phosphorescence was observed in the solid state or frozen solution at 77 K indicates that no spin−orbit coupling process was involved in the S1 state.",
+    "subject": "HPIP",
+    "scope": "target",
+    "conditions": "solid and frozen solution, 77 K",
+    "kind": "observation",
+    "statement": "No phosphorescence.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Torsion of the central C-C bond in the keto S1 leads to a conical intersection in solution; fixing it in crystals, frozen solution and PMMA turns emission on."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Emission in all solid forms is ESIPT keto emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Torsion of the central C-C bond in the keto S1 leads to a conical intersection in solution; fixing it in crystals, frozen solution and PMMA turns emission on."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Emission in all solid forms is ESIPT keto emission."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E06"
+    ],
+    "rationale": "The paper argues the stacked pairs do not form excimers or let excitons migrate; the enhancement is single-molecular.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "No phosphorescence at 77 K; no spin-orbit process in S1.",
+    "exclusion_basis": "paper"
+   }
+  ],
+  "environment_context": [
+   "crystal polymorphs; frozen THF; PMMA matrix"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: 2-(2'-hydroxyphenyl)imidazo[1,2-a]pyridine, same InChIKey"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Mainly computational, but new measurements in frozen solution and PMMA are reported; kept (borderline for §3.5).",
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "ESIPT_PT"
+  ]
+ }
+}

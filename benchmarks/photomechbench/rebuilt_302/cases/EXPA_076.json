@@ -1,0 +1,224 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_076",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCOCCOCCOCN1C(=CC=C2CCCC(C=CC3=[N+](CCOCCOCCOC)c4ccccc4C3(C)C)=C2Oc2ccc(N=Nc3ccc(OC4=C(C=CC5=[N+](COCCOCCOCC)c6ccccc6C5(C)C)CCCC4=CC=C4N(COCCOCCOCC)c5ccccc5C4(C)C)cc3)cc2)C(C)(C)c2ccccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DCy-PEG3 (PEG dimer)",
+  "source_documents": [
+   {
+    "source_id": "B02",
+    "title": "Manipulating H ‐aggregation of Cyanine Dimers by Side‐chain Engineering for High‐contrast Tumor Surgical Navigation",
+    "doi": "10.1002/agt2.70390",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B02-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/agt2.70390",
+    "file": "10.1002_agt2.70390_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "PBS (pH 7.4) with 3% DMSO",
+   "DMSO"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B02",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Notably, DCyPr displayed more pronounced H-shoulder peaks, indicative of stronger H-aggregate formation (Figure 1b).",
+    "subject": "DCy-Pr vs Cy-Azo",
+    "scope": "target",
+    "conditions": "PBS with 3% DMSO",
+    "kind": "observation",
+    "statement": "The dimer shows a stronger blue-shifted H band than the monomer.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B02",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This stark contrast indicated that dimerization led to enhanced fluorescence quenching of cyanine dyes.",
+    "subject": "DCy-Pr vs Cy-Azo",
+    "scope": "target",
+    "conditions": "PBS with 3% DMSO",
+    "kind": "observation",
+    "statement": "DCy-Pr Φf < 0.01% vs 0.06% for Cy-Azo.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B02",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In addition, fluorescence quantum yield (Φf ) analysis revealed that Cy-Azo had a Φf of 0.06% using ICG as a reference (Φf = 2.4% in water).",
+    "subject": "Cy-Azo",
+    "scope": "target",
+    "conditions": "PBS with 3% DMSO",
+    "kind": "observation",
+    "statement": "The monomer probe is also weakly emissive.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "As shown in Figure 2g, the addition of GSH to DCy-Pr led to a marked decrease in its H-aggregate shoulder peak and a concomitant increase in the monomeric absorption",
+    "subject": "DCy-Pr + GSH",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "Disassembly of the H-aggregate on reaction restores the monomer band and emission (151-fold).",
+    "limitations": "Reaction also changes the molecule (GSH substitution)."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Notably, DCy-Pr and DCy-SO3 displayed higher shoulder peaks compared to monomeric peaks, indicative of strong H-aggregation, whereas DCy-PEG3 and DCy-Am exhibited more pronounced monomeric peaks (Figure S3).",
+    "subject": "DCy-Pr vs DCy-PEG3",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "Hydrophobic propyl chains give strong H-aggregation; PEG chains do not.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The measured Φf values for DCy-PEG3 , DCy-SO3 , and DCy-Am were 9.90%, 2.73%, and 19.16%, respectively.",
+    "subject": "DCy-PEG3",
+    "scope": "target",
+    "conditions": "PBS with 3% DMSO",
+    "kind": "observation",
+    "statement": "The PEG dimer is bright.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In contrast, DCy-PEG3 and DCy-Am showed a much smaller increase of only about 7-fold (Figure S4).",
+    "subject": "DCy-PEG3",
+    "scope": "target",
+    "conditions": "DMSO vs PBS",
+    "kind": "observation",
+    "statement": "Little emission gain on dissolving in DMSO: little aggregation quenching in water.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B02",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These results indicated that DCy-Pr and DCy-SO3 had a stronger tendency to aggregate in aqueous solution, leading to more pronounced fluorescence quenching.",
+    "subject": "DCy-Pr",
+    "scope": "target",
+    "conditions": "DMSO vs PBS (109-fold)",
+    "kind": "author_interpretation",
+    "statement": "Aggregation in water causes the quenching.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Forms >200 nm particles by hydrophobic/hydrophilic interaction but its spectra stay monomer-like and it is bright (Φf 9.9%, E05-E07); the paper does not state 'no H-aggregation' for this compound explicitly, so not labelled contradicted."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PROBE_REACTION: GSH attacks the meso aryl ether (SNAr) and releases the cyanine; the turn-on after reaction concerns the product"
+  ],
+  "contrast_group": {
+   "group": "B02-CG1",
+   "varied_factor": "dimerization (DCy-Pr vs monomer Cy-Azo) and side chain (propyl vs PEG3), relative to DCy-Pr",
+   "paper_difference": "DCy-Pr forms strong H-aggregates and is non-emissive; the monomer aggregates less; the PEG3 dimer stays monomer-like and bright (Φf 9.9%)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: Cy-PEG3 + 4,4'-dihydroxyazobenzene",
+   "ESI-MS [M]2+ C100H128N6O14 matches",
+   "1H NMR OCH3 singlet (12H)"
+  ],
+  "used_si": true,
+  "note": "Written as the cyanine cation(s); the counter-anion is not reported (IR-780 iodide was the precursor).",
+  "formula": "C100H128N6O14+2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.67)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,209 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_028",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc(N(c2ccc(-c3cc4nc5nc(C#N)c(C#N)nc5nc4cc3-c3ccc(N(c4ccc(C(C)(C)C)cc4)c4ccc(C(C)(C)C)cc4)cc3)cc2)c2ccc(C(C)(C)C)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1-t-Bu",
+  "source_documents": [
+   {
+    "source_id": "A17",
+    "title": "Development of Intramolecular Charge Transfer‐Type NIR Fluorescent Dyes Bearing a Pyrazino[2,3‐ b ]quinoxaline‐Based Electron Acceptor",
+    "doi": "10.1002/asia.70787",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A17-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/asia.70787",
+    "file": "10.1002_asia.70787_SI_1.docx",
+    "format": "DOCX"
+   },
+   {
+    "source_id": "A17-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/asia.70787",
+    "file": "10.1002_asia.70787_SI_2.cif",
+    "format": "CIF"
+   },
+   {
+    "source_id": "A17-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/asia.70787",
+    "file": "10.1002_asia.70787_SI_3.cif",
+    "format": "CIF"
+   }
+  ],
+  "publication_date": "2026-05-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (toluene)",
+   "crystal"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Herein, we report new intramolecular charge transfer-type fluorescent dyes 1-H and 1-t-Bu bearing pyrazino[2,3-b]quinoxaline-2,3-dicarbonitrile as an electron acceptor unit.",
+    "subject": "1-H and 1-t-Bu",
+    "scope": "target",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "Donor-acceptor ICT dyes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In toluene, these dyes exhibited NIR emission at 947 and 979 nm, with PL quantum yields of 1.04% and 0.12%, respectively.",
+    "subject": "1-H and 1-t-Bu",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "NIR ICT emission in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "X-ray crystallographic analysis revealed the formation of dimeric species involving intermolecular π–π stacking between the donor and acceptor units for 1-H and between the acceptor units for 1-t-Bu.",
+    "subject": "1-H and 1-t-Bu",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "observation",
+    "statement": "Different stacked dimers in the two crystals.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Furthermore, TD-DFT calculations indicated that the red shifts of PL are caused by the intermolecular charge transfer interaction.",
+    "subject": "1-H and 1-t-Bu",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "computation",
+    "statement": "Crystal red shift (to 1076/1268 nm) from intermolecular CT in the dimers.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Intramolecular CT emission in solution (NIR)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The crystal red shift is explained by intermolecular CT in stacked dimers."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Intramolecular CT emission in solution (NIR)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The crystal red shift is explained by intermolecular CT in stacked dimers."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A17-CG1",
+   "varied_factor": "tert-butyl groups on the triarylamine donors",
+   "paper_difference": "1-H stacks donor-on-acceptor, 1-t-Bu acceptor-on-acceptor; both red-shift in the crystal through intermolecular CT."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name of the dihydro precursor (9-H / 9-t-Bu) in the paper, oxidised by DDQ to 1; parsed with OPSIN",
+   "two CIF files in the SI"
+  ],
+  "used_si": false,
+  "formula": "C64H62N8",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.7)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

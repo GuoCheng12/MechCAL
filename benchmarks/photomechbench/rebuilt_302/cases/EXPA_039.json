@@ -1,0 +1,175 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_039",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cccn2c(C3=CC(=O)N(C)C3=O)c(-c3ccccc3)nc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "IP-NMM dyad",
+  "source_documents": [
+   {
+    "source_id": "A22",
+    "title": "Synthesis, Characterization, and Photophysical Investigation of a Dyad Comprising 8‐Methyl‐2‐phenylimidazo[1,2‐ a ]pyridine and N ‐methyl Maleimide for Photoinduced Electron Transfer",
+    "doi": "10.1002/slct.202501958",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A22-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/slct.202501958",
+    "file": "10.1002_slct.202501958_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2025-07-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (hexane, acetonitrile)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A22",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "A broad absorption band in the low-energy region indicates the formation of ground state intramolecular charge transfer (ICT) complex in the IP-NMM dyad.",
+    "subject": "IP-NMM",
+    "scope": "target",
+    "conditions": "hexane, acetonitrile",
+    "kind": "observation",
+    "statement": "Ground-state CT absorption band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A22",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The photoexcited ICT complex of the IP-NMM dyad gives rise to a broad fluorescence emission band at an even lower energy region.",
+    "subject": "IP-NMM",
+    "scope": "target",
+    "conditions": "hexane, acetonitrile",
+    "kind": "observation",
+    "statement": "Low-energy CT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A22",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Our observations indicate the occurrence of photoinduced intramolecular electron transfer (ET) in the IPNMM dyad with a first-order ET rate constant ∼ 1010 s−1 in liquid medium.",
+    "subject": "IP-NMM",
+    "scope": "target",
+    "conditions": "liquid medium, time-resolved fluorescence",
+    "kind": "observation",
+    "statement": "IP fluorescence is quenched by intramolecular ET (k ~ 10^10 s-1).",
+    "limitations": "Rate from multi-exponential decays of the IP component."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Donor and acceptor are directly linked; a ground-state CT complex absorbs and emits at low energy, observed separately from the ET quenching."
+   },
+   {
+    "label": "PET_ET",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Photoinduced intramolecular ET quenching the IP donor is the paper's aim and main result."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Donor and acceptor are directly linked; a ground-state CT complex absorbs and emits at low energy, observed separately from the ET quenching."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Photoinduced intramolecular ET quenching the IP donor is the paper's aim and main result."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the paper parsed with OPSIN",
+   "NMR, IR and HRMS reported"
+  ],
+  "used_si": false,
+  "formula": "C19H15N3O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

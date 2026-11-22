@@ -1,0 +1,186 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_033",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c2ccccc2n(-c2ccc(N(c3ccccc3)c3ccccc3)cc2)c2cc3c(=O)c4ccccc4n(-c4ccc(N(c5ccccc5)c5ccccc5)cc4)c3cc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "QA-TPA",
+  "source_documents": [
+   {
+    "source_id": "A19",
+    "title": "Insights into solvents and substituents modulating green-to-red emission of quinacridone from locally excited-state and intramolecular charge transfer",
+    "doi": "10.1016/j.jphotochem.2026.117566",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A19-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117566",
+    "file": "10.1016_j.jphotochem.2026.117566_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-31",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (MeOH, THF, DMSO and others)",
+   "aggregated/solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A19",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "QA-TPA exhibits significant intramolecular charge transfer (ICT) characters in the excited state.",
+    "subject": "QA-TPA",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "ICT excited state in QA-TPA (fs-TA, solvatochromism).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A19",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Its prominent short-wavelength emission originates from the radiative transition of the higher-lying S3 singlet excited state rather than from the lowest S1 state.",
+    "subject": "QA-TPA",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Emission from S3 (anti-Kasha).",
+    "limitations": "Assignment by TD-DFT."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A19",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The introduction of steric substituents into the quinacridone (QA) backbone effectively inhibits π-π stacking interactions, thereby opening up the radiative transition channel of the molecules and enhancing fluorescence intensity.",
+    "subject": "QA-OMe and QA-TPA",
+    "scope": "target",
+    "conditions": "aggregated state",
+    "kind": "author_interpretation",
+    "statement": "N-aryl groups prevent π-π stacking quenching.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "ICT excited state is the main finding for QA-TPA."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Steric N-aryl groups suppress π-π stacking quenching."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "ICT excited state is the main finding for QA-TPA."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Steric N-aryl groups suppress π-π stacking quenching."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   {
+    "label": "SOKR_ANTI_KASHA",
+    "evidence_ids": [
+     "E02"
+    ],
+    "note": "emission from the higher-lying S3 state"
+   }
+  ],
+  "contrast_group": {
+   "group": "A19-CG1",
+   "varied_factor": "N-aryl group (4-methoxyphenyl vs 4-diphenylaminophenyl donor)",
+   "paper_difference": "QA-TPA shows ICT (and S3) emission; QA-OMe emits from an LE state."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI synthesis: N-arylation with 4-iodo-N,N-diphenylaniline; name built and parsed with OPSIN",
+   "NMR and HRMS reported"
+  ],
+  "used_si": true,
+  "formula": "C56H38N4O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.jphotochem.2026.117566_SI_1_image2.png, img 10.1016_j.jphotochem.2026.117566_SI_1_image4.png"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

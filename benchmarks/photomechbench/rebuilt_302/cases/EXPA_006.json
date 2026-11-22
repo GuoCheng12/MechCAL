@@ -1,0 +1,155 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_006",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cn1nccc1-c1oc2ccccc2c(=O)c1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "N1-Me",
+  "source_documents": [
+   {
+    "source_id": "A03",
+    "title": "Pyrazole‐Substituted 3‐Hydroxychromones: Conformation‐Dependent Proton‐Transfer Isomerization",
+    "doi": "10.1002/chem.71407",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A03-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71407",
+    "file": "10.1002_chem.71407_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (cyclohexane and others)",
+   "ASE measurements"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E04",
+    "source_id": "A03",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "the good solubility of N1-Me and N2-Me enabled investigation of their ESIPT dynamics in cyclohexane, both of which exhibited system-response-limited ESIPT time constants of ∼200 fs",
+    "subject": "N1-Me and N2-Me",
+    "scope": "target",
+    "conditions": "cyclohexane, fluorescence upconversion",
+    "kind": "observation",
+    "statement": "Ultrafast (~200 fs) ESIPT in both methylated analogues.",
+    "limitations": "Instrument-limited time constant."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "A03",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Since N1-Me exists exclusively as conformer (a), whose S1 (ππ*) state undergoes ultrafast ESIPT",
+    "subject": "N1-Me",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "N1-Me exists only as the ESIPT-competent conformer.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Ultrafast ESIPT from the single conformer (a)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Ultrafast ESIPT from the single conformer (a)."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A03-CG1",
+   "varied_factor": "pyrazole N-H vs N-methyl at N1 or N2 (intramolecular hydrogen-bond topology)",
+   "paper_difference": "Only conformer/isomer (a) undergoes efficient ESIPT; isomer or conformer (b) has a dark nπ* state; methylation fixes or biases the population."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN",
+   "ESI-HRMS [M+H]+ C13H11N2O3 matches"
+  ],
+  "used_si": true,
+  "formula": "C13H10N2O3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_chem.71407_SI_1.pdf p15, 10.1002_chem.71407_SI_1.pdf p8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

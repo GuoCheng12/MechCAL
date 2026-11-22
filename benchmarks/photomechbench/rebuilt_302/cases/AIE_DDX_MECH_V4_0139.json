@@ -1,0 +1,246 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0139",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1(C)c2ccccc2-c2ccc(C(=O)c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMF-BP-PXZ",
+  "source_documents": [
+   {
+    "source_id": "10.1002_advs.201801629",
+    "title": "Mechanical Insights into Aggregation-Induced Delayed Fluorescence Materials with Anti-Kasha Behavior",
+    "doi": "10.1002/advs.201801629",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "11335f7b0b9908d4bf7ffe5ded5df63e120ba66115a67a4c1be6f2f7d1d2f154"
+   }
+  ],
+  "publication_date": "2018-12-07",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF",
+   "THF/water",
+   "neat and doped films",
+   "ns transient absorption",
+   "OLEDs"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "this phenomenon can be ascribed to the suppression of IC channels and the promotion of ISC process in solid, which essentially benefits from restriction of intramolecular motion and rigidification of molecular structure.",
+    "subject": "BP-PXZ series",
+    "scope": "analog",
+    "conditions": "solution vs neat film",
+    "kind": "author_interpretation",
+    "statement": "AIDF from suppressed IC and promoted ISC via restricted motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Besides, a broad excited-state absorption (ESA) band",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "neat film, ns TA",
+    "kind": "observation",
+    "statement": "Triplet ESA (1.41 μs) matches the delayed PL.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "these molecules have close kF values in solutions and in neat",
+    "subject": "BP-PXZ series",
+    "scope": "analog",
+    "conditions": "rates",
+    "kind": "observation",
+    "statement": "kF unchanged; kIC falls 30-fold.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "the theoretical calculations reveal that the S1 of DMF-BP-PXZ is a dark state and its efficient emission emanates from the higher energy electronic excited states (e.g., S2)",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "Dark S1 (f 0.0006), emissive S2: anti-Kasha.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "As for S2, it is a typical CT state",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "NTO",
+    "kind": "computation",
+    "statement": "S2 is fluorene→benzoyl CT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1002_advs.201801629",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "the energy gap between S2 and T3 is so small (0.22 eV) in solid",
+    "subject": "DMF-BP-PXZ",
+    "scope": "target",
+    "conditions": "TDDFT",
+    "kind": "computation",
+    "statement": "S2/T3 ISC/RISC channel.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Restricted intramolecular motion in the solid suppresses IC, letting ISC/RISC and delayed emission appear."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "The emitting S2 is a CT state."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Dark S1 / bright S2 state order and the IC vs ISC rate balance."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "Aggregation-induced delayed fluorescence via S2/T3 ISC/RISC (triplet ESA, delayed PL)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Restricted intramolecular motion in the solid suppresses IC, letting ISC/RISC and delayed emission appear."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "The emitting S2 is a CT state."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "Dark S1 / bright S2 state order and the IC vs ISC rate balance."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06"
+    ],
+    "rationale": "Aggregation-induced delayed fluorescence via S2/T3 ISC/RISC (triplet ESA, delayed PL)."
+   }
+  ],
+  "environment_context": [
+   "weak C-H...π / C-H...O contacts rigidify the crystal"
+  ],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: emission from a higher excited state (S2 → S0)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

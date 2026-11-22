@@ -1,0 +1,275 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_173",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)c1ccc2c(c1)c1cc(C(C)(C)C)cc3c1n2[B-]1(c2ccccc2)N2c4c(cccc4-c4cccc5[n+]4[B-]2(c2ccccc2)n2c4ccc(C(C)(C)C)cc4c4cc(C(C)(C)C)cc-5c42)-c2cccc-3[n+]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "B2N5",
+  "source_documents": [
+   {
+    "source_id": "D19",
+    "title": "Tetracoordinate-Boron-Rigidified Heterohelicenes with Fragment-Precise Short-Range Charge Transfer for Narrow Near-Infrared Emission",
+    "doi": "10.1021/jacs.6c06955",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "D19-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/jacs.6c06955",
+    "file": "10.1021_jacs.6c06955_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-05-16",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene (N2 and air), 150-298 K",
+   "PMMA doped films",
+   "solid"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "According to this law, a contraction in the optical energy gap (ΔEopt) triggers an exponential acceleration in the nonradiative decay rate (knr) (eq 1).",
+    "subject": "design",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Energy-gap law framing of the NIR problem.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Coupled with the rigidified skeleton, the alternating donor−acceptor arrangement enables fragment-precise short-range charge transfer with drastically suppressed nonradiative decay.",
+    "subject": "B2N5, B4N10, B6N15",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "Rigidity plus short-range CT suppress knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D19",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "spatial demand synergizes perfectly with the alternating D−A imposed LR-CT constraint, drastically rigidifying the molecular skeleton to suppress nonradiative decay. Consequently, B2N5 delivers an exceptional 100% PLQY featuring thermally activated delayed fluorescence (TADF) at 561 nm.",
+    "subject": "B2N5",
+    "scope": "target",
+    "conditions": "toluene, N2",
+    "kind": "observation",
+    "statement": "PLQY 100% with TADF.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Notably, the delayed-fluorescence component decreases as the temperature is raised from 150 to 298 K, a hallmark of TADF behavior (Figure S5b).",
+    "subject": "B2N5",
+    "scope": "target",
+    "conditions": "toluene, 150-298 K",
+    "kind": "observation",
+    "statement": "Delayed component (2.1 us) with temperature dependence; RISC 1.67e7 s-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Consequently, its PLQY plummets to 3% in air due to severe oxygen quenching of the triplet states.",
+    "subject": "B2N5",
+    "scope": "target",
+    "conditions": "toluene, air",
+    "kind": "observation",
+    "statement": "Triplets are on the emission pathway.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "In contrast, B4N10 and B6N15 display monoexponential, nanosecond-scale lifetimes (9.0 and 9.4 ns, respectively), with negligible temperature dependence (Figures 3d, S5d and S5f), which is unambiguously characteristic of prompt fluorescence.",
+    "subject": "B4N10, B6N15",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "No TADF in the NIR members.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D19",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "It also severely restricted the excited-state vibrational modes and the corresponding Huang−Rhys factors, thereby narrowing the emission to a fwhm of 0.09 eV.",
+    "subject": "B4N10",
+    "scope": "target",
+    "conditions": "computed Huang-Rhys factors",
+    "kind": "author_interpretation",
+    "statement": "Extension suppresses the vibronic coupling that drives knr and broadening (PLQY 34% at 724 nm).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D19",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "From B2N5 to B4N10, the number of low-frequency vibrational modes with HRFs > 0.5 decreases from five",
+    "subject": "B2N5 vs B4N10",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Fewer strongly coupled modes in B4N10.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "D19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "suggesting that multiple-helicene extension effectively suppresses aggregation-caused quenching (ACQ).",
+    "subject": "B4N10, B6N15",
+    "scope": "target",
+    "conditions": "PMMA films 1-20%",
+    "kind": "observation",
+    "statement": "PLQY of B4N10 barely changes with doping; B2N5 drops.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Short-range CT emitter."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Rigidification is credited with suppressing nonradiative decay (100% PLQY)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "TADF: delayed component, RISC 1.67e7 s-1 and oxygen quenching (100% to 3%)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Short-range CT emitter."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Rigidification is credited with suppressing nonradiative decay (100% PLQY)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "TADF: delayed component, RISC 1.67e7 s-1 and oxygen quenching (100% to 3%)."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "D19-CG1",
+   "varied_factor": "helicene extension (two vs four tetracoordinate borons)",
+   "paper_difference": "B2N5 is a visible TADF emitter (100% PLQY under N2, 3% in air); B4N10 emits prompt NIR fluorescence at 724 nm with 34% PLQY, explained by suppressed vibronic coupling against the energy-gap law."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "note": "Built from the SI precursor by adding one B-Ph per pyridine, bonded to the pyridine N (dative), the aniline N and the carbazole/indolocarbazole N; the trans arrangement of the B-phenyls (crystal structure) is not encoded.",
+  "basis": [
+   "SI precursor 4: 2,6-bis(6-(3,6-di-tert-butyl-9H-carbazol-1-yl)pyridin-2-yl)aniline (OPSIN) + PhBCl2",
+   "SI HRMS [M+H]+ C68H66B2N5"
+  ],
+  "formula": "C68H65B2N5",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.3)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

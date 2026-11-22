@@ -1,0 +1,226 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0142",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2cccc-2cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "azulene | 1a | Az",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c9cp00739c",
+    "title": "A Reappraisal of Kasha's Rule",
+    "doi": "10.1039/c9cp00739c",
+    "format": "PDF",
+    "pages": 11,
+    "pdf_sha256": "5972f2c98defd118cc04936b408f63a4bf94380eeeba6960f4a35936c8384693"
+   },
+   {
+    "source_id": "10.1021_acs.jpca.0c05205",
+    "title": "A Computational Protocol to Predict Anti-Kasha Emissions: The Case of Azulene Derivatives",
+    "doi": "10.1021/acs.jpca.0c05205",
+    "format": "PDF",
+    "pages": 46,
+    "pdf_sha256": "f2996114569616aa01d8892b92f5d13327f1eebe00fb4540a1f485ffce42c24f"
+   },
+   {
+    "source_id": "10.1016_j.molliq.2025.127260",
+    "title": "Excited state dynamics of azulene and its derivatives: The impact of energy gap and vibronic coupling on anti-Kasha emission in solution",
+    "doi": "10.1016/j.molliq.2025.127260",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "1dcd024d6cbfd5fd467595f7de76a918bb8f6b9c1151bd5e40c9cea0c6144807"
+   }
+  ],
+  "publication_date": "2019-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "2-methylpentane (measured)",
+   "computational models of solution"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c9cp00739c",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "transition emission has been recorded on excitation at 220, 237, 269, 296 and 315 nm",
+    "subject": "azulene",
+    "scope": "target",
+    "conditions": "2-methylpentane",
+    "kind": "observation",
+    "statement": "Only S2 emission; no S1 emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c9cp00739c",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Azulene photophysics is a true exception to Kasha’s rule as has been reported.",
+    "subject": "azulene",
+    "scope": "target",
+    "conditions": "2-methylpentane",
+    "kind": "author_interpretation",
+    "statement": "Azulene is a true anti-Kasha emitter (S2-S1 gap 14000 cm-1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.molliq.2025.127260",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "by 20 ps 90.5 % of the excited molecules occupy the S2 state, whereas 9.5 % occupy the S1 state.",
+    "subject": "azulene",
+    "scope": "target",
+    "conditions": "wavepacket dynamics",
+    "kind": "computation",
+    "statement": "Slow S2→S1 conversion across the large gap.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "Y1",
+    "source_id": "10.1021_acs.jpca.0c05205",
+    "pdf_page": 20,
+    "location": null,
+    "quote": "the fluorescence yield from S2 is at least 1500 times larger than the yield from S1.",
+    "subject": "azulenes 1a-e",
+    "scope": "analog",
+    "conditions": "computed rates",
+    "kind": "computation",
+    "statement": "S2 fluorescence dominates S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "X1",
+    "source_id": "10.1021_acs.jpca.0c05205",
+    "pdf_page": 18,
+    "location": null,
+    "quote": "for azulene derivatives, intersystem crossing processes among other possible non-radiative decay pathways are not relevant.",
+    "subject": "azulenes 1a-e",
+    "scope": "analog",
+    "conditions": "rate model",
+    "kind": "author_interpretation",
+    "statement": "ISC excluded from the decay model.",
+    "limitations": "Argued in a computational model."
+   },
+   {
+    "evidence_id": "Y3",
+    "source_id": "10.1016_j.molliq.2025.127260",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The rate of the non-radiative decay of the S2 state for all compounds correlates well with the decrease of their anti-Kasha photoluminescence quantum yield",
+    "subject": "azulene and 2-substituted derivatives",
+    "scope": "analog",
+    "conditions": "wavepacket dynamics",
+    "kind": "computation",
+    "statement": "S2 nonradiative loss tracks the PLQY order.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "Y1",
+     "Y3"
+    ],
+    "rationale": "The large S2-S1 gap slows S2→S1 internal conversion so that S2 radiation competes; S1 decays nonradiatively."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "S1 decay through an S1/S0 conical intersection is cited from literature, not studied; earlier secondary dropped."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "Y1",
+     "Y3"
+    ],
+    "rationale": "The large S2-S1 gap slows S2→S1 internal conversion so that S2 radiation competes; S1 decays nonradiatively."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "X1"
+    ],
+    "rationale": "ISC is argued to be irrelevant for azulene derivatives.",
+    "exclusion_basis": "paper"
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: emission from a higher excited state (S2 → S0)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Kept: the first source reports its own spectra. The two other sources are computational.",
+  "previous_primary": [
+   "RADIATIVE_RATE_STATE_BALANCE"
+  ]
+ }
+}

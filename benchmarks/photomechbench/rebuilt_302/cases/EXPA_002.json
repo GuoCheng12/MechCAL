@@ -1,0 +1,155 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_002",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(/C=C/C(=O)c2ccc3ccccc3c2O)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMHC (reference)",
+  "source_documents": [
+   {
+    "source_id": "A01",
+    "title": "Aggregation‐Driven Thorough Cascaded Proton Transfer Process Targeting Ultralow‐Threshold Near‐Infrared Organic Single‐Crystal Lasers",
+    "doi": "10.1002/anie.202525240",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A01-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.202525240",
+    "file": "10.1002_anie.202525240_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-03-09",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "film: polystyrene",
+   "crystal: single-crystal microwires"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E04",
+    "source_id": "A01",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "which undergo only single ESIPT process in terms of structure, served as a reference system",
+    "subject": "DMHC",
+    "scope": "target",
+    "conditions": "reference compound",
+    "kind": "author_interpretation",
+    "statement": "DMHC is used as a single-ESIPT reference.",
+    "limitations": "Its ESIPT is assigned from structure and earlier work [34], not re-proved here."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "A01",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The substantial wavelength difference between DDMC (870 nm) and DMHC (775 nm) systems further corroborates cascaded ESDPT in DDMC single-crystal microwires",
+    "subject": "DMHC vs DDMC",
+    "scope": "target",
+    "conditions": "single-crystal microwires, lasing",
+    "kind": "observation",
+    "statement": "DMHC microwires lase at 775 nm, DDMC at 870 nm.",
+    "limitations": "Lasing wavelength only; no separate mechanistic study of DMHC."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "DMHC is the single-ESIPT reference; the support is the authors' assignment (from structure and earlier work) and its lasing wavelength, with no separate excited-state study here."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "DMHC is the single-ESIPT reference; the support is the authors' assignment (from structure and earlier work) and its lasing wavelength, with no separate excited-state study here."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A01-CG1",
+   "varied_factor": "second hydroxy group on the naphthalene (1,8-dihydroxy vs 1-hydroxy)",
+   "paper_difference": "DDMC can undergo cascaded double ESIPT in the crystal; DMHC only single ESIPT."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "IUPAC name in the paper parsed with OPSIN",
+   "same chalcone scaffold as DDMC minus the 8-OH"
+  ],
+  "used_si": false,
+  "formula": "C21H19NO2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1002_anie.202525240_SI_1_image5.png, main p5"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

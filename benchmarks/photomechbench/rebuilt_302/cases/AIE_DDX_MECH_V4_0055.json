@@ -1,0 +1,264 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0055",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=S(=O)(c1ccc(-n2c3ccccc3c3cc(-c4cccc(-n5c6ccccc6c6ccccc65)c4)ccc32)cc1)c1ccc(N2c3ccccc3Oc3ccccc32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "mPhDCzDPSPXZ",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "title": "Modifying the AIE-TADF chromophore with host-substituents to achieve high efficiency and low roll-off non-doped OLEDs",
+    "doi": "10.1016/j.orgel.2019.105602",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "90cddf1b392f07d9ef4acbd967814d82695a58007d643d198770a39f451fa75b"
+   }
+  ],
+  "publication_date": "2019-12-19",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF and other solvents",
+   "THF/water",
+   "neat film, N2/air, temperature series",
+   "non-doped OLED"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "They all showed obvious solvatochromic, which indicated strong CT state in these four molecules.",
+    "subject": "DPS-PXZ emitters",
+    "scope": "analog",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Solvatochromism: CT state of the PXZ-DPS core.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "host-substituents didn’t participate in intramolecular charge transfer.",
+    "subject": "DPS-PXZ emitters",
+    "scope": "analog",
+    "conditions": "DFT orbitals",
+    "kind": "computation",
+    "statement": "Peripheral carbazole hosts are outside the CT channel.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the molecular rotations were restricted more easily when the water content was increased.",
+    "subject": "pPhDCz/mPhDCz emitters",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "Larger twist makes rotations easier to restrict in aggregates (6.4-6.7-fold AIE).",
+    "limitations": "No specific rotor or rate data."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The PL intensities of pPhDCzDPSPXZ and mPhDCzDPSPXZ were increased by 6.4–6.7 times when the water was added to 90% compared to that of pure THF solution",
+    "subject": "pPhDCz/mPhDCz emitters",
+    "scope": "target",
+    "conditions": "THF/water 90%",
+    "kind": "observation",
+    "statement": "AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The minor overlap between HOMO and LUMO, resulting from the large twisted angle between DPS and PXZ, led to small singlet-triplet energy level (ΔEST) with promoting reverse intersystem crossing (RISC) process.",
+    "subject": "DPS-PXZ emitters",
+    "scope": "analog",
+    "conditions": "DFT; ΔEST 0.03 eV",
+    "kind": "computation",
+    "statement": "Small ΔEST enables RISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The delayed component exhibited a clear temperature dependence effect, which demonstrated thermally activated mechanism feature.",
+    "subject": "emitter series",
+    "scope": "analog",
+    "conditions": "neat film, temperature series",
+    "kind": "observation",
+    "statement": "Thermally activated delayed component.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the intensity of the delayed portion was obviously increased after oxy­ gen removal.",
+    "subject": "emitter series",
+    "scope": "analog",
+    "conditions": "neat film, N2 vs air",
+    "kind": "observation",
+    "statement": "Delayed emission is oxygen sensitive.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "10.1016_j.orgel.2019.105602",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The reverse intersystem crossing rate constants (kRISC) of pPhDCzDPSPXZ and mPhDCzDPSPXZ were 2–3 folds than DCB-DPS-PXZ and mCP-DPS-PXZ",
+    "subject": "pPhDCz/mPhDCz emitters",
+    "scope": "target",
+    "conditions": "neat film",
+    "kind": "observation",
+    "statement": "Faster RISC for the N-linked pair.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "AIE is explained by rotations that are restricted in aggregates, helped by the larger host-substituent twist. Weak: generic rotation."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The emissive state is a PXZ→DPS CT state; peripheral hosts do not take part."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "mPhDCzDPSPXZ: TADF via RISC from a small-ΔEST CT state (temperature- and O2-dependent delayed emission)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "AIE is explained by rotations that are restricted in aggregates, helped by the larger host-substituent twist. Weak: generic rotation."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The emissive state is a PXZ→DPS CT state; peripheral hosts do not take part."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Prompt/delayed yields and kf are tabulated but not used to explain emission; the earlier secondary is dropped."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E05",
+     "E06",
+     "E07",
+     "E08"
+    ],
+    "rationale": "mPhDCzDPSPXZ: TADF via RISC from a small-ΔEST CT state (temperature- and O2-dependent delayed emission)."
+   }
+  ],
+  "environment_context": [
+   "neat films; peripheral carbazole hosts disperse excitons"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0055-CG1",
+   "varied_factor": "linkage of the phenyl-dicarbazole host: meta (m) vs para (p)",
+   "paper_difference": "Nearly identical TADF and AIE; both outperform the C-linked hosts."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

@@ -1,0 +1,217 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0038",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCN(CC)C1=C2C=CC=[N+]2[B-](F)(F)n2cccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BODIPY 5",
+  "source_documents": [
+   {
+    "source_id": "10.1002_anie.201902766",
+    "title": "Photoexcitation Induced Twisted Intramolecular Charge Shuttle (TICS)",
+    "doi": "10.1002/anie.201902766",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "d8fd2f498db755792710f645e5d414a85b40218ae5b4bc01a943515edab74efa"
+   }
+  ],
+  "publication_date": "2019-03-27",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "organic solvents",
+   "ethylene glycol/glycerol viscosity series",
+   "crystal",
+   "fs/ps transient absorption"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1002_anie.201902766",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "In TICS systems, the donor and acceptor moieties dynamically switch roles in the excited state as a result of ~90° intramolecular twisting",
+    "subject": "TICS fluorophores",
+    "scope": "analog",
+    "conditions": "abstract",
+    "kind": "author_interpretation",
+    "statement": "Twisted intramolecular charge shuttle: donor and acceptor swap roles on ~90° twisting.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1002_anie.201902766",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the TICS conformation is the global minima and the oscillator strength of the TICS conformation is almost zero, indicating that TICS is a dark state.",
+    "subject": "BODIPY 2 (analogue)",
+    "scope": "analog",
+    "conditions": "TD-DFT PES",
+    "kind": "computation",
+    "statement": "The twisted TICS minimum is dark (f ≈ 0).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_anie.201902766",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "BODIPY 5 (a close analogue of 2) exhibited low quantum yields",
+    "subject": "BODIPY 5",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Low quantum yield.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_anie.201902766",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "These observations indicated that the low quantum yields of 5 were related to molecular rotations.",
+    "subject": "BODIPY 5",
+    "scope": "target",
+    "conditions": "ethylene glycol/glycerol",
+    "kind": "observation",
+    "statement": "Up to ~6-fold brighter with viscosity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_anie.201902766",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "We thus attributed the second excited state to the TICS state",
+    "subject": "BODIPY 5",
+    "scope": "target",
+    "conditions": "transient absorption",
+    "kind": "observation",
+    "statement": "3.0 ps LE decay and a 78.3 ps state assigned to TICS.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Viscosity restricts the amino rotation and raises the emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E03"
+    ],
+    "rationale": "Transient absorption shows LE → TICS conversion; the twisted charge-shuttle state explains the low yield."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "S2"
+    ],
+    "rationale": "The TICS state is dark (computed for analogue 2)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "Viscosity restricts the amino rotation and raises the emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "E01",
+     "E03"
+    ],
+    "rationale": "Transient absorption shows LE → TICS conversion; the twisted charge-shuttle state explains the low yield."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "S2"
+    ],
+    "rationale": "The TICS state is dark (computed for analogue 2)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0037-CG1",
+   "varied_factor": "meso amino group: dimethylamino (2) vs diethylamino (5)",
+   "paper_difference": "Both are TICS dyes; 2 is only computed, 5 is the measured analogue."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "SI 3.2.5: 5 made from B-MS (8-methylthio-BODIPY) + diethylamine; 1H NMR shows only 6 pyrrole H and NEt2 (4.16 q 4H, 1.49 t 6H); SI Table S7 crystal formula C13H16BF2N3 = case formula"
+  ],
+  "runnable": true,
+  "si_checked": "2026-11-13"
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ICT_TICT_CT"
+  ]
+ }
+}

@@ -1,0 +1,284 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_205",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=C1C=Cc2ccc3ccc4cccc5cc1c2c3c45"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Oly-one (5H-benzo[cd]pyren-5-one)",
+  "source_documents": [
+   {
+    "source_id": "D17",
+    "title": "Illuminating Olympicenes: Insights Into Anti‐Kasha Photophysics in Polycyclic Aromatic Hydrocarbons",
+    "doi": "10.1002/chem.71657",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "D17-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71657",
+    "file": "10.1002_chem.71657_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-09-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene (main solvent)",
+   "cyclohexane, THF, DMSO, methanol",
+   "aerated and degassed",
+   "solid"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Spectroscopic evidence demonstrates these behaviors arise from multiple singlet emissive states—an anti-Kasha locally excited (LE) state (Sn , n ≥ 2) and an intramolecular charge transfer (ICT) state.",
+    "subject": "all four olympicenes",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "Dual fluorescence: an anti-Kasha LE band and an ICT band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D17",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Such spectral variations clearly support the occurrence of an ICT process in all olympicene derivatives.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "solvents with dielectric constants 2.02-46.68",
+    "kind": "observation",
+    "statement": "Polarity-induced red shifts and band redistribution in absorption and emission.",
+    "limitations": "Only qualitative solvatochromism; no Lippert-Mataga analysis or CT calculation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D17",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Moreover, viscosity-dependent fluorescence emission measurements rule out the formation of a twisted intramolecular charge transfer (TICT) state, indicating the process is ICT rather than TICT (Figures S15–S18).",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "viscosity series",
+    "kind": "observation",
+    "statement": "Emission does not depend on viscosity: planar ICT, not TICT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D17",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This “anomalous” phenomenon suggests that the blueshifted emissive bands likely originate from the higher excited state (Sn , n ≥ 2), indicative of anti-Kasha behavior. In contrast, the redshifted emissive bands are attributed to ICT emission, reflecting the strong charge-transfer character of these olympicene derivatives.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "toluene, excitation spectra",
+    "kind": "author_interpretation",
+    "statement": "The blue band overlaps higher absorption bands (Sn emission); the red band is ICT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D17",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Most importantly, the blueshifted emissive bands, in the range 350 nm (28571 cm−1 ) to 450 nm (20202 cm−1 ), are not excitation-dependent, indicating a LE state. Conversely, the redshifted emissive bands exhibit conspicuous excitation-dependent fluorescence, which strongly supports an ICT state.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "toluene, excitation 300-500 nm",
+    "kind": "observation",
+    "statement": "Excitation dependence separates the LE and ICT bands.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D17",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "All of the examined olympicene derivatives exhibit pronounced excitation-dependent emission",
+    "subject": "Oly-one, tBu-MeOly-ol, (HxO)2-Oly-one",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "Strong excitation dependence (tBu-Oly-one only moderate).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D17",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The LE emission bands are also suppressed, influenced by π-π interaction between the olympicene cores, likely due to aggregation. An exception to this occurrence is tBu-MeOly-ol, which shows higher- and lower-energy emission features.",
+    "subject": "solid samples",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "author_interpretation",
+    "statement": "In the solid the LE band is suppressed by core pi-pi interaction, except for tBu-MeOly-ol.",
+    "limitations": "Stated as likely; solid-state study left for later work."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D17",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The multiple decay components are attributed to fluorescence from the LE state and/or the fully or partially relaxed ICT state.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "aerated solvents, excitation 337 and 465 nm",
+    "kind": "observation",
+    "statement": "Wavelength-dependent mono/biexponential decays.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "D17",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "These observations demonstrate that molecular oxygen plays a moderate fluorescence-quenching role in these olympicene systems, with integrated fluorescence intensities approximately 1.3–1.9 times larger after degassing (Figures S19–S22).",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "degassed vs aerated",
+    "kind": "observation",
+    "statement": "Moderate oxygen quenching of the fluorescence.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "D17",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "largely attributed to the two hexyl-oxy groups’ strong electron-donating character reducing the HOMO-LUMO gap.",
+    "subject": "(HxO)2-Oly-one",
+    "scope": "target",
+    "conditions": "toluene absorption",
+    "kind": "author_interpretation",
+    "statement": "The most red-shifted S0-S1 band comes from the two alkoxy donors.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "The red, excitation-dependent fluorescence band is assigned to a planar ICT state (solvatochromism; viscosity independence rules out TICT). Evidence is qualitative: no Lippert-Mataga analysis or excited-state calculation."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "In the solid, pi-pi interaction between the cores suppresses the LE band (stated as likely)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Rigidity is discussed for vibronic structure in absorption; viscosity measurements are used only to exclude TICT."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06",
+     "E08"
+    ],
+    "rationale": "The red, excitation-dependent fluorescence band is assigned to a planar ICT state (solvatochromism; viscosity independence rules out TICT). Evidence is qualitative: no Lippert-Mataga analysis or excited-state calculation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07"
+    ],
+    "rationale": "In the solid, pi-pi interaction between the cores suppresses the LE band (stated as likely)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The anti-Kasha LE emission is identified but not explained by state order, gaps or rates (recorded out of pool)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Oxygen quenching of the fluorescence is reported; no triplet state is invoked."
+   }
+  ],
+  "environment_context": [
+   "oxygen: moderate fluorescence quenching (1.3-1.9x brighter after degassing) (E09)"
+  ],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: excitation-independent blue fluorescence band from a higher singlet state (Sn, n >= 2) (E01, E04, E05)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SI name 5H-benzo[cd]pyren-5-one, parsed with OPSIN",
+   "SI route: 3-(pyren-1-yl)propanoic acid cyclised in Eaton's reagent",
+   "SI HRMS-ESI [M+H]+ calcd for C19H10O 255.0810, found 255.0806"
+  ],
+  "formula": "C19H10O",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1002_chem.71657_SI_1_image174.png, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

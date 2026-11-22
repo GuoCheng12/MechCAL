@@ -1,0 +1,213 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_010",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCN(CC)c1ccc(/C=N/c2nc3ccccc3[nH]2)c(O)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3a",
+  "source_documents": [
+   {
+    "source_id": "P05",
+    "title": "Fluorescent Detection Probes for Hg2+ and Zn2+ with Schiff Base Structure Based on a Turn-On ESIPT–CHEF Mechanism",
+    "doi": "10.3390/chemosensors14010009",
+    "format": "PDF",
+    "pages": 23,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "P05-SI",
+    "title": "Supporting information",
+    "doi": "10.3390/chemosensors14010009",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-01",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "THF, DCM, MeCN, DMF, DMSO, EA, MeOH, EtOH"
+   },
+   {
+    "state": "aggregate",
+    "media": "MeOH/water or DMSO/water"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P05",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "compound 3a displays dual emission bands (enol emission and keto emission) in aprotic solvents",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "aprotic organic solvents",
+    "kind": "observation",
+    "statement": "Dual (enol + keto) emission, read by the authors as ESIPT.",
+    "limitations": "Steady-state spectra only; no time-resolved data."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P05",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "reaching its maximum intensity at a water fraction of 70% (Figure S10)",
+    "subject": "3a",
+    "scope": "target",
+    "conditions": "CH3OH/H2O 0-90% water",
+    "kind": "observation",
+    "statement": "Emission changes non-monotonically with water fraction, maximal at 70% water.",
+    "limitations": "Aggregation is inferred, not characterised (no DLS/SEM)."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P05",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "these motions are significantly restricted, thereby suppressing non-radiative decay channels and leading to remarkable fluorescence enhancement",
+    "subject": "compounds 3a-3c",
+    "scope": "target",
+    "conditions": "MeOH or DMSO / water mixtures, aggregated",
+    "kind": "author_interpretation",
+    "statement": "AIE-type enhancement attributed to restricted rotation/vibration of the diethylamino alkyl chains in the aggregate.",
+    "limitations": "Interpretation only; the water-fraction curves are non-monotonic (decrease, rise, decrease) and no viscosity or rigid-matrix control is reported."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P05",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "It can be observed that the LUMO energy level of the enol form is higher than that of the keto form.",
+    "subject": "compounds 3a-3c and keto tautomers",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d,p), ground-state optimised tautomers",
+    "kind": "computation",
+    "statement": "Frontier orbital energies of enol vs keto forms are used to argue that ESIPT is favourable.",
+    "limitations": "Ground-state orbital energies only; no excited-state proton-transfer profile."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P05",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "This is likely because the coordination of compounds 3a–3c with the metal ions enhances the structural rigidity of the molecules while simultaneously suppressing C=N isomerization and the ESIPT process.",
+    "subject": "compounds 3a-3c with Hg2+/Zn2+",
+    "scope": "target",
+    "conditions": "DMF/H2O or DMSO/H2O with metal ions",
+    "kind": "author_interpretation",
+    "statement": "Turn-on upon metal binding is attributed to rigidification, blocked C=N isomerization and blocked ESIPT (CHEF).",
+    "limitations": "Concerns the metal complexes, not the free probe that is the case input."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "AIE-like enhancement in water mixtures attributed to restricted rotation/vibration of the diethylamino chains; interpretation-level evidence only."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "ESIPT is the paper's stated mechanism for the free probe; the support is limited to steady-state dual enol/keto emission in aprotic solvents and ground-state tautomer orbitals, with no time-resolved data or excited-state proton-transfer calculation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "AIE-like enhancement in water mixtures attributed to restricted rotation/vibration of the diethylamino chains; interpretation-level evidence only."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The D-π-A design and ICT are mentioned only as design motivation; no ICT evidence for the emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "ESIPT is the paper's stated mechanism for the free probe; the support is limited to steady-state dual enol/keto emission in aprotic solvents and ground-state tautomer orbitals, with no time-resolved data or excited-state proton-transfer calculation."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Aggregation is invoked only as motion restriction; no intermolecular electronic coupling discussed."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   {
+    "mechanism": "chelation-enhanced fluorescence (CHEF) of the metal complex, with blocked C=N isomerization and ESIPT",
+    "evidence_ids": [
+     "E05"
+    ]
+   }
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of 2-[(E)-(1H-benzimidazol-2-ylimino)methyl]-5-(diethylamino)phenol (name built from the stated synthesis: 4-diethylaminosalicylaldehyde + 2-aminobenzimidazole)",
+   "literature compound (m.p. compared with ref. in the paper); 1H NMR in the paper"
+  ],
+  "formula": "C18H20N4O",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main.pdf p14, main.pdf p15, main.pdf p3, si.pdf p21"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,223 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0001",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCC(CC)COC(=O)CCCc1ccc2ccc3cccc4ccc1c2c34"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PLQ",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "title": "Kinetics of Excimer Electrogenerated Chemiluminescence of Pyrene and 1-Pyrenebutyricacid 2-Ethylhexylester in Acetonitrile and an Ionic Liquid, Triethylpentylphosphonium Bis(trifluoromethanesulfonyl)imide",
+    "doi": "10.1021/acs.jpcb.9b08813",
+    "format": "PDF",
+    "pages": 12,
+    "pdf_sha256": "22bda901079091f4073c72a7138f5e86c01c207faa520a98cf4b3543149f55a1"
+   }
+  ],
+  "publication_date": "2019-12-05",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "MeCN solution, 10 μM to high concentration",
+   "[P2225][TFSI] ionic liquid solution",
+   "neat liquid PLQ",
+   "ECL"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Upon light absorption, the excimer emission of PLQ was observed at high concentrations as pyrene, and the kinetics of the excimer formation is limited by diffusion.",
+    "subject": "PLQ",
+    "scope": "target",
+    "conditions": "MeCN and [P2225][TFSI], concentration series",
+    "kind": "observation",
+    "statement": "Concentration-dependent excimer emission with diffusion-limited formation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "For neat PLQ (1.6 M), a delay of 0.3−0.4 ns for the excimer emission compared to the monomer emission was observed.",
+    "subject": "PLQ",
+    "scope": "target",
+    "conditions": "neat liquid",
+    "kind": "observation",
+    "statement": "Delayed excimer rise in the neat liquid; monomer emission is negligible.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "time-dependent DFT calculations show that the potential energy curve of the excimer against the distance between the pyrene rings reaches a minimum at 3.50 Å.",
+    "subject": "PLQ dimer",
+    "scope": "target",
+    "conditions": "DFT/TD-DFT",
+    "kind": "computation",
+    "statement": "Excimer energy minimum at 3.50 Å ring separation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Because the S1 → S0 transition of pyrene is symmetry forbidden,44 the enhancement of kM r for PLQ is attributable to its less symmetric molecular structure by the presence of the substituent.",
+    "subject": "PLQ vs pyrene",
+    "scope": "target",
+    "conditions": "dilute solution",
+    "kind": "author_interpretation",
+    "statement": "The larger monomer kr of PLQ is explained by symmetry breaking by the substituent.",
+    "limitations": "Concerns the monomer radiative rate, not the excimer."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "can be ascribed to the suppression of vibrational relaxations, as was observed for several dyes in viscous media.",
+    "subject": "PLQ and pyrene",
+    "scope": "target",
+    "conditions": "viscous ionic liquid",
+    "kind": "author_interpretation",
+    "statement": "Slightly lower knr in the viscous ionic liquid.",
+    "limitations": "No specific intramolecular motion is identified."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1021_acs.jpcb.9b08813",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Kinetic analysis for the electron transfer reaction between the radical ions based on Marcus theory indicates that the electron transfer is limited by the diffusion of the radical ions.",
+    "subject": "PLQ radical ions",
+    "scope": "target",
+    "conditions": "ECL, square-wave voltage",
+    "kind": "computation",
+    "statement": "ECL excited states form by electron transfer between electrogenerated radical ions.",
+    "limitations": "Electrochemical excitation, not photoinduced."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Pyrene excimer formation (concentration series, neat-liquid kinetics, dimer calculations) is the central subject in both PL and ECL."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The monomer radiative rate is analysed and its increase over pyrene is explained by the symmetry-forbidden S1→S0 transition being relaxed by the substituent."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The slightly lower knr in the viscous ionic liquid is ascribed to generic suppression of vibrational relaxation (E05); no specific motion is named, so not labelled (guideline §3.3)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Electron transfer here is the annihilation of electrogenerated radical ions that creates ECL excited states (E06), not a photoinduced quenching or switching; recorded out of pool."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Pyrene excimer formation (concentration series, neat-liquid kinetics, dimer calculations) is the central subject in both PL and ECL."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The monomer radiative rate is analysed and its increase over pyrene is explained by the symmetry-forbidden S1→S0 transition being relaxed by the substituent."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "viscous ionic liquid [P2225][TFSI] slows excimer formation (diffusion) and slightly lowers knr"
+  ],
+  "out_of_pool": [
+   "electrogenerated chemiluminescence: excited states formed by electron transfer between radical ions (E06)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCCCC(CC)COC(=O)CCCc1ccc2c(ccc3c4ccccc4ccc23)c1",
+  "problem": "pyrene ester written as chrysene",
+  "old_formula": "C30H34O2",
+  "new_formula": "C28H32O2",
+  "basis": "abstract: 1-pyrenebutyric acid 2-ethylhexyl ester (PLQ); MolScribe reading of the figure = proposed",
+  "evidence": [
+   "abstract: 1-pyrenebutyric acid 2-ethylhexyl ester (PLQ); MolScribe reading of the figure = proposed"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous RIM and PET secondaries dropped: generic vibrational suppression, and ECL electron transfer is not photoinduced (put out of pool; see the report's guideline proposals).",
+  "previous_primary": [
+   "AGGREGATE_EXCITON_EXCIMER"
+  ]
+ }
+}

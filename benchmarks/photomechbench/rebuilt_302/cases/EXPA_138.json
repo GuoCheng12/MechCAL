@@ -1,0 +1,241 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_138",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=Cc1ccc(C(=C(c2ccc(C=O)cc2)c2ccc(C=O)cc2)c2ccc(C=O)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPE-4CHO",
+  "source_documents": [
+   {
+    "source_id": "C30",
+    "title": "Formyl‐Group Multiplicity Regulates Nonradiative Decay Through Intermolecular Locking in Tetraphenylethylene‐Based Aggregation‐Induced Emission Luminogens",
+    "doi": "10.1002/chem.71711",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C30-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.71711",
+    "file": "10.1002_chem.71711_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-09-18",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: THF",
+   "aggregate: THF/water",
+   "solid: powders and single crystals"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "However, aggregation alone does not guarantee high solid-state photoluminescence efficiency, because residual molecular motions may still promote nonradiative decay.",
+    "subject": "TPE-nCHO",
+    "scope": "target",
+    "conditions": "powders/crystals",
+    "kind": "author_interpretation",
+    "statement": "Residual motions in some aggregates keep nonradiative decay active.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "TPE-CHO shows only 20 ± 2%, whereas (Z)-TPE-2CHO, (E)-TPE-2CHO, and TPE-4CHO reach 89 ± 2%, 99 ± 1%, and 99 ± 1%, respectively.",
+    "subject": "TPE-CHO, (E)-TPE-2CHO, TPE-4CHO",
+    "scope": "target",
+    "conditions": "solid powders",
+    "kind": "observation",
+    "statement": "Solid-state PLQY 20% vs 99% vs 99%.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Fluorescence lifetime analysis shows that the low efficiency of TPE-CHO is associated with a substantially larger nonradiative decay contribution.",
+    "subject": "TPE-CHO",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "knr is much larger for the mono-aldehyde.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Single-crystal structures and quantitative short-contact statistics indicate that the highly emissive (E)-TPE-2CHO and TPE-4CHO crystals possess more extensive and spatially distributed intermolecular contact networks than TPE-CHO.",
+    "subject": "TPE-CHO, (E)-TPE-2CHO, TPE-4CHO",
+    "scope": "target",
+    "conditions": "single crystals",
+    "kind": "observation",
+    "statement": "More short contacts around the bright crystals.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C30",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "Importantly, these results reveal that aggregation activates fluorescence in all four compounds, but does not suppress nonradiative decay to the same extent.",
+    "subject": "all four",
+    "scope": "target",
+    "conditions": "THF/water and solid",
+    "kind": "observation",
+    "statement": "All are AIE-active, with different residual knr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C30",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "These results support a twisting–locking design picture in which molecular twisting prevents unfavorable π–π stacking, while multipoint intermolecular contacts provide structural confinement that is consistent with reduced nonradiative relaxation.",
+    "subject": "TPE-nCHO",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Twisting prevents stacking; contacts lock the flexible TPE frame.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C30",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "We emphasize, however, that the crystallographic observations provide structural support rather than direct dynamic evidence of restricted molecular motion, and that the quantitative photophysical parameters were measured for powders.",
+    "subject": "TPE-nCHO",
+    "scope": "target",
+    "conditions": "crystals vs powders",
+    "kind": "author_interpretation",
+    "statement": "The authors flag that restricted motion is inferred, not measured.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Its AIE behavior is generally attributed to the restriction of intramolecular motion: phenyl-ring rotation and excited-state structural relaxation efficiently dissipate energy in solution, whereas aggregation suppresses these motions and activates fluorescence [13–16].",
+    "subject": "TPE scaffold",
+    "scope": "target",
+    "conditions": "literature",
+    "kind": "author_interpretation",
+    "statement": "Phenyl rotation and relaxation quench in solution; aggregation restricts them.",
+    "limitations": "From earlier work, not re-measured here."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E08"
+    ],
+    "rationale": "AIE from restricted phenyl rotation/relaxation; intermolecular contact networks lock residual motion and set knr. The authors note this is structural support, not dynamic evidence (E07). PLQY 99%."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04",
+     "E06",
+     "E08"
+    ],
+    "rationale": "AIE from restricted phenyl rotation/relaxation; intermolecular contact networks lock residual motion and set knr. The authors note this is structural support, not dynamic evidence (E07). PLQY 99%."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "twisted TPE geometry prevents cofacial π-π stacking; dense intermolecular contacts confine the framework (E06)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C30-CG1",
+   "varied_factor": "number of para-formyl groups on tetraphenylethylene (1 vs 2 trans vs 4)",
+   "paper_difference": "All are AIE-active, but the mono-aldehyde keeps a large knr (PLQY 20%) while the di- and tetra-aldehydes, locked by denser intermolecular contacts, reach 99%."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "4,4',4'',4'''-(ethene-1,1,2,2-tetrayl)tetrabenzaldehyde from TPE-4Br (SI)",
+   "single-crystal structure"
+  ],
+  "used_si": true,
+  "formula": "C30H20O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1002_chem.71711_SI_1_image1.png, img 10.1002_chem.71711_SI_1_image13.png, main p3, main p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,157 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_032",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(-n2c3ccccc3c(=O)c3cc4c(cc32)c(=O)c2ccccc2n4-c2ccc(OC)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "QA-OMe",
+  "source_documents": [
+   {
+    "source_id": "A19",
+    "title": "Insights into solvents and substituents modulating green-to-red emission of quinacridone from locally excited-state and intramolecular charge transfer",
+    "doi": "10.1016/j.jphotochem.2026.117566",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A19-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jphotochem.2026.117566",
+    "file": "10.1016_j.jphotochem.2026.117566_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-07-31",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (MeOH, THF, DMSO and others)",
+   "aggregated/solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E03",
+    "source_id": "A19",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The introduction of steric substituents into the quinacridone (QA) backbone effectively inhibits π-π stacking interactions, thereby opening up the radiative transition channel of the molecules and enhancing fluorescence intensity.",
+    "subject": "QA-OMe and QA-TPA",
+    "scope": "target",
+    "conditions": "aggregated state",
+    "kind": "author_interpretation",
+    "statement": "N-aryl groups prevent π-π stacking quenching.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "is assigned to the observed emission band of QA-OMe at 538.6 nm, corresponding to a locally excited (LE) transition from HOMO to LUMO",
+    "subject": "QA-OMe",
+    "scope": "target",
+    "conditions": "solution, TD-DFT",
+    "kind": "computation",
+    "statement": "QA-OMe emission is LE, not CT.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "N-aryl groups suppress π-π stacking quenching (design rationale); QA-OMe serves as the LE-emitting reference of the pair."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The paper assigns QA-OMe emission to a locally excited state.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "N-aryl groups suppress π-π stacking quenching (design rationale); QA-OMe serves as the LE-emitting reference of the pair."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A19-CG1",
+   "varied_factor": "N-aryl group (4-methoxyphenyl vs 4-diphenylaminophenyl donor)",
+   "paper_difference": "QA-TPA shows ICT (and S3) emission; QA-OMe emits from an LE state."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI synthesis: N-arylation of quinacridone with 4-iodoanisole; name built and parsed with OPSIN",
+   "NMR and HRMS reported"
+  ],
+  "used_si": true,
+  "formula": "C34H24N2O4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.jphotochem.2026.117566_SI_1_image1.png, img 10.1016_j.jphotochem.2026.117566_SI_1_image3.png"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

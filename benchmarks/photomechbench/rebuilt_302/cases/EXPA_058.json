@@ -1,0 +1,193 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_058",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Clc1ccc(C(c2ccc(Cl)cc2)N2CCNCC2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DClBP",
+  "source_documents": [
+   {
+    "source_id": "A32",
+    "title": "Single-component organic room temperature phosphorescence with high quantum yields and long lifetimes from simple diphenylmethane derivatives",
+    "doi": "10.1039/d6qm00664g",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A32-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6qm00664g",
+    "file": "10.1039_d6qm00664g_SI_1.pdf",
+    "format": "PDF"
+   },
+   {
+    "source_id": "A32-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6qm00664g",
+    "file": "10.1039_d6qm00664g_SI_2.cif",
+    "format": "CIF"
+   }
+  ],
+  "publication_date": "2026-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "crystalline powder (single component)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A32",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The intramolecular TSC caused by large steric hindrance and intramolecular CT synergistically promoted the generation of phosphorescence.",
+    "subject": "BP series",
+    "scope": "target",
+    "conditions": "crystalline powder",
+    "kind": "author_interpretation",
+    "statement": "Through-space conjugation and intramolecular CT promote RTP.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A32",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "1-(bis(4-fluorophenyl)methyl)piperazine demonstrates a higher phosphorescence quantum yield of 9.2%",
+    "subject": "DFBP vs BP",
+    "scope": "target",
+    "conditions": "crystalline powder",
+    "kind": "observation",
+    "statement": "DFBP: higher phosphorescence yield and longer lifetime than BP (3.2%, 23.0 ms).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A32",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "both phosphorescence quantum yield and lifetime could be effectively enhanced simultaneously",
+    "subject": "BP series",
+    "scope": "target",
+    "conditions": "crystalline powder",
+    "kind": "observation",
+    "statement": "Acceptor strength tunes RTP yield and lifetime.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Intramolecular CT (piperazine donor, halophenyl acceptor) is named as one of two factors promoting RTP."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Single-component room-temperature phosphorescence is the subject."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Intramolecular CT (piperazine donor, halophenyl acceptor) is named as one of two factors promoting RTP."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "Single-component room-temperature phosphorescence is the subject."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   {
+    "label": "THROUGH_SPACE_CONJUGATION",
+    "evidence_ids": [
+     "E01"
+    ],
+    "note": "through-space conjugation of the two phenyl rings"
+   }
+  ],
+  "contrast_group": {
+   "group": "A32-CG1",
+   "varied_factor": "para halogens on the benzhydryl rings (H, F2, Cl2)",
+   "paper_difference": "Halogen acceptors strengthen push-pull CT and raise phosphorescence yield and lifetime."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the paper parsed with OPSIN (commercial, purified; NMR and HRMS in the SI)"
+  ],
+  "used_si": true,
+  "formula": "C17H18Cl2N2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d6qm00664g_SI_1.pdf p10, 10.1039_d6qm00664g_SI_1.pdf p12, 10.1039_d6qm00664g_SI_1.pdf p13, 10.1039_d6qm00664g_SI_1.pdf p15"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

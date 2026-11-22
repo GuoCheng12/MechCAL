@@ -79,4 +79,9 @@
 
 **已決定（作者 2026-11-22）**：用方案 B，開發集約佔 10%（29 個 case）。
 
-下一步是把劃分寫成數據文件（每個 case 的歸屬和論文單元），再組裝新的數據集快照。
+已完成：
+- 每個 case 的歸屬、論文單元和發表日期寫在 `analysis/dataset_expansion/split-2026-11-22.json`；
+- 數據集快照在 `benchmarks/photomechbench/rebuilt_302/`（302 個 case、manifest 含校驗碼和排除清單）；
+- 劃分文件在 `benchmarks/photomechbench/splits/rebuilt_302_dev_test.json`，格式和舊的 `raw_v2_119_dev_test.json` 一致。
+
+`mechcal/` 仍讀舊數據集和舊劃分，切換要另外改代碼。

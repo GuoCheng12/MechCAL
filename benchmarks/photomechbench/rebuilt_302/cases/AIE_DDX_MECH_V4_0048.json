@@ -1,0 +1,208 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0048",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3ccc(-c4ccc(-c5cc(OCCCCCCCC)cc(OCCCCCCCC)c5)s4)c4nsnc34)s2)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DBTBT-4C8",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acsami.9b18336",
+    "title": "Deep-Red Fluorescent Organic Nanoparticles with High Brightness and Photo-Stability for Super-Resolution In Vitro and In Vivo Imaging Using STED Nanoscopy",
+    "doi": "10.1021/acsami.9b18336",
+    "format": "PDF",
+    "pages": 41,
+    "pdf_sha256": "d26a98c6f757a1a8a9e45434fd01073215e48c825e4e58e64cd6b21120e4f460"
+   }
+  ],
+  "publication_date": "2019-12-27",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solvent series",
+   "THF/water",
+   "solid",
+   "nanoparticles",
+   "cells and in vivo (STED)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acsami.9b18336",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "indicating that twisted intramolecular charge transfer (TICT) characteristics are featured in these molecules.",
+    "subject": "DBTBT-nC8",
+    "scope": "analog",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "580 → 700 nm red shift with polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acsami.9b18336",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "PL intensities were greatly decreased for all molecules caused by TICT",
+    "subject": "DBTBT-nC8",
+    "scope": "analog",
+    "conditions": "THF/water < 60%",
+    "kind": "author_interpretation",
+    "statement": "TICT quenching at low water fraction.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acsami.9b18336",
+    "pdf_page": 13,
+    "location": null,
+    "quote": "However, in case of DBTBT-4C8 here, the motions of flexible chains are proposed can be well restricted by its lamellar packing.",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "aggregates, film (GISAXS)",
+    "kind": "author_interpretation",
+    "statement": "Lamellar packing restricts alkyl-chain motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acsami.9b18336",
+    "pdf_page": 13,
+    "location": null,
+    "quote": "Furthermore, knr value for DBTBT-4C8 decreased significantly, and this could partly explain its excellent fluorescent properties in aggregates.",
+    "subject": "DBTBT-4C8",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "Lower knr explains bright aggregates.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "In aggregates, lamellar packing restricts the flexible alkyl-chain motions, lowering knr; unlike -0C8 and -2C8, -4C8 recovers emission above 60% water."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "D-A TICT character explains solvatochromism and quenching at low water fraction."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "kr/knr from yields and lifetimes are used to explain the aggregate brightness."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "In aggregates, lamellar packing restricts the flexible alkyl-chain motions, lowering knr; unlike -0C8 and -2C8, -4C8 recovers emission above 60% water."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "D-A TICT character explains solvatochromism and quenching at low water fraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "kr/knr from yields and lifetimes are used to explain the aggregate brightness."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "lamellar packing (GISAXS); DSPE-PEG nanoparticles"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CCCCCCCCOc1cc(OCCCCCCCC)cc(-c2ccc(-c3cc4nsnc4cc3-c3ccc(-c4cc(OCCCCCCCC)cc(OCCCCCCCC)c4)s3)s2)c1",
+  "problem": "arms at benzothiadiazole 5,6 instead of 4,7",
+  "old_formula": "C58H80N2O4S3",
+  "new_formula": "C58H80N2O4S3",
+  "basis": "figure: 4,7-bis(thienyl) benzothiadiazole",
+  "evidence": [
+   "figure: 4,7-bis(thienyl) benzothiadiazole"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "ICT_TICT_CT"
+  ]
+ }
+}

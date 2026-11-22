@@ -1,0 +1,189 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0015",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cc(C)c(B(c2ccc(-c3ccc(-c4cnc(-c5cc(-c6ccc(N(c7ccccc7)c7ccccc7)cc6)ccc5O)o4)cc3)cc2)c2c(C)cc(C)cc2C)c(C)c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "6b",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "title": "Tuning the dual emission of keto/enol forms of excited-state intramolecular proton transfer (ESIPT) emitters via intramolecular charge transfer (ICT)",
+    "doi": "10.1016/j.dyepig.2021.109497",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "89aa955fdd4e996161a13f93edfe3acbc12f6ed6d598204c309bbf0184e9c672"
+   }
+  ],
+  "publication_date": "2021-06-06",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "toluene and other solvents",
+   "polystyrene film"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "6b displays one emission peak at 530 nm with a large Stokes shift in toluene",
+    "subject": "6b",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "Single keto emission with large Stokes shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the energy levels of TS* of 6b is close to its S1(enol) energy",
+    "subject": "6b",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Low forward ESIPT barrier.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the two local ICT effects from TPA to the ESIPTresulting keto ca",
+    "subject": "6b",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "author_interpretation",
+    "statement": "Local CT effects stabilise the keto form.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "H2",
+    "source_id": "10.1016_j.dyepig.2021.109497",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "However, the excited-state keto forms of 6b and 6c as well as both enol and keto forms of 6d are not of the HLCT character.",
+    "subject": "6b, 6c, 6d",
+    "scope": "target",
+    "conditions": "solvatochromism",
+    "kind": "author_interpretation",
+    "statement": "Keto forms (6b, 6c) and both forms of 6d are not HLCT.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "H2"
+    ],
+    "rationale": "Local ICT stabilises the keto tautomer; the keto emission itself is not HLCT/CT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Keto-only emission from efficient ESIPT."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "H2"
+    ],
+    "rationale": "Local ICT stabilises the keto tautomer; the keto emission itself is not HLCT/CT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Keto-only emission from efficient ESIPT."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0014-CG1",
+   "varied_factor": "position of the TPA donor / TPB acceptor on the 2-(2'-hydroxyphenyl)oxazole",
+   "paper_difference": "Substituent placement selects enol-only (6a), keto-only (6b) or dual enol/keto emission (6c, 6d)."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "text (6b) (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ESIPT_PT"
+  ]
+ }
+}

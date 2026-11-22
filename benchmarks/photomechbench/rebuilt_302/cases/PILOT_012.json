@@ -1,0 +1,180 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_012",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c(O)c(-c2ccc(O)c(O)c2)oc2cc(O)ccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "fisetin (3,3',4',7-tetrahydroxyflavone)",
+  "source_documents": [
+   {
+    "source_id": "P06",
+    "title": "Dual-Excited-State Intramolecular Proton Transfer Pathways Observed in Fisetin",
+    "doi": "10.1021/photonsci.6c00003",
+    "format": "PDF",
+    "pages": 9,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "P06-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/photonsci.6c00003",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-03-04",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "1,4-dioxane, acetone, acetonitrile"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P06",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Meanwhile, the green fluorescence band with a large Stokes shift is attributed to the emission from the T* generated via the ESIPT process.",
+    "subject": "fisetin",
+    "scope": "target",
+    "conditions": "dioxane, acetone, acetonitrile; 370 nm excitation",
+    "kind": "observation",
+    "statement": "Weak N* emission (~400-430 nm) and strong T* emission (~540 nm) with a Stokes shift above 9900 cm-1.",
+    "limitations": "Steady-state assignment follows earlier literature on 3-hydroxyflavones."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P06",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "pathways were directly observed when fisetin was dissolved in acetone and acetonitrile.",
+    "subject": "fisetin",
+    "scope": "target",
+    "conditions": "acetone, acetonitrile",
+    "kind": "observation",
+    "statement": "Femtosecond TA resolves ESIPT from both N*-S1 and N*-S2.",
+    "limitations": "Pathway proportions come from global fitting of a kinetic model."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P06",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This is direct evidence for the occurrence of the N*-S1 → N*-S2 population transfer in fisetin even if only the N*-S1 state is excited.",
+    "subject": "fisetin",
+    "scope": "target",
+    "conditions": "CD3CN, TRIR, 300/370 nm excitation",
+    "kind": "observation",
+    "statement": "TRIR marker bands show S1→S2 population transfer before ESIPT.",
+    "limitations": "Band assignment relies on TD-DFT frequencies."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P06",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "the lowest energies of the N*-S1 and N*-S2 states of fisetin also present a degenerate trend, with an energy gap of only 0.13 eV",
+    "subject": "fisetin",
+    "scope": "target",
+    "conditions": "TD-B3LYP/6-311++G(d,p), acetonitrile",
+    "kind": "computation",
+    "statement": "Near-degenerate N*-S1 and N*-S2 states.",
+    "limitations": "Single functional; vibrational-mode argument is labelled speculative by the authors."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Dual N*/T* emission and time-resolved (TA, TRIR) evidence of two ESIPT pathways."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Dual N*/T* emission and time-resolved (TA, TRIR) evidence of two ESIPT pathways."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of 2-(3,4-dihydroxyphenyl)-3,7-dihydroxy-4H-chromen-4-one = the paper's name 3,3',4',7-tetrahydroxyflavone",
+   "commercial compound (J&K), well-known natural product"
+  ],
+  "formula": "C15H10O6",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main.pdf p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot batch 1)",
+  "date": "2026-11-15",
+  "status": "draft_awaiting_expert_review"
+ }
+}

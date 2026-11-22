@@ -1,0 +1,268 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_155",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[n+]1ccc(-c2ccc(N(c3ccc(-c4cc[n+](C)cc4)cc3)c3ccc(-c4ccc5c(c4)Sc4cc(-c6ccc(N(c7ccc(-c8cc[n+](C)cc8)cc7)c7ccc(-c8cc[n+](C)cc8)cc7)cc6)ccc4N5)cc3)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DT-PZ",
+  "source_documents": [
+   {
+    "source_id": "D03",
+    "title": "Self‐Amplifying AIE Probe for HClO‐Activatable Imaging and Antioxidative/Anti‐Inflammatory Therapy of Thoracic Aortic Dissection",
+    "doi": "10.1002/anie.3622603",
+    "format": "PDF",
+    "pages": 14,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D03-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/anie.3622603",
+    "file": "10.1002_anie.3622603_SI_1.doc",
+    "format": "DOC"
+   }
+  ],
+  "publication_date": "2026-09-02",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "aqueous PBS",
+   "PBS/THF mixtures (aggregation)",
+   "solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D03",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The probe initially exhibits quenched fluorescence via photoinduced electron transfer (PET).",
+    "subject": "DT-PZ",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "The free probe is dark because of PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D03",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "both probes underwent efficient a-PET, where an electron from the excited fluorophore (10-methylphenothiazine or phenothiazine) was transferred to the receptor unit (pyridinium salt-modified triphenylamine).",
+    "subject": "DT-PZM, DT-PZ",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Frontier orbitals place the electron donor on the phenothiazine and the acceptor on the pyridinium-TPA.",
+    "limitations": "Computation only."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D03",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Notably, phenothiazine exhibited a higher-lying HOMO compared to 10-methylphenothiazine, which enhanced the driving force for a-PET [36]. As a result, DT-PZ demonstrated more complete FL quenching and lower background signal, in full agreement with experimental observations.",
+    "subject": "DT-PZ vs DT-PZM",
+    "scope": "target",
+    "conditions": "DFT + PBS spectra",
+    "kind": "author_interpretation",
+    "statement": "N-H phenothiazine is the stronger donor: more complete quenching than the N-methyl analogue.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In contrast, no significant FL signal was detected for DT-PZ under identical conditions, indicating its negligible background FL.",
+    "subject": "DT-PZ vs DT-PZM",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "DT-PZM shows weak emission near 650 nm; DT-PZ shows none.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D03",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Upon oxidation of the sulfur atom in 10-methylphenothiazine or phenothiazine to sulfoxide by HClO, the electron-donating ability of the donor was substantially diminished, thereby blocking the PET pathway and turning on strong FL.",
+    "subject": "DT-PZ, DT-PZM + HClO",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "Sulfoxide formation removes the donor and turns emission on.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "As the THF fraction increased, the FL of both DTPZM and DT-PZ was significantly enhanced, revealing a typical AIE characteristic.",
+    "subject": "DT-PZM, DT-PZ",
+    "scope": "target",
+    "conditions": "PBS/THF mixtures",
+    "kind": "observation",
+    "statement": "Emission rises on aggregation (AIE index 18.7 for DT-PZ, 5.2 for DT-PZM).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "D03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "As depicted, the twisted triphenylamine rotor can facilitate nonradiative decay via intramolecular rotation in the single molecule, resulting in low FL background.",
+    "subject": "DT-PZM, DT-PZ",
+    "scope": "target",
+    "conditions": "DFT geometries",
+    "kind": "author_interpretation",
+    "statement": "The TPA rotor gives rotation-driven nonradiative decay in the isolated molecule.",
+    "limitations": "Based on computed geometries."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "D03",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "a lower-energy band around 420 nm, characteristic of a typical intramolecular charge transfer (ICT) process.",
+    "subject": "DT-PZM, DT-PZ",
+    "scope": "target",
+    "conditions": "PBS absorption",
+    "kind": "author_interpretation",
+    "statement": "The low-energy absorption band is a D-A ICT band.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "AIE on aggregation, assigned to the TPA rotor's rotation-driven nonradiative decay in the isolated molecule."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "D-A ICT absorption band."
+   },
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Paper's explanation of the dark free probe: a-PET from the phenothiazine to the pyridinium-TPA receptor (DFT), stronger than in the N-methyl analogue; oxidation of the donor turns emission on."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "AIE on aggregation, assigned to the TPA rotor's rotation-driven nonradiative decay in the isolated molecule."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E08"
+    ],
+    "rationale": "D-A ICT absorption band."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Paper's explanation of the dark free probe: a-PET from the phenothiazine to the pyridinium-TPA receptor (DFT), stronger than in the N-methyl analogue; oxidation of the donor turns emission on."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PROBE_REACTION: HClO oxidation of the phenothiazine sulfur to the sulfoxide blocks PET (emission of the reaction product) (E05)"
+  ],
+  "contrast_group": {
+   "group": "D03-CG1",
+   "varied_factor": "phenothiazine N-substituent (N-methyl vs N-H)",
+   "paper_difference": "The N-H phenothiazine has the higher HOMO, a larger PET driving force and no background emission; the N-methyl probe keeps weak emission near 650 nm."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "note": "Tetracation; the paper gives the pyridinium salts from iodomethane (iodide counterions), SMILES carries the dye cation only.",
+  "basis": [
+   "SI route: 3,7-dibromo-10-Boc-phenothiazine (HRMS C17H15Br2NO2S) + bis(4-pyridylphenyl)aminophenyl arms, Boc ester 8 (HRMS C73H55N7O2S), N-methylation of the four pyridines and deprotection",
+   "SI HRMS [M]4+ C72H59N7S"
+  ],
+  "formula": "C72H59N7S+4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.64)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

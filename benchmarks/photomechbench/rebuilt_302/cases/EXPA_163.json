@@ -1,0 +1,185 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_163",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)C(=S)Oc1ccc2cc(C#N)c(=O)oc2c1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CUM-DMTC",
+  "source_documents": [
+   {
+    "source_id": "D08",
+    "title": "From live cells to real-world samples: A PET-based ultrafast and photostable turn-on fluorescent probe for on-site quantification and in vivo visualization of HClO",
+    "doi": "10.1016/j.talanta.2026.130199",
+    "format": "PDF",
+    "pages": 8,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D08-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.talanta.2026.130199",
+    "file": "10.1016_j.talanta.2026.130199_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-06-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "aqueous PBS"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D08",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "By utilizing photoinduced electron transfer (PET) quenching, it exhibits an extremely low background signal.",
+    "subject": "CUM-DMTC",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "The intact probe is PET-quenched.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D08",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "In the intact probe, the energy of the HOMO localized on the fluorophore is lower than that of the donorcentered HOMO, enabling spontaneous electron transfer from the donor to the photoexcited fluorophore.",
+    "subject": "CUM-DMTC",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Thiocarbamate donor HOMO above the coumarin HOMO.",
+    "limitations": "Computation only."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D08",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This thermodynamically favorable PET pathway efficiently quenches the fluorescence.",
+    "subject": "CUM-DMTC",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "author_interpretation",
+    "statement": "",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D08",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Meanwhile, upon reaction with HClO, the fluorescence quantum yield of the probe increased from 3.57% to 50.75%, representing a more than 14-fold enhancement.",
+    "subject": "CUM-DMTC + HClO",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "QY 3.57% (probe) to 50.75% (product).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Paper's explanation of the low background (QY 3.57%): PET from the thiocarbamate to the excited coumarin (DFT)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Paper's explanation of the low background (QY 3.57%): PET from the thiocarbamate to the excited coumarin (DFT)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PROBE_REACTION: HClO oxidation and hydrolysis to the phenol blocks PET (emission of the product) (E04)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: CUM-OH (0.37 g for 2 mmol, i.e. 7-hydroxycoumarin-3-carbonitrile) + dimethylcarbamothioyl chloride",
+   "HRMS [M+H]+ 275.0485 = C13H11N2O3S+",
+   "1H NMR: coumarin H-4 singlet 8.93, two N-CH3 singlets"
+  ],
+  "used_si": false,
+  "note": "The paper does not name CUM-OH; it is identified from its molar mass and the NMR.",
+  "formula": "C13H10N2O3S",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1016_j.talanta.2026.130199_SI_1_image20.png, img 10.1016_j.talanta.2026.130199_SI_1_image4.png, main p5"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

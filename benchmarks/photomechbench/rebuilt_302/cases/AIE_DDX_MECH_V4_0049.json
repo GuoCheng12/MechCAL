@@ -1,0 +1,194 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0049",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(C(=C(c2ccccc2)c2ccc(/C=C3\\SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPR",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acsnano.0c02197",
+    "title": "Supramolecular Aggregation-Induced Emission Nanodots with Programmed Tumor Microenvironment Responsiveness for Image-Guided Orthotopic Pancreatic Cancer Therapy",
+    "doi": "10.1021/acsnano.0c02197",
+    "format": "PDF",
+    "pages": 45,
+    "pdf_sha256": "780f0146675b12e66928d5d129795db3c8e79faab8ced84da275cb5efd86fc9b"
+   }
+  ],
+  "publication_date": "2020-04-13",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water",
+   "nanoparticles",
+   "cells and mice"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acsnano.0c02197",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "when increasing the water fraction from 0% to 70%, the maximal PL red-shifted gradually from ~600 to ~645 nm along with an intensity decrease",
+    "subject": "TPR",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "observation",
+    "statement": "Red shift and quenching with polarity.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acsnano.0c02197",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The PL intensity greatly intensified in high water fractions (80% and 90%) because of the aggregates formation restricting the intramolecular motion of TPR.",
+    "subject": "TPR",
+    "scope": "target",
+    "conditions": "THF/water ≥ 80%",
+    "kind": "author_interpretation",
+    "statement": "AIE from restricted intramolecular motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acsnano.0c02197",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "formation of large aggregates offering a hydrophobic microenvironment against water invasion, thus reducing TICT effect.",
+    "subject": "TPR",
+    "scope": "target",
+    "conditions": "aggregates",
+    "kind": "author_interpretation",
+    "statement": "Aggregates shield TICT.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acsnano.0c02197",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "the LUMO was primarily distributed on the rhodanine3-acetic acid",
+    "subject": "TPR",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "D-A orbital separation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "AIE of TPR is attributed to aggregation restricting intramolecular motion of the TPE unit."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "TICT quenches emission at intermediate water fraction; aggregates suppress it."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "AIE of TPR is attributed to aggregation restricting intramolecular motion of the TPE unit."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04"
+    ],
+    "rationale": "TICT quenches emission at intermediate water fraction; aggregates suppress it."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The carboxylic acid is on the rhodanine N-CH2 arm, not conjugated in a six-membered H-bond with an acceptor.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "α-CD/PEG supramolecular nanodots"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "COc1ccc(C(=C(c2ccc(C=C3SC(=S)N(CC(=O)O)C3=O)cc2)c2ccc(OC)cc2)c2ccccc2)cc1",
+  "problem": "methoxyphenyls on different alkene carbons",
+  "old_formula": "C34H27NO5S2",
+  "new_formula": "C34H27NO5S2",
+  "basis": "figure: both 4-methoxyphenyls on the same alkene carbon; MolScribe reading = proposed",
+  "evidence": [
+   "figure: both 4-methoxyphenyls on the same alkene carbon; MolScribe reading = proposed"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

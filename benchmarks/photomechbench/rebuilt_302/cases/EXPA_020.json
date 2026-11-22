@@ -1,0 +1,180 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_020",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)[Si](C#Cc1c2ccccc2c(C#C[Si](C(C)C)(C(C)C)C(C)C)c2ccccc12)(C(C)C)C(C)C"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TIPS-Ac",
+  "source_documents": [
+   {
+    "source_id": "A10",
+    "title": "Triplet Excimer of TIPS-Anthracene in Solution",
+    "doi": "10.1021/acs.jpcc.6c04793",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A10-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpcc.6c04793",
+    "file": "10.1021_acs.jpcc.6c04793_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-10-06",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (concentrated, with and without PtOEP sensitiser)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A10",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "TA of triplet-sensitized TIPS-Ac showed a narrow photoinduced absorption (PIA) with a peak at around 700 nm.",
+    "subject": "TIPS-Ac",
+    "scope": "target",
+    "conditions": "solution, triplet sensitisation (PtOEP), transient absorption",
+    "kind": "observation",
+    "statement": "A new narrow PIA band appears after the isolated-triplet PIA.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A10",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The narrow PIA followed the broad PIA of an isolated triplet (T1) and is assigned to the triplet excimer excited state (T1 + S0).",
+    "subject": "TIPS-Ac",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Assignment of the band to a triplet excimer (T1 + S0).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A10",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "suggesting that TTA mainly proceeds with the fusion of two isolated triplets (2T1)",
+    "subject": "TIPS-Ac",
+    "scope": "target",
+    "conditions": "solution, photon upconversion",
+    "kind": "observation",
+    "statement": "Upconverted emission comes from TTA of isolated triplets, not from the excimer.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Identification of a triplet excimer (T1 + S0) is the paper's central claim."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Triplet states, triplet sensitisation and TTA upconversion are the subject of the study."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Identification of a triplet excimer (T1 + S0) is the paper's central claim."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Triplet states, triplet sensitisation and TTA upconversion are the subject of the study."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   {
+    "label": "TRIPLET_FUSION_TTA",
+    "note": "upconverted emission via triplet-triplet annihilation; closest pool family is TRIPLET"
+   }
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "standard compound named in the paper (bis[(triisopropylsilyl)ethynyl]anthracene), parsed with OPSIN"
+  ],
+  "used_si": false,
+  "formula": "C36H50Si2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_acs.jpcc.6c04793_SI_1.pdf p2, main p1, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

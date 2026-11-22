@@ -1,0 +1,206 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_116",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cn1c2cc3c(cc2c2nc(C(C)(C)C)cc4cccc1c42)c1nc(C(C)(C)C)cc2cccc(c21)n3C"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "cis-I2A2-4",
+  "source_documents": [
+   {
+    "source_id": "C14",
+    "title": "Group Theory-Guided Orbital Symmetry Engineering of cis -Quinacridone: From Symmetry-Forbidden to Dipole-Allowed Transitions for Efficient Narrowband Emissions",
+    "doi": "10.1021/jacs.6c18646",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C14-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/jacs.6c18646",
+    "file": "10.1021_jacs.6c18646_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-10-14",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene, 1e-5 M"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C14",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "the TDM of cis-QA is nearly negligible, which is far lower than that of trans-QA (3.04 D), directly verifying its forbidden lowestenergy electronic transition.",
+    "subject": "cis-QA core",
+    "scope": "target",
+    "conditions": "TD-DFT ωB97XD/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "The S0-S1 transition of cis-QA is symmetry-forbidden (near-zero TDM).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C14",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "In summary, this work reveals that the intrinsically weak emission of cis-quinacridone originates from a symmetryforbidden lowest-energy transition, as established by quantumchemical and group-theoretical analyses.",
+    "subject": "cis-QA derivatives",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "author_interpretation",
+    "statement": "Weak cis-QA emission is assigned to the symmetry-forbidden lowest transition.",
+    "limitations": "The assignment rests on calculations; the measured side is the low ΦPL."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C14",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Owing to the activated symmetry-allowed radiative transitions, cis-I2A2 derivatives achieve significantly improved ΦPL of 70−99%, in stark contrast to the low ΦPL values (0.4−12%) of pristine cis-QA molecules (Table 1).",
+    "subject": "cis-I2A2 series vs cis-QA series",
+    "scope": "target",
+    "conditions": "toluene, 1e-5 M",
+    "kind": "observation",
+    "statement": "ΦPL 0.4% for cis-tBuQA1 vs 97% for cis-I2A2-4 (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C14",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "cisI2A2 derivatives exhibit short transient PL lifetimes (0.7−2.6 ns) and high radiative rate constants",
+    "subject": "cis-I2A2 series",
+    "scope": "target",
+    "conditions": "toluene",
+    "kind": "observation",
+    "statement": "Large kr for the imine derivatives.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C14",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "These results reveal two complementary effects of the carbonyl-to-imine transformation: orbitalsymmetry reorganization converts the lowest-energy transition into an allowed radiative channel, while the resulting molecular framework exhibits reduced structural relaxation and vibronic coupling.",
+    "subject": "cis-I2A2 series",
+    "scope": "target",
+    "conditions": "TD-DFT, Huang-Rhys analysis",
+    "kind": "computation",
+    "statement": "The imine form makes S0-S1 allowed and lowers excited-state relaxation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C14",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The strong carbonyl stretching vibration leads to pronounced geometric relaxation in the excited state, resulting in a larger reorganization energy.",
+    "subject": "cis-QA core",
+    "scope": "target",
+    "conditions": "Huang-Rhys analysis",
+    "kind": "computation",
+    "statement": "Carbonyl stretching gives large reorganization in cis-QA.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "ΦPL 97% with ns lifetimes; carbonyl-to-imine annulation turns the forbidden lowest transition into an allowed one."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Reduced Huang-Rhys factors and reorganization energy are used to explain the narrow band, not a motion-gated nonradiative channel; not labelled RIM."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "N-methylated; no NH or OH donor.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "ΦPL 97% with ns lifetimes; carbonyl-to-imine annulation turns the forbidden lowest transition into an allowed one."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name 2,14-di-tert-butyl-7,9-dimethyl-7,9-dihydrobenzo[4,5][1,6]naphthyridino[8,7-b]pyrido[4,3,2-kl]acridine (OPSIN)",
+   "SI HRMS [M+H]+ C34H35N4 matches C34H34N4",
+   "route: O-methyl oxime of cis-QA1 + 3,3-dimethyl-1-butyne annulation"
+  ],
+  "used_si": true,
+  "formula": "C34H34N4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_jacs.6c18646_SI_1.pdf p26, 10.1021_jacs.6c18646_SI_1.pdf p43, main p4"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

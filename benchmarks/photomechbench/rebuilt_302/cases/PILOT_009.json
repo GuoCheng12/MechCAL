@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_009",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc2c(c1)CCc1nc(-c3ccc(N4c5ccccc5Oc5ccccc54)cc3)c3c(c1-2)CCc1ccccc1-3"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DBP-PXZ",
+  "source_documents": [
+   {
+    "source_id": "P04",
+    "title": "Molecularly Engineered Dual-Emission Pathways with Monomer-Excimer Interplay for Single-Component Blue and White Organic Light-Emitting Diodes",
+    "doi": "10.1021/acsaom.6c00161",
+    "pmcid": "PMC13317630",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2026-05-27",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "toluene, THF, THF/water"
+   },
+   {
+    "state": "film",
+    "media": "neat, PMMA, DPEPO"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Introduction (summary of findings)",
+    "quote": "establishing a well-defined intramolecular CT monomer state that shows blue fluorescence",
+    "subject": "DBP-PXZ",
+    "scope": "target",
+    "conditions": "solution, PMMA",
+    "kind": "author_interpretation",
+    "statement": "HOMO on phenoxazine, LUMO on the DBP acceptor; the monomer emits from an intramolecular CT state.",
+    "limitations": "Assignment supported by DFT and solvatochromism."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Photophysical properties of solutions",
+    "quote": "The steady-state PL spectra of toluene and THF solutions of DBP-PXZ reveal a strong sensitivity of the emission to polarity.",
+    "subject": "DBP-PXZ",
+    "scope": "target",
+    "conditions": "toluene, THF",
+    "kind": "observation",
+    "statement": "Emission is polarity sensitive.",
+    "limitations": "Two solvents."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Neat film",
+    "quote": "The dual-band PL spectrum of the film can be assigned to high-energy blue emission from the intramolecular CT S1 state and low-energy greenish-yellow emission from the excimer CT state.",
+    "subject": "DBP-PXZ",
+    "scope": "target",
+    "conditions": "neat film",
+    "kind": "author_interpretation",
+    "statement": "Dual emission: monomer CT band and excimer CT band.",
+    "limitations": "None."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Solid solutions in a host",
+    "quote": "As the concentration of DBP-PXZ increased, the enhanced proximity among chromophores facilitated stronger intermolecular π-interactions, thereby promoting excimer formation.",
+    "subject": "DBP-PXZ",
+    "scope": "target",
+    "conditions": "DPEPO host, 10-90 wt%",
+    "kind": "observation",
+    "statement": "The low-energy band grows with dopant concentration.",
+    "limitations": "None."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Photophysical properties of dispersions (TD-DFT)",
+    "quote": "Notably, the dimer exhibits a significantly stabilized S1 state at 2.93 eV",
+    "subject": "DBP-PXZ dimer model",
+    "scope": "target",
+    "conditions": "TD-ωB97XD/6-31G**, CPCM/THF",
+    "kind": "computation",
+    "statement": "A modeled dimer has a lower S1 than the monomer (3.10 eV), supporting an intermolecular CT excimer.",
+    "limitations": "Single modeled dimer geometry."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "P04",
+    "pdf_page": null,
+    "location": "Photophysical properties of dispersions",
+    "quote": "PLQYs of the solutions of DBP-PXZ are higher than that of the neat film, indicating the absence of aggregation-induced emission enhancement (Table ).",
+    "subject": "DBP-PXZ",
+    "scope": "target",
+    "conditions": "solutions vs neat film",
+    "kind": "observation",
+    "statement": "No aggregation-induced emission enhancement.",
+    "limitations": "Says nothing direct about motion restriction."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Blue emission from the intramolecular CT monomer state."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Low-energy band from an intermolecular CT excimer, concentration dependent, dimer TD-DFT."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Blue emission from the intramolecular CT monomer state."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "Low-energy band from an intermolecular CT excimer, concentration dependent, dimer TD-DFT."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "close chromophore packing activates the excimer channel; dilution suppresses it",
+    "evidence_ids": [
+     "E04"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "OPSIN parse of the SI name 10-(4-(7,8,13,14-tetrahydrodibenzo[a,i]phenanthridin-5-yl)phenyl)-10H-phenoxazine",
+   "consistent with the synthesis (4-(phenoxazin-10-yl)benzaldehyde + 2 eq. 3,4-dihydronaphthalen-2(1H)-one + NH4OAc)"
+  ],
+  "si_checked": "2026-11-14",
+  "second_source": "found_exact in Scheme 1 (MolScribe)",
+  "formula": "C39H28N2O"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

@@ -1,0 +1,171 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_053",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cn1cccc1C(=O)n1c2ccc(Br)cc2c2cc(Br)ccc21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "K-Br2",
+  "source_documents": [
+   {
+    "source_id": "A30",
+    "title": "Dual-Mechanism Synergistic Enhancement of Room-Temperature Phosphorescence in Carbazole Derivatives",
+    "doi": "10.1007/s10895-026-04749-w",
+    "format": "PDF",
+    "pages": 6,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A30-SI",
+    "title": "Supporting information",
+    "doi": "10.1007/s10895-026-04749-w",
+    "file": "10.1007_s10895-026-04749-w_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-03-27",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "powder/crystal at 77 K",
+   "PMMA film (doped)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "these compounds bear heavy-atom substituents (–Br, –Cl) and rigid skeletons to enhance spin-orbit coupling for efficient intersystem crossing",
+    "subject": "K series",
+    "scope": "target",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "Heavy atoms and rigid skeleton for efficient ISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Exhibiting relatively extended phosphorescent afterglow durations (0.6–3 s) and long phosphorescence lifetimes (τp: 4.2-177.3 ms) at 77 K.",
+    "subject": "K series",
+    "scope": "target",
+    "conditions": "powder, 77 K",
+    "kind": "observation",
+    "statement": "Long-lived phosphorescence at 77 K.",
+    "limitations": "Room-temperature phosphorescence only in PMMA."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A30",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Doping these compounds into a PMMA matrix yields composite materials with significantly enhanced room-temperature phosphorescence.",
+    "subject": "K series",
+    "scope": "target",
+    "conditions": "PMMA films",
+    "kind": "observation",
+    "statement": "RTP in PMMA.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Phosphorescence (77 K and in PMMA) from heavy-atom/heteroatom-enhanced ISC; evidence is lifetimes and afterglow only."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Phosphorescence (77 K and in PMMA) from heavy-atom/heteroatom-enhanced ISC; evidence is lifetimes and afterglow only."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A30-CG1",
+   "varied_factor": "carbazole substituent (3-CN vs 3,6-dibromo)",
+   "paper_difference": "K-CN gives the longest lifetime (177.3 ms); bromine adds heavy-atom SOC."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "same route; HRMS [M+Na]+ C18H12Br2N2O matches; symmetric 1H NMR (2H doublets) fits 3,6-dibromo"
+  ],
+  "used_si": true,
+  "note": "bromine positions (3,6) inferred from NMR symmetry and the usual dibromocarbazole; to be confirmed by structure recognition",
+  "formula": "C18H12Br2N2O",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at img 10.1007_s10895-026-04749-w_SI_1_image10.png, img 10.1007_s10895-026-04749-w_SI_1_image11.png, img 10.1007_s10895-026-04749-w_SI_1_image7.png"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

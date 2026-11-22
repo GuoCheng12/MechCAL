@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_103",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c2ccccc2c2ccccc2c(=O)n1-c1ccccc1Br"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "C7-oBr",
+  "source_documents": [
+   {
+    "source_id": "C10",
+    "title": "Remote Heavy Atom Effect-Induced Efficient Ultralong Room-Temperature Phosphorescence of Biphenyl Imide",
+    "doi": "10.1021/acsaom.5c00562",
+    "format": "PDF",
+    "pages": 6,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C10-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acsaom.5c00562",
+    "file": "10.1021_acsaom.5c00562_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-07",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution",
+   "crystal: single crystals (ambient RTP)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C10",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Single-crystal and photophysical analyses confirm that the halogen atoms exert a remote heavy-atom effect over distances d (X-centroid) exceeding 4.2 Å, effectively enhancing the ISC without significantly accelerating radiative decay.",
+    "subject": "halogenated C7 series",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Halogens far from the core raise ISC but keep the triplet radiative decay slow.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C10",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The five compounds exhibit negligible phosphorescence in solution due to efficient nonradiative vibrational deactivation.",
+    "subject": "C7-H, C7-oBr, C7-mBr, C7-pBr, C7-oI",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "No RTP in solution; RTP appears in the crystals.",
+    "limitations": "The deactivating motion is not specified."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C10",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These lifetimes decreased monotonically with heavier halogen substitution (H → Br → I), effectively demonstrating the tunable heavy-atom effect (Figure 2c).",
+    "subject": "C7-H, C7-oBr, C7-oI",
+    "scope": "target",
+    "conditions": "crystals, ambient",
+    "kind": "observation",
+    "statement": "τP falls from 439.7 ms (H) to 234.8 ms (o-Br) and 169.0 ms (o-I) (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C10",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Figure 2b shows that halogenation of the aniline moiety yields nearly identical phosphorescence spectra, confirming that this group does not influence the energy of triplet excited states and serves only an auxiliary role.",
+    "subject": "C7 series",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "Same phosphorescence spectrum: the biphenyl imide core is the emitter.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C10",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The integration ratios of phosphorescence to fluorescence in C7-H and C7-o/m/pBr are from 0.084 to 0.303, while the value reached as high as 1.521 in C7-oI (Figure 2a).",
+    "subject": "C7-H, C7-oBr, C7-oI",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "observation",
+    "statement": "The phosphorescence share rises with the heavier halogen; ΦP 1.2% (H), 3.1% (o-Br), 10.8% (o-I) (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C10",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Thus, the observed phosphorescence enhancement can be attributed to a remote heavy-atom effect, which boosts efficiency without significantly compromising the lifetime.",
+    "subject": "halogenated C7 series",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "The RTP gain is assigned to the remote heavy-atom effect.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The paper explains the long lifetime with high yield as a balance of rates: the remote heavy atom speeds ISC without much speeding the triplet radiative decay (kP, kISC tabulated). A consequence of the heavy-atom design, so secondary."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Crystal RTP (τP 234.8 ms, ΦP 3.1%) enhanced by a remote heavy-atom effect of the ortho bromine."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "The paper explains the long lifetime with high yield as a balance of rates: the remote heavy atom speeds ISC without much speeding the triplet radiative decay (kP, kISC tabulated). A consequence of the heavy-atom design, so secondary."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Crystal RTP (τP 234.8 ms, ΦP 3.1%) enhanced by a remote heavy-atom effect of the ortho bromine."
+   }
+  ],
+  "environment_context": [
+   "RTP only in crystals; in solution nonradiative vibrational deactivation removes it, no specific motion named (E02)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C10-CG1",
+   "varied_factor": "ortho substituent on the N-phenyl ring (H, Br, I)",
+   "paper_difference": "Heavier halogens raise kISC and ΦP (1.2 to 10.8%) while τP stays above 160 ms, assigned to a remote heavy-atom effect."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "Scheme 1 (N-(2-bromophenyl) analogue)",
+   "X-ray formula C20H12BrNO2 (SI Table S2)"
+  ],
+  "used_si": true,
+  "formula": "C20H12BrNO2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_acsaom.5c00562_SI_1.pdf p15, 10.1021_acsaom.5c00562_SI_1.pdf p16, 10.1021_acsaom.5c00562_SI_1.pdf p3, 10.1021_acsaom.5c00562_SI_1.pdf p5"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

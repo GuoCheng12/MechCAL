@@ -1,0 +1,206 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0099",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Fc1ccc2c(c1)O[B-]1(F)Oc3cc(F)ccc3[N+]1=N2"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BAz-F",
+  "source_documents": [
+   {
+    "source_id": "10.1039_d4dt02458c",
+    "title": "Contribution of radiative rate constants to crystallization-induced emission enhancement in boron-fused azobenzene complexes",
+    "doi": "10.1039/d4dt02458c",
+    "format": "PDF",
+    "pages": 8,
+    "pdf_sha256": "f918167781b05d4e87c19a92fa3c6156b9eb43cec25df447639247ef0f965970"
+   }
+  ],
+  "publication_date": "2024-11-14",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "PMMA 1 wt%",
+   "crystal",
+   "2MeTHF and toluene/2-methylpentane glasses at 77 K"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1039_d4dt02458c",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "it is experimentally proved that a large refractive index in an organic crystal mainly promotes the radiative processes in CIEE even without significant intermolecular electronic interactions.",
+    "subject": "BAz series",
+    "scope": "analog",
+    "conditions": "77 K glass vs crystal",
+    "kind": "observation",
+    "statement": "Crystal refractive index accelerates kr.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1039_d4dt02458c",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "This could be mainly attributed to the higher polarizability of the crystal surrounding, and implied that the molecular planarization and exciton coupling might be minor contributions.",
+    "subject": "halogenated BAz",
+    "scope": "analog",
+    "conditions": "77 K",
+    "kind": "author_interpretation",
+    "statement": "Polarizability, not planarization or exciton coupling, explains the kr rise.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S3",
+    "source_id": "10.1039_d4dt02458c",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "the restriction of structural relaxation in the excited state",
+    "subject": "BAz series",
+    "scope": "analog",
+    "conditions": "crystal contacts",
+    "kind": "author_interpretation",
+    "statement": "Crystal contacts restrict excited-state structural relaxation.",
+    "limitations": "No specific motion named."
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_d4dt02458c",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the kr value of the crystalline sample of BAz-F was 1.7-fold larger than that in the solution",
+    "subject": "BAz-F",
+    "scope": "target",
+    "conditions": "77 K",
+    "kind": "observation",
+    "statement": "kr 1.7-fold higher in crystal, little knr change.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_d4dt02458c",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "the slight decrease in kr,SB in a crystal was theoretically predicted due to the eﬀect of H-aggregation, especially in BAz-H and BAz-F",
+    "subject": "BAz-H, BAz-F",
+    "scope": "target",
+    "conditions": "Strickler-Berg, dimer calcs",
+    "kind": "computation",
+    "statement": "A weak H-aggregation effect slightly lowers kr.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "A weak H-aggregation contribution slightly opposes the kr gain."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "E01"
+    ],
+    "rationale": "Low-temperature comparison isolates a crystal kr acceleration attributed mainly to refractive index."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Only generic restriction of structural relaxation is invoked (S3); by guideline §3.3 not labelled (earlier secondary dropped)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "A weak H-aggregation contribution slightly opposes the kr gain."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "S1",
+     "S2",
+     "E01"
+    ],
+    "rationale": "Low-temperature comparison isolates a crystal kr acceleration attributed mainly to refractive index."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "crystal contacts restrict structural relaxation (S3)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "REANN-0098-CG1",
+   "varied_factor": "para substituent on the azobenzene rings (H, F, Cl)",
+   "paper_difference": "Halogens accelerate kr via polarizability; BAz-H's tight H-aggregation suppresses kr."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RADIATIVE_RATE_STATE_BALANCE"
+  ]
+ }
+}

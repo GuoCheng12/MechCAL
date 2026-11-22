@@ -1,0 +1,202 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_043",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccccc1-c1nccc(-c2ccc(N(c3ccccc3)c3ccccc3)cc2)n1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2",
+  "source_documents": [
+   {
+    "source_id": "A26",
+    "title": "Photophysical behavior of mono- and bis(2′-hydroxyphenyl)-6-(4′-diphenylaminophenyl)pyrimidines: Interplay of ESIPT, ICT, and vibrational nonradiative decay",
+    "doi": "10.1016/j.saa.2026.128334",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A26-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.saa.2026.128334",
+    "file": "10.1016_j.saa.2026.128334_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-06-29",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (neutral and acidified; several solvents)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A26",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "all compounds exhibit very low fluores cence quantum yields",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "neutral solution",
+    "kind": "observation",
+    "statement": "Very weak fluorescence under neutral conditions.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A26",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "Although ESIPT is energetically accessible according to TD-DFT calculations, the absence of a significant decrease in oscillator strength upon enol–keto conversion suggests that ESIPT alone does not fully account for the observed quenching.",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "ESIPT is accessible but not the main quenching channel.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A26",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "indicating that large-amplitude molecular motions, particularly involving the diphenylamino group, play a major role in promoting in ternal conversion",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "Huang-Rhys analysis",
+    "kind": "computation",
+    "statement": "Low-frequency motions of the diphenylamino group drive internal conversion.",
+    "limitations": "Calculation only."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A26",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "Protonation of the pyrimidine nitrogen atoms induces pronounced bathochromic shifts in both absorption and emission spectra, reflecting an enhancement of the ICT character.",
+    "subject": "compounds 1-4",
+    "scope": "target",
+    "conditions": "acidified solution",
+    "kind": "observation",
+    "statement": "Protonation strengthens ICT.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Quenching is attributed to coupling with large-amplitude motions of the diphenylamino group. Boundary case (RIM vs RADIATIVE): quenching through an intramolecular motion whose barrier or coupling is tuned by substituents, not restricted by an environment; labelled RIM by guideline §3.2 (access to a conical intersection along a motion)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "ICT character, enhanced on protonation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "ESIPT is accessible but judged not to account for the quenching."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "Quenching is attributed to coupling with large-amplitude motions of the diphenylamino group. Boundary case (RIM vs RADIATIVE): quenching through an intramolecular motion whose barrier or coupling is tuned by substituents, not restricted by an environment; labelled RIM by guideline §3.2 (access to a conical intersection along a motion)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "ICT character, enhanced on protonation."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "ESIPT is accessible but judged not to account for the quenching."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A26-CG1",
+   "varied_factor": "position of the 2'-hydroxyphenyl on the pyrimidine (C2 vs C4)",
+   "paper_difference": "Both are weakly emissive; ESIPT accessible but motion-driven IC dominates."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "experimental-section name (2'-hydroxyphenyl)(4'-N,N-diphenylaminophenyl)pyrimidine rewritten and parsed with OPSIN",
+   "ESI [M+H]+ C28H22N3O matches"
+  ],
+  "used_si": false,
+  "formula": "C28H21N3O",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1016_j.saa.2026.128334_SI_1.pdf p4, main p3"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

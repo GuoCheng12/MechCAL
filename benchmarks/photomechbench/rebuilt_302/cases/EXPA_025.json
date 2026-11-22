@@ -1,0 +1,174 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_025",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(/C=C/c2ccc([N+](=O)[O-])cc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "MNS (4-methoxy-4'-nitrostilbene)",
+  "source_documents": [
+   {
+    "source_id": "A15",
+    "title": "Excited-state intramolecular charge transfer dynamics in 4-methoxy-4′-nitrostilbene: excitation wavelength and solvent dependence",
+    "doi": "10.1039/d5ra08595k",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A15-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5ra08595k",
+    "file": "10.1039_d5ra08595k_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (toluene, acetonitrile and others)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A15",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Steadystate spectroscopy reveals strong intramolecular charge transfer (ICT) behavior, with solvatochromic shifts and large Stokes shifts in polar solvents.",
+    "subject": "MNS",
+    "scope": "target",
+    "conditions": "solvents of different polarity",
+    "kind": "observation",
+    "statement": "Solvatochromic, large-Stokes-shift ICT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A15",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Time-resolved fluorescence measurements show that both polarity and viscosity enhance ICT state stabilization by extending emissive state lifetimes.",
+    "subject": "MNS",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Polarity and viscosity lengthen the ICT emission lifetime.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A15",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In the case of toluene, 370 and 310 nm excitations lead to efficient intersystem crossing (ISC) as depicted by a strong and persistent excited state absorption (ESA) band at ∼600 nm.",
+    "subject": "MNS",
+    "scope": "target",
+    "conditions": "toluene, fsTA",
+    "kind": "observation",
+    "statement": "Efficient ISC to a long-lived triplet in toluene.",
+    "limitations": "Excitation-wavelength and solvent dependent."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "ICT emission and its solvent dependence are the main subject."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Triplet formation by ISC observed by transient absorption, competing with ICT emission."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "ICT emission and its solvent dependence are the main subject."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Triplet formation by ISC observed by transient absorption, competing with ICT emission."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the title, parsed with OPSIN (trans isomer as studied)"
+  ],
+  "used_si": false,
+  "formula": "C15H13NO3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

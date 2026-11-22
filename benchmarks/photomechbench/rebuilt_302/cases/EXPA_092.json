@@ -1,0 +1,279 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_092",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCn1c(-c2ccc(OC)cc2O)nc(-c2ccccc2)c1-c1ccccc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "8 (N-butyl, 5-methoxyphenol)",
+  "source_documents": [
+   {
+    "source_id": "C01",
+    "title": "Rational Modulation of Excited‐State Intramolecular Proton Transfer, Aggregation‐Induced Emission, and Intramolecular Motion on Polysubstituted Imidazoles",
+    "doi": "10.1002/cptc.202500262",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C01-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/cptc.202500262",
+    "file": "10.1002_cptc.202500262_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-11-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: hexane, cyclohexane, THF, methanol, DMSO",
+   "aggregate: THF/water",
+   "solution: methanol/glycerol"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C01",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Compounds 4, 5, and 6 showed both isomers (E*–K*) in methanol and DMSO, indicating that the inclusion of a C-sp3 helps regulate the ESIPT effect, though not as effectively as when combined with a methoxy group on the proton donor, as seen in compounds 7 and 8.",
+    "subject": "4-8",
+    "scope": "target",
+    "conditions": "methanol, DMSO",
+    "kind": "observation",
+    "statement": "Enol (E*) and keto (K*) emission bands coexist; N-alkyl groups and a methoxy on the phenol tune the ESIPT balance.",
+    "limitations": "Steady-state spectra only; no time-resolved ESIPT kinetics."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C01",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "This effect is magnified when a methoxy group (compounds 7 and 8) decorates the phenolic ring, pinpointing these compounds as leading candidates for modulating the keto-enol ratio due to their values of ΔE°S1 = 1.5 and 0.1 kcal mol",
+    "subject": "7, 8 vs 1-6",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "The methoxy group destabilises the excited keto form (ΔE°S1 1.5 and 0.1 kcal/mol).",
+    "limitations": "Gas-phase/implicit-solvent calculation."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C01",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "In pure THF (fw = 0%), compound 4 already displays contributions from both enol-keto isomers.",
+    "subject": "4",
+    "scope": "target",
+    "conditions": "THF",
+    "kind": "observation",
+    "statement": "Dual enol/keto emission already in THF.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C01",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Compound 5 (H; N-Bu) shows exclusive keto isomer emission in pure THF (fw = 0%) (Figure 8c).",
+    "subject": "5",
+    "scope": "target",
+    "conditions": "THF",
+    "kind": "observation",
+    "statement": "Only keto (ESIPT) emission in THF.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C01",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "decrease in overall emission, suggests aggregation-caused quenching (ACQ) of the keto tautomer (keto-ACQ) (Figure 8b and Figure S20b, Supporting Information).",
+    "subject": "5",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "Adding water lowers the total emission, read as ACQ of the keto form.",
+    "limitations": "No packing or spectroscopic evidence for the quenching interaction."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C01",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "it was observed that the keto isomer dominates on both compounds (Figure 8c,d)",
+    "subject": "7, 8",
+    "scope": "target",
+    "conditions": "THF",
+    "kind": "observation",
+    "statement": "Keto emission dominates for 7 and 8 in THF.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C01",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "Compound 8 (OMe; N-Bu), reveals a smooth and continuous migration from the keto form to the enol as water fractions increase until reaching the fw = 80%, where the enol emerged as the exclusive emissive species",
+    "subject": "8",
+    "scope": "target",
+    "conditions": "THF/water up to fw 90%",
+    "kind": "observation",
+    "statement": "Aggregation in water switches 8 from keto to enol-only emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C01",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "For compounds 4 and 5, emission intensity increased substantially as the glycerol fractions increased, while both K* and E* contributions persisted across all mixtures (Figure 9a,b).",
+    "subject": "4, 5",
+    "scope": "target",
+    "conditions": "methanol/glycerol",
+    "kind": "observation",
+    "statement": "Viscosity raises the emission of 4 and 5 without changing the enol/keto balance.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C01",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "particularly compound 8, which shows a twofold increase in emission intensity at fGly = 70% with a contribution of only one isomer across all the experiments.",
+    "subject": "8",
+    "scope": "target",
+    "conditions": "methanol/glycerol",
+    "kind": "observation",
+    "statement": "Viscosity doubles the emission of 8.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "C01",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "This trend is consistent with the restriction of intramolecular motions (RIM) mechanism, in which suppression of nonradiative relaxation pathways enhances fluorescence efficiency.",
+    "subject": "4, 5, 7, 8",
+    "scope": "target",
+    "conditions": "methanol/glycerol",
+    "kind": "author_interpretation",
+    "statement": "Viscosity-enhanced emission is read as RIM.",
+    "limitations": "The moving fragment is not identified; no viscosity-dependent lifetimes."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E09",
+     "E10"
+    ],
+    "rationale": "Viscosity raises the emission, which the paper reads as restricted intramolecular motion (the title's 'intramolecular motion'); a supporting explanation next to the ESIPT modulation. The moving fragment is not identified."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Keto emission dominates in THF; the methoxy group destabilises K* (TD-DFT) and aggregation switches the emission to the enol."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E09",
+     "E10"
+    ],
+    "rationale": "Viscosity raises the emission, which the paper reads as restricted intramolecular motion (the title's 'intramolecular motion'); a supporting explanation next to the ESIPT modulation. The moving fragment is not identified."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E06",
+     "E07"
+    ],
+    "rationale": "Keto emission dominates in THF; the methoxy group destabilises K* (TD-DFT) and aggregation switches the emission to the enol."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "aggregation in THF/water switches the emission from keto to enol (E07); the paper ties it to polarity and AIE without naming an interaction"
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C01-CG1",
+   "varied_factor": "methoxy group on the phenol ring (para to the imidazole)",
+   "paper_difference": "The methoxy group destabilises the excited keto tautomer (TD-DFT) and lets aggregation switch 8 to enol-only emission; 5 keeps keto emission."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SMILES from Scheme 1 and the SI route (2-hydroxy-4-methoxybenzaldehyde, benzil, butylamine)",
+   "SI HRMS [M+H]+ C26H27N2O2 matches C26H26N2O2"
+  ],
+  "used_si": true,
+  "formula": "C26H26N2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_cptc.202500262_SI_1.pdf p21, 10.1002_cptc.202500262_SI_1.pdf p22, 10.1002_cptc.202500262_SI_1.pdf p3, 10.1002_cptc.202500262_SI_1.pdf p35"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

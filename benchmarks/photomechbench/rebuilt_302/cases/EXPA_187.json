@@ -1,0 +1,231 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_187",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc2ccccc2c1/N=N/c1ccccc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PDNO (1-phenylazo-2-naphthol)",
+  "source_documents": [
+   {
+    "source_id": "F10",
+    "title": "Interrogating the Azo-Hydrazo Proton Transfer Process in the Excited State Using a Multipronged Spectroscopic Study: Effect of Annulation and Solvent",
+    "doi": "10.1021/acsphyschemau.5c00067",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F10-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acsphyschemau.5c00067",
+    "file": "10.1021_acsphyschemau.5c00067_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-09-11",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "n-heptane",
+   "chloroform",
+   "DMF",
+   "methanol",
+   "excitation 450 nm (both tautomers) and 502-540 nm (hydrazo)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "we infer that the ESIPT process in both PDNO and NDNO is considerably fast, occurring at a time scale less than 100 ps.",
+    "subject": "PDNO, NDNO",
+    "scope": "target",
+    "conditions": "heptane, CHCl3, DMF, MeOH",
+    "kind": "author_interpretation",
+    "statement": "Azo-to-hydrazo excited-state proton transfer is faster than 100 ps in both dyes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "The azo and hydrazo tautomeric forms of PDNO and NDNO are present in the ground state; the thermally allowed conversion of the azo to the hydrazo form results in a very poor quantum yield of the dyes in solution phase.",
+    "subject": "PDNO, NDNO",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Both tautomers coexist in the ground state; the dyes are very weakly emissive.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F10",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The higher value of Stokes’ Shift for the 650 nm emission band supports the excited state tautomerization of the trans-azo form to the trans-hydrazo form, in keeping with literature reports.",
+    "subject": "PDNO",
+    "scope": "target",
+    "conditions": "steady-state emission",
+    "kind": "author_interpretation",
+    "statement": "The large-Stokes-shift 650 nm band comes from the hydrazo tautomer formed in the excited state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F10",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Hence, the increasing contribution of the τ1 component at the red λobs leads us to assign it as the lifetime of deactivation of the trans-hydrazo-tautomer, as the ultrafast photo tautomerism yields the trans-hydrazo from the excited trans-azo form.",
+    "subject": "PDNO, NDNO",
+    "scope": "target",
+    "conditions": "ps-ns emission decays, 450 nm excitation",
+    "kind": "author_interpretation",
+    "statement": "The short red-side lifetime belongs to the hydrazo tautomer formed by ultrafast phototautomerism.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "The second extracted lifetime τ2 (with associated EADS 2), ranging between 5.0 and 12.0 ps, is plausibly assigned to trans-cis isomerization of the dyes, in line with previously reported studies on PDNO.",
+    "subject": "PDNO, NDNO",
+    "scope": "target",
+    "conditions": "fs-TA",
+    "kind": "author_interpretation",
+    "statement": "A 5-12 ps component is assigned to trans-cis isomerization.",
+    "limitations": "Assignment by analogy to earlier PDNO work."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "We attribute this difference based on the greater conjugation in NDNO due to the presence of an extra phenyl ring, which is reported to have slower relaxation pathways in organic dyes.",
+    "subject": "NDNO vs PDNO",
+    "scope": "target",
+    "conditions": "fs-TA, all solvents",
+    "kind": "author_interpretation",
+    "statement": "NDNO relaxes more slowly than PDNO in every solvent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F10",
+    "pdf_page": 8,
+    "location": null,
+    "quote": "Thus, we could safely state that chloroform provides the optimal polarity and viscosity to reduce the rate of relaxation of the dyes.",
+    "subject": "PDNO, NDNO",
+    "scope": "target",
+    "conditions": "fs-TA, CHCl3 vs DMF, MeOH",
+    "kind": "author_interpretation",
+    "statement": "Relaxation is slowest in chloroform; protic MeOH speeds nonradiative relaxation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Ultrafast excited-state azo-to-hydrazo proton transfer (the azo-hydrazo subclass of ESIPT), with both tautomers present in the ground state; it underlies the dual emission and the very low quantum yield."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Ultrafast excited-state azo-to-hydrazo proton transfer (the azo-hydrazo subclass of ESIPT), with both tautomers present in the ground state; it underlies the dual emission and the very low quantum yield."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "solvent: relaxation is slowest in chloroform and faster in protic methanol; the paper discusses a polarity/viscosity balance without a specific restricted motion (E07)"
+  ],
+  "out_of_pool": [
+   "PHOTOCHEMISTRY: trans-cis photoisomerization about the azo/hydrazo linkage (5-12 ps component) (E05)"
+  ],
+  "contrast_group": {
+   "group": "F10-CG1",
+   "varied_factor": "aryl group on the azo nitrogen of 2-naphthol (phenyl vs 1-naphthyl)",
+   "paper_difference": "Both show ultrafast azo-to-hydrazo ESIPT and very weak emission; the naphthyl dye NDNO has red-shifted bands and slower nonradiative relaxation than PDNO in every solvent."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": false,
+  "basis": [
+   "name 1-phenylazo-2-naphthol in the paper, parsed with OPSIN",
+   "prepared from aniline and beta-naphthol (Experimental section)",
+   "trans-azo tautomer written as named; the paper reports azo and hydrazo tautomers together in the ground state (PDNO crystallises as the hydrazone)"
+  ],
+  "formula": "C16H12N2O"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

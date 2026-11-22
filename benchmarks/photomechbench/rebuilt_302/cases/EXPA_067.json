@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_067",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(=O)OCC1=C2C(C)=CC(C)=[N+]2[B-](F)(Oc2ccc(COC(C)=O)cc2)n2c(C)cc(C)c21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "4 (B-(4-acetoxymethylphenoxy))",
+  "source_documents": [
+   {
+    "source_id": "B12",
+    "title": "Competition between Photoinduced Electron Transfer and Heterolytic Cleavage on Boron in B-Phenoxy Substituted BODIPY Photocages",
+    "doi": "10.1021/acs.joc.6c01175",
+    "format": "PDF",
+    "pages": 15,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B12-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.joc.6c01175",
+    "file": "10.1021_acs.joc.6c01175_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-09-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "acetonitrile",
+   "methanol (irradiation)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B12",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "On the contrary, varying the phenoxy substituent from the strong EWG (CHO) to the one with no electronic effect (CH2OH) or very weak EWG (CH2OAc) resulted in lower Φf values (compare the Φf values for 3, 4, 3-bis and 4-bis to those of 1, 2 and 2-bis, Table 1).",
+    "subject": "2 vs 3, 4",
+    "scope": "target",
+    "conditions": "acetonitrile",
+    "kind": "observation",
+    "statement": "Φf 0.94 (2) vs 0.18 (3) and 0.23 (4); 3 and 4 decay biexponentially.",
+    "limitations": "Relative Φf (rhodamine B reference, probably overestimated)."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B12",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The presumable reason is quenching of fluorescence by PET, as suggested by Urano.",
+    "subject": "3, 4",
+    "scope": "target",
+    "conditions": "acetonitrile",
+    "kind": "author_interpretation",
+    "statement": "Quenching attributed to PET from the electron-richer phenoxy group.",
+    "limitations": "Hedged ('presumable'); no transient or electrochemical test."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B12",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Homolytic cleavage proceeds via a dark charge-transfer state accessed through an S2/S1 conical intersection, which forms more readily with the weak EWG.",
+    "subject": "2', 3' models",
+    "scope": "target",
+    "conditions": "TD-DFT, CAM-B3LYP-D4, CPCM methanol",
+    "kind": "computation",
+    "statement": "A dark phenoxy→BODIPY CT state is reached more easily without a strong EWG.",
+    "limitations": "Computed along B-O dissociation, not for the intact emitting molecule."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B12",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In contrast, the derivative bearing the strong EWG remains longer in the bright intra-BODIPY excited state, favoring heterolytic cleavage.",
+    "subject": "2' model",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "With CHO the bright BODIPY state persists.",
+    "limitations": "Computed along B-O dissociation."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B12",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Thus, the Φf values for molecules 2 and 2-bis with the phenoxy substituent on the boron bearing the electron withdrawing CHO group are similar to the Φf of 1 (Table 1).",
+    "subject": "2",
+    "scope": "target",
+    "conditions": "acetonitrile",
+    "kind": "observation",
+    "statement": "2 is as bright as the parent BF2 dye.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B12",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Upon irradiation in methanol, all compounds gave photomethanolysis products with quantum yields Φr = 0.01−0.03, independent of the substituent type.",
+    "subject": "2-4",
+    "scope": "target",
+    "conditions": "methanol, irradiation",
+    "kind": "observation",
+    "statement": "B-O photocleavage (phenol release) with Φr 0.01-0.03.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B12",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Consequently, our data indicate that PET is not an intrinsic step in the overall mechanism of the cleavage on boron.",
+    "subject": "2-4",
+    "scope": "target",
+    "conditions": "methanol, irradiation",
+    "kind": "author_interpretation",
+    "statement": "PET does not drive the photocleavage.",
+    "limitations": "About the photoreaction, not the fluorescence quenching."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Φf 0.23 vs 0.94 for the CHO analogue, presumed PET quenching from the phenoxy group; weak evidence as for 3."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The CT state is the product of the electron transfer itself (twisted donor); by guideline §3.3 it is not labelled ICT separately."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Φf 0.23 vs 0.94 for the CHO analogue, presumed PET quenching from the phenoxy group; weak evidence as for 3."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "PHOTOCHEMISTRY: B-O photocleavage (photomethanolysis, phenol release)"
+  ],
+  "contrast_group": {
+   "group": "B12-CG1",
+   "varied_factor": "para substituent on the B-phenoxy group (CHO, CH2OH, CH2OAc)",
+   "paper_difference": "The CHO compound is as bright as the parent dye; the CH2OH and CH2OAc compounds are quenched (Φf ~0.2), presumably by PET from the phenoxy group."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "experimental-section name (acetylation of 3)",
+   "HRMS [M+Na]+ C25H28BFN2O5 matches"
+  ],
+  "used_si": false,
+  "formula": "C25H28BFN2O5",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

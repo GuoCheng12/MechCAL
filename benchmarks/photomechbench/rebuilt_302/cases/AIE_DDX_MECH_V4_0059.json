@@ -1,0 +1,257 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0059",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#Cc1ccc(N2c3ccccc3Sc3ccccc32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CzS-CN",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c7tc03656f",
+    "title": "Three polymorphs of one luminogen: How the molecular packing affects the RTP and AIE properties？",
+    "doi": "10.1039/c7tc03656f",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "db60197849d1d4de809be02a37de29e395211fefdb6d43bff92541b5f99bfbbd"
+   }
+  ],
+  "publication_date": "2017-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF",
+   "THF/water",
+   "crystals A, B, C",
+   "ground powder"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "CzS-CN gave a very weak emission at about 529 nm in THF solution with a PL efficiency as low as 2.1%, mainly caused by the motions of phenthiazine, cyan groups and phenyl ring",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "THF",
+    "kind": "author_interpretation",
+    "statement": "Weak solution emission from motions of phenothiazine, cyano and phenyl units.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "RTP lifetimes for the three polymorphs could change from 266 ms to 41 ms, then to 32 ms",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "polymorphs A, B, C",
+    "kind": "observation",
+    "statement": "Persistent RTP, polymorph-dependent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "For crystal (A), there were three major and one minor ISC channels, while those of crystal (C) were much less with only one major and one minor, owing to the big changes of the molecular configuration.",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "TD-DFT on crystal conformers",
+    "kind": "computation",
+    "statement": "Number of ISC channels explains RTP differences.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The strong intermolecular interactions would restrict the intermolecular motions effectively and lead to the reduced non-radiative transition",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "crystal A",
+    "kind": "author_interpretation",
+    "statement": "Packing contacts suppress nonradiative decay and prolong RTP.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the formed H-type packing mode in coupled II, originated from the more planar configuration in the long axis direction, would",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "crystal C",
+    "kind": "author_interpretation",
+    "statement": "H-type packing gives the low efficiency of C; A/B have X-type pairs.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the lowest excited state corresponded to the destructive combination of the transition dipole moment for the individual molecule, which was optically forbidden",
+    "subject": "CzS-CN dimer",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Parallel pair has a dark lowest state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1039_c7tc03656f",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "crystal (C) should give the more efficient emission than others. But actually it was not",
+    "subject": "CzS-CN",
+    "scope": "target",
+    "conditions": "TD-DFT monomer f",
+    "kind": "computation",
+    "statement": "Monomer oscillator strength alone does not explain efficiency.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "Motions of the phenothiazine, cyano and phenyl units quench the solution; aggregation restricts them (AIE)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "H-type vs X-type coupled pairs explain the polymorph efficiency differences."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Bright vs dark coupled-state transition dipoles, rather than monomer f, account for efficiency."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Persistent RTP whose lifetime depends on ISC channels set by the polymorph conformation."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E04"
+    ],
+    "rationale": "Motions of the phenothiazine, cyano and phenyl units quench the solution; aggregation restricts them (AIE)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "H-type vs X-type coupled pairs explain the polymorph efficiency differences."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E06",
+     "E07"
+    ],
+    "rationale": "Bright vs dark coupled-state transition dipoles, rather than monomer f, account for efficiency."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Persistent RTP whose lifetime depends on ISC channels set by the polymorph conformation."
+   }
+  ],
+  "environment_context": [
+   "three crystal polymorphs; ground powder"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "text (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

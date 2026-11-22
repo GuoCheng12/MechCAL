@@ -1,0 +1,229 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0023",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Oc1ccc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)cc1C=Nc1ccccc1N=Cc1cc(C(=C(c2ccccc2)c2ccccc2)c2ccccc2)ccc1O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TPESB",
+  "source_documents": [
+   {
+    "source_id": "10.1039_d0qm00623h",
+    "title": "Multifunctional AIE-ESIPT dual mechanism tetraphenylethene-based Schiff base for inkless rewritable paper and colorimetric/fluorescent dual-channel Zn2+ sensor",
+    "doi": "10.1039/d0qm00623h",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "10c6f266620b6a834f4324acc2828734ab1959471d1a563aba900808f3082975"
+   }
+  ],
+  "publication_date": "2020-09-30",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF",
+   "THF/water mixtures (fresh and aged)",
+   "paper with PEG",
+   "Zn2+ in solution",
+   "cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The 410 nm emission band is attributed to the enol form of TPESB while the longer emission peak at 590 nm can be ascribed to its keto form resulted from the ESIPT reaction.",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "THF and solvents",
+    "kind": "author_interpretation",
+    "statement": "Enol and ESIPT keto bands; 265 nm Stokes shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "However, when large amount of water was added (90%), the weak emission was significantly increased (about 10 times).",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "THF/water 90%",
+    "kind": "observation",
+    "statement": "AIE.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Secondly, the free rotation of benzene rings will largely consume excited state energy through non-radiative channel, which will quench the emission seriously.",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "dilute solution",
+    "kind": "author_interpretation",
+    "statement": "Free phenyl rotation quenches emission in solution.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Secondly, addition of water may lead to formation of aggregates, which will inhibit non-radioactive decay by restricted intramolecular rotation (RIR).",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "Aggregation restricts rotation (aggregates confirmed by scattering, SEM).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Firstly, the photoinduced electron transfer (PET) effect can significantly quench the emission of TPESB.",
+    "subject": "TPESB",
+    "scope": "target",
+    "conditions": "dilute solution",
+    "kind": "author_interpretation",
+    "statement": "PET proposed as a quenching route.",
+    "limitations": "Cited from literature; no energetics or control for TPESB."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1039_d0qm00623h",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The chelation effect will restrict the PET effect and prevent the ESIPT",
+    "subject": "TPESB-Zn complex",
+    "scope": "target",
+    "conditions": "Zn2+",
+    "kind": "author_interpretation",
+    "statement": "Zn chelation blocks PET and ESIPT.",
+    "limitations": "Concerns the complex."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Free phenyl rotation quenches the solution; aggregation restricts it (RIR)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Enol/keto emission from ESIPT; 'AIE-ESIPT dual mechanism' in the title."
+   },
+   {
+    "label": "PET_ET",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "PET is invoked as a quenching route in solution, which water H-bonding is said to restrict. Weak: cited, no energetics or control experiment."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Free phenyl rotation quenches the solution; aggregation restricts it (RIR)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "Enol/keto emission from ESIPT; 'AIE-ESIPT dual mechanism' in the title."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "PET is invoked as a quenching route in solution, which water H-bonding is said to restrict. Weak: cited, no energetics or control experiment."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "aggregates and nanoparticles in THF/water; water H-bonding"
+  ],
+  "out_of_pool": [
+   "Zn2+ chelation blocks PET and ESIPT in the complex (E06)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure same connectivity (E/Z marking differs)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "ESIPT raised from secondary to co_primary (title and band assignment).",
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

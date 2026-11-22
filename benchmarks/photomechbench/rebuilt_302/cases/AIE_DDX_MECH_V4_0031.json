@@ -1,0 +1,189 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0031",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCN1C(=O)c2cc3ccc(N(C)C)cc3cc2C1=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DMN-Bu",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.jcis.2017.03.097",
+    "title": "Customized Tuning of Aggregation-Induced Emission of a Napthalimide Dye by Surfactants and Cyclodextrin",
+    "doi": "10.1016/j.jcis.2017.03.097",
+    "format": "PDF",
+    "pages": 27,
+    "pdf_sha256": "8d3168b9e7106fffdd5850f08b1382277b9c741ac9da0d7d8e64cc747ef2cf60"
+   }
+  ],
+  "publication_date": "2017-03-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "water, neutral pH",
+   "surfactant solutions below and above CMC",
+   "with α-cyclodextrin"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.jcis.2017.03.097",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The changes observed in the excitation spectrum of the dye compared to its absorption spectra in water in presence of the surfactants above their micellar concentration reveals the transformation of the H-aggregates of the dye to the monomeric form.",
+    "subject": "DMN-Bu",
+    "scope": "target",
+    "conditions": "water with surfactants",
+    "kind": "observation",
+    "statement": "H-aggregates convert to monomers in micelles.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1016_j.jcis.2017.03.097",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "A clear isoemissive point at 554 nm shows a clear transformation",
+    "subject": "DMN-Bu",
+    "scope": "target",
+    "conditions": "CTAB titration",
+    "kind": "observation",
+    "statement": "Isoemissive conversion between aggregate (486 nm) and monomer (~600 nm) bands.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1016_j.jcis.2017.03.097",
+    "pdf_page": 16,
+    "location": null,
+    "quote": "Since the aggregates are blue shifted with respect to the monomers in the case of both ionic as well as non-ionic surfactants",
+    "subject": "DMN-Bu",
+    "scope": "target",
+    "conditions": "surfactants",
+    "kind": "observation",
+    "statement": "Blue-shifted aggregates: H-type.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1016_j.jcis.2017.03.097",
+    "pdf_page": 14,
+    "location": null,
+    "quote": "This can be explained by the presence of high dipole moment of DMN-Bu due to an intramolecular charge transfer nature of the dye.",
+    "subject": "DMN-Bu",
+    "scope": "target",
+    "conditions": "micelles of different polarity",
+    "kind": "author_interpretation",
+    "statement": "Polarity-sensitive monomer emission from ICT.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The monomer's polarity sensitivity is ascribed to its ICT nature."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Reversible H-aggregate/monomer conversion controlled by surfactants and α-cyclodextrin explains the emission changes."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "The monomer's polarity sensitivity is ascribed to its ICT nature."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Reversible H-aggregate/monomer conversion controlled by surfactants and α-cyclodextrin explains the emission changes."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "micelles of CTAB, SDS, Tween-20, TX-100; α-cyclodextrin captures SDS"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "AGGREGATE_EXCITON_EXCIMER"
+  ]
+ }
+}

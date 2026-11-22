@@ -1,0 +1,165 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "PILOT_004",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COCCOCCOCCO[B-]1(OCCOCCOCCOC)n2c(C)cc(C)c2C(c2c3ccccc3cc3ccccc23)=C2C(C)=CC(C)=[N+]21"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1-TEG",
+  "source_documents": [
+   {
+    "source_id": "P02",
+    "title": "Hydration-Gated Photoinduced Electron Transfer in BODIPY Dyes",
+    "doi": "10.1002/anie.3726851",
+    "pmcid": "PMC13749329",
+    "format": "PMC full text"
+   }
+  ],
+  "publication_date": "2026-09-29",
+  "conditions_studied": [
+   {
+    "state": "solution",
+    "media": "MeCN, water, formamide, mixtures"
+   }
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: O-BODIPYs as building blocks",
+    "quote": "Remarkably, however, fluorescence of 1‐TEG is strongly quenched in water (ΦF = 0.005) (Figure 2b), with faster fluorescence decays and a prominent sub‐nanosecond component",
+    "subject": "1-TEG",
+    "scope": "target",
+    "conditions": "water vs MeCN",
+    "kind": "observation",
+    "statement": "1-TEG is bright in polar organic solvents and quenched in water with a fast decay component.",
+    "limitations": "None."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: O-BODIPYs as building blocks",
+    "quote": "Accordingly, ΔG°PET decreases to +0.09 eV in water, rendering charge separation thermodynamically accessible and rationalizing the observed fluorescence quenching.",
+    "subject": "1-TEG",
+    "scope": "target",
+    "conditions": "MeCN vs water, electrochemistry",
+    "kind": "observation",
+    "statement": "Hydration makes the O-BODIPY core easier to reduce and switches PET on.",
+    "limitations": "Irreversible reduction wave in water."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "P02",
+    "pdf_page": null,
+    "location": "Results: O-BODIPYs as building blocks",
+    "quote": "The resulting derivative 1‐TEG shows excellent solubility in water, with no signs of aggregation at concentrations of 10− 6–10− 5 M (Figure S2).",
+    "subject": "1-TEG",
+    "scope": "target",
+    "conditions": "water, 1-10 µM",
+    "kind": "observation",
+    "statement": "No aggregation of 1-TEG in water at working concentrations.",
+    "limitations": "Concentration range only."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Hydration-gated PET: quenched in water, emissive in MeCN, supported by electrochemistry."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "Hydration-gated PET: quenched in water, emissive in MeCN, supported by electrochemistry."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "No aggregation in water at working concentrations.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "PILOT_C01",
+   "factor": "boron substituent: BF2 (1) vs B(OTEG)2 (1-TEG)",
+   "difference": "see PILOT_003"
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure drawn in Figure 2a",
+   "HRMS (SI): calcd for (M+Na) C41H53BN2NaO8 = SMILES formula + Na"
+  ],
+  "si_checked": "2026-11-14",
+  "second_source": "visual check of the figure (MolScribe could not read it: R groups, abbreviated chains, boron complex or low-resolution image)",
+  "formula": "C41H53BN2O8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (pilot)",
+  "date": "2026-11-14",
+  "status": "draft_awaiting_expert_review"
+ }
+}

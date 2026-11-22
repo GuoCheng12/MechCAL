@@ -1,0 +1,194 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_034",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C=Cc1ccc(/C=C/[Ge](C)(C)c2ccc3c(c2)c2ccccc2n3C(C)C)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1 (Ge bridge)",
+  "source_documents": [
+   {
+    "source_id": "A20",
+    "title": "Germanium vs Silicon Bridge in Photoinduced Electron Transfer Leading to Blue Emission",
+    "doi": "10.1021/acs.jpcc.6c04347",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A20-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpcc.6c04347",
+    "file": "10.1021_acs.jpcc.6c04347_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-10-02",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution (several solvents)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A20",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Its previously reported silicon analogue (2) displays efficient blue-light emission resulting from photoinduced intramolecular electron transfer (ET) from carbazole to the divinylbenzene moiety through the dimethylsilyl bridge.",
+    "subject": "compound 2 (Si)",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "author_interpretation",
+    "statement": "Blue emission arises from photoinduced intramolecular ET through the Si bridge.",
+    "limitations": "Established in earlier work; remeasured here."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A20",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "the bridge linking the donor and acceptor parts plays a crucial role in the light-induced electron transfer process, leading to this blue emission from the intramolecular charge-transfer state (ICT)",
+    "subject": "compounds 1 and 2",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Both compounds emit from the CT state formed by ET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A20",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "resulting from the internal heavy-atom effect of germanium",
+    "subject": "compound 1 (Ge)",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "Ge lowers the CT fluorescence quantum yield about 10-fold.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A20",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Enhanced intersystem crossing of compound 1 (15-times larger spin-orbit coupling than that of compound 2) competes with electron transfer, making ET less efficient.",
+    "subject": "compound 1 vs 2",
+    "scope": "target",
+    "conditions": "calculation and photophysics",
+    "kind": "computation",
+    "statement": "Larger SOC in the Ge compound lets ISC compete with ET.",
+    "limitations": "SOC computed; triplet not detected directly."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "Photoinduced intramolecular ET from carbazole to divinylbenzene through the Ge bridge produces the emitting CT state."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The heavy-atom effect of Ge enhances ISC, which competes with ET and lowers the emission yield."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The emitting CT state is formed by the electron transfer itself through a non-conjugated (Si/Ge) bridge; by guideline §3.3 it is not labelled ICT separately."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "Photoinduced intramolecular ET from carbazole to divinylbenzene through the Ge bridge produces the emitting CT state."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03",
+     "E04"
+    ],
+    "rationale": "The heavy-atom effect of Ge enhances ISC, which competes with ET and lowers the emission yield."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A20-CG1",
+   "varied_factor": "bridge atom (Ge vs Si)",
+   "paper_difference": "Same CT energy; Ge raises SOC so ISC competes with ET and the CT emission yield drops ~10-fold."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "name in the abstract parsed with OPSIN",
+   "MS in the SI shows the Ge isotope pattern near m/z 440 (C27H29GeN)"
+  ],
+  "used_si": true,
+  "formula": "C27H29GeN",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_acs.jpcc.6c04347_SI_1.pdf p6, 10.1021_acs.jpcc.6c04347_SI_1.pdf p8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

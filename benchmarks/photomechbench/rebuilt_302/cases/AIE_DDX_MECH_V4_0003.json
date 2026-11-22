@@ -1,0 +1,208 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0003",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCCCCCCCOc1ccc([N+]#[C-]->[Au]c2c(F)c(F)c(F)c(F)c2F)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "complex 1",
+  "source_documents": [
+   {
+    "source_id": "10.1039_c3cc00157a",
+    "title": "Aggregation-induced emission (AIE) behavior and thermochromic luminescence properties of a new gold(I) complex",
+    "doi": "10.1039/c3cc00157a",
+    "format": "PDF",
+    "pages": 3,
+    "pdf_sha256": "19648ae0db8d1b5f5f939c5059aeb50c3066f2a8f80118689083b69ef66e9305"
+   }
+  ],
+  "publication_date": "2013-01-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "EtOH/water mixtures",
+   "crystals",
+   "powder heated to 55-59 °C"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "interactions and the formation of nano-aggregates.",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "EtOH/water; solid",
+    "kind": "author_interpretation",
+    "statement": "AIE and thermochromism attributed to intermolecular Au...Au interactions in aggregates.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The intensity in pure EtOH was 0.88 a.u., which increased to B70.59 a.u. in the 40% EtOH–H2O mixture, showing an approximately 80-fold enhancement, due to the formation of nano-aggregates.",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "EtOH/water 40%",
+    "kind": "observation",
+    "statement": "80-fold emission rise on aggregation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "We speculate that two kinds of nano-aggregates might be formed, causing the difference in molecular packing and the change in the intermolecular gold–gold interactions.",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "EtOH/water >40%",
+    "kind": "author_interpretation",
+    "statement": "Blue → yellow-green switch assigned to aggregates with different Au...Au contacts.",
+    "limitations": "Explicitly speculative."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "in which aurophilic interactions may be responsible for the new ligand-to-metal–metal charge transfer (LMMCT) excited state",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "heated powder (>55 °C)",
+    "kind": "author_interpretation",
+    "statement": "The 530 nm band is assigned to an aurophilic LMMCT state.",
+    "limitations": "No Au...Au distance measured in the emissive phase."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In this case, no obvious intermolecular gold–gold interaction is indicated.",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "single crystal (blue-emitting)",
+    "kind": "observation",
+    "statement": "Au...Au 3.78 Å in the blue crystal: no aurophilic contact.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1039_c3cc00157a",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "which can be attributed to the fluorescence from the intra-ligand localized p–p* excited state.",
+    "subject": "complex 1",
+    "scope": "target",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Blue bands are ligand-centred ππ* fluorescence.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The emission colour and AIE are attributed to intermolecular Au...Au (aurophilic) interactions that appear in aggregates or the amorphous phase and are absent in the blue crystal. Evidence is weak: speculative wording, no structure of the emissive phase."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "RIR is listed only as a general AIE mechanism in the introduction."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "The emission colour and AIE are attributed to intermolecular Au...Au (aurophilic) interactions that appear in aggregates or the amorphous phase and are absent in the blue crystal. Evidence is weak: speculative wording, no structure of the emissive phase."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No triplet measurement (lifetime, O2, delayed emission); the earlier label came from the merged metal family. Not labelled."
+   }
+  ],
+  "environment_context": [
+   "nano-aggregates in EtOH/water; amorphous phase after heating"
+  ],
+  "out_of_pool": [
+   "metal-involving LMMCT excited state (aurophilic)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure: C6F5-Au-C#N-C6H4-OC10H21 (Scheme 1)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previous primary TRIPLET (metal family) changed to AGGREGATE.",
+  "previous_primary": [
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

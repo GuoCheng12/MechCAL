@@ -1,0 +1,225 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0002",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CN(C)c1ccc(C=CC=NN=Cc2ccc3ccc4cccc5ccc2c3c45)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PYNC",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acsomega.8b02717",
+    "title": "Photophysical Properties of an Azine-Linked Pyrene− Cinnamaldehyde Hybrid: Evidence of Solvent-Dependent Charge-Transfer-Coupled Excimer Emission",
+    "doi": "10.1021/acsomega.8b02717",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "98a7b680f3021339a6710562aa7393c2378c61096500c6536d413280d9fa029e"
+   }
+  ],
+  "publication_date": "2019-01-29",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "organic solvents",
+   "water",
+   "chloroform/methanol mixtures",
+   "PEG400 mixtures",
+   "solid",
+   "acid (TFA)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acsomega.8b02717",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In water, PYNC shows the characteristic feature of excimer formation exclusively. However, in all other solvents, the excimer band is present alongside the charge transfer emission band.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "water and organic solvents",
+    "kind": "observation",
+    "statement": "Excimer band in all solvents, CT band outside water.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acsomega.8b02717",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "Thus, it could be concluded that the high-energy band was due to the pyrene excimer and the polarity-sensitive band was due to excited-state intramolecular charge transfer in PYNC.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "solvent, concentration, viscosity series",
+    "kind": "author_interpretation",
+    "statement": "Band assignment: excimer (high energy) and ICT (polarity-sensitive).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acsomega.8b02717",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "with a Stokes shift value ranging from ∼5480 cm−1 (in chloroform) to ∼7750 cm−1 (in dimethyl sulfoxide (DMSO)) with quite higher excited-state dipole moment value than that in the ground state.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "solvent series, Lippert-Mataga",
+    "kind": "observation",
+    "statement": "Solvatochromic Stokes shift and larger excited-state dipole.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acsomega.8b02717",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "On the other hand, increment of viscosity freezes the single-bond rotational motions in PYNC, a flexible motion responsible for nonradiative energy dissipation, thereby increasing the charge transfer phenomenon in the same",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "PEG400 viscosity series",
+    "kind": "author_interpretation",
+    "statement": "Viscosity freezes single-bond rotations and enhances the CT emission.",
+    "limitations": "Analogy to earlier cinnamaldehyde probes; no rate data."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_acsomega.8b02717",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "PYNC was found to be totally nonfluorescent in the solid state.",
+    "subject": "PYNC",
+    "scope": "target",
+    "conditions": "solid",
+    "kind": "observation",
+    "statement": "Non-emissive solid, used to rule out AIE as the origin of the water band.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Viscosity freezes single-bond rotations, suppressing nonradiative decay and raising the CT emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "The polarity-sensitive band is intramolecular CT emission (Lippert-Mataga, larger excited-state dipole)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The high-energy band is assigned to pyrene excimer emission (exclusive in water)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Viscosity freezes single-bond rotations, suppressing nonradiative decay and raising the CT emission."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "The polarity-sensitive band is intramolecular CT emission (Lippert-Mataga, larger excited-state dipole)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "The high-energy band is assigned to pyrene excimer emission (exclusive in water)."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "solid is non-emissive (E05)",
+   "viscous PEG400 mixtures disrupt excimer formation"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CN(C)c1ccc(C=CC=NN=Cc2cc3ccc4cccc5ccc(c2)c3c45)cc1",
+  "problem": "pyren-2-yl instead of pyren-1-yl",
+  "old_formula": "C28H23N3",
+  "new_formula": "C28H23N3",
+  "basis": "synthesis from 1-pyrenecarboxaldehyde (figure); MolScribe reading of the figure = proposed (connectivity)",
+  "evidence": [
+   "synthesis from 1-pyrenecarboxaldehyde (figure); MolScribe reading of the figure = proposed (connectivity)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "ICT_TICT_CT",
+   "AGGREGATE_EXCITON_EXCIMER"
+  ]
+ }
+}

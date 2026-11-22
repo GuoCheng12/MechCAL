@@ -1,0 +1,202 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0024",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "COc1ccc(C(=C(c2ccc(C#Cc3cc[n+](CCCCCC[n+]4ccccc4)cc3)cc2)c2ccc(OC)cc2)c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "G",
+  "source_documents": [
+   {
+    "source_id": "10.1002_anie.202000338",
+    "title": "Constructing adaptive photosensitizers via supramolecular modification based on pillararene host−guest interactions",
+    "doi": "10.1002/anie.202000338",
+    "format": "PDF",
+    "pages": 6,
+    "pdf_sha256": "21c1505df9afe52e3229ed4a2bfc7f870aeb5cf50b43cea17ff2bf4f2b98ba19"
+   }
+  ],
+  "publication_date": "2020-04-23",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "water",
+   "WP5 host, pH 7.4 and 5.0",
+   "HeLa cells"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_anie.202000338",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Est value of 0.2 eV, indicating a high intersystem crossing (ISC) rate for efficient ROS generation.",
+    "subject": "G",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Separated HOMO/LUMO and small ΔEST predict fast ISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_anie.202000338",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "the consumption of ABDA was calculated to be 4.5 nmol",
+    "subject": "G",
+    "scope": "target",
+    "conditions": "water, light",
+    "kind": "observation",
+    "statement": "Efficient ROS (1O2) generation by G alone.",
+    "limitations": "Indirect for the triplet."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_anie.202000338",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The TPE part not only endows G with aggregation-induced emission (AIE) property but also serves as an electron donor.",
+    "subject": "G",
+    "scope": "target",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "TPE gives AIE and acts as donor to the pyridinium acceptor.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_anie.202000338",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Then photoinduced electron transfer (PET) happened between WP5 and G, resulting in the annihilating of the ROS generation",
+    "subject": "WP5⊃G complex",
+    "scope": "target",
+    "conditions": "water, pH 7.4",
+    "kind": "author_interpretation",
+    "statement": "Host-to-guest PET switches ROS off in the complex.",
+    "limitations": "Concerns the host-guest complex."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1002_anie.202000338",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the AIE molecule G itself showed very weak fluorescence in aqueous solution because of its good water solubility.",
+    "subject": "G",
+    "scope": "target",
+    "conditions": "water",
+    "kind": "observation",
+    "statement": "G alone is weakly emissive when dissolved.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "TPE donor / pyridinium acceptor separates the frontier orbitals to lower ΔEST (computation)."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "G's photosensitizing ability is explained by fast ISC from a small ΔEST (computed), with ROS generation measured."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "AIE is attributed to the TPE unit without naming restricted motion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01",
+     "E03"
+    ],
+    "rationale": "TPE donor / pyridinium acceptor separates the frontier orbitals to lower ΔEST (computation)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "PET occurs between the WP5 host and G (E04); it belongs to the host-guest complex and is recorded out of pool."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "G's photosensitizing ability is explained by fast ISC from a small ΔEST (computed), with ROS generation measured."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "host-guest PET between WP5 and G quenches fluorescence and ROS; pH-driven shuttling restores them (E04)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure + text (hexyl linker) (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "The paper's main switch is host-guest (out of pool; guideline §1.2 excludes host-defined systems). G's own in-pool mechanism is ISC; previous PET co_primary moved out of pool.",
+  "previous_primary": [
+   "PET_ET"
+  ]
+ }
+}

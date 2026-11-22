@@ -1,0 +1,217 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_178",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1=CC(C)=[N+]2C1=C(c1ccc(O)c(C[NH+](C)C)c1)c1c(C)cc(C)n1[B-]2(F)F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1+ (BODIPY-phenol dimethylammonium salt)",
+  "source_documents": [
+   {
+    "source_id": "D15",
+    "title": "The role of higher excited states in the photophysics and photochemistry of a BODIPY–phenol derivative",
+    "doi": "10.1039/d6cp02044e",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D15-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d6cp02044e",
+    "file": "10.1039_d6cp02044e_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-09-16",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution, excitation at 495, 335 and 272 nm (fluorescence upconversion, transient absorption)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D15",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "The photodynamics of 1 is strongly wavelength dependent. Visible excitation leads to rapid internal conversion to the S1 state, and results in green fluorescence without detectable photochemistry.",
+    "subject": "1+",
+    "scope": "target",
+    "conditions": "visible excitation",
+    "kind": "observation",
+    "statement": "Normal S1 BODIPY emission near 510-530 nm.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D15",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "In contrast, UV excitation opens additional pathways, giving rise to weak high-energy fluorescence and ultrafast deamination.",
+    "subject": "1+",
+    "scope": "target",
+    "conditions": "UV excitation (< 350 nm)",
+    "kind": "observation",
+    "statement": "Weak 350-400 nm emission plus photo-deamination.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D15",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "The anomalous emission originates from the lowest electronic state of the third absorption band with phenyl-to-BODIPY CT character (CTPH-BP), where partial population trapping occurs due to suppression of internal conversion by the relatively large interband energy gap and restricted access to conical intersections.",
+    "subject": "1+",
+    "scope": "target",
+    "conditions": "nonadiabatic dynamics + fluorescence upconversion",
+    "kind": "author_interpretation",
+    "statement": "Upper CT state is trapped by a large interband gap and restricted access to conical intersections.",
+    "limitations": "Assignment rests on simulations."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D15",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "Therefore, this emission from a high-lying excited state is better viewed as an intraband extension rather than a strict violation of Kasha’s rule.",
+    "subject": "1+",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D15",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "Our simulations show that photodeamination proceeds through higher CT states with BODIPY-to-phenyl character and involves rapid C–N bond cleavage occurring before intramolecular vibrational energy redistribution.",
+    "subject": "1+",
+    "scope": "target",
+    "conditions": "TSH simulations",
+    "kind": "computation",
+    "statement": "Photochemistry runs through other upper CT states.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Restricted access to conical intersections (RACI, RIM family) is the second reason given for the population trapping; intrinsic, from simulations."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The emitting upper state has phenyl-to-BODIPY CT character."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The weak high-energy emission survives because a large interband energy gap slows internal conversion from the upper CT state."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Restricted access to conical intersections (RACI, RIM family) is the second reason given for the population trapping; intrinsic, from simulations."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "The emitting upper state has phenyl-to-BODIPY CT character."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Phenol OH next to the CH2NMe2H+ group; the paper discusses no proton transfer in the excited state."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The paper notes PET as a general BODIPY quenching route but does not assign it here."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "The weak high-energy emission survives because a large interband energy gap slows internal conversion from the upper CT state."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: weak 350-400 nm emission from an upper CT state (the paper calls it an intraband extension rather than a strict Kasha violation) (E02, E03, E04)",
+   "PHOTOCHEMISTRY: UV photo-deamination to a quinone methide through higher CT states (E02, E05)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of Scheme 1 (main text p2): meso 4-hydroxy-3-(dimethylammoniomethyl)phenyl tetramethyl BODIPY chloride, with its quinone-methide and solvent-adduct products",
+   "photoelimination of N(CH3)2H+Cl- described in the text; the paper calls the species 1+"
+  ],
+  "used_si": false,
+  "note": "Cation (chloride counterion); the recognised drawing left the BF2 fluorines as a placeholder. Compound from the authors' earlier work (ref. 20); no HRMS in this paper.",
+  "formula": "C22H27BF2N3O+",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.6)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

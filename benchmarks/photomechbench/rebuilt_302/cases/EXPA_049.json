@@ -1,0 +1,142 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_049",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=c1c2ccc(N(c3ccccc3)c3ccccc3)cc2oc2cc(N(c3ccccc3)c3ccccc3)ccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "XT-DPA",
+  "source_documents": [
+   {
+    "source_id": "A29",
+    "title": "Exploring Efficient Purely Organic Room‐Temperature Phosphorescence Materials Based on the Heavy‐Atom Effect of Thioxanthone",
+    "doi": "10.1002/adom.202502168",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "A29-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/adom.202502168",
+    "file": "10.1002_adom.202502168_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-09-30",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution",
+   "doped film",
+   "OLED devices"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A29",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "In comparison with the XT-based molecules that mainly exhibit TADF property, the TXT-based analogues hold prominent dual emissions of TADF and RTP.",
+    "subject": "XT vs TXT series",
+    "scope": "target",
+    "conditions": "doped films",
+    "kind": "observation",
+    "statement": "XT emitters: TADF; TXT emitters: TADF + RTP.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "TADF from the xanthone D-A-D emitter."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "TADF from the xanthone D-A-D emitter."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A29-CG1",
+   "varied_factor": "acceptor bridge atom O (xanthone) vs S (thioxanthone)",
+   "paper_difference": "O gives TADF; S adds RTP through heavy-atom-enhanced ISC."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN",
+   "HRMS [M+H]+ C37H27N2O2 matches"
+  ],
+  "used_si": true,
+  "formula": "C37H26N2O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_adom.202502168_SI_1.pdf p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

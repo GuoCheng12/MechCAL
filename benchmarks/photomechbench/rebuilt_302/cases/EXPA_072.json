@@ -1,0 +1,254 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_072",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "Cc1cc(C)cc(C2=C(/C=C/c3sc4ccc(Cl)cc4[n+]3CCCS(=O)(=O)[O-])CCC/C2=C\\C=C2/Sc3ccc(Cl)cc3N2CCCS(=O)(=O)[O-])c1.[Na+]"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1b (4′-3,5-dimethylphenyl)",
+  "source_documents": [
+   {
+    "source_id": "B01",
+    "title": "Structural Engineering of Cyanine Dyes to Access Shortwave Infrared-Emissive J-Aggregates",
+    "doi": "10.1021/jacs.5c22031",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B01-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/jacs.5c22031",
+    "file": "10.1021_jacs.5c22031_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-07-10",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "ethanol (monomer)",
+   "methanol/water mixtures (J-aggregates)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "We hypothesized that introducing increasingly bulky groups off the middle of the polymethine chain, at the 4′ position, would allow the slip angle to be modulated in a systematic manner, leading to more red-shifted emissive aggregates.",
+    "subject": "1a-1d",
+    "scope": "target",
+    "conditions": "design",
+    "kind": "author_interpretation",
+    "statement": "Steric bulk at the 4′ aryl is meant to tune the slip of J-aggregates.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B01",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "We found that the unaggregated dyes all share nearly identical absorption (798 nm) and emission (∼813 nm) wavelengths (Figure 2b), as well as similar molar absorptivity (ε) and fluorescence quantum yield (ΦF) (Figure 2c), demonstrating that the different alkyl chains are not affecting the electronics of the fluorophores.",
+    "subject": "1a-1d monomers",
+    "scope": "target",
+    "conditions": "ethanol",
+    "kind": "observation",
+    "statement": "Monomers are photophysically identical; differences arise only on aggregation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B01",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "We observe that the J1 analogues experience a redshift as the steric bulk of the monomer is increased from H (1a) to tert-butyl (1d), while the J3 analogues experience a blueshift as the steric bulk increases.",
+    "subject": "1a-1d aggregates",
+    "scope": "target",
+    "conditions": "methanol/water",
+    "kind": "observation",
+    "statement": "J-band positions shift systematically with steric bulk.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B01",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "For the most common parallel orientation of dyes in a 2D sheet, we confirmed our hypothesis that increased steric bulk increases the slip angle, leading to the most redshifted benzothiazole Jaggregate to date.",
+    "subject": "1a-1d J1",
+    "scope": "target",
+    "conditions": "methanol/water; dipole and transition-monopole models",
+    "kind": "computation",
+    "statement": "Slip from 4.6 Å (1a) to 5.2 Å (1d) reproduces the J1 red shift.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B01",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "In every case, the J1 mesophase displayed emission with 1b J1 having the highest quantum yield (ΦF = 0.12%) of the four J1 mesophases (Figure 7b, Table 1).",
+    "subject": "1a-1d J1",
+    "scope": "target",
+    "conditions": "aqueous aggregates",
+    "kind": "observation",
+    "statement": "All J1 sheets emit in the NIR/SWIR.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B01",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "Overall, 1b aggregates displayed the highest fluorescence with the J2 having a ΦF = 0.05% and the J3 displaying the highest value obtained in this study of ΦF = 0.15%.",
+    "subject": "1b J2, J3",
+    "scope": "target",
+    "conditions": "aqueous aggregates",
+    "kind": "observation",
+    "statement": "1b gives the brightest aggregates, including the tubular J2.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B01",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "The J4 aggregate for 1b as well as 1a and 1c were all nonemissive, likely due to the increased disorder allowing for more internal conversion pathways.",
+    "subject": "1a, 1b, 1c J4",
+    "scope": "target",
+    "conditions": "aged aggregates",
+    "kind": "author_interpretation",
+    "statement": "Disordered J4 sheets are dark.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B01",
+    "pdf_page": 9,
+    "location": null,
+    "quote": "The only J4 aggregate that displayed emission was from 1d, which also has the smallest FWHM of all the J4 aggregates, suggesting it is more ordered.",
+    "subject": "1d J4",
+    "scope": "target",
+    "conditions": "aged aggregates",
+    "kind": "observation",
+    "statement": "Only 1d J4 emits.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "B01",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Benzothiazole dye 1b is the first example of a single cyanine chromophore aggregating to form up to four distinct spectra that can be isolated at room temperature.",
+    "subject": "1b",
+    "scope": "target",
+    "conditions": "methanol/water",
+    "kind": "observation",
+    "statement": "1b forms four J-aggregate mesophases.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Four J-aggregate mesophases including a tubular SWIR J2; the brightest aggregates of the series."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E02",
+     "E05",
+     "E06",
+     "E07",
+     "E09"
+    ],
+    "rationale": "Four J-aggregate mesophases including a tubular SWIR J2; the brightest aggregates of the series."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B01-CG1",
+   "varied_factor": "steric bulk of the 4′ aryl (phenyl, 3,5-dimethylphenyl, 3,5-di-tert-butylphenyl)",
+   "paper_difference": "Identical monomers; bulk changes the slip and the set of J-aggregate mesophases, their red shift and which ones emit."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI name parsed with OPSIN",
+   "HRMS [M]- C38H37Cl2N2O6S4 matches"
+  ],
+  "used_si": true,
+  "note": "Sodium salt: the SI structure drawings show one sulfonate as SO3Na; HRMS is of the monoanion.",
+  "formula": "C38H37Cl2N2NaO6S4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_jacs.5c22031_SI_1.pdf p27, 10.1021_jacs.5c22031_SI_1.pdf p38"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

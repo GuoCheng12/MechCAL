@@ -1,0 +1,246 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_114",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(-c2cc3ccc(N4CCCC4)ccc-3c2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "3a (decarboxylated 2a)",
+  "source_documents": [
+   {
+    "source_id": "C13",
+    "title": "Azulenes exhibiting solid-state fluorescence: synthesis and photophysics of 2-aryl-6-pyrrolidinylazulenes",
+    "doi": "10.1039/d5cc05926g",
+    "format": "PDF",
+    "pages": 4,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "C13-SI",
+    "title": "Supporting information",
+    "doi": "10.1039/d5cc05926g",
+    "file": "10.1039_d5cc05926g_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-12-04",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: solvent series and 2-MeTHF (variable temperature)",
+   "film: PMMA at increasing concentration",
+   "solid state"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C13",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Photophysical measurements revealed that fluorescence efficiency is primarily governed by the radiative rate constant, while the nonradiative rate remains relatively constant, indicating that activation of the radiative channel underlies the observed emission in the solid state.",
+    "subject": "2a-2k",
+    "scope": "target",
+    "conditions": "solid state",
+    "kind": "observation",
+    "statement": "Across 2a-2k ΦFlu follows kr (0.6-1.5e7 s-1) while knr stays at 1.4-2.4e8 s-1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This analysis suggests that the solid-state emissive behaviour of 2a–2k arises less from suppression of nonradiative decay and more from activation of the radiative channel in each derivative.",
+    "subject": "2a-2k",
+    "scope": "target",
+    "conditions": "solid state",
+    "kind": "author_interpretation",
+    "statement": "Solid-state emission is switched on by the radiative channel, not by slower nonradiative decay.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These results indicate that the solid-state emission of 2a–2k can be rationalized by the formation of emissive H-type aggregates in the solid state, since the blue-shifted emission was also observed in the solid-state.",
+    "subject": "2a-2k",
+    "scope": "target",
+    "conditions": "PMMA films of rising concentration, solid",
+    "kind": "author_interpretation",
+    "statement": "Emission appears with concentration in PMMA and is assigned to emissive H-type aggregates.",
+    "limitations": "Absorption does not change with concentration; no packing data."
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The emission behaviour of 2a–2k should be explained by the steric constraints imposed by the two ester groups at the 1,3-positions, which restrict the rotation of the 2-aryl substituent, leading to a conformation orthogonal to the azulene ring.",
+    "subject": "2a-2k",
+    "scope": "target",
+    "conditions": "solid state",
+    "kind": "author_interpretation",
+    "statement": "The 1,3-diesters lock the 2-aryl ring orthogonal to azulene.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "By contrast, 3a–3k lacking the ester substituents, did not display emission behaviour, presumably because their 2-aryl substituents remain freely rotatable in solution.",
+    "subject": "3a-3k",
+    "scope": "target",
+    "conditions": "solution and solid",
+    "kind": "author_interpretation",
+    "statement": "Without the esters the compounds are nonemissive, put down to free aryl rotation.",
+    "limitations": "Hedged ('presumably'); no viscosity or low-temperature test on 3a."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These results support that the observed fluorescence most likely arises from a locally excited (LE) state rather than an ICT state.",
+    "subject": "2a-2k",
+    "scope": "target",
+    "conditions": "solvent series, TD-DFT",
+    "kind": "author_interpretation",
+    "statement": "Small solvatochromism and azulene-localised orbitals: LE, not ICT, emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "a clear transition from nonemissive to yellow fluorescence was observed in PMMA thin films as concentration increased [Fig. 5(c)]",
+    "subject": "2a",
+    "scope": "target",
+    "conditions": "PMMA films",
+    "kind": "observation",
+    "statement": "Emission turns on with concentration.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "C13",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "kr values, also displayed higher FFlu (7.3%), indicating that increased radiative decay efficiency correlates with enhanced emission efficiency.",
+    "subject": "2i",
+    "scope": "target",
+    "conditions": "solid state",
+    "kind": "observation",
+    "statement": "2i has the largest kr (1.5e7 s-1) and the highest ΦFlu (7.3%).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "C13",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "This behaviour can be reasonably attributed to the suppression of thermally activated molecular motions at lower temperatures, which reduces nonradiative deactivation pathways and thereby enhances radiative fluorescence efficiency.",
+    "subject": "2a",
+    "scope": "target",
+    "conditions": "2-methyltetrahydrofuran, variable temperature",
+    "kind": "author_interpretation",
+    "statement": "Cooling raises the emission of 2a in solution.",
+    "limitations": "No specific motion named."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Nonemissive; the paper's only explanation is that the 2-aryl group stays freely rotatable without the esters (free rotor, guideline §3.6). Hedged and untested (no viscosity or low-temperature data for 3a)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "Nonemissive; the paper's only explanation is that the 2-aryl group stays freely rotatable without the esters (free rotor, guideline §3.6). Hedged and untested (no viscosity or low-temperature data for 3a)."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "C13-CG1",
+   "varied_factor": "1,3-diethyl ester groups on the 2-aryl-6-pyrrolidinylazulene",
+   "paper_difference": "The diester (2a) fluoresces in the solid (ΦFlu 4.5%) with the aryl locked orthogonal; the decarboxylated 3a is nonemissive, presumably because the aryl rotates freely."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "decarboxylation product of 2a with H3PO4 (Table 1, 91%)",
+   "OPSIN of 1-(2-phenylazulen-6-yl)pyrrolidine"
+  ],
+  "used_si": true,
+  "formula": "C20H19N",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1039_d5cc05926g_SI_1.pdf p14, 10.1039_d5cc05926g_SI_1.pdf p43, 10.1039_d5cc05926g_SI_1.pdf p44, 10.1039_d5cc05926g_SI_1.pdf p69"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

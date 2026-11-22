@@ -1,0 +1,253 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_198",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=[N+]([O-])c1ccc(/C=C/c2nc3ccccc3[nH]2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BVI-NO2 ((E)-2-(4-nitrostyryl)-1H-benzimidazole)",
+  "source_documents": [
+   {
+    "source_id": "F19",
+    "title": "Modulating Heavy-Atom-Free Triplet-State Dynamics in Benzimidazole-Based D−π–A Molecules: Distinct Roles of Solvent Polarity and Protic Interactions",
+    "doi": "10.1021/acs.jpclett.6c02116",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F19-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpclett.6c02116",
+    "file": "10.1021_acs.jpclett.6c02116_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-08-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "DMSO",
+   "DMF",
+   "trichloroethylene",
+   "methanol",
+   "ethanol"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The transient absorption spectroscopy reveals that nitro-substituted BVI-NO2 in DMSO exhibits obvious intersystem crossing (ISC, 863.4 ps) and triplet-state population (1.53 μs), which is different from the other two molecules.",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "DMSO, fs/ns-TA",
+    "kind": "observation",
+    "statement": "ISC in 863 ps and a 1.53 us triplet; the OH and malononitrile analogues show none.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F19",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Concurrently, a new absorption band gradually emerges and intensifies in the region of 640 nm, which is assigned to the triplet−triplet absorption (TTA).",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "fs-TA, DMSO",
+    "kind": "observation",
+    "statement": "A 640 nm triplet-triplet absorption grows in with an isosbestic point.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Therefore, the long-lived component observed in the ns-TA spectra confirms the formation of the triplet excitons in BVI-NO2, indicating that nitro substitution effectively facilitates ISC and promotes triplet exciton population.",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "ns-TA, DMSO",
+    "kind": "observation",
+    "statement": "Long-lived triplet confirmed by ns-TA.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Theoretical calculation demonstrates that nitro substitution enables a favorable S1(π, π) → T4(n, π*) transition, triggering the absence of the ISC channel in hydroxyl and malononitrile molecules.",
+    "subject": "BVI-NO2 vs analogues",
+    "scope": "target",
+    "conditions": "B3LYP/def2-TZVP",
+    "kind": "computation",
+    "statement": "An El-Sayed-allowed S1(pi-pi*) to T4(n-pi*) channel exists only with the nitro group.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "More interestingly, in aprotic solvents, the ISC times are prolonged (1154 ps in DMF, 1887 ps in trichloroethylene) with the decreasing polarity, while the triplet decay shortens to 1.268 and 0.453 μs.",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "DMF, trichloroethylene",
+    "kind": "observation",
+    "statement": "ISC slows as polarity falls.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "F19",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "In contrast, in protic solvents (methanol and ethanol), ISC lifetimes significantly accelerated to 34.29 and 92.07 ps, accompanied by shortened triplet lifetimes (0.3053 and 0.3591 μs).",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "methanol, ethanol",
+    "kind": "observation",
+    "statement": "Hydrogen-bonding solvents speed ISC to tens of ps.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "F19",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The spectral component of 1.584 ps reflects the decay of the initial ESA signal at 590 nm together with the rise of the ICT-related ESA signal at 540 nm and is therefore assigned to the ICT process.",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "fs-TA, DMSO",
+    "kind": "observation",
+    "statement": "An ICT state forms in 1.6 ps before ISC.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "F19",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "Compared with BVI-OH, which shows an emission maximum at 439 nm, BVI-NO2 and BVI-MN display obvious red-shifted emission bands located at 624 and 615 nm, respectively, supporting the formation of CT states in these two molecules.",
+    "subject": "BVI-NO2",
+    "scope": "target",
+    "conditions": "DMSO",
+    "kind": "observation",
+    "statement": "Red-shifted CT emission at 624 nm.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "An ICT state forms in 1.6 ps and precedes ISC; red-shifted CT emission."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Heavy-atom-free ISC via the nitro group (S1 pi-pi* to T4 n-pi*): triplet absorption and microsecond triplets by fs/ns-TA; ISC time tuned by solvent polarity and hydrogen bonding."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E07",
+     "E08"
+    ],
+    "rationale": "An ICT state forms in 1.6 ps and precedes ISC; red-shifted CT emission."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05",
+     "E06"
+    ],
+    "rationale": "Heavy-atom-free ISC via the nitro group (S1 pi-pi* to T4 n-pi*): triplet absorption and microsecond triplets by fs/ns-TA; ISC time tuned by solvent polarity and hydrogen bonding."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": true,
+  "basis": [
+   "SI name (E)-2-(4-nitrostyryl)-1H-benzimidazole; Knoevenagel route from 2-methylbenzimidazole and 4-nitrobenzaldehyde",
+   "SI HRMS [M+H]+ 266.0924 (listed for C15H11N3O2, the neutral formula)"
+  ],
+  "formula": "C15H11N3O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1021_acs.jpclett.6c02116_SI_1.pdf p3, 10.1021_acs.jpclett.6c02116_SI_1.pdf p4, main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}

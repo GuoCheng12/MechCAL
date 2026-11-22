@@ -1,0 +1,200 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0140",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "O=Cc1ccc2c(C=O)cc(C=O)c-2cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "TA",
+  "source_documents": [
+   {
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "title": "Anti-Kasha's Rule Emissive Switching Induced by Intermolecular H-bonding",
+    "doi": "10.1021/acs.chemmater.8b03699",
+    "format": "PDF",
+    "pages": 10,
+    "pdf_sha256": "83fb3b2e4cb6e52224423ee6c7503530bb3356ec0a8b485cfbd5a8e5be78d9c1"
+   }
+  ],
+  "publication_date": "2018-10-18",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "organic solvents with and without water",
+   "solid state with moisture"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The emitter initially gives rise to an S3-to-S0 dominant emission as indicated by our experimental and theoretical studies.",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "dry solvent",
+    "kind": "observation",
+    "statement": "Anti-Kasha S3 emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "On this basis, it can be toggled into an S2-to-S0 dominant emission upon the H-bond formation between the triformyl groups and water molecules.",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "with water",
+    "kind": "observation",
+    "statement": "Water H-bonding switches the emitting state to S2.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "Overall, the photophysical switching arises from stabilization of the CT",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "polar solvent / water",
+    "kind": "author_interpretation",
+    "statement": "The switch comes from stabilising a CT excited state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "thus to effectively regulate the distribution of the π-π* and n-π* electronic transitions as well as the corresponding radiative decay efficiency.",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "experiment and calculation",
+    "kind": "author_interpretation",
+    "statement": "H-bonding reorders ππ*/nπ* states and their radiative efficiency.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1021_acs.chemmater.8b03699",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The “electronic” effect of Hbonding is here more pronounced than its rigidity effect as indicated by the current photophysical studies.",
+    "subject": "TA",
+    "scope": "target",
+    "conditions": "with water",
+    "kind": "author_interpretation",
+    "statement": "Rigidification by H-bonds is secondary.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Stabilisation of a CT excited state by polar solvent/water drives the emission switch."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "H-bonding redistributes the ππ*/nπ* state order and the radiative efficiency of the emitting higher states."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The paper says the electronic effect of H-bonding outweighs its rigidity effect (E05); not labelled."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E03"
+    ],
+    "rationale": "Stabilisation of a CT excited state by polar solvent/water drives the emission switch."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E04"
+    ],
+    "rationale": "H-bonding redistributes the ππ*/nπ* state order and the radiative efficiency of the emitting higher states."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "intermolecular H-bonding with water"
+  ],
+  "out_of_pool": [
+   "SOKR_ANTI_KASHA: emission from a higher excited state (S3/S2 → S0)"
+  ],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "name: azulene-1,3,6-tricarbaldehyde, same InChIKey",
+   "HRMS [M+H]+ 213.0546 (calc 213.0546, -0.1 ppm)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "Previously no primary label; the main phenomenon (anti-Kasha) is out of pool, and its in-pool explanations are now labelled co_primary.",
+  "previous_primary": []
+ }
+}

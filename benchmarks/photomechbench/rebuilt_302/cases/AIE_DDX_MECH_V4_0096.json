@@ -1,0 +1,244 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0096",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "N#Cc1ccc(-c2cc(-c3ccccc3)c(-c3ccc(N4c5ccccc5Oc5ccccc54)cc3)cc2-c2ccccc2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "PXZ-TPB-CN",
+  "source_documents": [
+   {
+    "source_id": "10.1002_ajoc.202000133",
+    "title": "Tetraphenylbenzene Based AIE Luminogen with Donor-Acceptor Structure: Unique Mechanochromic Emission and High Exciton Utilization",
+    "doi": "10.1002/ajoc.202000133",
+    "format": "PDF",
+    "pages": 7,
+    "pdf_sha256": "18026ec502ade0fe9770584f8093bc8920b724d52a12ae6a95bfb46f9a904c64"
+   }
+  ],
+  "publication_date": "2020-08-10",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "THF/water",
+   "pristine and ground powders",
+   "film",
+   "non-doped OLED"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "This phenomenon is readily ascribed to the effect of twisted intermolecular charge transfer (TICT).",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "THF/water < 60%",
+    "kind": "author_interpretation",
+    "statement": "Red shift and quenching at low water fraction from TICT.",
+    "limitations": "Paper writes 'intermolecular'; intramolecular meant."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "activation of restriction of intramolecular motion, demonstrating an AEE feature",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "high water fraction",
+    "kind": "author_interpretation",
+    "statement": "AEE from restricted intramolecular motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "multiple weak intermolecular interactions could partially restrict the intramolecular motion of molecules in the aggregate state",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "crystal",
+    "kind": "author_interpretation",
+    "statement": "Crystal contacts restrict motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "The lifetime of its ground powders and films exhibits a new decay component compared with the pristine powders, which attribute to the reverse intersystem crossing from the high-lying triplet state process according to the theoretical calculation.",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "ground powder, film",
+    "kind": "observation",
+    "statement": "New delayed component assigned to hRISC (T5 → S1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "the energy gap between T5 and S1 is as low as 0.043 eV",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "DFT",
+    "kind": "computation",
+    "statement": "Near-degenerate T5/S1.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "the experiment EQE value is much higher than the theoretical EQE value",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "non-doped OLED",
+    "kind": "observation",
+    "statement": "EQE 2.9% above the fluorescent limit: triplets used.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "10.1002_ajoc.202000133",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "suggesting that it doesn’t possess traditional TADF feature.",
+    "subject": "PXZ-TPB-CN",
+    "scope": "target",
+    "conditions": "pristine powder",
+    "kind": "observation",
+    "statement": "Only prompt 12.69 ns emission: no conventional TADF.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "AEE from restricted intramolecular motion in aggregates and crystals."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "TICT quenching at low water fraction."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "High exciton utilisation via hot-exciton RISC (T5→S1): new decay component, small calculated gap, EQE above the fluorescent limit; conventional TADF excluded."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "AEE from restricted intramolecular motion in aggregates and crystals."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E01"
+    ],
+    "rationale": "TICT quenching at low water fraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No rate-based argument; horizontal dipole orientation concerns outcoupling. Earlier secondary dropped."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05",
+     "E06",
+     "E07"
+    ],
+    "rationale": "High exciton utilisation via hot-exciton RISC (T5→S1): new decay component, small calculated gap, EQE above the fluorescent limit; conventional TADF excluded."
+   }
+  ],
+  "environment_context": [
+   "crystalline vs ground amorphous powder (mechanochromism)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "MolScribe reading of the source figure identical"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "TRIPLET raised from secondary to co_primary: hRISC is the 'high exciton utilization' in the title, with decay and device evidence.",
+  "previous_primary": [
+   "RIM_RIR_RIV"
+  ]
+ }
+}

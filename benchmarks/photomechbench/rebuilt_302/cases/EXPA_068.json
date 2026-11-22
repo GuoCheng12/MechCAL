@@ -1,0 +1,303 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_068",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCNc1ccc2c3c(cccc13)C(=O)N(CCN1CCCCC1)C2=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1A",
+  "source_documents": [
+   {
+    "source_id": "B13",
+    "title": "pH-dependent photoinduced electron transfer of 1,8-naphthalimide derivatives: Effects of regiochemistry, substituent at 4-position and proton receptor",
+    "doi": "10.1016/j.molstruc.2025.144705",
+    "format": "PDF",
+    "pages": 11,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "B13-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.molstruc.2025.144705",
+    "file": "10.1016_j.molstruc.2025.144705_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2025-11-12",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "20 mM PBS, pH 2-11"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B13",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "For the probes with piperidine or morpholine as the receptor (compounds 1A-B and 2A-B), PET exhibit pathselective, namely from the distal tertiary amine at 4-substituent to NPA and resulted in fluorescence quench ing.",
+    "subject": "1A, 1B, 2A, 2B",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "PET only from a receptor on the 4-amino side.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B13",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "when the solution’s pH changed from 11.0 to 7.01, significant fluorescence enhancement (by 19-fold) was observed accompanied with notable blue-shifts in both absorption (16 nm) and emission (12 nm)",
+    "subject": "1B",
+    "scope": "target",
+    "conditions": "20 mM PBS, pH 11 → 7",
+    "kind": "observation",
+    "statement": "Protonating the piperidine turns emission on 19-fold.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B13",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "The protonation of the receptor decreased the fluorescence of 1A/2A, but enhanced that of 1B/2B (Φ> 0.2) significantly, indicating PET is path-dependent for non-acetylated probes 1 and 2.",
+    "subject": "1A vs 1B",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "Neutral 1A is bright (Φ ~0.2) and 1B dark (Φ < 0.03).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "However, the quite small energy gap (0.16 eV, EHOMO -EHOMO-1) makes it difficult for the electron to overcome the reputation barrier, and PET from the proton receptor to the fluorophore is unlikely to happen.",
+    "subject": "1A",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "PET from the imide-side receptor is unlikely.",
+    "limitations": "Orbital-energy argument only."
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "When the receptor is sited at the imide N (1A/2A), PET process is obstructed by the repulsive barrier from the adjacent carbonyl groups to some extent, and therefore 1A/2A emits fluorescence in their neutral states.",
+    "subject": "1A",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "author_interpretation",
+    "statement": "Field from the carbonyls blocks PET in 1A.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The slight fluo rescence quenching upon protonation of 1A/2A could possibly be ascribed to the D-PET from the fluorophore to the protonated receptor.",
+    "subject": "1A (protonated)",
+    "scope": "target",
+    "conditions": "PBS, acidic",
+    "kind": "author_interpretation",
+    "statement": "15% quenching on protonation, tentatively reverse PET.",
+    "limitations": "Speculative ('could possibly')."
+   },
+   {
+    "evidence_id": "E07",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "For probe 1B, electron density in the LUMO is situated on the fluorophore, that in the HOMO is distributed over the fluorophore and the piperidine ring, and the HOMO-1 electron density is primarily localized on the proton receptor (Fig. 6), theoretically sup porting the proposed PET process (Fig. 4).",
+    "subject": "1B",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "Orbital localisation supports receptor→fluorophore PET.",
+    "limitations": "Ground-state orbitals only."
+   },
+   {
+    "evidence_id": "E08",
+    "source_id": "B13",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "It is interesting to note that the decrease in pH initiated prominent fluores cence enhancements for both 1A-Ace and 1B-Ace (Fig. 3a-b), implying that PET process is activated upon acetylation of the 4-amino.",
+    "subject": "1A-Ace",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "After acetylation even the imide-side receptor quenches; protonation gives 12-fold enhancement (Table 1).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E09",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "For 1A-Ace, the much higher energy gap between HOMO and HOMO-1 (0.79 eV) along with the attractive field at 4-position makes the PET process easier [55].",
+    "subject": "1A-Ace",
+    "scope": "target",
+    "conditions": "B3LYP/6-31G(d,p)",
+    "kind": "computation",
+    "statement": "Acetylation lowers the fluorophore orbital and enables PET.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E10",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Taking probe 1A as an example, Fig. 5 demonstrates that 1A exhibits significant charge separation capability: the molecule exhibits ground-state polarization or donor-acceptor character.",
+    "subject": "1A",
+    "scope": "target",
+    "conditions": "DFT electron density",
+    "kind": "computation",
+    "statement": "4-amino donor and imide acceptor give push-pull character.",
+    "limitations": "Ground-state density."
+   },
+   {
+    "evidence_id": "E11",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "The higher Sr index (0.72178 a.u. for 1A vs 0.80511 a.u. for 1A-Ace) induced by acetylation confirms greater overlap be tween the hole and electron distributions, demonstrating that the ICT process is attenuated upon acetylation.",
+    "subject": "1A vs 1A-Ace",
+    "scope": "target",
+    "conditions": "hole-electron analysis, S1",
+    "kind": "computation",
+    "statement": "1A has a CT-type S1; acetylation reduces it.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E12",
+    "source_id": "B13",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "Compared to their parent compounds, acetylation led to 80–100 nm blue shifts in both absorption and emission maxima.",
+    "subject": "1A vs 1A-Ace",
+    "scope": "target",
+    "conditions": "PBS",
+    "kind": "observation",
+    "statement": "Weaker ICT after acetylation shifts spectra to the blue.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E13",
+    "source_id": "B13",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "Acetylation led to similar changes in Sr, D index and t index values of 1B (Fig. S5).",
+    "subject": "1B",
+    "scope": "target",
+    "conditions": "hole-electron analysis, S1",
+    "kind": "computation",
+    "statement": "1B has the same CT-type S1 as 1A.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E10",
+     "E11",
+     "E12"
+    ],
+    "rationale": "The 4-aminonaphthalimide S1 has CT character (hole-electron analysis); weakening the donor by acetylation blue-shifts emission 80-100 nm. The paper treats ICT as the fluorophore's nature, not the studied mechanism."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E10",
+     "E11",
+     "E12"
+    ],
+    "rationale": "The 4-aminonaphthalimide S1 has CT character (hole-electron analysis); weakening the donor by acetylation blue-shifts emission 80-100 nm. The paper treats ICT as the fluorophore's nature, not the studied mechanism."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "The paper says PET from the imide-side receptor to the fluorophore is unlikely, and neutral 1A is bright (Φ ~0.2). It speculates reverse PET after protonation (E06), untested.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "B13-CG1",
+   "varied_factor": "relative to 1A: receptor moved from the imide N to the 4-amino side (1B), or 4-amino acetylated (1A-Ace)",
+   "paper_difference": "1A: no PET, bright in neutral form; 1B: PET from the 4-side receptor, dark until protonated; 1A-Ace: acetylation activates PET from the imide-side receptor."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure from the synthesis (N-2 + butylamine) and Scheme 1, name parsed with OPSIN",
+   "HRMS [M+H]+ C23H30N3O2 matches"
+  ],
+  "used_si": false,
+  "formula": "C23H29N3O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2, main p6, main p7"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

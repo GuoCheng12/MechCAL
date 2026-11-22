@@ -1,0 +1,208 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_018",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCOC(=O)c1c(Cl)c(Cl)c(Cl)c(O)c1-c1nc2ccccc2o1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "1b (ethyl ester)",
+  "source_documents": [
+   {
+    "source_id": "A09",
+    "title": "Monomeric Fluorescence of H‐Aggregates in a Series of 2‐(Hydroxyphenyl)benzoxazoles Derivatives",
+    "doi": "10.1002/chem.202503484",
+    "format": "PDF",
+    "pages": 14,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "A09-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.202503484",
+    "file": "10.1002_chem.202503484_SI_1.pdf",
+    "format": "PDF"
+   },
+   {
+    "source_id": "A09-SI",
+    "title": "Supporting information",
+    "doi": "10.1002/chem.202503484",
+    "file": "10.1002_chem.202503484_SI_2.zip",
+    "format": "ZIP"
+   }
+  ],
+  "publication_date": "2026-02-07",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution",
+   "aggregate: aqueous binary mixtures",
+   "crystal"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "A09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "These aggregates exhibit intense fluorescence despite the prohibition imposed by Kasha’s rule.",
+    "subject": "HBOs 1a-1c",
+    "scope": "target",
+    "conditions": "aqueous binary mixtures and crystals",
+    "kind": "observation",
+    "statement": "H-aggregates of the HBOs are strongly fluorescent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "A09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "This violation seems to result from the deactivation mechanism of the excited excitonic state in HBO H-aggregates, which involves, along with internal conversion, a photochemical channel induced by excited-state intramolecular proton transfer (ESIPT) rather than a radiative one.",
+    "subject": "HBOs 1a-1c",
+    "scope": "target",
+    "conditions": "H-aggregates",
+    "kind": "author_interpretation",
+    "statement": "The excitonic state of the H-aggregate decays through ESIPT, giving monomeric keto emission.",
+    "limitations": "Hedged by the authors ('seems to')."
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "A09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The consequence of ESIPT is monomeric fluorescence from the keto forms of HBOs.",
+    "subject": "HBOs 1a-1c",
+    "scope": "target",
+    "conditions": "aggregates and crystals",
+    "kind": "observation",
+    "statement": "Emission is keto (ESIPT) fluorescence.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "A09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "This enhancement is due to intramolecular hydrogen bonds as well as the dense molecular packing of HBOs, which suppresses conformational transformations.",
+    "subject": "HBOs 1a-1c",
+    "scope": "target",
+    "conditions": "crystal vs solution",
+    "kind": "author_interpretation",
+    "statement": "Higher crystal quantum yields (0.81-0.91) are attributed to H-bonds and dense packing.",
+    "limitations": "The suppressed motion is not specified."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ESIPT_PT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "ESIPT from the excitonic state produces the monomeric keto emission."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "H-aggregate excitonic states are the paper's subject; their unusual brightness is the central finding."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E02",
+     "E03"
+    ],
+    "rationale": "ESIPT from the excitonic state produces the monomeric keto emission."
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02"
+    ],
+    "rationale": "H-aggregate excitonic states are the paper's subject; their unusual brightness is the central finding."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   {
+    "effect": "dense packing and intramolecular H-bonds raise the crystal quantum yield (motion not specified)",
+    "evidence_ids": [
+     "E04"
+    ]
+   }
+  ],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "A09-CG1",
+   "varied_factor": "ester alkyl group (methyl, ethyl, isopropyl)",
+   "paper_difference": "Same mechanism across the series; crystal packing and quantum yields differ."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "experimental-section name parsed with OPSIN; formula C16H10Cl3NO4 matches the X-ray data"
+  ],
+  "used_si": false,
+  "formula": "C16H10Cl3NO4",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at 10.1002_chem.202503484_SI_1.pdf p11, 10.1002_chem.202503484_SI_1.pdf p13"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list A)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

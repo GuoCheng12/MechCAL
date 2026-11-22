@@ -1,0 +1,219 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0039",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC1=CC(C)=[N+]2C1=C(c1ccc(N3CCC3)cc1)c1c(C)cc(C)n1[B-]2(F)F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "AZE-Ph-BDP",
+  "source_documents": [
+   {
+    "source_id": "10.1002_anie.201916357",
+    "title": "Quantitative Design of Bright Fluorophores and AIEgens via the Accurate Prediction of Twisted Intramolecular Charge Transfer (TICT)",
+    "doi": "10.1002/anie.201916357",
+    "format": "PDF",
+    "pages": 15,
+    "pdf_sha256": "eeb99e3bd698daf11ea4ae820e1307a403f810ea3010dd2a6ff2e67370f19f1d"
+   }
+  ],
+  "publication_date": "2020-01-13",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "hexane and polar solvents",
+   "viscous solvents",
+   "THF/water aggregates",
+   "solid"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1002_anie.201916357",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "the rotation of θ towards 90° is almost barrierless in AZE-Ph-BDP.",
+    "subject": "AZE-Ph-BDP",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "Barrierless meso-phenyl twisting to a TICT geometry.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "10.1002_anie.201916357",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "resulting in a negligible oscillator strength (f = 0.00; Figure 6c).",
+    "subject": "AZE-Ph-BDP",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "The TICT minimum is dark.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "10.1002_anie.201916357",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "AZE-Ph-BDP is emissive only in hexane (Φ = 0.36; Figure 6d).",
+    "subject": "AZE-Ph-BDP",
+    "scope": "target",
+    "conditions": "solvent series",
+    "kind": "observation",
+    "statement": "Emission vanishes in polar solvents.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "10.1002_anie.201916357",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "the fluorescence of AZE-Ph-BDP greatly intensifies in highly viscous solvents.",
+    "subject": "AZE-Ph-BDP",
+    "scope": "target",
+    "conditions": "viscous solvents",
+    "kind": "observation",
+    "statement": "Viscosity turns on emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "10.1002_anie.201916357",
+    "pdf_page": 11,
+    "location": null,
+    "quote": "The molecular aggregates effectively inhibit TICT rotations.",
+    "subject": "AZE-Ph-BDP",
+    "scope": "target",
+    "conditions": "THF/water aggregates",
+    "kind": "author_interpretation",
+    "statement": "Aggregation blocks the TICT rotation (~27-fold turn-on; solid Φ 0.11).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Viscosity and aggregation restrict the TICT rotation and turn on emission (~27-fold); this is the AIE design."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Designed so that monomers form a dark TICT state almost without barrier; polar solvents quench."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The TICT minimum has f = 0.00, a dark state."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Viscosity and aggregation restrict the TICT rotation and turn on emission (~27-fold); this is the AIE design."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Designed so that monomers form a dark TICT state almost without barrier; polar solvents quench."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The TICT minimum has f = 0.00, a dark state."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "corrected",
+  "checked": "2026-11-13",
+  "original_smiles": "CC1=C(C)N2C1=C(c1ccc(N3CCC3)cc1)C(C)=C(C)[N+](=C(C)C)[B-]2(F)F",
+  "problem": "garbled BODIPY (azete and open chain instead of two pyrroles)",
+  "old_formula": "C22H28BF2N3",
+  "new_formula": "C22H24BF2N3",
+  "basis": "figure: 1,3,5,7-tetramethyl-8-(4-azetidin-1-ylphenyl)-BODIPY",
+  "evidence": [
+   "figure: 1,3,5,7-tetramethyl-8-(4-azetidin-1-ylphenyl)-BODIPY"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": "RIM raised from secondary to co_primary (guideline §3.4, molecular rotor: aggregation-inhibited TICT is the AIE design).",
+  "previous_primary": [
+   "ICT_TICT_CT"
+  ]
+ }
+}

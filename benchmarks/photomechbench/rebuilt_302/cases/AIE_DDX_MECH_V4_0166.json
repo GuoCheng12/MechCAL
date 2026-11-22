@@ -1,0 +1,252 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "AIE_DDX_MECH_V4_0166",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(C)(C)N1C(=O)c2cc(-n3c4ccccc4c4ccccc43)c(-n3c4ccccc4c4ccccc43)cc2S1(=O)=O"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "DiCz-Sac",
+  "source_documents": [
+   {
+    "source_id": "10.1016_j.cej.2021.129628",
+    "title": "Saccharin-derived multifunctional emitters featuring concurrently room temperature phosphorescence, thermally activated delayed fluorescence and aggregation-induced enhanced emission",
+    "doi": "10.1016/j.cej.2021.129628",
+    "format": "PDF",
+    "pages": 9,
+    "pdf_sha256": "962004d8380aed2bb91e15099e5e7a5bab9243770aa282324a3c05da1ac400e3"
+   }
+  ],
+  "publication_date": "2021-04-05",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solvent series",
+   "THF/water",
+   "crystals",
+   "neat film",
+   "temperature series"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "S1",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "These close-distance intermolecular non-covalent interactions can effectively suppress the intramolecular motions and impede non-radiative decay channels, thus resulting in intense emission in aggregated states.",
+    "subject": "Cz-Sac series",
+    "scope": "analog",
+    "conditions": "crystals",
+    "kind": "author_interpretation",
+    "statement": "Packing contacts suppress intramolecular motion.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S2",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "The formation of aggregates could effectively block molecular motions and inhibit the non-radiative decay channels (e.g., the rotation of carbazole unit), resulting in the increased emission intensity.",
+    "subject": "Cz-Sac series",
+    "scope": "analog",
+    "conditions": "THF/water",
+    "kind": "author_interpretation",
+    "statement": "AIEE: aggregation blocks carbazole rotation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S3",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "348 ms for 6-Cz-Sac, 664 ms for 5-Cz-Sac, and 285 ms for DiCz-Sac",
+    "subject": "Cz-Sac series",
+    "scope": "target",
+    "conditions": "crystals, air",
+    "kind": "observation",
+    "statement": "Ultralong RTP lifetimes.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S4",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "may be caused by the trace amount of the carbazole isomer",
+    "subject": "Cz-Sac series",
+    "scope": "analog",
+    "conditions": "lab-made vs commercial carbazole",
+    "kind": "author_interpretation",
+    "statement": "Ultralong lifetimes likely from a trace carbazole isomer; pure lab samples give ~2.5 ms RTP.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S5",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "dark twisted intramolecular charge transfer (TICT) states formed with the increase of solvent polarity.",
+    "subject": "Cz-Sac series",
+    "scope": "analog",
+    "conditions": "THF/water < 80%",
+    "kind": "author_interpretation",
+    "statement": "Dark TICT quenching before aggregation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "S6",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "were attributed to the ICT transition from carbazole to the saccharin moiety.",
+    "subject": "Cz-Sac series",
+    "scope": "analog",
+    "conditions": "absorption, solvatochromism",
+    "kind": "observation",
+    "statement": "ICT absorption band; positive solvatochromism.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E01",
+    "source_id": "10.1016_j.cej.2021.129628",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "DiCz-Sac exhibited TADF properties with a delayed lifetime of 3.2 μs in neat film state, in addition to AIEE and RTP.",
+    "subject": "DiCz-Sac",
+    "scope": "target",
+    "conditions": "neat film",
+    "kind": "observation",
+    "statement": "TADF (3.2 μs) besides RTP.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "RIM_RIR_RIV",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S1",
+     "S2"
+    ],
+    "rationale": "AIEE: aggregation and crystal contacts block carbazole rotation and suppress nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "S5",
+     "S6"
+    ],
+    "rationale": "Carbazole→saccharin ICT; dark TICT quenches at intermediate water fraction."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "S3",
+     "S4",
+     "E01"
+    ],
+    "rationale": "DiCz-Sac: RTP in crystals and TADF in films (small ΔEST). The ultralong lifetimes are tentatively traced to a carbazole-isomer impurity."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "S1",
+     "S2"
+    ],
+    "rationale": "AIEE: aggregation and crystal contacts block carbazole rotation and suppress nonradiative decay."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "S5",
+     "S6"
+    ],
+    "rationale": "Carbazole→saccharin ICT; dark TICT quenches at intermediate water fraction."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "S3",
+     "S4",
+     "E01"
+    ],
+    "rationale": "DiCz-Sac: RTP in crystals and TADF in films (small ΔEST). The ultralong lifetimes are tentatively traced to a carbazole-isomer impurity."
+   }
+  ],
+  "environment_context": [
+   "crystal C-H...π, C-H...O and π-π contacts stabilise triplets"
+  ],
+  "out_of_pool": [
+   "trace carbazole-isomer impurity prolongs RTP (S4)"
+  ],
+  "contrast_group": {
+   "group": "REANN-0164-CG1",
+   "varied_factor": "carbazole position on saccharin (5 vs 6); DiCz-Sac has both",
+   "paper_difference": "5-Cz-Sac has the longest RTP; only DiCz-Sac shows TADF."
+  }
+ },
+ "structure_verification": {
+  "status": "verified_consistent",
+  "checked": "2026-11-13",
+  "evidence": [
+   "figure (reviewed by Claude)"
+  ],
+  "runnable": true
+ },
+ "reannotation": {
+  "date": "2026-11-16",
+  "annotator": "Claude (re-annotation of the 119, guideline 2026-11-16)",
+  "status": "draft_awaiting_expert_review",
+  "suggest_removal": null,
+  "note": null,
+  "previous_primary": [
+   "RIM_RIR_RIV",
+   "TRIPLET_ISC_RTP_TADF"
+  ]
+ }
+}

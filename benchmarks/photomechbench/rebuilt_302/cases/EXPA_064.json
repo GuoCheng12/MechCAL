@@ -1,0 +1,155 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_064",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "C[n+]1c2ccccc2c(-c2nc(-c3ccc(-c4cc(C(C)(C)C)cc(C(C)(C)C)c4)[nH]3)cc(-c3ccc(-c4cc(C(C)(C)C)cc(C(C)(C)C)c4)[nH]3)n2)c2ccccc21.Fc1c(F)c(F)c([B-](c2c(F)c(F)c(F)c(F)c2F)(c2c(F)c(F)c(F)c(F)c2F)c2c(F)c(F)c(F)c(F)c2F)c(F)c1F"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "2+ B(C6F5)4- (N-methylacridinium-dpp)",
+  "source_documents": [
+   {
+    "source_id": "B11",
+    "title": "Orthogonally Arranged π-Electronic Systems with Anion-Responsive Moiety Exhibiting Photoinduced Electron Transfer",
+    "doi": "10.1021/acs.orglett.5c02265",
+    "format": "PDF",
+    "pages": 6,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "B11-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.orglett.5c02265",
+    "file": "10.1021_acs.orglett.5c02265_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2025-07-14",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "CH2Cl2",
+   "less polar solvents",
+   "CH2Cl2 + TBACl"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E05",
+    "source_id": "B11",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "suggesting that the electron transfer occurs in 2+ on a time scale of picoseconds and the generated electron-transferred state survives over nanosecond timescales.",
+    "subject": "2+",
+    "scope": "target",
+    "conditions": "CH2Cl2, fs transient absorption",
+    "kind": "observation",
+    "statement": "Spectral evolution after the dpp local state, absent in less polar solvents, is assigned to ET.",
+    "limitations": "Reported in a footnote; the radical bands are not assigned as explicitly as for 1, and the Cl- complex behaves unexpectedly."
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B11",
+    "pdf_page": 6,
+    "location": null,
+    "quote": "These spectral evolutions were not observed in less polar solvents, especially in 2+ (Figure S22)",
+    "subject": "2+",
+    "scope": "target",
+    "conditions": "less polar solvents",
+    "kind": "observation",
+    "statement": "The evolution needs a polar solvent, as expected for charge separation.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "TA evolution from the dpp local state, absent in less polar solvents, is assigned to picosecond ET to the methylacridinium acceptor. Evidence is weaker than for 1 (footnote, less explicit band assignment)."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "TD-DFT gives the absorption bands ICT character; by guideline §3.3 the ET product is not labelled ICT."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E05",
+     "E06"
+    ],
+    "rationale": "TA evolution from the dpp local state, absent in less polar solvents, is assigned to picosecond ET to the methylacridinium acceptor. Evidence is weaker than for 1 (footnote, less explicit band assignment)."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [
+   "Cl- binding changes the ET behaviour unexpectedly (smaller CT-state amplitude)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "made from 1 by N-methylation with TfOCH3 and anion exchange to B(C6F5)4- (Figure 4a)",
+   "1H/13C/19F NMR and ESI-TOF-MS reported"
+  ],
+  "used_si": true,
+  "note": "Ion pair written with its non-coordinating counter-anion, as isolated.",
+  "formula": "C78H60BF20N5",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: no exact match (nearest Tanimoto 0.81)"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

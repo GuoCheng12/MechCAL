@@ -1,0 +1,197 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_159",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC12CCC(c3nc4c(-c5ccccc5)c5nsnc5c(-c5ccccc5)c4nc31)C2(C)C"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "CQXB (model without hydroxyl)",
+  "source_documents": [
+   {
+    "source_id": "D05",
+    "title": "A novel camphor-based fluorescent probe for sensing thiophenols in food analysis and biological imaging via a PET-TICT integrated mechanism",
+    "doi": "10.1016/j.talanta.2026.129712",
+    "format": "PDF",
+    "pages": 12,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "D05-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.talanta.2026.129712",
+    "file": "10.1016_j.talanta.2026.129712_SI_1.doc",
+    "format": "DOC"
+   }
+  ],
+  "publication_date": "2026-03-25",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "organic solvents of varied polarity",
+   "PBS/THF mixtures"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "D05",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "integrated mechanism was proposed to illustrate this unique phenomenon, in which the DNP play the role of a-PET-blocking and rotation-restricting group to keep the fluorescence",
+    "subject": "CQXPN",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "In the probe the dinitrophenyl ethers block a-PET and restrict rotation, so it is fluorescent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "D05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The molecule containing DNP moiety (CQXPN) dis played a strong fluorescence intensity, while molecule cleaving DNB moiety (CQXP) exhibited almost no fluorescence (Scheme 1 b).",
+    "subject": "CQXPN vs CQXP",
+    "scope": "target",
+    "conditions": "solution",
+    "kind": "observation",
+    "statement": "The probe is bright; the bis-phenol is nearly dark.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "D05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "When the DNP group was removed by thiophenols, the hy droxyl group in CQXP activated the a-PET process with the phenol groups under unbound and free rotating conditions (the TICT state)",
+    "subject": "CQXP",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "The free phenols drive a-PET and rotate freely into a TICT state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "D05",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "As shown in Fig. 6a and Figs. S10–S13, the initial fluorescence intensities of CQXB in different solvents were much higher than CQXP, indicating the existence of a-PET in CQXP [61].",
+    "subject": "CQXB vs CQXP",
+    "scope": "target",
+    "conditions": "various solvents",
+    "kind": "observation",
+    "statement": "Removing the OH (phenyl model) restores emission: evidence for a-PET in CQXP.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "D05",
+    "pdf_page": 7,
+    "location": null,
+    "quote": "With the increase of solvents’ polarity, the fluorescence intensity of CQXPN, CQXB and CQXJ decreased only 11.7, 3.6 and 4.8 folds respectively, while CQXP decreased 82.1 folds (Fig. 6b and S10-S11).",
+    "subject": "CQXP, CQXPN, CQXB, CQXJ",
+    "scope": "target",
+    "conditions": "solvent polarity series",
+    "kind": "observation",
+    "statement": "Only CQXP is strongly quenched by polarity (TICT signature).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "D05",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "In our initial design, the fluorophore CQXP was a donor-acceptordonor (D-A-D) type molecule with extended conjugation where camphor fused thiadiazolo-phenazine acted as the acceptor and phenol units acted as the donors (Scheme 1b).",
+    "subject": "CQXP",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "D-A-D push-pull chromophore.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "D-A-D chromophore, but the paper uses CQXB as the rotation-restricted, polarity-insensitive control (3.6-fold change)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [
+     "E04"
+    ],
+    "rationale": "Model compound without the phenol donor; the paper uses its bright emission to show that a-PET needs the OH.",
+    "exclusion_basis": "paper"
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": {
+   "group": "D05-CG1",
+   "varied_factor": "para substituent of the aryl wings (OH vs H vs O-2,4-dinitrophenyl)",
+   "paper_difference": "Free phenols (CQXP) are nearly dark through a-PET and TICT; the phenyl model and the DNP ether are bright and much less polarity-sensitive."
+  }
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "SI route: camphorquinone + 4,7-dibromobenzo[c][1,2,5]thiadiazole-5,6-diamine -> CQX (HRMS C16H14Br2N4S), then Suzuki coupling",
+   "phenyl pinacol boronate; SI HRMS [M+H]+ C28H24N4S"
+  ],
+  "used_si": true,
+  "formula": "C28H24N4S",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p8"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 4)",
+  "date": "2026-11-20",
+  "status": "draft_awaiting_expert_review"
+ }
+}

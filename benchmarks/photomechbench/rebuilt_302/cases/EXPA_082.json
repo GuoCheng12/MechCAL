@@ -1,0 +1,233 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_082",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "c1ccc(-c2nc(-c3ccccc3)nc(-c3ccccc3-c3cc4c5c(c3)Oc3ccccc3N5c3ccccc3O4)n2)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "Tz-p-BPO",
+  "source_documents": [
+   {
+    "source_id": "B09",
+    "title": "Rigid D-π-A through-space charge-transfer TADF emitter with high radiative rate and fast reverse intersystem crossing for OLEDs",
+    "doi": "10.1016/j.jlumin.2026.122294",
+    "format": "PDF",
+    "pages": 7,
+    "obtained_via": "manual (author, browser)"
+   },
+   {
+    "source_id": "B09-SI",
+    "title": "Supporting information",
+    "doi": "10.1016/j.jlumin.2026.122294",
+    "file": "10.1016_j.jlumin.2026.122294_SI_1.docx",
+    "format": "DOCX"
+   }
+  ],
+  "publication_date": "2026-11-01",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "dilute toluene and other solvents",
+   "3 wt% in 26DCzPPy film, 100-298 K",
+   "OLED devices"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "B09",
+    "pdf_page": 5,
+    "location": null,
+    "quote": "This distinct temperature-dependent delayed emission unambiguously con firms the thermally activated nature of the delayed fluorescence, which is highly consistent with TADF characteristics.",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "3 wt% in 26DCzPPy film, 100-298 K",
+    "kind": "observation",
+    "statement": "Delayed fluorescence grows from 28.9% to 58.7% with temperature.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "B09",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "Consequently, Tz-p-BPO simultaneously exhibits a small ΔEST of 0.07 eV and a high photoluminescence quantum yield (ФPL) of 93% in a 3 wt% doped film, together with a kr of 3.23 × 107 s− 1 and a kRISC of 2.70 × 105 s− 1.",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "3 wt% doped film",
+    "kind": "observation",
+    "statement": "Small ΔEST, fast RISC and kr retained.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "B09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "and the small energy gaps between them (0.01 and 0.13 eV, respectively) lead to spin-orbit coupling matrix elements",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "TD-DFT",
+    "kind": "computation",
+    "statement": "S1-T2/T3 gaps and SOC open high-lying RISC channels.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "B09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The absorption band in the 390-430 nm range corresponds to the CT state transition from the BPO donor unit to the acceptor unit (Tz) in this TSCT-TADF molecule, indicating strong non-covalent donor–acceptor interactions.",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "dilute toluene",
+    "kind": "observation",
+    "statement": "Through-space CT absorption band.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "B09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The CT nature is further supported by polarity-dependent PL measurements",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "n-hexane to more polar solvents",
+    "kind": "observation",
+    "statement": "Solvatochromic CT emission.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E06",
+    "source_id": "B09",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "These non-covalent in teractions enhance molecular rigidity and restrict intramolecular vibrations, thereby suppressing non-radiative transitions in the aggre gated state, reducing excited-state energy loss, and ultimately contrib uting to an enhanced fluorescence quantum yield (ФPL) [40].",
+    "subject": "Tz-p-BPO",
+    "scope": "target",
+    "conditions": "RDG analysis",
+    "kind": "computation",
+    "statement": "Intramolecular D-A stacking rigidifies the molecule.",
+    "limitations": "No specific motion identified or tested."
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "ICT_TICT_CT",
+    "role": "co_primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Emission is from a through-space donor-acceptor CT state, central to the design."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The design aims to keep a high kr while ΔEST is small; kr is reported and discussed as an outcome rather than used to explain a change."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Temperature-dependent delayed fluorescence confirms TADF; RISC via T2/T3 with SOC."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The paper says D-A stacking 'restricts intramolecular vibrations' (E06) without naming or testing a motion; by guideline §3.3 not labelled RIM."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "supported",
+    "role": "co_primary",
+    "evidence_ids": [
+     "E04",
+     "E05"
+    ],
+    "rationale": "Emission is from a through-space donor-acceptor CT state, central to the design."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E02"
+    ],
+    "rationale": "The design aims to keep a high kr while ΔEST is small; kr is reported and discussed as an outcome rather than used to explain a change."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03"
+    ],
+    "rationale": "Temperature-dependent delayed fluorescence confirms TADF; RISC via T2/T3 with SOC."
+   }
+  ],
+  "environment_context": [
+   "rigid intramolecular donor-acceptor stacking suppresses non-radiative loss (computational argument)"
+  ],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "route: 2-(2-bromophenyl)-4,6-diphenyl-1,3,5-triazine → Bpin, Suzuki with 7-bromo-BPO; name parsed with OPSIN",
+   "HRMS [M+H]+ 581.19 for C39H24N4O2"
+  ],
+  "used_si": true,
+  "formula": "C39H24N4O2",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion list B)",
+  "date": "2026-11-16",
+  "status": "draft_awaiting_expert_review"
+ }
+}

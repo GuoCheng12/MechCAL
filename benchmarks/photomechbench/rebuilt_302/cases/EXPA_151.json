@@ -1,0 +1,206 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_151",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CCCCN(CCCC)c1ccc(C2=C3C(C)=C(CC)C(C)=[N+]3[B-](F)(F)n3c(C)c(CC)c(C)c32)cc1"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "BODIPY 1 (meso-4-dibutylaminophenyl)",
+  "source_documents": [
+   {
+    "source_id": "C25",
+    "title": "J-Aggregates of BODIPYs: Heat-Induced Fluorescence Enhancement via Polarity-Modulated Photoinduced Electron Transfer",
+    "doi": "10.1021/acs.jpclett.6c01387",
+    "format": "PDF",
+    "pages": 10,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "C25-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpclett.6c01387",
+    "file": "10.1021_acs.jpclett.6c01387_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-05-29",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "solution: toluene, THF, 2-MeTHF (180-298 K), benzonitrile"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "C25",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "As mentioned, the photophysics of BODIPY 1 is governed by a reductive photoinduced electron transfer process, from the electron donor aniline to the acceptor BODIPY core, which is therefore reduced upon photoexcitation (Figure 1a).",
+    "subject": "BODIPY 1",
+    "scope": "target",
+    "conditions": "polar solvents",
+    "kind": "author_interpretation",
+    "statement": "Reductive PET from the meso aniline to the excited BODIPY core.",
+    "limitations": "Builds on the authors' earlier study [16]."
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "C25",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "rPET leads to the formation of an almost perfectly dark charge transfer excited state",
+    "subject": "BODIPY 1",
+    "scope": "target",
+    "conditions": "THF, 2-MeTHF, benzonitrile",
+    "kind": "author_interpretation",
+    "statement": "rPET populates a dark CT state.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "C25",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "While the nonfluorescent monomer dissipates excitation energy through rPET between the BODIPY core and a meso aniline substituent, J-aggregation in the oligomers enhances radiative decay in nonpolar environments.",
+    "subject": "BODIPY 1",
+    "scope": "target",
+    "conditions": "polar solvents",
+    "kind": "observation",
+    "statement": "The monomer is nonfluorescent in polar media.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "C25",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "The emission in 2-MeTHF shows a sharp peak typical of BODIPY dyes,21 together with a weak, redshifted tail that is absent in toluene.",
+    "subject": "BODIPY 1",
+    "scope": "target",
+    "conditions": "2-MeTHF vs toluene",
+    "kind": "observation",
+    "statement": "A weak red CT tail appears only in the polar solvent.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "C25",
+    "pdf_page": 4,
+    "location": null,
+    "quote": "The shape of the long living component presents the typical spectral features attributed to BODIPY triplet states, signaling the occurrence of intersystem crossing (ISC).31,32",
+    "subject": "BODIPY 1",
+    "scope": "target",
+    "conditions": "THF, benzonitrile; fs/ns transient absorption",
+    "kind": "observation",
+    "statement": "A long-lived BODIPY triplet (SOCT-ISC from the CT state).",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "PET_ET",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Nonfluorescent in polar solvents through reductive PET from the meso aniline (dark CT state); emission returns in toluene."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "secondary",
+    "gain": 1,
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "A BODIPY triplet forms after charge transfer (SOCT-ISC), more in THF than in benzonitrile."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The dark CT state is the product of the rPET itself; not labelled ICT separately (guideline §3.3)."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04"
+    ],
+    "rationale": "Nonfluorescent in polar solvents through reductive PET from the meso aniline (dark CT state); emission returns in toluene."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "J-type exciton coupling is the subject for the covalent oligomers, not the monomer."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "secondary",
+    "evidence_ids": [
+     "E05"
+    ],
+    "rationale": "A BODIPY triplet forms after charge transfer (SOCT-ISC), more in THF than in benzonitrile."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "basis": [
+   "structure recognition of Figure 1 (main text p2): meso-(4-dibutylaminophenyl)-2,6-diethyl-1,3,5,7-tetramethyl BODIPY",
+   "consistent with the 'meso aniline substituent' described in the text"
+  ],
+  "used_si": false,
+  "note": "Single structural source (no synthesis or HRMS in this paper; the compound is from ref 16). Dative N-B written as [N+]/[B-].",
+  "formula": "C31H44BF2N3",
+  "structure_recognition": "MolDetect+MolScribe on the source PDF/SI: same connectivity at main p2"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 3)",
+  "date": "2026-11-19",
+  "status": "draft_awaiting_expert_review"
+ }
+}

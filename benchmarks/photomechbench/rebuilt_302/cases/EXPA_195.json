@@ -1,0 +1,197 @@
+{
+ "schema_version": "photomechbench.raw.v2",
+ "case_id": "EXPA_195",
+ "public_input": {
+  "molecule": {
+   "structure": {
+    "format": "smiles",
+    "value": "CC(=O)c1c2ccccc2cc2ccccc12"
+   }
+  }
+ },
+ "hidden_reference": {
+  "target_name": "9-acetylanthracene (9AA)",
+  "source_documents": [
+   {
+    "source_id": "F17",
+    "title": "New Insights into Intersystem Crossing in Substituted Aromatics: Singlet–Triplet Conversion in Carbonyl-Substituted Anthracenes",
+    "doi": "10.1021/acs.jpcb.5c07987",
+    "format": "PDF",
+    "pages": 13,
+    "obtained_via": "InstSci (institutional)"
+   },
+   {
+    "source_id": "F17-SI",
+    "title": "Supporting information",
+    "doi": "10.1021/acs.jpcb.5c07987",
+    "file": "10.1021_acs.jpcb.5c07987_SI_1.pdf",
+    "format": "PDF"
+   }
+  ],
+  "publication_date": "2026-02-03",
+  "publication_date_source": "OpenAlex",
+  "conditions_studied": [
+   "cyclohexane",
+   "acetonitrile",
+   "methanol",
+   "other solvents (Table 1)"
+  ],
+  "reference_evidence_units": [
+   {
+    "evidence_id": "E01",
+    "source_id": "F17",
+    "pdf_page": 3,
+    "location": null,
+    "quote": "9AA is a minimally fluorescent compound at room temperature (for example, Φf = 2 × 10−4 in cyclohexane, see Table 1) which is typical for molecules with a fast S1 depopulation channel.",
+    "subject": "9AA vs 2AA",
+    "scope": "target",
+    "conditions": "cyclohexane and other solvents",
+    "kind": "observation",
+    "statement": "9AA is nearly dark while 2AA fluoresces strongly (0.04-0.8).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E02",
+    "source_id": "F17",
+    "pdf_page": 1,
+    "location": null,
+    "quote": "The time-resolved signals from 9AA show that ISC takes place after spectral shifts that reflect the evolution of the carbonyl group to a slanted geometry as it adjusts to a dihedral angle of around 40° with respect to the aromatic plane. Depending on the solvent, in 9AA manifold crossing takes place on the 3 to 25 ps time-scale.",
+    "subject": "9AA",
+    "scope": "target",
+    "conditions": "femtosecond fluorescence upconversion and TA, several solvents",
+    "kind": "observation",
+    "statement": "ISC in 3-25 ps follows a sub-ps carbonyl reorientation.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E03",
+    "source_id": "F17",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "In summary, for 9acetylanthracene (9AA) the S1(1La) state undergoes at least partial structural relaxation without crossings with other singlets, and remains of emissive ππ* character (1La) throughout this path.",
+    "subject": "9AA",
+    "scope": "target",
+    "conditions": "XMS-RASPT2",
+    "kind": "computation",
+    "statement": "S1 stays pi-pi* (no singlet n-pi* crossing).",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E04",
+    "source_id": "F17",
+    "pdf_page": 2,
+    "location": null,
+    "quote": "uch effect is related to the energy-coincidence of the singlet−triplet pair and to the switch-on of spin−orbit couplings related the nonparallel orientation of bonds localized in the aromatic plane and those associated with the tilted substituent double bonds.",
+    "subject": "9AA",
+    "scope": "target",
+    "conditions": "computation",
+    "kind": "computation",
+    "statement": "Near-degenerate S1/T(n-pi*-mixed) pair and SOC switched on by the tilted carbonyl.",
+    "limitations": ""
+   },
+   {
+    "evidence_id": "E05",
+    "source_id": "F17",
+    "pdf_page": 10,
+    "location": null,
+    "quote": "When the acetyl group corresponds to anthracene position 2 as in the case of 2-acetylanthracene (2AA), the near planarity of the substituent effectively corresponds with reduced couplings with the triplet manifold and much longer fluorescent state lifetime of up to 15 ns.",
+    "subject": "2AA (comparison)",
+    "scope": "target",
+    "conditions": "",
+    "kind": "author_interpretation",
+    "statement": "The coplanar 2-isomer has weak triplet coupling and a long-lived fluorescent S1.",
+    "limitations": ""
+   }
+  ],
+  "reference_mechanisms": [
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "role": "primary",
+    "gain": 2,
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "S1 decays by intersystem crossing in 3-25 ps (solvent dependent) after the acetyl group tilts to about 40 degrees; SOC switched on by the tilted carbonyl and a near-degenerate triplet; the coplanar 2-isomer, with weak triplet coupling, fluoresces for up to 15 ns."
+   }
+  ],
+  "mechanism_decisions": [
+   {
+    "label": "RIM_RIR_RIV",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "The acetyl torsion (sub-ps) precedes ISC, but the paper attributes the dark S1 to orientation-dependent spin-orbit coupling, not to free or restricted motion."
+   },
+   {
+    "label": "ICT_TICT_CT",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "ESIPT_PT",
+    "status": "contradicted",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "No intramolecular proton donor-acceptor pair.",
+    "exclusion_basis": "structure"
+   },
+   {
+    "label": "PET_ET",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "AGGREGATE_EXCITON_EXCIMER",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "RADIATIVE_RATE_STATE_BALANCE",
+    "status": "not_established",
+    "role": null,
+    "evidence_ids": [],
+    "rationale": "Not discussed for this molecule in the source."
+   },
+   {
+    "label": "TRIPLET_ISC_RTP_TADF",
+    "status": "supported",
+    "role": "primary",
+    "evidence_ids": [
+     "E01",
+     "E02",
+     "E03",
+     "E04",
+     "E05"
+    ],
+    "rationale": "S1 decays by intersystem crossing in 3-25 ps (solvent dependent) after the acetyl group tilts to about 40 degrees; SOC switched on by the tilted carbonyl and a near-degenerate triplet; the coplanar 2-isomer, with weak triplet coupling, fluoresces for up to 15 ns."
+   }
+  ],
+  "environment_context": [],
+  "out_of_pool": [],
+  "contrast_group": null
+ },
+ "structure_verification": {
+  "status": "verified",
+  "used_si": false,
+  "basis": [
+   "name in the paper, parsed with OPSIN (1-(anthracen-9-yl)ethan-1-one)"
+  ],
+  "formula": "C16H12O"
+ },
+ "provenance": {
+  "annotation_method": "assistant_draft_from_source",
+  "annotator": "Claude (expansion batch 5)",
+  "date": "2026-11-22",
+  "status": "draft_awaiting_expert_review"
+ }
+}
