@@ -24,7 +24,9 @@ calculations yourself.
   percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes
   and other widely studied luminescent or absorbing molecules, chosen as common examples and not to
   resemble the molecules studied here; isolated molecules, no metal complexes), computed with the
-  same tool and default settings. The panel has no mechanism labels.
+  same tool and default settings. The panel has no mechanism labels. Each row gives its pointer, so
+  a panel value can be cited like any other value of that result (for example
+  <pointer>/panel_percentile).
 - recipes: fixed combinations of tools (combines lists them), with the same applicability and cost.
   They are a convenience, not a recommendation; a tool can always be used directly instead.
 
@@ -50,10 +52,8 @@ A failed or blocked calculation is not evidence for or against a mechanism.
    "discriminates", "discriminates_why"} (label: the family it bears on; see Prior and evidence). Adopt only findings whose numbers and interpretation you
    accept; you may instead write your own claim citing the same artifact pointers.
 3. updates (with prior and prior_basis, and claimed: see The answer), claims (each with discriminates and discriminates_why),
-   drop_claims, limitations, proposal_responses: as for the board (claims:
-   structural cite fact_ids; computed cite every number with artifact_id and exact pointer;
-   prior is background knowledge and never case evidence). Limitations of a family are restated
-   in full when they change.
+   drop_claims, limitations, proposal_responses: as for the board (see Claims). Limitations of a
+   family are restated in full when they change.
 4. action: exactly one of
    - delegate: assign an experiment. {"type": "delegate", "task": "the question to answer",
      "recipe": "<recipe>" and/or "tools": ["<tool id>", ...], "fixed_args": {scientific settings},
@@ -81,6 +81,21 @@ marks current every turn, because the run can end when the budget does (budget.m
 The claimed families are ordered by plausibility; the most plausible one is your main mechanism.
 Claim a family only if you judge it applies: a claimed family that is not reported counts against
 you, and so does a reported family you leave out.
+
+## Claims
+Every claim is attached to one family and is one of three kinds:
+- structural: a fact about this molecule's graph (groups, connectivity, conjugation, rings,
+  rotatable bonds, donor/acceptor sites); cite fact_ids. No numbers in quantities.
+- computed: a result of a calculation that was actually run. Each number you write in the
+  statement must also appear in quantities with its artifact_id and exact pointer. Never cite a
+  value that no result contains.
+- prior: general chemical knowledge. It may explain other claims but is never case-specific
+  evidence and must not carry numbers.
+Be accurate rather than exhaustive. A claim that misstates a value, cites the wrong artifact, or
+presents a failed or modeled calculation as something else counts against you. Interpretations
+must agree with the cited numbers (for example, do not call a state dark while citing a large
+oscillator strength). State limitations honestly: vertical vs relaxed states, isolated molecule vs
+aggregate, modeled dimer vs crystal.
 
 ## Prior and evidence
 Two things decide how plausible a family is:
@@ -120,7 +135,12 @@ Two things decide how plausible a family is:
             "discriminates_why": "hole and electron on different groups, unlike a local excitation"}],
  "updates": [{"label": "ICT_TICT_CT", "prior": 0.4, "prior_basis": "amine donor conjugated to nitrile acceptor",
               "plausibility": 0.6, "claimed": true, "status": "supported", "reason": "prior 0.4; discriminating CT evidence raises it", "next_test": "..."}],
- "claims": [{"label": "TRIPLET_ISC_RTP_TADF", "kind": "structural", "statement": "...", "fact_ids": ["F3"]}],
+ "claims": [{"label": "TRIPLET_ISC_RTP_TADF", "kind": "structural", "statement": "...", "fact_ids": ["F3"]},
+            {"label": "ICT_TICT_CT", "kind": "computed", "statement": "S1 oscillator strength is 0.42.",
+             "quantities": [{"name": "S1_oscillator_strength", "value": 0.42, "unit": "", "artifact_id": "T003",
+                             "pointer": "/structured_results/..."}],
+             "discriminates": "partly", "discriminates_why": "..."},
+            {"label": "ICT_TICT_CT", "kind": "prior", "statement": "..."}],
  "drop_claims": [],
  "limitations": [{"label": "ICT_TICT_CT", "text": "..."}],
  "proposal_responses": [{"proposal_id": "P1.1", "decision": "decline", "reason": "..."}],

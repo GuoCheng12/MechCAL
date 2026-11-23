@@ -17,7 +17,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError, field_validator, model_validator
 
-from mechcal.agent.board import Board, ClaimIn, Status
+from mechcal.agent.board import Board, ClaimIn, Status, uncited_numbers
 from mechcal.agent.facts import structural_facts
 from mechcal.agent.recipes import RECIPE_ARGS, RECIPES, RecipeContext, run_recipe
 from mechcal.agent import cards as cardlib
@@ -596,6 +596,7 @@ class AgentRun:
                 cid = self.board.add_claim(label, claim, step=n, origin="worker", discriminates=a.discriminates,
                                            discriminates_why=a.discriminates_why)
                 f["adopted_as"] = cid
+                self._note_uncited(cid, claim, n)
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: adopt {a.finding_id} rejected ({exc})")
         locked = self.priors_fixed or self._computations() > 0
@@ -614,8 +615,10 @@ class AgentRun:
                     setattr(fam, key, getattr(u, key))
         for c in step.claims:
             try:
-                self.board.add_claim(c.label, c.to_claim(self.facts), step=n, discriminates=c.discriminates,
-                                     discriminates_why=c.discriminates_why)
+                claim = c.to_claim(self.facts)
+                cid = self.board.add_claim(c.label, claim, step=n, discriminates=c.discriminates,
+                                           discriminates_why=c.discriminates_why)
+                self._note_uncited(cid, claim, n)
             except (ValueError, TypeError, KeyError) as exc:
                 self.history.append(f"step {n}: claim rejected ({exc})")
         self.board.drop_claims(step.drop_claims)
@@ -629,6 +632,11 @@ class AgentRun:
                 r = answered[p["proposal_id"]]
                 self.log.write({"role": "proposal_response", "proposal": p, "decision": r.decision, "reason": r.reason})
         self.proposals = [p for p in self.proposals if p["proposal_id"] not in answered]
+
+    def _note_uncited(self, claim_id: str, claim, n: int) -> None:
+        if numbers := uncited_numbers(claim):
+            self.history.append(f"step {n}: claim {claim_id} states {', '.join(numbers)} without a source; each number "
+                                "written in a computed statement needs its artifact_id and pointer in quantities")
 
     def _execute(self, action: Action, n: int) -> str:
         if self.cfg.worker and (action.type == "recipe"
@@ -1025,6 +1033,13 @@ class AgentRun:
                     claim = self.board.claims_for(pred.label)[c.claim_index]
                     proposals.append({"label": pred.label, "kind": "claim_check",
                                       "text": f"Claim {claim.claim_id} fails the grounding check ({c.outcome}); fix or drop it."})
+        loose = {c.claim_id: numbers for c in self.board.claims
+                 if self.board.families[c.label].claimed and (numbers := uncited_numbers(c.claim))}
+        if loose:                                    # one proposal for all of them, ahead of the cap
+            proposals.insert(0, {"label": None, "kind": "uncited_numbers",
+                                 "text": ("These claims state numbers without a source: "
+                                          + "; ".join(f"{k} ({', '.join(v)})" for k, v in loose.items())
+                                          + ". Cite each number taken from a result (artifact_id and pointer) or reword the claim.")})
         for i, p in enumerate(proposals[:5], start=1):
             p["proposal_id"] = f"P{self.critic_runs}.{i}"
         self.proposals = proposals[:5]

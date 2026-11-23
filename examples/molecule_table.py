@@ -6,8 +6,9 @@ Each method is one or more directories of graded runs (grade.json written by exa
 several directories are repeats). Per molecule a method's value is its mean over its runs; the table
 gives the mean over molecules with a 95 % interval from resampling paper units. Floors are computed on
 the molecules the methods ran on: three random families, all seven, the three most frequent families of
-the development set, and structure kNN-5 (similarity-weighted label transfer from the other paper units
-of rebuilt_302, its top three as the answer). Every pair of methods is compared on the molecules both
+the development set, structure kNN-5 (similarity-weighted label transfer from the other paper units
+of rebuilt_302, its top three as the answer), and structure rules (STRUCTURE_RULES: a family is claimed
+when the molecule's deterministic structural facts contain a named motif; no labels are used). Every pair of methods is compared on the molecules both
 have (mean difference and its interval). Prints the tables and, with --out, writes them as JSON.
 """
 
@@ -20,12 +21,30 @@ from collections import Counter
 from itertools import combinations
 from pathlib import Path
 
+from mechcal.agent.facts import structural_facts
 from mechcal.eval import molecule_metrics as mm
-from mechcal.eval.dataset import CASES_DIR, case_record
+from mechcal.eval.dataset import CASES_DIR, case_record, public_smiles
 from mechcal.eval.dataset_analysis import knn_predictor, similarity_matrix
 from mechcal.eval.splits import load_split
 from mechcal.eval.stats import load_reference_cases
 from mechcal.mechanism_pool import MECHANISM_POOL as POOL
+
+# Textbook structure shortcuts, fixed on 2026-11-23 before any score was computed and not tuned afterwards.
+# Each uses fact kinds of mechcal/agent/facts.py (the facts every method receives). The order is the answer
+# order, most specific motif first. PET, AGGREGATE and RADIATIVE have no rule: no fact kind is a standard
+# shortcut for them. A molecule on which no rule fires gets an empty answer.
+STRUCTURE_RULES = (
+    ("ESIPT_PT", {"intramolecular_hbond_motif"}),
+    ("TRIPLET_ISC_RTP_TADF", {"heavy_atom", "metal_center"}),
+    ("ICT_TICT_CT", {"donor_acceptor_path"}),
+    ("RIM_RIR_RIV", {"conjugated_rotor", "aryl_olefin"}),
+)
+
+
+def structure_rule_answer(smiles: str) -> list[str]:
+    kinds = {f["kind"] for f in structural_facts(smiles)["facts"]}
+    return [family for family, motifs in STRUCTURE_RULES if kinds & motifs]
+
 
 LABELS = {"es_rec": "ES-Rec", "top1": "Top-1", "evr": "EVR", "ep": "EP", "rec": "Rec", "bal": "BAL"}
 
@@ -52,6 +71,7 @@ def floors(case_ids: list[str], refs: dict[str, mm.Reference], split: dict) -> d
         "all 7 families": {c: [mm.molecule_metrics(list(POOL), refs[c])] for c in case_ids},
         "most frequent 3 (dev)": {c: [mm.molecule_metrics(common, refs[c])] for c in case_ids},
         "structure kNN-5": {c: [mm.molecule_metrics(knn[c], refs[c])] for c in case_ids},
+        "structure rules": {c: [mm.molecule_metrics(structure_rule_answer(public_smiles(c)), refs[c])] for c in case_ids},
     }
 
 

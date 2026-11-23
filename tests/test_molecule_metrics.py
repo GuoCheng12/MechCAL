@@ -93,3 +93,17 @@ def test_floors_on_the_development_set():
     draws = [score(lambda: rng.sample(list(MECHANISM_POOL), 3)) for _ in range(300)]
     for metric, expected in (("rec", 3 / 7), ("evr", 3 / 7), ("bal", 0.5), ("top1", 0.17)):
         assert mean(d[metric] for d in draws) == pytest.approx(expected, abs=0.02), metric
+
+
+def test_structure_rule_floor_claims_a_family_only_when_its_motif_is_in_the_structural_facts():
+    import importlib.util
+    from pathlib import Path
+    spec = importlib.util.spec_from_file_location("molecule_table", Path(__file__).parents[1] / "examples/molecule_table.py")
+    table = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(table)
+    assert table.structure_rule_answer("c1ccccc1") == []                                    # no motif: empty answer
+    assert table.structure_rule_answer("Oc1ccccc1-c1nc2ccccc2s1")[0] == "ESIPT_PT"          # O-H...N six-membered ring
+    assert "ESIPT_PT" not in table.structure_rule_answer("COc1ccccc1-c1nc2ccccc2s1")        # no proton to transfer
+    assert table.structure_rule_answer("CN(C)c1ccc(cc1)C#N") == ["ICT_TICT_CT", "RIM_RIR_RIV"]
+    assert table.structure_rule_answer("Brc1ccc2ccccc2c1") == ["TRIPLET_ISC_RTP_TADF"]
+    assert {f for f, _ in table.STRUCTURE_RULES} <= set(MECHANISM_POOL)

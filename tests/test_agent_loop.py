@@ -197,3 +197,19 @@ def test_planner_aliases_seen_in_the_first_0003_smoke_are_normalized():
         "quantities": [{"name": "ip", "value": 8.3, "unit": "eV", "source": {"artifact_id": "T001", "pointer": "/a"}}]}],
         "action": {"type": "submit"}})
     assert nested.claims[0].to_claim({"facts": []}).quantities[0].source.artifact_id == "T001"
+
+
+def test_a_number_stated_without_a_source_is_noted_at_once_and_raised_by_the_critic(tmp_path):
+    critic = [{"ranking": [{"label": "ICT_TICT_CT", "plausibility": 0.8}], "tests": []}]
+    run = AgentRun(ByRole([], critic), case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False)
+    quantity = {"name": "e", "value": 3.21, "unit": "eV", "artifact_id": "T001", "pointer": "/x"}
+    run._apply(PlannerStep.model_validate({
+        "updates": [{"label": "ICT_TICT_CT", "plausibility": 0.7, "claimed": True}],
+        "claims": [{"label": "ICT_TICT_CT", "kind": "computed", "statement": "S1 is at 3.21 eV with f 0.42.", "quantities": [quantity]},
+                   {"label": "ICT_TICT_CT", "kind": "computed", "statement": "S1 is at 3.21 eV (state 1).", "quantities": [quantity]}],
+        "action": {"type": "submit"}}), 1)
+    notes = [h for h in run.history if "without a source" in h]
+    assert len(notes) == 1 and "claim K1 states 0.42" in notes[0]          # K2 cites every value it states
+    run._critic_inner(1, before_submit=True)
+    assert run.proposals[0]["kind"] == "uncited_numbers" and "K1 (0.42)" in run.proposals[0]["text"]
+    assert "K2" not in run.proposals[0]["text"]

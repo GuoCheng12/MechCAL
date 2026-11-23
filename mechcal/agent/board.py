@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from itertools import permutations
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field
@@ -9,6 +10,7 @@ from pydantic import BaseModel, ConfigDict, Field
 from mechcal.eval.submission import (
     EvidenceClaim, Prediction, Quantity, QuantitySource, StructuralAssertion, Submission,
 )
+from mechcal.eval.grounding import _statement_matches, close
 from mechcal.mechanism_pool import MECHANISM_POOL
 
 Status = Literal["untested", "supported", "weakened", "mixed", "not_testable"]
@@ -16,6 +18,17 @@ Status = Literal["untested", "supported", "weakened", "mixed", "not_testable"]
 
 class _M(BaseModel):
     model_config = ConfigDict(extra="forbid")
+
+
+def uncited_numbers(claim: EvidenceClaim) -> list[str]:
+    """Decimal numbers written in a computed claim that its quantities do not account for, either
+    directly or as the sum, difference or ratio of two of them."""
+    if claim.kind != "computed":
+        return []
+    values = [q.value for q in claim.quantities]
+    derived = [x for a, b in permutations(values, 2) for x in (a - b, a + b, *([a / b] if b else []))]
+    return [w for w in _statement_matches(claim)[1]
+            if ("." in w or "e" in w.lower()) and not any(close(float(w), d, w) for d in derived)]
 
 
 class BoardClaim(_M):

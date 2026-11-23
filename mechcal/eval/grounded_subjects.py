@@ -175,7 +175,8 @@ A result's reference_panel (when present) gives, for each standard descriptor, i
 median and interquartile range among 43 common organic chromophores (aromatics, dyes and other
 widely studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
 molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
-default settings. The panel has no mechanism labels.
+default settings. The panel has no mechanism labels. Each row gives its pointer, so a panel value
+can be cited like any other value of that result (for example <pointer>/panel_percentile).
 When must_submit_now is true, submit immediately."""
 
 
