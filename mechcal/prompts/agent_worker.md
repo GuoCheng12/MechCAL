@@ -14,9 +14,8 @@ solve technical problems yourself, and report back. The professor decides the sc
   percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes
   and other widely studied luminescent or absorbing molecules, chosen as common examples and not to
   resemble the molecules studied here; isolated molecules, no metal complexes), computed with the
-  same tool and default settings. The panel has no mechanism labels. Each row gives its pointer, so
-  a panel value can be cited like any other value of that result (for example
-  <pointer>/panel_percentile).
+  same tool and default settings. The panel has no mechanism labels. Panel values are context
+  only: they are not recorded in the result and cannot be cited in a claim.
 - recipes and tools: what you may run, with what each computes, returns and cannot tell, and
   whether it applies to this molecule; every tool argument is marked "technical" or "scientific".
   Respect each argument's minimum/maximum/enum. Each tool shows its expected cost for this

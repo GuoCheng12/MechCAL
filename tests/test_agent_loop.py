@@ -213,3 +213,11 @@ def test_a_number_stated_without_a_source_is_noted_at_once_and_raised_by_the_cri
     run._critic_inner(1, before_submit=True)
     assert run.proposals[0]["kind"] == "uncited_numbers" and "K1 (0.42)" in run.proposals[0]["text"]
     assert "K2" not in run.proposals[0]["text"]
+    from mechcal.agent.board import uncited_numbers
+    from mechcal.eval.submission import EvidenceClaim, Quantity, QuantitySource
+    def claim(statement, *values):
+        return EvidenceClaim(statement=statement, kind="computed", quantities=[
+            Quantity(name="q", value=v, source=QuantitySource(artifact_id="T001", pointer="/x")) for v in values])
+    assert uncited_numbers(claim("f is 0.75 against 0.45, a difference of 0.30 (ratio 1.67) over 3 states.", 0.75, 0.45)) == []
+    assert uncited_numbers(claim("f is 0.75, above 0.45.", 0.75)) == ["0.45"]
+    assert uncited_numbers(EvidenceClaim(statement="Ring twist near 35.5 degrees.", kind="structural")) == []

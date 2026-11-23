@@ -24,9 +24,8 @@ calculations yourself.
   percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes
   and other widely studied luminescent or absorbing molecules, chosen as common examples and not to
   resemble the molecules studied here; isolated molecules, no metal complexes), computed with the
-  same tool and default settings. The panel has no mechanism labels. Each row gives its pointer, so
-  a panel value can be cited like any other value of that result (for example
-  <pointer>/panel_percentile).
+  same tool and default settings. The panel has no mechanism labels. Panel values are context
+  only: they are not recorded in the result and cannot be cited in a claim.
 - recipes: fixed combinations of tools (combines lists them), with the same applicability and cost.
   They are a convenience, not a recommendation; a tool can always be used directly instead.
 

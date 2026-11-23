@@ -86,44 +86,9 @@ def test_every_role_gets_the_same_neutral_panel_description():
     core = ("percentile, median and interquartile range among 43 common organic chromophores (aromatics, dyes and "
             "other widely studied luminescent or absorbing molecules, chosen as common examples and not to resemble "
             "the molecules studied here; isolated molecules, no metal complexes), computed with the same tool and "
-            "default settings. The panel has no mechanism labels.")
+            "default settings. The panel has no mechanism labels. Panel values are context only: they are not "
+            "recorded in the result and cannot be cited in a claim.")
     for name, text in flat.items():
         assert core in text, name
         assert not re.search(r"interquartile range is typical|[Nn]ear the median|percentile exists, use it", text), name
 
-
-def test_panel_rows_are_recorded_in_the_artifact_so_their_values_can_be_cited_and_checked():
-    from mechcal.agent.board import uncited_numbers
-    from mechcal.eval.grounding import check_claim
-    from mechcal.eval.submission import ArtifactStore, EvaluatorArtifact, EvidenceClaim, Quantity, QuantitySource, resolve_pointer
-    row = reference.context({"s1_oscillator_strength": 0.75}, _panel())[0]
-    assert row["pointer"] == "/reference_panel/s1_oscillator_strength"
-    store = ArtifactStore(case_id="CASE")
-    store.add(EvaluatorArtifact(artifact_id="T001", case_id="CASE", tool="t", status="success", molecule_smiles=SMILES,
-                                outputs={"structured_results": {"f": 0.75},
-                                         "reference_panel": {row["descriptor"]: {k: v for k, v in row.items()
-                                                                                 if k not in ("descriptor", "pointer")}}}))
-    assert resolve_pointer(store.artifacts["T001"].outputs, row["pointer"] + "/panel_percentile") == 80
-    def claim(statement, *quantities):
-        return EvidenceClaim(statement=statement, kind="computed", quantities=[
-            Quantity(name=n, value=v, source=QuantitySource(artifact_id="T001", pointer=p)) for n, v, p in quantities])
-    f = ("f", 0.75, "/structured_results/f")
-    cited = claim("S1 oscillator strength 0.75 is at percentile 80 of the panel (median 0.45).", f,
-                  ("pct", 80, row["pointer"] + "/panel_percentile"), ("median", 0.45, row["pointer"] + "/panel_median"))
-    assert check_claim(0, cited, store, SMILES).outcome == "grounded" and uncited_numbers(cited) == []
-    assert uncited_numbers(claim("S1 oscillator strength 0.75, above the panel median 0.45.", f)) == ["0.45"]
-    derived = claim("f is 0.75 against a panel median of 0.45, a difference of 0.30 (ratio 1.67) over 3 states.", f,
-                    ("median", 0.45, row["pointer"] + "/panel_median"))
-    assert uncited_numbers(derived) == []                       # differences and ratios of cited values; integers are not values
-    assert uncited_numbers(EvidenceClaim(statement="Ring twist near 35.5 degrees.", kind="structural")) == []
-
-
-def test_gateway_records_the_panel_rows_of_a_result_under_the_pointer_it_shows(tmp_path, monkeypatch):
-    monkeypatch.setattr(reference, "load_panel", lambda *a, **k: _panel())
-    monkeypatch.setattr(reference, "extract", lambda *a, **k: {"s1_oscillator_strength": 0.75})
-    run = AgentRun(ByRole([]), case_id="CASE", smiles=SMILES, run_dir=tmp_path, enable_amesp=False,
-                   config=AgentConfig(critic=False))
-    obs = run.gateway.call("microscopic.list_rotatable_dihedrals", {"source_artifact_id": "structure:prepared"})
-    row = obs["reference_panel"][0]
-    assert run.gateway.read(obs["artifact_id"], row["pointer"] + "/panel_percentile")["value"] == 80
-    assert run.gateway.read(obs["artifact_id"], row["pointer"] + "/panel_iqr/0")["status"] == "ok"

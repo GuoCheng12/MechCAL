@@ -307,9 +307,6 @@ class ToolGateway:
             panel = self._reference(capability_id, tool_args, result, alias)
             if panel:
                 obs["reference_panel"] = panel
-                rows = {r["descriptor"]: {k: v for k, v in r.items() if k not in ("descriptor", "pointer")} for r in panel}
-                for artifact_id in (alias, result.tool_result_id):     # recorded, so panel values can be cited and checked
-                    self.store.artifacts[artifact_id].outputs["reference_panel"] = rows
         self._observations[alias] = dict(obs)
         if note:
             obs["note"] = note

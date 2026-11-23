@@ -147,9 +147,7 @@ def _quartiles(xs: list[float]) -> list[float]:
 
 
 def context(values: dict[str, float], panel: dict | None = None, *, min_n: int = 8) -> list[dict]:
-    """Per descriptor: value, percentile among the panel molecules, panel median and interquartile range.
-
-    ``pointer`` is where the gateway records the row in the artifact, so a panel value can be cited."""
+    """Per descriptor: value, percentile among the panel molecules, panel median and interquartile range."""
     panel = panel if panel is not None else load_panel()
     if not panel or not values:
         return []
@@ -161,8 +159,7 @@ def context(values: dict[str, float], panel: dict | None = None, *, min_n: int =
             continue
         unit, meaning = DESCRIPTORS.get(key, ("", key))
         q25, q75 = _quartiles(xs)
-        rows.append({"descriptor": key, "pointer": f"/reference_panel/{key}", "meaning": meaning,
-                     "value": round(value, 4), "unit": unit,
+        rows.append({"descriptor": key, "meaning": meaning, "value": round(value, 4), "unit": unit,
                      "panel_percentile": round(100 * bisect_right(xs, value) / len(xs)),
                      "panel_median": round(median(xs), 4), "panel_iqr": [round(q25, 4), round(q75, 4)],
                      "panel_n": len(xs)})

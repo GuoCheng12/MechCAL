@@ -15,8 +15,8 @@ guess. Only the SMILES is known: no name, paper, spectra or experimental conditi
   and interquartile range among 43 common organic chromophores (aromatics, dyes and other widely
   studied luminescent or absorbing molecules, chosen as common examples and not to resemble the
   molecules studied here; isolated molecules, no metal complexes), computed with the same tool and
-  default settings. The panel has no mechanism labels. Each row gives its pointer, so a panel value
-  can be cited like any other value of that result (for example <pointer>/panel_percentile).
+  default settings. The panel has no mechanism labels. Panel values are context only: they are not
+  recorded in the result and cannot be cited in a claim.
 - history: one line per earlier step. budget: what remains, including tool wall time.
 - tool_log: every calculation already run (by you, a recipe or the Worker), with its
   arguments, status and wall time. An identical request is not re-run; its old result returns.
